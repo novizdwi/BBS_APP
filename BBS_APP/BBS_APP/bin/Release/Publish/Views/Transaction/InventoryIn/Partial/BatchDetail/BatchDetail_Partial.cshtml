@@ -1,0 +1,22 @@
+﻿@using (Ajax.BeginForm("mantap", "LabelingProductionOrder", null,
+new AjaxOptions
+{
+    HttpMethod = "POST",
+    OnBegin = "OnBegin",
+    OnSuccess = "OnSuccessMsgBox",
+    OnFailure = "OnFailure",
+    OnComplete = "OnComplete",
+    UpdateTargetId = "BatchDetail_contentForm",
+},
+
+new
+{
+    id = "BatchDetail_formDetail",
+    @class = "edit_form",
+    Style = "height:100%; width: 100%"
+}))
+{
+    <div id="BatchDetail_contentForm">
+        @Html.Partial("Partial/BatchDetail/BatchDetail_Panel_Partial")
+    </div>
+}

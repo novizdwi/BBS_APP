@@ -1,0 +1,219 @@
+﻿@using Models;
+
+@{
+    var Id = Convert.ToInt64(Request["cbId"]);
+
+
+    if (ViewBag.Id != null)
+    {
+        Id = ViewBag.Id;
+    }
+    //if (ViewBag.ReadOnly == null)
+    //{
+    //    ViewBag.ReadOnly = false;
+
+    //    if (Model.Status != "Draft")
+    //    {
+    //        ViewBag.ReadOnly = true;
+
+    //    }
+    //}
+}
+
+@Html.DevExpress().GridView(settings =>
+{
+
+    settings.Name = "gvInventoryInBatchDetailContentDetail";
+    settings.KeyFieldName = "DetDetId";
+    settings.Width = Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "InventoryIn", Action = "TabBatchDetailListPartial" };
+
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollableHeight = 100;
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+
+    settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+    settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+    settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+    settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
+
+    settings.CommandColumn.Visible = true;
+
+    settings.CommandColumn.ShowDeleteButton = true;
+    settings.CommandColumn.ShowNewButtonInHeader = true;
+    settings.Enabled = true;
+
+    settings.CommandColumn.Width = 70;
+
+    settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
+
+
+    settings.Columns.Add("Id", "Id").Visible = false;
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "DetId";
+        column.Name = "DetId";
+        column.Caption = "DetId";
+        column.Width = 0;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "DetDetId";
+        column.Name = "DetDetId";
+        column.Caption = "DetDetId";
+        column.Width = 150;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "BatchNum";
+        column.Name = "BatchNum";
+        column.Caption = "Batch";
+
+
+        column.ColumnType = MVCxGridViewColumnType.ComboBox;
+        column.Width = 100;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as ComboBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.TextField = "U_IDU_BATCH_NAME";
+        txt.ValueField = "U_IDU_BATCH_NAME";
+        txt.DataSource = Models._Utils.GeneralGetList.GetBatchUDT();
+
+    });
+
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Quantity";
+        column.Name = "Quantity";
+        column.Caption = "Quantity";
+        column.HeaderStyle.HorizontalAlign = HorizontalAlign.Right;
+        column.Width = Unit.Percentage(33.33);
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+        
+
+        var txt = column.PropertiesEdit as SpinEditProperties;
+        txt.NumberType = SpinEditNumberType.Float;
+        txt.DisplayFormatString = "#,##0.##";
+        txt.DisplayFormatInEditMode = true;
+        txt.AllowMouseWheel = false;
+        txt.SpinButtons.ShowIncrementButtons = false;
+
+        txt.ClientInstanceName = "gvInventoryInBatchDetailContentDetail_Quantity";
+
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.Style.HorizontalAlign = HorizontalAlign.Right;
+
+        txt.AllowMouseWheel = false;
+        ASPxSummaryItem summaryItem = new ASPxSummaryItem(column.FieldName, DevExpress.Data.SummaryItemType.Sum);
+        summaryItem.Tag = column.FieldName + "_Sum";
+        summaryItem.DisplayFormat = "{0}";
+        settings.TotalSummary.Add(summaryItem);
+
+        column.SetFooterTemplateContent(c =>
+        {
+            Html.DevExpress().Label(lbSettings =>
+            {
+                string fieldName = (c.Column as GridViewDataColumn).FieldName;
+                lbSettings.Name = "gvInventoryInBatchDetailContentDetailLabel" + fieldName + "Sum";
+                lbSettings.Properties.EnableClientSideAPI = true;
+                ASPxSummaryItem summaryItem1 = c.Grid.TotalSummary.First(i => i.Tag == (fieldName + "_Sum"));
+                lbSettings.Text = decimal.Parse(c.Grid.GetTotalSummaryValue(summaryItem1).ToString()).ToString("#");
+
+                lbSettings.CustomJSProperties = (sender, e) =>
+                {
+                    e.Properties["cpValue"] = c.Grid.GetTotalSummaryValue(summaryItem1).ToString();
+                };
+
+            }).Render();
+        });
+    });
+
+
+
+
+    //settings.Columns.Add(column =>
+    //{
+    //    column.Caption = "Production Date";
+    //    column.Name = "BatchDetailContent_ProductionDate";
+    //    column.FieldName = "BatchDetailContent_ProductionDate";
+    //    column.ColumnType = MVCxGridViewColumnType.DateEdit;
+    //    column.Width = 130;
+
+    //    var txt = column.PropertiesEdit as DateEditProperties;
+    //    txt.DisplayFormatString = "dd/MM/yyyy";
+    //    txt.EditFormatString = "dd/MM/yyyy";
+    //    txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+    //    txt.ClientInstanceName = "gvInventoryInBatchDetailContentDetail_ProductionDate";
+
+    //    if (ViewBag.ReadOnly)
+    //    {
+    //        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+    //        column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+    //        column.CellStyle.ForeColor = System.Drawing.Color.Black;
+    //        column.EditFormSettings.Visible = DefaultBoolean.False;
+    //    }
+
+    //});
+
+    settings.Columns.Add(column =>
+    {
+        column.Caption = "Expiration Date";
+        column.Name = "ExpDate";
+        column.FieldName = "ExpDate";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.Width = Unit.Percentage(33.33);
+
+        var txt = column.PropertiesEdit as DateEditProperties;
+        txt.DisplayFormatString = "dd/MM/yyyy";
+        txt.EditFormatString = "dd/MM/yyyy";
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ClientInstanceName = "gvInventoryInBatchDetailContentDetail_ExpiredDate";
+
+
+
+
+    });
+
+
+    //settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "Total");
+
+    settings.CellEditorInitialize = (s, e) =>
+    {
+        ASPxEdit editor = (ASPxEdit)e.Editor;
+        editor.ValidationSettings.Display = Display.Dynamic;
+    };
+
+    //settings.CustomJSProperties += (s, e) => {
+    //    var grid = s as MVCxGridView;
+    //    e.Properties["cp_doctotal"] = grid.GetTotalSummaryValue(grid.TotalSummary["Total"]);
+    //};
+
+    settings.Settings.ShowFooter = true;
+
+    settings.ClientSideEvents.BeginCallback = "gvInventoryInBatchDetailContentDetailOnBeginCallback";
+
+    settings.ClientSideEvents.BatchEditStartEditing = "gvInventoryInBatchDetailContentDetailOnBatchEditStartEditing";
+    settings.ClientSideEvents.BatchEditEndEditing = "gvInventoryInBatchDetailContentDetailOnBatchEditEndEditing";
+    settings.ClientSideEvents.BatchEditRowValidating = "gvInventoryInBatchDetailContentDetailOnBatchEditRowValidating";
+    settings.ClientSideEvents.EndCallback = "gvInventoryInBatchDetailContentDetailOnEndCallBack";
+
+    settings.InitNewRow = (sender, e) =>
+    {
+        e.NewValues["Quantity"] = 1.0;
+        e.NewValues["OpenQty"] = 1.0;
+    };
+
+    settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
+
+    //settings.ClientSideEvents.EndCallback = "function(s, e) {{ Id.SetValue(s.cpIdMantap);  }}";
+
+
+
+}).Bind(Model).GetHtml()

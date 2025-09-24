@@ -1,0 +1,609 @@
+﻿@using Models.Master.Ship;
+@using System.Web.Script.Serialization;
+
+@{
+    ViewBag.Id = Model.Id;
+    
+    
+}
+
+@model Models.Master.Ship.ShipModel
+
+@Html.DevExpress().TextBox(
+        settings =>
+        {
+            settings.Name = "Id";
+            settings.ControlStyle.CssClass = "editor";
+            settings.ShowModelErrors = true;
+            settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            settings.ClientVisible = false;
+        }
+).Bind(Model.Id).GetHtml() 
+
+
+@Html.DevExpress().FormLayout(settings =>
+{
+    settings.Name = "formLayout";
+    settings.EncodeHtml = false;
+    settings.Width = Unit.Percentage(100);
+    settings.AlignItemCaptionsInAllGroups = true;
+    settings.ShowItemCaptionColon = false;
+    settings.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+    settings.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+
+    var groupItem = settings.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.Caption = "";
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.ColCount = 1;
+
+        itemSettings.GroupBoxStyle.Caption.Paddings.Padding = 0;
+        itemSettings.GroupBoxStyle.Caption.Font.Size = 14;
+        itemSettings.GroupBoxStyle.Caption.ForeColor = System.Drawing.Color.Orange;
+
+    });
+
+
+    groupItem.Items.AddEmptyItem().Height = 0;
+
+    var groupItem_2 = groupItem.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        itemSettings.ColCount = 3;
+    });
+
+    var groupItem_3 = groupItem.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        itemSettings.ColCount = 3;
+    });
+
+
+    var groupItem_Col1 = groupItem_2.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        itemSettings.ColCount = 1;
+        itemSettings.CssClass = "groupCol";
+        //itemSettings.Width = Unit.Percentage(33.33);
+    });
+
+
+
+    var groupItem_Col2 = groupItem_2.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        itemSettings.ColCount = 1;
+        itemSettings.CssClass = "groupCol";
+        //itemSettings.Width = Unit.Percentage(33.33);
+    });
+
+    var groupItem_Col3 = groupItem_2.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        itemSettings.ColCount = 1;
+
+        //itemSettings.Width = Unit.Percentage(33.33);
+    });
+
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.Name = "grpShipCode";
+        itemSettings.Caption = "Ship Code";
+        itemSettings.FieldName = "ShipCode";
+        itemSettings.ClientVisible = false;
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
+
+        var cbo = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
+        cbo.Name = "ShipCode";
+        cbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+        cbo.ShowModelErrors = true;
+        //cbo.Width = 250;
+
+        cbo.ControlStyle.CssClass = "editornoimage";
+        cbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        cbo.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        cbo.Properties.ValidationSettings.Display = Display.Dynamic;
+
+        // Hide the default DropDown button
+        cbo.Properties.DropDownButton.Visible = false;
+
+        cbo.Properties.ButtonStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        EditButton lookUpButton = new EditButton();
+        lookUpButton.Text = "";
+        lookUpButton.Image.Url = "~/Content/Images/buttonnew/find-hitam.png";
+        lookUpButton.Image.Width = 15;
+
+        cbo.Properties.Buttons.Add(lookUpButton);
+        cbo.ReadOnly = true;
+
+        cbo.Properties.ClientSideEvents.ButtonClick = "BtnShipNameOnClick";
+    });
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.Name = "grpShipName";
+        itemSettings.Caption = "Ship Name";
+        itemSettings.FieldName = "ShipName";
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
+
+        var cbo = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
+        cbo.Name = "ShipName";
+        cbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+        cbo.ShowModelErrors = true;
+        //cbo.Width = 250;
+
+        cbo.ControlStyle.CssClass = "editornoimage";
+        cbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        cbo.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        cbo.Properties.ValidationSettings.Display = Display.Dynamic;
+
+        // Hide the default DropDown button
+        cbo.Properties.DropDownButton.Visible = false;
+
+        cbo.Properties.ButtonStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        EditButton lookUpButton = new EditButton();
+        lookUpButton.Text = "";
+        lookUpButton.Image.Url = "~/Content/Images/buttonnew/find-hitam.png";
+        lookUpButton.Image.Width = 15;
+
+        cbo.Properties.Buttons.Add(lookUpButton);
+        cbo.ReadOnly = true;
+
+        cbo.Properties.ClientSideEvents.ButtonClick = "BtnShipNameOnClick";
+    });
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Alias";
+        itemSettings.FieldName = "Alias";
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "Alias";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.ReadOnly = true;
+    });
+    
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
+        itemSettings.FieldName = "ShipType";
+        itemSettings.Caption = "Type";
+
+        ComboBoxSettings cbo = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
+        cbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+        cbo.Name = "ShipType";
+        cbo.ShowModelErrors = false;
+        cbo.Properties.TextField = "Name";
+        cbo.Properties.ValueField = "Code";
+        cbo.Properties.ValueType = typeof(string);
+        cbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+
+
+        cbo.Properties.DataSource = Models._Utils.GeneralGetList.GetList("ShipType");
+
+        cbo.ControlStyle.CssClass = "editornoimage";
+        cbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        cbo.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+    });
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Builder";
+        itemSettings.FieldName = "Builder";
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "Builder";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+    });
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Tahun Pembuatan";
+        itemSettings.FieldName = "YearOfBuild";
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "YearOfBuild";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+    });
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Bendera";
+        itemSettings.FieldName = "Flag";
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "Flag";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+    });
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Class";
+        itemSettings.FieldName = "Class";
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "Class";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+    });
+
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Call Sign";
+        itemSettings.FieldName = "CallSign";
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "CallSign";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+    });
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Mark Tonnage";
+        itemSettings.FieldName = "MarkTonnage";
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "MarkTonnage";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+    });
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Mark of Tonnage Certificate";
+        itemSettings.FieldName = "MarkOfTonageCer";
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "MarkOfTonageCer";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+    });
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Register Mark";
+        itemSettings.FieldName = "RegMark";
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "RegMark";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+    });
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Place Register";
+        itemSettings.FieldName = "RegPlace";
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "RegPlace";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+    });
+
+    groupItem_Col2.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.SpinEdit;
+        itemSettings.Caption = "LOA";
+        itemSettings.FieldName = "LOA";
+
+        var txt = (SpinEditSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "LOA";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.DecimalPlaces = 4;
+        txt.Properties.NumberType = SpinEditNumberType.Float;
+        txt.Properties.DisplayFormatString = "#.###";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Properties.SpinButtons.ShowIncrementButtons = false;
+    });
+
+    groupItem_Col2.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.SpinEdit;
+        itemSettings.Caption = "LBP";
+        itemSettings.FieldName = "LBP";
+
+        var txt = (SpinEditSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "LBP";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.DecimalPlaces = 4;
+        txt.Properties.NumberType = SpinEditNumberType.Float;
+        txt.Properties.DisplayFormatString = "#.###";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Properties.SpinButtons.ShowIncrementButtons = false;
+    });
+
+    groupItem_Col2.Items.Add(itemSettings =>
+    {
+
+
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.SpinEdit;
+        itemSettings.Caption = "Breadth Moulded";
+        itemSettings.FieldName = "BreadthMoulded";
+
+        var txt = (SpinEditSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "BreadthMoulded";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.DecimalPlaces = 4;
+        txt.Properties.NumberType = SpinEditNumberType.Float;
+        txt.Properties.DisplayFormatString = "#.###";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Properties.SpinButtons.ShowIncrementButtons = false;
+    });
+
+    groupItem_Col2.Items.Add(itemSettings =>
+    {
+
+
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.SpinEdit;
+        itemSettings.Caption = "Depth / Draught";
+        itemSettings.FieldName = "DepthDraught";
+
+        var txt = (SpinEditSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "DepthDraught";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.DecimalPlaces = 4;
+        txt.Properties.NumberType = SpinEditNumberType.Float;
+        txt.Properties.DisplayFormatString = "#.###";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Properties.SpinButtons.ShowIncrementButtons = false;
+    });
+
+    groupItem_Col2.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.SpinEdit;
+        itemSettings.Caption = "Gross Tonnage";
+        itemSettings.FieldName = "GrossTonnage";
+
+        var txt = (SpinEditSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "GrossTonnage";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.DecimalPlaces = 4;
+        txt.Properties.NumberType = SpinEditNumberType.Float;
+        txt.Properties.DisplayFormatString = "#.###";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Properties.SpinButtons.ShowIncrementButtons = false;
+    });
+
+    groupItem_Col2.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.SpinEdit;
+        itemSettings.Caption = "Net Tonnage";
+        itemSettings.FieldName = "NetTonnage";
+
+        var txt = (SpinEditSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "NetTonnage";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.DecimalPlaces = 4;
+        txt.Properties.NumberType = SpinEditNumberType.Float;
+        txt.Properties.DisplayFormatString = "#.###";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Properties.SpinButtons.ShowIncrementButtons = false;
+    });
+    groupItem_Col2.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Draft Design";
+        itemSettings.FieldName = "DraftDesign";
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "DraftDesign";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+    });
+    groupItem_Col2.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Owner";
+        itemSettings.FieldName = "Owner";
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "Owner";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+    });
+    groupItem_Col2.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Memo;
+        itemSettings.Caption = "Owner Address";
+        itemSettings.FieldName = "OwnerAddress";
+
+        var txt = (MemoSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "OwnerAddress";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        //txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        //txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Width = Unit.Percentage(100);
+        txt.Height = 80;
+    });
+    groupItem_Col3.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.DateEdit;
+        itemSettings.Caption = "ModifiedDate";
+        itemSettings.FieldName = "ModifiedDate";
+
+        var txt = (DateEditSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "ModifiedDate";
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Properties.NullText = "dd/MM/yyyy";
+        txt.Properties.EditFormat = EditFormat.Custom;
+        txt.Properties.EditFormatString = "dd/MM/yyyy";
+        txt.Properties.EditFormat = EditFormat.Date;
+        txt.ReadOnly = true;
+        txt.Properties.DropDownButton.Visible = false;
+    });
+    groupItem_Col3.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "UserName";
+        itemSettings.FieldName = "UserName";
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "UserName";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.ReadOnly = true;
+    });
+
+    groupItem.Items.AddTabbedGroupItem(group =>
+    {
+        group.Name = "TabDetail";
+        group.ColSpan = 1;
+        //group.Width = Unit.Percentage(100);
+        //group.Height = Unit.Percentage(100);
+        //group.PageControl.ContentStyle.Paddings.Padding = 3;
+        //group.PageControl.ContentStyle.Paddings.PaddingTop = 0;
+
+        group.Items.Add(item =>
+        {
+            item.Name = "TabEngine";
+            item.Caption = "Engine";
+            item.SetNestedContent(() =>
+            {
+                ViewContext.Writer.Write(
+                     Html.Partial("Partial/Ship_Form_TabEngine_List_Partial", Model.ListEngines_)
+                 );
+            });
+
+        });
+
+        group.Items.Add(item =>
+        {
+            item.Name = "TabNavEq";
+            item.Caption = "Navigation Eq";
+            item.SetNestedContent(() =>
+            {
+                ViewContext.Writer.Write(
+                    Html.Partial("Partial/Ship_Form_TabNavEq_List_Partial", Model.ListNavEqs_)
+                );
+            });
+        });
+        group.Items.Add(item =>
+        {
+            item.Name = "TabSafeEq";
+            item.Caption = "Safety Eq";
+            item.SetNestedContent(() =>
+            {
+                ViewContext.Writer.Write(
+                    Html.Partial("Partial/Ship_Form_TabSafeEq_List_Partial", Model.ListSafeEqs_)
+                );
+            });
+        });
+        group.Items.Add(item =>
+        {
+            item.Name = "TabAcco";
+            item.Caption = "Accomodation";
+            item.SetNestedContent(() =>
+            {
+                ViewContext.Writer.Write(
+                    Html.Partial("Partial/Ship_Form_TabAcco_List_Partial", Model.ListAccos_)
+                );
+            });
+        });
+        group.Items.Add(item =>
+        {
+            item.Name = "TabAnchor";
+            item.Caption = "Anchor";
+            item.SetNestedContent(() =>
+            {
+                ViewContext.Writer.Write(
+                    Html.Partial("Partial/Ship_Form_TabAnchor_List_Partial", Model.ListAnchors_)
+                );
+            });
+        });
+        group.Items.Add(item =>
+        {
+            item.Name = "TabOperation";
+            item.Caption = "Operation";
+            item.SetNestedContent(() =>
+            {
+                ViewContext.Writer.Write(
+                    Html.Partial("Partial/Ship_Form_TabOperation_List_Partial", Model.ListOperations_)
+                );
+            });
+        });
+        group.Items.Add(item =>
+        {
+            item.Name = "TabAttachment";
+            item.Caption = "Attachment";
+            item.SetNestedContent(() =>
+            {
+                ViewContext.Writer.Write(
+                    Html.Partial("Partial/Ship_Form_TabAttachment_List_Partial", Model.ListAttachments_)
+                );
+            });
+        });
+
+
+    });
+
+
+
+}).GetHtml()
+
+
+

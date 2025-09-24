@@ -1,0 +1,72 @@
+﻿@using Models;
+
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvMasterSettingBagianDetail";
+    settings.KeyFieldName = "Id";
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollableHeight = 300;
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+
+    settings.Width = Unit.Percentage(100);
+    //settings.Height = Unit.Percentage(100);
+    settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+    settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
+    settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+    settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+    settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
+
+    settings.CommandColumn.Visible = true;
+    settings.CommandColumn.ShowDeleteButton = true;
+    settings.CommandColumn.ShowNewButtonInHeader = true;
+    settings.CommandColumn.Width = 70;
+    settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
+
+    settings.Columns.Add("Id", "Id").Visible = false;
+    
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Bagian";
+        column.Name = "Bagian";
+        column.Caption = "Bagian";
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = false;
+
+        column.Width = 300;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ClientInstanceName = "ItemGroupCode";
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+        //var cbo = column.PropertiesEdit as ComboBoxProperties;
+        //cbo.ClientInstanceName = "ItemGroupCode";
+        //cbo.DataSource = Models.Setting.MasterSetting.MasterSettingGetList.GetItemList("ReportTypeChoose");
+        //cbo.TextField = "Code";
+        //cbo.ValueField = "Code";
+        //cbo.ValueType = typeof(string);
+        //cbo.DropDownStyle = DropDownStyle.DropDownList;
+        //cbo.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        //cbo.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        //cbo.ClientSideEvents.SelectedIndexChanged = "CboItemGroupCodeOnChange";
+    });
+
+    
+
+    settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
+
+    settings.CellEditorInitialize = (s, e) =>
+    {
+        ASPxEdit editor = (ASPxEdit)e.Editor;
+        editor.ValidationSettings.Display = Display.Dynamic;
+    };
+
+    settings.CellEditorInitialize = (s, e) =>
+    {
+        ASPxEdit editor = (ASPxEdit)e.Editor;
+        editor.ValidationSettings.Display = Display.Dynamic;
+    };
+
+
+}).Bind(Model).GetHtml()

@@ -1,0 +1,161 @@
+﻿ 
+@*@using Models.Setting.GeneralSetting*@
+
+@using Models
+
+@using Models.Setting.GeneralSetting
+
+@*@model Models.Setting.GeneralSetting.GeneralSettingModel*@
+
+
+<script type="text/javascript">
+    // <![CDATA[
+    function gvGeneralSettingCoaDetail_BatchEditStartEditing(s, e) {
+        var CoaCodeColumn = s.GetColumnByField("CoaCode");
+        if (!e.rowValues.hasOwnProperty(CoaCodeColumn.index))
+            return;
+        var cellInfo = e.rowValues[CoaCodeColumn.index];
+        gvGeneralSettingCoaDetail_CoaCode.SetValue(cellInfo.value);
+
+        if (e.focusedColumn === CoaCodeColumn)
+            gvGeneralSettingCoaDetail_CoaCode.SetFocus();
+    }
+    function gvGeneralSettingCoaDetail_BatchEditEndEditing(s, e) {
+        var CoaCodeColumn = s.GetColumnByField("CoaCode");
+        if (!e.rowValues.hasOwnProperty(CoaCodeColumn.index))
+            return;
+        var cellInfo = e.rowValues[CoaCodeColumn.index];
+
+        cellInfo.value = gvGeneralSettingCoaDetail_CoaCode.GetValue();
+        cellInfo.text = gvGeneralSettingCoaDetail_CoaCode.GetText();
+
+        gvGeneralSettingCoaDetail_CoaCode.SetValue(null);
+    }
+    function gvGeneralSettingCoaDetail_BatchEditRowValidating(s, e) {
+        var CoaCodeColumn = s.GetColumnByField("CoaCode");
+        var cellValidationInfo = e.validationInfo[CoaCodeColumn.index];
+        if (!cellValidationInfo) return;
+        var value = cellValidationInfo.value;
+        if (!ASPxClientUtils.IsExists(value) || ASPxClientUtils.Trim(value) === "") {
+            cellValidationInfo.isValid = false;
+            cellValidationInfo.errorText = "COA Code is required";
+        }
+    }
+
+
+    // ]]>
+</script>
+
+@Html.DevExpress().GridView(settings =>
+   {
+
+       settings.Name = "gvGeneralSettingCoaDetail";
+       settings.KeyFieldName = "Id";
+       settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+       settings.Settings.VerticalScrollableHeight = 400;
+       settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+
+       settings.Width = Unit.Percentage(100);
+       settings.Height = Unit.Percentage(100);
+
+       settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+       settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+       settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+       settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
+
+       settings.CommandColumn.Visible = false;
+       settings.CommandColumn.ShowDeleteButton = true;
+       settings.CommandColumn.ShowNewButtonInHeader = true;
+       settings.CommandColumn.Width = 50;
+       settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden; 
+
+
+       settings.Columns.Add("Id", "Id").Visible = false;
+       settings.Columns.Add("SortCode", "SortCode").Visible = false;
+       settings.Columns.Add("Code", "Code").Visible = false; 
+       
+       settings.Columns.Add(column =>
+       {
+           column.Name = "Name";
+           column.FieldName = "Name";
+           column.Caption = "Name";
+           column.Width = 300;
+           column.ColumnType = MVCxGridViewColumnType.TextBox;
+           column.ReadOnly = true;
+           var txt = column.PropertiesEdit as TextBoxProperties;
+           txt.ClientInstanceName = "gvGeneralSettingCoaDetail_Name";
+           txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+       });
+
+
+       settings.Columns.Add(column =>
+       {
+           column.Caption = "COA Code";
+           column.Name = "CoaCode";
+           column.FieldName = "CoaCode";
+           column.Width = 150;
+
+           column.SetEditItemTemplateContent(c =>
+           {
+
+               ViewContext.Writer.Write(
+                   Html.DevExpress().ComboBox(settingsHL =>
+                   {
+                       settingsHL.Name = "CoaCode";
+                       settingsHL.Properties.ClientInstanceName = "gvGeneralSettingCoaDetail_CoaCode";
+                       settingsHL.Width = 140;
+
+                       settingsHL.ControlStyle.CssClass = "editor";
+                       settingsHL.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                       settingsHL.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+                       settingsHL.Properties.ValidationSettings.Display = Display.Dynamic; 
+
+                       // Hide the default DropDown button
+                       settingsHL.Properties.DropDownButton.Visible = false;
+                       settingsHL.Properties.ButtonStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+                       EditButton lookUpButton = new EditButton();
+                       lookUpButton.Text = "";
+                       lookUpButton.Image.Url = "~/Content/Images/buttonnew/find-hitam.png";
+                       lookUpButton.Image.Width = 15;
+
+                       settingsHL.Properties.Buttons.Add(lookUpButton);
+                       settingsHL.Properties.ClientSideEvents.ButtonClick = "gvGeneralSettingCoaDetail_ClickBtnFindCoaCode";
+                       
+                   }).GetHtml()
+                );
+
+              
+           });
+
+       });
+
+
+       settings.Columns.Add(column =>
+       {
+           column.Name = "CoaName";
+           column.FieldName = "CoaName";
+           column.Caption = "COA Name";
+           column.Width = 300;
+           column.ColumnType = MVCxGridViewColumnType.TextBox;
+           column.ReadOnly = true;
+           var txt = column.PropertiesEdit as TextBoxProperties;
+           txt.ClientInstanceName = "gvGeneralSettingCoaDetail_CoaName";
+           txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+       });
+
+       settings.ClientSideEvents.BatchEditStartEditing = "gvGeneralSettingCoaDetail_BatchEditStartEditing";
+       settings.ClientSideEvents.BatchEditEndEditing = "gvGeneralSettingCoaDetail_BatchEditEndEditing";
+       settings.ClientSideEvents.BatchEditRowValidating = "gvGeneralSettingCoaDetail_BatchEditRowValidating";
+       settings.CellEditorInitialize = (s, e) =>
+       {
+           ASPxEdit editor = (ASPxEdit)e.Editor;
+           editor.ValidationSettings.Display = Display.Dynamic;
+       };
+
+       settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
+
+
+   }).Bind(Model).GetHtml()

@@ -1,0 +1,140 @@
+﻿@using Models;
+
+@{
+    var Id = Convert.ToInt64(Request["cbId"]);
+
+    if (ViewBag.Id != null)
+    {
+        Id = ViewBag.Id;
+    }
+}
+
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvTukarFakturSendItemDetail";
+    settings.KeyFieldName = "DetId";
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollableHeight = 300;
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+
+    settings.Width = Unit.Percentage(100);
+    //settings.Height = Unit.Percentage(100);
+    settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+    settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
+    settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+    settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+    settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
+
+    settings.CommandColumn.Visible = true;
+    settings.CommandColumn.ShowDeleteButton = true;
+    settings.CommandColumn.ShowNewButtonInHeader = true;
+    settings.CommandColumn.Width = 50;
+    settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
+
+    settings.Columns.Add("Id", "Id").Visible = false;
+    settings.Columns.Add("DetId", "DetId").Visible = false;
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "NoArInvoice";
+        column.Name = "NoArInvoice";
+        column.Caption = "No Ar Invoice";
+        column.ColumnType = MVCxGridViewColumnType.ComboBox;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        column.Width = 300;
+
+        var cbo = column.PropertiesEdit as ComboBoxProperties;
+        cbo.ClientInstanceName = "NoArInvoice";
+        cbo.DataSource = Models.Transaction.TukarFakturSend.TukarFakturSendGetList.GetInvoiceList(Id);
+        cbo.TextField = "Name";
+        cbo.ValueField = "Name";
+        cbo.ValueType = typeof(string);
+        cbo.DropDownStyle = DropDownStyle.DropDownList;
+        cbo.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        cbo.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        cbo.ClientSideEvents.SelectedIndexChanged = "CboNoArInvoiceOnChange";
+
+        //cbo.DropDownButton.Visible = false;
+        //EditButton lookUpButton = new EditButton();
+        //lookUpButton.Text = "";
+        //lookUpButton.Image.Url = "~/Content/Images/buttonnew/find-hitam.png";
+        //lookUpButton.Image.Width = 15;
+        //cbo.Buttons.Add(lookUpButton);
+        //cbo.ClientSideEvents.ButtonClick = "BtnCflNoArInvoicePopupListTukarFakturSendOnClick";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "TanggalInvoice";
+        column.Name = "TanggalInvoice";
+        column.Caption = "Tanggal Invoice";
+        column.ReadOnly = true;
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as DateEditProperties;
+        txt.ClientInstanceName = "TanggalInvoice";
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.DisplayFormatString = "dd/MM/yyyy";
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "TotalInvoice";
+        column.Name = "TotalInvoice";
+        column.Caption = "Total Invoice";
+        column.HeaderStyle.HorizontalAlign = HorizontalAlign.Right;
+        column.ReadOnly = true;
+
+        column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.Width = 100;
+        //column.Visible = ViewBag.IsShowWTax ? true : false;
+        var txt = column.PropertiesEdit as SpinEditProperties;
+        txt.NumberType = SpinEditNumberType.Integer;
+        txt.ClientInstanceName = "TotalInvoice";
+        txt.DisplayFormatString = "#,###";
+        txt.DisplayFormatInEditMode = true;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "NoInvoiceRevisi";
+        column.Name = "NoInvoiceRevisi";
+        column.Caption = "No Invoice Revisi";
+        column.HeaderStyle.HorizontalAlign = HorizontalAlign.Right;
+        column.ReadOnly = true;
+
+        column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.Width = 100;
+        //column.Visible = ViewBag.IsShowWTax ? true : false;
+        var txt = column.PropertiesEdit as SpinEditProperties;
+        txt.NumberType = SpinEditNumberType.Integer;
+        txt.ClientInstanceName = "NoInvoiceRevisi";
+        txt.DisplayFormatString = "#,###";
+        txt.DisplayFormatInEditMode = true;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+    });
+
+    settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
+
+    settings.CellEditorInitialize = (s, e) =>
+    {
+        ASPxEdit editor = (ASPxEdit)e.Editor;
+        editor.ValidationSettings.Display = Display.Dynamic;
+    };
+
+    settings.CellEditorInitialize = (s, e) =>
+    {
+        ASPxEdit editor = (ASPxEdit)e.Editor;
+        editor.ValidationSettings.Display = Display.Dynamic;
+    };
+
+
+}).Bind(Model).GetHtml()

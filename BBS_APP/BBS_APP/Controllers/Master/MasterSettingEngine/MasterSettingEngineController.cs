@@ -1,0 +1,202 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using DevExpress.Web.Mvc;
+using System.Threading;
+using Models;
+
+using System.Net;
+
+using Models.Setting.MasterSettingEngine;
+using Models._Utils;
+
+namespace Controllers.Master
+{
+
+    public partial class MasterSettingEngineController : BaseController
+    {
+
+        string VIEW_DETAIL = "MasterSettingEngine";
+        string VIEW_FORM_PARTIAL = "Partial/MasterSettingEngine_Form_Partial";
+
+        MasterSettingEngineService masterSettingEngineService;
+
+        public ActionResult Index()
+        {
+            return RedirectToAction("Detail");
+        }
+
+        public ActionResult Detail(int Id = 0)
+        {
+
+
+            MasterSettingEngineModel masterSettingEngineModel;
+
+            masterSettingEngineService = new MasterSettingEngineService();
+            masterSettingEngineModel = masterSettingEngineService.GetById(Id);
+
+
+            return View(VIEW_DETAIL, masterSettingEngineModel);
+        }
+
+
+        public ActionResult DetailPartial(int Id = 0)
+        {
+
+            MasterSettingEngineModel masterSettingEngineModel;
+
+            masterSettingEngineService = new MasterSettingEngineService();
+
+
+            masterSettingEngineModel = masterSettingEngineService.GetById(Id);
+
+
+            return PartialView(VIEW_FORM_PARTIAL, masterSettingEngineModel);
+        }
+
+        public ActionResult ItemGroupName(string docNum = "")
+        {
+            var abc = MasterSettingEngineGetList.GetDetailGroupItemCode(docNum);
+            if (abc != null)
+            {
+                var response = new MyCustomResponse
+                {
+                    ItemGroupCode = abc.Rows[0]["Code"].ToString(),
+                    ItemGroupName = abc.Rows[0]["Name"].ToString()
+                };
+                return this.Json(response, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var response = new MyCustomResponse
+                {
+                    ItemGroupCode = "",
+                    ItemGroupName = ""
+                };
+                return this.Json(response, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public class MyCustomResponse
+        {
+            public string ItemGroupCode { get; set; }
+            public string ItemGroupName { get; set; }
+        }
+
+
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Update([ModelBinder(typeof(DevExpressEditorsBinder))]  MasterSettingEngineModel masterSettingEngineModel)
+        {
+            masterSettingEngineModel._UserId = (int)Session["userId"];
+            masterSettingEngineService = new MasterSettingEngineService();
+
+
+            if (ModelState.IsValid)
+            {
+                masterSettingEngineService.Update(masterSettingEngineModel);
+                masterSettingEngineModel = masterSettingEngineService.GetById(masterSettingEngineModel.Id);
+            }
+            else
+            {
+                string message = GetErrorModel();
+
+                throw new Exception(string.Format("[VALIDATION] {0}", message));
+            }
+
+            return PartialView(VIEW_FORM_PARTIAL, masterSettingEngineModel);
+        }
+
+
+    }
+}
+
+//using System;
+//using System.Collections.Generic;
+//using System.Collections;
+//using System.Linq;
+//using System.Web;
+//using System.Web.Mvc;
+//using DevExpress.Web.Mvc;
+//using System.IO;
+//using System.Threading;
+
+//using DevExpress.Web.ASPxUploadControl;
+
+//using System.Net;
+
+//using Models;
+//using Models.Setting.GeneralSetting;
+
+//namespace Controllers.Setting
+//{
+
+//    public partial class GeneralSettingController : BaseController
+//    {
+
+//        string VIEW_DETAIL = "GeneralSetting";
+//        string VIEW_FORM_PARTIAL = "Partial/GeneralSetting_Form_Partial";
+
+//        GeneralSettingService generalSettingService;
+
+//        public ActionResult Index()
+//        {
+//            return RedirectToAction("Detail");
+//        }
+
+//        public ActionResult Detail(int Id = 0)
+//        {
+
+
+//            GeneralSettingModel generalSettingModel;
+
+//            generalSettingService = new GeneralSettingService();
+//            generalSettingModel = generalSettingService.GetById(Id);
+
+//            return View(VIEW_DETAIL, generalSettingModel);
+//        }
+
+
+//        public ActionResult DetailPartial(int Id = 0)
+//        {
+
+//            GeneralSettingModel generalSettingModel;
+
+//            generalSettingService = new GeneralSettingService();
+
+
+//            generalSettingModel = generalSettingService.GetById(Id);
+
+
+//            return PartialView(VIEW_FORM_PARTIAL, generalSettingModel);
+//        }
+
+
+
+//        [HttpPost, ValidateInput(false)]
+//        public ActionResult Update([ModelBinder(typeof(DevExpressEditorsBinder))]  GeneralSettingModel generalSettingModel)
+//        {
+//            generalSettingModel._UserId = (int)Session["userId"];
+//            generalSettingService = new GeneralSettingService();
+
+
+//            if (ModelState.IsValid)
+//            {
+//                generalSettingService.Update(generalSettingModel);
+//                generalSettingModel = generalSettingService.GetById(generalSettingModel.Id);
+//            }
+//            else
+//            {
+//                string message = GetErrorModel();
+
+//                throw new Exception(string.Format("[VALIDATION] {0}", message));
+//            } 
+
+//            return PartialView(VIEW_FORM_PARTIAL, generalSettingModel);
+//        }
+
+
+//    }
+//}

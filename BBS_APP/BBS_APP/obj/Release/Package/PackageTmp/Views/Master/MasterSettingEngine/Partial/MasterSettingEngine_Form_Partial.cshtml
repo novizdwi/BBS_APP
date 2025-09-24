@@ -1,0 +1,92 @@
+﻿ 
+@using Models.Setting.MasterSettingEngine
+
+@model Models.Setting.MasterSettingEngine.MasterSettingEngineModel
+
+@{
+    ViewBag.Id=Model.Id;
+ 
+}
+
+@Html.DevExpress().TextBox(
+        settings =>
+        {
+            settings.Name = "Id";
+            settings.ControlStyle.CssClass = "editor";
+            settings.ShowModelErrors = true;
+            settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            settings.ClientVisible = false;
+        }
+).Bind(Model.Id).GetHtml()
+
+
+
+@Html.DevExpress().FormLayout(settings =>
+{
+    settings.Name = "formLayout";
+    settings.EncodeHtml = false;
+    settings.Width = Unit.Percentage(100);
+    settings.AlignItemCaptionsInAllGroups = true;
+    settings.ShowItemCaptionColon = false;
+
+    var groupItem = settings.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.Caption = "Master Setting";
+        //itemSettings.Caption = "Series Reservation";
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
+        itemSettings.ColCount = 1;
+
+        itemSettings.GroupBoxStyle.Caption.Paddings.Padding = 5;
+        itemSettings.GroupBoxStyle.Caption.Font.Size = 14;
+        itemSettings.GroupBoxStyle.Caption.ForeColor = System.Drawing.ColorTranslator.FromHtml("#F20056");
+        //itemSettings.GroupBoxStyle.Caption.ForeColor = System.Drawing.Color.FromName("#dccb3f");
+        //itemSettings.GroupBoxStyle.Caption.BackColor = System.Drawing.Color.FromName("#116959");
+
+    });
+
+    groupItem.Items.AddEmptyItem().Height = 25;
+
+    groupItem.Items.AddTabbedGroupItem(group =>
+    {
+        group.Name = "TabDetail";
+        group.ColSpan =1;
+        group.Width = Unit.Percentage(70);
+        group.Height = Unit.Percentage(80);
+        group.PageControl.ContentStyle.Paddings.Padding = 3;
+        group.PageControl.ContentStyle.Paddings.PaddingTop = 0;
+
+
+
+
+        group.Items.Add(item =>
+        {
+            item.Name = "TabBagian";
+            item.Caption = " Bagian ";
+            item.SetNestedContent(() =>
+            {
+                ViewContext.Writer.Write(
+                     Html.Partial("Partial/MasterSettingEngine_TabBagian_List_Partial", Model.ListBagians_)
+                 );
+            });
+
+        });
+
+        group.Items.Add(item =>
+        {
+            item.Name = "TabItem";
+            item.Caption = "Item ";
+            item.SetNestedContent(() =>
+            {
+                ViewContext.Writer.Write(
+                     Html.Partial("Partial/MasterSettingEngine_TabItem_List_Partial", Model.ListItems_)
+                 );
+            });
+
+        });
+
+
+    });
+
+}).GetHtml()
+

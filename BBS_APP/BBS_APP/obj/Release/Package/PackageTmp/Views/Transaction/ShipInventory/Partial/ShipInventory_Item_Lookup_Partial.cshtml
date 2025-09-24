@@ -1,0 +1,47 @@
+﻿@Html.DevExpress().GridLookup(settings =>
+{
+    settings.Name = "gvItemLookup";
+    settings.GridViewProperties.CallbackRouteValues = new { Controller = "ShipInventory", Action = "ItemLookup"};
+    settings.GridViewProperties.Settings.ShowFilterRow = true;
+    settings.GridViewProperties.Settings.ShowFilterRowMenu = true;
+    settings.GridViewProperties.Settings.ShowStatusBar = GridViewStatusBarMode.Visible;
+    settings.Properties.IncrementalFilteringMode = IncrementalFilteringMode.None;
+    settings.Properties.SelectionMode = GridLookupSelectionMode.Single;
+    settings.Properties.TextFormatString = "{0}";
+    settings.Properties.IncrementalFilteringDelay = 500;
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.GridViewStyles.Header.HorizontalAlign = HorizontalAlign.Center;
+    settings.ControlStyle.Font.Name = "Trebuchet MS";
+    settings.ControlStyle.Font.Size = 9;
+    //settings.KeyFieldName = "CardCode";
+    settings.KeyFieldName = "ItemCode";
+
+    settings.GridViewProperties.SettingsBehavior.EnableRowHotTrack = true;
+    settings.GridViewStyles.RowHotTrack.Cursor = "pointer";
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ItemCode";
+        column.Caption = "ItemCode";
+        column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Item";
+        column.Caption = "ItemName";
+        column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+    });
+
+    
+
+    settings.GridViewProperties.BeforeGetCallbackResult = (s, e) =>
+    {
+        MVCxGridView g = s as MVCxGridView;
+        var a = 0;
+    };
+    settings.PreRender = (s, e) =>
+    {
+        MVCxGridView g = s as MVCxGridView;
+        var a = 0;
+    };
+}).Bind(Model).Bind(ViewData["ItemCode"]).GetHtml()

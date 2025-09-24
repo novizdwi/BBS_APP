@@ -1,0 +1,730 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\BBS_APP\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\BBS_APP\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E939A90B-5F9B-41BA-AB6F-7A28F5999F36}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BBS_DI</RootNamespace>
+    <AssemblyName>BBS_DI</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\MJL_DX20\packages\CrystalDecisions.CrystalReports.Engine.1.0.0\lib\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.ClientDoc, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\MJL_DX20\packages\CrystalDecisions.ReportAppServer.1.0.0\lib\CrystalDecisions.ReportAppServer.ClientDoc.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.Controllers, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\MJL_DX20\packages\CrystalDecisions.ReportAppServer.1.0.0\lib\CrystalDecisions.ReportAppServer.Controllers.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.DataDefModel, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\MJL_DX20\packages\CrystalDecisions.ReportAppServer.1.0.0\lib\CrystalDecisions.ReportAppServer.DataDefModel.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\MJL_DX20\packages\CrystalDecisions.ReportSource.1.0.0\lib\CrystalDecisions.ReportSource.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\MJL_DX20\packages\CrystalDecisions.Shared.1.0.0\lib\CrystalDecisions.Shared.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.Web, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\MJL_DX20\packages\CrystalDecisions.Web.1.0.1\lib\CrystalDecisions.Web.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Data.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dlls\DevExpress.Data.v20.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Web.Mvc5.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dlls\DevExpress.Web.Mvc5.v20.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Web.v20.1, Version=20.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dlls\DevExpress.Web.v20.1.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\BBS_APP\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\BBS_APP\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <HintPath>..\MJL_DX20\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="LumenWorks.Framework.IO, Version=3.9.1.0, Culture=neutral, PublicKeyToken=5ad3ea2f85776344, processorArchitecture=MSIL">
+      <HintPath>..\..\Master\MJL-WEBAPP\MJL_DI\bin\Debug\LumenWorks.Framework.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="Sap.Data.Hana.v4.5, Version=2.17.22.0, Culture=neutral, PublicKeyToken=0326b8ea63db4bc4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files\sap\hdbclient\ado.net\v4.5\Sap.Data.Hana.v4.5.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Api\DeliveryApiModel.cs" />
+    <Compile Include="Models\Api\SalesOrderApiModel.cs" />
+    <Compile Include="Models\Api\ServiceResult.cs" />
+    <Compile Include="Models\Authentication\ChangePasswordModel.cs" />
+    <Compile Include="Models\Authentication\LoginModel.cs" />
+    <Compile Include="Models\Authentication\RoleModel.cs" />
+    <Compile Include="Models\Authentication\Role__List_Model.cs" />
+    <Compile Include="Models\Authentication\UserModel.cs" />
+    <Compile Include="Models\Authentication\User__List_Model.cs" />
+    <Compile Include="Models\Master\DocContentModel.cs" />
+    <Compile Include="Models\Master\MasterSettingEngineModel.cs" />
+    <Compile Include="Models\Master\Ship__List_Model.cs" />
+    <Compile Include="Models\Master\DocContent__List_Model.cs" />
+    <Compile Include="Models\Master\DocGeneralModel.cs" />
+    <Compile Include="Models\Master\DocGeneral__List_Model.cs" />
+    <Compile Include="Models\Master\ShipModel.cs" />
+    <Compile Include="Models\Report\ReportAlertDetail__List_Model.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Report\ReportAlertModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Report\ReportCustomModel.cs" />
+    <Compile Include="Models\Report\ReportQueryDetail__List_Model.cs" />
+    <Compile Include="Models\Report\ReportQueryModel.cs" />
+    <Compile Include="Models\Setting\AlertGroupModel.cs" />
+    <Compile Include="Models\Setting\AlertGroup__List_Model.cs" />
+    <Compile Include="Models\Setting\AlertModel.cs" />
+    <Compile Include="Models\Setting\Alert__List_Model.cs" />
+    <Compile Include="Models\Setting\GeneralSettingModel.cs" />
+    <Compile Include="Models\Setting\LayoutModel.cs" />
+    <Compile Include="Models\Setting\Layout__List_Model.cs" />
+    <Compile Include="Models\Setting\QueryGroupModel.cs" />
+    <Compile Include="Models\Setting\QueryGroup__List_Model.cs" />
+    <Compile Include="Models\Setting\QueryModel.cs" />
+    <Compile Include="Models\Setting\Query__List_Model.cs" />
+    <Compile Include="Models\Setting\ReportGroup__List_Model.cs" />
+    <Compile Include="Models\Setting\ReportGroupModel.cs" />
+    <Compile Include="Models\Setting\ReportModel.cs" />
+    <Compile Include="Models\Setting\Report__List_Model.cs" />
+    <Compile Include="Models\Transaction\CleaningTankModel.cs" />
+    <Compile Include="Models\Transaction\CleaningTank__List_Model.cs" />
+    <Compile Include="Models\Transaction\PerawatanEngineModel.cs" />
+    <Compile Include="Models\Transaction\PerawatanModel.cs" />
+    <Compile Include="Models\Transaction\PerawatanEngine__List_Model.cs" />
+    <Compile Include="Models\Transaction\Perawatan__List_Model.cs" />
+    <Compile Include="Models\Transaction\RunningHoursModel.cs" />
+    <Compile Include="Models\Transaction\RunningHours__List_Model.cs" />
+    <Compile Include="Models\Transaction\KecelakaanModel.cs" />
+    <Compile Include="Models\Transaction\Kecelakaan__List_Model.cs" />
+    <Compile Include="Models\Transaction\OverhaulModel.cs" />
+    <Compile Include="Models\Transaction\Overhaul__List_Model.cs" />
+    <Compile Include="Models\Transaction\FreshWaterControlModel.cs" />
+    <Compile Include="Models\Transaction\FreshWaterControl__List_Model.cs" />
+    <Compile Include="Models\Transaction\DockingModel.cs" />
+    <Compile Include="Models\Transaction\Docking__List_Model.cs" />
+    <Compile Include="Models\Master\MasterSettingModel.cs" />
+    <Compile Include="Models\Transaction\InventoryInModel.cs" />
+    <Compile Include="Models\Transaction\InventoryIn__List_Model.cs" />
+    <Compile Include="Models\Transaction\InventoryReceivedModel.cs" />
+    <Compile Include="Models\Transaction\InventoryReceived__List_Model.cs" />
+    <Compile Include="Models\Transaction\InventorySendModel.cs" />
+    <Compile Include="Models\Transaction\InventorySend__List_Model.cs" />
+    <Compile Include="Models\Transaction\ApprovalMRModel.cs" />
+    <Compile Include="Models\Transaction\ApprovalMR__List_Model.cs" />
+    <Compile Include="Models\Transaction\GoodIssueModel.cs" />
+    <Compile Include="Models\Transaction\GoodIssue__List_Model.cs" />
+    <Compile Include="Models\Transaction\FuelControlModel.cs" />
+    <Compile Include="Models\Transaction\FuelControl__List_Model.cs" />
+    <Compile Include="Models\Transaction\MaterialRequest__List_Model.cs" />
+    <Compile Include="Models\Transaction\GeneralDocumentMonitoringModel.cs" />
+    <Compile Include="Models\Transaction\MaterialRequestModel.cs" />
+    <Compile Include="Models\Transaction\ReceiptModel.cs" />
+    <Compile Include="Models\Transaction\Receipt__List_Model.cs" />
+    <Compile Include="Models\Transaction\KerusakanKapalModel.cs" />
+    <Compile Include="Models\Transaction\ShipInventoryModel.cs" />
+    <Compile Include="Models\Transaction\KerusakanKapal__List_Model.cs" />
+    <Compile Include="Models\Transaction\ShipInventory__List_Model.cs" />
+    <Compile Include="Models\Transaction\TukarFakturReceiptModel.cs" />
+    <Compile Include="Models\Transaction\TukarFakturReceipt__List_Model.cs" />
+    <Compile Include="Models\Transaction\TukarFakturSendModel.cs" />
+    <Compile Include="Models\Transaction\TukarFakturSend__List_Model.cs" />
+    <Compile Include="Models\_BaseModel\FormModeEnum.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\_BaseModel\IMasterService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\_BaseModel\ITransactionService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\_Cfl\CflBp_Model.cs" />
+    <Compile Include="Models\_Cfl\CflItemNoJ_Model.cs" />
+    <Compile Include="Models\_Cfl\CflKategori_Model.cs" />
+    <Compile Include="Models\_Cfl\CflMaterialRequest_Model.cs" />
+    <Compile Include="Models\_Cfl\CflProject_Model.cs" />
+    <Compile Include="Models\_Cfl\CflShipROB_Model.cs" />
+    <Compile Include="Models\_Cfl\CflRefMR_Model.cs" />
+    <Compile Include="Models\_Cfl\CflTongkang_Model.cs" />
+    <Compile Include="Models\_Cfl\CflShip_Model.cs" />
+    <Compile Include="Models\_Cfl\CflDocumentGeneral_Model.cs" />
+    <Compile Include="Models\_Cfl\CflDynamic_Model.cs" />
+    <Compile Include="Models\_Cfl\CflInventoryIn_Model.cs" />
+    <Compile Include="Models\_Cfl\CflItem_Model.cs" />
+    <Compile Include="Models\_Cfl\CflBin_Model.cs" />
+    <Compile Include="Models\_Cfl\CflLoadingOrderOli_Model.cs" />
+    <Compile Include="Models\_Cfl\CflLoadingOrder_Model.cs" />
+    <Compile Include="Models\_Cfl\CflNamaCustomer_Model.cs" />
+    <Compile Include="Models\_Cfl\CflNoArInvoice_Model.cs" />
+    <Compile Include="Models\_Cfl\CflNoTtd_Model.cs" />
+    <Compile Include="Models\_Cfl\CflPurchaseOrderOli_Model.cs" />
+    <Compile Include="Models\_Cfl\CflSppHistoryOli_Model.cs" />
+    <Compile Include="Models\_Cfl\CflWarehouse_Model.cs" />
+    <Compile Include="Models\_Cfl\CflSalesOrder_Model.cs" />
+    <Compile Include="Models\_Cfl\CflSegel_Model.cs" />
+    <Compile Include="Models\_Cfl\CflActivity_Model.cs" />
+    <Compile Include="Models\_Cfl\CflCoa_Model.cs" />
+    <Compile Include="Models\_Cfl\CflPurchaseOrder_Model.cs" />
+    <Compile Include="Models\_Cfl\CflSppHistory_Model.cs" />
+    <Compile Include="Models\_Cfl\CflInventorySend_Model.cs" />
+    <Compile Include="Models\_CrystalReport\CrystalReportParam.cs" />
+    <Compile Include="Models\_EF\EfIduHanaRsExtensionsApp.cs" />
+    <Compile Include="Models\_EF\DbProvider.cs" />
+    <Compile Include="Models\_EF\HANA_APP.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HANA_APP.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\HANA_APP.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\HANA_APP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HANA_APP.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Alert.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_AlertGroup.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Alert_Role.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Alert_User.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_DocContent.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_DocContent_Ref.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_DocGeneral.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_DocGeneral_Attachment.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_DocGeneral_Reference.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_GeneralSetting.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_GeneralSetting_Coa.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_GeneralSetting_Item.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Layout.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Layout_Role.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Layout_User.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_MasterSetting.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_MasterSettingEngine_Bagian.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_MasterSettingEngine_Item.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_MasterSettingEngine_SubItem.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_MasterSetting_Bagian.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_MasterSetting_Item.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_MasterSetting_SubItem.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Query.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_QueryGroup.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_QueryGroup_Role.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_QueryGroup_User.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Query_Param.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Query_Role.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Query_User.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Report.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_ReportGroup.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_ReportGroup_Role.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_ReportGroup_User.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Report_Param.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Report_Role.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Report_User.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Role.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Role_Auth.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Ship.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Ship_Acco.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Ship_Anchor.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Ship_Attachment.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Ship_Engine.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Ship_NavEq.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Ship_Operation.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_Ship_SafeEq.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_User.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Ts_FormatNumbering.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Ts_LayoutForm.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Ts_List.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Ts_Menu.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_AdjustmentIn.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_AdjustmentIn_Attachment.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_AdjustmentIn_Location.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_AdjustmentOut.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_AdjustmentOut_Attachment.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_AdjustmentOut_Location.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_ApprovalMR.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_ApprovalMR_Detail.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_CleaningTank.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_CleaningTank_Attachment.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_CleaningTank_Detail.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_Delivery.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_Delivery_Activity.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_Docking.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_Docking_Detail.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_FreshWaterControl.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_FreshWaterControl_Detail.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_FuelControl.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_FuelControl_Detail.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_GeneralDocRenewal.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_GeneralDocRenewal_Reference.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_GoodIssue.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_GoodIssue_Detail.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_GoodIssue_Detail_Batch.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_InventoryIn.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_InventoryIn_Detail.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_InventoryIn_Detail_Batch.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_InventoryReceived.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_InventoryReceived_Detail.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_InventoryReceived_Detail_Batch.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_InventorySend.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_InventorySend_Detail.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_InventorySend_Detail_Batch.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_Kecelakaan.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_Kecelakaan_Detail.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_KerusakanKapal.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_KerusakanKapal_Detail.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_LoadingOrder.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_LoadingOrder_SalesOrder.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_LoadingOrder_Segel.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_MaterialRequest.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_MaterialRequest_Attachment.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_MaterialRequest_Detail.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_Overhaul.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_Overhaul_AEKanan.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_Overhaul_AEKiri.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_Overhaul_GBKanan.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_Overhaul_GBKiri.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_Overhaul_MEKanan.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_Overhaul_MEKiri.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_Perawatan.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_PerawatanEngine.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_PerawatanEngine_Attachment.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_PerawatanEngine_Detail.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_Perawatan_Attachment.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_Perawatan_Detail.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_Receipt.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_RunningHours.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_RunningHours_Daily.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_RunningHours_RunPump.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_RunningHours_Total.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_ShipInventory.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_ShipInventory_Detail.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_TukarFakturReceipt.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_TukarFakturSend.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_TukarFakturSend_Detail.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_Sap\SAPCachedCompany.cs" />
+    <Compile Include="Models\_Sap\SAPCachedCompanyII.cs" />
+    <Compile Include="Models\_Sap\SAPConnection.cs" />
+    <Compile Include="Models\_Sl\Sl_PurchaseRequestModel.cs" />
+    <Compile Include="Models\_Utils\SpNotif.cs" />
+    <Compile Include="Models\_Utils\GeneralGetList.cs" />
+    <Compile Include="Models\_Utils\General.cs" />
+    <Compile Include="Models\_Utils\GeneralFormat.cs" />
+    <Compile Include="Models\_Utils\Rpt.cs" />
+    <Compile Include="Models\_Utils\SapCompany.cs" />
+    <Compile Include="Models\_Utils\Csv.cs" />
+    <Compile Include="Models\_Utils\Excel.cs" />
+    <Compile Include="Models\_Utils\GetSqlFromGridViewModelState.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\_Utils\Encryption.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\_Utils\CopyProperties.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\_ViewJe\ViewJe_Model.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="Models\_EF\HANA_APP.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HANA_APP.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Models\_EF\HANA_APP.edmx.diagram">
+      <DependentUpon>HANA_APP.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Models\_EF\HANA_APP.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HANA_APP.edmx</DependentUpon>
+      <LastGenOutput>HANA_APP.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\_EF\HANA_APP.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HANA_APP.edmx</DependentUpon>
+      <LastGenOutput>HANA_APP.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="SAPbobsCOM">
+      <Guid>{FC8030BE-F5D2-4B8E-8F92-44228FE30100}</Guid>
+      <VersionMajor>10</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\BBS_APP\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\BBS_APP\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\BBS_APP\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\BBS_APP\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\BBS_APP\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\BBS_APP\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

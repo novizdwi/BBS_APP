@@ -1,0 +1,154 @@
+﻿@using Models;
+@using Models._Cfl;
+@{
+    var Id = Convert.ToInt64(Request["cbId"]);
+
+    if (ViewBag.Id != null)
+    {
+        Id = ViewBag.Id;
+    }
+
+}
+
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvDetail";
+    settings.KeyFieldName = "DetId";
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    //settings.Settings.VerticalScrollableHeight = 350;
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+
+    settings.Width = Unit.Percentage(100);
+    settings.Height = Unit.Percentage(100);
+
+    settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+    settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
+    settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+    settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+    settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
+
+
+    settings.CommandColumn.Visible = true;
+    settings.CommandColumn.ShowDeleteButton = true;
+    settings.CommandColumn.ShowNewButtonInHeader = true;
+    settings.CommandColumn.Width = 50;
+    settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
+    settings.Columns.Add("Id", "Id").Visible = false;
+    settings.Columns.Add("DetId", "DetId").Visible = false;
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Date";
+        column.Name = "Date";
+        column.Caption = "Tanggal";
+
+
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.Width = 100;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as DateEditProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+    });
+    
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Lokasi";
+        column.Name = "Lokasi";
+        column.Caption = "Lokasi Kejadian";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 150;
+        //column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        //txt.ClientInstanceName = "gvDetail_ShipName";
+    });
+   
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Jenis";
+        column.Name = "Jenis";
+        column.Caption = "Jenis Kecelakaan";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 150;
+        //column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        //txt.ClientInstanceName = "gvDetail_ShipName";
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "DoneDate";
+        column.Name = "DoneDate";
+        column.Caption = "Tgl. Penyelesaian";
+
+
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.Width = 100;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as DateEditProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Status";
+        column.Name = "Status";
+        column.Caption = "Status";
+
+
+        column.ColumnType = MVCxGridViewColumnType.ComboBox;
+        column.Width = 100;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        
+        var cbo = column.PropertiesEdit as ComboBoxProperties;
+        cbo.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        cbo.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        cbo.ValueType = typeof(string);
+        cbo.Items.Insert(0, new ListEditItem("Open", "Open"));
+        cbo.Items.Insert(1, new ListEditItem("Close", "Close"));
+
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Remark";
+        column.Name = "Remark";
+        column.Caption = "Catatan";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 250;
+        //column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        //txt.ClientInstanceName = "gvDetail_ShipName";
+    });
+    
+    settings.Settings.ShowFooter = true;
+
+    settings.ClientSideEvents.BeginCallback = "gvDetailOnBeginCallback";
+    settings.ClientSideEvents.EndCallback = "gvDetailOnEndCallback";
+
+    settings.ClientSideEvents.BatchEditStartEditing = "gvDetailOnBatchEditStartEditing";
+    settings.ClientSideEvents.BatchEditEndEditing = "gvDetailOnBatchEditEndEditing";
+    settings.ClientSideEvents.BatchEditRowValidating = "gvDetailOnBatchEditRowValidating";
+
+}).Bind(Model.ListDetails_).GetHtml()
+

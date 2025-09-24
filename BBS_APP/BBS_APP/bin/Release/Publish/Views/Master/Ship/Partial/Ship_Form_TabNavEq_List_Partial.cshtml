@@ -1,0 +1,106 @@
+﻿@using Models;
+
+@{
+    var Id = Convert.ToInt64(Request["cbId"]);
+
+    if (ViewBag.Id != null)
+    {
+        Id = ViewBag.Id;
+    }
+
+}
+
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvShipNavEq";
+    settings.KeyFieldName = "DetId";
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollableHeight = 350;
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+
+    settings.Width = Unit.Percentage(100);
+    settings.Height = Unit.Percentage(100);
+
+    settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+    settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
+    settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+    settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+    settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
+
+    settings.CommandColumn.Visible = true;
+    settings.CommandColumn.ShowDeleteButton = true;
+    settings.CommandColumn.ShowNewButtonInHeader = true;
+    settings.CommandColumn.Width = 50;
+    settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
+
+    settings.Columns.Add("Id", "Id").Visible = false;
+    settings.Columns.Add("DetId", "DetId").Visible = false;
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "DetName";
+        column.Name = "DetName";
+        column.Caption = "Name";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = Unit.Percentage(33.33);
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        //column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        //column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        //column.CellStyle.ForeColor = System.Drawing.Color.Black;
+        //column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        //txt.ClientInstanceName = "gvDocContentReferenceDetail_Reference";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Brand";
+        column.Name = "Brand";
+        column.Caption = "Merk";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = Unit.Percentage(33.33);
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        //column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        //column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        //column.CellStyle.ForeColor = System.Drawing.Color.Black;
+        //column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        //txt.ClientInstanceName = "gvDocContentReferenceDetail_Reference";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Remark";
+        column.Name = "Remark";
+        column.Caption = "Remark";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = Unit.Percentage(33.33);
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        //column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        //column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        //column.CellStyle.ForeColor = System.Drawing.Color.Black;
+        //column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        //txt.ClientInstanceName = "gvDocContentReferenceDetail_Reference";
+    });
+    
+
+
+
+
+}).Bind(Model).GetHtml()
