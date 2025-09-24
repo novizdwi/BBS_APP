@@ -30,6 +30,7 @@ C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\DevExpress.SpellChecker.v20.1.Core.
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\DevExpress.Web.ASPxSpreadsheet.v20.1.dll
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\DevExpress.Spreadsheet.v20.1.Core.dll
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\DevExpress.Office.v20.1.Core.dll
+C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\stdole.dll
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\DevExpress.Web.Resources.v20.1.dll
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\DevExpress.Pdf.v20.1.Core.dll
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\DevExpress.Pdf.v20.1.Drawing.dll
@@ -50,5 +51,3 @@ C:\LegionShared\Project\BBS\BBS_DI\obj\Debug\BBS_DI.csproj.CoreCompileInputs.cac
 C:\LegionShared\Project\BBS\BBS_DI\obj\Debug\BBS_DI.csproj.CopyComplete
 C:\LegionShared\Project\BBS\BBS_DI\obj\Debug\BBS_DI.dll
 C:\LegionShared\Project\BBS\BBS_DI\obj\Debug\BBS_DI.pdb
-C:\LegionShared\Project\BBS\BBS_DI\obj\Debug\BBS_DI.csprojAssemblyReference.cache
-C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\stdole.dll
