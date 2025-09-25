@@ -179,9 +179,13 @@
         if (BeforeSave() == false) {
             return;
         }
-          
+         
         var formData = $('#formDetail').serializeObject(); 
+        var Contents_ = GetGvDetails('gvUserWarehouseDetail');
 
+        $.extend(formData, {
+            DetailContents_: Contents_,
+        });
 
         $.ajax({
             type: "POST",
@@ -212,6 +216,11 @@
             }
              
             var formData = $('#formDetail').serializeObject(); 
+            var Contents_ = GetGvDetails('gvUserWarehouseDetail');
+
+            $.extend(formData, {
+                DetailContents_: Contents_,
+            });
 
             $.ajax({
                 type: "POST",

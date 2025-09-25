@@ -898,6 +898,7 @@
     <Content Include="Views\Transaction\GoodIssue\Partial\GoodIssue_Item_Lookup_Partial.cshtml" />
     <Content Include="Views\Transaction\GoodIssue\Partial\GoodIssue_List_Partial.cshtml" />
     <Content Include="Views\Transaction\GoodIssue\Partial\GoodIssue_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Authentication\User\Partial\User_TabWarehouse_List_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

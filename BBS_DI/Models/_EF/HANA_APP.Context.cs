@@ -37,6 +37,9 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tm_GeneralSetting> Tm_GeneralSetting { get; set; }
         public virtual DbSet<Tm_GeneralSetting_Coa> Tm_GeneralSetting_Coa { get; set; }
         public virtual DbSet<Tm_GeneralSetting_Item> Tm_GeneralSetting_Item { get; set; }
+        public virtual DbSet<Tm_Item> Tm_Item { get; set; }
+        public virtual DbSet<Tm_Item_Warehouse> Tm_Item_Warehouse { get; set; }
+        public virtual DbSet<Tm_Item_Warehouse_Tag> Tm_Item_Warehouse_Tag { get; set; }
         public virtual DbSet<Tm_Layout> Tm_Layout { get; set; }
         public virtual DbSet<Tm_Layout_Role> Tm_Layout_Role { get; set; }
         public virtual DbSet<Tm_Layout_User> Tm_Layout_User { get; set; }
@@ -72,6 +75,7 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tm_Ship_Operation> Tm_Ship_Operation { get; set; }
         public virtual DbSet<Tm_Ship_SafeEq> Tm_Ship_SafeEq { get; set; }
         public virtual DbSet<Tm_User> Tm_User { get; set; }
+        public virtual DbSet<Tm_User_Warehouse> Tm_User_Warehouse { get; set; }
         public virtual DbSet<Ts_FormatNumbering> Ts_FormatNumbering { get; set; }
         public virtual DbSet<Ts_LayoutForm> Ts_LayoutForm { get; set; }
         public virtual DbSet<Ts_List> Ts_List { get; set; }
@@ -100,6 +104,9 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_GoodIssue> Tx_GoodIssue { get; set; }
         public virtual DbSet<Tx_GoodIssue_Detail> Tx_GoodIssue_Detail { get; set; }
         public virtual DbSet<Tx_GoodIssue_Detail_Batch> Tx_GoodIssue_Detail_Batch { get; set; }
+        public virtual DbSet<Tx_GoodsReceiptPO> Tx_GoodsReceiptPO { get; set; }
+        public virtual DbSet<Tx_GoodsReceiptPO_Item> Tx_GoodsReceiptPO_Item { get; set; }
+        public virtual DbSet<Tx_GoodsReceiptPO_Item_Tag> Tx_GoodsReceiptPO_Item_Tag { get; set; }
         public virtual DbSet<Tx_InventoryIn> Tx_InventoryIn { get; set; }
         public virtual DbSet<Tx_InventoryIn_Detail> Tx_InventoryIn_Detail { get; set; }
         public virtual DbSet<Tx_InventoryIn_Detail_Batch> Tx_InventoryIn_Detail_Batch { get; set; }
@@ -132,6 +139,9 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_PerawatanEngine> Tx_PerawatanEngine { get; set; }
         public virtual DbSet<Tx_PerawatanEngine_Attachment> Tx_PerawatanEngine_Attachment { get; set; }
         public virtual DbSet<Tx_PerawatanEngine_Detail> Tx_PerawatanEngine_Detail { get; set; }
+        public virtual DbSet<Tx_PurchaseOrder> Tx_PurchaseOrder { get; set; }
+        public virtual DbSet<Tx_PurchaseOrder_Item> Tx_PurchaseOrder_Item { get; set; }
+        public virtual DbSet<Tx_PurchaseOrder_Item_Tag> Tx_PurchaseOrder_Item_Tag { get; set; }
         public virtual DbSet<Tx_Receipt> Tx_Receipt { get; set; }
         public virtual DbSet<Tx_RunningHours> Tx_RunningHours { get; set; }
         public virtual DbSet<Tx_RunningHours_Daily> Tx_RunningHours_Daily { get; set; }

@@ -144,21 +144,21 @@
                     dataTable = Models._Utils.GeneralGetList.GetMenuUrls((int)Session["userId"]);
                 }
 
-
-
                 settings.Nodes.Add(node1 =>
                 {
                     node1.Text = "Master";
 
                     node1.Nodes.Add(node2 =>
                     {
-                        node2.Text = "Document";
+                        //node2.Text = "Monitoring";
+                        //AddNode(dataTable, node2, "Status Permintaan User", "MaterialRequestStatus");
 
-                        AddNode(dataTable, node2, "Document Content", "DocContent");
-                        AddNode(dataTable, node2, "General Document", "DocGeneral");
+                        node2.Text = "Item";
+                        AddNode(dataTable, node2, "RFID", "Rfid");
+
+
+
                     });
-                    AddNode(dataTable, node1, "Ship", "Ship");
-
                 });
 
                 settings.Nodes.Add(node1 =>
@@ -167,66 +167,73 @@
 
                     node1.Nodes.Add(node2 =>
                     {
-                        node2.Text = "Material Request";
-                        AddNode(dataTable, node2, "Material Request", "MaterialRequest");
-                    //AddNode(dataTable, node2, "General Doc Renewal", "GeneralDocRenewal");
-                });
-                    node1.Nodes.Add(node2 =>
-                    {
-                        node2.Text = "General Document";
-                        AddNode(dataTable, node2, "General Doc Monitoring", "GeneralDocumentMonitoring");
-                        AddNode(dataTable, node2, "General Doc Renewal", "GeneralDocRenewal");
-                    });
-
-                    node1.Nodes.Add(node2 =>
-                    {
-                        node2.Text = "Delivery Schedule";
-
-
+                        node2.Text = "Web";
                         node2.Nodes.Add(node3 =>
                         {
-                            node3.Text = "Loading Order";
-                            AddNode(dataTable, node3, "List SPP/SO", "SppHistory");
-                            AddNode(dataTable, node3, "Loading Order", "LoadingOrder");
+                            node3.Text = "RFID";
+                            AddNode(dataTable, node3, "Deactive RFID", "DeactiveRfid");
+                            AddNode(dataTable, node3, "Check & Replace RFID", "CheckReplaceRfid");
+
                         });
-
                         node2.Nodes.Add(node3 =>
                         {
-                            node3.Text = "Receipt";
-                            AddNode(dataTable, node3, "DO Receipt", "Receipt");
-                            AddNode(dataTable, node3, "Scan DO", "ScanDO");
+                            node3.Text = "Adjustment";
+                            AddNode(dataTable, node3, "Adjustment In", "AdjustmentIn");
+                            AddNode(dataTable, node3, "Adjustment Out", "AdjustmentOut");
+                        });
+                        node2.Nodes.Add(node3 =>
+                        {
+                            node3.Text = "Inventory";
+                            AddNode(dataTable, node3, "Transfer In", "TransferIn");
+                            AddNode(dataTable, node3, "Transfer Out", "TransferOut");
+                            AddNode(dataTable, node3, "Stock Opname", "StockOpname");
+                        });
+                        node2.Nodes.Add(node3 =>
+                        {
+                            node3.Text = "Purchase Order";
+                            AddNode(dataTable, node3, "Goods Receipt PO", "Grpo");
                         });
 
                     });
-
                     node1.Nodes.Add(node2 =>
                     {
-                        node2.Text = "Inventory";
-                        AddNode(dataTable, node2, "Inventory In", "InventoryIn");
-                        AddNode(dataTable, node2, "Inventory Transfer (Send)", "InventorySend");
-                        AddNode(dataTable, node2, "Inventory Transfer (Receipt)", "InventoryReceipt");
-                        AddNode(dataTable, node2, "Adjustment In", "AdjustmentIn");
-                        AddNode(dataTable, node2, "Adjustment Out", "AdjustmentOut");
+
+                        node2.Text = "Mobile";
+                        node2.Nodes.Add(node3 =>
+                        {
+                            node3.Text = "RFID";
+                            AddNode(dataTable, node3, "Deactive RFID", "DeactiveRfid");
+                            AddNode(dataTable, node3, "Check & Replace RFID", "CheckReplaceRfid");
+
+                        });
+                        node2.Nodes.Add(node3 =>
+                        {
+                            node3.Text = "Adjustment";
+                            AddNode(dataTable, node3, "Adjustment In", "AdjustmentIn");
+                            AddNode(dataTable, node3, "Adjustment Out", "AdjustmentOut");
+                        });
+                        node2.Nodes.Add(node3 =>
+                        {
+                            node3.Text = "Inventory";
+                            AddNode(dataTable, node3, "Transfer In", "TransferIn");
+                            AddNode(dataTable, node3, "Transfer Out", "TransferOut");
+                            AddNode(dataTable, node3, "Stock Opname", "StockOpname");
+                        });
+                        node2.Nodes.Add(node3 =>
+                        {
+                            node3.Text = "Purchase Order";
+                            AddNode(dataTable, node3, "Purchase Order", "PurchaseOrder");
+                        });
                     });
-
                 });
-
-                settings.Nodes.Add(node1 =>
-                {
-                    node1.Text = "Tukar Faktur";
-
-                    AddNode(dataTable, node1, "Tukar Faktur (send)", "TukarFakturSend");
-                    AddNode(dataTable, node1, "Tukar Faktur (receipt)", "TukarFakturReceipt");
-                });
-
 
                 settings.Nodes.Add(node1 =>
                 {
 
                     node1.Text = "Report";
 
-                //AddNode(dataTable, node1, "Alert", "ReportAlert");
-                AddNode(dataTable, node1, "Query", "ReportQuery");
+                    //AddNode(dataTable, node1, "Alert", "ReportAlert");
+                    AddNode(dataTable, node1, "Query", "ReportQuery");
                     AddNode(dataTable, node1, "Report", "ReportCustom");
                 });
 
@@ -235,7 +242,6 @@
                     node1.Text = "Setting";
 
                     AddNode(dataTable, node1, "General Setting", "GeneralSetting");
-
 
                     node1.Nodes.Add(node2 =>
                     {
@@ -246,8 +252,6 @@
 
                     });
 
-
-
                     node1.Nodes.Add(node2 =>
                     {
                         node2.Text = "Query";
@@ -256,8 +260,23 @@
 
                     });
 
+                    node1.Nodes.Add(node2 =>
+                    {
+                        node2.Text = "Approval";
+                        AddNode(dataTable, node2, "Stages", "ApprovalStage");
+                        AddNode(dataTable, node2, "Templates", "ApprovalTemplate");
+
+                    });
                 });
 
+                settings.Nodes.Add(node1 =>
+                {
+                    node1.Text = "Approval";
+
+                    AddNode(dataTable, node1, "Approval Decision", "ApprovalDecision");
+                    AddNode(dataTable, node1, "Approval Monitoring", "ApprovalStatus");
+
+                });
 
                 settings.Nodes.Add(node1 =>
                 {

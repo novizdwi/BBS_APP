@@ -211,6 +211,40 @@ namespace Models._Utils
             }
         }
 
+        public static DataTable GetPositions()
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                var ssql = @"
+                SELECT NULL AS ""Code"", NULL AS ""Name"" FROM DUMMY
+
+                UNION ALL
+                
+                SELECT T0.""Code"", T0.""Name"" FROM ""{0}"".""@POSITION"" T0 ";
+                ssql = string.Format(ssql, DbProvider.dbSap_Name);
+                return GetDataTable(CONTEXT, ssql);
+            }
+        }
+
+        public static DataTable GetDefaultWhsCodes(int id)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                var ssql = @"
+                    SELECT NULL AS ""Code"", NULL AS ""Name"" FROM DUMMY
+
+                    UNION ALL
+
+                    SELECT T0.""WhsCode"" AS ""Code"", 
+                    T1.""WhsName""  AS ""Name""
+                    FROM ""Tm_User_Warehouse"" T0  
+                    INNER JOIN ""{0}"".""OWHS"" T1 ON T0.""WhsCode"" = T1.""WhsCode""
+                    WHERE T0.""Id"" = {1} 
+                ";
+                ssql = string.Format(ssql, DbProvider.dbSap_Name, id);
+                return GetDataTable(CONTEXT, ssql);
+            }
+        }
 
 
         public static DataTable GetListPointEx(string strType)

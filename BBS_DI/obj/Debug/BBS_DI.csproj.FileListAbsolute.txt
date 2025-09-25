@@ -45,6 +45,7 @@ C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\EntityFramework.SqlServer.xml
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\Sap.Data.Hana.v4.5.pdb
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\Sap.Data.Hana.v4.5.xml
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\Sap.Data.Hana.v4.5.dll.config
+C:\LegionShared\Project\BBS\BBS_DI\obj\Debug\BBS_DI.csprojAssemblyReference.cache
 C:\LegionShared\Project\BBS\BBS_DI\obj\Debug\Interop.SAPbobsCOM.dll
 C:\LegionShared\Project\BBS\BBS_DI\obj\Debug\BBS_DI.csproj.ResolveComReference.cache
 C:\LegionShared\Project\BBS\BBS_DI\obj\Debug\BBS_DI.csproj.CoreCompileInputs.cache

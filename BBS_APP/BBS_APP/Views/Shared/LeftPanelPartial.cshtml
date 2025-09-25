@@ -154,134 +154,90 @@
                 }
 
 
+
                 settings.Nodes.Add(node1 =>
                 {
-                    node1.Text = "Permintaan Barang/Jasa";
+                    node1.Text = "Master";
 
                     node1.Nodes.Add(node2 =>
                     {
                         //node2.Text = "Monitoring";
                         //AddNode(dataTable, node2, "Status Permintaan User", "MaterialRequestStatus");
 
-                        node2.Text = "Permintaan User";
-                        AddNode(dataTable, node2, "Form - Permintaan User", "MaterialRequest");
+                        node2.Text = "Item";
+                        AddNode(dataTable, node2, "RFID", "Rfid");
 
 
 
-                    });
-                    node1.Nodes.Add(node2 =>
-                    {
-
-                        node2.Text = "Approval Permintaan";
-                        AddNode(dataTable, node2, "Form - MR Approval", "ApprovalMR");
-                    });
-                    node1.Nodes.Add(node2 =>
-                    {
-
-                        node2.Text = "Mutasi Barang";
-                        AddNode(dataTable, node2, "Penerimaan(LPB)", "InventoryIn");
-                        AddNode(dataTable, node2, "Pengeluaran(SJ)", "GoodIssue");
-                        AddNode(dataTable, node2, "Item Transfer (Send)", "InventorySend");
-                        AddNode(dataTable, node2, "Item Transfer (Received)", "InventoryReceived");
                     });
                 });
 
                 settings.Nodes.Add(node1 =>
                 {
-                    node1.Text = "Technical";
+                    node1.Text = "Transaction";
 
                     node1.Nodes.Add(node2 =>
                     {
-                        //node2.Text = "Monitoring";
-                        //AddNode(dataTable, node2, "Status Permintaan User", "MaterialRequestStatus");
+                        node2.Text = "Web";
+                        node2.Nodes.Add(node3 =>
+                        {
+                            node3.Text = "RFID";
+                            AddNode(dataTable, node3, "Deactive RFID", "DeactiveRfid");
+                            AddNode(dataTable, node3, "Check & Replace RFID", "CheckReplaceRfid");
 
-                        node2.Text = "Master";
-                        AddNode(dataTable, node2, "Ship Particular", "Ship");
-                        AddNode(dataTable, node2, "Master Perawatan Deck", "MasterSetting");
-                        AddNode(dataTable, node2, "Master Perawatan Engine", "MasterSettingEngine");
+                        });
+                        node2.Nodes.Add(node3 =>
+                        {
+                            node3.Text = "Adjustment";
+                            AddNode(dataTable, node3, "Adjustment In", "AdjustmentIn");
+                            AddNode(dataTable, node3, "Adjustment Out", "AdjustmentOut");
+                        });
+                        node2.Nodes.Add(node3 =>
+                        {
+                            node3.Text = "Inventory";
+                            AddNode(dataTable, node3, "Transfer In", "TransferIn");
+                            AddNode(dataTable, node3, "Transfer Out", "TransferOut");
+                            AddNode(dataTable, node3, "Stock Opname", "StockOpname");
+                        });
+                        node2.Nodes.Add(node3 =>
+                        {
+                            node3.Text = "Purchase Order";
+                            AddNode(dataTable, node3, "Goods Receipt PO", "Grpo");
+                        });
 
                     });
                     node1.Nodes.Add(node2 =>
                     {
 
-                        node2.Text = "Monitoring";
-                        AddNode(dataTable, node2, "Running Hours", "RunningHours");
-                        AddNode(dataTable, node2, "Perawatan Kapal (Deck)", "Perawatan");
-                        AddNode(dataTable, node2, "Perawatan Kapal (Engine)", "PerawatanEngine");
-                        AddNode(dataTable, node2, "Kerusakan Kapal", "KerusakanKapal");
-                        AddNode(dataTable, node2, "Docking", "Docking");
-                        AddNode(dataTable, node2, "Overhaul", "Overhaul");
+                        node2.Text = "Mobile";
+                        node2.Nodes.Add(node3 =>
+                        {
+                            node3.Text = "RFID";
+                            AddNode(dataTable, node3, "Deactive RFID", "DeactiveRfid");
+                            AddNode(dataTable, node3, "Check & Replace RFID", "CheckReplaceRfid");
 
-                    });
-                    
-                    node1.Nodes.Add(node2 =>
-                    {
-
-                        node2.Text = "Inventory Kapal (ROB)";
-                        AddNode(dataTable, node2, "Laporan ROB", "ShipInventory");
-
-                    });
-                    //node1.Nodes.Add(node2 =>
-                    //{
-
-                    //    node2.Text = "Perawatan Kapal";
-                    //    AddNode(dataTable, node2, "Plan Perawatan (PMS)", "");
-                    //    AddNode(dataTable, node2, "Perawatan harian", "");
-
-                    //});
-
-                    //node1.Nodes.Add(node2 =>
-                    //{
-
-                    //    node2.Text = "Docking";
-                    //    AddNode(dataTable, node2, "Laporan Docking", "Docking");
-
-                    //});
-                    //node1.Nodes.Add(node2 =>
-                    //{
-
-                    //    node2.Text = "Overhaul";
-                    //    AddNode(dataTable, node2, "Laporan Overhaul", "Overhaul");
-
-                    //});
-                    node1.Nodes.Add(node2 =>
-                    {
-
-                        node2.Text = "Cleaning Tank";
-                        AddNode(dataTable, node2, "Laporan Cleaning Tank", "CleaningTank");
-
-                    });
-
-
-                });
-
-                settings.Nodes.Add(node1 =>
-                {
-                    node1.Text = "Operasional";
-
-                    
-                    node1.Nodes.Add(node2 =>
-                    {
-
-                        node2.Text = "Monitoring";
-                        AddNode(dataTable, node2, "Fuel Control", "FuelControl");
-                        AddNode(dataTable, node2, "Fresh Water Control", "FreshWaterControl");
-                    });
-                    
-                    node1.Nodes.Add(node2 =>
-                    {
-
-                        node2.Text = "Emergency";
-                        AddNode(dataTable, node2, "Catatan Kecelakaan", "Kecelakaan");
+                        });
+                        node2.Nodes.Add(node3 =>
+                        {
+                            node3.Text = "Adjustment";
+                            AddNode(dataTable, node3, "Adjustment In", "AdjustmentIn");
+                            AddNode(dataTable, node3, "Adjustment Out", "AdjustmentOut");
+                        });
+                        node2.Nodes.Add(node3 =>
+                        {
+                            node3.Text = "Inventory";
+                            AddNode(dataTable, node3, "Transfer In", "TransferIn");
+                            AddNode(dataTable, node3, "Transfer Out", "TransferOut");
+                            AddNode(dataTable, node3, "Stock Opname", "StockOpname");
+                        });
+                        node2.Nodes.Add(node3 =>
+                        {
+                            node3.Text = "Purchase Order";
+                            AddNode(dataTable, node3, "Purchase Order", "PurchaseOrder");
+                        });
                     });
                 });
-                settings.Nodes.Add(node1 =>
-                {
-                    node1.Text = "Tukar Faktur";
 
-                    AddNode(dataTable, node1, "Tukar Faktur (send)", "TukarFakturSend");
-                    AddNode(dataTable, node1, "Tukar Faktur (receipt)", "TukarFakturReceipt");
-                });
                 settings.Nodes.Add(node1 =>
                 {
 
@@ -296,8 +252,7 @@
                 {
                     node1.Text = "Setting";
 
-
-
+                    AddNode(dataTable, node1, "General Setting", "GeneralSetting");
 
                     node1.Nodes.Add(node2 =>
                     {
@@ -308,8 +263,6 @@
 
                     });
 
-
-
                     node1.Nodes.Add(node2 =>
                     {
                         node2.Text = "Query";
@@ -318,8 +271,23 @@
 
                     });
 
+                    node1.Nodes.Add(node2 =>
+                    {
+                        node2.Text = "Approval";
+                        AddNode(dataTable, node2, "Stages", "ApprovalStage");
+                        AddNode(dataTable, node2, "Templates", "ApprovalTemplate");
+
+                    });
                 });
 
+                settings.Nodes.Add(node1 =>
+                {
+                    node1.Text = "Approval";
+
+                    AddNode(dataTable, node1, "Approval Decision", "ApprovalDecision");
+                    AddNode(dataTable, node1, "Approval Monitoring", "ApprovalStatus");
+
+                });
 
                 settings.Nodes.Add(node1 =>
                 {

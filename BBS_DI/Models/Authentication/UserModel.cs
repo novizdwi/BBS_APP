@@ -69,14 +69,50 @@ namespace Models.Authentication.User
         //[Required(ErrorMessage = "required")]
         public int? EmpId { get; set; }
 
-      
+        public string Position { get; set; }
 
-        
+        public string DefaultWhsCode { get; set; }
 
+        public string IsActive { get; set; }
+
+        public List<User_WarehouseModel> ListWarehouses_ = new List<User_WarehouseModel>();
+
+        public User_WarehouseModel_Contents DetailContents_ { get; set; }
     }
 
-  
+    public class User_WarehouseModel
+    {
 
+        private FormModeEnum _FormModeEnum = FormModeEnum.New;
+        public FormModeEnum _FormMode
+        {
+            get { return this._FormModeEnum; }
+            set { this._FormModeEnum = value; }
+        }
+
+        public int? _UserId { get; set; }
+
+        public int RowNo { get; set; }
+
+        public int? Id { get; set; }
+
+        public string WhsCode { get; set; }
+
+        public string IsTick { get; set; }
+
+        public string WhsCode_ { get; set; }
+
+        public string WhsName_ { get; set; }
+    }
+
+    public class User_WarehouseModel_Contents
+    {
+        public List<int> deletedRowKeys { get; set; }
+
+        public List<User_WarehouseModel> insertedRowValues { get; set; }
+
+        public List<User_WarehouseModel> modifiedRowValues { get; set; }
+    }
     #endregion
 
     #region Services
@@ -125,7 +161,6 @@ namespace Models.Authentication.User
 
                             String keyValue;
                             keyValue = tm_User.Id.ToString();
-                          
                             SpNotif.SpSysTransNotif(model._UserId, CONTEXT, "after", "Tm_User", "add", "Id", keyValue);
 
                             CONTEXT_TRANS.Commit();
@@ -184,9 +219,20 @@ namespace Models.Authentication.User
 
                                 tm_User.ModifiedDate = dtModified;
                                 tm_User.ModifiedUser = model._UserId;
-                                CONTEXT.SaveChanges();
 
-                               
+                                var changes = CONTEXT.SaveChanges();
+
+                                if (model.DetailContents_ != null)
+                                {
+                                    if (model.DetailContents_.modifiedRowValues != null)
+                                    {
+                                        foreach (var modifiedRow in model.DetailContents_.modifiedRowValues)
+                                        {
+                                            Content_Update(CONTEXT, modifiedRow, model.Id, model._UserId, dtModified);
+                                        }
+                                    }
+                                }
+
                                 SpNotif.SpSysTransNotif(model._UserId, CONTEXT, "after", "Tm_User", "update", "Id", keyValue);
                             }
 
@@ -213,6 +259,51 @@ namespace Models.Authentication.User
                 }
 
             }
+        }
+
+        public void Content_Update(HANA_APP CONTEXT, User_WarehouseModel model, int id, int userId, DateTime dtModified)
+        {
+            int? detId = 0;
+
+            if (model != null)
+            {
+                {
+                    detId = CONTEXT.Database.SqlQuery<int?>(@"SELECT TOP 1 T0.""DetId"" FROM ""Tm_User_Warehouse"" T0 WHERE T0.""Id"" = :p0 AND T0.""WhsCode"" = :p1 ", id, model.WhsCode_).FirstOrDefault() ?? 0;
+                    if (detId == 0)
+                    {
+                        Tm_User_Warehouse tm_User_Warehouse = new Tm_User_Warehouse();
+                        CopyProperty.CopyProperties(model, tm_User_Warehouse, false);
+
+                        tm_User_Warehouse.WhsCode = model.WhsCode_;
+                        tm_User_Warehouse.CreatedDate = dtModified;
+                        tm_User_Warehouse.CreatedUser = userId;
+                        tm_User_Warehouse.ModifiedDate = dtModified;
+                        tm_User_Warehouse.ModifiedUser = userId;
+
+                        CONTEXT.Tm_User_Warehouse.Add(tm_User_Warehouse);
+                        var u = CONTEXT.SaveChanges();
+
+                    }
+                    else
+                    {
+                        var tm_User_Warehouse = CONTEXT.Tm_User_Warehouse.Find(detId);
+                        if (tm_User_Warehouse != null)
+                        {
+                            var exceptColumns = new string[] { "DetId", "Id" };
+                            CopyProperty.CopyProperties(model, tm_User_Warehouse, false, exceptColumns);
+
+                            tm_User_Warehouse.WhsCode = model.WhsCode_;
+                            tm_User_Warehouse.ModifiedDate = dtModified;
+                            tm_User_Warehouse.ModifiedUser = userId;
+
+                            CONTEXT.SaveChanges();
+
+                        }
+                    }
+
+                }
+            }
+
         }
 
         public void Delete(UserModel model)
@@ -270,7 +361,7 @@ namespace Models.Authentication.User
         {
             UserModel model = new UserModel();
             model.isSetPassword = true;
-           
+            model.IsActive = "Y";
             return model;
         }
 
@@ -282,7 +373,8 @@ namespace Models.Authentication.User
                 using (var CONTEXT = new HANA_APP())
                 {
                     model = CONTEXT.Database.SqlQuery<UserModel>("SELECT T0.* FROM \"Tm_User\" T0 WHERE T0.\"Id\"=:p0 ", id).Single();
-                   
+                    model.isSetPassword = false;
+                    model.ListWarehouses_ = this.GetWarehouseById(model.Id);
                 }
             }
 
@@ -379,9 +471,26 @@ namespace Models.Authentication.User
 
         }
 
-       
+        public List<User_WarehouseModel> GetWarehouseById(long id)
+        {
+            string ssql = "";
+            using (var CONTEXT = new HANA_APP())
+            {
+                ssql = @"SELECT
+                    ROW_NUMBER() OVER (ORDER BY T0.""WhsCode"") AS ""RowNo"",
+                    T1.""Id"" AS ""Id"",
+	                T1.""WhsCode"" AS ""WhsCode"",
+	                T1.""IsTick"" AS ""IsTick"",
+	                T0.""WhsCode"" AS ""WhsCode_"",
+	                T0.""WhsName"" AS ""WhsName_""
+                FROM ""{0}"".""OWHS"" T0
+                LEFT JOIN  ""Tm_User_Warehouse"" T1 ON T0.""WhsCode"" = T1.""WhsCode"" AND T1.""Id"" = :p0 ";
 
+                ssql = string.Format(ssql, DbProvider.dbSap_Name);
+                return CONTEXT.Database.SqlQuery<User_WarehouseModel>(ssql, id).ToList();
+            }
 
+        }
     }
 
     #endregion
