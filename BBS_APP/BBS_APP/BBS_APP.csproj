@@ -731,6 +731,7 @@
     <Compile Include="Controllers\Setting\Report\ReportController.List.cs" />
     <Compile Include="Controllers\Setting\Report\ReportController.List.Export.cs" />
     <Compile Include="Controllers\Setting\Report\ReportController.Nav.cs" />
+    <Compile Include="Controllers\Transaction\Web\Purchasing\PurchaseOrderController.cs" />
     <Compile Include="Controllers\_Cfl\_CflActivity\_CflActivityController.List.cs" />
     <Compile Include="Controllers\_Cfl\_CflActivity\_CflActivityController.List.Export.cs" />
     <Compile Include="Controllers\_Cfl\_CflBin\_CflBinController.List.cs" />
@@ -816,13 +817,13 @@
     <Folder Include="Content\Images\menu\" />
     <Folder Include="Content\Temp\" />
     <Folder Include="Controllers\Master\" />
-    <Folder Include="Controllers\Transaction\" />
     <Folder Include="Properties\" />
     <Folder Include="Rpts\Layout\" />
     <Folder Include="Rpts\Models\" />
     <Folder Include="Views\Authentication\Login\Partial\" />
     <Folder Include="Views\Logout\" />
     <Folder Include="Views\Master\" />
+    <Folder Include="Views\PurchaseOrder\" />
     <Folder Include="Views\Transaction\" />
   </ItemGroup>
   <ItemGroup>

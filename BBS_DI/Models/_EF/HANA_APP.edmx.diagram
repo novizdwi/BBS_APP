@@ -61,7 +61,7 @@
         <EntityTypeShape EntityType="Model1.Tx_GoodIssue" Width="1.5" PointX="0.75" PointY="21.75" />
         <EntityTypeShape EntityType="Model1.Tx_GoodsReceiptPO" Width="1.5" PointX="2.75" PointY="21.75" />
         <EntityTypeShape EntityType="Model1.Tx_GoodsReceiptPO_Item" Width="1.5" PointX="4.75" PointY="21.75" />
-        <EntityTypeShape EntityType="Model1.Tx_GoodsReceiptPO_Item_Tag" Width="1.5" PointX="6.75" PointY="21.75" />
+        <EntityTypeShape EntityType="Model1.Tx_GoodsReceiptPO_Item_tag" Width="1.5" PointX="6.75" PointY="21.75" />
         <EntityTypeShape EntityType="Model1.Tx_PurchaseOrder" Width="1.5" PointX="8.75" PointY="21.75" />
         <EntityTypeShape EntityType="Model1.Tx_PurchaseOrder_Item" Width="1.5" PointX="10.75" PointY="21.75" />
         <EntityTypeShape EntityType="Model1.Tx_PurchaseOrder_Item_Tag" Width="1.5" PointX="12.75" PointY="21.75" />

@@ -800,27 +800,27 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="bigint" Nullable="false" />
           <Property Name="TransType" Type="nvarchar" MaxLength="50" />
           <Property Name="TransNo" Type="nvarchar" MaxLength="50" />
           <Property Name="TransDate" Type="timestamp" />
-          <Property Name="CreatedDate" Type="timestamp" />
-          <Property Name="CreatedUser" Type="int" />
-          <Property Name="ModifiedDate" Type="timestamp" />
-          <Property Name="ModifiedUser" Type="int" />
-          <Property Name="BaseId" Type="bigint" />
-          <Property Name="BaseNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="VendorCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="VendorName" Type="varchar" MaxLength="100" />
+          <Property Name="Address" Type="nvarchar" MaxLength="254" />
           <Property Name="DocEntry" Type="bigint" />
           <Property Name="DocNum" Type="nvarchar" MaxLength="50" />
           <Property Name="DocDate" Type="timestamp" />
           <Property Name="RefNo" Type="nvarchar" MaxLength="100" />
-          <Property Name="VendorCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="VendorName" Type="varchar" MaxLength="100" />
-          <Property Name="Address" Type="nvarchar" MaxLength="254" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="254" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="BaseEntry" Type="bigint" />
+          <Property Name="BaseDocNum" Type="nvarchar" MaxLength="100" />
           <Property Name="IsAfterPosted" Type="varchar" MaxLength="1" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="254" />
           <Property Name="CancelReason" Type="nvarchar" MaxLength="254" />
+          <Property Name="CreatedDate" Type="timestamp" />
+          <Property Name="CreatedUser" Type="int" />
+          <Property Name="ModifiedDate" Type="timestamp" />
+          <Property Name="ModifiedUser" Type="int" />
         </EntityType>
         <EntityType Name="Tx_GoodsReceiptPO_Item">
           <Key>
@@ -847,72 +847,74 @@
           <Property Name="UnitPriceTc" Type="decimal" Precision="21" Scale="6" />
           <Property Name="LineStatus" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="Tx_GoodsReceiptPO_Item_Tag">
+        <EntityType Name="Tx_GoodsReceiptPO_Item_tag">
           <Key>
             <PropertyRef Name="DetDetId" />
           </Key>
           <Property Name="Id" Type="bigint" />
           <Property Name="DetId" Type="bigint" />
-          <Property Name="DetDetId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CreatedDate" Type="timestamp" />
-          <Property Name="CreatedUser" Type="int" />
-          <Property Name="ModifiedDate" Type="timestamp" />
-          <Property Name="ModifiedUser" Type="int" />
+          <Property Name="DetDetId" Type="bigint" Nullable="false" />
           <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
           <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
           <Property Name="TagId" Type="nvarchar" MaxLength="200" />
           <Property Name="Quantity" Type="decimal" Precision="21" Scale="6" />
+          <Property Name="EventType" Type="nvarchar" MaxLength="100" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="BaseId" Type="bigint" />
+          <Property Name="BaseLine" Type="bigint" />
+          <Property Name="BaseDetDetId" Type="bigint" />
+          <Property Name="CreatedDate" Type="timestamp" />
+          <Property Name="CreatedUser" Type="int" />
+          <Property Name="ModifiedDate" Type="timestamp" />
+          <Property Name="ModifiedUser" Type="int" />
         </EntityType>
         <EntityType Name="Tx_PurchaseOrder">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="bigint" Nullable="false" />
           <Property Name="TransType" Type="nvarchar" MaxLength="50" />
           <Property Name="TransNo" Type="nvarchar" MaxLength="50" />
           <Property Name="TransDate" Type="timestamp" />
-          <Property Name="CreatedDate" Type="timestamp" />
-          <Property Name="CreatedUser" Type="int" />
-          <Property Name="ModifiedDate" Type="timestamp" />
-          <Property Name="ModifiedUser" Type="int" />
           <Property Name="VendorCode" Type="nvarchar" MaxLength="50" />
           <Property Name="VendorName" Type="varchar" MaxLength="100" />
           <Property Name="Address" Type="nvarchar" MaxLength="254" />
-          <Property Name="Status" Type="nvarchar" MaxLength="50" />
-          <Property Name="IsAfterPosted" Type="varchar" MaxLength="1" />
           <Property Name="DocEntry" Type="bigint" />
           <Property Name="DocNum" Type="nvarchar" MaxLength="50" />
           <Property Name="DocDate" Type="timestamp" />
           <Property Name="RefNo" Type="nvarchar" MaxLength="100" />
-          <Property Name="CreatedBranchId" Type="int" />
-          <Property Name="CreatedBranch" Type="nvarchar" MaxLength="100" />
+          <Property Name="ScanDeviceId" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsAfterPosted" Type="varchar" MaxLength="1" />
           <Property Name="Comments" Type="nvarchar" MaxLength="254" />
           <Property Name="CancelReason" Type="nvarchar" MaxLength="254" />
+          <Property Name="CreatedDate" Type="timestamp" />
+          <Property Name="CreatedUser" Type="int" />
+          <Property Name="ModifiedDate" Type="timestamp" />
+          <Property Name="ModifiedUser" Type="int" />
         </EntityType>
         <EntityType Name="Tx_PurchaseOrder_Item">
           <Key>
             <PropertyRef Name="DetId" />
           </Key>
           <Property Name="Id" Type="bigint" />
-          <Property Name="DetId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CreatedDate" Type="timestamp" />
-          <Property Name="CreatedUser" Type="int" />
-          <Property Name="ModifiedDate" Type="timestamp" />
-          <Property Name="ModifiedUser" Type="int" />
-          <Property Name="LineNum" Type="int" />
+          <Property Name="DetId" Type="bigint" Nullable="false" />
           <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
           <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
+          <Property Name="FreeText" Type="nvarchar" MaxLength="1000" />
           <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
           <Property Name="Quantity" Type="decimal" Precision="21" Scale="6" />
           <Property Name="QuantityScan" Type="decimal" Precision="21" Scale="2" />
           <Property Name="QuantityOpen" Type="decimal" Precision="21" Scale="2" />
           <Property Name="UomEntry" Type="int" />
           <Property Name="Uom" Type="nvarchar" MaxLength="50" />
-          <Property Name="UnitPriceTc" Type="decimal" Precision="21" Scale="6" />
-          <Property Name="LineStatus" Type="nvarchar" MaxLength="50" />
           <Property Name="DocEntry" Type="bigint" />
-          <Property Name="DocNum" Type="nvarchar" MaxLength="50" />
+          <Property Name="LineNum" Type="bigint" />
+          <Property Name="LineStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="timestamp" />
+          <Property Name="CreatedUser" Type="int" />
+          <Property Name="ModifiedDate" Type="timestamp" />
+          <Property Name="ModifiedUser" Type="int" />
         </EntityType>
         <EntityType Name="Tx_PurchaseOrder_Item_Tag">
           <Key>
@@ -920,16 +922,17 @@
           </Key>
           <Property Name="Id" Type="bigint" />
           <Property Name="DetId" Type="bigint" />
-          <Property Name="DetDetId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CreatedDate" Type="timestamp" />
-          <Property Name="CreatedUser" Type="int" />
-          <Property Name="ModifiedDate" Type="timestamp" />
-          <Property Name="ModifiedUser" Type="int" />
+          <Property Name="DetDetId" Type="bigint" Nullable="false" />
           <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
           <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
           <Property Name="TagId" Type="nvarchar" MaxLength="200" />
           <Property Name="Quantity" Type="decimal" Precision="21" Scale="6" />
+          <Property Name="EventType" Type="nvarchar" MaxLength="100" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="timestamp" />
+          <Property Name="CreatedUser" Type="int" />
+          <Property Name="ModifiedDate" Type="timestamp" />
+          <Property Name="ModifiedUser" Type="int" />
         </EntityType>
         <EntityContainer Name="Model1StoreContainer">
           <EntitySet Name="Tm_Alert" EntityType="Self.Tm_Alert" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
@@ -988,7 +991,7 @@
           <EntitySet Name="Tx_GoodIssue" EntityType="Self.Tx_GoodIssue" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tx_GoodsReceiptPO" EntityType="Self.Tx_GoodsReceiptPO" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tx_GoodsReceiptPO_Item" EntityType="Self.Tx_GoodsReceiptPO_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_GoodsReceiptPO_Item_Tag" EntityType="Self.Tx_GoodsReceiptPO_Item_Tag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
+          <EntitySet Name="Tx_GoodsReceiptPO_Item_tag" EntityType="Self.Tx_GoodsReceiptPO_Item_tag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tx_PurchaseOrder" EntityType="Self.Tx_PurchaseOrder" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tx_PurchaseOrder_Item" EntityType="Self.Tx_PurchaseOrder_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tx_PurchaseOrder_Item_Tag" EntityType="Self.Tx_PurchaseOrder_Item_Tag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
@@ -1054,7 +1057,7 @@
           <EntitySet Name="Tx_GoodIssue" EntityType="Model1.Tx_GoodIssue" />
           <EntitySet Name="Tx_GoodsReceiptPO" EntityType="Model1.Tx_GoodsReceiptPO" />
           <EntitySet Name="Tx_GoodsReceiptPO_Item" EntityType="Model1.Tx_GoodsReceiptPO_Item" />
-          <EntitySet Name="Tx_GoodsReceiptPO_Item_Tag" EntityType="Model1.Tx_GoodsReceiptPO_Item_Tag" />
+          <EntitySet Name="Tx_GoodsReceiptPO_Item_tag" EntityType="Model1.Tx_GoodsReceiptPO_Item_tag" />
           <EntitySet Name="Tx_PurchaseOrder" EntityType="Model1.Tx_PurchaseOrder" />
           <EntitySet Name="Tx_PurchaseOrder_Item" EntityType="Model1.Tx_PurchaseOrder_Item" />
           <EntitySet Name="Tx_PurchaseOrder_Item_Tag" EntityType="Model1.Tx_PurchaseOrder_Item_Tag" />
@@ -1854,27 +1857,27 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int64" Nullable="false" />
           <Property Name="TransType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TransNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TransDate" Type="DateTime" />
-          <Property Name="CreatedDate" Type="DateTime" />
-          <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
-          <Property Name="BaseId" Type="Int64" />
-          <Property Name="BaseNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VendorCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VendorName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
           <Property Name="DocEntry" Type="Int64" />
           <Property Name="DocNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DocDate" Type="DateTime" />
           <Property Name="RefNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="VendorCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="VendorName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-          <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BaseEntry" Type="Int64" />
+          <Property Name="BaseDocNum" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="IsAfterPosted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
           <Property Name="CancelReason" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
         <EntityType Name="Tx_GoodsReceiptPO_Item">
           <Key>
@@ -1901,72 +1904,74 @@
           <Property Name="UnitPriceTc" Type="Decimal" Precision="21" Scale="6" />
           <Property Name="LineStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="Tx_GoodsReceiptPO_Item_Tag">
+        <EntityType Name="Tx_GoodsReceiptPO_Item_tag">
           <Key>
             <PropertyRef Name="DetDetId" />
           </Key>
           <Property Name="Id" Type="Int64" />
           <Property Name="DetId" Type="Int64" />
-          <Property Name="DetDetId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CreatedDate" Type="DateTime" />
-          <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
+          <Property Name="DetDetId" Type="Int64" Nullable="false" />
           <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="TagId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Quantity" Type="Decimal" Precision="21" Scale="6" />
+          <Property Name="EventType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BaseId" Type="Int64" />
+          <Property Name="BaseLine" Type="Int64" />
+          <Property Name="BaseDetDetId" Type="Int64" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
         <EntityType Name="Tx_PurchaseOrder">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int64" Nullable="false" />
           <Property Name="TransType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TransNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TransDate" Type="DateTime" />
-          <Property Name="CreatedDate" Type="DateTime" />
-          <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
           <Property Name="VendorCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="VendorName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Address" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsAfterPosted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="DocEntry" Type="Int64" />
           <Property Name="DocNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DocDate" Type="DateTime" />
           <Property Name="RefNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBranchId" Type="Int32" />
-          <Property Name="CreatedBranch" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ScanDeviceId" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsAfterPosted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
           <Property Name="CancelReason" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
         <EntityType Name="Tx_PurchaseOrder_Item">
           <Key>
             <PropertyRef Name="DetId" />
           </Key>
           <Property Name="Id" Type="Int64" />
-          <Property Name="DetId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CreatedDate" Type="DateTime" />
-          <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
-          <Property Name="LineNum" Type="Int32" />
+          <Property Name="DetId" Type="Int64" Nullable="false" />
           <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FreeText" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Quantity" Type="Decimal" Precision="21" Scale="6" />
           <Property Name="QuantityScan" Type="Decimal" Precision="21" Scale="2" />
           <Property Name="QuantityOpen" Type="Decimal" Precision="21" Scale="2" />
           <Property Name="UomEntry" Type="Int32" />
           <Property Name="Uom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UnitPriceTc" Type="Decimal" Precision="21" Scale="6" />
-          <Property Name="LineStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DocEntry" Type="Int64" />
-          <Property Name="DocNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LineNum" Type="Int64" />
+          <Property Name="LineStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
         <EntityType Name="Tx_PurchaseOrder_Item_Tag">
           <Key>
@@ -1974,16 +1979,17 @@
           </Key>
           <Property Name="Id" Type="Int64" />
           <Property Name="DetId" Type="Int64" />
-          <Property Name="DetDetId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CreatedDate" Type="DateTime" />
-          <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
+          <Property Name="DetDetId" Type="Int64" Nullable="false" />
           <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="TagId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Quantity" Type="Decimal" Precision="21" Scale="6" />
+          <Property Name="EventType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2836,23 +2842,23 @@
           <EntitySetMapping Name="Tx_GoodsReceiptPO">
             <EntityTypeMapping TypeName="Model1.Tx_GoodsReceiptPO">
               <MappingFragment StoreEntitySet="Tx_GoodsReceiptPO">
-                <ScalarProperty Name="CancelReason" ColumnName="CancelReason" />
-                <ScalarProperty Name="IsAfterPosted" ColumnName="IsAfterPosted" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
-                <ScalarProperty Name="VendorCode" ColumnName="VendorCode" />
-                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
-                <ScalarProperty Name="DocDate" ColumnName="DocDate" />
-                <ScalarProperty Name="DocNum" ColumnName="DocNum" />
-                <ScalarProperty Name="DocEntry" ColumnName="DocEntry" />
-                <ScalarProperty Name="BaseNo" ColumnName="BaseNo" />
-                <ScalarProperty Name="BaseId" ColumnName="BaseId" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CancelReason" ColumnName="CancelReason" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="IsAfterPosted" ColumnName="IsAfterPosted" />
+                <ScalarProperty Name="BaseDocNum" ColumnName="BaseDocNum" />
+                <ScalarProperty Name="BaseEntry" ColumnName="BaseEntry" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+                <ScalarProperty Name="DocDate" ColumnName="DocDate" />
+                <ScalarProperty Name="DocNum" ColumnName="DocNum" />
+                <ScalarProperty Name="DocEntry" ColumnName="DocEntry" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
+                <ScalarProperty Name="VendorCode" ColumnName="VendorCode" />
                 <ScalarProperty Name="TransDate" ColumnName="TransDate" />
                 <ScalarProperty Name="TransNo" ColumnName="TransNo" />
                 <ScalarProperty Name="TransType" ColumnName="TransType" />
@@ -2886,18 +2892,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tx_GoodsReceiptPO_Item_Tag">
-            <EntityTypeMapping TypeName="Model1.Tx_GoodsReceiptPO_Item_Tag">
-              <MappingFragment StoreEntitySet="Tx_GoodsReceiptPO_Item_Tag">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="TagId" ColumnName="TagId" />
-                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+          <EntitySetMapping Name="Tx_GoodsReceiptPO_Item_tag">
+            <EntityTypeMapping TypeName="Model1.Tx_GoodsReceiptPO_Item_tag">
+              <MappingFragment StoreEntitySet="Tx_GoodsReceiptPO_Item_tag">
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="BaseDetDetId" ColumnName="BaseDetDetId" />
+                <ScalarProperty Name="BaseLine" ColumnName="BaseLine" />
+                <ScalarProperty Name="BaseId" ColumnName="BaseId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="EventType" ColumnName="EventType" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
                 <ScalarProperty Name="DetDetId" ColumnName="DetDetId" />
                 <ScalarProperty Name="DetId" ColumnName="DetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -2907,23 +2917,22 @@
           <EntitySetMapping Name="Tx_PurchaseOrder">
             <EntityTypeMapping TypeName="Model1.Tx_PurchaseOrder">
               <MappingFragment StoreEntitySet="Tx_PurchaseOrder">
-                <ScalarProperty Name="CancelReason" ColumnName="CancelReason" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="CreatedBranch" ColumnName="CreatedBranch" />
-                <ScalarProperty Name="CreatedBranchId" ColumnName="CreatedBranchId" />
-                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
-                <ScalarProperty Name="DocDate" ColumnName="DocDate" />
-                <ScalarProperty Name="DocNum" ColumnName="DocNum" />
-                <ScalarProperty Name="DocEntry" ColumnName="DocEntry" />
-                <ScalarProperty Name="IsAfterPosted" ColumnName="IsAfterPosted" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
-                <ScalarProperty Name="VendorCode" ColumnName="VendorCode" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CancelReason" ColumnName="CancelReason" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="IsAfterPosted" ColumnName="IsAfterPosted" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ScanDeviceId" ColumnName="ScanDeviceId" />
+                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+                <ScalarProperty Name="DocDate" ColumnName="DocDate" />
+                <ScalarProperty Name="DocNum" ColumnName="DocNum" />
+                <ScalarProperty Name="DocEntry" ColumnName="DocEntry" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
+                <ScalarProperty Name="VendorCode" ColumnName="VendorCode" />
                 <ScalarProperty Name="TransDate" ColumnName="TransDate" />
                 <ScalarProperty Name="TransNo" ColumnName="TransNo" />
                 <ScalarProperty Name="TransType" ColumnName="TransType" />
@@ -2934,23 +2943,22 @@
           <EntitySetMapping Name="Tx_PurchaseOrder_Item">
             <EntityTypeMapping TypeName="Model1.Tx_PurchaseOrder_Item">
               <MappingFragment StoreEntitySet="Tx_PurchaseOrder_Item">
-                <ScalarProperty Name="DocNum" ColumnName="DocNum" />
-                <ScalarProperty Name="DocEntry" ColumnName="DocEntry" />
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="LineStatus" ColumnName="LineStatus" />
-                <ScalarProperty Name="UnitPriceTc" ColumnName="UnitPriceTc" />
+                <ScalarProperty Name="LineNum" ColumnName="LineNum" />
+                <ScalarProperty Name="DocEntry" ColumnName="DocEntry" />
                 <ScalarProperty Name="Uom" ColumnName="Uom" />
                 <ScalarProperty Name="UomEntry" ColumnName="UomEntry" />
                 <ScalarProperty Name="QuantityOpen" ColumnName="QuantityOpen" />
                 <ScalarProperty Name="QuantityScan" ColumnName="QuantityScan" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="WhsCode" ColumnName="WhsCode" />
+                <ScalarProperty Name="FreeText" ColumnName="FreeText" />
                 <ScalarProperty Name="ItemName" ColumnName="ItemName" />
                 <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
-                <ScalarProperty Name="LineNum" ColumnName="LineNum" />
-                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="DetId" ColumnName="DetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -2959,15 +2967,16 @@
           <EntitySetMapping Name="Tx_PurchaseOrder_Item_Tag">
             <EntityTypeMapping TypeName="Model1.Tx_PurchaseOrder_Item_Tag">
               <MappingFragment StoreEntitySet="Tx_PurchaseOrder_Item_Tag">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="TagId" ColumnName="TagId" />
-                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="EventType" ColumnName="EventType" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
                 <ScalarProperty Name="DetDetId" ColumnName="DetDetId" />
                 <ScalarProperty Name="DetId" ColumnName="DetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

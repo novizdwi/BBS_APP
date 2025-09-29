@@ -413,7 +413,7 @@
     <Compile Include="Models\_EF\Tx_GoodsReceiptPO_Item.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\_EF\Tx_GoodsReceiptPO_Item_Tag.cs">
+    <Compile Include="Models\_EF\Tx_GoodsReceiptPO_Item_tag.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\_EF\Tx_PurchaseOrder.cs">
@@ -493,7 +493,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\Master\" />
-    <Folder Include="Models\Transaction\" />
+    <Folder Include="Models\Transaction\Web\Purchasing\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
