@@ -18,14 +18,14 @@ using System.Threading.Tasks;
 
 namespace Models.Transaction.Web.Purchasing
 {
-    public class ListFindParamPurchaseOrder
+    public class ListFindParamGoodsReceiptPO
     {
         public bool IsFindTransDate { get; set; }
         public DateTime? TransDate_From { get; set; }
         public DateTime? TransDate_To { get; set; }
     }
 
-    public class PurchaseOrderView___
+    public class GoodsReceiptPOView___
     {
         public long Id { get; set; }
 
@@ -49,20 +49,20 @@ namespace Models.Transaction.Web.Purchasing
 
     }
 
-    public class PurchaseOrder__List_Model
+    public class GoodsReceiptPO__List_Model
     {
         static string ViewSql = "SELECT *" +
-                                "FROM \"Tx_PurchaseOrder\" T0 " +
+                                "FROM \"Tx_GoodsReceiptPO\" T0 " +
                                 "ORDER BY T0.\"CreatedDate\" DESC";
 
-        public static void SetBindingData(GridViewModel state, int userId, ListFindParamPurchaseOrder cflParam)
+        public static void SetBindingData(GridViewModel state, int userId, ListFindParamGoodsReceiptPO cflParam)
         {
             string sqlCriteria = GetSqlFromGridViewModelState.getHanaCriteria(state);
             string sqlSort = GetSqlFromGridViewModelState.getHanaSort(state);
 
             using (var CONTEXT = new HANA_APP())
             {
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "PurchaseOrder");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "GoodsReceiptPO");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     if (string.IsNullOrEmpty(sqlCriteria))
@@ -97,12 +97,12 @@ namespace Models.Transaction.Web.Purchasing
             e.DataRowCount = dataRowCount;
         }
 
-        public static void GetData(GridViewCustomBindingGetDataArgs e, List<PurchaseOrderView___> dataList)
+        public static void GetData(GridViewCustomBindingGetDataArgs e, List<GoodsReceiptPOView___> dataList)
         {
             e.Data = dataList;
         }
 
-        public static int GetRowCount(HANA_APP CONTEXT, int userId, ListFindParamPurchaseOrder param, string sqlCriteria)
+        public static int GetRowCount(HANA_APP CONTEXT, int userId, ListFindParamGoodsReceiptPO param, string sqlCriteria)
         {
 
             if (sqlCriteria == null)
@@ -154,7 +154,7 @@ namespace Models.Transaction.Web.Purchasing
             return dataRowCount;
         }
 
-        public static List<PurchaseOrderView___> GetDataList(HANA_APP CONTEXT, int userId, ListFindParamPurchaseOrder param, string sqlCriteria, string sqlSort, int PageIndex, int PageSize)
+        public static List<GoodsReceiptPOView___> GetDataList(HANA_APP CONTEXT, int userId, ListFindParamGoodsReceiptPO param, string sqlCriteria, string sqlSort, int PageIndex, int PageSize)
         {
 
 
@@ -178,7 +178,7 @@ namespace Models.Transaction.Web.Purchasing
                 sqlSort = " ORDER BY \"TransDate\" DESC ";
             }
 
-            var views = new List<PurchaseOrderView___>();
+            var views = new List<GoodsReceiptPOView___>();
 
             string ssql = "";
             ssql = "SELECT T0.* FROM (" + ViewSql + ") T0  WHERE 1=1 " + sqlCriteria;
@@ -193,32 +193,32 @@ namespace Models.Transaction.Web.Purchasing
                     if ((param.TransDate_From != null) && (param.TransDate_To != null))
                     {
                         //ssql = ssql + " AND \"TransDate\">=:p0 AND \"TransDate\"<=:p1 ";
-                        views = CONTEXT.Database.SqlQuery<PurchaseOrderView___>(ssql + sqlSort + ssqlLimit, param.TransDate_From.Value.Date, param.TransDate_To.Value.Date).ToList();
+                        views = CONTEXT.Database.SqlQuery<GoodsReceiptPOView___>(ssql + sqlSort + ssqlLimit, param.TransDate_From.Value.Date, param.TransDate_To.Value.Date).ToList();
                     }
                     else if (param.TransDate_From != null)
                     {
                         //ssql = ssql + " AND \"TransDate\">=:p0 ";
-                        views = CONTEXT.Database.SqlQuery<PurchaseOrderView___>(ssql + sqlSort + ssqlLimit, param.TransDate_From.Value.Date).ToList();
+                        views = CONTEXT.Database.SqlQuery<GoodsReceiptPOView___>(ssql + sqlSort + ssqlLimit, param.TransDate_From.Value.Date).ToList();
                     }
                     else if (param.TransDate_To != null)
                     {
                         //ssql = ssql + " AND \"TransDate\"<=:p0 ";
-                        views = CONTEXT.Database.SqlQuery<PurchaseOrderView___>(ssql + sqlSort + ssqlLimit, param.TransDate_To.Value.Date).ToList();
+                        views = CONTEXT.Database.SqlQuery<GoodsReceiptPOView___>(ssql + sqlSort + ssqlLimit, param.TransDate_To.Value.Date).ToList();
                     }
                 }
                 else
                 {
-                    views = CONTEXT.Database.SqlQuery<PurchaseOrderView___>(ssql + sqlSort + ssqlLimit).ToList();
+                    views = CONTEXT.Database.SqlQuery<GoodsReceiptPOView___>(ssql + sqlSort + ssqlLimit).ToList();
                 }
             }
             else
             {
-                views = CONTEXT.Database.SqlQuery<PurchaseOrderView___>(ssql + sqlSort + ssqlLimit).ToList();
+                views = CONTEXT.Database.SqlQuery<GoodsReceiptPOView___>(ssql + sqlSort + ssqlLimit).ToList();
             }
 
             if (views.Count == 0)
             {
-                PurchaseOrderView___ view = new PurchaseOrderView___();
+                GoodsReceiptPOView___ view = new GoodsReceiptPOView___();
                 views.Add(view);
             }
 

@@ -189,7 +189,9 @@
     <Compile Include="Models\Setting\ReportGroupModel.cs" />
     <Compile Include="Models\Setting\ReportModel.cs" />
     <Compile Include="Models\Setting\Report__List_Model.cs" />
+    <Compile Include="Models\Transaction\Web\Purchasing\GoodsReceiptPOService.cs" />
     <Compile Include="Models\Transaction\Web\Purchasing\PurchaseOrderService.cs" />
+    <Compile Include="Models\Transaction\Web\Purchasing\GoodsReceiptPO__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Purchasing\PurchaseOrder__List_Model.cs" />
     <Compile Include="Models\_BaseModel\FormModeEnum.cs">
       <SubType>Code</SubType>
@@ -201,34 +203,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\_Cfl\CflBp_Model.cs" />
-    <Compile Include="Models\_Cfl\CflItemNoJ_Model.cs" />
-    <Compile Include="Models\_Cfl\CflKategori_Model.cs" />
-    <Compile Include="Models\_Cfl\CflMaterialRequest_Model.cs" />
-    <Compile Include="Models\_Cfl\CflProject_Model.cs" />
-    <Compile Include="Models\_Cfl\CflShipROB_Model.cs" />
-    <Compile Include="Models\_Cfl\CflRefMR_Model.cs" />
-    <Compile Include="Models\_Cfl\CflTongkang_Model.cs" />
-    <Compile Include="Models\_Cfl\CflShip_Model.cs" />
-    <Compile Include="Models\_Cfl\CflDocumentGeneral_Model.cs" />
     <Compile Include="Models\_Cfl\CflDynamic_Model.cs" />
-    <Compile Include="Models\_Cfl\CflInventoryIn_Model.cs" />
     <Compile Include="Models\_Cfl\CflItem_Model.cs" />
-    <Compile Include="Models\_Cfl\CflBin_Model.cs" />
-    <Compile Include="Models\_Cfl\CflLoadingOrderOli_Model.cs" />
-    <Compile Include="Models\_Cfl\CflLoadingOrder_Model.cs" />
-    <Compile Include="Models\_Cfl\CflNamaCustomer_Model.cs" />
-    <Compile Include="Models\_Cfl\CflNoArInvoice_Model.cs" />
-    <Compile Include="Models\_Cfl\CflNoTtd_Model.cs" />
-    <Compile Include="Models\_Cfl\CflPurchaseOrderOli_Model.cs" />
-    <Compile Include="Models\_Cfl\CflSppHistoryOli_Model.cs" />
-    <Compile Include="Models\_Cfl\CflWarehouse_Model.cs" />
-    <Compile Include="Models\_Cfl\CflSalesOrder_Model.cs" />
-    <Compile Include="Models\_Cfl\CflSegel_Model.cs" />
-    <Compile Include="Models\_Cfl\CflActivity_Model.cs" />
     <Compile Include="Models\_Cfl\CflCoa_Model.cs" />
-    <Compile Include="Models\_Cfl\CflPurchaseOrder_Model.cs" />
-    <Compile Include="Models\_Cfl\CflSppHistory_Model.cs" />
-    <Compile Include="Models\_Cfl\CflInventorySend_Model.cs" />
+    <Compile Include="Models\_Cfl\CflWarehouse_Model.cs" />
     <Compile Include="Models\_CrystalReport\CrystalReportParam.cs" />
     <Compile Include="Models\_EF\EfIduHanaRsExtensionsApp.cs" />
     <Compile Include="Models\_EF\DbProvider.cs" />

@@ -18,7 +18,7 @@ namespace Models.Transaction.Web.Purchasing
 {
     #region Models
 
-    public class PurchaseOrderModel
+    public class GoodsReceiptPOModel
     {
         private FormModeEnum _FormModeEnum = FormModeEnum.New;
 
@@ -68,17 +68,17 @@ namespace Models.Transaction.Web.Purchasing
 
         public string CancelReason { get; set; }
 
-        public List<PurchaseOrder_DetailModel> ListDetails_ = new List<PurchaseOrder_DetailModel>();
+        public List<GoodsReceiptPO_DetailModel> ListDetails_ = new List<GoodsReceiptPO_DetailModel>();
 
-        public PurchaseOrder_Detail Details_ { get; set; }
+        public GoodsReceiptPO_Detail Details_ { get; set; }
     }
-    public class PurchaseOrder_Detail
+    public class GoodsReceiptPO_Detail
     {
         public List<long> deletedRowKeys { get; set; }
-        public List<PurchaseOrder_DetailModel> insertedRowValues { get; set; }
-        public List<PurchaseOrder_DetailModel> modifiedRowValues { get; set; }
+        public List<GoodsReceiptPO_DetailModel> insertedRowValues { get; set; }
+        public List<GoodsReceiptPO_DetailModel> modifiedRowValues { get; set; }
     }
-    public class PurchaseOrder_DetailModel
+    public class GoodsReceiptPO_DetailModel
     {
 
         private FormModeEnum _FormModeEnum = FormModeEnum.New;
@@ -124,16 +124,16 @@ namespace Models.Transaction.Web.Purchasing
         public string LineStatus { get; set; }
     }
 
-    public class PurchaseOrderItemTagView___
+    public class GoodsReceiptPOItemTagView___
     {
         public long Id { get; set; }
 
         public long DetId { get; set; }
 
-        public List<PurchaseOrderItemTagModel> PurchaseOrderItemTagModel___ { get; set; }
+        public List<GoodsReceiptPOItemTagModel> GoodsReceiptPOItemTagModel___ { get; set; }
     }
 
-    public class PurchaseOrderItemTagModel
+    public class GoodsReceiptPOItemTagModel
     {
         public int RowNo { get; set; }
 
@@ -160,16 +160,17 @@ namespace Models.Transaction.Web.Purchasing
 
     #region Services
 
-    public class PurchaseOrderService
+    public class GoodsReceiptPOService
     {
 
-        public PurchaseOrderModel GetNewModel(int userId)
+        public GoodsReceiptPOModel GetNewModel(int userId)
         {
-            PurchaseOrderModel model = new PurchaseOrderModel();
+            GoodsReceiptPOModel model = new GoodsReceiptPOModel();
             model.Status = "Draft";
             return model;
         }
-        public PurchaseOrderModel GetById(int userId, long id = 0)
+
+        public GoodsReceiptPOModel GetById(int userId, long id = 0)
         {
             using (var CONTEXT = new HANA_APP())
             {
@@ -177,54 +178,54 @@ namespace Models.Transaction.Web.Purchasing
             }
         }
 
-        public PurchaseOrderModel GetById(HANA_APP CONTEXT, int userId, long id = 0)
+        public GoodsReceiptPOModel GetById(HANA_APP CONTEXT, int userId, long id = 0)
         {
-            PurchaseOrderModel model = null;
+            GoodsReceiptPOModel model = null;
             if (id != 0)
             {
                 string ssql = @"SELECT *, T1.""FirstName"" AS ""UserName"" 
-                            FROM ""Tx_PurchaseOrder"" T0
+                            FROM ""Tx_GoodsReceiptPO"" T0
                             LEFT JOIN ""Tm_User"" T1 ON T0.""ModifiedUser"" = T1.""Id""
                             WHERE T0.""Id""=:p0 ";
 
-                model = CONTEXT.Database.SqlQuery<PurchaseOrderModel>(ssql, id).Single();
+                model = CONTEXT.Database.SqlQuery<GoodsReceiptPOModel>(ssql, id).Single();
 
-                model.ListDetails_ = this.PurchaseOrder_Details(CONTEXT, id);
+                model.ListDetails_ = this.GoodsReceiptPO_Details(CONTEXT, id);
             }
 
             return model;
         }
-        public List<PurchaseOrder_DetailModel> PurchaseOrder_Details(long id = 0)
+        public List<GoodsReceiptPO_DetailModel> GoodsReceiptPO_Details(long id = 0)
         {
             using (var CONTEXT = new HANA_APP())
             {
-                return PurchaseOrder_Details(CONTEXT, id);
+                return GoodsReceiptPO_Details(CONTEXT, id);
             }
 
         }
 
-        public List<PurchaseOrder_DetailModel> PurchaseOrder_Details(HANA_APP CONTEXT, long id = 0)
+        public List<GoodsReceiptPO_DetailModel> GoodsReceiptPO_Details(HANA_APP CONTEXT, long id = 0)
         {
             string ssql = @"SELECT * 
-                FROM ""Tx_PurchaseOrder_Item"" 
+                FROM ""Tx_GoodsReceiptPO_Item"" 
                 WHERE ""Id"" =:p0";
-            var purchaseOrder = CONTEXT.Database.SqlQuery<PurchaseOrder_DetailModel>(ssql, id).ToList();
-            return purchaseOrder;
+            var goodsReceiptPO = CONTEXT.Database.SqlQuery<GoodsReceiptPO_DetailModel>(ssql, id).ToList();
+            return goodsReceiptPO;
         }
 
-        public PurchaseOrderModel NavFirst(int userId)
+        public GoodsReceiptPOModel NavFirst(int userId)
         {
-            PurchaseOrderModel model = null;
+            GoodsReceiptPOModel model = null;
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "PurchaseOrder");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "GoodsReceiptPO");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;
                 }
 
-                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tx_PurchaseOrder\" T0 WHERE 1=1 " + sqlCriteria + " ORDER BY T0.\"Id\" ASC").FirstOrDefault();
+                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tx_GoodsReceiptPO\" T0 WHERE 1=1 " + sqlCriteria + " ORDER BY T0.\"Id\" ASC").FirstOrDefault();
 
                 model = this.GetById(CONTEXT, userId, Id.HasValue ? Id.Value : 0);
             }
@@ -232,19 +233,19 @@ namespace Models.Transaction.Web.Purchasing
             return model;
 
         }
-        public PurchaseOrderModel NavPrevious(int userId, long id = 0)
+        public GoodsReceiptPOModel NavPrevious(int userId, long id = 0)
         {
-            PurchaseOrderModel model = null;
+            GoodsReceiptPOModel model = null;
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "PurchaseOrder");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "GoodsReceiptPO");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;
                 }
 
-                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tx_PurchaseOrder\" T0 WHERE T0.\"Id\"<:p0 " + sqlCriteria + "  ORDER BY T0.\"Id\" DESC", id).FirstOrDefault();
+                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tx_GoodsReceiptPO\" T0 WHERE T0.\"Id\"<:p0 " + sqlCriteria + "  ORDER BY T0.\"Id\" DESC", id).FirstOrDefault();
                 if (Id.HasValue)
                 {
                     model = this.GetById(CONTEXT, userId, Id.Value);
@@ -260,19 +261,19 @@ namespace Models.Transaction.Web.Purchasing
             return model;
         }
 
-        public PurchaseOrderModel NavNext(int userId, long id = 0)
+        public GoodsReceiptPOModel NavNext(int userId, long id = 0)
         {
-            PurchaseOrderModel model = null;
+            GoodsReceiptPOModel model = null;
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "PurchaseOrder");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "GoodsReceiptPO");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;
                 }
 
-                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tx_PurchaseOrder\" T0 WHERE T0.\"Id\">:p0 " + sqlCriteria + "  ORDER BY T0.\"Id\" ASC", id).FirstOrDefault();
+                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tx_GoodsReceiptPO\" T0 WHERE T0.\"Id\">:p0 " + sqlCriteria + "  ORDER BY T0.\"Id\" ASC", id).FirstOrDefault();
                 if (Id.HasValue)
                 {
                     model = this.GetById(CONTEXT, userId, Id.Value);
@@ -287,19 +288,19 @@ namespace Models.Transaction.Web.Purchasing
             return model;
         }
 
-        public PurchaseOrderModel NavLast(int userId)
+        public GoodsReceiptPOModel NavLast(int userId)
         {
-            PurchaseOrderModel model = null;
+            GoodsReceiptPOModel model = null;
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "PurchaseOrder");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "GoodsReceiptPO");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;
                 }
 
-                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tx_PurchaseOrder\" T0 WHERE 1=1 " + sqlCriteria + "  ORDER BY T0.\"Id\" DESC").FirstOrDefault();
+                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tx_GoodsReceiptPO\" T0 WHERE 1=1 " + sqlCriteria + "  ORDER BY T0.\"Id\" DESC").FirstOrDefault();
 
                 model = this.GetById(CONTEXT, userId, Id.HasValue ? Id.Value : 0);
             }
@@ -307,7 +308,7 @@ namespace Models.Transaction.Web.Purchasing
             return model;
         }
 
-        //public long Add(PurchaseOrderModel model)
+        //public long Add(GoodsReceiptPOModel model)
         //{
         //    long Id = 0;
 
@@ -321,39 +322,39 @@ namespace Models.Transaction.Web.Purchasing
         //                try
         //                {
 
-        //                    Tx_PurchaseOrder Tx_PurchaseOrder = new Tx_PurchaseOrder();
-        //                    CopyProperty.CopyProperties(model, Tx_PurchaseOrder, false);
+        //                    Tx_GoodsReceiptPO Tx_GoodsReceiptPO = new Tx_GoodsReceiptPO();
+        //                    CopyProperty.CopyProperties(model, Tx_GoodsReceiptPO, false);
 
         //                    DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-        //                    Tx_PurchaseOrder.TransType = "PurchaseOrder";
-        //                    Tx_PurchaseOrder.CreatedDate = dtModified;
-        //                    Tx_PurchaseOrder.CreatedUser = model._UserId;
-        //                    Tx_PurchaseOrder.ModifiedDate = dtModified;
-        //                    Tx_PurchaseOrder.ModifiedUser = model._UserId;
+        //                    Tx_GoodsReceiptPO.TransType = "GoodsReceiptPO";
+        //                    Tx_GoodsReceiptPO.CreatedDate = dtModified;
+        //                    Tx_GoodsReceiptPO.CreatedUser = model._UserId;
+        //                    Tx_GoodsReceiptPO.ModifiedDate = dtModified;
+        //                    Tx_GoodsReceiptPO.ModifiedUser = model._UserId;
         //                    if (model.StartDate != null)
         //                    {
-        //                        Tx_PurchaseOrder.Status2 = "On Progress";
+        //                        Tx_GoodsReceiptPO.Status2 = "On Progress";
         //                    }
         //                    else
         //                    {
-        //                        Tx_PurchaseOrder.Status2 = "Open";
+        //                        Tx_GoodsReceiptPO.Status2 = "Open";
         //                    }
 
         //                    if (model.EndDate != null)
         //                    {
-        //                        Tx_PurchaseOrder.Status2 = "Close";
+        //                        Tx_GoodsReceiptPO.Status2 = "Close";
         //                    }
 
         //                    string dateX = model.TransDate.Value.ToString("yyyy-MM-dd");
-        //                    string transNo = CONTEXT.Database.SqlQuery<string>("CALL \"SpSysGetNumbering\" (" + model._UserId.ToString() + ",'PurchaseOrder','" + dateX + "','') ").SingleOrDefault();
-        //                    Tx_PurchaseOrder.TransNo = transNo;
+        //                    string transNo = CONTEXT.Database.SqlQuery<string>("CALL \"SpSysGetNumbering\" (" + model._UserId.ToString() + ",'GoodsReceiptPO','" + dateX + "','') ").SingleOrDefault();
+        //                    Tx_GoodsReceiptPO.TransNo = transNo;
 
-        //                    CONTEXT.Tx_PurchaseOrder.Add(Tx_PurchaseOrder);
+        //                    CONTEXT.Tx_GoodsReceiptPO.Add(Tx_GoodsReceiptPO);
         //                    CONTEXT.SaveChanges();
-        //                    Id = Tx_PurchaseOrder.Id;
+        //                    Id = Tx_GoodsReceiptPO.Id;
 
         //                    String keyValue;
-        //                    keyValue = Tx_PurchaseOrder.Id.ToString();
+        //                    keyValue = Tx_GoodsReceiptPO.Id.ToString();
 
         //                    if (model.Details_ != null)
         //                    {
@@ -377,7 +378,7 @@ namespace Models.Transaction.Web.Purchasing
         //                        {
         //                            foreach (var detId in model.Details_.deletedRowKeys)
         //                            {
-        //                                PurchaseOrder_DetailModel detailModel = new PurchaseOrder_DetailModel();
+        //                                GoodsReceiptPO_DetailModel detailModel = new GoodsReceiptPO_DetailModel();
         //                                detailModel.DetId = detId;
         //                                Detail_Delete(CONTEXT, detailModel);
         //                            }
@@ -386,7 +387,7 @@ namespace Models.Transaction.Web.Purchasing
 
 
 
-        //                    SpNotif.SpSysTransNotif(model._UserId, CONTEXT, "after", "Tx_PurchaseOrder", "add", "Id", keyValue);
+        //                    SpNotif.SpSysTransNotif(model._UserId, CONTEXT, "after", "Tx_GoodsReceiptPO", "add", "Id", keyValue);
 
 
         //                    CONTEXT_TRANS.Commit();
@@ -416,7 +417,7 @@ namespace Models.Transaction.Web.Purchasing
 
         //}
 
-        public void Update(PurchaseOrderModel model)
+        public void Update(GoodsReceiptPOModel model)
         {
             if (model != null)
             {
@@ -431,33 +432,33 @@ namespace Models.Transaction.Web.Purchasing
                                 String keyValue;
                                 keyValue = model.Id.ToString();
                                 
-                                SpNotif.SpSysControllerTransNotif(model._UserId, "PurchaseOrder", CONTEXT, "before", "PurchaseOrder", "update", "Id", keyValue);
+                                SpNotif.SpSysControllerTransNotif(model._UserId, "GoodsReceiptPO", CONTEXT, "before", "GoodsReceiptPO", "update", "Id", keyValue);
 
 
-                                Tx_PurchaseOrder Tx_PurchaseOrder = CONTEXT.Tx_PurchaseOrder.Find(model.Id);
+                                Tx_GoodsReceiptPO Tx_GoodsReceiptPO = CONTEXT.Tx_GoodsReceiptPO.Find(model.Id);
                                 DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                                Tx_PurchaseOrder.ModifiedDate = dtModified;
-                                Tx_PurchaseOrder.ModifiedUser = model._UserId;
+                                Tx_GoodsReceiptPO.ModifiedDate = dtModified;
+                                Tx_GoodsReceiptPO.ModifiedUser = model._UserId;
 
-                                if (Tx_PurchaseOrder != null)
+                                if (Tx_GoodsReceiptPO != null)
                                 {
                                     var exceptColumns = new string[] { "Id", "TransNo", "CreatedUser" };
-                                    CopyProperty.CopyProperties(model, Tx_PurchaseOrder, false, exceptColumns);
-                                    Tx_PurchaseOrder.ModifiedDate = dtModified;
-                                    Tx_PurchaseOrder.ModifiedUser = model._UserId;
+                                    CopyProperty.CopyProperties(model, Tx_GoodsReceiptPO, false, exceptColumns);
+                                    Tx_GoodsReceiptPO.ModifiedDate = dtModified;
+                                    Tx_GoodsReceiptPO.ModifiedUser = model._UserId;
 
                                     //if (model.StartDate != null)
                                     //{
-                                    //    Tx_PurchaseOrder.Status2 = "On Progress";
+                                    //    Tx_GoodsReceiptPO.Status2 = "On Progress";
                                     //}
                                     //else
                                     //{
-                                    //    Tx_PurchaseOrder.Status2 = "Open";
+                                    //    Tx_GoodsReceiptPO.Status2 = "Open";
                                     //}
 
                                     //if (model.EndDate != null)
                                     //{
-                                    //    Tx_PurchaseOrder.Status2 = "Close";
+                                    //    Tx_GoodsReceiptPO.Status2 = "Close";
                                     //}
                                     CONTEXT.SaveChanges();
 
@@ -483,13 +484,13 @@ namespace Models.Transaction.Web.Purchasing
                                     //    {
                                     //        foreach (var detId in model.Details_.deletedRowKeys)
                                     //        {
-                                    //            PurchaseOrder_DetailModel detailModel = new PurchaseOrder_DetailModel();
+                                    //            GoodsReceiptPO_DetailModel detailModel = new GoodsReceiptPO_DetailModel();
                                     //            detailModel.DetId = detId;
                                     //            Detail_Delete(CONTEXT, detailModel);
                                     //        }
                                     //    }
                                     //}
-                                    SpNotif.SpSysControllerTransNotif(model._UserId, "PurchaseOrder", CONTEXT, "after", "PurchaseOrder", "update", "Id", keyValue);
+                                    SpNotif.SpSysControllerTransNotif(model._UserId, "GoodsReceiptPO", CONTEXT, "after", "GoodsReceiptPO", "update", "Id", keyValue);
                                     
                                 }
 
@@ -521,39 +522,39 @@ namespace Models.Transaction.Web.Purchasing
 
         }
 
-        //public long Detail_Add(HANA_APP CONTEXT, PurchaseOrder_DetailModel model, long Id, int UserId)
+        //public long Detail_Add(HANA_APP CONTEXT, GoodsReceiptPO_DetailModel model, long Id, int UserId)
         //{
         //    long DetId = 0;
 
         //    if (model != null)
         //    {
 
-        //        Tx_PurchaseOrder_Item Tx_PurchaseOrder_Item = new Tx_PurchaseOrder_Item();
+        //        Tx_GoodsReceiptPO_Item Tx_GoodsReceiptPO_Item = new Tx_GoodsReceiptPO_Item();
 
-        //        CopyProperty.CopyProperties(model, Tx_PurchaseOrder_Item, false);
+        //        CopyProperty.CopyProperties(model, Tx_GoodsReceiptPO_Item, false);
 
         //        DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-        //        Tx_PurchaseOrder_Item.Id = Id;
-        //        Tx_PurchaseOrder_Item.CreatedDate = dtModified;
-        //        Tx_PurchaseOrder_Item.CreatedUser = UserId;
-        //        Tx_PurchaseOrder_Item.ModifiedDate = dtModified;
-        //        Tx_PurchaseOrder_Item.ModifiedUser = UserId;
+        //        Tx_GoodsReceiptPO_Item.Id = Id;
+        //        Tx_GoodsReceiptPO_Item.CreatedDate = dtModified;
+        //        Tx_GoodsReceiptPO_Item.CreatedUser = UserId;
+        //        Tx_GoodsReceiptPO_Item.ModifiedDate = dtModified;
+        //        Tx_GoodsReceiptPO_Item.ModifiedUser = UserId;
         //        if (model.StartDate != null && model.EndDate == null)
         //        {
-        //            Tx_PurchaseOrder_Item.Status = "On Progress";
+        //            Tx_GoodsReceiptPO_Item.Status = "On Progress";
         //        }
         //        else if (model.StartDate != null && model.EndDate != null)
         //        {
-        //            Tx_PurchaseOrder_Item.Status = "Close";
+        //            Tx_GoodsReceiptPO_Item.Status = "Close";
         //        }
         //        else
         //        {
-        //            Tx_PurchaseOrder_Item.Status = "Open";
+        //            Tx_GoodsReceiptPO_Item.Status = "Open";
         //        }
 
-        //        CONTEXT.Tx_PurchaseOrder_Item.Add(Tx_PurchaseOrder_Item);
+        //        CONTEXT.Tx_GoodsReceiptPO_Item.Add(Tx_GoodsReceiptPO_Item);
         //        CONTEXT.SaveChanges();
-        //        DetId = Tx_PurchaseOrder_Item.DetId;
+        //        DetId = Tx_GoodsReceiptPO_Item.DetId;
 
         //    }
 
@@ -561,34 +562,34 @@ namespace Models.Transaction.Web.Purchasing
 
         //}
 
-        //public void Detail_Update(HANA_APP CONTEXT, PurchaseOrder_DetailModel model, int UserId)
+        //public void Detail_Update(HANA_APP CONTEXT, GoodsReceiptPO_DetailModel model, int UserId)
         //{
         //    if (model != null)
         //    {
 
-        //        Tx_PurchaseOrder_Item Tx_PurchaseOrder_Item = CONTEXT.Tx_PurchaseOrder_Item.Find(model.DetId);
+        //        Tx_GoodsReceiptPO_Item Tx_GoodsReceiptPO_Item = CONTEXT.Tx_GoodsReceiptPO_Item.Find(model.DetId);
 
-        //        if (Tx_PurchaseOrder_Item != null)
+        //        if (Tx_GoodsReceiptPO_Item != null)
         //        {
         //            var exceptColumns = new string[] { "DetId", "Id" };
-        //            CopyProperty.CopyProperties(model, Tx_PurchaseOrder_Item, false, exceptColumns);
+        //            CopyProperty.CopyProperties(model, Tx_GoodsReceiptPO_Item, false, exceptColumns);
 
 
         //            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
 
-        //            Tx_PurchaseOrder_Item.ModifiedDate = dtModified;
-        //            Tx_PurchaseOrder_Item.ModifiedUser = UserId;
+        //            Tx_GoodsReceiptPO_Item.ModifiedDate = dtModified;
+        //            Tx_GoodsReceiptPO_Item.ModifiedUser = UserId;
         //            if (model.StartDate != null && model.EndDate == null)
         //            {
-        //                Tx_PurchaseOrder_Item.Status = "On Progress";
+        //                Tx_GoodsReceiptPO_Item.Status = "On Progress";
         //            }
         //            else if (model.StartDate != null && model.EndDate != null)
         //            {
-        //                Tx_PurchaseOrder_Item.Status = "Close";
+        //                Tx_GoodsReceiptPO_Item.Status = "Close";
         //            }
         //            else
         //            {
-        //                Tx_PurchaseOrder_Item.Status = "Open";
+        //                Tx_GoodsReceiptPO_Item.Status = "Open";
         //            }
         //            CONTEXT.SaveChanges();
 
@@ -599,14 +600,14 @@ namespace Models.Transaction.Web.Purchasing
 
         //}
 
-        //public void Detail_Delete(HANA_APP CONTEXT, PurchaseOrder_DetailModel model)
+        //public void Detail_Delete(HANA_APP CONTEXT, GoodsReceiptPO_DetailModel model)
         //{
         //    if (model.DetId != null)
         //    {
         //        if (model.DetId != 0)
         //        {
 
-        //            CONTEXT.Database.ExecuteSqlCommand("DELETE FROM \"Tx_PurchaseOrder_Item\"  WHERE \"DetId\"=:p0", model.DetId);
+        //            CONTEXT.Database.ExecuteSqlCommand("DELETE FROM \"Tx_GoodsReceiptPO_Item\"  WHERE \"DetId\"=:p0", model.DetId);
 
         //            CONTEXT.SaveChanges();
 
@@ -629,21 +630,21 @@ namespace Models.Transaction.Web.Purchasing
                         String keyValue;
                         keyValue = id.ToString();
 
-                        SpNotif.SpSysControllerTransNotif(userId, "PurchaseOrder", CONTEXT, "before", "Tx_PurchaseOrder", "post", "Id", keyValue);
+                        SpNotif.SpSysControllerTransNotif(userId, "GoodsReceiptPO", CONTEXT, "before", "Tx_GoodsReceiptPO", "post", "Id", keyValue);
 
-                        Tx_PurchaseOrder tx_PurchaseOrder = CONTEXT.Tx_PurchaseOrder.Find(id);
-                        if (tx_PurchaseOrder != null)
+                        Tx_GoodsReceiptPO tx_GoodsReceiptPO = CONTEXT.Tx_GoodsReceiptPO.Find(id);
+                        if (tx_GoodsReceiptPO != null)
                         {
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                            tx_PurchaseOrder.Status = "Post";
-                            tx_PurchaseOrder.IsAfterPosted = "Y";
-                            tx_PurchaseOrder.ModifiedDate = dtModified;
-                            tx_PurchaseOrder.ModifiedUser = userId;
+                            tx_GoodsReceiptPO.Status = "Post";
+                            tx_GoodsReceiptPO.IsAfterPosted = "Y";
+                            tx_GoodsReceiptPO.ModifiedDate = dtModified;
+                            tx_GoodsReceiptPO.ModifiedUser = userId;
 
                             CONTEXT.SaveChanges();
                         }
 
-                        SpNotif.SpSysControllerTransNotif(userId, "PurchaseOrder", CONTEXT, "after", "Tx_PurchaseOrder", "post", "Id", keyValue);
+                        SpNotif.SpSysControllerTransNotif(userId, "GoodsReceiptPO", CONTEXT, "after", "Tx_GoodsReceiptPO", "post", "Id", keyValue);
 
 
                         CONTEXT_TRANS.Commit();
@@ -682,21 +683,21 @@ namespace Models.Transaction.Web.Purchasing
                         String keyValue;
                         keyValue = Id.ToString();
 
-                        SpNotif.SpSysControllerTransNotif(userId, "PurchaseOrder", CONTEXT, "before", "Tx_PurchaseOrder", "cancel", "Id", keyValue);
+                        SpNotif.SpSysControllerTransNotif(userId, "GoodsReceiptPO", CONTEXT, "before", "Tx_GoodsReceiptPO", "cancel", "Id", keyValue);
 
-                        Tx_PurchaseOrder tx_PurchaseOrder = CONTEXT.Tx_PurchaseOrder.Find(Id);
-                        if (tx_PurchaseOrder != null)
+                        Tx_GoodsReceiptPO tx_GoodsReceiptPO = CONTEXT.Tx_GoodsReceiptPO.Find(Id);
+                        if (tx_GoodsReceiptPO != null)
                         {
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                            tx_PurchaseOrder.Status = "Cancel";
-                            tx_PurchaseOrder.CancelReason = cancelReason;
-                            tx_PurchaseOrder.ModifiedDate = dtModified;
-                            tx_PurchaseOrder.ModifiedUser = userId;
+                            tx_GoodsReceiptPO.Status = "Cancel";
+                            tx_GoodsReceiptPO.CancelReason = cancelReason;
+                            tx_GoodsReceiptPO.ModifiedDate = dtModified;
+                            tx_GoodsReceiptPO.ModifiedUser = userId;
 
                             CONTEXT.SaveChanges();
                         }
 
-                        SpNotif.SpSysControllerTransNotif(userId, "PurchaseOrder", CONTEXT, "after", "Tx_PurchaseOrder", "cancel", "Id", keyValue);
+                        SpNotif.SpSysControllerTransNotif(userId, "GoodsReceiptPO", CONTEXT, "after", "Tx_GoodsReceiptPO", "cancel", "Id", keyValue);
 
 
                         CONTEXT_TRANS.Commit();
@@ -724,20 +725,20 @@ namespace Models.Transaction.Web.Purchasing
         }
 
 
-        public PurchaseOrderItemTagView___ GetItemTags(long id, long detId)
+        public GoodsReceiptPOItemTagView___ GetItemTags(long id, long detId)
         {
             string sql = null;
-            PurchaseOrderItemTagView___ model = new PurchaseOrderItemTagView___();
+            GoodsReceiptPOItemTagView___ model = new GoodsReceiptPOItemTagView___();
             model.Id = id;
             model.DetId = detId;
 
             using (var CONTEXT = new HANA_APP())
             {
                 string ssql = @"SELECT ROW_NUMBER() OVER (ORDER BY ""DetDetId"") AS ""RowNo"", T0.* 
-                            FROM ""Tx_PurchaseOrder_Item_Tag"" T0   
+                            FROM ""Tx_GoodsReceiptPO_Item_Tag"" T0   
                             WHERE T0.""Id""=:p0 AND ""DetId"" = :p1 ";
 
-                model.PurchaseOrderItemTagModel___ = CONTEXT.Database.SqlQuery<PurchaseOrderItemTagModel>(ssql, id, detId).ToList();
+                model.GoodsReceiptPOItemTagModel___ = CONTEXT.Database.SqlQuery<GoodsReceiptPOItemTagModel>(ssql, id, detId).ToList();
             }
 
             return model;
