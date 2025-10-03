@@ -91,19 +91,19 @@ namespace Models._Utils
             {
                 ssql = "";
             }
-            else if (formAuthorize == "Branch")
-            {
-                string branch = GeneralGetList.GetAuthBranchCodeByUserId(CONTEXT, userId);
+            //else if (formAuthorize == "Branch")
+            //{
+            //    string branch = GeneralGetList.GetAuthBranchCodeByUserId(CONTEXT, userId);
 
-                if (!string.IsNullOrEmpty(branch))
-                {
-                    ssql = ssql + "  \"CreatedBranch\" IN (" + branch + ") ";
-                }
-                else
-                {
-                    ssql = ssql + "  1=0 ";
-                }
-            }
+            //    if (!string.IsNullOrEmpty(branch))
+            //    {
+            //        ssql = ssql + "  \"CreatedBranch\" IN (" + branch + ") ";
+            //    }
+            //    else
+            //    {
+            //        ssql = ssql + "  1=0 ";
+            //    }
+            //}
             else if (formAuthorize == "User")
             {
                 ssql = ssql + "  \"CreatedUser\"=" + userId.ToString();
@@ -461,123 +461,7 @@ namespace Models._Utils
             ssql = string.Format(ssql, DbProvider.dbSap_Name);
             return GetDataTable(CONTEXT, ssql);
         }
-
-        //get Deck
-        public static DataTable GetBagian()
-        {
-            using (var CONTEXT = new HANA_APP())
-            {
-                return GetBagian(CONTEXT);
-            }
-        }
-        public static DataTable GetBagian(HANA_APP CONTEXT)
-        {
-            var ssql = "SELECT T0.\"Id\", T0.\"Bagian\" FROM \"Tm_MasterSetting_Bagian\" T0   ORDER BY T0.\"Bagian\" ASC ";
-            return GetDataTable(CONTEXT, ssql);
-        }
-
-        public static DataTable GetItem()
-        {
-            using (var CONTEXT = new HANA_APP())
-            {
-                return GetItem(CONTEXT);
-            }
-        }
-        public static DataTable GetItem(HANA_APP CONTEXT)
-        {
-            var ssql = "SELECT T0.\"Id\", T0.\"Item\", T0.\"Bagian\" FROM \"Tm_MasterSetting_Item\" T0   ORDER BY T0.\"Item\" ASC ";
-            return GetDataTable(CONTEXT, ssql);
-        }
-        public static DataTable GetItemsByBagian(string Bagian)
-        {
-            using (var CONTEXT = new HANA_APP())
-            {
-                return GetItemsByBagian(CONTEXT, Bagian);
-            }
-        }
-        public static DataTable GetItemsByBagian(HANA_APP CONTEXT, string Bagian)
-        {
-            var ssql = "SELECT T0.\"Id\", T0.\"Item\", T0.\"Bagian\" FROM \"Tm_MasterSetting_Item\" T0 WHERE T0.\"Bagian\" = "+ Bagian +"  ORDER BY T0.\"Item\" ASC ";
-            return GetDataTable(CONTEXT, ssql);
-        }
-        public static DataTable GetSubItem()
-        {
-            using (var CONTEXT = new HANA_APP())
-            {
-                return GetSubItem(CONTEXT);
-            }
-        }
-
-        public static DataTable GetSubItem(HANA_APP CONTEXT)
-        {
-            var ssql = "SELECT T0.\"Id\", T0.\"SubItem\", T0.\"Item\", T0.\"Bagian\" FROM \"Tm_MasterSetting_SubItem\" T0   ORDER BY T0.\"SubItem\" ASC ";
-            return GetDataTable(CONTEXT, ssql);
-        }
-        //get Engine
-        public static DataTable GetBagianEngine()
-        {
-            using (var CONTEXT = new HANA_APP())
-            {
-                return GetBagianEngine(CONTEXT);
-            }
-        }
-        public static DataTable GetBagianEngine(HANA_APP CONTEXT)
-        {
-            var ssql = "SELECT T0.\"Id\", T0.\"Bagian\" FROM \"Tm_MasterSettingEngine_Bagian\" T0   ORDER BY T0.\"Bagian\" ASC ";
-            return GetDataTable(CONTEXT, ssql);
-        }
-
-        public static DataTable GetItemEngine()
-        {
-            using (var CONTEXT = new HANA_APP())
-            {
-                return GetItemEngine(CONTEXT);
-            }
-        }
-        public static DataTable GetItemEngine(HANA_APP CONTEXT)
-        {
-            var ssql = "SELECT T0.\"Id\", T0.\"Item\", T0.\"Bagian\" FROM \"Tm_MasterSettingEngine_Item\" T0   ORDER BY T0.\"Item\" ASC ";
-            return GetDataTable(CONTEXT, ssql);
-        }
-        public static DataTable GetSubItemEngine()
-        {
-            using (var CONTEXT = new HANA_APP())
-            {
-                return GetSubItemEngine(CONTEXT);
-            }
-        }
-        public static DataTable GetSubItemEngine(HANA_APP CONTEXT)
-        {
-            var ssql = "SELECT T0.\"Id\", T0.\"SubItem\", T0.\"Item\", T0.\"Bagian\" FROM \"Tm_MasterSettingEngine_SubItem\" T0   ORDER BY T0.\"SubItem\" ASC ";
-            return GetDataTable(CONTEXT, ssql);
-        }
-
-        public static DataTable GetRegional()
-        {
-            using (var CONTEXT = new HANA_APP())
-            {
-                return GetRegional(CONTEXT);
-            }
-        }
-
-
-
-        public static DataTable GetRegional(HANA_APP CONTEXT)
-        {
-            //            string ssql = @"SELECT T0.""U_IDU_Regional"" AS ""Regional"", T1.""PrcName"" AS ""RegionalName""  
-            //                            FROM  ""{0}"".""OWHS"" T0  
-            //                            LEFT JOIN ""{0}"".""OPRC"" T1 ON T1.""U_IDU_whs"" = T0.""WhsCode"" 
-            //                            AND T1.""DimCode"" = 2
-            //                            ORDER BY T0.""WhsCode"" ";
-            string ssql = @"SELECT T1.""PrcCode"" AS ""Regional"", T1.""PrcName"" AS ""RegionalName""  
-                            FROM ""{0}"".""OPRC"" T1 
-                            WHERE T1.""DimCode"" = 2 AND T1.""Locked"" = 'N'
-                            ORDER BY T1.""PrcCode"" ASC ";
-
-            ssql = string.Format(ssql, DbProvider.dbSap_Name);
-            return GetDataTable(CONTEXT, ssql);
-        }
-
+        
         public static DataTable GetWarehouses()
         {
             using (var CONTEXT = new HANA_APP())
@@ -615,47 +499,7 @@ namespace Models._Utils
             ssql = string.Format(ssql, DbProvider.dbSap_Name);
             return GetDataTable(CONTEXT, ssql);
         }
-        public static DataTable GetBatch(string ItemCode)
-        {
-            using (var CONTEXT = new HANA_APP())
-            {
-                return GetBatch(CONTEXT, ItemCode);
-            }
-        }
 
-        public static DataTable GetBatch(HANA_APP CONTEXT, string ItemCode)
-        {
-            string ssql = @"SELECT DISTINCT
-                                A.""BatchNum"",
-                                B.""U_IDU_BATCH_NAME"" AS ""BatchName""
-                                FROM ""{0}"".""OIBT"" A
-                                LEFT JOIN ""{0}"".""@IDU_BATCH"" B ON A.""BatchNum"" = B.""Code""
-                                WHERE
-                                A.""Quantity"" > 0
-                                AND
-                                A.""ItemCode"" = '" + ItemCode + "' ORDER BY A.\"BatchNum\" ASC";
-           
-            ssql = string.Format(ssql, DbProvider.dbSap_Name);
-            return GetDataTable(CONTEXT, ssql);
-        }
-        public static DataTable GetBatchUDT()
-        {
-            using (var CONTEXT = new HANA_APP())
-            {
-                return GetBatchUDT(CONTEXT);
-            }
-        }
-
-        public static DataTable GetBatchUDT(HANA_APP CONTEXT)
-        {
-            string ssql = @"SELECT DISTINCT
-                                A.""U_IDU_BATCH_NAME""
-                                FROM ""{0}"".""@IDU_BATCH"" A
-                                ORDER BY A.""U_IDU_BATCH_NAME"" ASC";
-
-            ssql = string.Format(ssql, DbProvider.dbSap_Name);
-            return GetDataTable(CONTEXT, ssql);
-        }
         public static string GetCustomerCode(string docEntry)
         {
             using (var CONTEXT = new HANA_APP())
@@ -691,44 +535,7 @@ namespace Models._Utils
             ssql = string.Format(ssql, DbProvider.dbSap_Name);
             return GetDataTable(CONTEXT, ssql);
         }
-
-        public static DataTable GetDriver()
-        {
-            using (var CONTEXT = new HANA_APP())
-            {
-                return GetDriver(CONTEXT);
-            }
-        }
-
-        public static DataTable GetDriver(HANA_APP CONTEXT)
-        {
-            string ssql = @"SELECT T0.""Code"",T0.""U_IDU_DriverCode"" AS ""DriverCode"", T0.""U_IDU_DriverName"" AS ""DriverName""  
-                            FROM  ""{0}"".""@IDU_DRIVER"" T0       
-                            ORDER BY T0.""U_IDU_DriverCode""  ASC ";
-
-            ssql = string.Format(ssql, DbProvider.dbSap_Name);
-            return GetDataTable(CONTEXT, ssql);
-        }
-
-        public static DataTable GetVehicle()
-        {
-            using (var CONTEXT = new HANA_APP())
-            {
-                return GetVehicle(CONTEXT);
-            }
-        }
-
-        public static DataTable GetVehicle(HANA_APP CONTEXT)
-        {
-            string ssql = @"SELECT T0.""Code"" ,T0.""U_IDU_PoliceNo"" AS ""PoliceNo"", T0.""U_IDU_Type"" AS ""Vehicle""  
-                            FROM  ""{0}"".""@IDU_VEHICLE"" T0       
-                            ORDER BY T0.""U_IDU_PoliceNo""  ASC ";
-
-            ssql = string.Format(ssql, DbProvider.dbSap_Name);
-            return GetDataTable(CONTEXT, ssql);
-        }
-
-
+        
         public static DataTable GetReportGroups()
         {
             using (var CONTEXT = new HANA_APP())

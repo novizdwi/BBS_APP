@@ -16,21 +16,23 @@ namespace BBS_DI.Models._EF
     {
         public Nullable<long> Id { get; set; }
         public long DetId { get; set; }
-        public string ItemCode { get; set; }
-        public string ItemName { get; set; }
-        public string FreeText { get; set; }
-        public string WhsCode { get; set; }
-        public Nullable<decimal> Quantity { get; set; }
-        public Nullable<decimal> QuantityScan { get; set; }
-        public Nullable<decimal> QuantityOpen { get; set; }
-        public Nullable<int> UomEntry { get; set; }
-        public string Uom { get; set; }
-        public Nullable<long> DocEntry { get; set; }
-        public Nullable<long> LineNum { get; set; }
-        public string LineStatus { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedUser { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> ModifiedUser { get; set; }
+        public Nullable<long> DocEntry { get; set; }
+        public string DocNum { get; set; }
+        public Nullable<int> BaseLine { get; set; }
+        public Nullable<int> LineNum { get; set; }
+        public string ItemCode { get; set; }
+        public string ItemName { get; set; }
+        public string WhsCode { get; set; }
+        public Nullable<decimal> Quantity { get; set; }
+        public Nullable<decimal> QuantityOpen { get; set; }
+        public Nullable<decimal> QuantityScan { get; set; }
+        public Nullable<int> UomEntry { get; set; }
+        public string Uom { get; set; }
+        public Nullable<decimal> UnitPriceTc { get; set; }
+        public string LineStatus { get; set; }
     }
 }

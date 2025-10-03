@@ -40,9 +40,6 @@ namespace Models._Sap
                 case "dst_HANADB":
                     Servertype = SAPbobsCOM.BoDataServerTypes.dst_HANADB;
                     break;
-                //case "dst_MSSQL2016":
-                //    Servertype = SAPbobsCOM.BoDataServerTypes.dst_MSSQL2016;
-                //    break;
                 case "dst_MSSQL2014":
                     Servertype = SAPbobsCOM.BoDataServerTypes.dst_MSSQL2014;
                     break;

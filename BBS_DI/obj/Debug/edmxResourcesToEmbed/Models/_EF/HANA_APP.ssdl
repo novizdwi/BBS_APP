@@ -795,7 +795,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="bigint" Nullable="false" />
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="TransType" Type="nvarchar" MaxLength="50" />
     <Property Name="TransNo" Type="nvarchar" MaxLength="50" />
     <Property Name="TransDate" Type="timestamp" />
@@ -835,20 +835,20 @@
     <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
     <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
     <Property Name="Quantity" Type="decimal" Precision="21" Scale="6" />
-    <Property Name="QuantityScan" Type="decimal" Precision="21" Scale="2" />
     <Property Name="QuantityOpen" Type="decimal" Precision="21" Scale="2" />
+    <Property Name="QuantityScan" Type="decimal" Precision="21" Scale="2" />
     <Property Name="UomEntry" Type="int" />
     <Property Name="Uom" Type="nvarchar" MaxLength="50" />
     <Property Name="UnitPriceTc" Type="decimal" Precision="21" Scale="6" />
     <Property Name="LineStatus" Type="nvarchar" MaxLength="50" />
   </EntityType>
-  <EntityType Name="Tx_GoodsReceiptPO_Item_tag">
+  <EntityType Name="Tx_GoodsReceiptPO_Item_Tag">
     <Key>
       <PropertyRef Name="DetDetId" />
     </Key>
     <Property Name="Id" Type="bigint" />
     <Property Name="DetId" Type="bigint" />
-    <Property Name="DetDetId" Type="bigint" Nullable="false" />
+    <Property Name="DetDetId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
     <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
     <Property Name="TagId" Type="nvarchar" MaxLength="200" />
@@ -867,7 +867,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="bigint" Nullable="false" />
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="TransType" Type="nvarchar" MaxLength="50" />
     <Property Name="TransNo" Type="nvarchar" MaxLength="50" />
     <Property Name="TransDate" Type="timestamp" />
@@ -893,23 +893,25 @@
       <PropertyRef Name="DetId" />
     </Key>
     <Property Name="Id" Type="bigint" />
-    <Property Name="DetId" Type="bigint" Nullable="false" />
-    <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
-    <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
-    <Property Name="FreeText" Type="nvarchar" MaxLength="1000" />
-    <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
-    <Property Name="Quantity" Type="decimal" Precision="21" Scale="6" />
-    <Property Name="QuantityScan" Type="decimal" Precision="21" Scale="2" />
-    <Property Name="QuantityOpen" Type="decimal" Precision="21" Scale="2" />
-    <Property Name="UomEntry" Type="int" />
-    <Property Name="Uom" Type="nvarchar" MaxLength="50" />
-    <Property Name="DocEntry" Type="bigint" />
-    <Property Name="LineNum" Type="bigint" />
-    <Property Name="LineStatus" Type="nvarchar" MaxLength="50" />
+    <Property Name="DetId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CreatedDate" Type="timestamp" />
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
     <Property Name="ModifiedUser" Type="int" />
+    <Property Name="DocEntry" Type="bigint" />
+    <Property Name="DocNum" Type="nvarchar" MaxLength="50" />
+    <Property Name="BaseLine" Type="int" />
+    <Property Name="LineNum" Type="int" />
+    <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
+    <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="Quantity" Type="decimal" Precision="21" Scale="6" />
+    <Property Name="QuantityOpen" Type="decimal" Precision="21" Scale="2" />
+    <Property Name="QuantityScan" Type="decimal" Precision="21" Scale="2" />
+    <Property Name="UomEntry" Type="int" />
+    <Property Name="Uom" Type="nvarchar" MaxLength="50" />
+    <Property Name="UnitPriceTc" Type="decimal" Precision="21" Scale="6" />
+    <Property Name="LineStatus" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Tx_PurchaseOrder_Item_Tag">
     <Key>
@@ -917,7 +919,7 @@
     </Key>
     <Property Name="Id" Type="bigint" />
     <Property Name="DetId" Type="bigint" />
-    <Property Name="DetDetId" Type="bigint" Nullable="false" />
+    <Property Name="DetDetId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
     <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
     <Property Name="TagId" Type="nvarchar" MaxLength="200" />
@@ -986,7 +988,7 @@
     <EntitySet Name="Tx_GoodIssue" EntityType="Self.Tx_GoodIssue" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
     <EntitySet Name="Tx_GoodsReceiptPO" EntityType="Self.Tx_GoodsReceiptPO" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
     <EntitySet Name="Tx_GoodsReceiptPO_Item" EntityType="Self.Tx_GoodsReceiptPO_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_GoodsReceiptPO_Item_tag" EntityType="Self.Tx_GoodsReceiptPO_Item_tag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_GoodsReceiptPO_Item_Tag" EntityType="Self.Tx_GoodsReceiptPO_Item_Tag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
     <EntitySet Name="Tx_PurchaseOrder" EntityType="Self.Tx_PurchaseOrder" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
     <EntitySet Name="Tx_PurchaseOrder_Item" EntityType="Self.Tx_PurchaseOrder_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
     <EntitySet Name="Tx_PurchaseOrder_Item_Tag" EntityType="Self.Tx_PurchaseOrder_Item_Tag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />

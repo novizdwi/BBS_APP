@@ -877,8 +877,8 @@
           <ScalarProperty Name="UnitPriceTc" ColumnName="UnitPriceTc" />
           <ScalarProperty Name="Uom" ColumnName="Uom" />
           <ScalarProperty Name="UomEntry" ColumnName="UomEntry" />
-          <ScalarProperty Name="QuantityOpen" ColumnName="QuantityOpen" />
           <ScalarProperty Name="QuantityScan" ColumnName="QuantityScan" />
+          <ScalarProperty Name="QuantityOpen" ColumnName="QuantityOpen" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="WhsCode" ColumnName="WhsCode" />
           <ScalarProperty Name="ItemName" ColumnName="ItemName" />
@@ -896,9 +896,9 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Tx_GoodsReceiptPO_Item_tag">
-      <EntityTypeMapping TypeName="Model1.Tx_GoodsReceiptPO_Item_tag">
-        <MappingFragment StoreEntitySet="Tx_GoodsReceiptPO_Item_tag">
+    <EntitySetMapping Name="Tx_GoodsReceiptPO_Item_Tag">
+      <EntityTypeMapping TypeName="Model1.Tx_GoodsReceiptPO_Item_Tag">
+        <MappingFragment StoreEntitySet="Tx_GoodsReceiptPO_Item_Tag">
           <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -947,22 +947,24 @@
     <EntitySetMapping Name="Tx_PurchaseOrder_Item">
       <EntityTypeMapping TypeName="Model1.Tx_PurchaseOrder_Item">
         <MappingFragment StoreEntitySet="Tx_PurchaseOrder_Item">
+          <ScalarProperty Name="LineStatus" ColumnName="LineStatus" />
+          <ScalarProperty Name="UnitPriceTc" ColumnName="UnitPriceTc" />
+          <ScalarProperty Name="Uom" ColumnName="Uom" />
+          <ScalarProperty Name="UomEntry" ColumnName="UomEntry" />
+          <ScalarProperty Name="QuantityScan" ColumnName="QuantityScan" />
+          <ScalarProperty Name="QuantityOpen" ColumnName="QuantityOpen" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="WhsCode" ColumnName="WhsCode" />
+          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+          <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+          <ScalarProperty Name="LineNum" ColumnName="LineNum" />
+          <ScalarProperty Name="BaseLine" ColumnName="BaseLine" />
+          <ScalarProperty Name="DocNum" ColumnName="DocNum" />
+          <ScalarProperty Name="DocEntry" ColumnName="DocEntry" />
           <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="LineStatus" ColumnName="LineStatus" />
-          <ScalarProperty Name="LineNum" ColumnName="LineNum" />
-          <ScalarProperty Name="DocEntry" ColumnName="DocEntry" />
-          <ScalarProperty Name="Uom" ColumnName="Uom" />
-          <ScalarProperty Name="UomEntry" ColumnName="UomEntry" />
-          <ScalarProperty Name="QuantityOpen" ColumnName="QuantityOpen" />
-          <ScalarProperty Name="QuantityScan" ColumnName="QuantityScan" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="WhsCode" ColumnName="WhsCode" />
-          <ScalarProperty Name="FreeText" ColumnName="FreeText" />
-          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-          <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
           <ScalarProperty Name="DetId" ColumnName="DetId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>

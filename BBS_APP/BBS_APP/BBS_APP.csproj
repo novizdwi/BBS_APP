@@ -662,6 +662,19 @@
     <Content Include="Views\_Cfl\_CflRefMR\Partial\_CflRefMR_List_Partial.cshtml" />
     <Content Include="Views\_Cfl\_CflRefMR\Partial\_CflRefMR_Panel_List_Partial.cshtml" />
     <Content Include="Views\Authentication\User\Partial\User_TabWarehouse_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Purchasing\PurchaseOrder\Partial\PurchaseOrder_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Purchasing\PurchaseOrder\Partial\PurchaseOrder_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Purchasing\PurchaseOrder\Partial\PurchaseOrder_Form_TabDetail_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Purchasing\PurchaseOrder\Partial\PurchaseOrder_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Purchasing\PurchaseOrder\Partial\PurchaseOrder_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Purchasing\PurchaseOrder\PurchaseOrder.cshtml" />
+    <Content Include="Views\Transaction\Web\Purchasing\PurchaseOrder\Partial\ItemTag\ItemTag_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Purchasing\PurchaseOrder\Partial\ItemTag\ItemTag_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Purchasing\PurchaseOrder\Partial\ItemTag\ItemTag_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Purchasing\PurchaseOrder\Partial\ItemTag\ItemTag_TabItemTagList_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Purchasing\PurchaseOrder\Partial\CancelReason\CancelReason_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Purchasing\PurchaseOrder\Partial\CancelReason\CancelReason_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Purchasing\PurchaseOrder\Partial\CancelReason\CancelReason_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -731,6 +744,11 @@
     <Compile Include="Controllers\Setting\Report\ReportController.List.cs" />
     <Compile Include="Controllers\Setting\Report\ReportController.List.Export.cs" />
     <Compile Include="Controllers\Setting\Report\ReportController.Nav.cs" />
+    <Compile Include="Controllers\Transaction\Web\Purchasing\PurchaseController.ViewItemTag.cs" />
+    <Compile Include="Controllers\Transaction\Web\Purchasing\PurchaseOrderController.CancelReason.cs" />
+    <Compile Include="Controllers\Transaction\Web\Purchasing\PurchaseOrderController.List.cs" />
+    <Compile Include="Controllers\Transaction\Web\Purchasing\PurchaseOrderController.Nav.cs" />
+    <Compile Include="Controllers\Transaction\Web\Purchasing\PurchaseOrderController.Tab.Detail.cs" />
     <Compile Include="Controllers\Transaction\Web\Purchasing\PurchaseOrderController.cs" />
     <Compile Include="Controllers\_Cfl\_CflActivity\_CflActivityController.List.cs" />
     <Compile Include="Controllers\_Cfl\_CflActivity\_CflActivityController.List.Export.cs" />
@@ -823,8 +841,6 @@
     <Folder Include="Views\Authentication\Login\Partial\" />
     <Folder Include="Views\Logout\" />
     <Folder Include="Views\Master\" />
-    <Folder Include="Views\PurchaseOrder\" />
-    <Folder Include="Views\Transaction\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BBS_DI\BBS_DI.csproj">

@@ -12,7 +12,7 @@ namespace BBS_DI.Models._EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Tx_GoodsReceiptPO_Item_tag
+    public partial class Tx_GoodsReceiptPO_Item_Tag
     {
         public Nullable<long> Id { get; set; }
         public Nullable<long> DetId { get; set; }
