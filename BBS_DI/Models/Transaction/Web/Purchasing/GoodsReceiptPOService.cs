@@ -130,6 +130,10 @@ namespace Models.Transaction.Web.Purchasing
 
         public long DetId { get; set; }
 
+        public string ItemCode { get; set; }
+
+        public string ItemName { get; set; }
+
         public List<GoodsReceiptPOItemTagModel> GoodsReceiptPOItemTagModel___ { get; set; }
     }
 
@@ -729,16 +733,20 @@ namespace Models.Transaction.Web.Purchasing
         {
             string sql = null;
             GoodsReceiptPOItemTagView___ model = new GoodsReceiptPOItemTagView___();
-            model.Id = id;
-            model.DetId = detId;
 
             using (var CONTEXT = new HANA_APP())
             {
-                string ssql = @"SELECT ROW_NUMBER() OVER (ORDER BY ""DetDetId"") AS ""RowNo"", T0.* 
+                sql = @"SELECT T0.""Id"", T0.""DetId"", T0.""ItemCode"", T0.""ItemName""
+                                FROM ""Tx_GoodsReceiptPO"" T0   
+                                WHERE T0.""Id""=:p0 AND ""DetId"" = :p1 ";
+
+                model = CONTEXT.Database.SqlQuery<GoodsReceiptPOItemTagView___>(sql, id, detId).FirstOrDefault();
+
+                sql = @"SELECT ROW_NUMBER() OVER (ORDER BY ""DetDetId"") AS ""RowNo"", T0.* 
                             FROM ""Tx_GoodsReceiptPO_Item_Tag"" T0   
                             WHERE T0.""Id""=:p0 AND ""DetId"" = :p1 ";
 
-                model.GoodsReceiptPOItemTagModel___ = CONTEXT.Database.SqlQuery<GoodsReceiptPOItemTagModel>(ssql, id, detId).ToList();
+                model.GoodsReceiptPOItemTagModel___ = CONTEXT.Database.SqlQuery<GoodsReceiptPOItemTagModel>(sql, id, detId).ToList();
             }
 
             return model;

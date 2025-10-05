@@ -11,44 +11,23 @@
 
     settings.CommandColumn.Width = 70;
 
+
     settings.Settings.ShowFilterRow = false;
     settings.Settings.ShowFilterRowMenu = false;
     settings.SettingsBehavior.AllowSort = false;
+
     settings.Columns.Add("Id", "Id").Visible = false;
     settings.Columns.Add("DetId", "DetId").Visible = false;
     settings.Columns.Add("DetDetId", "DetDetId").Visible = false;
-    settings.Columns.Add("RowNo", "No.").Width = 50;
+    settings.Columns.Add("RowNo", "No.").Width = 40;
 
-    settings.Columns.Add(column =>
-    {
-        column.FieldName = "ItemCode";
-        column.Name = "ItemCode";
-        column.Caption = "Item Code";
-        column.Width = 50;
-        column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Visible = true;
-
-        column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
-    });
-
-    settings.Columns.Add(column =>
-    {
-        column.FieldName = "ItemName";
-        column.Name = "ItemName";
-        column.Caption = "Item Name";
-        column.Width = 100;
-        column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Visible = true;
-
-        column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
-    });
 
     settings.Columns.Add(column =>
     {
         column.FieldName = "TagId";
         column.Name = "TagId";
         column.Caption = "Tag Id";
-        column.Width = 50;
+        column.Width = 100;
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Visible = true;
 
@@ -60,7 +39,7 @@
         column.FieldName = "EventType";
         column.Name = "EventType";
         column.Caption = "Event Type";
-        column.Width = 80;
+        column.Width = 150;
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Visible = true;
 

@@ -67,7 +67,37 @@
         itemSettings.Width = 150;
         itemSettings.HorizontalAlign = FormLayoutHorizontalAlign.Right;
     });
-    
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.Name = "ItemCode";
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Item Code";
+        itemSettings.FieldName = "ItemCode";
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "ItemCode";
+        txt.ShowModelErrors = true;
+        txt.ReadOnly = true;
+        txt.ControlStyle.CssClass = "editor";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Width = 230;
+    });
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.Name = "ItemName";
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Item Name";
+        itemSettings.FieldName = "ItemName";
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "ItemName";
+        txt.ShowModelErrors = true;
+        txt.ReadOnly = true;
+        txt.ControlStyle.CssClass = "editor";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Width = 230;
+    });
+
     groupItem_Col1.Items.AddTabbedGroupItem(group =>
     {
         group.Name = "ViewViewItemTag_TabItemTag";

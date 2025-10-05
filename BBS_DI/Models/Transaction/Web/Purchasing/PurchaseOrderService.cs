@@ -130,6 +130,10 @@ namespace Models.Transaction.Web.Purchasing
 
         public long DetId { get; set; }
 
+        public string ItemCode { get; set; }
+
+        public string ItemName { get; set; }
+
         public List<PurchaseOrderItemTagModel> PurchaseOrderItemTagModel___ { get; set; }
     }
 
@@ -727,17 +731,21 @@ namespace Models.Transaction.Web.Purchasing
         public PurchaseOrderItemTagView___ GetItemTags(long id, long detId)
         {
             string sql = null;
-            PurchaseOrderItemTagView___ model = new PurchaseOrderItemTagView___();
-            model.Id = id;
-            model.DetId = detId;
 
+            PurchaseOrderItemTagView___ model = new PurchaseOrderItemTagView___();
             using (var CONTEXT = new HANA_APP())
             {
-                string ssql = @"SELECT ROW_NUMBER() OVER (ORDER BY ""DetDetId"") AS ""RowNo"", T0.* 
+                sql = @"SELECT T0.""Id"", T0.""DetId"", T0.""ItemCode"", T0.""ItemName""
+                                FROM ""Tx_PurchaseOrder_Item"" T0   
+                                WHERE T0.""Id""=:p0 AND ""DetId"" = :p1 ";
+
+                model = CONTEXT.Database.SqlQuery<PurchaseOrderItemTagView___>(sql, id, detId).FirstOrDefault();
+
+                sql = @"SELECT ROW_NUMBER() OVER (ORDER BY ""DetDetId"") AS ""RowNo"", T0.* 
                             FROM ""Tx_PurchaseOrder_Item_Tag"" T0   
                             WHERE T0.""Id""=:p0 AND ""DetId"" = :p1 ";
 
-                model.PurchaseOrderItemTagModel___ = CONTEXT.Database.SqlQuery<PurchaseOrderItemTagModel>(ssql, id, detId).ToList();
+                model.PurchaseOrderItemTagModel___ = CONTEXT.Database.SqlQuery<PurchaseOrderItemTagModel>(sql, id, detId).ToList();
             }
 
             return model;
