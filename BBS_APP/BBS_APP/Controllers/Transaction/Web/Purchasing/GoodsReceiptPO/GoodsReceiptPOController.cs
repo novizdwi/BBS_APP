@@ -76,30 +76,30 @@ namespace Controllers.Transaction.Web.Purchasing
             return PartialView(VIEW_FORM_PARTIAL, goodsReceiptPOModel);
         }
 
-        //[HttpPost, ValidateInput(false)]
-        //public ActionResult Add([ModelBinder(typeof(DevExpressEditorsBinder))]  GoodsReceiptPOModel goodsReceiptPOModel)
-        //{
-        //    int userId = (int)Session["userId"];
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Add([ModelBinder(typeof(DevExpressEditorsBinder))]  GoodsReceiptPOModel goodsReceiptPOModel)
+        {
+            int userId = (int)Session["userId"];
 
-        //    goodsReceiptPOModel._UserId = (int)Session["userId"];
-        //    goodsReceiptPOService = new GoodsReceiptPOService();
+            goodsReceiptPOModel._UserId = (int)Session["userId"];
+            goodsReceiptPOService = new GoodsReceiptPOService();
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        long Id = 0;
+            if (ModelState.IsValid)
+            {
+                long Id = 0;
 
-        //        Id = goodsReceiptPOService.Add(goodsReceiptPOModel);
-        //        goodsReceiptPOModel = goodsReceiptPOService.GetById(userId, Id);
-        //        goodsReceiptPOModel._FormMode = Models.FormModeEnum.Edit;
-        //    }
-        //    else
-        //    {
-        //        string message = GetErrorModel();
-        //        throw new Exception(string.Format("[VALIDATION] {0}", message));
-        //    }
+                Id = goodsReceiptPOService.Add(goodsReceiptPOModel);
+                goodsReceiptPOModel = goodsReceiptPOService.GetById(userId, Id);
+                goodsReceiptPOModel._FormMode = Models.FormModeEnum.Edit;
+            }
+            else
+            {
+                string message = GetErrorModel();
+                throw new Exception(string.Format("[VALIDATION] {0}", message));
+            }
 
-        //    return PartialView(VIEW_FORM_PARTIAL, goodsReceiptPOModel);
-        //}
+            return PartialView(VIEW_FORM_PARTIAL, goodsReceiptPOModel);
+        }
 
         [HttpPost, ValidateInput(false)]
         public ActionResult Update([ModelBinder(typeof(DevExpressEditorsBinder))]  GoodsReceiptPOModel goodsReceiptPOModel)
@@ -178,5 +178,16 @@ namespace Controllers.Transaction.Web.Purchasing
             return PartialView(VIEW_FORM_PARTIAL, goodsReceiptPOModel);
         }
 
+
+        public ActionResult RefreshItem(long Id)
+        {
+            int userId = (int)Session["userId"];
+
+            goodsReceiptPOService = new GoodsReceiptPOService();
+            var result = goodsReceiptPOService.RefreshItem(userId, Id);
+
+            return Content(result.ToString());
+
+        }
     }
 }

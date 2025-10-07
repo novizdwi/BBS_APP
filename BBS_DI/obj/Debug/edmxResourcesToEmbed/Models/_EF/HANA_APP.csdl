@@ -903,6 +903,8 @@
     <Property Name="Uom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="UnitPriceTc" Type="Decimal" Precision="21" Scale="6" />
     <Property Name="LineStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BaseId" Type="Int64" />
+    <Property Name="BaseDetId" Type="Int64" />
   </EntityType>
   <EntityType Name="Tx_GoodsReceiptPO_Item_Tag">
     <Key>

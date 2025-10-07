@@ -189,7 +189,9 @@ namespace Models.Transaction.Web.Purchasing
                 string ssql = @"SELECT *, T1.""FirstName"" AS ""UserName"" 
                             FROM ""Tx_PurchaseOrder"" T0
                             LEFT JOIN ""Tm_User"" T1 ON T0.""ModifiedUser"" = T1.""Id""
-                            WHERE T0.""Id""=:p0 ";
+                            WHERE T0.""Id"" = :p0 
+                            ORDER BY T0.""Id"" ASC
+                ";
 
                 model = CONTEXT.Database.SqlQuery<PurchaseOrderModel>(ssql, id).Single();
 
@@ -211,7 +213,9 @@ namespace Models.Transaction.Web.Purchasing
         {
             string ssql = @"SELECT * 
                 FROM ""Tx_PurchaseOrder_Item"" 
-                WHERE ""Id"" =:p0";
+                WHERE ""Id"" =:p0
+                ORDER BY ""DetId"" ASC
+            ";
             var purchaseOrder = CONTEXT.Database.SqlQuery<PurchaseOrder_DetailModel>(ssql, id).ToList();
             return purchaseOrder;
         }
@@ -311,114 +315,76 @@ namespace Models.Transaction.Web.Purchasing
             return model;
         }
 
-        //public long Add(PurchaseOrderModel model)
-        //{
-        //    long Id = 0;
+        public long Add(PurchaseOrderModel model)
+        {
+            long Id = 0;
 
-        //    if (model != null)
-        //    {
-        //        using (var CONTEXT = new HANA_APP())
-        //        {
+            if (model != null)
+            {
+                using (var CONTEXT = new HANA_APP())
+                {
 
-        //            using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
-        //            {
-        //                try
-        //                {
+                    using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                    {
+                        try
+                        {
 
-        //                    Tx_PurchaseOrder Tx_PurchaseOrder = new Tx_PurchaseOrder();
-        //                    CopyProperty.CopyProperties(model, Tx_PurchaseOrder, false);
+                            Tx_PurchaseOrder Tx_PurchaseOrder = new Tx_PurchaseOrder();
+                            CopyProperty.CopyProperties(model, Tx_PurchaseOrder, false);
 
-        //                    DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-        //                    Tx_PurchaseOrder.TransType = "PurchaseOrder";
-        //                    Tx_PurchaseOrder.CreatedDate = dtModified;
-        //                    Tx_PurchaseOrder.CreatedUser = model._UserId;
-        //                    Tx_PurchaseOrder.ModifiedDate = dtModified;
-        //                    Tx_PurchaseOrder.ModifiedUser = model._UserId;
-        //                    if (model.StartDate != null)
-        //                    {
-        //                        Tx_PurchaseOrder.Status2 = "On Progress";
-        //                    }
-        //                    else
-        //                    {
-        //                        Tx_PurchaseOrder.Status2 = "Open";
-        //                    }
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                            Tx_PurchaseOrder.TransType = "PurchaseOrder";
+                            Tx_PurchaseOrder.CreatedDate = dtModified;
+                            Tx_PurchaseOrder.CreatedUser = model._UserId;
+                            Tx_PurchaseOrder.ModifiedDate = dtModified;
+                            Tx_PurchaseOrder.ModifiedUser = model._UserId;
+                            
+                            string dateX = model.TransDate.Value.ToString("yyyy-MM-dd");
+                            string transNo = CONTEXT.Database.SqlQuery<string>("CALL \"SpSysGetNumbering\" (" + model._UserId.ToString() + ",'PurchaseOrder','" + dateX + "','') ").SingleOrDefault();
+                            Tx_PurchaseOrder.TransNo = transNo;
 
-        //                    if (model.EndDate != null)
-        //                    {
-        //                        Tx_PurchaseOrder.Status2 = "Close";
-        //                    }
+                            CONTEXT.Tx_PurchaseOrder.Add(Tx_PurchaseOrder);
+                            CONTEXT.SaveChanges();
+                            Id = Tx_PurchaseOrder.Id;
 
-        //                    string dateX = model.TransDate.Value.ToString("yyyy-MM-dd");
-        //                    string transNo = CONTEXT.Database.SqlQuery<string>("CALL \"SpSysGetNumbering\" (" + model._UserId.ToString() + ",'PurchaseOrder','" + dateX + "','') ").SingleOrDefault();
-        //                    Tx_PurchaseOrder.TransNo = transNo;
+                            String keyValue;
+                            keyValue = Tx_PurchaseOrder.Id.ToString();
 
-        //                    CONTEXT.Tx_PurchaseOrder.Add(Tx_PurchaseOrder);
-        //                    CONTEXT.SaveChanges();
-        //                    Id = Tx_PurchaseOrder.Id;
+                            CONTEXT.Database.ExecuteSqlCommand(
+                            "CALL \"SpGoodsReceiptPO_AddItemDetail\" ({0}, {1}, {2})",
+                            model._UserId,
+                            keyValue
+                        );
 
-        //                    String keyValue;
-        //                    keyValue = Tx_PurchaseOrder.Id.ToString();
-
-        //                    if (model.Details_ != null)
-        //                    {
-        //                        if (model.Details_.insertedRowValues != null)
-        //                        {
-        //                            foreach (var detail in model.Details_.insertedRowValues)
-        //                            {
-        //                                Detail_Add(CONTEXT, detail, Id, model._UserId);
-        //                            }
-        //                        }
-
-        //                        if (model.Details_.modifiedRowValues != null)
-        //                        {
-        //                            foreach (var detail in model.Details_.modifiedRowValues)
-        //                            {
-        //                                Detail_Update(CONTEXT, detail, model._UserId);
-        //                            }
-        //                        }
-
-        //                        if (model.Details_.deletedRowKeys != null)
-        //                        {
-        //                            foreach (var detId in model.Details_.deletedRowKeys)
-        //                            {
-        //                                PurchaseOrder_DetailModel detailModel = new PurchaseOrder_DetailModel();
-        //                                detailModel.DetId = detId;
-        //                                Detail_Delete(CONTEXT, detailModel);
-        //                            }
-        //                        }
-        //                    }
+                            SpNotif.SpSysTransNotif(model._UserId, CONTEXT, "after", "Tx_PurchaseOrder", "add", "Id", keyValue);
 
 
+                            CONTEXT_TRANS.Commit();
+                        }
 
-        //                    SpNotif.SpSysTransNotif(model._UserId, CONTEXT, "after", "Tx_PurchaseOrder", "add", "Id", keyValue);
+                        catch (Exception ex)
+                        {
+                            CONTEXT_TRANS.Rollback();
 
+                            string errorMassage;
+                            if (ex.Message.Substring(12) == "[VALIDATION]")
+                            {
+                                errorMassage = ex.Message;
+                            }
+                            else
+                            {
+                                errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                            }
 
-        //                    CONTEXT_TRANS.Commit();
-        //                }
+                            throw new Exception(errorMassage);
+                        }
+                    }
+                }
+            }
 
-        //                catch (Exception ex)
-        //                {
-        //                    CONTEXT_TRANS.Rollback();
+            return Id;
 
-        //                    string errorMassage;
-        //                    if (ex.Message.Substring(12) == "[VALIDATION]")
-        //                    {
-        //                        errorMassage = ex.Message;
-        //                    }
-        //                    else
-        //                    {
-        //                        errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
-        //                    }
-
-        //                    throw new Exception(errorMassage);
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    return Id;
-
-        //}
+        }
 
         public void Update(PurchaseOrderModel model)
         {
@@ -639,7 +605,7 @@ namespace Models.Transaction.Web.Purchasing
                         if (tx_PurchaseOrder != null)
                         {
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                            tx_PurchaseOrder.Status = "Post";
+                            tx_PurchaseOrder.Status = "Posted";
                             tx_PurchaseOrder.IsAfterPosted = "Y";
                             tx_PurchaseOrder.ModifiedDate = dtModified;
                             tx_PurchaseOrder.ModifiedUser = userId;

@@ -1,0 +1,138 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using DevExpress.Web.Mvc;
+using System.Threading;
+using Models;
+
+using System.Net;
+using Models._Cfl;
+
+
+
+namespace Controllers._Cfl
+{
+    public partial class _CflPurchaseOrderController : BaseController
+    {
+        string VIEW_LIST_PARTIAL = "Partial/_CflPurchaseOrder_List_Partial";
+        string VIEW_PANEL_LIST_PARTIAL = "Partial/_CflPurchaseOrder_Panel_List_Partial";
+
+        public CflPurchaseOrder_ParamModel GetParam(HttpRequestBase Request, int userId = 0)
+        {
+            var cflParam = new CflPurchaseOrder_ParamModel();
+            cflParam.Type = Request["hidden_CflType"];
+            cflParam.Name = Request["hidden_CflName"];
+            cflParam.Header = Request["hidden_CflHeader"];
+            cflParam.SqlWhere = Request["hidden_CflSqlWhere"];
+            cflParam.IsMulti = Request["hidden_CflIsMulti"];
+
+            if (cflParam.Type == "GoodReceiptPo")
+            {
+                //var hidden_CflSlpCode = (string)Request["hidden_CflSlpCode"];
+                //hidden_CflSlpCode = hidden_CflSlpCode.Replace("'", "''");
+
+                //cflParam.SqlWhere = string.Format(" AND Tx_Delivery___.SalesEmployeeId='{0}' ", hidden_CflSlpCode);
+                //var hidden_CflBpCode = (string)Request["hidden_CflBpCode"];
+                //hidden_CflBpCode = hidden_CflBpCode.Replace("'", "''");
+
+                //cflParam.SqlWhere = string.Format(" AND Tx_PurchaseOrder___.BpCode='{0}' ", hidden_CflBpCode);
+
+            }
+
+            return cflParam;
+        }
+
+
+        public ActionResult ListPartial()
+        {
+            int userId = (int)Session["userId"];
+
+            var cflPurchaseOrderParam = GetParam(Request, userId);  
+
+            var viewModel = GetListModel(cflPurchaseOrderParam.Name);
+            ProcessCustomBinding(userId, cflPurchaseOrderParam, viewModel);
+
+            return PartialView(VIEW_LIST_PARTIAL, viewModel);
+        }
+
+        // Paging
+        public ActionResult ListPaging(GridViewPagerState pager)
+        {
+            int userId = (int)Session["userId"];
+
+            var cflPurchaseOrderParam = GetParam(Request, userId);  
+
+            var viewModel = GetListModel(cflPurchaseOrderParam.Name);
+            viewModel.ApplyPagingState(pager);
+            ProcessCustomBinding(userId, cflPurchaseOrderParam, viewModel);
+
+            return PartialView(VIEW_LIST_PARTIAL, viewModel);
+        }
+
+        // Filtering 
+        public ActionResult ListFiltering(GridViewFilteringState filteringState)
+        {
+            int userId = (int)Session["userId"];
+
+            var cflPurchaseOrderParam = GetParam(Request, userId);  
+
+            var viewModel = GetListModel(cflPurchaseOrderParam.Name);
+            viewModel.ApplyFilteringState(filteringState);
+            ProcessCustomBinding(userId, cflPurchaseOrderParam, viewModel);
+
+            return PartialView(VIEW_LIST_PARTIAL, viewModel);
+        }
+
+        // Sorting
+        public ActionResult ListSorting(GridViewColumnState column, bool reset)
+        {
+            int userId = (int)Session["userId"];
+
+            var cflPurchaseOrderParam = GetParam(Request, userId);  
+
+            var viewModel = GetListModel(cflPurchaseOrderParam.Name);
+            viewModel.ApplySortingState(column, reset);
+            ProcessCustomBinding(userId, cflPurchaseOrderParam, viewModel);
+
+            return PartialView(VIEW_LIST_PARTIAL, viewModel);
+        }
+
+
+
+        static GridViewModel GetListModel(string name)
+        {
+            var viewModel = GridViewExtension.GetViewModel("gvCflPurchaseOrderList" + name);
+            if (viewModel == null)
+            {
+                viewModel = CflPurchaseOrder_Model.CreateGridViewModel();
+            }
+
+            return viewModel;
+        }
+
+        static void ProcessCustomBinding(int userId, CflPurchaseOrder_ParamModel cflPurchaseOrderParam, GridViewModel viewModel)
+        { 
+
+            CflPurchaseOrder_Model.SetBindingData(viewModel, userId, cflPurchaseOrderParam ); 
+
+        }
+
+        public ActionResult PopupListLoadOnDemandPartial()
+        {
+            int userId = (int)Session["userId"];
+
+            var cflPurchaseOrderParam = GetParam(Request, userId);  
+
+            var viewModel = GetListModel(cflPurchaseOrderParam.Name);
+            ProcessCustomBinding(userId, cflPurchaseOrderParam, viewModel);
+
+            ViewBag.viewModel = viewModel; 
+
+            return PartialView(VIEW_PANEL_LIST_PARTIAL, cflPurchaseOrderParam);
+        }
+
+    }
+}

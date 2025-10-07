@@ -34,5 +34,7 @@ namespace BBS_DI.Models._EF
         public string Uom { get; set; }
         public Nullable<decimal> UnitPriceTc { get; set; }
         public string LineStatus { get; set; }
+        public Nullable<long> BaseId { get; set; }
+        public Nullable<long> BaseDetId { get; set; }
     }
 }

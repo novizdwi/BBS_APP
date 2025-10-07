@@ -873,6 +873,8 @@
     <EntitySetMapping Name="Tx_GoodsReceiptPO_Item">
       <EntityTypeMapping TypeName="Model1.Tx_GoodsReceiptPO_Item">
         <MappingFragment StoreEntitySet="Tx_GoodsReceiptPO_Item">
+          <ScalarProperty Name="BaseDetId" ColumnName="BaseDetId" />
+          <ScalarProperty Name="BaseId" ColumnName="BaseId" />
           <ScalarProperty Name="LineStatus" ColumnName="LineStatus" />
           <ScalarProperty Name="UnitPriceTc" ColumnName="UnitPriceTc" />
           <ScalarProperty Name="Uom" ColumnName="Uom" />

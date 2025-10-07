@@ -52,7 +52,6 @@
 
         var grpBtnUpdate = formLayouBtn.GetItemByName('grpBtnUpdate');
         var btnUpdate = ASPxClientButton.Cast('btnUpdate');
-        btnAdd.SetEnabled(false);
 
         var btnRefresh = ASPxClientButton.Cast('btnRefresh');
 
@@ -206,7 +205,34 @@
         //ExpiredTypeOnValueChange();
     }
 
+    function btnRefreshItemOnClick(s, e) {
+        if (!confirm('are you sure want to refresh item detail?'))
+        {
+            return;
+        }
 
+        var key = Id.GetValue();
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("RefreshItem", "PurchaseOrder")',
+            data: { Id: key },
+            beforeSend: function () {
+                OnBegin();
+            },
+            success: function (response) {
+                gvGoodsReceiptPOList.PerformCallback();
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                OnFailure(jqXhr, textStatus, errorThrown)
+            },
+            complete: function () {
+                OnComplete()
+            }
+        });
+
+
+    }
 
     function OnClickBtnNew(s, e) {
 
@@ -567,6 +593,9 @@
         });
     }
 
+    function BtnCflPOOnClick(s, e) {
+        cflPurchaseOrderPopupListGoodsReceiptPO.Show();
+    }
 
 </script>
 
@@ -648,6 +677,37 @@ new
 }
 
 
+@{
+    var cflPurchaseOrder_ParamModel = new CflPurchaseOrder_ParamModel();
+    cflPurchaseOrder_ParamModel.Name = "GoodsReceiptPO";
+    cflPurchaseOrder_ParamModel.Type = "GoodsReceiptPO";
+    cflPurchaseOrder_ParamModel.Header = " Goods Receipt PO";
+    cflPurchaseOrder_ParamModel.SqlWhere = " ";
+    cflPurchaseOrder_ParamModel.IsMulti = "N";
+}
+
+
+
+<script type="text/javascript">
+
+
+    function OnClickChoose_cflPurchaseOrderGoodsReceiptPO(s, e, data) {
+        VendorCode.SetValue(data.VendorCode);
+        VendorName.SetValue(data.VendorName);
+
+        BaseEntry.SetValue(data.DocEntry);
+        BaseDocNum.SetValue(data.DocNum);
+
+        Comments.SetValue("Based on PO: " + data.DocNum + " - " + data.Comments);
+        cflPurchaseOrderPopupListGoodsReceiptPO.Hide();
+
+    }
+
+
+</script>
+@Html.Partial("~/Views/_Cfl/_CflPurchaseOrder/Partial/_CflPurchaseOrder_Panel_List_Partial.cshtml", cflPurchaseOrder_ParamModel)
+
+
 @*
     -----------------------------------------------------------------------------
     loadingPanel
@@ -697,6 +757,7 @@ new
 </script>
 
 @Html.Partial("Partial/ItemTag/ItemTag_Partial")
+
 
 @*
     -----------------------------------------------------------------------------

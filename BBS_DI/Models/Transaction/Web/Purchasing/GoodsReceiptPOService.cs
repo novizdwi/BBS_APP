@@ -40,6 +40,10 @@ namespace Models.Transaction.Web.Purchasing
 
         public long Id { get; set; }
 
+        public long? BaseId { get; set; }
+
+        public long? BaseDetId { get; set; }
+
         public string TransNo { get; set; }
 
         public DateTime? TransDate { get; set; }
@@ -55,6 +59,10 @@ namespace Models.Transaction.Web.Purchasing
         public long? DocEntry { get; set; }
 
         public string DocNum { get; set; }
+
+        public long? BaseEntry { get; set; }
+
+        public string BaseDocNum { get; set; }
 
         public string RefNo { get; set; }
 
@@ -171,6 +179,7 @@ namespace Models.Transaction.Web.Purchasing
         {
             GoodsReceiptPOModel model = new GoodsReceiptPOModel();
             model.Status = "Draft";
+            model.TransDate = DateTime.Now;
             return model;
         }
 
@@ -190,7 +199,9 @@ namespace Models.Transaction.Web.Purchasing
                 string ssql = @"SELECT *, T1.""FirstName"" AS ""UserName"" 
                             FROM ""Tx_GoodsReceiptPO"" T0
                             LEFT JOIN ""Tm_User"" T1 ON T0.""ModifiedUser"" = T1.""Id""
-                            WHERE T0.""Id""=:p0 ";
+                            WHERE T0.""Id"" = :p0 
+                            ORDER BY T0.""Id"" ASC
+                ";
 
                 model = CONTEXT.Database.SqlQuery<GoodsReceiptPOModel>(ssql, id).Single();
 
@@ -212,7 +223,9 @@ namespace Models.Transaction.Web.Purchasing
         {
             string ssql = @"SELECT * 
                 FROM ""Tx_GoodsReceiptPO_Item"" 
-                WHERE ""Id"" =:p0";
+                WHERE ""Id"" =:p0
+                ORDER BY ""DetId"" ASC
+            ";
             var goodsReceiptPO = CONTEXT.Database.SqlQuery<GoodsReceiptPO_DetailModel>(ssql, id).ToList();
             return goodsReceiptPO;
         }
@@ -312,114 +325,81 @@ namespace Models.Transaction.Web.Purchasing
             return model;
         }
 
-        //public long Add(GoodsReceiptPOModel model)
-        //{
-        //    long Id = 0;
+        public bool RefreshItem(int userId, long id)
+        {
+            bool ret = true;
+            if (id != 0)
+            {
+                using (var CONTEXT = new HANA_APP())
+                {
 
-        //    if (model != null)
-        //    {
-        //        using (var CONTEXT = new HANA_APP())
-        //        {
+                }
+            }
+            return ret;
+        }
 
-        //            using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
-        //            {
-        //                try
-        //                {
+        public long Add(GoodsReceiptPOModel model)
+        {
+            long Id = 0;
 
-        //                    Tx_GoodsReceiptPO Tx_GoodsReceiptPO = new Tx_GoodsReceiptPO();
-        //                    CopyProperty.CopyProperties(model, Tx_GoodsReceiptPO, false);
+            if (model != null)
+            {
+                using (var CONTEXT = new HANA_APP())
+                {
 
-        //                    DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-        //                    Tx_GoodsReceiptPO.TransType = "GoodsReceiptPO";
-        //                    Tx_GoodsReceiptPO.CreatedDate = dtModified;
-        //                    Tx_GoodsReceiptPO.CreatedUser = model._UserId;
-        //                    Tx_GoodsReceiptPO.ModifiedDate = dtModified;
-        //                    Tx_GoodsReceiptPO.ModifiedUser = model._UserId;
-        //                    if (model.StartDate != null)
-        //                    {
-        //                        Tx_GoodsReceiptPO.Status2 = "On Progress";
-        //                    }
-        //                    else
-        //                    {
-        //                        Tx_GoodsReceiptPO.Status2 = "Open";
-        //                    }
+                    using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            Tx_GoodsReceiptPO Tx_GoodsReceiptPO = new Tx_GoodsReceiptPO();
+                            CopyProperty.CopyProperties(model, Tx_GoodsReceiptPO, false);
 
-        //                    if (model.EndDate != null)
-        //                    {
-        //                        Tx_GoodsReceiptPO.Status2 = "Close";
-        //                    }
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                            Tx_GoodsReceiptPO.TransType = "GoodsReceiptPO";
+                            Tx_GoodsReceiptPO.CreatedDate = dtModified;
+                            Tx_GoodsReceiptPO.CreatedUser = model._UserId;
+                            Tx_GoodsReceiptPO.ModifiedDate = dtModified;
+                            Tx_GoodsReceiptPO.ModifiedUser = model._UserId;
 
-        //                    string dateX = model.TransDate.Value.ToString("yyyy-MM-dd");
-        //                    string transNo = CONTEXT.Database.SqlQuery<string>("CALL \"SpSysGetNumbering\" (" + model._UserId.ToString() + ",'GoodsReceiptPO','" + dateX + "','') ").SingleOrDefault();
-        //                    Tx_GoodsReceiptPO.TransNo = transNo;
+                            string dateX = model.TransDate.Value.ToString("yyyy-MM-dd");
+                            string transNo = CONTEXT.Database.SqlQuery<string>("CALL \"SpSysGetNumbering\" (" + model._UserId.ToString() + ",'GoodsReceiptPO','" + dateX + "','') ").SingleOrDefault();
+                            Tx_GoodsReceiptPO.TransNo = transNo;
 
-        //                    CONTEXT.Tx_GoodsReceiptPO.Add(Tx_GoodsReceiptPO);
-        //                    CONTEXT.SaveChanges();
-        //                    Id = Tx_GoodsReceiptPO.Id;
+                            CONTEXT.Tx_GoodsReceiptPO.Add(Tx_GoodsReceiptPO);
+                            CONTEXT.SaveChanges();
+                            Id = Tx_GoodsReceiptPO.Id;
 
-        //                    String keyValue;
-        //                    keyValue = Tx_GoodsReceiptPO.Id.ToString();
+                            String keyValue;
+                            keyValue = Tx_GoodsReceiptPO.Id.ToString();
+                            
+                            SpNotif.SpSysControllerTransNotif(model._UserId, "GoodsReceiptPO", CONTEXT, "after", "GoodsReceiptPO", "add", "Id", keyValue);
 
-        //                    if (model.Details_ != null)
-        //                    {
-        //                        if (model.Details_.insertedRowValues != null)
-        //                        {
-        //                            foreach (var detail in model.Details_.insertedRowValues)
-        //                            {
-        //                                Detail_Add(CONTEXT, detail, Id, model._UserId);
-        //                            }
-        //                        }
+                            CONTEXT_TRANS.Commit();
+                        }
 
-        //                        if (model.Details_.modifiedRowValues != null)
-        //                        {
-        //                            foreach (var detail in model.Details_.modifiedRowValues)
-        //                            {
-        //                                Detail_Update(CONTEXT, detail, model._UserId);
-        //                            }
-        //                        }
+                        catch (Exception ex)
+                        {
+                            CONTEXT_TRANS.Rollback();
 
-        //                        if (model.Details_.deletedRowKeys != null)
-        //                        {
-        //                            foreach (var detId in model.Details_.deletedRowKeys)
-        //                            {
-        //                                GoodsReceiptPO_DetailModel detailModel = new GoodsReceiptPO_DetailModel();
-        //                                detailModel.DetId = detId;
-        //                                Detail_Delete(CONTEXT, detailModel);
-        //                            }
-        //                        }
-        //                    }
+                            string errorMassage;
+                            if (ex.Message.Substring(12) == "[VALIDATION]")
+                            {
+                                errorMassage = ex.Message;
+                            }
+                            else
+                            {
+                                errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                            }
 
+                            throw new Exception(errorMassage);
+                        }
+                    }
+                }
+            }
 
+            return Id;
 
-        //                    SpNotif.SpSysTransNotif(model._UserId, CONTEXT, "after", "Tx_GoodsReceiptPO", "add", "Id", keyValue);
-
-
-        //                    CONTEXT_TRANS.Commit();
-        //                }
-
-        //                catch (Exception ex)
-        //                {
-        //                    CONTEXT_TRANS.Rollback();
-
-        //                    string errorMassage;
-        //                    if (ex.Message.Substring(12) == "[VALIDATION]")
-        //                    {
-        //                        errorMassage = ex.Message;
-        //                    }
-        //                    else
-        //                    {
-        //                        errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
-        //                    }
-
-        //                    throw new Exception(errorMassage);
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    return Id;
-
-        //}
+        }
 
         public void Update(GoodsReceiptPOModel model)
         {
@@ -640,7 +620,7 @@ namespace Models.Transaction.Web.Purchasing
                         if (tx_GoodsReceiptPO != null)
                         {
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                            tx_GoodsReceiptPO.Status = "Post";
+                            tx_GoodsReceiptPO.Status = "Posted";
                             tx_GoodsReceiptPO.IsAfterPosted = "Y";
                             tx_GoodsReceiptPO.ModifiedDate = dtModified;
                             tx_GoodsReceiptPO.ModifiedUser = userId;

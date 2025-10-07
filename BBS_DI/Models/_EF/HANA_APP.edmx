@@ -828,14 +828,6 @@
           </Key>
           <Property Name="Id" Type="bigint" />
           <Property Name="DetId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CreatedDate" Type="timestamp" />
-          <Property Name="CreatedUser" Type="int" />
-          <Property Name="ModifiedDate" Type="timestamp" />
-          <Property Name="ModifiedUser" Type="int" />
-          <Property Name="DocEntry" Type="bigint" />
-          <Property Name="DocNum" Type="nvarchar" MaxLength="50" />
-          <Property Name="BaseLine" Type="int" />
-          <Property Name="LineNum" Type="int" />
           <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
           <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
           <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
@@ -845,7 +837,17 @@
           <Property Name="UomEntry" Type="int" />
           <Property Name="Uom" Type="nvarchar" MaxLength="50" />
           <Property Name="UnitPriceTc" Type="decimal" Precision="21" Scale="6" />
+          <Property Name="DocEntry" Type="bigint" />
+          <Property Name="DocNum" Type="nvarchar" MaxLength="50" />
+          <Property Name="BaseId" Type="bigint" />
+          <Property Name="BaseDetId" Type="bigint" />
+          <Property Name="BaseLine" Type="int" />
+          <Property Name="LineNum" Type="int" />
           <Property Name="LineStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="timestamp" />
+          <Property Name="CreatedUser" Type="int" />
+          <Property Name="ModifiedDate" Type="timestamp" />
+          <Property Name="ModifiedUser" Type="int" />
         </EntityType>
         <EntityType Name="Tx_GoodsReceiptPO_Item_Tag">
           <Key>
@@ -1905,6 +1907,8 @@
           <Property Name="Uom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UnitPriceTc" Type="Decimal" Precision="21" Scale="6" />
           <Property Name="LineStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BaseId" Type="Int64" />
+          <Property Name="BaseDetId" Type="Int64" />
         </EntityType>
         <EntityType Name="Tx_GoodsReceiptPO_Item_Tag">
           <Key>
@@ -2873,6 +2877,8 @@
           <EntitySetMapping Name="Tx_GoodsReceiptPO_Item">
             <EntityTypeMapping TypeName="Model1.Tx_GoodsReceiptPO_Item">
               <MappingFragment StoreEntitySet="Tx_GoodsReceiptPO_Item">
+                <ScalarProperty Name="BaseDetId" ColumnName="BaseDetId" />
+                <ScalarProperty Name="BaseId" ColumnName="BaseId" />
                 <ScalarProperty Name="LineStatus" ColumnName="LineStatus" />
                 <ScalarProperty Name="UnitPriceTc" ColumnName="UnitPriceTc" />
                 <ScalarProperty Name="Uom" ColumnName="Uom" />
