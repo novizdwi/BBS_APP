@@ -12,23 +12,17 @@ namespace BBS_DI.Models._EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Tx_GoodsReceiptPO_Item_Tag
+    public partial class Tm_Item_Warehouse_Tag_Log
     {
-        public Nullable<long> Id { get; set; }
-        public Nullable<long> DetId { get; set; }
-        public long DetDetId { get; set; }
+        public long LogId { get; set; }
         public string ItemCode { get; set; }
         public string ItemName { get; set; }
-        public string TagId { get; set; }
-        public Nullable<decimal> Quantity { get; set; }
-        public string EventType { get; set; }
-        public string Status { get; set; }
-        public Nullable<long> BaseId { get; set; }
-        public Nullable<long> BaseDetId { get; set; }
-        public Nullable<long> BaseDetDetId { get; set; }
+        public string WhsCode { get; set; }
+        public string WhsName { get; set; }
+        public string OldTagId { get; set; }
+        public string NewTagId { get; set; }
+        public string ActionNote { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedUser { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public Nullable<int> ModifiedUser { get; set; }
     }
 }

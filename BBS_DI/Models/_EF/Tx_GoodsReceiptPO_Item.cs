@@ -14,16 +14,8 @@ namespace BBS_DI.Models._EF
     
     public partial class Tx_GoodsReceiptPO_Item
     {
-        public Nullable<long> Id { get; set; }
+        public long Id { get; set; }
         public long DetId { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<int> CreatedUser { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public Nullable<int> ModifiedUser { get; set; }
-        public Nullable<long> DocEntry { get; set; }
-        public string DocNum { get; set; }
-        public Nullable<int> BaseLine { get; set; }
-        public Nullable<int> LineNum { get; set; }
         public string ItemCode { get; set; }
         public string ItemName { get; set; }
         public string WhsCode { get; set; }
@@ -33,8 +25,15 @@ namespace BBS_DI.Models._EF
         public Nullable<int> UomEntry { get; set; }
         public string Uom { get; set; }
         public Nullable<decimal> UnitPriceTc { get; set; }
+        public Nullable<long> DocEntry { get; set; }
+        public string DocNum { get; set; }
+        public Nullable<int> LineNum { get; set; }
+        public Nullable<long> BaseEntry { get; set; }
+        public Nullable<int> BaseLine { get; set; }
         public string LineStatus { get; set; }
-        public Nullable<long> BaseId { get; set; }
-        public Nullable<long> BaseDetId { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<int> CreatedUser { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public Nullable<int> ModifiedUser { get; set; }
     }
 }

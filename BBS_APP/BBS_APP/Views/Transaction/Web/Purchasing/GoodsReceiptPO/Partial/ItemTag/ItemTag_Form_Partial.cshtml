@@ -1,6 +1,6 @@
 ﻿@using Models;
 
-@model Models.Transaction.Web.Purchasing.PurchaseOrderItemTagView___
+@model Models.Transaction.Web.Purchasing.GoodsReceiptPOItemTagView___
 
 
 @Html.DevExpress().TextBox(
@@ -114,7 +114,7 @@
             item.SetNestedContent(() =>
             {
                 ViewContext.Writer.Write(
-                    Html.Partial("Partial/ItemTag/ItemTag_TabItemTagList_List_Partial", Model.PurchaseOrderItemTagModel___)
+                    Html.Partial("Partial/ItemTag/ItemTag_TabItemTagList_List_Partial", Model.GoodsReceiptPOItemTagModel___)
                 );
             });
         });

@@ -91,13 +91,14 @@
                 switch (Status.GetValue()) {
                     case 'Draft':
                         btnUpdate.SetEnabled(true);
+
                         btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(true);
                         btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(true);
 
                         break;
                     case 'Posted':
-
                         btnUpdate.SetEnabled(true);
+
                         btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(false);
                         btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(true);
 
@@ -108,6 +109,12 @@
                         btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(false);
                         btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(false);
 
+                        break;
+                    case 'Closed':
+                        btnUpdate.SetEnabled(false);
+
+                        btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(false);
+                        btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(false);
                         break;
                     default:
                         break;

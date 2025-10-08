@@ -179,14 +179,17 @@ namespace Controllers.Transaction.Web.Purchasing
         }
 
 
-        public ActionResult RefreshItem(long Id)
+        public ActionResult RefreshItem(GoodsReceiptPOModel goodsReceiptPOModel)
         {
             int userId = (int)Session["userId"];
 
             goodsReceiptPOService = new GoodsReceiptPOService();
-            var result = goodsReceiptPOService.RefreshItem(userId, Id);
+            goodsReceiptPOModel._FormMode = FormModeEnum.Edit;
 
-            return Content(result.ToString());
+            goodsReceiptPOService.RefreshItem(userId, goodsReceiptPOModel.Id);
+            goodsReceiptPOModel = goodsReceiptPOService.GetById(userId, goodsReceiptPOModel.Id);
+
+            return PartialView(VIEW_FORM_PARTIAL, goodsReceiptPOModel);
 
         }
     }

@@ -332,7 +332,7 @@ namespace Models.Transaction.Web.Purchasing
             {
                 using (var CONTEXT = new HANA_APP())
                 {
-
+                    CONTEXT.Database.ExecuteSqlCommand("CALL \"SpGoodsReceiptPO_AddItemDetail\"(:p0,:p1,'Refresh')", userId, id);
                 }
             }
             return ret;
@@ -373,6 +373,8 @@ namespace Models.Transaction.Web.Purchasing
                             keyValue = Tx_GoodsReceiptPO.Id.ToString();
                             
                             SpNotif.SpSysControllerTransNotif(model._UserId, "GoodsReceiptPO", CONTEXT, "after", "GoodsReceiptPO", "add", "Id", keyValue);
+
+                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpGoodsReceiptPO_AddItemDetail\"(:p0,:p1,'Add')", model._UserId, Id);
 
                             CONTEXT_TRANS.Commit();
                         }
@@ -717,7 +719,7 @@ namespace Models.Transaction.Web.Purchasing
             using (var CONTEXT = new HANA_APP())
             {
                 sql = @"SELECT T0.""Id"", T0.""DetId"", T0.""ItemCode"", T0.""ItemName""
-                                FROM ""Tx_GoodsReceiptPO"" T0   
+                                FROM ""Tx_GoodsReceiptPO_Item"" T0   
                                 WHERE T0.""Id""=:p0 AND ""DetId"" = :p1 ";
 
                 model = CONTEXT.Database.SqlQuery<GoodsReceiptPOItemTagView___>(sql, id, detId).FirstOrDefault();

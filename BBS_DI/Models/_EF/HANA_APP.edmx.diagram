@@ -6,7 +6,6 @@
     <edmx:Diagrams>
       <Diagram DiagramId="6293d835dee9458aaa7ac63c8a695517" Name="Diagram1" ZoomLevel="68">
         <EntityTypeShape EntityType="Model1.Tx_GoodsReceiptPO" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="Model1.Tx_GoodsReceiptPO_Item_Tag" Width="1.5" PointX="4.75" PointY="0.75" />
         <EntityTypeShape EntityType="Model1.Tx_PurchaseOrder" Width="1.5" PointX="4.75" PointY="5.75" />
         <EntityTypeShape EntityType="Model1.Tx_PurchaseOrder_Item" Width="1.5" PointX="6.75" PointY="0.75" />
         <EntityTypeShape EntityType="Model1.Tx_PurchaseOrder_Item_Tag" Width="1.5" PointX="0.75" PointY="6.75" />
@@ -63,7 +62,9 @@
         <EntityTypeShape EntityType="Model1.Tx_AdjustmentOut" Width="1.5" PointX="21.375" PointY="19.75" />
         <EntityTypeShape EntityType="Model1.Tx_AdjustmentOut_Attachment" Width="1.5" PointX="11.375" PointY="22.75" />
         <EntityTypeShape EntityType="Model1.Tx_AdjustmentOut_Location" Width="1.5" PointX="13.375" PointY="22.75" />
+        <EntityTypeShape EntityType="Model1.Tm_Item_Warehouse_Tag_Log" Width="1.5" PointX="23.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model1.Tx_GoodsReceiptPO_Item" Width="1.5" PointX="15.375" PointY="22.75" />
+        <EntityTypeShape EntityType="Model1.Tx_GoodsReceiptPO_Item_Tag" Width="1.5" PointX="3.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -163,6 +163,8 @@ C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\System.Web.WebPages.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\System.Web.WebPages.Razor.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\WebMatrix.Data.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\LumenWorks.Framework.IO.dll
+C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\BBS_APP.dll.config
+C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\BBS_APP.pdb
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\DevExpress.BonusSkins.v20.1.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\DevExpress.Charts.v20.1.Core.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\DevExpress.CodeParser.v20.1.dll
@@ -281,8 +283,6 @@ C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\obj\Debug\BBS_APP.csprojAssemblyRefe
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\obj\Debug\Interop.SAPbobsCOM.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\obj\Debug\BBS_APP.csproj.ResolveComReference.cache
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\obj\Debug\BBS_APP.csproj.CoreCompileInputs.cache
+C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\obj\Debug\BBS_APP.csproj.CopyComplete
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\obj\Debug\BBS_APP.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\obj\Debug\BBS_APP.pdb
-C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\BBS_APP.dll.config
-C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\BBS_APP.pdb
-C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\obj\Debug\BBS_APP.csproj.CopyComplete

@@ -206,22 +206,24 @@
     }
 
     function btnRefreshItemOnClick(s, e) {
-        if (!confirm('are you sure want to refresh item detail?'))
+        if (!confirm('This action may takes time, are you sure want to refresh item detail?'))
         {
             return;
         }
 
         var key = Id.GetValue();
+        var formData = GetFormData();
 
         $.ajax({
             type: "POST",
-            url: '@Url.Action("RefreshItem", "PurchaseOrder")',
-            data: { Id: key },
+            url: '@Url.Action("RefreshItem", "GoodsReceiptPO")',
+            data: formData,
             beforeSend: function () {
                 OnBegin();
             },
             success: function (response) {
-                gvGoodsReceiptPOList.PerformCallback();
+                RefreshAfterSuccess(response);
+                OnSuccessMsgBox();
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 OnFailure(jqXhr, textStatus, errorThrown)

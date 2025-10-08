@@ -290,6 +290,21 @@
     <Property Name="IsCommitted" Type="decimal" Precision="21" Scale="2" />
     <Property Name="OnOrder" Type="decimal" Precision="21" Scale="2" />
   </EntityType>
+  <EntityType Name="Tm_Item_Warehouse_Tag_Log">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ItemCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
+    <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="WhsName" Type="nvarchar" MaxLength="200" />
+    <Property Name="OldTagId" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="NewTagId" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="ActionNote" Type="nvarchar" MaxLength="500" />
+    <Property Name="CreatedDate" Type="timestamp" />
+    <Property Name="CreatedUser" Type="int" />
+  </EntityType>
   <EntityType Name="Tm_Layout">
     <Key>
       <PropertyRef Name="Id" />
@@ -821,7 +836,7 @@
     <Key>
       <PropertyRef Name="DetId" />
     </Key>
-    <Property Name="Id" Type="bigint" />
+    <Property Name="Id" Type="bigint" Nullable="false" />
     <Property Name="DetId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
     <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
@@ -834,10 +849,9 @@
     <Property Name="UnitPriceTc" Type="decimal" Precision="21" Scale="6" />
     <Property Name="DocEntry" Type="bigint" />
     <Property Name="DocNum" Type="nvarchar" MaxLength="50" />
-    <Property Name="BaseId" Type="bigint" />
-    <Property Name="BaseDetId" Type="bigint" />
-    <Property Name="BaseLine" Type="int" />
     <Property Name="LineNum" Type="int" />
+    <Property Name="BaseEntry" Type="bigint" />
+    <Property Name="BaseLine" Type="int" />
     <Property Name="LineStatus" Type="nvarchar" MaxLength="50" />
     <Property Name="CreatedDate" Type="timestamp" />
     <Property Name="CreatedUser" Type="int" />
@@ -858,7 +872,7 @@
     <Property Name="EventType" Type="nvarchar" MaxLength="100" />
     <Property Name="Status" Type="nvarchar" MaxLength="50" />
     <Property Name="BaseId" Type="bigint" />
-    <Property Name="BaseLine" Type="bigint" />
+    <Property Name="BaseDetId" Type="bigint" />
     <Property Name="BaseDetDetId" Type="bigint" />
     <Property Name="CreatedDate" Type="timestamp" />
     <Property Name="CreatedUser" Type="int" />
@@ -954,6 +968,7 @@
     <EntitySet Name="Tm_Item" EntityType="Self.Tm_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
     <EntitySet Name="Tm_Item_Warehouse" EntityType="Self.Tm_Item_Warehouse" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
     <EntitySet Name="Tm_Item_Warehouse_Tag" EntityType="Self.Tm_Item_Warehouse_Tag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Item_Warehouse_Tag_Log" EntityType="Self.Tm_Item_Warehouse_Tag_Log" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
     <EntitySet Name="Tm_Layout" EntityType="Self.Tm_Layout" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
     <EntitySet Name="Tm_Layout_Role" EntityType="Self.Tm_Layout_Role" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
     <EntitySet Name="Tm_Layout_User" EntityType="Self.Tm_Layout_User" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
