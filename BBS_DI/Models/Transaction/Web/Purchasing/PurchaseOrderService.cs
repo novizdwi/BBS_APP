@@ -599,9 +599,10 @@ namespace Models.Transaction.Web.Purchasing
                         String keyValue;
                         keyValue = id.ToString();
 
+                        Tx_PurchaseOrder tx_PurchaseOrder = CONTEXT.Tx_PurchaseOrder.Find(id);
+
                         SpNotif.SpSysControllerTransNotif(userId, "PurchaseOrder", CONTEXT, "before", "Tx_PurchaseOrder", "post", "Id", keyValue);
 
-                        Tx_PurchaseOrder tx_PurchaseOrder = CONTEXT.Tx_PurchaseOrder.Find(id);
                         if (tx_PurchaseOrder != null)
                         {
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
@@ -652,9 +653,9 @@ namespace Models.Transaction.Web.Purchasing
                         String keyValue;
                         keyValue = Id.ToString();
 
-                        SpNotif.SpSysControllerTransNotif(userId, "PurchaseOrder", CONTEXT, "before", "Tx_PurchaseOrder", "cancel", "Id", keyValue);
-
                         Tx_PurchaseOrder tx_PurchaseOrder = CONTEXT.Tx_PurchaseOrder.Find(Id);
+
+                        SpNotif.SpSysControllerTransNotif(userId, "PurchaseOrder", CONTEXT, "before", "Tx_PurchaseOrder", "cancel", "Id", keyValue);
                         if (tx_PurchaseOrder != null)
                         {
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();

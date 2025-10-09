@@ -107,6 +107,22 @@
 
     groupItem_Col1.Items.Add(itemSettings =>
     {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Doc Entry";
+        itemSettings.FieldName = "DocEntry";
+        itemSettings.ClientVisible = false;
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "DocEntry"; 
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Width = 230;
+    });
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
 
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.DateEdit;
         itemSettings.Caption = "Trans Date";
@@ -178,12 +194,12 @@
 
     groupItem_Col2.Items.Add(itemSettings =>
     {
-        itemSettings.Name = "grpDeviceId";
+        itemSettings.Name = "grpScanDeviceId";
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
         itemSettings.Caption = "Device Id";
-        itemSettings.FieldName = "DeviceId";
+        itemSettings.FieldName = "ScanDeviceId";
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
-        txt.Name = "DeviceId";
+        txt.Name = "ScanDeviceId";
         txt.ShowModelErrors = true;
         txt.ReadOnly = true;
         txt.ControlStyle.CssClass = "editor";

@@ -403,7 +403,7 @@ namespace Models.Authentication.User
             int? Id;
             using (var CONTEXT = new HANA_APP())
             {
-                Id = CONTEXT.Database.SqlQuery<int?>("SELECT TOP 1 T0.\"Id\" FROM \"Tm_User\" T0 WHERE T0.\"Id\"<:p0 ORDER BY T0.\"Id\" ASC", id).FirstOrDefault();
+                Id = CONTEXT.Database.SqlQuery<int?>("SELECT TOP 1 T0.\"Id\" FROM \"Tm_User\" T0 WHERE T0.\"Id\"<:p0 ORDER BY T0.\"Id\" DESC", id).FirstOrDefault();
 
                 //else
                 //{

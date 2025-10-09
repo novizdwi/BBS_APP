@@ -56,12 +56,12 @@
     <EntitySet Name="Tx_AdjustmentOut_Location" EntityType="Model1.Tx_AdjustmentOut_Location" />
     <EntitySet Name="Tx_GoodIssue" EntityType="Model1.Tx_GoodIssue" />
     <EntitySet Name="Tx_GoodsReceiptPO" EntityType="Model1.Tx_GoodsReceiptPO" />
-    <EntitySet Name="Tx_PurchaseOrder" EntityType="Model1.Tx_PurchaseOrder" />
     <EntitySet Name="Tx_PurchaseOrder_Item" EntityType="Model1.Tx_PurchaseOrder_Item" />
     <EntitySet Name="Tx_PurchaseOrder_Item_Tag" EntityType="Model1.Tx_PurchaseOrder_Item_Tag" />
     <EntitySet Name="Tm_Item_Warehouse_Tag_Log" EntityType="Model1.Tm_Item_Warehouse_Tag_Log" />
     <EntitySet Name="Tx_GoodsReceiptPO_Item" EntityType="Model1.Tx_GoodsReceiptPO_Item" />
     <EntitySet Name="Tx_GoodsReceiptPO_Item_Tag" EntityType="Model1.Tx_GoodsReceiptPO_Item_Tag" />
+    <EntitySet Name="Tx_PurchaseOrder" EntityType="Model1.Tx_PurchaseOrder" />
   </EntityContainer>
   <EntityType Name="Tm_Alert">
     <Key>
@@ -880,31 +880,6 @@
     <Property Name="ModifiedDate" Type="DateTime" />
     <Property Name="ModifiedUser" Type="Int32" />
   </EntityType>
-  <EntityType Name="Tx_PurchaseOrder">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="TransType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="TransNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="TransDate" Type="DateTime" />
-    <Property Name="VendorCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="VendorName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="Address" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-    <Property Name="DocEntry" Type="Int64" />
-    <Property Name="DocNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="DocDate" Type="DateTime" />
-    <Property Name="RefNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="ScanDeviceId" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="IsAfterPosted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-    <Property Name="CancelReason" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-    <Property Name="CreatedDate" Type="DateTime" />
-    <Property Name="CreatedUser" Type="Int32" />
-    <Property Name="ModifiedDate" Type="DateTime" />
-    <Property Name="ModifiedUser" Type="Int32" />
-  </EntityType>
   <EntityType Name="Tx_PurchaseOrder_Item">
     <Key>
       <PropertyRef Name="DetId" />
@@ -1005,6 +980,31 @@
     <Property Name="BaseId" Type="Int64" />
     <Property Name="BaseDetId" Type="Int64" />
     <Property Name="BaseDetDetId" Type="Int64" />
+    <Property Name="CreatedDate" Type="DateTime" />
+    <Property Name="CreatedUser" Type="Int32" />
+    <Property Name="ModifiedDate" Type="DateTime" />
+    <Property Name="ModifiedUser" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Tx_PurchaseOrder">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TransType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TransNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TransDate" Type="DateTime" />
+    <Property Name="VendorCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="VendorName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+    <Property Name="DocEntry" Type="Int64" />
+    <Property Name="DocNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DocDate" Type="DateTime" />
+    <Property Name="RefNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ScanDeviceId" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsAfterPosted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+    <Property Name="CancelReason" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
     <Property Name="CreatedDate" Type="DateTime" />
     <Property Name="CreatedUser" Type="Int32" />
     <Property Name="ModifiedDate" Type="DateTime" />

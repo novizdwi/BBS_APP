@@ -30,7 +30,7 @@ namespace Models._Cfl
         public string DocEntry { get; set; }
         public string DocNum { get; set; }
 
-        public string DocDate { get; set; }
+        public string TransDate { get; set; }
 
         public string VendorCode { get; set; }
         public string VendorName { get; set; }
@@ -43,10 +43,15 @@ namespace Models._Cfl
         public static string ssql = @"
             SELECT DISTINCT T0.""DocEntry"", T0.""DocNum"", T0.""TransDate"", T0.""VendorCode"", T0.""VendorName"", T0.""Comments""
                 FROM ""Tx_PurchaseOrder"" T0
-                LEFT JOIN ""Tx_GoodsReceiptPO"" T1 ON T0.""DocEntry"" = T1.""BaseEntry"" AND T1.""Status"" NOT IN ('Draft','Posted')
                 WHERE T0.""Status"" = 'Posted'
-                
+                AND NOT EXISTS(
+                    SELECT T1.""Id""
+                    FROM ""Tx_GoodsReceiptPO"" T1 
+                    WHERE T0.""DocEntry"" = T1.""BaseEntry"" 
+                    AND T1.""Status"" NOT IN ('Cancel')
+                )
         ";
+                
         public static void SetBindingData(GridViewModel state, int userId, CflPurchaseOrder_ParamModel cflParam)
         {
             string sqlCriteria = GetSqlFromGridViewModelState.getHanaCriteria(state);

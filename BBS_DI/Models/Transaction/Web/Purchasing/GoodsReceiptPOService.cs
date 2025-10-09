@@ -602,9 +602,22 @@ namespace Models.Transaction.Web.Purchasing
         //    }
 
         //}
-
         public void Post(int userId, long id)
         {
+            try
+            {
+                PostSAP(userId, id);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void PostSAP(int userId, long id)
+        {
+            SAPbobsCOM.Company oCompany = null;
 
             using (var CONTEXT = new HANA_APP())
             {
@@ -613,6 +626,9 @@ namespace Models.Transaction.Web.Purchasing
                 {
                     try
                     {
+                        oCompany = SAPCachedCompany.GetCompany();
+                        oCompany.StartTransaction();
+
                         String keyValue;
                         keyValue = id.ToString();
 
@@ -621,6 +637,8 @@ namespace Models.Transaction.Web.Purchasing
                         Tx_GoodsReceiptPO tx_GoodsReceiptPO = CONTEXT.Tx_GoodsReceiptPO.Find(id);
                         if (tx_GoodsReceiptPO != null)
                         {
+                            bool goodsReceiptPO = AddGoodsReceiptPO(oCompany, userId, id);
+
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
                             tx_GoodsReceiptPO.Status = "Posted";
                             tx_GoodsReceiptPO.IsAfterPosted = "Y";
@@ -631,7 +649,7 @@ namespace Models.Transaction.Web.Purchasing
                         }
 
                         SpNotif.SpSysControllerTransNotif(userId, "GoodsReceiptPO", CONTEXT, "after", "Tx_GoodsReceiptPO", "post", "Id", keyValue);
-
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpGoodsReceiptPO_UpdatePOStatus\"(:p0,:p1,'post')", userId, id);
 
                         CONTEXT_TRANS.Commit();
                     }
@@ -655,6 +673,27 @@ namespace Models.Transaction.Web.Purchasing
                 }
             }
 
+        }
+
+        private bool AddGoodsReceiptPO(Company oCompany, int userId, long id)
+        {
+            bool ret = true;
+            //SAPbobsCOM.Recordset rsDetailSO = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset);
+
+            SAPbobsCOM.Documents oDelivery = (SAPbobsCOM.Documents)oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oPurchaseDeliveryNotes);
+
+            string docEntry;
+            docEntry = oCompany.GetNewObjectKey();
+
+            string sqlUpdateGRPO;
+            sqlUpdateGRPO = "UPDATE T0 SET   "
+            + " T0.\"DocEntry\"=" + docEntry + " "
+            + " FROM \"\".\"Tx_GoodsReceiptPO\" T0 "
+            + " WHERE T0.\"Id\"=" + id.ToString() + " ";
+
+            SapCompany.ExecuteQuery(oCompany, sqlUpdateGRPO);
+
+            return ret;
         }
 
         public void Cancel(int userId, long Id, string cancelReason)
@@ -685,6 +724,7 @@ namespace Models.Transaction.Web.Purchasing
 
                         SpNotif.SpSysControllerTransNotif(userId, "GoodsReceiptPO", CONTEXT, "after", "Tx_GoodsReceiptPO", "cancel", "Id", keyValue);
 
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpGoodsReceiptPO_UpdatePOStatus\"(:p0,:p1,'cancel')", userId, Id);
 
                         CONTEXT_TRANS.Commit();
                     }
