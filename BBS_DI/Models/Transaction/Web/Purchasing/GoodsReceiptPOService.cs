@@ -60,6 +60,8 @@ namespace Models.Transaction.Web.Purchasing
 
         public string DocNum { get; set; }
 
+        public string DocNum_ { get; set; }
+
         public long? BaseEntry { get; set; }
 
         public string BaseDocNum { get; set; }
@@ -214,8 +216,16 @@ namespace Models.Transaction.Web.Purchasing
                             ORDER BY T0.""Id"" ASC
                 ";
 
-                model = CONTEXT.Database.SqlQuery<GoodsReceiptPOModel>(ssql, id).Single();
+                string getDocNum = @"SELECT T1.""DocNum""
+                    FROM ""Tx_GoodsReceiptPO"" T0
+                    INNER JOIN """+ DbProvider.dbSap_Name +@""".""OPDN"" T1 ON T0.""DocEntry"" = T1.""DocEntry""
+                    WHERE T0.""Id"" = :p0 
+                    ORDER BY T0.""Id"" ASC
+                ";
 
+
+                model = CONTEXT.Database.SqlQuery<GoodsReceiptPOModel>(ssql, id).Single();
+                model.DocNum_ = CONTEXT.Database.SqlQuery<string>(getDocNum, id).FirstOrDefault();
                 model.ListDetails_ = this.GoodsReceiptPO_Details(CONTEXT, id);
             }
 
@@ -629,8 +639,8 @@ namespace Models.Transaction.Web.Purchasing
         public void PostSAP(int userId, long id)
         {
             SAPbobsCOM.Company oCompany = null;
-
             GoodsReceiptPOModel syncGRPO = GetById(userId, id);
+
             using (var CONTEXT = new HANA_APP())
             {
 
@@ -648,49 +658,63 @@ namespace Models.Transaction.Web.Purchasing
                         SpNotif.SpSysControllerTransNotif(userId, "GoodsReceiptPO", CONTEXT, "before", "Tx_GoodsReceiptPO", "post", "Id", keyValue);
 
                         Tx_GoodsReceiptPO tx_GoodsReceiptPO = CONTEXT.Tx_GoodsReceiptPO.Find(id);
-                        if (tx_GoodsReceiptPO != null)
+                        if (tx_GoodsReceiptPO == null)
                         {
-                            GRPOAddResultModel GRPOResult = AddGoodsReceiptPO(oCompany, userId, id, syncGRPO);
-                            string ssql = @"SELECT ""DocNum"" 
-                                FROM """+ DbProvider.dbSap_Name +@""".""OPDN"" T0
-                                WHERE T0.""DocEntry"" = "+ GRPOResult.DocEntry + @" 
-                             ";
-
-                            string docNum = CONTEXT.Database.SqlQuery<string>(ssql, id).FirstOrDefault();
-
-                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-
-                            tx_GoodsReceiptPO.PostingDate = dtModified;
-                            tx_GoodsReceiptPO.DocEntry = Convert.ToInt64(GRPOResult.DocEntry) ;
-                            tx_GoodsReceiptPO.DocNum = docNum;
-
-                            tx_GoodsReceiptPO.Status = "Posted";
-                            tx_GoodsReceiptPO.IsAfterPosted = "Y";
-                            tx_GoodsReceiptPO.ModifiedDate = dtModified;
-                            tx_GoodsReceiptPO.ModifiedUser = userId;
-
-                            CONTEXT.SaveChanges();
-
-                            var caseStatements = string.Join(" ",
-                            GRPOResult.LineMapping.Select(kv => $"WHEN T0.\"DetId\" = {kv.Key} THEN {kv.Value}"));
-
-                            var whereIn = string.Join(", ",GRPOResult.LineMapping.Keys);
-
-                            string sqlLine = $@"
-                                UPDATE ""Tx_GoodsReceiptPO_Item"" T0
-                                SET ""LineNum"" = CASE {caseStatements} END
-                                WHERE T0.""DetId"" IN ({whereIn})";
-                            CONTEXT.Database.ExecuteSqlCommand(sqlLine);
+                            throw new Exception($"[VALIDATION] - GRPO Data not found");
                         }
+                        
+                        GRPOAddResultModel GRPOResult = AddGoodsReceiptPO(oCompany, userId, id, syncGRPO);
+                        /*
+                        string ssql = $@"SELECT ""DocNum"" 
+                            FROM ""{DbProvider.dbSap_Name}"".""OPDN""
+                            WHERE CAST(""DocEntry"" AS NVARCHAR) = '{GRPOResult.DocEntry}'";
+                        string docNum = CONTEXT.Database.SqlQuery<string>(ssql, id).FirstOrDefault();
+                        */
+
+                        DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+
+                        tx_GoodsReceiptPO.PostingDate = dtModified;
+                        tx_GoodsReceiptPO.DocEntry = Convert.ToInt64(GRPOResult.DocEntry) ;
+                        //tx_GoodsReceiptPO.DocNum = docNum;
+
+                        tx_GoodsReceiptPO.Status = "Posted";
+                        tx_GoodsReceiptPO.IsAfterPosted = "Y";
+                        tx_GoodsReceiptPO.ModifiedDate = dtModified;
+                        tx_GoodsReceiptPO.ModifiedUser = userId;
+
+                        CONTEXT.SaveChanges();
+
+                        var caseStatements = string.Join(" ",
+                        GRPOResult.LineMapping.Select(kv => $"WHEN T0.\"DetId\" = {kv.Key} THEN {kv.Value}"));
+
+                        var whereIn = string.Join(", ",GRPOResult.LineMapping.Keys);
+
+                        string sqlLine = $@"
+                            UPDATE ""Tx_GoodsReceiptPO_Item"" T0
+                            SET ""LineNum"" = CASE {caseStatements} END,
+                                ""DocEntry"" = {GRPOResult.DocEntry}
+                            WHERE T0.""DetId"" IN ({whereIn})";
+                        CONTEXT.Database.ExecuteSqlCommand(sqlLine);
+                        
 
                         SpNotif.SpSysControllerTransNotif(userId, "GoodsReceiptPO", CONTEXT, "after", "Tx_GoodsReceiptPO", "post", "Id", keyValue);
                         CONTEXT.Database.ExecuteSqlCommand("CALL \"SpGoodsReceiptPO_UpdatePOStatus\"(:p0,:p1,'post')", userId, id);
+
+                        if (oCompany.InTransaction)
+                        {
+                            oCompany.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_Commit);
+                        }
 
                         CONTEXT_TRANS.Commit();
                     }
 
                     catch (Exception ex)
                     {
+                        if (oCompany.InTransaction)
+                        {
+                            oCompany.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                        }
+
                         CONTEXT_TRANS.Rollback();
 
                         string errorMassage;
@@ -707,7 +731,6 @@ namespace Models.Transaction.Web.Purchasing
                     }
                     finally
                     {
-                        SapCompany.CleanUpGCCollect();
                         SAPCachedCompany.Release(oCompany);
                     }
                 }
@@ -779,7 +802,8 @@ namespace Models.Transaction.Web.Purchasing
                 }
             }
 
-            if (oDocument.Add() != 0)
+            int docAdd = oDocument.Add();
+            if (docAdd != 0)
             {
                 nErr = oCompany.GetLastErrorCode();
                 errMsg = oCompany.GetLastErrorDescription();
@@ -788,14 +812,18 @@ namespace Models.Transaction.Web.Purchasing
 
                 throw new Exception("[VALIDATION] - Add Goods Receipt PO : " + nErr.ToString() + "|" + errMsg);
             }
+
             result.DocEntry = oCompany.GetNewObjectKey();
             result.LineMapping = insertedLineIds;
 
+            SapCompany.CleanUp(oDocument);
             return result;
         }
 
         public void Cancel(int userId, long Id, string cancelReason)
         {
+            SAPbobsCOM.Company oCompany = SAPCachedCompany.GetCompany();
+
             using (var CONTEXT = new HANA_APP())
             {
 
@@ -803,6 +831,8 @@ namespace Models.Transaction.Web.Purchasing
                 {
                     try
                     {
+                        oCompany.StartTransaction();
+
                         String keyValue;
                         keyValue = Id.ToString();
 
@@ -811,6 +841,11 @@ namespace Models.Transaction.Web.Purchasing
                         Tx_GoodsReceiptPO tx_GoodsReceiptPO = CONTEXT.Tx_GoodsReceiptPO.Find(Id);
                         if (tx_GoodsReceiptPO != null)
                         {
+                            if (tx_GoodsReceiptPO.IsAfterPosted == "Y")
+                            {
+                                Cancel_GoodReceiptPo(oCompany, Convert.ToInt32(tx_GoodsReceiptPO.DocEntry) );
+                            }
+
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
                             tx_GoodsReceiptPO.Status = "Cancel";
                             tx_GoodsReceiptPO.CancelReason = cancelReason;
@@ -823,31 +858,71 @@ namespace Models.Transaction.Web.Purchasing
                         SpNotif.SpSysControllerTransNotif(userId, "GoodsReceiptPO", CONTEXT, "after", "Tx_GoodsReceiptPO", "cancel", "Id", keyValue);
 
                         CONTEXT.Database.ExecuteSqlCommand("CALL \"SpGoodsReceiptPO_UpdatePOStatus\"(:p0,:p1,'cancel')", userId, Id);
+                        oCompany.EndTransaction(BoWfTransOpt.wf_Commit);
 
                         CONTEXT_TRANS.Commit();
                     }
 
                     catch (Exception ex)
                     {
+                        if (oCompany.InTransaction)
+                        {
+                            oCompany.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                        }
+
                         CONTEXT_TRANS.Rollback();
 
-                        string errorMassage;
-                        if (ex.Message.Substring(12) == "[VALIDATION]")
+                        string errorMessage;
+                        if (ex.Message.StartsWith("[VALIDATION]"))
                         {
-                            errorMassage = ex.Message;
+                            errorMessage = ex.Message;
                         }
                         else
                         {
-                            errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                            errorMessage = $"[VALIDATION] {ex.Message}";
                         }
 
-                        throw new Exception(errorMassage);
+                        throw new Exception(errorMessage);
+                    }
+                    finally
+                    {
+                        SAPCachedCompany.Release(oCompany);
                     }
                 }
             }
 
         }
 
+        public bool Cancel_GoodReceiptPo(SAPbobsCOM.Company oCompany, int id)
+        {
+            int nErr;
+            string errMsg;
+
+            if (id != 0)
+            {
+                SAPbobsCOM.Documents oDocument = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oPurchaseDeliveryNotes);
+                SAPbobsCOM.Documents oCancelDocument = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oPurchaseDeliveryNotes);
+
+                if (oDocument.GetByKey(id))
+                {
+                    oCancelDocument = oDocument.CreateCancellationDocument();
+                    if (oCancelDocument.Add() != 0)
+                    {
+                        nErr = oCompany.GetLastErrorCode();
+                        errMsg = oCompany.GetLastErrorDescription();
+
+                        SapCompany.CleanUp(oDocument);
+
+                        throw new Exception("[VALIDATION] - Cancel GRPO |" + nErr.ToString() + "|" + errMsg);
+                    }
+
+                }
+                
+                SapCompany.CleanUp(oDocument);
+            }
+
+            return true;
+        }
 
         public GoodsReceiptPOItemTagView___ GetItemTags(long id, long detId)
         {

@@ -1,3 +1,4 @@
+C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\DevExpress.Images.v20.1.dll
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\BBS_DI.dll.config
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\BBS_DI.dll
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\BBS_DI.pdb
@@ -38,7 +39,6 @@ C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\DevExpress.Sparkline.v20.1.Core.dll
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\DevExpress.XtraGauges.v20.1.Core.dll
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\DevExpress.Xpo.v20.1.dll
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\DevExpress.CodeParser.v20.1.dll
-C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\DevExpress.Images.v20.1.dll
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\DevExpress.Data.Desktop.v20.1.dll
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\EntityFramework.xml
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\EntityFramework.SqlServer.xml
@@ -51,4 +51,3 @@ C:\LegionShared\Project\BBS\BBS_DI\obj\Debug\BBS_DI.csproj.CoreCompileInputs.cac
 C:\LegionShared\Project\BBS\BBS_DI\obj\Debug\BBS_DI.csproj.CopyComplete
 C:\LegionShared\Project\BBS\BBS_DI\obj\Debug\BBS_DI.dll
 C:\LegionShared\Project\BBS\BBS_DI\obj\Debug\BBS_DI.pdb
-C:\LegionShared\Project\BBS\BBS_DI\obj\Debug\BBS_DI.csprojAssemblyReference.cache
