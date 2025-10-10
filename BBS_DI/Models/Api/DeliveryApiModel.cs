@@ -122,56 +122,7 @@ namespace Models.Api
 
             return result;
         }
-
-        //APP
-        public DeliveryApiModel GetByDocEntry(long? id = 0)
-        {
-            using (var CONTEXT = new HANA_APP())
-            {
-                return GetByDocEntry(CONTEXT, id);
-            }
-        }
-
-        //APP
-        public DeliveryApiModel GetByDocEntry(HANA_APP CONTEXT, long? id = 0)
-        {
-            DeliveryApiModel model = null;
-            if (id != 0)
-            {
-
-                string ssql = @"SELECT T0.""Id"", T1.""DetId"", T0.""TransType"", T0.""TransNo"", T0.""TransDate"" AS ""DocumentDate"", T0.""Remarks"" AS ""Remarks"",
-                        T4.""CardCode"" AS ""CustomerCode""
-                        FROM ""Tx_Fpfs"" T0
-                        INNER JOIN ""Tx_Fpfs_SalesOrder"" T1 ON T0.""Id"" = T1.""Id""
-                        INNER JOIN ""{1}"".""ORDR"" T3 ON T3.""DocEntry"" = T1.""SapSalesOrderId""
-                        INNER JOIN ""{0}"".""ORDR"" T4 ON T3.""U_SODocEntry"" = T4.""DocEntry"" AND IFNULL(T4.""CANCELED"",'N') = 'N'
-                        WHERE T0.""Id""=:p0 AND T1.""DetId"" =:p1 ";
-                ssql = string.Format(ssql, DbProvider.dbSap_Name2, DbProvider.dbSap_Name);
-                model = CONTEXT.Database.SqlQuery<DeliveryApiModel>(ssql, id).Single();
-                model.Lines = this.Detail_Lines(CONTEXT, id);
-            }
-
-            return model;
-        }
-
-        //SADP_II
-        public List<DeliveryApi_ItemModel> Detail_Lines(HANA_APP CONTEXT, long? id = 0)
-        {
-            string ssql = @"SELECT T5.""ItemCode"" AS ""ItemCode"", 
-                        CASE WHEN T1.""OpenQuantitySalesOrder"" > T0.""UnitCapacity"" THEN T0.""UnitCapacity"" ELSE T1.""OpenQuantitySalesOrder"" END AS ""Quantity"",
-                        T5.""Price"" AS ""Price"", 
-                        T2.""WhsCode"" AS ""WarehouseCode"", T2.""AbsEntry"" AS ""BinAbsEntry"",
-                        T5.""ObjType"" AS ""BaseType"",T5.""DocEntry"" AS ""BaseEntry"",T5.""LineNum"" AS ""BaseLine""
-                        FROM ""Tx_Fpfs"" T0
-                        INNER JOIN ""Tx_Fpfs_SalesOrder"" T1 ON T0.""Id"" = T1.""Id""
-                        INNER JOIN  ""{0}"".""OBIN"" T2 ON T1.""BinAbsEntry"" = T2.""AbsEntry""
-                        INNER JOIN ""{1}"".""ORDR"" T3 ON T3.""DocEntry"" = T1.""SapSalesOrderId""
-                        INNER JOIN ""{0}"".""ORDR"" T4 ON T3.""U_SODocEntry"" = T4.""DocEntry"" AND IFNULL(T4.""CANCELED"",'N') = 'N'
-                        INNER JOIN ""{0}"".""RDR1"" T5 ON T5.""DocEntry"" = T4.""DocEntry""
-                        WHERE T0.""Id""=:p0 AND T1.""DetId""=:p1  ";
-            ssql = string.Format(ssql, DbProvider.dbSap_Name2, DbProvider.dbSap_Name);
-            return CONTEXT.Database.SqlQuery<DeliveryApi_ItemModel>(ssql, id).ToList();
-        }
+         
 
     }
 

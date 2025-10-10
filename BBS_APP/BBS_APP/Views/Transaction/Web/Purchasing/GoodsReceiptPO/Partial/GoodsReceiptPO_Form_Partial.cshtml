@@ -107,21 +107,6 @@
 
     groupItem_Col1.Items.Add(itemSettings =>
     {
-        itemSettings.Name = "grpBaseEntry";
-        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
-        itemSettings.Caption = "Base Entry";
-        itemSettings.FieldName = "BaseEntry";
-        itemSettings.ClientVisible = false;
-
-        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
-        txt.Name = "BaseEntry";
-        txt.ReadOnly = true;
-        txt.ShowModelErrors = true;
-        txt.ControlStyle.CssClass = "editor";
-    });
-
-    groupItem_Col1.Items.Add(itemSettings =>
-    {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
         itemSettings.Caption = "Doc Entry";
         itemSettings.FieldName = "DocEntry";
