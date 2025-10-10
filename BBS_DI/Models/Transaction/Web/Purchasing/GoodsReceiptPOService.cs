@@ -129,6 +129,10 @@ namespace Models.Transaction.Web.Purchasing
 
         public long? LineNum { get; set; }
 
+        public long? BaseEntry { get; set; }
+
+        public int? BaseLine { get; set; }
+
         public string LineStatus { get; set; }
     }
 
@@ -619,6 +623,7 @@ namespace Models.Transaction.Web.Purchasing
         {
             SAPbobsCOM.Company oCompany = null;
 
+            GoodsReceiptPOModel syncGRPO = GetById(userId, id);
             using (var CONTEXT = new HANA_APP())
             {
 
@@ -632,14 +637,26 @@ namespace Models.Transaction.Web.Purchasing
                         String keyValue;
                         keyValue = id.ToString();
 
+
                         SpNotif.SpSysControllerTransNotif(userId, "GoodsReceiptPO", CONTEXT, "before", "Tx_GoodsReceiptPO", "post", "Id", keyValue);
 
                         Tx_GoodsReceiptPO tx_GoodsReceiptPO = CONTEXT.Tx_GoodsReceiptPO.Find(id);
                         if (tx_GoodsReceiptPO != null)
                         {
-                            bool goodsReceiptPO = AddGoodsReceiptPO(oCompany, userId, id);
+                            string newEntry_ = AddGoodsReceiptPO(oCompany, userId, id, syncGRPO);
+                            string ssql = @"SELECT ""DocNum"" 
+                                FROM """+ DbProvider.dbSap_Name +@""".""OPDN"" T0
+                                WHERE T0.""DocEntry"" = "+ newEntry_  + @" 
+                             ";
+
+                            string docNum = CONTEXT.Database.SqlQuery<string>(ssql, id).FirstOrDefault();
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+
+                            tx_GoodsReceiptPO.PostingDate = dtModified;
+                            tx_GoodsReceiptPO.DocEntry = Convert.ToInt64(newEntry_) ;
+                            tx_GoodsReceiptPO.DocNum = docNum;
+
                             tx_GoodsReceiptPO.Status = "Posted";
                             tx_GoodsReceiptPO.IsAfterPosted = "Y";
                             tx_GoodsReceiptPO.ModifiedDate = dtModified;
@@ -670,30 +687,87 @@ namespace Models.Transaction.Web.Purchasing
 
                         throw new Exception(errorMassage);
                     }
+                    finally
+                    {
+                        SapCompany.CleanUpGCCollect();
+                        SAPCachedCompany.Release(oCompany);
+                    }
                 }
             }
 
         }
 
-        private bool AddGoodsReceiptPO(Company oCompany, int userId, long id)
+
+        private string AddGoodsReceiptPO(Company oCompany, int userId, long id, GoodsReceiptPOModel model)
         {
-            bool ret = true;
+            int nErr;
+            string errMsg;
+            string newEntry_ = string.Empty;
             //SAPbobsCOM.Recordset rsDetailSO = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset);
 
-            SAPbobsCOM.Documents oDelivery = (SAPbobsCOM.Documents)oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oPurchaseDeliveryNotes);
+            SAPbobsCOM.Documents oDocument = (SAPbobsCOM.Documents)oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oPurchaseDeliveryNotes);
 
-            string docEntry;
-            docEntry = oCompany.GetNewObjectKey();
+            oDocument.DocDate = (DateTime)model.TransDate;
+            oDocument.DocDueDate = (DateTime)model.TransDate;
+            oDocument.TaxDate = (DateTime)model.TransDate;
 
-            string sqlUpdateGRPO;
-            sqlUpdateGRPO = "UPDATE T0 SET   "
-            + " T0.\"DocEntry\"=" + docEntry + " "
-            + " FROM \"\".\"Tx_GoodsReceiptPO\" T0 "
-            + " WHERE T0.\"Id\"=" + id.ToString() + " ";
+            oDocument.CardCode = model.VendorCode;
+            oDocument.CardName = model.VendorCode;
 
-            SapCompany.ExecuteQuery(oCompany, sqlUpdateGRPO);
+            if (model.RefNo != null)
+            {
+                oDocument.NumAtCard = model.RefNo;
+            }
 
-            return ret;
+            if (model.Comments != null)
+            {
+                oDocument.Comments = model.Comments;
+            }
+
+            if (model.Address != null)
+            {
+                oDocument.Address = model.Address;
+            }
+
+            int lineItem = 0;
+            if (model.ListDetails_.Count > 0)
+            {
+                foreach (var item in model.ListDetails_)
+                {
+                    oDocument.Lines.BaseType = 22;
+                    oDocument.Lines.BaseEntry = Convert.ToInt32(item.BaseEntry);
+                    oDocument.Lines.BaseLine = Convert.ToInt32(item.BaseLine);
+
+                    oDocument.Lines.ItemCode = item.ItemCode;
+                    oDocument.Lines.WarehouseCode = item.WhsCode;
+                    oDocument.Lines.Quantity = (double)item.Quantity;
+
+                    if (item.UomEntry != null)
+                    {
+                        oDocument.Lines.UoMEntry = Convert.ToInt32(item.UomEntry);
+                    }
+
+                    if (item.FreeText != null)
+                    {
+                        oDocument.Lines.FreeText = item.FreeText;
+                    }
+
+                    oDocument.Lines.Add();
+                    lineItem += 1;
+                }
+            }
+
+            if (oDocument.Add() != 0)
+            {
+                nErr = oCompany.GetLastErrorCode();
+                errMsg = oCompany.GetLastErrorDescription();
+
+                SapCompany.CleanUp(oDocument);
+
+                throw new Exception("[VALIDATION] - Add Goods Receipt PO : " + nErr.ToString() + "|" + errMsg);
+            }
+            newEntry_ = oCompany.GetNewObjectKey();
+            return newEntry_;
         }
 
         public void Cancel(int userId, long Id, string cancelReason)

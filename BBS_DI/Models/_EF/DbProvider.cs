@@ -64,55 +64,6 @@ namespace Models._Ef
             }
         }
 
-        public static string dbSegel_Name
-        {
-            get
-            {
-                //string connStr  = dbApp.Database.Connection.ConnectionString;// ConfigurationManager.ConnectionStrings["HANA_APP"].ToString();
-                string connStr = ConfigurationManager.ConnectionStrings["SEGEL_APP"].ToString();
-                if (HttpContext.Current.Items[EfContextKeyDbSegel_Name] == null)
-                {
-                    var connectionString = new Sap.Data.Hana.HanaConnectionStringBuilder(connStr);
-
-                    HttpContext.Current.Items[EfContextKeyDbSegel_Name] = connectionString.CurrentSchema;
-                }
-                return (string)HttpContext.Current.Items[EfContextKeyDbSegel_Name];
-            }
-        }
-
-
-        public static string dbSadpIApp_Name
-        {
-            get
-            {
-                //string connStr  = dbApp.Database.Connection.ConnectionString;// ConfigurationManager.ConnectionStrings["HANA_APP"].ToString();
-                string connStr = ConfigurationManager.ConnectionStrings["SADPI_APP"].ToString();
-                if (HttpContext.Current.Items[EfContextKeyDbSadpIApp_Name] == null)
-                {
-                    var connectionString = new Sap.Data.Hana.HanaConnectionStringBuilder(connStr);
-
-                    HttpContext.Current.Items[EfContextKeyDbSadpIApp_Name] = connectionString.CurrentSchema;
-                }
-                return (string)HttpContext.Current.Items[EfContextKeyDbSadpIApp_Name];
-            }
-        }
-
-        public static string dbDmlApp_Name
-        {
-            get
-            {
-                //string connStr  = dbApp.Database.Connection.ConnectionString;// ConfigurationManager.ConnectionStrings["HANA_APP"].ToString();
-                string connStr = ConfigurationManager.ConnectionStrings["DML_APP"].ToString();
-                if (HttpContext.Current.Items[EfContextKeyDbDmlApp_Name] == null)
-                {
-                    var connectionString = new Sap.Data.Hana.HanaConnectionStringBuilder(connStr);
-
-                    HttpContext.Current.Items[EfContextKeyDbDmlApp_Name] = connectionString.CurrentSchema;
-                }
-                return (string)HttpContext.Current.Items[EfContextKeyDbDmlApp_Name];
-            }
-        }
-
         //public static DbSap dbSap
         //{
         //    get
@@ -142,22 +93,6 @@ namespace Models._Ef
                     HttpContext.Current.Items[EfContextKeyDbSap_Name] = connectionString.CurrentSchema;
                 }
                 return (string)HttpContext.Current.Items[EfContextKeyDbSap_Name];
-            }
-        }
-
-        public static string dbSap_Name2
-        {
-
-            get
-            {
-                string connStr2 = ConfigurationManager.ConnectionStrings["HANA_SAP2"].ToString();
-                if (HttpContext.Current.Items[EfContextKeyDbSap_Name2] == null)
-                {
-                    var connectionString = new Sap.Data.Hana.HanaConnectionStringBuilder(connStr2);
-
-                    HttpContext.Current.Items[EfContextKeyDbSap_Name2] = connectionString.CurrentSchema;
-                }
-                return (string)HttpContext.Current.Items[EfContextKeyDbSap_Name2];
             }
         }
 
