@@ -61,12 +61,14 @@
         <EntityTypeShape EntityType="Model1.Tx_AdjustmentOut_Attachment" Width="1.5" PointX="11.375" PointY="22.75" />
         <EntityTypeShape EntityType="Model1.Tx_AdjustmentOut_Location" Width="1.5" PointX="13.375" PointY="22.75" />
         <EntityTypeShape EntityType="Model1.Tm_Item_Warehouse_Tag_Log" Width="1.5" PointX="23.375" PointY="0.75" />
-        <EntityTypeShape EntityType="Model1.Tx_GoodsReceiptPO_Item" Width="1.5" PointX="15.375" PointY="22.75" />
-        <EntityTypeShape EntityType="Model1.Tx_GoodsReceiptPO_Item_Tag" Width="1.5" PointX="3.375" PointY="0.75" />
         <EntityTypeShape EntityType="Model1.Tx_PurchaseOrder" Width="1.5" PointX="3.375" PointY="5.75" />
-        <EntityTypeShape EntityType="Model1.Tx_AdjustmentIn_Item" Width="1.5" PointX="0.875" PointY="0.75" />
+        <EntityTypeShape EntityType="Model1.Tx_AdjustmentOut_Item" Width="1.5" PointX="23.75" PointY="10.75" />
+        <EntityTypeShape EntityType="Model1.Tx_AdjustmentOut_Item_Tag" Width="1.5" PointX="23.75" PointY="14.75" />
+        <EntityTypeShape EntityType="Model1.Tx_AdjustmentIn_Item" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="Model1.Tx_AdjustmentIn_Item_Tag" Width="1.5" PointX="0.75" PointY="23.75" />
-        <EntityTypeShape EntityType="Model1.Tx_GoodsReceiptPO" Width="1.5" PointX="23.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Model1.Tx_GoodsReceiptPO" Width="1.5" PointX="15.375" PointY="22.75" />
+        <EntityTypeShape EntityType="Model1.Tx_GoodsReceiptPO_Item" Width="1.5" PointX="23.375" PointY="4.75" />
+        <EntityTypeShape EntityType="Model1.Tx_GoodsReceiptPO_Item_Tag" Width="1.5" PointX="3.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -163,9 +163,8 @@ C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\System.Web.WebPages.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\System.Web.WebPages.Razor.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\WebMatrix.Data.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\LumenWorks.Framework.IO.dll
-C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\BBS_APP.pdb
-C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\BBS_DI.pdb
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\BBS_APP.dll.config
+C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\BBS_APP.pdb
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\DevExpress.BonusSkins.v20.1.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\DevExpress.Charts.v20.1.Core.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\DevExpress.CodeParser.v20.1.dll
@@ -229,6 +228,7 @@ C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\DevExpress.XtraGrid.v20.1.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\stdole.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\DevExpress.XtraDiagram.v20.1.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\DevExpress.Diagram.v20.1.Core.dll
+C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\BBS_DI.pdb
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\BBS_DI.dll.config
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\EntityFramework.xml
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\EntityFramework.SqlServer.xml
