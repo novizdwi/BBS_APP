@@ -643,6 +643,15 @@
     <Content Include="Views\Transaction\Web\Purchasing\GoodsReceiptPO\GoodsReceiptPO.cshtml" />
     <Content Include="Views\_Cfl\_CflPurchaseOrder\Partial\_CflPurchaseOrder_List_Partial.cshtml" />
     <Content Include="Views\_Cfl\_CflPurchaseOrder\Partial\_CflPurchaseOrder_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferRequest\Partial\TransferRequest_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferRequest\Partial\TransferRequest_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferRequest\Partial\TransferRequest_Form_TabDetail_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferRequest\Partial\TransferRequest_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferRequest\Partial\TransferRequest_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferRequest\TransferRequest.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferRequest\Partial\CancelReason\CancelReason_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferRequest\Partial\CancelReason\CancelReason_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferRequest\Partial\CancelReason\CancelReason_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -712,6 +721,11 @@
     <Compile Include="Controllers\Setting\Report\ReportController.List.cs" />
     <Compile Include="Controllers\Setting\Report\ReportController.List.Export.cs" />
     <Compile Include="Controllers\Setting\Report\ReportController.Nav.cs" />
+    <Compile Include="Controllers\Transaction\Web\Inventory\TransferRequest\TransferRequestController.Tab.Detail.cs" />
+    <Compile Include="Controllers\Transaction\Web\Inventory\TransferRequest\TransferRequestController.Nav.cs" />
+    <Compile Include="Controllers\Transaction\Web\Inventory\TransferRequest\TransferRequestController.List.cs" />
+    <Compile Include="Controllers\Transaction\Web\Inventory\TransferRequest\TransferRequestController.CancelReason.cs" />
+    <Compile Include="Controllers\Transaction\Web\Inventory\TransferRequest\TransferRequestController.cs" />
     <Compile Include="Controllers\Transaction\Web\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.cs" />
     <Compile Include="Controllers\Transaction\Web\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.List.cs" />
     <Compile Include="Controllers\Transaction\Web\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.Nav.cs" />
