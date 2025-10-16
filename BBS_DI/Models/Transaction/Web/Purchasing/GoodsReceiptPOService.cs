@@ -106,6 +106,12 @@ namespace Models.Transaction.Web.Purchasing
 
         public long? DetId { get; set; }
 
+        public int? IdPDO { get; set; }
+
+        public string PDODocNum_ { get; set; }
+
+        public int? GoodsReceiptNo { get; set; }
+
         public string Bagian { get; set; }
 
         public string ItemCode { get; set; }
@@ -178,7 +184,15 @@ namespace Models.Transaction.Web.Purchasing
     public class GRPOAddResultModel
     {
         public string DocEntry { get; set; }
+
         public Dictionary<long, int> LineMapping { get; set; } // LineId -> LineNum
+    }
+
+    public class GoodsReceiptResultModel
+    {
+        public long DetId { get; set; }
+
+        public long? GoodsReceiptId { get; set; }
     }
 
     #endregion
@@ -242,10 +256,11 @@ namespace Models.Transaction.Web.Purchasing
 
         public List<GoodsReceiptPO_DetailModel> GoodsReceiptPO_Details(HANA_APP CONTEXT, long id = 0)
         {
-            string ssql = @"SELECT * 
-                FROM ""Tx_GoodsReceiptPO_Item"" 
-                WHERE ""Id"" =:p0
-                ORDER BY ""DetId"" ASC
+            string ssql = @"SELECT T0.*, T1.""DocNum"" AS ""PDODocNum_""
+                FROM ""Tx_GoodsReceiptPO_Item"" T0
+                LEFT JOIN """ + DbProvider.dbSap_Name + @""".""OWOR"" T1 ON T0.""IdPDO"" = T1.""DocEntry""
+                WHERE T0.""Id"" =:p0
+                ORDER BY T0.""DetId"" ASC
             ";
             var goodsReceiptPO = CONTEXT.Database.SqlQuery<GoodsReceiptPO_DetailModel>(ssql, id).ToList();
             return goodsReceiptPO;
@@ -623,6 +638,7 @@ namespace Models.Transaction.Web.Purchasing
         //    }
 
         //}
+
         public void Post(int userId, long id)
         {
             try
@@ -662,20 +678,20 @@ namespace Models.Transaction.Web.Purchasing
                         {
                             throw new Exception($"[VALIDATION] - GRPO Data not found");
                         }
-                        
+
                         GRPOAddResultModel GRPOResult = AddGoodsReceiptPO(oCompany, userId, id, syncGRPO);
-                        /*
-                        string ssql = $@"SELECT ""DocNum"" 
-                            FROM ""{DbProvider.dbSap_Name}"".""OPDN""
-                            WHERE CAST(""DocEntry"" AS NVARCHAR) = '{GRPOResult.DocEntry}'";
-                        string docNum = CONTEXT.Database.SqlQuery<string>(ssql, id).FirstOrDefault();
-                        */
+                        if(GRPOResult != null)
+                        {
+                            //insert RFID items to pending
+                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_InsertItemTag\"(:p0,:p1, 'GoodsReceiptPO','P')", userId, id);
+                        }
+
+                        List<GoodsReceiptResultModel> GRResult  = AddReceiveFromProduction(oCompany, userId, id, syncGRPO);
 
                         DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
 
                         tx_GoodsReceiptPO.PostingDate = dtModified;
-                        tx_GoodsReceiptPO.DocEntry = Convert.ToInt64(GRPOResult.DocEntry) ;
-                        //tx_GoodsReceiptPO.DocNum = docNum;
+                        tx_GoodsReceiptPO.DocEntry = Convert.ToInt64(GRPOResult.DocEntry);
 
                         tx_GoodsReceiptPO.Status = "Posted";
                         tx_GoodsReceiptPO.IsAfterPosted = "Y";
@@ -685,17 +701,28 @@ namespace Models.Transaction.Web.Purchasing
                         CONTEXT.SaveChanges();
 
                         var caseStatements = string.Join(" ",
-                        GRPOResult.LineMapping.Select(kv => $"WHEN T0.\"DetId\" = {kv.Key} THEN {kv.Value}"));
-
-                        var whereIn = string.Join(", ",GRPOResult.LineMapping.Keys);
+                            GRPOResult.LineMapping.Select(kv => $"WHEN T0.\"DetId\" = {kv.Key} THEN {kv.Value}"));
 
                         string sqlLine = $@"
-                            UPDATE ""Tx_GoodsReceiptPO_Item"" T0
+                            UPDATE ""Tx_GoodsReceiptPO_Item"" T0 
                             SET ""LineNum"" = CASE {caseStatements} END,
                                 ""DocEntry"" = {GRPOResult.DocEntry}
-                            WHERE T0.""DetId"" IN ({whereIn})";
+                            ";
+                        var whereIn = string.Join(", ", GRPOResult.LineMapping.Keys);
+
+                        if (GRResult.Count > 0) {
+                        var GRStatements = string.Join(" ",
+                            GRResult.Select(kv => $"WHEN T0.\"DetId\" = {kv.DetId} THEN {kv.GoodsReceiptId}"));
+                            sqlLine += @",
+                                ""GoodsReceiptNo"" = "+ GRStatements + " ";
+
+                            whereIn = string.Join(", ", GRPOResult.LineMapping.Keys.Union(GRResult.Select(x => x.DetId)).ToList());
+                        }
+
+                        sqlLine += @" WHERE T0.""DetId"" IN ("+ whereIn + ")";
+
                         CONTEXT.Database.ExecuteSqlCommand(sqlLine);
-                        
+
 
                         SpNotif.SpSysControllerTransNotif(userId, "GoodsReceiptPO", CONTEXT, "after", "Tx_GoodsReceiptPO", "post", "Id", keyValue);
                         CONTEXT.Database.ExecuteSqlCommand("CALL \"SpGoodsReceiptPO_UpdatePOStatus\"(:p0,:p1,'post')", userId, id);
@@ -745,7 +772,6 @@ namespace Models.Transaction.Web.Purchasing
 
             int nErr;
             string errMsg;
-            string newEntry_ = string.Empty;
             //SAPbobsCOM.Recordset rsDetailSO = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset);
 
             SAPbobsCOM.Documents oDocument = (SAPbobsCOM.Documents)oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oPurchaseDeliveryNotes);
@@ -772,8 +798,11 @@ namespace Models.Transaction.Web.Purchasing
                 oDocument.Address = model.Address;
             }
 
-            var insertedLineIds = new Dictionary<long, int>();
+            oDocument.UserFields.Fields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
+            oDocument.UserFields.Fields.Item("U_IDU_WebTransNo").Value = model.TransNo;
+            
             int i = 0;
+            Dictionary<long, int> InsertedLine = new Dictionary<long, int>();
             if (model.ListDetails_.Count > 0)
             {
                 foreach (var item in model.ListDetails_)
@@ -782,23 +811,25 @@ namespace Models.Transaction.Web.Purchasing
                     oDocument.Lines.BaseEntry = Convert.ToInt32(item.BaseEntry);
                     oDocument.Lines.BaseLine = Convert.ToInt32(item.BaseLine);
 
-                    oDocument.Lines.ItemCode = item.ItemCode;
+                    //oDocument.Lines.ItemCode = item.ItemCode;
                     oDocument.Lines.WarehouseCode = item.WhsCode;
-                    oDocument.Lines.Quantity = (double)item.Quantity;
+                    oDocument.Lines.Quantity = (double)item.QuantityScan;
 
                     if (item.UomEntry != null)
                     {
                         oDocument.Lines.UoMEntry = Convert.ToInt32(item.UomEntry);
                     }
 
-                    if (item.FreeText != null)
-                    {
-                        oDocument.Lines.FreeText = item.FreeText;
-                    }
+                    //if (item.FreeText != null)
+                    //{
+                    //    oDocument.Lines.FreeText = item.FreeText;
+                    //}
+
+                    oDocument.Lines.UserFields.Fields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
+                    oDocument.Lines.UserFields.Fields.Item("U_IDU_DetId").Value = Convert.ToInt32(item.DetId);
 
                     oDocument.Lines.Add();
-                    insertedLineIds.Add(Convert.ToInt64(item.DetId), i);
-                    i += 1;
+                    InsertedLine.Add(Convert.ToInt64(item.DetId) , i);
                 }
             }
 
@@ -814,9 +845,61 @@ namespace Models.Transaction.Web.Purchasing
             }
 
             result.DocEntry = oCompany.GetNewObjectKey();
-            result.LineMapping = insertedLineIds;
+            result.LineMapping = InsertedLine;
 
             SapCompany.CleanUp(oDocument);
+            return result;
+        }
+
+        
+
+        private List<GoodsReceiptResultModel> AddReceiveFromProduction(Company oCompany, int userId, long id, GoodsReceiptPOModel model)
+        {
+            List<GoodsReceiptResultModel> result = new List<GoodsReceiptResultModel>();
+            int nErr;
+            string errMsg;
+            
+            if (model.ListDetails_.Count > 0)
+            {
+                foreach (var item in model.ListDetails_)
+                {
+                    SAPbobsCOM.Documents oDocument = (SAPbobsCOM.Documents)oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oInventoryGenEntry);
+                    oDocument.DocDate = model.TransDate?? DateTime.Now;
+
+                    oDocument.UserFields.Fields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
+                    oDocument.UserFields.Fields.Item("U_IDU_WebTransNo").Value = model.TransNo;
+
+                    oDocument.Lines.BaseType = 202;
+                    oDocument.Lines.BaseEntry = item.IdPDO ?? 0;
+                    oDocument.Lines.Quantity = double.Parse(item.QuantityScan.ToString());
+
+                    oDocument.Lines.UserFields.Fields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
+                    oDocument.Lines.UserFields.Fields.Item("U_IDU_DetId").Value = Convert.ToInt32(item.DetId);
+
+                    oDocument.Lines.Add();
+
+                    if (oDocument.Add() != 0)
+                    {
+
+                        nErr = oCompany.GetLastErrorCode();
+                        errMsg = oCompany.GetLastErrorDescription();
+
+                        SapCompany.CleanUp(oDocument);
+
+                        throw new Exception("[VALIDATION] - Add ReceiptProduction | " + nErr.ToString() + "|" + errMsg);
+
+                    }
+                    string docEntry =  oCompany.GetNewObjectKey();
+                    result.Add( 
+                        new GoodsReceiptResultModel
+                        {
+                            DetId = Convert.ToInt64(item.DetId),
+                            GoodsReceiptId = Convert.ToInt32(docEntry)
+                        }
+                    );
+                }
+            }
+
             return result;
         }
 
@@ -843,7 +926,8 @@ namespace Models.Transaction.Web.Purchasing
                         {
                             if (tx_GoodsReceiptPO.IsAfterPosted == "Y")
                             {
-                                Cancel_GoodReceiptPo(oCompany, Convert.ToInt32(tx_GoodsReceiptPO.DocEntry) );
+                                Cancel_GoodReceiptPo(oCompany, Convert.ToInt32(tx_GoodsReceiptPO.DocEntry));
+                                CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_InsertItemTag\"(:p0,:p1, 'GoodsReceiptPO','I')", userId, Id);
                             }
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
