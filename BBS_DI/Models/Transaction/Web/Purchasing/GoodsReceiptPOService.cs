@@ -110,7 +110,9 @@ namespace Models.Transaction.Web.Purchasing
 
         public string PDODocNum_ { get; set; }
 
-        public int? GoodsReceiptNo { get; set; }
+        public int? GoodsReceiptDocEntry { get; set; }
+
+        public string GRDocNum_ { get; set; }
 
         public string Bagian { get; set; }
 
@@ -256,9 +258,10 @@ namespace Models.Transaction.Web.Purchasing
 
         public List<GoodsReceiptPO_DetailModel> GoodsReceiptPO_Details(HANA_APP CONTEXT, long id = 0)
         {
-            string ssql = @"SELECT T0.*, T1.""DocNum"" AS ""PDODocNum_""
+            string ssql = @"SELECT T0.*, T1.""DocNum"" AS ""PDODocNum_"", T2.""DocNum"" AS ""GRDocNum_""
                 FROM ""Tx_GoodsReceiptPO_Item"" T0
                 LEFT JOIN """ + DbProvider.dbSap_Name + @""".""OWOR"" T1 ON T0.""IdPDO"" = T1.""DocEntry""
+                LEFT JOIN """ + DbProvider.dbSap_Name + @""".""OIGN"" T2 ON T0.""GoodsReceiptDocEntry"" = T2.""DocEntry""
                 WHERE T0.""Id"" =:p0
                 ORDER BY T0.""DetId"" ASC
             ";
@@ -713,9 +716,9 @@ namespace Models.Transaction.Web.Purchasing
                         if (GRResult.Count > 0) {
                         var GRStatements = string.Join(" ",
                             GRResult.Select(kv => $"WHEN T0.\"DetId\" = {kv.DetId} THEN {kv.GoodsReceiptId}"));
-                            sqlLine += @",
-                                ""GoodsReceiptNo"" = "+ GRStatements + " ";
-
+                            sqlLine += ",";
+                            sqlLine += @"
+                                    ""GoodsReceiptDocEntry"" = CASE " + GRStatements + " END ";
                             whereIn = string.Join(", ", GRPOResult.LineMapping.Keys.Union(GRResult.Select(x => x.DetId)).ToList());
                         }
 
@@ -830,6 +833,7 @@ namespace Models.Transaction.Web.Purchasing
 
                     oDocument.Lines.Add();
                     InsertedLine.Add(Convert.ToInt64(item.DetId) , i);
+                    i ++;
                 }
             }
 

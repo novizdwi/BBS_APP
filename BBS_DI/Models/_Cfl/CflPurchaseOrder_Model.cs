@@ -143,7 +143,7 @@ namespace Models._Cfl
 
 
             string ssql = "";
-            ssql = "SELECT T0.* FROM (" + Cfl_Sql + ") T0  WHERE 1=1 " + sqlCriteria;
+            ssql = "SELECT T0.* FROM (" + Cfl_Sql + ") T0  WHERE 1=1 " + sqlCriteria + " ORDER BY T0.\"DocEntry\" DESC ";
             string ssqlLimit = string.Format(" LIMIT {0} OFFSET {1} ", PageSize, (PageIndex) * PageSize);
 
             var items = CONTEXT.Database.SqlQuery<CflPurchaseOrder_View__>(ssql + sqlSort + ssqlLimit).ToList();

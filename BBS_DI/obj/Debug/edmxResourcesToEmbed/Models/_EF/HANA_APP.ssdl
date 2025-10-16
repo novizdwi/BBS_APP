@@ -714,6 +714,8 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AdjustTypeCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="AdjustTypeName" Type="nvarchar" MaxLength="50" />
     <Property Name="TransType" Type="nvarchar" MaxLength="50" />
     <Property Name="TransNo" Type="nvarchar" MaxLength="50" />
     <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
@@ -796,6 +798,8 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AdjustTypeCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="AdjustTypeName" Type="nvarchar" MaxLength="50" />
     <Property Name="TransType" Type="nvarchar" MaxLength="50" />
     <Property Name="TransNo" Type="nvarchar" MaxLength="50" />
     <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
@@ -919,7 +923,7 @@
     <Property Name="ModifiedDate" Type="timestamp" />
     <Property Name="ModifiedUser" Type="int" />
     <Property Name="IdPDO" Type="int" />
-    <Property Name="GoodsReceiptNo" Type="int" />
+    <Property Name="GoodsReceiptDocEntry" Type="int" />
   </EntityType>
   <EntityType Name="Tx_GoodsReceiptPO_Item_Tag">
     <Key>

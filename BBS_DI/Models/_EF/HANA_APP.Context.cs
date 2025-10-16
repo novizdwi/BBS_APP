@@ -88,9 +88,9 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_AdjustmentIn_Item> Tx_AdjustmentIn_Item { get; set; }
         public virtual DbSet<Tx_AdjustmentIn_Item_Tag> Tx_AdjustmentIn_Item_Tag { get; set; }
         public virtual DbSet<Tx_GoodsReceiptPO> Tx_GoodsReceiptPO { get; set; }
-        public virtual DbSet<Tx_GoodsReceiptPO_Item> Tx_GoodsReceiptPO_Item { get; set; }
         public virtual DbSet<Tx_GoodsReceiptPO_Item_Tag> Tx_GoodsReceiptPO_Item_Tag { get; set; }
         public virtual DbSet<Tx_TransferRequest> Tx_TransferRequest { get; set; }
         public virtual DbSet<Tx_TransferRequest_Item> Tx_TransferRequest_Item { get; set; }
+        public virtual DbSet<Tx_GoodsReceiptPO_Item> Tx_GoodsReceiptPO_Item { get; set; }
     }
 }
