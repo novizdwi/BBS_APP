@@ -846,6 +846,7 @@
     <EntitySetMapping Name="Tx_PurchaseOrder_Item">
       <EntityTypeMapping TypeName="Model1.Tx_PurchaseOrder_Item">
         <MappingFragment StoreEntitySet="Tx_PurchaseOrder_Item">
+          <ScalarProperty Name="IdPDO" ColumnName="IdPDO" />
           <ScalarProperty Name="LineStatus" ColumnName="LineStatus" />
           <ScalarProperty Name="UnitPriceTc" ColumnName="UnitPriceTc" />
           <ScalarProperty Name="Uom" ColumnName="Uom" />
@@ -1025,6 +1026,8 @@
     <EntitySetMapping Name="Tx_GoodsReceiptPO_Item">
       <EntityTypeMapping TypeName="Model1.Tx_GoodsReceiptPO_Item">
         <MappingFragment StoreEntitySet="Tx_GoodsReceiptPO_Item">
+          <ScalarProperty Name="GoodsReceiptNo" ColumnName="GoodsReceiptNo" />
+          <ScalarProperty Name="IdPDO" ColumnName="IdPDO" />
           <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -1066,6 +1069,61 @@
           <ScalarProperty Name="ItemName" ColumnName="ItemName" />
           <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
           <ScalarProperty Name="DetDetId" ColumnName="DetDetId" />
+          <ScalarProperty Name="DetId" ColumnName="DetId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tx_TransferRequest">
+      <EntityTypeMapping TypeName="Model1.Tx_TransferRequest">
+        <MappingFragment StoreEntitySet="Tx_TransferRequest">
+          <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CancelReason" ColumnName="CancelReason" />
+          <ScalarProperty Name="JournalRemarks" ColumnName="JournalRemarks" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="IsAfterPosted" ColumnName="IsAfterPosted" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="PriecListName" ColumnName="PriecListName" />
+          <ScalarProperty Name="PriecList" ColumnName="PriecList" />
+          <ScalarProperty Name="ToWhsName" ColumnName="ToWhsName" />
+          <ScalarProperty Name="ToWhsCode" ColumnName="ToWhsCode" />
+          <ScalarProperty Name="FromWhsName" ColumnName="FromWhsName" />
+          <ScalarProperty Name="FromWhsCode" ColumnName="FromWhsCode" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="VendorName" ColumnName="VendorName" />
+          <ScalarProperty Name="VendorCode" ColumnName="VendorCode" />
+          <ScalarProperty Name="DocDate" ColumnName="DocDate" />
+          <ScalarProperty Name="DocNum" ColumnName="DocNum" />
+          <ScalarProperty Name="DocEntry" ColumnName="DocEntry" />
+          <ScalarProperty Name="TransDate" ColumnName="TransDate" />
+          <ScalarProperty Name="TransNo" ColumnName="TransNo" />
+          <ScalarProperty Name="TransType" ColumnName="TransType" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tx_TransferRequest_Item">
+      <EntityTypeMapping TypeName="Model1.Tx_TransferRequest_Item">
+        <MappingFragment StoreEntitySet="Tx_TransferRequest_Item">
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="Uom" ColumnName="Uom" />
+          <ScalarProperty Name="UomEntry" ColumnName="UomEntry" />
+          <ScalarProperty Name="QuantityScan" ColumnName="QuantityScan" />
+          <ScalarProperty Name="QuantityOpen" ColumnName="QuantityOpen" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="ToWhsName" ColumnName="ToWhsName" />
+          <ScalarProperty Name="ToWhsCode" ColumnName="ToWhsCode" />
+          <ScalarProperty Name="FromWhsName" ColumnName="FromWhsName" />
+          <ScalarProperty Name="FromWhsCode" ColumnName="FromWhsCode" />
+          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+          <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+          <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="DetId" ColumnName="DetId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>

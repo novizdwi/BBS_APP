@@ -31,6 +31,8 @@
     settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
     settings.Columns.Add("Id", "Id").Visible = false;
     settings.Columns.Add("DetId", "DetId").Visible = false;
+    settings.Columns.Add("IdPDO", "IdPDO").Width = 0;
+    settings.Columns.Add("PDODocNum_", "Production No").Width = 200;
 
     settings.Columns.Add(column =>
     {
@@ -71,7 +73,7 @@
         column.Caption = "Item Name";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 200;
+        column.Width = 220;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
 
@@ -163,7 +165,7 @@
         column.Caption = "Free Text";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 200;
+        column.Width = 220;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
 
@@ -209,7 +211,7 @@
         column.Caption = "Line Status";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 120;
+        column.Width = 0;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
 

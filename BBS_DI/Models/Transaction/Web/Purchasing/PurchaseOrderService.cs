@@ -122,6 +122,10 @@ namespace Models.Transaction.Web.Purchasing
         public long? LineNum { get; set; }
 
         public string LineStatus { get; set; }
+
+        public int? IdPDO { get; set; }
+
+        public string PDODocNum_ { get; set; }
     }
 
     public class PurchaseOrderItemTagView___
@@ -211,10 +215,11 @@ namespace Models.Transaction.Web.Purchasing
 
         public List<PurchaseOrder_DetailModel> PurchaseOrder_Details(HANA_APP CONTEXT, long id = 0)
         {
-            string ssql = @"SELECT * 
-                FROM ""Tx_PurchaseOrder_Item"" 
-                WHERE ""Id"" =:p0
-                ORDER BY ""DetId"" ASC
+            string ssql = @"SELECT T0.*, T1.""DocNum"" AS ""PDODocNum_""
+                FROM ""Tx_PurchaseOrder_Item"" T0
+                LEFT JOIN """ + DbProvider.dbSap_Name + @""".""OWOR"" T1 ON T0.""IdPDO"" = T1.""DocEntry""
+                WHERE T0.""Id"" =:p0
+                ORDER BY T0.""DetId"" ASC
             ";
             var purchaseOrder = CONTEXT.Database.SqlQuery<PurchaseOrder_DetailModel>(ssql, id).ToList();
             return purchaseOrder;
