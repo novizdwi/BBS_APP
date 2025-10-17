@@ -1,116 +1,78 @@
-﻿<br /><br /> 
-@Html.DevExpress().FormLayout(settings =>
-{
-    settings.Name = "formLayouBtn";
-    settings.EncodeHtml = false;
-
-    var groupBtn = settings.Items.AddGroupItem(groupBtnSettings =>
+﻿@Html.DevExpress().Panel(settings => {
+    settings.Name = "pageToolbarPanel";
+    settings.ControlStyle.CssClass = "page-toolbar-wrapper";
+    settings.ClientSideEvents.Init = "onPageToolbarInit";
+    settings.SetContent(() =>
     {
-        
-        groupBtnSettings.CellStyle.Paddings.Padding = 0;
-        groupBtnSettings.Caption = "";
-        groupBtnSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
-        groupBtnSettings.GroupBoxDecoration = GroupBoxDecoration.None;
-        groupBtnSettings.ColCount = 20;
-
-
-
-
-        groupBtnSettings.Items.Add(itemSettings =>
+        @Html.DevExpress().Menu(menuSettings =>
         {
-            itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Button;
-            itemSettings.VerticalAlign = FormLayoutVerticalAlign.Top;
-            itemSettings.Name = "grpBtnUpdate";
+            menuSettings.Name = "pageToolbar";
+            menuSettings.ItemAutoWidth = false;
+            menuSettings.AllowSelectItem = false;
+            menuSettings.ApplyItemStyleToTemplates = true;
+            menuSettings.SettingsAdaptivity.Enabled = true;
+            menuSettings.SettingsAdaptivity.EnableAutoHideRootItems = true;
+            menuSettings.SettingsAdaptivity.EnableCollapseRootItemsToIcons = true;
+            menuSettings.SettingsAdaptivity.CollapseRootItemsToIconsAtWindowInnerWidth = 600;
+            menuSettings.Width = Unit.Percentage(100);
+            menuSettings.ControlStyle.SeparatorWidth = Unit.Pixel(0);
+            menuSettings.ControlStyle.CssClass = "page-toolbar";
+            menuSettings.Styles.Item.CssClass = "item";
+            menuSettings.Styles.Item.VerticalAlign = VerticalAlign.Middle;
+            menuSettings.Images.Item.Width = Unit.Pixel(16);
+            menuSettings.Images.Item.Height = Unit.Pixel(16);
+            menuSettings.Items.Add(item =>
+            {
+                item.Enabled = false;
+                item.SetTemplateContent(template => ViewContext.Writer.Write("<h1><b>General Setting</b></h1>"));
+                item.ItemStyle.Width = Unit.Percentage(100);
+            });
 
-            var btnSettings = (ButtonSettings)itemSettings.NestedExtensionSettings;
-            btnSettings.Name = "btnUpdate";
-            btnSettings.Text = "Save";
-            btnSettings.Width = 20;
-            btnSettings.ClientSideEvents.Click = "OnClickBtnUpdate";
+        }).GetHtml();
 
-            btnSettings.ImagePosition = ImagePosition.Left;
-            btnSettings.Images.Image.Url = "~/Content/Images/buttonnew/save.png";
-            //btnSettings.Images.Image.Height = 20;
-            //btnSettings.Styles.Style.ImageSpacing = 1;
-            btnSettings.Styles.Style.Paddings.Padding = 0;
-        });
-
-        groupBtnSettings.Items.Add(itemSettings =>
+        @Html.DevExpress().FormLayout(panelBtnsettings =>
         {
-            itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Button;
-            var btnSettings = (ButtonSettings)itemSettings.NestedExtensionSettings;
-            btnSettings.Name = "btnRefresh";
-            btnSettings.Text = "Refresh";
-            btnSettings.Width = 20;
-            btnSettings.ClientSideEvents.Click = "OnClickBtnRefresh";
+            panelBtnsettings.Name = "formLayouBtn";
+            panelBtnsettings.EncodeHtml = false;
+            panelBtnsettings.ControlStyle.CssClass = "under-toolbar";
+            panelBtnsettings.Height = Unit.Pixel(16);
+            panelBtnsettings.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+            var groupBtn = panelBtnsettings.Items.AddGroupItem(groupBtnSettings =>
+            {
+                groupBtnSettings.Caption = "";
+                groupBtnSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+                groupBtnSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+                groupBtnSettings.ColCount = 2;
+                groupBtnSettings.Width = Unit.Pixel(350);
+                groupBtnSettings.SettingsItems.ShowCaption = DefaultBoolean.False;
+                groupBtnSettings.CellStyle.Paddings.Padding = 0;
 
-            btnSettings.ImagePosition = ImagePosition.Left;
-            btnSettings.Images.Image.Url = "~/Content/Images/buttonnew/refresh.png";
-            //btnSettings.Images.Image.Height = 20;
-            //btnSettings.Styles.Style.ImageSpacing = 1;
-            btnSettings.Styles.Style.Paddings.Padding = 0;
-        });
+                groupBtnSettings.Items.Add(itemSettings =>
+                {
+                    itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Button;
+                    itemSettings.Name = "grpBtnUpdate";
+                    var btnSettings = (ButtonSettings)itemSettings.NestedExtensionSettings;
+                    btnSettings.Name = "btnUpdate";
+                    btnSettings.Text = "Save";
+                    btnSettings.Width = Unit.Percentage(90);
+                    btnSettings.ClientSideEvents.Click = "OnClickBtnUpdate";
+                    btnSettings.ImagePosition = ImagePosition.Left;
+                    btnSettings.Images.Image.Url = "~/Content/Images/buttonnew/save.png";
+                });
 
+                groupBtnSettings.Items.Add(itemSettings =>
+                {
+                    itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Button;
+                    var btnSettings = (ButtonSettings)itemSettings.NestedExtensionSettings;
+                    btnSettings.Name = "btnRefresh";
+                    btnSettings.Text = "Refresh";
+                    btnSettings.Width = Unit.Percentage(90);
+                    btnSettings.ClientSideEvents.Click = "OnClickBtnRefresh";
+                    btnSettings.ImagePosition = ImagePosition.Left;
+                    btnSettings.Images.Image.Url = "~/Content/Images/buttonnew/refresh.png";
+                });
+            });
 
+        }).GetHtml();
     });
-
-
 }).GetHtml()
-
-@*<br /><br /> 
-@Html.DevExpress().FormLayout(settings =>
-{
-    settings.Name = "formLayouBtn";
-    settings.EncodeHtml = false;
-
-    var groupBtn = settings.Items.AddGroupItem(groupBtnSettings =>
-    {
-        
-        groupBtnSettings.CellStyle.Paddings.Padding = 0;
-        groupBtnSettings.Caption = "";
-        groupBtnSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
-        groupBtnSettings.GroupBoxDecoration = GroupBoxDecoration.None;
-        groupBtnSettings.ColCount = 20;
-
-    
-
-        groupBtnSettings.Items.Add(itemSettings =>
-        {
-            itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Button;
-            itemSettings.VerticalAlign = FormLayoutVerticalAlign.Top;
-            itemSettings.Name = "grpBtnUpdate";
-            
-            var btnSettings = (ButtonSettings)itemSettings.NestedExtensionSettings;
-            btnSettings.Name = "btnUpdate";
-            btnSettings.Text = "Save";
-            btnSettings.Width = 20;
-            btnSettings.ClientSideEvents.Click = "OnClickBtnUpdate";
-
-            btnSettings.ImagePosition = ImagePosition.Left;
-            btnSettings.Images.Image.Url = "~/Content/Images/button/b_update.png";
-            //btnSettings.Images.Image.Height = 20;
-            //btnSettings.Styles.Style.ImageSpacing = 1;
-            btnSettings.Styles.Style.Paddings.Padding = 0; 
-        });
-
-        groupBtnSettings.Items.Add(itemSettings =>
-        {
-            itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Button;
-            var btnSettings = (ButtonSettings)itemSettings.NestedExtensionSettings;
-            btnSettings.Name = "btnRefresh";
-            btnSettings.Text = "Refresh";
-            btnSettings.Width = 20;
-            btnSettings.ClientSideEvents.Click = "OnClickBtnRefresh";
-
-            btnSettings.ImagePosition = ImagePosition.Left;
-            btnSettings.Images.Image.Url = "~/Content/Images/button/b_refresh.png";
-            //btnSettings.Images.Image.Height = 20;
-            //btnSettings.Styles.Style.ImageSpacing = 1;
-            btnSettings.Styles.Style.Paddings.Padding = 0; 
-        });
-
-
-    });
-
-
-}).GetHtml()*@

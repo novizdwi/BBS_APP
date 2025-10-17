@@ -56,36 +56,7 @@ namespace Controllers.Setting
 
             return PartialView(VIEW_FORM_PARTIAL, generalSettingModel);
         }
-
-        public ActionResult ItemGroupName(string docNum = "")
-        {
-            var abc = GeneralSettingGetList.GetDetailGroupItemCode(docNum);
-            if (abc != null)
-            {
-                var response = new MyCustomResponse
-                {
-                    ItemGroupCode = abc.Rows[0]["Code"].ToString(),
-                    ItemGroupName = abc.Rows[0]["Name"].ToString()
-                };
-                return this.Json(response, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                var response = new MyCustomResponse
-                {
-                    ItemGroupCode = "",
-                    ItemGroupName = ""
-                };
-                return this.Json(response, JsonRequestBehavior.AllowGet);
-            }
-        }
-        public class MyCustomResponse
-        {
-            public string ItemGroupCode { get; set; }
-            public string ItemGroupName { get; set; }
-        }
-
-
+         
 
         [HttpPost, ValidateInput(false)]
         public ActionResult Update([ModelBinder(typeof(DevExpressEditorsBinder))]  GeneralSettingModel generalSettingModel)

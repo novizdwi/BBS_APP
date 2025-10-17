@@ -143,7 +143,6 @@ C:\LegionShared\Project\BBS\BBS_APP\MJL_DX20\obj\Debug\BBS_APP.csproj.CopyComple
 C:\LegionShared\Project\BBS\BBS_APP\MJL_DX20\obj\Debug\BBS_APP.dll
 C:\LegionShared\Project\BBS\BBS_APP\MJL_DX20\obj\Debug\BBS_APP.pdb
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\BBS_APP.dll
-C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\BBS_APP.pdb
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\BBS_DI.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\Elmah.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\EntityFramework.dll
@@ -166,6 +165,7 @@ C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\WebMatrix.Data.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\LumenWorks.Framework.IO.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\BBS_DI.pdb
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\BBS_APP.dll.config
+C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\BBS_APP.pdb
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\DevExpress.BonusSkins.v20.1.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\DevExpress.Charts.v20.1.Core.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\DevExpress.CodeParser.v20.1.dll
