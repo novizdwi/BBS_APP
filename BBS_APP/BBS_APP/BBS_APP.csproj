@@ -563,7 +563,7 @@
     <Content Include="Views\Setting\GeneralSetting\GeneralSetting.cshtml" />
     <Content Include="Views\Setting\GeneralSetting\Partial\GeneralSetting_Form_Btn_Partial.cshtml" />
     <Content Include="Views\Setting\GeneralSetting\Partial\GeneralSetting_Form_Partial.cshtml" />
-    <Content Include="Views\Setting\GeneralSetting\Partial\GeneralSetting_TabCoa_List_Partial.cshtml" />
+    <Content Include="Views\Setting\GeneralSetting\Partial\GeneralSetting_TabAdjustmentCoa_List_Partial.cshtml" />
     <Content Include="Views\Setting\GeneralSetting\Partial\GeneralSetting_TabItem_List_Partial.cshtml" />
     <Content Include="Views\Setting\Layout\Layout.cshtml" />
     <Content Include="Views\Setting\Layout\Partial\Layout_Form_Btn_Partial.cshtml" />

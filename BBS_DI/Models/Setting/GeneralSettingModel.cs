@@ -16,89 +16,20 @@ namespace Models.Setting.GeneralSetting
 
     #region Models
 
-
-    public static class GeneralSettingGetList
-    {
-        public static DataTable GetItemList(string strType)
-        {
-            using (var CONTEXT = new HANA_APP())
-            {
-                return GetItemList(CONTEXT, strType);
-            }
-        }
-        public static DataTable GetItemList(HANA_APP CONTEXT, string strType)
-        {
-            var ssql = "SELECT T0.\"ItmsGrpCod\" AS \"Code\", T0.\"ItmsGrpNam\" AS \"Name\" FROM \"" + DbProvider.dbSap_Name + "\".\"OITB\" T0";
-
-            return GetDataTable(CONTEXT, ssql, strType);
-        }
-        public static DataTable GetDataTable(HANA_APP CONTEXT, string sql, params object[] parameters)
-        {
-            var s = EfIduHanaRsExtensionsApp.IduGetDataTable(CONTEXT, sql, parameters);
-
-            return s;
-        }
-        public static DataTable GetDetailGroupItemCode(string docNum)
-        {
-            using (var CONTEXT = new HANA_APP())
-            {
-                return GetDetailGroupItemCode(CONTEXT, docNum);
-            }
-        }
-        public static DataTable GetDetailGroupItemCode(HANA_APP CONTEXT, string docNum)
-        {
-            var ssql = "SELECT T0.\"ItmsGrpCod\" AS \"Code\", T0.\"ItmsGrpNam\" AS \"Name\" FROM \"" + DbProvider.dbSap_Name + "\".\"OITB\" T0 WHERE T0.\"ItmsGrpNam\" = '" + docNum + "'";
-            //var ssql = "SELECT T0.\"DocNum\" AS \"Code\", T0.\"DocNum\" AS \"Name\" FROM \"" + DbProvider.dbSap_Name + "\".\"OINV\" T0 WHERE \"DocStatus\" = 'O'";
-
-            return GetDataTable(CONTEXT, ssql, "");
-        }
-
-    }
-
     public class GeneralSettingModel
     {
         
         public int _UserId { get; set; }
 
         public int Id { get; set; }
-
-        public string SegelItemCode { get; set; }
-
-        public string SegelItemName { get; set; }
-
-        //public string BiayaKirimItemCode { get; set; }
-
-        //public string BiayaKirimItemName { get; set; }
-
-        //public string SadpIICardCode { get; set; }
-
-        //public string SadpIICardName { get; set; }
-
-        public string SolarItemCode { get; set; }
-
-        public string SolarItemName { get; set; }
-
-        public string WarehouseTransitCode { get; set; }
-
-        public string WarehouseTransitName { get; set; }
-
-        //public string JasaAngkutCodeDarat { get; set; }
-
-        //public string JasaAngkutNameDarat { get; set; }
-
-        //public string JasaAngkutCodeLaut { get; set; }
-
-        //public string JasaAngkutNameLaut { get; set; }
         
-        public List<GeneralSetting_CoaModel> ListCoas_ = new List<GeneralSetting_CoaModel>();
+        public List<GeneralSetting_AdjustmentCoaModel> ListCoas_ = new List<GeneralSetting_AdjustmentCoaModel>();
 
-        public List<GeneralSetting_ItemModel> ListItems_ = new List<GeneralSetting_ItemModel>();
-        public GeneralSetting_Coas DetailCoas_ { get; set; }
-        public GeneralSetting_Items DetailItems_ { get; set; }
+        public GeneralSetting_AdjustmentCoas DetailCoas_ { get; set; }
 
     }
 
-    public class GeneralSetting_CoaModel
+    public class GeneralSetting_AdjustmentCoaModel
     {
 
         private FormModeEnum _FormModeEnum = FormModeEnum.New;
@@ -111,59 +42,25 @@ namespace Models.Setting.GeneralSetting
 
         public int _UserId { get; set; }
 
-        public long Id { get; set; }
-
-        //[Required(ErrorMessage = "required")]
-        public string SortCode { get; set; }
-
-        //[Required(ErrorMessage = "required")]
         public string Code { get; set; }
 
-        //[Required(ErrorMessage = "required")]
         public string Name { get; set; }
 
-        //[Required(ErrorMessage = "required")]
-        public string CoaCode { get; set; }
+        public string U_IDU_Account { get; set; }
 
-        //[Required(ErrorMessage = "required")]
-        public string CoaName { get; set; }
+        public string U_IDU_Type { get; set; }
+
+        public string AcctName { get; set; }
 
     }
-    public class GeneralSetting_ItemModel
+
+    public class GeneralSetting_AdjustmentCoas
     {
-
-        private FormModeEnum _FormModeEnum = FormModeEnum.New;
-
-        public FormModeEnum _FormMode
-        {
-            get { return this._FormModeEnum; }
-            set { this._FormModeEnum = value; }
-        }
-
-        public int _UserId { get; set; }
-
-        public int? Id { get; set; }
-
-        public int? DetId { get; set; }
-
-        public string ItemGroupCode { get; set; }
-        
-        public string ItemGroupName { get; set; }
+        public List<string> deletedRowKeys { get; set; }
+        public List<GeneralSetting_AdjustmentCoaModel> insertedRowValues { get; set; }
+        public List<GeneralSetting_AdjustmentCoaModel> modifiedRowValues { get; set; }
     }
-
-    public class GeneralSetting_Coas
-    {
-        public List<long> deletedRowKeys { get; set; }
-        public List<GeneralSetting_CoaModel> insertedRowValues { get; set; }
-        public List<GeneralSetting_CoaModel> modifiedRowValues { get; set; }
-    }
-    public class GeneralSetting_Items
-    {
-        public List<int> deletedRowKeys { get; set; }
-        public List<GeneralSetting_ItemModel> insertedRowValues { get; set; }
-        public List<GeneralSetting_ItemModel> modifiedRowValues { get; set; }
-    }
-
+    
 
     #endregion
 
@@ -225,71 +122,8 @@ namespace Models.Setting.GeneralSetting
                                 keyValue = tm_GeneralSetting.Id.ToString();
                                 SpNotif.SpSysTransNotif(model._UserId, CONTEXT, "after", "Tm_GeneralSetting", "add", "Id", keyValue);
                             }
-
-                            if (model.DetailCoas_ != null)
-                            {
-                                if (model.DetailCoas_.insertedRowValues != null)
-                                {
-                                    foreach (var coa in model.DetailCoas_.insertedRowValues)
-                                    {
-                                        Detail_Add(CONTEXT,coa, model._UserId);
-                                    }
-                                }
-
-
-                                if (model.DetailCoas_.modifiedRowValues != null)
-                                {
-                                    foreach (var coa in model.DetailCoas_.modifiedRowValues)
-                                    {
-                                        Detail_Update(CONTEXT,coa, model._UserId);
-                                    }
-                                }
-
-                                if (model.DetailCoas_.deletedRowKeys != null)
-                                {
-                                    foreach (var id in model.DetailCoas_.deletedRowKeys)
-                                    {
-                                        GeneralSetting_CoaModel coa = new GeneralSetting_CoaModel();
-                                        coa.Id = id;
-                                        Detail_Delete(CONTEXT,coa);
-                                    }
-                                }
-                            }
-
-                            if (model.DetailItems_ != null)
-                            {
-                                if (model.DetailItems_.insertedRowValues != null)
-                                {
-                                    foreach (var item in model.DetailItems_.insertedRowValues)
-                                    {
-                                        DetailItem_Add(CONTEXT, item, model.Id, model._UserId);
-                                        //DetailItem_Add(CONTEXT, item, model._UserId);
-                                    }
-                                }
-
-
-                                if (model.DetailItems_.modifiedRowValues != null)
-                                {
-                                    foreach (var item in model.DetailItems_.modifiedRowValues)
-                                    {
-                                        DetailItem_Update(CONTEXT, item, model._UserId);
-                                    }
-                                }
-
-                                if (model.DetailItems_.deletedRowKeys != null)
-                                {
-                                    foreach (var id in model.DetailItems_.deletedRowKeys)
-                                    {
-                                        GeneralSetting_ItemModel item = new GeneralSetting_ItemModel();
-                                        item.Id = Convert.ToInt32(id);
-                                        DetailItem_Delete(CONTEXT, item);
-                                    }
-                                }
-                            }
-
-
-
-
+                            
+                            
                             CONTEXT_TRANS.Commit();
                         }
 
@@ -344,7 +178,6 @@ namespace Models.Setting.GeneralSetting
                 CopyProperty.CopyProperties(tm_GeneralSetting, model, false);
 
                 model.ListCoas_ = this.GeneralSetting_Coas(CONTEXT);
-                model.ListItems_ = this.GeneralSetting_Items(CONTEXT, id);
             }
             else
             {
@@ -357,15 +190,22 @@ namespace Models.Setting.GeneralSetting
         //-------------------------------------
         //Detail  GeneralSetting_CoaModel
         //-------------------------------------
-        public List<GeneralSetting_CoaModel> GeneralSetting_Coas(HANA_APP CONTEXT)
+        public List<GeneralSetting_AdjustmentCoaModel> GeneralSetting_Coas(HANA_APP CONTEXT)
         {
-            return CONTEXT.Database.SqlQuery<GeneralSetting_CoaModel>("SELECT T0.* FROM \"Tm_GeneralSetting_Coa\" T0 ").ToList();
+            string ssql = @"
+                SELECT T0.*, T1.""AcctName"" AS ""AcctName""
+                FROM ""{0}"".""@ADJUSTMENTTYPE"" AS T0
+                INNER JOIN ""{0}"".""OACT"" AS T1 ON T0.""U_IDU_Account"" = T1.""AcctCode""
+            ";
+
+            ssql = string.Format(ssql, DbProvider.dbSap_Name);
+            return CONTEXT.Database.SqlQuery<GeneralSetting_AdjustmentCoaModel>(ssql).ToList();
         }
 
         //---------------------------------------
         //GeneralSetting_CoaModel
         //--------------------------------------- 
-        public long Detail_Add(HANA_APP CONTEXT, GeneralSetting_CoaModel model, int UserId)
+        public long Detail_Add(HANA_APP CONTEXT, GeneralSetting_AdjustmentCoaModel model, int UserId)
         {
             long Id = 0;
 
@@ -392,16 +232,16 @@ namespace Models.Setting.GeneralSetting
 
         }
 
-        public void Detail_Update(HANA_APP CONTEXT, GeneralSetting_CoaModel model, int UserId)
+        public void Detail_Update(HANA_APP CONTEXT, GeneralSetting_AdjustmentCoaModel model, int UserId)
         {
             if (model != null)
             {
 
-                Tm_GeneralSetting_Coa tm_GeneralSetting_Coa = CONTEXT.Tm_GeneralSetting_Coa.Find(model.Id);
+                Tm_GeneralSetting_Coa tm_GeneralSetting_Coa = CONTEXT.Tm_GeneralSetting_Coa.Find(model.Code);
 
                 if (tm_GeneralSetting_Coa != null)
                 {
-                    var exceptColumns = new string[] { "Id", "SortCode", "Code", "Name" };
+                    var exceptColumns = new string[] { "Code"};
                     CopyProperty.CopyProperties(model, tm_GeneralSetting_Coa, false, exceptColumns);
 
                     DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
@@ -416,88 +256,20 @@ namespace Models.Setting.GeneralSetting
 
         }
 
-        public void Detail_Delete(HANA_APP CONTEXT, GeneralSetting_CoaModel model)
+        public void Detail_Delete(HANA_APP CONTEXT, GeneralSetting_AdjustmentCoaModel model)
         {
-            if (model.Id != null)
-            {
-                if (model.Id != 0)
-                {
-                    CONTEXT.Database.ExecuteSqlCommand("DELETE FROM \"Tm_GeneralSetting_Coa\"  WHERE \"Id\"=:p0", model.Id);
+            //if (model.Code != null)
+            //{
+            //    if (model.Code != 0)
+            //    {
+            //        CONTEXT.Database.ExecuteSqlCommand("DELETE FROM \"Tm_GeneralSetting_Coa\"  WHERE \"Id\"=:p0", model.Code);
 
-                    CONTEXT.SaveChanges();
-                }
-            }
+            //        CONTEXT.SaveChanges();
+            //    }
+            //}
 
         }
-
-        //-------------------------------------
-        //Detail  GeneralSetting_CoaModel
-        //-------------------------------------
-        public List<GeneralSetting_ItemModel> GeneralSetting_Items(HANA_APP CONTEXT, int id = 0)
-        {
-            string ssql = "SELECT * FROM \"Tm_GeneralSetting_Item\" T0 ORDER BY T0.\"DetId\" ";
-
-            return CONTEXT.Database.SqlQuery<GeneralSetting_ItemModel>(ssql, id).ToList();
-        }
-
-        public int DetailItem_Add(HANA_APP CONTEXT, GeneralSetting_ItemModel model, int Id, int UserId)
-        {
-            int DetId = 0;
-
-            if (model != null)
-            {
-                Tm_GeneralSetting_Item tm_GeneralSetting_Item = new Tm_GeneralSetting_Item();
-
-                CopyProperty.CopyProperties(model, tm_GeneralSetting_Item, false);
-
-                DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                tm_GeneralSetting_Item.CreatedDate = dtModified;
-                tm_GeneralSetting_Item.CreatedUser = UserId;
-                tm_GeneralSetting_Item.ModifiedDate = dtModified;
-                tm_GeneralSetting_Item.ModifiedUser = UserId;
-
-                CONTEXT.Tm_GeneralSetting_Item.Add(tm_GeneralSetting_Item);
-                CONTEXT.SaveChanges();
-
-            }
-
-            return DetId;
-
-        }
-        public void DetailItem_Update(HANA_APP CONTEXT, GeneralSetting_ItemModel model, int UserId)
-        {
-            if (model != null)
-            {
-                Tm_GeneralSetting_Item Tm_GeneralSetting_Item = CONTEXT.Tm_GeneralSetting_Item.Find(model.DetId);
-
-                if (Tm_GeneralSetting_Item != null)
-                {
-                    var exceptColumns = new string[] { "DetId", "Id" };
-                    CopyProperty.CopyProperties(model, Tm_GeneralSetting_Item, false, exceptColumns);
-
-                    DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-
-                    Tm_GeneralSetting_Item.ModifiedDate = dtModified;
-                    Tm_GeneralSetting_Item.ModifiedUser = UserId;
-
-                    CONTEXT.SaveChanges();
-                }
-            }
-
-        }
-
-        public void DetailItem_Delete(HANA_APP CONTEXT, GeneralSetting_ItemModel model)
-        {
-            if (model.Id != null)
-            {
-                if (model.Id != 0)
-                {
-                    CONTEXT.Database.ExecuteSqlCommand("DELETE FROM \"Tm_GeneralSetting_Item\"  WHERE \"DetId\"=:p0", model.Id);
-                    CONTEXT.SaveChanges();
-                }
-            }
-        }
-
+        
     }
 
 

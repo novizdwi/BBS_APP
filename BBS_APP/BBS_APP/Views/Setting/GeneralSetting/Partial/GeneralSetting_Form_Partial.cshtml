@@ -31,13 +31,12 @@
 
     var groupItem = settings.Items.AddGroupItem(itemSettings =>
     {
-        itemSettings.Caption = "General Setting";
+        itemSettings.Caption = string.Empty;
         //itemSettings.Caption = "Series Reservation";
         itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
-        itemSettings.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
         itemSettings.ColCount = 1;
- 
-        itemSettings.GroupBoxStyle.Caption.Paddings.Padding = 5;
+
+        itemSettings.GroupBoxStyle.Caption.Paddings.Padding = 0;
         itemSettings.GroupBoxStyle.Caption.Font.Size = 14;
         itemSettings.GroupBoxStyle.Caption.ForeColor = System.Drawing.ColorTranslator.FromHtml("#F20056");
         //itemSettings.GroupBoxStyle.Caption.ForeColor = System.Drawing.Color.FromName("#dccb3f");
@@ -50,13 +49,13 @@
     groupItem.Items.AddTabbedGroupItem(group =>
     {
         group.Name = "TabDetail";
-        group.ColSpan =1;
+        group.ColSpan = 1;
         group.Width = Unit.Percentage(70);
         group.Height = Unit.Percentage(80);
-        group.PageControl.ContentStyle.Paddings.Padding = 3;
-        group.PageControl.ContentStyle.Paddings.PaddingTop = 0;        
-       
-        
+        group.PageControl.ContentStyle.Paddings.Padding = 0;
+        group.PageControl.ContentStyle.Paddings.PaddingTop = 0;
+
+
         group.Items.Add(item =>
         {
             item.Name = "TabGeneral";
@@ -79,7 +78,7 @@
                         itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
                         itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
                         itemSettings.ColCount = 1;
-                       
+
 
                     });
 
@@ -90,191 +89,28 @@
                         itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
                         itemSettings.ShowCaption = DefaultBoolean.False;
                         itemSettings.ColCount = 1;
-                        
+
                     });
 
-
-                    groupItemTab_Col1.Items.Add(itemSettings =>
-                    {
-
-                        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
-                        itemSettings.Caption = "Solar Item Code";
-                        itemSettings.FieldName = "SolarItemCode";
-                        var txt = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
-                        txt.Name = "SolarItemCode";
-                        txt.ReadOnly = true;
-                        txt.ShowModelErrors = true;
-
-                        txt.ControlStyle.CssClass = "editor";
-                        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-                        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-                        txt.Properties.ValidationSettings.Display = Display.Dynamic;
-                        txt.Width = 100;
-
-                        // Hide the default DropDown button
-                        txt.Properties.DropDownButton.Visible = false;
-                        txt.Properties.ButtonStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-
-                        EditButton lookUpButton = new EditButton();
-                        lookUpButton.Text = "";
-                        lookUpButton.Image.Url = "~/Content/Images/buttonnew/find-hitam.png";
-                        lookUpButton.Image.Width = 15;
-
-                        txt.Properties.Buttons.Add(lookUpButton);
-                        txt.Properties.ClientSideEvents.ButtonClick = "BtnCflItemPopupListSolarOnClick";
-                    });
-
-
-                    groupItemTab_Col1.Items.Add(itemSettings =>
-                    {
-
-                        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
-                        itemSettings.Caption = "Solar Item Name";
-                        itemSettings.FieldName = "SolarItemName";
-                        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
-                        txt.Name = "SolarItemName";
-                        txt.ReadOnly = true;
-                        txt.ShowModelErrors = true;
-
-                        txt.ControlStyle.CssClass = "editor";
-                        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-                        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-                        txt.Properties.ValidationSettings.Display = Display.Dynamic;
-                        txt.Width = 300;
-                    });
-
-
-                    //groupItemTab_Col1.Items.Add(itemSettings =>
-                    //{
-
-                    //    itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
-                    //    itemSettings.Caption = "Jasa Angkut Darat (Item Code)";
-                    //    itemSettings.FieldName = "JasaAngkutCodeDarat";
-                    //    var txt = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
-                    //    txt.Name = "JasaAngkutCodeDarat";
-                    //    txt.ReadOnly = true;
-                    //    txt.ShowModelErrors = true;
-
-                    //    txt.ControlStyle.CssClass = "editor";
-                    //    txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-                    //    txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-                    //    txt.Properties.ValidationSettings.Display = Display.Dynamic;
-                    //    txt.Width = 100;
-
-                    //    // Hide the default DropDown button
-                    //    txt.Properties.DropDownButton.Visible = false;
-                    //    txt.Properties.ButtonStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-
-                    //    EditButton lookUpButton = new EditButton();
-                    //    lookUpButton.Text = "";
-                    //    lookUpButton.Image.Url = "~/Content/Images/buttonnew/find-hitam.png";
-                    //    lookUpButton.Image.Width = 15;
-
-                    //    txt.Properties.Buttons.Add(lookUpButton);
-                    //    txt.Properties.ClientSideEvents.ButtonClick = "BtnCflItemPopupListJasaAngkutDaratOnClick";
-                    //});
-
-
-                    //groupItemTab_Col1.Items.Add(itemSettings =>
-                    //{
-
-                    //    itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
-                    //    itemSettings.Caption = "Jasa Angkut Darat (Item Name)";
-                    //    itemSettings.FieldName = "JasaAngkutNameDarat";
-                    //    var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
-                    //    txt.Name = "JasaAngkutNameDarat";
-                    //    txt.ReadOnly = true;
-                    //    txt.ShowModelErrors = true;
-
-                    //    txt.ControlStyle.CssClass = "editor";
-                    //    txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-                    //    txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-                    //    txt.Properties.ValidationSettings.Display = Display.Dynamic;
-                    //    txt.Width = 300;
-                    //});
-
-                    //groupItemTab_Col1.Items.Add(itemSettings =>
-                    //{
-
-                    //    itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
-                    //    itemSettings.Caption = "Jasa Angkut Laut (Item Code)";
-                    //    itemSettings.FieldName = "JasaAngkutCodeLaut";
-                    //    var txt = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
-                    //    txt.Name = "JasaAngkutCodeLaut";
-                    //    txt.ReadOnly = true;
-                    //    txt.ShowModelErrors = true;
-
-                    //    txt.ControlStyle.CssClass = "editor";
-                    //    txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-                    //    txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-                    //    txt.Properties.ValidationSettings.Display = Display.Dynamic;
-                    //    txt.Width = 100;
-
-                    //    // Hide the default DropDown button
-                    //    txt.Properties.DropDownButton.Visible = false;
-                    //    txt.Properties.ButtonStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-
-                    //    EditButton lookUpButton = new EditButton();
-                    //    lookUpButton.Text = "";
-                    //    lookUpButton.Image.Url = "~/Content/Images/buttonnew/find-hitam.png";
-                    //    lookUpButton.Image.Width = 15;
-
-                    //    txt.Properties.Buttons.Add(lookUpButton);
-                    //    txt.Properties.ClientSideEvents.ButtonClick = "BtnCflItemPopupListJasaAngkutLautOnClick";
-                    //});
-
-
-                    //groupItemTab_Col1.Items.Add(itemSettings =>
-                    //{
-
-                    //    itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
-                    //    itemSettings.Caption = "Jasa Angkut Laut (Item Name)";
-                    //    itemSettings.FieldName = "JasaAngkutNameLaut";
-                    //    var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
-                    //    txt.Name = "JasaAngkutNameLaut";
-                    //    txt.ReadOnly = true;
-                    //    txt.ShowModelErrors = true;
-
-                    //    txt.ControlStyle.CssClass = "editor";
-                    //    txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-                    //    txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-                    //    txt.Properties.ValidationSettings.Display = Display.Dynamic;
-                    //    txt.Width = 300;
-                    //});
-                    
-                    
                 }).GetHtml();
-             });
+            });
         });
 
 
         group.Items.Add(item =>
         {
-            item.Name = "TabCoa";
-            item.Caption = " COA ";
+            item.Name = "TabAdjustmentCoa";
+            item.Caption = " Adjustment COA ";
             item.SetNestedContent(() =>
             {
                 ViewContext.Writer.Write(
-                     Html.Partial("Partial/GeneralSetting_TabCoa_List_Partial", Model.ListCoas_)
+                     Html.Partial("Partial/GeneralSetting_TabAdjustmentCoa_List_Partial", Model.ListCoas_)
                  );
             });
 
         });
 
-        group.Items.Add(item =>
-        {
-            item.Name = "TabItem";
-            item.Caption = "Oli & Others";
-            item.SetNestedContent(() =>
-            {
-                ViewContext.Writer.Write(
-                     Html.Partial("Partial/GeneralSetting_TabItem_List_Partial", Model.ListItems_)
-                 );
-            });
-
-        });
-
-    }); 
+    });
 
 }).GetHtml()
 
