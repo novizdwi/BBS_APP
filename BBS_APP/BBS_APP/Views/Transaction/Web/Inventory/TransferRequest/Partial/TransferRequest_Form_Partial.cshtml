@@ -105,7 +105,7 @@
         txt.Width = 230;
     });
 
-   
+
     groupItem_Col1.Items.Add(itemSettings =>
     {
 
@@ -141,41 +141,139 @@
 
     groupItem_Col1.Items.Add(itemSettings =>
     {
-        itemSettings.Name = "grpVendorCode";
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
-        itemSettings.Caption = "VendorCode";
-        itemSettings.FieldName = "VendorCode";
+        itemSettings.Caption = "From Warehouse";
+        itemSettings.FieldName = "FromWhsCode";
         var txt = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
-        txt.Name = "VendorCode";
-        txt.ReadOnly = true;
+        txt.Name = "FromWhsCode";
+        txt.ReadOnly = true;//ViewBag.ReadOnly;
         txt.ShowModelErrors = true;
 
-        txt.ControlStyle.CssClass = "editornoimage";
+        txt.ControlStyle.CssClass = "editor";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        //txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
         txt.Properties.ValidationSettings.Display = Display.Dynamic;
-        //txt.Width = 100;
+        txt.Width = 200;
 
         // Hide the default DropDown button
         txt.Properties.DropDownButton.Visible = false;
         txt.Properties.ButtonStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-        txt.Width = 230;
+
+        if (!ViewBag.ReadOnly)
+        {
+            EditButton lookUpButton = new EditButton();
+            lookUpButton.Text = "";
+            lookUpButton.Image.Url = "~/Content/Images/buttonnew/find-hitam.png";
+            lookUpButton.Image.Width = 15;
+
+            txt.Properties.Buttons.Add(lookUpButton);
+            //txt.Properties.ClientSideEvents.ButtonClick = " function (s,e) { BtnCflCrmWorkOrderHdrPopupListQrcodeOnClick(s,e); } ";
+            txt.Properties.ClientSideEvents.ButtonClick = " function (s,e) { BtnCflWarehousePopupListTransferRequestOnClick(s,e); } ";
+            //BtnCflGoodIssueHdrPopupListQrcodeGIOnClick 
+        }
     });
 
     groupItem_Col1.Items.Add(itemSettings =>
     {
-        itemSettings.Name = "grpVendorName";
+        itemSettings.Name = "FromWhsName";
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
-        itemSettings.Caption = "Vendor Name";
-        itemSettings.FieldName = "VendorName";
+        itemSettings.Caption = "Warehouse Name";
+        itemSettings.FieldName = "FromWhsName";
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
-        txt.Name = "VendorName";
+        txt.Name = "FromWhsName";
         txt.ShowModelErrors = true;
         txt.ReadOnly = true;
         txt.ControlStyle.CssClass = "editor";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
         txt.Width = 230;
     });
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
+        itemSettings.Caption = "To Warehouse";
+        itemSettings.FieldName = "ToWhsCode";
+        var txt = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "ToWhsCode";
+        txt.ReadOnly = true;//ViewBag.ReadOnly;
+        txt.ShowModelErrors = true;
+
+        txt.ControlStyle.CssClass = "editor";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+        txt.Properties.ValidationSettings.Display = Display.Dynamic;
+        txt.Width = 200;
+
+        // Hide the default DropDown button
+        txt.Properties.DropDownButton.Visible = false;
+        txt.Properties.ButtonStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        if (!ViewBag.ReadOnly)
+        {
+            EditButton lookUpButton = new EditButton();
+            lookUpButton.Text = "";
+            lookUpButton.Image.Url = "~/Content/Images/buttonnew/find-hitam.png";
+            lookUpButton.Image.Width = 15;
+
+            txt.Properties.Buttons.Add(lookUpButton);
+            //txt.Properties.ClientSideEvents.ButtonClick = " function (s,e) { BtnCflCrmWorkOrderHdrPopupListQrcodeOnClick(s,e); } ";
+            txt.Properties.ClientSideEvents.ButtonClick = " function (s,e) { BtnCflWarehousePopupListTransferRequestOnClick(s,e); } ";
+            //BtnCflGoodIssueHdrPopupListQrcodeGIOnClick 
+        }
+    });
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.Name = "ToWhsName";
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "To Warehouse Name";
+        itemSettings.FieldName = "ToWhsName";
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "ToWhsName";
+        txt.ShowModelErrors = true;
+        txt.ReadOnly = true;
+        txt.ControlStyle.CssClass = "editor";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Width = 230;
+    });
+
+    //groupItem_Col1.Items.Add(itemSettings =>
+    //{
+    //    itemSettings.Name = "grpVendorCode";
+    //    itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
+    //    itemSettings.Caption = "VendorCode";
+    //    itemSettings.FieldName = "VendorCode";
+    //    var txt = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
+    //    txt.Name = "VendorCode";
+    //    txt.ReadOnly = true;
+    //    txt.ShowModelErrors = true;
+
+    //    txt.ControlStyle.CssClass = "editornoimage";
+    //    txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+    //    //txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+    //    txt.Properties.ValidationSettings.Display = Display.Dynamic;
+    //    //txt.Width = 100;
+
+    //    // Hide the default DropDown button
+    //    txt.Properties.DropDownButton.Visible = false;
+    //    txt.Properties.ButtonStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+    //    txt.Width = 230;
+    //});
+
+    //groupItem_Col1.Items.Add(itemSettings =>
+    //{
+    //    itemSettings.Name = "grpVendorName";
+    //    itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+    //    itemSettings.Caption = "Vendor Name";
+    //    itemSettings.FieldName = "VendorName";
+    //    var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+    //    txt.Name = "VendorName";
+    //    txt.ShowModelErrors = true;
+    //    txt.ReadOnly = true;
+    //    txt.ControlStyle.CssClass = "editor";
+    //    txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+    //    txt.Width = 230;
+    //});
 
 
     groupItem_Col3.Items.Add(m => Model.Status, itemSettings =>

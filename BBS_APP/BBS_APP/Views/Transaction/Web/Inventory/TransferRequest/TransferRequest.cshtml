@@ -627,6 +627,61 @@
 
 </script>
 
+@*
+    ----------------------------------------------------------------------------
+        CflWarehouse
+
+    ----------------------------------------------------------------------------
+*@
+
+@{
+    var cflWarehouse_ParamModel = new CflWarehouse_ParamModel();
+    cflWarehouse_ParamModel.Name = "TransferRequest";
+    cflWarehouse_ParamModel.Type = "TransferRequest";
+    cflWarehouse_ParamModel.SqlWhere = "   ";
+    cflWarehouse_ParamModel.Header = "";
+
+    cflWarehouse_ParamModel.IsMulti = "N";
+}
+
+
+
+<script type="text/javascript">
+
+    function BtnCflWarehousePopupListTransferRequestOnClick(s, e) {
+
+        //cflCrmWorkOrderHdrPopupListDeliveryOrder.Show();
+
+        var popup = ASPxClientPopupControl.Cast("cflWarehousePopupListTransferRequest");
+
+        var gv = ASPxClientGridView.Cast('gvCflWarehouseListTransferRequest');
+
+        if (gv == null) {
+            popup.Show();
+        } else {
+            popup.SetContentHtml("");
+            popup.PerformCallback();
+            popup.Show();
+        }
+
+    }
+
+
+    function OnClickChoose_CflWarehouseTransferRequest(s, e, data) {
+        FromWhsCode.SetValue(data.WhsCode);
+        FromWhsName.SetValue(data.WhsName);      
+
+        cflWarehousePopupListTransferRequest.Hide();
+
+    }
+
+
+
+
+</script>
+@Html.Partial("~/Views/_Cfl/_CflWarehouse/Partial/_CflWarehouse_Panel_List_Partial.cshtml", cflWarehouse_ParamModel)
+
+
 
 
 @Html.Partial("Partial/TransferRequest_Form_Btn_Partial")

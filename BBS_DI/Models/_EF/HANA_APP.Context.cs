@@ -25,6 +25,7 @@ namespace BBS_DI.Models._EF
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Tx_GoodIssue> Tx_GoodIssue { get; set; }
         public virtual DbSet<Tm_Alert> Tm_Alert { get; set; }
         public virtual DbSet<Tm_Alert_Role> Tm_Alert_Role { get; set; }
         public virtual DbSet<Tm_Alert_User> Tm_Alert_User { get; set; }
@@ -45,6 +46,7 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tm_Item> Tm_Item { get; set; }
         public virtual DbSet<Tm_Item_Warehouse> Tm_Item_Warehouse { get; set; }
         public virtual DbSet<Tm_Item_Warehouse_Tag> Tm_Item_Warehouse_Tag { get; set; }
+        public virtual DbSet<Tm_Item_Warehouse_Tag_Log> Tm_Item_Warehouse_Tag_Log { get; set; }
         public virtual DbSet<Tm_Layout> Tm_Layout { get; set; }
         public virtual DbSet<Tm_Layout_Role> Tm_Layout_Role { get; set; }
         public virtual DbSet<Tm_Layout_User> Tm_Layout_User { get; set; }
@@ -74,21 +76,21 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Ts_ObjectApproval> Ts_ObjectApproval { get; set; }
         public virtual DbSet<Tx_AdjustmentIn> Tx_AdjustmentIn { get; set; }
         public virtual DbSet<Tx_AdjustmentIn_Attachment> Tx_AdjustmentIn_Attachment { get; set; }
+        public virtual DbSet<Tx_AdjustmentIn_Item> Tx_AdjustmentIn_Item { get; set; }
+        public virtual DbSet<Tx_AdjustmentIn_Item_Tag> Tx_AdjustmentIn_Item_Tag { get; set; }
         public virtual DbSet<Tx_AdjustmentIn_Location> Tx_AdjustmentIn_Location { get; set; }
         public virtual DbSet<Tx_AdjustmentOut> Tx_AdjustmentOut { get; set; }
         public virtual DbSet<Tx_AdjustmentOut_Attachment> Tx_AdjustmentOut_Attachment { get; set; }
-        public virtual DbSet<Tx_AdjustmentOut_Location> Tx_AdjustmentOut_Location { get; set; }
-        public virtual DbSet<Tx_GoodIssue> Tx_GoodIssue { get; set; }
-        public virtual DbSet<Tx_PurchaseOrder_Item> Tx_PurchaseOrder_Item { get; set; }
-        public virtual DbSet<Tx_PurchaseOrder_Item_Tag> Tx_PurchaseOrder_Item_Tag { get; set; }
-        public virtual DbSet<Tm_Item_Warehouse_Tag_Log> Tm_Item_Warehouse_Tag_Log { get; set; }
-        public virtual DbSet<Tx_PurchaseOrder> Tx_PurchaseOrder { get; set; }
         public virtual DbSet<Tx_AdjustmentOut_Item> Tx_AdjustmentOut_Item { get; set; }
         public virtual DbSet<Tx_AdjustmentOut_Item_Tag> Tx_AdjustmentOut_Item_Tag { get; set; }
-        public virtual DbSet<Tx_AdjustmentIn_Item> Tx_AdjustmentIn_Item { get; set; }
-        public virtual DbSet<Tx_AdjustmentIn_Item_Tag> Tx_AdjustmentIn_Item_Tag { get; set; }
+        public virtual DbSet<Tx_AdjustmentOut_Location> Tx_AdjustmentOut_Location { get; set; }
         public virtual DbSet<Tx_GoodsReceiptPO> Tx_GoodsReceiptPO { get; set; }
         public virtual DbSet<Tx_GoodsReceiptPO_Item> Tx_GoodsReceiptPO_Item { get; set; }
         public virtual DbSet<Tx_GoodsReceiptPO_Item_Tag> Tx_GoodsReceiptPO_Item_Tag { get; set; }
+        public virtual DbSet<Tx_PurchaseOrder> Tx_PurchaseOrder { get; set; }
+        public virtual DbSet<Tx_PurchaseOrder_Item> Tx_PurchaseOrder_Item { get; set; }
+        public virtual DbSet<Tx_PurchaseOrder_Item_Tag> Tx_PurchaseOrder_Item_Tag { get; set; }
+        public virtual DbSet<Tx_TransferRequest> Tx_TransferRequest { get; set; }
+        public virtual DbSet<Tx_TransferRequest_Item> Tx_TransferRequest_Item { get; set; }
     }
 }
