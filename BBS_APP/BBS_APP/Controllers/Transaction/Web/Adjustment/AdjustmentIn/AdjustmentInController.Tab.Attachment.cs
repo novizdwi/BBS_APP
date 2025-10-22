@@ -21,7 +21,7 @@ namespace Controllers.Transaction.Web.Adjustment
     {
 
         string VIEW_TAB_ATTACHMENT = "Partial/AdjustmentIn_Form_TabAttachment_List_Partial";
-        string moduleName = "SalesOrder";
+        string moduleName = "AdjustmentIn";
 
         public ActionResult TabAttachmentListPartial()
         {
@@ -51,7 +51,7 @@ namespace Controllers.Transaction.Web.Adjustment
                 var model = adjustmentInService.GetAdjustmentIn_Attachments_GetById(detId);
                 if (model != null)
                 {
-                    adjustmentInService.Detail_Delete(model);
+                    adjustmentInService.Attachment_Delete(model);
                     CommonFileHelper.DeleteFile(moduleName, model.Guid + "_" + model.FileName);
                 }
 

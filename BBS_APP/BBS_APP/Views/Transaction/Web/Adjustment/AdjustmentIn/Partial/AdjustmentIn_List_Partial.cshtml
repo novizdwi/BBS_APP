@@ -14,9 +14,9 @@
 
 @Html.DevExpress().GridView(settings=>
 {
-    settings.Name = "gvPurchaseOrderList";
+    settings.Name = "gvAdjustmentInList";
     settings.KeyFieldName = "Id";
-    settings.CallbackRouteValues =  new { Controller = "PurchaseOrder", Action = "ListPartial" };
+    settings.CallbackRouteValues =  new { Controller = "AdjustmentIn", Action = "ListPartial" };
 
     settings.Columns.Add(column =>
     {
@@ -28,7 +28,7 @@
             ViewContext.Writer.Write(
 
              Html.DevExpress().HyperLink(settingsHL => {
-                 settingsHL.Name = "gvPurchaseOrderListChoose_" + Guid.NewGuid();
+                 settingsHL.Name = "gvAdjustmentInListChoose_" + Guid.NewGuid();
                  settingsHL.NavigateUrl = "javascript:void(0)";
                  settingsHL.Properties.Text = "Choose";
                  settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ OnClickChoose(s, e, '{0}'); }}", DataBinder.Eval(c.DataItem, "Id"));
@@ -131,17 +131,17 @@
 
     settings.CustomBindingRouteValuesCollection.Add(
         GridViewOperationType.Paging,
-        new { Controller = "PurchaseOrder", Action = "ListPaging" }
+        new { Controller = "AdjustmentIn", Action = "ListPaging" }
     );
 
     settings.CustomBindingRouteValuesCollection.Add(
         GridViewOperationType.Filtering,
-        new { Controller = "PurchaseOrder", Action = "ListFiltering" }
+        new { Controller = "AdjustmentIn", Action = "ListFiltering" }
     );
 
     settings.CustomBindingRouteValuesCollection.Add(
         GridViewOperationType.Sorting,
-        new { Controller = "PurchaseOrder", Action = "ListSorting" }
+        new { Controller = "AdjustmentIn", Action = "ListSorting" }
     );
 
 

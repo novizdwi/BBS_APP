@@ -659,6 +659,7 @@
     <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\ItemTag\ItemTag_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\ItemTag\ItemTag_TabItemTagList_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentIn.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\AdjustmentIn_Form_TabAttachment_List_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -733,6 +734,7 @@
     <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.Nav.cs" />
     <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.Tab.Attachment.cs" />
     <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.Tab.Attachment.Detail.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.ViewItemTag.cs" />
     <Compile Include="Controllers\Transaction\Web\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.cs" />
     <Compile Include="Controllers\Transaction\Web\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.List.cs" />
     <Compile Include="Controllers\Transaction\Web\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.Nav.cs" />
