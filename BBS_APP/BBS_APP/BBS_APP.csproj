@@ -643,6 +643,22 @@
     <Content Include="Views\Transaction\Web\Purchasing\GoodsReceiptPO\GoodsReceiptPO.cshtml" />
     <Content Include="Views\_Cfl\_CflPurchaseOrder\Partial\_CflPurchaseOrder_List_Partial.cshtml" />
     <Content Include="Views\_Cfl\_CflPurchaseOrder\Partial\_CflPurchaseOrder_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\AdjustmentIn_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\AdjustmentIn_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\AdjustmentIn_Form_TabDetail_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\AdjustmentIn_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\AdjustmentIn_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\Attachment\Attachment_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\Attachment\Attachment_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\Attachment\Attachment_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\CancelReason\CancelReason_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\CancelReason\CancelReason_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\CancelReason\CancelReason_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\ItemTag\ItemTag_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\ItemTag\ItemTag_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\ItemTag\ItemTag_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\ItemTag\ItemTag_TabItemTagList_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentIn.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -672,6 +688,7 @@
     <Compile Include="Controllers\Authentication\User\UserController.List.Export.cs" />
     <Compile Include="Controllers\Authentication\User\UserController.Nav.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CommonFileHelper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Report\ReportAlert\ReportAlertController.cs" />
     <Compile Include="Controllers\Report\ReportAlert\ReportAlertController.ListDetail.cs" />
@@ -712,6 +729,10 @@
     <Compile Include="Controllers\Setting\Report\ReportController.List.cs" />
     <Compile Include="Controllers\Setting\Report\ReportController.List.Export.cs" />
     <Compile Include="Controllers\Setting\Report\ReportController.Nav.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.Nav.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.Tab.Attachment.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.Tab.Attachment.Detail.cs" />
     <Compile Include="Controllers\Transaction\Web\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.cs" />
     <Compile Include="Controllers\Transaction\Web\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.List.cs" />
     <Compile Include="Controllers\Transaction\Web\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.Nav.cs" />

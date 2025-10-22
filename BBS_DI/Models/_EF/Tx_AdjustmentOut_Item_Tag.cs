@@ -15,8 +15,12 @@ namespace BBS_DI.Models._EF
     public partial class Tx_AdjustmentOut_Item_Tag
     {
         public Nullable<long> Id { get; set; }
-        public long DetId { get; set; }
+        public Nullable<long> DetId { get; set; }
+        public long DetDetId { get; set; }
+        public string ItemCode { get; set; }
+        public string ItemName { get; set; }
         public string TagId { get; set; }
+        public Nullable<decimal> Quantity { get; set; }
         public string EventType { get; set; }
         public string Status { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

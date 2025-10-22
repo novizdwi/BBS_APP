@@ -679,22 +679,19 @@
     <Property Name="TransType" Type="nvarchar" MaxLength="50" />
     <Property Name="TransNo" Type="nvarchar" MaxLength="50" />
     <Property Name="TransDate" Type="timestamp" />
+    <Property Name="AdjustmentTypeCode" Type="nvarchar" MaxLength="100" />
+    <Property Name="AdjustmentTypeName" Type="nvarchar" MaxLength="100" />
     <Property Name="Status" Type="nvarchar" MaxLength="50" />
-    <Property Name="WarehouseCode" Type="nvarchar" MaxLength="50" />
-    <Property Name="WarehouseName" Type="nvarchar" MaxLength="200" />
-    <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
-    <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
-    <Property Name="QtyStock" Type="decimal" Precision="21" Scale="6" />
     <Property Name="IsAfterPosted" Type="varchar" MaxLength="1" />
-    <Property Name="SapGoodReceiptId" Type="int" />
-    <Property Name="SapGoodReceiptNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="DocEntry" Type="int" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="200" />
+    <Property Name="ScanDeviceId" Type="nvarchar" MaxLength="1000" />
+    <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="CancelReason" Type="nvarchar" MaxLength="500" />
     <Property Name="CreatedDate" Type="timestamp" />
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
     <Property Name="ModifiedUser" Type="int" />
-    <Property Name="Remarks" Type="nvarchar" MaxLength="200" />
-    <Property Name="SapGoodIssueId" Type="int" />
-    <Property Name="SapGoodIssueNo" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Tx_AdjustmentIn_Attachment">
     <Key>
@@ -711,17 +708,18 @@
   </EntityType>
   <EntityType Name="Tx_AdjustmentIn_Item">
     <Key>
-      <PropertyRef Name="Id" />
+      <PropertyRef Name="DetId" />
     </Key>
-    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="AdjustTypeCode" Type="nvarchar" MaxLength="50" />
-    <Property Name="AdjustTypeName" Type="nvarchar" MaxLength="50" />
-    <Property Name="TransType" Type="nvarchar" MaxLength="50" />
-    <Property Name="TransNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="Id" Type="bigint" Nullable="false" />
+    <Property Name="DetId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
     <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
+    <Property Name="FreeText" Type="nvarchar" MaxLength="1000" />
     <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="QuantityScan" Type="decimal" Precision="21" Scale="2" />
     <Property Name="LineStatus" Type="nvarchar" MaxLength="50" />
+    <Property Name="UomEntry" Type="int" />
+    <Property Name="Uom" Type="nvarchar" MaxLength="50" />
     <Property Name="CreatedDate" Type="timestamp" />
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
@@ -729,11 +727,15 @@
   </EntityType>
   <EntityType Name="Tx_AdjustmentIn_Item_Tag">
     <Key>
-      <PropertyRef Name="DetId" />
+      <PropertyRef Name="DetDetId" />
     </Key>
     <Property Name="Id" Type="bigint" />
-    <Property Name="DetId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DetId" Type="bigint" />
+    <Property Name="DetDetId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
     <Property Name="TagId" Type="nvarchar" MaxLength="200" />
+    <Property Name="Quantity" Type="decimal" Precision="21" Scale="6" />
     <Property Name="EventType" Type="nvarchar" MaxLength="100" />
     <Property Name="Status" Type="nvarchar" MaxLength="50" />
     <Property Name="CreatedDate" Type="timestamp" />
@@ -763,22 +765,19 @@
     <Property Name="TransType" Type="nvarchar" MaxLength="50" />
     <Property Name="TransNo" Type="nvarchar" MaxLength="50" />
     <Property Name="TransDate" Type="timestamp" />
+    <Property Name="AdjustmentTypeCode" Type="nvarchar" MaxLength="100" />
+    <Property Name="AdjustmentTypeName" Type="nvarchar" MaxLength="100" />
     <Property Name="Status" Type="nvarchar" MaxLength="50" />
-    <Property Name="WarehouseCode" Type="nvarchar" MaxLength="50" />
-    <Property Name="WarehouseName" Type="nvarchar" MaxLength="200" />
-    <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
-    <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
-    <Property Name="QtyStock" Type="decimal" Precision="21" Scale="6" />
     <Property Name="IsAfterPosted" Type="varchar" MaxLength="1" />
-    <Property Name="SapGoodIssueId" Type="int" />
-    <Property Name="SapGoodIssueNo" Type="nvarchar" MaxLength="50" />
-    <Property Name="SapGoodReceiptId" Type="int" />
-    <Property Name="SapGoodReceiptNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="DocEntry" Type="int" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="200" />
+    <Property Name="ScanDeviceId" Type="nvarchar" MaxLength="1000" />
+    <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="CancelReason" Type="nvarchar" MaxLength="500" />
     <Property Name="CreatedDate" Type="timestamp" />
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
     <Property Name="ModifiedUser" Type="int" />
-    <Property Name="Remarks" Type="nvarchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="Tx_AdjustmentOut_Attachment">
     <Key>
@@ -795,17 +794,18 @@
   </EntityType>
   <EntityType Name="Tx_AdjustmentOut_Item">
     <Key>
-      <PropertyRef Name="Id" />
+      <PropertyRef Name="DetId" />
     </Key>
-    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="AdjustTypeCode" Type="nvarchar" MaxLength="50" />
-    <Property Name="AdjustTypeName" Type="nvarchar" MaxLength="50" />
-    <Property Name="TransType" Type="nvarchar" MaxLength="50" />
-    <Property Name="TransNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="Id" Type="bigint" Nullable="false" />
+    <Property Name="DetId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
     <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
+    <Property Name="FreeText" Type="nvarchar" MaxLength="1000" />
     <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="QuantityScan" Type="decimal" Precision="21" Scale="2" />
     <Property Name="LineStatus" Type="nvarchar" MaxLength="50" />
+    <Property Name="UomEntry" Type="int" />
+    <Property Name="Uom" Type="nvarchar" MaxLength="50" />
     <Property Name="CreatedDate" Type="timestamp" />
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
@@ -813,11 +813,15 @@
   </EntityType>
   <EntityType Name="Tx_AdjustmentOut_Item_Tag">
     <Key>
-      <PropertyRef Name="DetId" />
+      <PropertyRef Name="DetDetId" />
     </Key>
     <Property Name="Id" Type="bigint" />
-    <Property Name="DetId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DetId" Type="bigint" />
+    <Property Name="DetDetId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
     <Property Name="TagId" Type="nvarchar" MaxLength="200" />
+    <Property Name="Quantity" Type="decimal" Precision="21" Scale="6" />
     <Property Name="EventType" Type="nvarchar" MaxLength="100" />
     <Property Name="Status" Type="nvarchar" MaxLength="50" />
     <Property Name="CreatedDate" Type="timestamp" />

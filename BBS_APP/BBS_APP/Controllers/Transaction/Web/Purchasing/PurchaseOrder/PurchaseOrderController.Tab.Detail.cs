@@ -29,7 +29,7 @@ namespace Controllers.Transaction.Web.Purchasing
             var Id = Convert.ToInt64(Request["cbId"]);
 
 
-            var modelListDetail = purchaseOrderService.PurchaseOrder_Details(Id);
+            var modelListDetail = purchaseOrderService.PurchaseOrder_Items(Id);
 
             return PartialView(VIEW_TAB_DETAIL_COMPONENT, modelListDetail);
         }
