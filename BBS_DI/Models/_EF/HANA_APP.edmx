@@ -910,29 +910,29 @@
           <Key>
             <PropertyRef Name="DetId" />
           </Key>
-          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="Id" Type="bigint" />
           <Property Name="DetId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
           <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
           <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="Quantity" Type="decimal" Precision="21" Scale="6" />
+          <Property Name="Quantity" Type="decimal" Precision="21" Scale="2" />
           <Property Name="QuantityOpen" Type="decimal" Precision="21" Scale="2" />
           <Property Name="QuantityScan" Type="decimal" Precision="21" Scale="2" />
+          <Property Name="UnitPriceTc" Type="decimal" Precision="21" Scale="2" />
           <Property Name="UomEntry" Type="int" />
           <Property Name="Uom" Type="nvarchar" MaxLength="50" />
-          <Property Name="UnitPriceTc" Type="decimal" Precision="21" Scale="6" />
           <Property Name="DocEntry" Type="bigint" />
           <Property Name="DocNum" Type="nvarchar" MaxLength="50" />
           <Property Name="LineNum" Type="int" />
           <Property Name="BaseEntry" Type="bigint" />
           <Property Name="BaseLine" Type="int" />
           <Property Name="LineStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="IdPDO" Type="int" />
+          <Property Name="GoodsReceiptDocEntry" Type="int" />
           <Property Name="CreatedDate" Type="timestamp" />
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
-          <Property Name="IdPDO" Type="int" />
-          <Property Name="GoodsReceiptDocEntry" Type="int" />
         </EntityType>
         <EntityType Name="Tx_GoodsReceiptPO_Item_Tag">
           <Key>
@@ -986,10 +986,6 @@
           </Key>
           <Property Name="Id" Type="bigint" />
           <Property Name="DetId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CreatedDate" Type="timestamp" />
-          <Property Name="CreatedUser" Type="int" />
-          <Property Name="ModifiedDate" Type="timestamp" />
-          <Property Name="ModifiedUser" Type="int" />
           <Property Name="DocEntry" Type="bigint" />
           <Property Name="DocNum" Type="nvarchar" MaxLength="50" />
           <Property Name="BaseLine" Type="int" />
@@ -997,14 +993,18 @@
           <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
           <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
           <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="Quantity" Type="decimal" Precision="21" Scale="6" />
+          <Property Name="Quantity" Type="decimal" Precision="21" Scale="2" />
           <Property Name="QuantityOpen" Type="decimal" Precision="21" Scale="2" />
           <Property Name="QuantityScan" Type="decimal" Precision="21" Scale="2" />
+          <Property Name="UnitPriceTc" Type="decimal" Precision="21" Scale="2" />
           <Property Name="UomEntry" Type="int" />
           <Property Name="Uom" Type="nvarchar" MaxLength="50" />
-          <Property Name="UnitPriceTc" Type="decimal" Precision="21" Scale="6" />
           <Property Name="LineStatus" Type="nvarchar" MaxLength="50" />
           <Property Name="IdPDO" Type="int" />
+          <Property Name="CreatedDate" Type="timestamp" />
+          <Property Name="CreatedUser" Type="int" />
+          <Property Name="ModifiedDate" Type="timestamp" />
+          <Property Name="ModifiedUser" Type="int" />
         </EntityType>
         <EntityType Name="Tx_PurchaseOrder_Item_Tag">
           <Key>

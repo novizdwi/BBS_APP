@@ -1,4 +1,4 @@
-﻿@using Models.Transaction.Web.Purchasing;
+﻿@using Models.Transaction.Web.Adjustment;
 @using System.Web.Script.Serialization;
 
 @{
@@ -9,7 +9,7 @@
 
 }
 
-@model Models.Transaction.Web.Purchasing.PurchaseOrderModel
+@model Models.Transaction.Web.Adjustment.AdjustmentInModel
 
 @Html.DevExpress().TextBox(
         settings =>
@@ -113,7 +113,23 @@
         itemSettings.ClientVisible = false;
 
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
-        txt.Name = "DocEntry"; 
+        txt.Name = "DocEntry";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Width = 230;
+    });
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "AdjustmentTypeCode";
+        itemSettings.FieldName = "AdjustmentTypeCode";
+        itemSettings.ClientVisible = false;
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "AdjustmentTypeCode";
         txt.ShowModelErrors = true;
         txt.ControlStyle.CssClass = "editornoimage";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
@@ -156,39 +172,17 @@
 
     groupItem_Col1.Items.Add(itemSettings =>
     {
-        itemSettings.Name = "grpVendorCode";
-        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
-        itemSettings.Caption = "VendorCode";
-        itemSettings.FieldName = "VendorCode";
-        var txt = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
-        txt.Name = "VendorCode";
-        txt.ReadOnly = true;
-        txt.ShowModelErrors = true;
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Adjustment Type";
+        itemSettings.FieldName = "AdjustmentTypeName";
 
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "AdjustmentTypeName";
+        txt.ShowModelErrors = true;
+        txt.ClientEnabled = false;
         txt.ControlStyle.CssClass = "editornoimage";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        //txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-        txt.Properties.ValidationSettings.Display = Display.Dynamic;
-        //txt.Width = 100;
-
-        // Hide the default DropDown button
-        txt.Properties.DropDownButton.Visible = false;
-        txt.Properties.ButtonStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-        txt.Width = 230;
-    });
-
-    groupItem_Col1.Items.Add(itemSettings =>
-    {
-        itemSettings.Name = "grpVendorName";
-        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
-        itemSettings.Caption = "Vendor Name";
-        itemSettings.FieldName = "VendorName";
-        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
-        txt.Name = "VendorName";
-        txt.ShowModelErrors = true;
-        txt.ReadOnly = true;
-        txt.ControlStyle.CssClass = "editor";
-        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Width = 230;
     });
 
@@ -239,7 +233,7 @@
         cbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
         cbo.Properties.DropDownButton.Visible = false;
 
-        cbo.Properties.DataSource = Models._Utils.GeneralGetList.GetList("PurchaseOrder_Status");
+        cbo.Properties.DataSource = Models._Utils.GeneralGetList.GetList("AdjustmentIn_Status");
 
         cbo.ControlStyle.CssClass = "editor";
         cbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
@@ -340,117 +334,24 @@
             item.SetNestedContent(() =>
             {
                 ViewContext.Writer.Write(
-                    Html.Partial("Partial/PurchaseOrder_Form_TabDetail_Partial", Model)
+                    Html.Partial("Partial/AdjustmentIn_Form_TabDetail_Partial", Model)
                 );
 
             });
-
         });
+
         group.Items.Add(item =>
         {
-            item.Name = "TabAddresses";
-            item.Caption = "      Address      ";
+            item.Name = "TabAttachment";
+            item.Caption = "Attachment";
             item.SetNestedContent(() =>
             {
-                Html.DevExpress().FormLayout(frm =>
-                {
-                    frm.Name = "formLayoutLogistic";
-                    frm.EncodeHtml = false;
-                    frm.Width = Unit.Percentage(100);
-                    frm.Height = 250;
-                    frm.AlignItemCaptionsInAllGroups = true;
-                    frm.ShowItemCaptionColon = false;
-
-                    //var groupItem_main = frm.Items.AddGroupItem(itemSettings =>
-                    //{
-                    //    itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
-                    //    itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
-                    //    itemSettings.ShowCaption = DefaultBoolean.False;
-                    //    itemSettings.ColCount = 1;
-
-                    //});
-
-                    var groupItem_1 = frm.Items.AddGroupItem(itemSettings =>
-                    {
-                        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
-                        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
-                        itemSettings.ShowCaption = DefaultBoolean.False;
-                        itemSettings.ColCount = 2;
-
-                    });
-
-                    var groupItem_1_1 = groupItem_1.Items.AddGroupItem(itemSettings =>
-                    {
-                        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
-                        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
-                        itemSettings.ShowCaption = DefaultBoolean.False;
-                        itemSettings.ColCount = 1;
-                        itemSettings.Width = Unit.Percentage(20);
-                        itemSettings.GroupBoxStyle.Caption.Paddings.Padding = 0;
-                        itemSettings.ParentContainerStyle.Paddings.Padding = 0;
-                        itemSettings.CellStyle.Paddings.Padding = 0;
-                    });
-
-                    var groupItem_1_2 = groupItem_1.Items.AddGroupItem(itemSettings =>
-                    {
-                        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
-                        itemSettings.SettingsItems.HorizontalAlign = FormLayoutHorizontalAlign.Left;
-                        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
-                        itemSettings.ShowCaption = DefaultBoolean.False;
-                        itemSettings.ColCount = 1;
-                        itemSettings.Width = Unit.Percentage(80);
-                        itemSettings.GroupBoxStyle.Caption.Paddings.Padding = 0;
-                        itemSettings.ParentContainerStyle.Paddings.Padding = 0;
-                        itemSettings.CellStyle.Paddings.Padding = 0;
-                    });
-
-                    var groupItem_2_1 = groupItem_3.Items.AddGroupItem(itemSettings =>
-                    {
-                        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
-                        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
-                        itemSettings.ShowCaption = DefaultBoolean.False;
-                        itemSettings.ColCount = 1;
-                        itemSettings.Width = Unit.Percentage(20);
-                        itemSettings.GroupBoxStyle.Caption.Paddings.Padding = 0;
-                        itemSettings.ParentContainerStyle.Paddings.Padding = 0;
-                        itemSettings.CellStyle.Paddings.Padding = 0;
-                    });
-
-                    var groupItem_2_2 = groupItem_3.Items.AddGroupItem(itemSettings =>
-                    {
-                        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
-                        itemSettings.SettingsItems.HorizontalAlign = FormLayoutHorizontalAlign.Left;
-                        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
-                        itemSettings.ShowCaption = DefaultBoolean.False;
-                        itemSettings.ColCount = 1;
-                        itemSettings.GroupBoxStyle.Caption.Paddings.Padding = 0;
-                        itemSettings.ParentContainerStyle.Paddings.Padding = 0;
-                        itemSettings.CellStyle.Paddings.Padding = 0;
-                        itemSettings.Width = Unit.Percentage(80);
-                    });
-
-                    groupItem_1_1.Items.Add(itemSettings =>
-                    {
-                        itemSettings.Name = "grpAddress";
-                        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Memo;
-                        itemSettings.Caption = "Address";
-                        itemSettings.FieldName = "Address";
-                        itemSettings.CaptionSettings.HorizontalAlign = FormLayoutHorizontalAlign.Right;
-                        var txt = (MemoSettings)itemSettings.NestedExtensionSettings;
-                        txt.Name = "Address";
-                        txt.ShowModelErrors = true;
-                        txt.ReadOnly = true;
-                        txt.ControlStyle.CssClass = "editor";
-                        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-                        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-                        txt.Width = 450;
-                        txt.Height = 50;
-                    });
-                }).GetHtml();
+                ViewContext.Writer.Write(
+                    Html.Partial("Partial/AdjustmentIn_Form_TabAttachment_List_Partial", Model.ListAttachments_)
+                );
             });
 
         });
-
     });
 
 }).GetHtml()

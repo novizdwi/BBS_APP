@@ -48,6 +48,10 @@ namespace Models.Transaction.Web.Adjustment
 
         public string ScanDeviceId { get; set; }
 
+        public string AdjustmentTypeCode { get; set; }
+
+        public string AdjustmentTypeName { get; set; }
+
         public string WhsCode { get; set; }
 
         public DateTime? CreatedDate { get; set; }
@@ -55,6 +59,9 @@ namespace Models.Transaction.Web.Adjustment
         public int? CreatedUser { get; set; }
 
         public DateTime? ModifiedDate { get; set; }
+
+        public string CancelReason { get; set; }
+
 
         public int? ModifiedUser { get; set; }
         public List<AdjustmentIn_ItemModel> ListDetails_ = new List<AdjustmentIn_ItemModel>();
@@ -127,6 +134,8 @@ namespace Models.Transaction.Web.Adjustment
 
     public class AdjustmentIn_Item_TagModel
     {
+        public int RowNo { get; set; }
+
         public long Id { get; set; }
 
         public long DetId { get; set; }
@@ -144,14 +153,6 @@ namespace Models.Transaction.Web.Adjustment
         public string EventType { get; set; }
 
         public string Status { get; set; }
-
-        public DateTime? CreatedDate { get; set; }
-
-        public int? CreatedUser { get; set; }
-
-        public DateTime? ModifiedDate { get; set; }
-
-        public int? ModifiedUser { get; set; }
 
     }
 
@@ -254,9 +255,8 @@ namespace Models.Transaction.Web.Adjustment
 
         public List<AdjustmentIn_ItemModel> AdjustmentIn_Details(HANA_APP CONTEXT, long id = 0)
         {
-            string ssql = @"SELECT T0.*, T1.""DocNum"" AS ""PDODocNum_""
+            string ssql = @"SELECT T0.*
                 FROM ""Tx_AdjustmentIn_Item"" T0
-                LEFT JOIN """ + DbProvider.dbSap_Name + @""".""OWOR"" T1 ON T0.""IdPDO"" = T1.""DocEntry""
                 WHERE T0.""Id"" =:p0
                 ORDER BY T0.""DetId"" ASC
             ";
@@ -571,8 +571,8 @@ namespace Models.Transaction.Web.Adjustment
             if (id != 0)
             { 
                 string ssql = "SELECT TOP 1 T0.*  "
-                                + " FROM Tx_AdjustmentIn_Attachment T0 "
-                                + " WHERE T0.DetId=@detId ";
+                                + " FROM \"Tx_AdjustmentIn_Attachment\" T0 "
+                                + " WHERE T0.\"DetId\" = :p0 ";
 
             model = CONTEXT.Database.SqlQuery<AdjustmentIn_AttachmentModel>(ssql, id).Single();
             }
@@ -620,7 +620,7 @@ namespace Models.Transaction.Web.Adjustment
 
         }
 
-        public void Detail_Delete(AdjustmentIn_AttachmentModel model)
+        public void Attachment_Delete(AdjustmentIn_AttachmentModel model)
         {
 
             if (model != null)
@@ -634,13 +634,13 @@ namespace Models.Transaction.Web.Adjustment
                             try
                             {
                                 string keyValue = model.Id.ToString();
-                                Tx_AdjustmentIn tx_AdjustmentIn = CONTEXT.Tx_AdjustmentIn.Find(model.Id);
+                                Tx_AdjustmentIn_Attachment tx_AdjustmentInAttachment = CONTEXT.Tx_AdjustmentIn_Attachment.Find(model.DetId);
 
                                 SpNotif.SpSysControllerTransNotif(model._UserId, "AdjustmentIn", CONTEXT, "before", "Tx_AdjustmentIn", "delete", "Id", keyValue);
 
-                                if (tx_AdjustmentIn != null)
+                                if (tx_AdjustmentInAttachment != null)
                                 {
-                                    CONTEXT.Tx_AdjustmentIn.Remove(tx_AdjustmentIn);
+                                    CONTEXT.Tx_AdjustmentIn_Attachment.Remove(tx_AdjustmentInAttachment);
                                     CONTEXT.SaveChanges();
                                 }
 

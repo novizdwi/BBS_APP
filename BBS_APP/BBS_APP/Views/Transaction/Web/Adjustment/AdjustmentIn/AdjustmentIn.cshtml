@@ -100,7 +100,7 @@
                         btnUpdate.SetEnabled(true);
 
                         btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(false);
-                        btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(true);
+                        btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(false);
 
                         break;
                     case 'Cancel':
@@ -714,8 +714,64 @@ new
     -----------------------------------------------------------------------------
 *@
 
-
 @Html.Partial("Partial/AdjustmentIn_Panel_List_Partial")
+
+@*
+    -----------------------------------------------------------------------------
+    gvAdjustmentInAttachmentDetail
+    -----------------------------------------------------------------------------
+*@
+<script>
+    function gvAdjustmentInAttachmentDetailBeginCallback(s, e) {
+        e.customArgs['cbId'] = Id.GetValue();
+    }
+
+
+    function gvAdjustmentInAttachmentDetail_OnClickBtnNew() {
+        var popup = ASPxClientPopupControl.Cast("popupAttachment");
+        popup.callbackUrl = '@Url.Action("Attachment_PopupListLoadOnDemandPartial", "AdjustmentIn")' + '?Id=' + Id.GetValue(); // "/BB_TMS/AdjustmentIn/Attachment_PopupListLoadOnDemandPartial?Id=" + Id.GetValue();
+
+        popup.PerformCallback();
+
+
+        popup.Show();
+    }
+
+    function Attachment_OnClickBtnUpload(s, e) {
+        // Attachment_formDetail.action = '@Url.Action("Attachment_Upload", "AdjustmentIn")';
+        // $("#Attachment_formDetail").submit();
+
+        UploadMultiFile.Upload();
+
+    }
+
+    function Attachment_OnClickBtnCancel(s, e) {
+        var popup = ASPxClientPopupControl.Cast("popupAttachment");
+        popup.Hide();
+
+    }
+
+    function Attachment_FileUploadComplete(s, e) {
+        var popup = ASPxClientPopupControl.Cast("popupAttachment");
+        popup.Hide();
+        gvAdjustmentInAttachmentDetail.PerformCallback();;
+    }
+
+    function gvAdjustmentInAttachmentDetail_OnClickBtnDelete(DetId) {
+        //if (Status.GetValue() == "Posted" )
+        //{
+        //    alert("Tidak dapat di delete jika sudah posted!");
+        //    return;
+        //}
+
+        if (confirm('Delete data?')) {
+            var gv = ASPxClientGridView.Cast("gvAdjustmentInAttachmentDetail");
+            gv.DeleteRowByKey(DetId);
+        }
+    }
+</script>
+@Html.Partial("Partial/Attachment/Attachment_Panel_Partial")
+
 
 
 @Html.Partial("~/Views/_CrystalReport/Layout/Print_Panel_Partial.cshtml")

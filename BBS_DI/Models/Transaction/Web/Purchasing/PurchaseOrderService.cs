@@ -140,7 +140,7 @@ namespace Models.Transaction.Web.Purchasing
 
         public string ItemName { get; set; }
 
-        public List<PurchaseOrderItemTagModel> PurchaseOrderItemTagModel___ { get; set; }
+        public List<PurchaseOrderItemTagModel> PurchaseOrder_Item_TagModel___ { get; set; }
     }
 
     public class PurchaseOrderItemTagModel
@@ -720,7 +720,7 @@ namespace Models.Transaction.Web.Purchasing
                             FROM ""Tx_PurchaseOrder_Item_Tag"" T0   
                             WHERE T0.""Id""=:p0 AND ""DetId"" = :p1 ";
 
-                model.PurchaseOrderItemTagModel___ = CONTEXT.Database.SqlQuery<PurchaseOrderItemTagModel>(sql, id, detId).ToList();
+                model.PurchaseOrder_Item_TagModel___ = CONTEXT.Database.SqlQuery<PurchaseOrderItemTagModel>(sql, id, detId).ToList();
             }
 
             return model;
