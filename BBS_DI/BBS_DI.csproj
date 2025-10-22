@@ -189,6 +189,7 @@
     <Compile Include="Models\Setting\ReportGroupModel.cs" />
     <Compile Include="Models\Setting\ReportModel.cs" />
     <Compile Include="Models\Setting\Report__List_Model.cs" />
+    <Compile Include="Models\Transaction\Web\Adjustment\AdjustmentIn.cs" />
     <Compile Include="Models\Transaction\Web\Purchasing\GoodsReceiptPOService.cs" />
     <Compile Include="Models\Transaction\Web\Purchasing\PurchaseOrderService.cs" />
     <Compile Include="Models\Transaction\Web\Purchasing\GoodsReceiptPO__List_Model.cs" />

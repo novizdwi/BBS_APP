@@ -68,17 +68,19 @@ namespace Models.Transaction.Web.Purchasing
 
         public string CancelReason { get; set; }
 
-        public List<PurchaseOrder_DetailModel> ListDetails_ = new List<PurchaseOrder_DetailModel>();
+        public List<PurchaseOrder_ItemModel> ListDetails_ = new List<PurchaseOrder_ItemModel>();
 
-        public PurchaseOrder_Detail Details_ { get; set; }
+        public PurchaseOrder_Item Details_ { get; set; }
     }
-    public class PurchaseOrder_Detail
+
+    public class PurchaseOrder_Item
     {
         public List<long> deletedRowKeys { get; set; }
-        public List<PurchaseOrder_DetailModel> insertedRowValues { get; set; }
-        public List<PurchaseOrder_DetailModel> modifiedRowValues { get; set; }
+        public List<PurchaseOrder_ItemModel> insertedRowValues { get; set; }
+        public List<PurchaseOrder_ItemModel> modifiedRowValues { get; set; }
     }
-    public class PurchaseOrder_DetailModel
+
+    public class PurchaseOrder_ItemModel
     {
 
         private FormModeEnum _FormModeEnum = FormModeEnum.New;
@@ -199,21 +201,22 @@ namespace Models.Transaction.Web.Purchasing
 
                 model = CONTEXT.Database.SqlQuery<PurchaseOrderModel>(ssql, id).Single();
 
-                model.ListDetails_ = this.PurchaseOrder_Details(CONTEXT, id);
+                model.ListDetails_ = this.PurchaseOrder_Items(CONTEXT, id);
             }
 
             return model;
         }
-        public List<PurchaseOrder_DetailModel> PurchaseOrder_Details(long id = 0)
+
+        public List<PurchaseOrder_ItemModel> PurchaseOrder_Items(long id = 0)
         {
             using (var CONTEXT = new HANA_APP())
             {
-                return PurchaseOrder_Details(CONTEXT, id);
+                return PurchaseOrder_Items(CONTEXT, id);
             }
 
         }
 
-        public List<PurchaseOrder_DetailModel> PurchaseOrder_Details(HANA_APP CONTEXT, long id = 0)
+        public List<PurchaseOrder_ItemModel> PurchaseOrder_Items(HANA_APP CONTEXT, long id = 0)
         {
             string ssql = @"SELECT T0.*, T1.""DocNum"" AS ""PDODocNum_""
                 FROM ""Tx_PurchaseOrder_Item"" T0
@@ -221,7 +224,7 @@ namespace Models.Transaction.Web.Purchasing
                 WHERE T0.""Id"" =:p0
                 ORDER BY T0.""DetId"" ASC
             ";
-            var purchaseOrder = CONTEXT.Database.SqlQuery<PurchaseOrder_DetailModel>(ssql, id).ToList();
+            var purchaseOrder = CONTEXT.Database.SqlQuery<PurchaseOrder_ItemModel>(ssql, id).ToList();
             return purchaseOrder;
         }
 
