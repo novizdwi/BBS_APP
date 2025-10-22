@@ -76,30 +76,30 @@ namespace Controllers.Transaction.Web.Inventory
             return PartialView(VIEW_FORM_PARTIAL, transferRequestModel);
         }
 
-        //[HttpPost, ValidateInput(false)]
-        //public ActionResult Add([ModelBinder(typeof(DevExpressEditorsBinder))]  TransferRequestModel transferRequestModel)
-        //{
-        //    int userId = (int)Session["userId"];
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Add([ModelBinder(typeof(DevExpressEditorsBinder))]  TransferRequestModel transferRequestModel)
+        {
+            int userId = (int)Session["userId"];
 
-        //    transferRequestModel._UserId = (int)Session["userId"];
-        //    transferRequestService = new TransferRequestService();
+            transferRequestModel._UserId = (int)Session["userId"];
+            transferRequestService = new TransferRequestService();
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        long Id = 0;
+            if (ModelState.IsValid)
+            {
+                long Id = 0;
 
-        //        Id = transferRequestService.Add(transferRequestModel);
-        //        transferRequestModel = transferRequestService.GetById(userId, Id);
-        //        transferRequestModel._FormMode = Models.FormModeEnum.Edit;
-        //    }
-        //    else
-        //    {
-        //        string message = GetErrorModel();
-        //        throw new Exception(string.Format("[VALIDATION] {0}", message));
-        //    }
+                Id = transferRequestService.Add(transferRequestModel);
+                transferRequestModel = transferRequestService.GetById(userId, Id);
+                transferRequestModel._FormMode = Models.FormModeEnum.Edit;
+            }
+            else
+            {
+                string message = GetErrorModel();
+                throw new Exception(string.Format("[VALIDATION] {0}", message));
+            }
 
-        //    return PartialView(VIEW_FORM_PARTIAL, transferRequestModel);
-        //}
+            return PartialView(VIEW_FORM_PARTIAL, transferRequestModel);
+        }
 
         [HttpPost, ValidateInput(false)]
         public ActionResult Update([ModelBinder(typeof(DevExpressEditorsBinder))]  TransferRequestModel transferRequestModel)
@@ -177,6 +177,17 @@ namespace Controllers.Transaction.Web.Inventory
 
             return PartialView(VIEW_FORM_PARTIAL, transferRequestModel);
         }
-        
+
+        public ContentResult ChooseItem(long Id, String[] Data)
+        {
+            int userId = (int)Session["userId"];
+
+            transferRequestService = new TransferRequestService();
+            var result = transferRequestService.ChooseItem(userId, Id, Data);
+
+
+            return Content(result.ToString());
+        }
+
     }
 }

@@ -206,9 +206,11 @@
     </Compile>
     <Compile Include="Models\_Cfl\CflBp_Model.cs" />
     <Compile Include="Models\_Cfl\CflDynamic_Model.cs" />
+    <Compile Include="Models\_Cfl\CflItemByWarehouse_Model.cs" />
     <Compile Include="Models\_Cfl\CflItem_Model.cs" />
     <Compile Include="Models\_Cfl\CflCoa_Model.cs" />
     <Compile Include="Models\_Cfl\CflPurchaseOrder_Model.cs" />
+    <Compile Include="Models\_Cfl\CflToWarehouse_Model.cs" />
     <Compile Include="Models\_Cfl\CflWarehouse_Model.cs" />
     <Compile Include="Models\_CrystalReport\CrystalReportParam.cs" />
     <Compile Include="Models\_EF\EfIduHanaRsExtensionsApp.cs" />

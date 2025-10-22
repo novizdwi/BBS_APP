@@ -18,21 +18,18 @@ namespace BBS_DI.Models._EF
         public string TransType { get; set; }
         public string TransNo { get; set; }
         public Nullable<System.DateTime> TransDate { get; set; }
+        public string AdjustmentTypeCode { get; set; }
+        public string AdjustmentTypeName { get; set; }
         public string Status { get; set; }
-        public string WarehouseCode { get; set; }
-        public string WarehouseName { get; set; }
-        public string ItemCode { get; set; }
-        public string ItemName { get; set; }
-        public Nullable<decimal> QtyStock { get; set; }
         public string IsAfterPosted { get; set; }
-        public Nullable<int> SapGoodIssueId { get; set; }
-        public string SapGoodIssueNo { get; set; }
-        public Nullable<int> SapGoodReceiptId { get; set; }
-        public string SapGoodReceiptNo { get; set; }
+        public Nullable<int> DocEntry { get; set; }
+        public string Comments { get; set; }
+        public string ScanDeviceId { get; set; }
+        public string WhsCode { get; set; }
+        public string CancelReason { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedUser { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> ModifiedUser { get; set; }
-        public string Remarks { get; set; }
     }
 }
