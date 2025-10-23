@@ -669,6 +669,19 @@
     <Content Include="Views\Transaction\Web\Inventory\TransferOut\Partial\TransferOut_Form_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Inventory\TransferOut\Partial\TransferOut_Form_TabDetail_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Inventory\TransferOut\TransferOut.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferIn\Partial\CancelReason\CancelReason_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferIn\Partial\CancelReason\CancelReason_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferIn\Partial\CancelReason\CancelReason_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferIn\Partial\ItemTag\ItemTag_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferIn\Partial\ItemTag\ItemTag_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferIn\Partial\ItemTag\ItemTag_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferIn\Partial\ItemTag\ItemTag_TabItemTagList_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferIn\Partial\TransferIn_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferIn\Partial\TransferIn_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferIn\Partial\TransferIn_Form_TabDetail_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferIn\Partial\TransferIn_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferIn\Partial\TransferIn_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferIn\TransferIn.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -738,6 +751,12 @@
     <Compile Include="Controllers\Setting\Report\ReportController.List.cs" />
     <Compile Include="Controllers\Setting\Report\ReportController.List.Export.cs" />
     <Compile Include="Controllers\Setting\Report\ReportController.Nav.cs" />
+    <Compile Include="Controllers\Transaction\Web\Inventory\TransferIn\TransferInController.CancelReason.cs" />
+    <Compile Include="Controllers\Transaction\Web\Inventory\TransferIn\TransferInController.cs" />
+    <Compile Include="Controllers\Transaction\Web\Inventory\TransferIn\TransferInController.List.cs" />
+    <Compile Include="Controllers\Transaction\Web\Inventory\TransferIn\TransferInController.Nav.cs" />
+    <Compile Include="Controllers\Transaction\Web\Inventory\TransferIn\TransferInController.Tab.Detail.cs" />
+    <Compile Include="Controllers\Transaction\Web\Inventory\TransferIn\TransferInController.ViewItemTag.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferOut\TransferOutController.ViewItemTag.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferOut\TransferOutController.CancelReason.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferOut\TransferOutController.Tab.Detail.cs" />
@@ -810,7 +829,6 @@
     <Folder Include="Views\Logout\" />
     <Folder Include="Views\Master\" />
     <Folder Include="Views\Transaction\Web\Inventory\TransferInSummary\Partial\" />
-    <Folder Include="Views\Transaction\Web\Inventory\TransferIn\Partial\" />
     <Folder Include="Views\Transaction\Web\Inventory\TransferOutSummary\Partial\" />
   </ItemGroup>
   <ItemGroup>

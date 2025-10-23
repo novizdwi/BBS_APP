@@ -8,11 +8,11 @@
     <script src="~/Scripts/Test/DXR.js"></script>
 }
 
-@model Models.Transaction.Web.Inventory.TransferOutModel
+@model Models.Transaction.Web.Inventory.TransferInModel
 
 
 @{
-    ViewBag.Title = "Transfer Scan (OUT)";
+    ViewBag.Title = "Transfer Scan (IN)";
 }
 
 
@@ -222,7 +222,7 @@
 
         $.ajax({
             type: "POST",
-            url: "@Url.Action("DetailPartial", "TransferOut")",
+            url: "@Url.Action("DetailPartial", "TransferIn")",
             beforeSend: function () {
                 OnBegin();
             },
@@ -247,7 +247,7 @@
     function GetFormData() {
         var formData = $('#formDetail').serializeObject();
 
-        var Details_ = GetGvDetails('gvTransferOutDetail');
+        var Details_ = GetGvDetails('gvTransferInDetail');
         $.extend(formData, { Details_: Details_ });
         return formData;
     }
@@ -262,7 +262,7 @@
 
         $.ajax({
             type: "POST",
-            url: '@Url.Action("Add", "TransferOut")',
+            url: '@Url.Action("Add", "TransferIn")',
             data: formData,
             beforeSend: function () {
                 OnBegin();
@@ -291,7 +291,7 @@
 
         $.ajax({
             type: "POST",
-            url: '@Url.Action("Update", "TransferOut")',
+            url: '@Url.Action("Update", "TransferIn")',
             data: formData,
             beforeSend: function () {
                 OnBegin();
@@ -320,7 +320,7 @@
     function OnClickBtnNavFirst(s, e) {
         $.ajax({
             type: "POST",
-            url: "@Url.Action("NavFirst", "TransferOut")",
+            url: "@Url.Action("NavFirst", "TransferIn")",
             beforeSend: function () {
                 OnBegin();
             },
@@ -342,7 +342,7 @@
 
         $.ajax({
             type: "POST",
-            url: '@Url.Action("NavPrevious", "TransferOut")',
+            url: '@Url.Action("NavPrevious", "TransferIn")',
             data: { Id: key },
             beforeSend: function () {
                 OnBegin();
@@ -364,7 +364,7 @@
         key = Id.GetValue();
         $.ajax({
             type: "POST",
-            url: '@Url.Action("NavNext", "TransferOut")',
+            url: '@Url.Action("NavNext", "TransferIn")',
             data: { Id: key },
             beforeSend: function () {
                 OnBegin();
@@ -387,7 +387,7 @@
     function OnClickBtnNavLast(s, e) {
         $.ajax({
             type: "POST",
-            url: "@Url.Action("NavLast", "TransferOut")",
+            url: "@Url.Action("NavLast", "TransferIn")",
             beforeSend: function () {
                 OnBegin();
             },
@@ -411,7 +411,7 @@
 
         $.ajax({
             type: "POST",
-            url: '@Url.Action("DetailPartial", "TransferOut")',
+            url: '@Url.Action("DetailPartial", "TransferIn")',
             data: { Id: key },
             beforeSend: function () {
                 OnBegin();
@@ -435,7 +435,7 @@
     function OnClickBtnListFind(s, e) {
         var popup = ASPxClientPopupControl.Cast("popupList");
 
-        var gv = ASPxClientGridView.Cast('gvTransferOutList');
+        var gv = ASPxClientGridView.Cast('gvTransferInList');
         if (gv == null) {
             popup.Show();
         } else {
@@ -464,7 +464,7 @@
 
                     $.ajax({
                         type: "POST",
-                        url: '@Url.Action("Post", "TransferOut")',
+                        url: '@Url.Action("Post", "TransferIn")',
                         data: formData,
                         beforeSend: function () {
                             OnBegin();
@@ -504,7 +504,7 @@
     function btnShowCancelReasonOnClick(s, e, Id) {
         var popup = ASPxClientPopupControl.Cast("popupCancelReason");
 
-        popup.callbackUrl = '@Url.Action("CancelReason_PopupListOnDemandPartial", "TransferOut")' + '?Id=' + Id;
+        popup.callbackUrl = '@Url.Action("CancelReason_PopupListOnDemandPartial", "TransferIn")' + '?Id=' + Id;
         popup.PerformCallback();
 
         if (!popup.IsVisible()) {
@@ -517,7 +517,7 @@
 
         var popup = ASPxClientPopupControl.Cast("popupItemTag");
 
-        popup.callbackUrl = '@Url.Action("ViewItemTag_PopupListOnDemandPartial", "TransferOut")' + '?Id=' + key + '&DetId=' + detId;
+        popup.callbackUrl = '@Url.Action("ViewItemTag_PopupListOnDemandPartial", "TransferIn")' + '?Id=' + key + '&DetId=' + detId;
         popup.PerformCallback();
 
         if (!popup.IsVisible()) {
@@ -534,7 +534,7 @@
 
         $.ajax({
             type: "POST",
-            url: '@Url.Action("Cancel", "TransferOut")',
+            url: '@Url.Action("Cancel", "TransferIn")',
             data: { Id: key, CancelReason: reason },
             beforeSend: function () {
                 OnBegin();
@@ -558,7 +558,7 @@
     function OnClickChoose(s, e, key) {
         $.ajax({
             type: "POST",
-            url: '@Url.Action("DetailPartial", "TransferOut")',
+            url: '@Url.Action("DetailPartial", "TransferIn")',
             data: { Id: key },
             beforeSend: function () {
                 OnBegin();
@@ -601,37 +601,37 @@
 </script>
 <script type="text/javascript">
 
-    function gvTransferOutDetailOnBeginCallback(s, e) {
+    function gvTransferInDetailOnBeginCallback(s, e) {
         e.customArgs['cbId'] = Id.GetValue();
     }
 
-    function gvTransferOutDetailOnEndCallback(s, e) {
+    function gvTransferInDetailOnEndCallback(s, e) {
 
     }
 
-    function gvTransferOutDetailOnCustomButtonClick(s, e) {
+    function gvTransferInDetailOnCustomButtonClick(s, e) {
     }
 
 
-    function gvTransferOutDetailOnBatchEditStartEditing(s, e) {
+    function gvTransferInDetailOnBatchEditStartEditing(s, e) {
     }
 
-    function gvTransferOutDetailOnBatchEditEndEditing(s, e) {
+    function gvTransferInDetailOnBatchEditEndEditing(s, e) {
     }
 
-    function gvTransferOutDetailOnBatchEditRowValidating(s, e) {
+    function gvTransferInDetailOnBatchEditRowValidating(s, e) {
     }
 
-    function gvTransferOutDetailCalculateSummary(grid, rowValues, visibleIndex, isDeleting) {
+    function gvTransferInDetailCalculateSummary(grid, rowValues, visibleIndex, isDeleting) {
     }
 
 </script>
 
 
 
-@Html.Partial("Partial/TransferOut_Form_Btn_Partial")
+@Html.Partial("Partial/TransferIn_Form_Btn_Partial")
 
-@using (Ajax.BeginForm("mantap", "TransferOut", null,
+@using (Ajax.BeginForm("mantap", "TransferIn", null,
 new AjaxOptions
 {
     HttpMethod = "POST",
@@ -652,7 +652,7 @@ new
 }))
 {
     <div id="contentForm" style="padding-top:79px">
-        @Html.Partial("Partial/TransferOut_Form_Partial")
+        @Html.Partial("Partial/TransferIn_Form_Partial")
 
     </div>
 }
@@ -715,7 +715,7 @@ new
 *@
 
 
-@Html.Partial("Partial/TransferOut_Panel_List_Partial")
+@Html.Partial("Partial/TransferIn_Panel_List_Partial")
 
 
 @Html.Partial("~/Views/_CrystalReport/Layout/Print_Panel_Partial.cshtml")

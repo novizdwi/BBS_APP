@@ -90,6 +90,9 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_PurchaseOrder> Tx_PurchaseOrder { get; set; }
         public virtual DbSet<Tx_PurchaseOrder_Item> Tx_PurchaseOrder_Item { get; set; }
         public virtual DbSet<Tx_PurchaseOrder_Item_Tag> Tx_PurchaseOrder_Item_Tag { get; set; }
+        public virtual DbSet<Tx_TransferIn> Tx_TransferIn { get; set; }
+        public virtual DbSet<Tx_TransferIn_Item> Tx_TransferIn_Item { get; set; }
+        public virtual DbSet<Tx_TransferIn_Item_Tag> Tx_TransferIn_Item_Tag { get; set; }
         public virtual DbSet<Tx_TransferOut> Tx_TransferOut { get; set; }
         public virtual DbSet<Tx_TransferOut_Item> Tx_TransferOut_Item { get; set; }
         public virtual DbSet<Tx_TransferOut_Item_Tag> Tx_TransferOut_Item_Tag { get; set; }
