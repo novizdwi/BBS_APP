@@ -231,17 +231,19 @@ namespace Models.Transaction.Web.Purchasing
                             WHERE T0.""Id"" = :p0 
                             ORDER BY T0.""Id"" ASC
                 ";
+                model = CONTEXT.Database.SqlQuery<GoodsReceiptPOModel>(ssql, id).Single();
 
-                string getDocNum = @"SELECT T1.""DocNum""
+                if (model.DocEntry != null)
+                {
+                    string getDocNum = @"SELECT T1.""DocNum""
                     FROM ""Tx_GoodsReceiptPO"" T0
-                    INNER JOIN """+ DbProvider.dbSap_Name +@""".""OPDN"" T1 ON T0.""DocEntry"" = T1.""DocEntry""
+                    INNER JOIN """ + DbProvider.dbSap_Name + @""".""OPDN"" T1 ON T0.""DocEntry"" = T1.""DocEntry""
                     WHERE T0.""Id"" = :p0 
                     ORDER BY T0.""Id"" ASC
                 ";
+                    model.DocNum_ = CONTEXT.Database.SqlQuery<string>(getDocNum, id).FirstOrDefault();
+                }
 
-
-                model = CONTEXT.Database.SqlQuery<GoodsReceiptPOModel>(ssql, id).Single();
-                model.DocNum_ = CONTEXT.Database.SqlQuery<string>(getDocNum, id).FirstOrDefault();
                 model.ListDetails_ = this.GoodsReceiptPO_Details(CONTEXT, id);
             }
 

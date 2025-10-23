@@ -722,7 +722,9 @@
           <Property Name="FreeText" Type="nvarchar" MaxLength="1000" />
           <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
           <Property Name="QuantityScan" Type="decimal" Precision="21" Scale="2" />
+          <Property Name="QuantityPosted" Type="decimal" Precision="21" Scale="2" />
           <Property Name="LineStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="UnitPriceTc" Type="decimal" Precision="21" Scale="2" />
           <Property Name="UomEntry" Type="int" />
           <Property Name="Uom" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="timestamp" />
@@ -808,6 +810,7 @@
           <Property Name="FreeText" Type="nvarchar" MaxLength="1000" />
           <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
           <Property Name="QuantityScan" Type="decimal" Precision="21" Scale="2" />
+          <Property Name="QuantityPosted" Type="decimal" Precision="21" Scale="2" />
           <Property Name="LineStatus" Type="nvarchar" MaxLength="50" />
           <Property Name="UomEntry" Type="int" />
           <Property Name="Uom" Type="nvarchar" MaxLength="50" />
@@ -1070,7 +1073,7 @@
           <Property Name="FromWhsName" Type="varchar" MaxLength="100" />
           <Property Name="ToWhsCode" Type="nvarchar" MaxLength="50" />
           <Property Name="ToWhsName" Type="varchar" MaxLength="100" />
-          <Property Name="Quantity" Type="decimal" Precision="21" Scale="6" />
+          <Property Name="Quantity" Type="decimal" Precision="21" Scale="2" />
           <Property Name="QuantityOpen" Type="decimal" Precision="21" Scale="2" />
           <Property Name="QuantityScan" Type="decimal" Precision="21" Scale="2" />
           <Property Name="UomEntry" Type="int" />
@@ -1943,6 +1946,8 @@
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
+          <Property Name="UnitPriceTc" Type="Decimal" Precision="21" Scale="2" />
+          <Property Name="QuantityPosted" Type="Decimal" Precision="21" Scale="2" />
         </EntityType>
         <EntityType Name="Tx_AdjustmentIn_Item_Tag">
           <Key>
@@ -2029,6 +2034,7 @@
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
+          <Property Name="QuantityPosted" Type="Decimal" Precision="21" Scale="2" />
         </EntityType>
         <EntityType Name="Tx_AdjustmentOut_Item_Tag">
           <Key>
@@ -3053,6 +3059,8 @@
           <EntitySetMapping Name="Tx_AdjustmentIn_Item">
             <EntityTypeMapping TypeName="Model1.Tx_AdjustmentIn_Item">
               <MappingFragment StoreEntitySet="Tx_AdjustmentIn_Item">
+                <ScalarProperty Name="QuantityPosted" ColumnName="QuantityPosted" />
+                <ScalarProperty Name="UnitPriceTc" ColumnName="UnitPriceTc" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -3144,6 +3152,7 @@
           <EntitySetMapping Name="Tx_AdjustmentOut_Item">
             <EntityTypeMapping TypeName="Model1.Tx_AdjustmentOut_Item">
               <MappingFragment StoreEntitySet="Tx_AdjustmentOut_Item">
+                <ScalarProperty Name="QuantityPosted" ColumnName="QuantityPosted" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />

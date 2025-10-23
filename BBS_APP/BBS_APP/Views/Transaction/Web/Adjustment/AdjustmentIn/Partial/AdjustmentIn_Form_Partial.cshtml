@@ -131,6 +131,7 @@
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
         txt.Name = "AdjustmentTypeCode";
         txt.ShowModelErrors = true;
+        txt.ReadOnly = true;
         txt.ControlStyle.CssClass = "editornoimage";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
         txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
@@ -175,14 +176,14 @@
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
         itemSettings.Caption = "Adjustment Type";
         itemSettings.FieldName = "AdjustmentTypeName";
+        itemSettings.ClientVisible = true;
 
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
         txt.Name = "AdjustmentTypeName";
         txt.ShowModelErrors = true;
-        txt.ClientEnabled = false;
+        txt.ReadOnly = true;
         txt.ControlStyle.CssClass = "editornoimage";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Width = 230;
     });
 
@@ -203,12 +204,12 @@
 
     groupItem_Col2.Items.Add(itemSettings =>
     {
-        itemSettings.Name = "grpDocNum";
+        itemSettings.Name = "grpDocNum_";
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
         itemSettings.Caption = "SAP Doc Num";
-        itemSettings.FieldName = "DocNum";
+        itemSettings.FieldName = "DocNum_";
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
-        txt.Name = "DocNum";
+        txt.Name = "DocNum_";
         txt.ShowModelErrors = true;
         txt.ReadOnly = true;
         txt.ControlStyle.CssClass = "editor";

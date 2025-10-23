@@ -717,7 +717,9 @@
     <Property Name="FreeText" Type="nvarchar" MaxLength="1000" />
     <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
     <Property Name="QuantityScan" Type="decimal" Precision="21" Scale="2" />
+    <Property Name="QuantityPosted" Type="decimal" Precision="21" Scale="2" />
     <Property Name="LineStatus" Type="nvarchar" MaxLength="50" />
+    <Property Name="UnitPriceTc" Type="decimal" Precision="21" Scale="2" />
     <Property Name="UomEntry" Type="int" />
     <Property Name="Uom" Type="nvarchar" MaxLength="50" />
     <Property Name="CreatedDate" Type="timestamp" />
@@ -803,6 +805,7 @@
     <Property Name="FreeText" Type="nvarchar" MaxLength="1000" />
     <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
     <Property Name="QuantityScan" Type="decimal" Precision="21" Scale="2" />
+    <Property Name="QuantityPosted" Type="decimal" Precision="21" Scale="2" />
     <Property Name="LineStatus" Type="nvarchar" MaxLength="50" />
     <Property Name="UomEntry" Type="int" />
     <Property Name="Uom" Type="nvarchar" MaxLength="50" />
@@ -1065,7 +1068,7 @@
     <Property Name="FromWhsName" Type="varchar" MaxLength="100" />
     <Property Name="ToWhsCode" Type="nvarchar" MaxLength="50" />
     <Property Name="ToWhsName" Type="varchar" MaxLength="100" />
-    <Property Name="Quantity" Type="decimal" Precision="21" Scale="6" />
+    <Property Name="Quantity" Type="decimal" Precision="21" Scale="2" />
     <Property Name="QuantityOpen" Type="decimal" Precision="21" Scale="2" />
     <Property Name="QuantityScan" Type="decimal" Precision="21" Scale="2" />
     <Property Name="UomEntry" Type="int" />

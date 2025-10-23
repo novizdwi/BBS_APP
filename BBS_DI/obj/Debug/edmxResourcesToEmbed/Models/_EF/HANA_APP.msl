@@ -757,6 +757,8 @@
     <EntitySetMapping Name="Tx_AdjustmentIn_Item">
       <EntityTypeMapping TypeName="Model1.Tx_AdjustmentIn_Item">
         <MappingFragment StoreEntitySet="Tx_AdjustmentIn_Item">
+          <ScalarProperty Name="QuantityPosted" ColumnName="QuantityPosted" />
+          <ScalarProperty Name="UnitPriceTc" ColumnName="UnitPriceTc" />
           <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -848,6 +850,7 @@
     <EntitySetMapping Name="Tx_AdjustmentOut_Item">
       <EntityTypeMapping TypeName="Model1.Tx_AdjustmentOut_Item">
         <MappingFragment StoreEntitySet="Tx_AdjustmentOut_Item">
+          <ScalarProperty Name="QuantityPosted" ColumnName="QuantityPosted" />
           <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />

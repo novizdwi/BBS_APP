@@ -28,8 +28,10 @@ CREATE COLUMN TABLE "Tx_AdjustmentIn_Item" (
     "ItemName" NVARCHAR(200),
     "FreeText" NVARCHAR(1000),
     "WhsCode" NVARCHAR(50),
-    "QuantityScan" DECIMAL(21, 2),    
+    "QuantityScan" DECIMAL(21, 2), 
+    "QuantityPosted" DECIMAL(21, 2), 
     "LineStatus" NVARCHAR(50),
+    "UnitPriceTc" DECIMAL(21, 2),  
     "UomEntry" INT,
     "Uom" NVARCHAR(50),
     "CreatedDate" TIMESTAMP,
@@ -54,7 +56,6 @@ CREATE COLUMN TABLE "Tx_AdjustmentIn_Item_Tag" (
     "ModifiedDate" TIMESTAMP,
     "ModifiedUser" INTEGER
 );
-
 
 DROP TABLE "Tx_AdjustmentOut";
 CREATE COLUMN TABLE "Tx_AdjustmentOut" (
@@ -85,7 +86,8 @@ CREATE COLUMN TABLE "Tx_AdjustmentOut_Item" (
     "ItemName" NVARCHAR(200),
     "FreeText" NVARCHAR(1000),
     "WhsCode" NVARCHAR(50),
-    "QuantityScan" DECIMAL(21, 2),    
+    "QuantityScan" DECIMAL(21, 2),
+    "QuantityPosted" DECIMAL(21, 2), 
     "LineStatus" NVARCHAR(50),
     "UomEntry" INT,
     "Uom" NVARCHAR(50),

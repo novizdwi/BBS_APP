@@ -7,6 +7,7 @@
     {
         Id = ViewBag.Id;
     }
+    string status = Models._Ef.DbProvider.dbApp.Database.SqlQuery<string>("SELECT TOP 1 T0.\"Status\" FROM \"Tx_AdjustmentIn\" T0 WHERE T0.\"Id\"=:p0", Id).FirstOrDefault();
 
 }
 
@@ -31,7 +32,7 @@
     settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
     settings.Columns.Add("Id", "Id").Visible = false;
     settings.Columns.Add("DetId", "DetId").Visible = false;
-    
+
     settings.Columns.Add(column =>
     {
         column.FieldName = "ItemCode";
@@ -95,7 +96,7 @@
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
 
     });
-    
+
     settings.Columns.Add(column =>
     {
         column.FieldName = "QuantityScan";
@@ -103,7 +104,37 @@
         column.Caption = "Qty Scan";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 80;
+        column.Width = 90;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.DisplayFormatString = "#,###";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "QuantityPosted";
+        column.Name = "QuantityPosted";
+        column.Caption = "Qty Posted";
+        column.Width = status != "Draft" ? 90 : 0;
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.DisplayFormatString = "#,###";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "EstQuantityPosted_";
+        column.Name = "EstQuantityPosted_";
+        column.Caption = "Qty Valid";
+        column.Width = status == "Draft" ? 90 : 0;
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
         var txt = column.PropertiesEdit as TextBoxProperties;
@@ -133,7 +164,7 @@
         column.Caption = "Free Text";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 200;
+        column.Width = 300;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
 

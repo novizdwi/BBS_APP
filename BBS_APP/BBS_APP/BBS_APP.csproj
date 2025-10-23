@@ -735,6 +735,7 @@
     <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.Tab.Attachment.cs" />
     <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.Tab.Attachment.Detail.cs" />
     <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.ViewItemTag.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.CancelReason.cs" />
     <Compile Include="Controllers\Transaction\Web\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.cs" />
     <Compile Include="Controllers\Transaction\Web\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.List.cs" />
     <Compile Include="Controllers\Transaction\Web\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.Nav.cs" />
