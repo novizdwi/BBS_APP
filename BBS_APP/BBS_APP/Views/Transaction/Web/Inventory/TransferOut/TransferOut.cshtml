@@ -8,11 +8,11 @@
     <script src="~/Scripts/Test/DXR.js"></script>
 }
 
-@model Models.Transaction.Web.Inventory.TransferRequestModel
+@model Models.Transaction.Web.Inventory.TransferOutModel
 
 
 @{
-    ViewBag.Title = "Transfer Request";
+    ViewBag.Title = "Tramsfer Out Scan";
 }
 
 
@@ -48,14 +48,14 @@
     function SetBtnStatus() {
 
         var btnNew = ASPxClientButton.Cast('btnNew');
-        //btnNew.SetEnabled(false);
+        btnNew.SetEnabled(false);
 
         var grpBtnAdd = formLayouBtn.GetItemByName('grpBtnAdd');
         var btnAdd = ASPxClientButton.Cast('btnAdd');
 
         var grpBtnUpdate = formLayouBtn.GetItemByName('grpBtnUpdate');
         var btnUpdate = ASPxClientButton.Cast('btnUpdate');
-        //btnAdd.SetEnabled(false);
+        btnAdd.SetEnabled(false);
 
         var btnRefresh = ASPxClientButton.Cast('btnRefresh');
 
@@ -222,7 +222,7 @@
 
         $.ajax({
             type: "POST",
-            url: "@Url.Action("DetailPartial", "TransferRequest")",
+            url: "@Url.Action("DetailPartial", "TransferOut")",
             beforeSend: function () {
                 OnBegin();
             },
@@ -247,7 +247,7 @@
     function GetFormData() {
         var formData = $('#formDetail').serializeObject();
 
-        var Details_ = GetGvDetails('gvTransferRequestDetail');
+        var Details_ = GetGvDetails('gvTransferOutDetail');
         $.extend(formData, { Details_: Details_ });
         return formData;
     }
@@ -262,7 +262,7 @@
 
         $.ajax({
             type: "POST",
-            url: '@Url.Action("Add", "TransferRequest")',
+            url: '@Url.Action("Add", "TransferOut")',
             data: formData,
             beforeSend: function () {
                 OnBegin();
@@ -291,7 +291,7 @@
 
         $.ajax({
             type: "POST",
-            url: '@Url.Action("Update", "TransferRequest")',
+            url: '@Url.Action("Update", "TransferOut")',
             data: formData,
             beforeSend: function () {
                 OnBegin();
@@ -320,7 +320,7 @@
     function OnClickBtnNavFirst(s, e) {
         $.ajax({
             type: "POST",
-            url: "@Url.Action("NavFirst", "TransferRequest")",
+            url: "@Url.Action("NavFirst", "TransferOut")",
             beforeSend: function () {
                 OnBegin();
             },
@@ -342,7 +342,7 @@
 
         $.ajax({
             type: "POST",
-            url: '@Url.Action("NavPrevious", "TransferRequest")',
+            url: '@Url.Action("NavPrevious", "TransferOut")',
             data: { Id: key },
             beforeSend: function () {
                 OnBegin();
@@ -364,7 +364,7 @@
         key = Id.GetValue();
         $.ajax({
             type: "POST",
-            url: '@Url.Action("NavNext", "TransferRequest")',
+            url: '@Url.Action("NavNext", "TransferOut")',
             data: { Id: key },
             beforeSend: function () {
                 OnBegin();
@@ -387,7 +387,7 @@
     function OnClickBtnNavLast(s, e) {
         $.ajax({
             type: "POST",
-            url: "@Url.Action("NavLast", "TransferRequest")",
+            url: "@Url.Action("NavLast", "TransferOut")",
             beforeSend: function () {
                 OnBegin();
             },
@@ -411,7 +411,7 @@
 
         $.ajax({
             type: "POST",
-            url: '@Url.Action("DetailPartial", "TransferRequest")',
+            url: '@Url.Action("DetailPartial", "TransferOut")',
             data: { Id: key },
             beforeSend: function () {
                 OnBegin();
@@ -435,7 +435,7 @@
     function OnClickBtnListFind(s, e) {
         var popup = ASPxClientPopupControl.Cast("popupList");
 
-        var gv = ASPxClientGridView.Cast('gvTransferRequestList');
+        var gv = ASPxClientGridView.Cast('gvTransferOutList');
         if (gv == null) {
             popup.Show();
         } else {
@@ -464,7 +464,7 @@
 
                     $.ajax({
                         type: "POST",
-                        url: '@Url.Action("Post", "TransferRequest")',
+                        url: '@Url.Action("Post", "TransferOut")',
                         data: formData,
                         beforeSend: function () {
                             OnBegin();
@@ -504,7 +504,7 @@
     function btnShowCancelReasonOnClick(s, e, Id) {
         var popup = ASPxClientPopupControl.Cast("popupCancelReason");
 
-        popup.callbackUrl = '@Url.Action("CancelReason_PopupListOnDemandPartial", "TransferRequest")' + '?Id=' + Id;
+        popup.callbackUrl = '@Url.Action("CancelReason_PopupListOnDemandPartial", "TransferOut")' + '?Id=' + Id;
         popup.PerformCallback();
 
         if (!popup.IsVisible()) {
@@ -513,16 +513,16 @@
     }
 
     function OnClickChooseItem(s, e, detId) {
-        @*key = Id.GetValue();
+        key = Id.GetValue();
 
         var popup = ASPxClientPopupControl.Cast("popupItemTag");
 
-        popup.callbackUrl = '@Url.Action("ViewItemTag_PopupListOnDemandPartial", "TransferRequest")' + '?Id=' + key + '&DetId=' + detId;
+        popup.callbackUrl = '@Url.Action("ViewItemTag_PopupListOnDemandPartial", "TransferOut")' + '?Id=' + key + '&DetId=' + detId;
         popup.PerformCallback();
 
         if (!popup.IsVisible()) {
             loadingPanel.Show();
-        }*@
+        }
     }
 
     function btnUpdateReasonOnClick(s, e) {
@@ -534,7 +534,7 @@
 
         $.ajax({
             type: "POST",
-            url: '@Url.Action("Cancel", "TransferRequest")',
+            url: '@Url.Action("Cancel", "TransferOut")',
             data: { Id: key, CancelReason: reason },
             beforeSend: function () {
                 OnBegin();
@@ -558,7 +558,7 @@
     function OnClickChoose(s, e, key) {
         $.ajax({
             type: "POST",
-            url: '@Url.Action("DetailPartial", "TransferRequest")',
+            url: '@Url.Action("DetailPartial", "TransferOut")',
             data: { Id: key },
             beforeSend: function () {
                 OnBegin();
@@ -601,245 +601,37 @@
 </script>
 <script type="text/javascript">
 
-    function gvTransferRequestDetailOnBeginCallback(s, e) {
+    function gvTransferOutDetailOnBeginCallback(s, e) {
         e.customArgs['cbId'] = Id.GetValue();
     }
 
-    function gvTransferRequestDetailOnEndCallback(s, e) {
+    function gvTransferOutDetailOnEndCallback(s, e) {
 
     }
 
-    function gvTransferRequestDetailOnCustomButtonClick(s, e) {
-
-        if (e.buttonID == "deleteButton") {
-            //if (confirm('Delete line transaction?')) {
-                //s.batchEditApi.StartEdit(e.visibleIndex);
-                //var rowValues = s.batchEditHelper.GetRowValues(e.visibleIndex);
-                //gvTransferRequestDetailCalculateSummary(s, rowValues, e.visibleIndex, true);
-                //s.DeleteRow(e.visibleIndex);
-                //s.GetBatchEditHelper().CanUpdate();
-
-                var vi = e.visibleIndex;
-
-                // Pastikan nilai editor di-commit ke batch cache
-                s.batchEditApi.EndEdit();
-
-                // Ambil nilai langsung dari cache batch edit
-                var fields = ["Qty", "Price", "Discount", "Amount"]; // ganti sesuai kolom
-                var rowValues = {};
-                fields.forEach(function (f) {
-                    rowValues[f] = s.batchEditApi.GetCellValue(vi, f);
-                });
-
-                // Hitung ulang summary (sebelum hapus, jika logika Anda perlu)
-                gvTransferRequestDetailCalculateSummary(s, rowValues, vi, true);
-
-                // Hapus baris di batch
-                s.DeleteRow(vi);
-
-            //}
-        }
-
+    function gvTransferOutDetailOnCustomButtonClick(s, e) {
     }
 
 
-    function gvTransferRequestDetailOnBatchEditStartEditing(s, e) {
+    function gvTransferOutDetailOnBatchEditStartEditing(s, e) {
     }
 
-    function gvTransferRequestDetailOnBatchEditEndEditing(s, e) {
+    function gvTransferOutDetailOnBatchEditEndEditing(s, e) {
     }
 
-    function gvTransferRequestDetailOnBatchEditRowValidating(s, e) {
+    function gvTransferOutDetailOnBatchEditRowValidating(s, e) {
     }
 
-    function gvTransferRequestDetailCalculateSummary(grid, rowValues, visibleIndex, isDeleting) {
+    function gvTransferOutDetailCalculateSummary(grid, rowValues, visibleIndex, isDeleting) {
     }
 
 </script>
 
-@*
-    ----------------------------------------------------------------------------
-        CflWarehouse
-
-    ----------------------------------------------------------------------------
-*@
-
-@{
-    var cflWarehouse_ParamModel = new CflWarehouse_ParamModel();
-    cflWarehouse_ParamModel.Name = "TransferRequest";
-    cflWarehouse_ParamModel.Type = "TransferRequest";
-    cflWarehouse_ParamModel.SqlWhere = "   ";
-    cflWarehouse_ParamModel.Header = "";
-
-    cflWarehouse_ParamModel.IsMulti = "N";
-}
 
 
+@Html.Partial("Partial/TransferOut_Form_Btn_Partial")
 
-<script type="text/javascript">
-
-    function BtnCflWarehousePopupListTransferRequestOnClick(s, e) {
-
-        //cflCrmWorkOrderHdrPopupListDeliveryOrder.Show();
-
-        var popup = ASPxClientPopupControl.Cast("cflWarehousePopupListTransferRequest");
-
-        var gv = ASPxClientGridView.Cast('gvCflWarehouseListTransferRequest');
-
-        if (gv == null) {
-            popup.Show();
-        } else {
-            popup.SetContentHtml("");
-            popup.PerformCallback();
-            popup.Show();
-        }
-
-    }
-
-
-    function OnClickChoose_CflWarehouseTransferRequest(s, e, data) {
-        FromWhsCode.SetValue(data.WhsCode);
-        FromWhsName.SetValue(data.WhsName);
-
-        cflWarehousePopupListTransferRequest.Hide();
-
-    }
-
-
-
-
-</script>
-@Html.Partial("~/Views/_Cfl/_CflWarehouse/Partial/_CflWarehouse_Panel_List_Partial.cshtml", cflWarehouse_ParamModel)
-
-@*
-    ----------------------------------------------------------------------------
-        CflToWarehouse
-
-    ----------------------------------------------------------------------------
-*@
-
-@{
-    var cflToWarehouse_ParamModel = new CflToWarehouse_ParamModel();
-    cflToWarehouse_ParamModel.Name = "TransferRequest";
-    cflToWarehouse_ParamModel.Type = "TransferRequest";
-    cflToWarehouse_ParamModel.SqlWhere = "   ";
-    cflToWarehouse_ParamModel.Header = "";
-
-    cflToWarehouse_ParamModel.IsMulti = "N";
-}
-
-
-
-<script type="text/javascript">
-
-    function BtnCflToWarehousePopupListTransferRequestOnClick(s, e) {
-
-        //cflCrmWorkOrderHdrPopupListDeliveryOrder.Show();
-
-        var popup = ASPxClientPopupControl.Cast("cflToWarehousePopupListTransferRequest");
-
-        var gv = ASPxClientGridView.Cast('gvCflToWarehouseListTransferRequest');
-
-        if (gv == null) {
-            popup.Show();
-        } else {
-            popup.SetContentHtml("");
-            popup.PerformCallback();
-            popup.Show();
-        }
-
-    }
-
-
-    function OnClickChoose_CflToWarehouseTransferRequest(s, e, data) {
-        ToWhsCode.SetValue(data.WhsCode);
-        ToWhsName.SetValue(data.WhsName);
-
-        cflToWarehousePopupListTransferRequest.Hide();
-
-    }
-
-
-
-
-</script>
-@Html.Partial("~/Views/_Cfl/_CflToWarehouse/Partial/_CflToWarehouse_Panel_List_Partial.cshtml", cflToWarehouse_ParamModel)
-
-@*
-    -----------------------------------------------------------------------------
-    gvCflItemByWarehouseList
-    -----------------------------------------------------------------------------
-*@
-
-
-@{
-    var cflItemByWarehouse_ParamModel = new CflItemByWarehouse_ParamModel();
-    cflItemByWarehouse_ParamModel.Name = "TransferRequest";
-    cflItemByWarehouse_ParamModel.Type = "TransferRequest";
-    cflItemByWarehouse_ParamModel.SqlWhere = "    ";
-    cflItemByWarehouse_ParamModel.Header = "";
-
-    cflItemByWarehouse_ParamModel.IsMulti = "Y";
-}
-
-
-
-<script type="text/javascript">
-
-    function BtnCflItemByWarehousePopupListTransferRequestOnClick(s, e) {
-
-        var popup = ASPxClientPopupControl.Cast("cflItemByWarehousePopupListTransferRequest");
-
-        var gv = ASPxClientGridView.Cast('gvCflItemByWarehouseListTransferRequest');
-
-        if (gv == null) {
-            popup.Show();
-        } else {
-            popup.SetContentHtml("");
-            popup.PerformCallback();
-            popup.Show();
-        }
-    }
-
-
-    function OnClickChoose_CflItemByWarehouseTransferRequest(s, e) {
-        gvCflItemByWarehouseListTransferRequest.GetSelectedFieldValues('ItemCode', GetSelectedFieldValuesCallback_CflItemByWarehouse);
-    }
-
-
-    function GetSelectedFieldValuesCallback_CflItemByWarehouse(values) {
-        cflItemByWarehousePopupListTransferRequest.Hide();
-
-        key = Id.GetValue();
-        fromWhsCodeKey = FromWhsCode.GetValue();
-
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("ChooseItem", "TransferRequest")',
-            data: { Id: key, Data: values },
-            beforeSend: function () {
-                OnBegin();
-            },
-            success: function (response) {
-                gvTransferRequestDetail.PerformCallback();
-            },
-            error: function (jqXhr, textStatus, errorThrown) {
-                OnFailure(jqXhr, textStatus, errorThrown)
-            },
-            complete: function () {
-                OnComplete()
-            }
-        });
-
-    }
-
-</script>
-@Html.Partial("~/Views/_Cfl/_CflItemByWarehouse/Partial/_CflItemByWarehouse_Panel_List_Partial.cshtml", cflItemByWarehouse_ParamModel)
-
-
-@Html.Partial("Partial/TransferRequest_Form_Btn_Partial")
-
-@using (Ajax.BeginForm("mantap", "TransferRequest", null,
+@using (Ajax.BeginForm("mantap", "TransferOut", null,
 new AjaxOptions
 {
     HttpMethod = "POST",
@@ -860,7 +652,7 @@ new
 }))
 {
     <div id="contentForm" style="padding-top:79px">
-        @Html.Partial("Partial/TransferRequest_Form_Partial")
+        @Html.Partial("Partial/TransferOut_Form_Partial")
 
     </div>
 }
@@ -890,6 +682,32 @@ new
 
 @Html.Partial("Partial/CancelReason/CancelReason_Partial")
 
+
+@*-------------------------------------------------
+    ViewItemTag
+    -------------------------------------------------*@
+<script>
+
+    function popupItemTag_EndCallback(s, e) {
+        $.validator.unobtrusive.parse("#ItemTag_formDetail");
+
+        var popup = ASPxClientPopupControl.Cast("popupItemTag");
+        if (!popup.IsVisible()) {
+            loadingPanel.Hide();
+            popup.ShowAtPos(400, 100);
+        }
+    }
+
+    function ViewItemTag_OnClickBtnCancel(s, e) {
+        var popup = ASPxClientPopupControl.Cast("popupItemTag");
+        popup.Hide();
+    }
+
+
+</script>
+
+@Html.Partial("Partial/ItemTag/ItemTag_Partial")
+
 @*
     -----------------------------------------------------------------------------
     gvShipList
@@ -897,7 +715,7 @@ new
 *@
 
 
-@Html.Partial("Partial/TransferRequest_Panel_List_Partial")
+@Html.Partial("Partial/TransferOut_Panel_List_Partial")
 
 
 @Html.Partial("~/Views/_CrystalReport/Layout/Print_Panel_Partial.cshtml")

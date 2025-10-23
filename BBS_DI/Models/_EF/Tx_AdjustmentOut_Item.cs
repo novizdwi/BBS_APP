@@ -21,6 +21,7 @@ namespace BBS_DI.Models._EF
         public string FreeText { get; set; }
         public string WhsCode { get; set; }
         public Nullable<decimal> QuantityScan { get; set; }
+        public Nullable<decimal> QuantityPosted { get; set; }
         public string LineStatus { get; set; }
         public Nullable<int> UomEntry { get; set; }
         public string Uom { get; set; }

@@ -189,7 +189,9 @@
     <Compile Include="Models\Setting\ReportGroupModel.cs" />
     <Compile Include="Models\Setting\ReportModel.cs" />
     <Compile Include="Models\Setting\Report__List_Model.cs" />
+    <Compile Include="Models\Transaction\Web\Inventory\TransferOutService.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\TransferRequestService.cs" />
+    <Compile Include="Models\Transaction\Web\Inventory\TransferOut__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\TransferRequest__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Purchasing\GoodsReceiptPOService.cs" />
     <Compile Include="Models\Transaction\Web\Purchasing\PurchaseOrderService.cs" />
@@ -423,6 +425,15 @@
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\_EF\Tx_PurchaseOrder_Item_Tag.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_TransferOut.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_TransferOut_Item.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_TransferOut_Item_Tag.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\_EF\Tx_TransferRequest.cs">

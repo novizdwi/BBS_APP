@@ -12,20 +12,19 @@ namespace BBS_DI.Models._EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Tx_AdjustmentIn_Item
+    public partial class Tx_TransferOut_Item_Tag
     {
-        public long Id { get; set; }
-        public long DetId { get; set; }
+        public Nullable<long> Id { get; set; }
+        public Nullable<long> DetId { get; set; }
+        public long DetDetId { get; set; }
         public string ItemCode { get; set; }
         public string ItemName { get; set; }
-        public string FreeText { get; set; }
-        public string WhsCode { get; set; }
-        public Nullable<decimal> QuantityScan { get; set; }
-        public Nullable<decimal> QuantityPosted { get; set; }
-        public string LineStatus { get; set; }
-        public Nullable<decimal> UnitPriceTc { get; set; }
-        public Nullable<int> UomEntry { get; set; }
-        public string Uom { get; set; }
+        public string TagId { get; set; }
+        public Nullable<decimal> Quantity { get; set; }
+        public string EventType { get; set; }
+        public string Status { get; set; }
+        public Nullable<long> BaseId { get; set; }
+        public Nullable<long> BaseDetId { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedUser { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
