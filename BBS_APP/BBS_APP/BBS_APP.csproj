@@ -660,6 +660,23 @@
     <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\ItemTag\ItemTag_TabItemTagList_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentIn.cshtml" />
     <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\AdjustmentIn_Form_TabAttachment_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\AdjustmentOut.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\AdjustmentOut_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\AdjustmentOut_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\AdjustmentOut_Form_TabAttachment_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\AdjustmentOut_Form_TabDetail_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\AdjustmentOut_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\AdjustmentOut_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\Attachment\Attachment_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\Attachment\Attachment_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\Attachment\Attachment_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\CancelReason\CancelReason_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\CancelReason\CancelReason_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\CancelReason\CancelReason_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\ItemTag\ItemTag_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\ItemTag\ItemTag_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\ItemTag\ItemTag_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\ItemTag\ItemTag_TabItemTagList_List_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -730,6 +747,12 @@
     <Compile Include="Controllers\Setting\Report\ReportController.List.cs" />
     <Compile Include="Controllers\Setting\Report\ReportController.List.Export.cs" />
     <Compile Include="Controllers\Setting\Report\ReportController.Nav.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentOut\AdjustmentOutController.CancelReason.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentOut\AdjustmentOutController.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentOut\AdjustmentOutController.Nav.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentOut\AdjustmentOutController.Tab.Attachment.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentOut\AdjustmentOutController.Tab.Attachment.Detail.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentOut\AdjustmentOutController.ViewItemTag.cs" />
     <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.cs" />
     <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.Nav.cs" />
     <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.Tab.Attachment.cs" />
