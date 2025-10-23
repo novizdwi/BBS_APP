@@ -707,6 +707,21 @@ namespace Models._Utils
             }
         }
 
+        public static string GetSAPCoaAdjustment(string code)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                string ssql = @"
+                    SELECT T0.""U_IDU_Account"" AS ""Code""
+                    FROM ""{0}"".""@ADJUSTMENTTYPE"" AS T0
+                    WHERE T0.""Code"" = '{1}'
+                ";
+
+                ssql = string.Format(ssql, DbProvider.dbSap_Name, code);
+                return CONTEXT.Database.SqlQuery<string>(ssql).FirstOrDefault();
+            }
+        }
+
         public static DataTable GetSAPCodeOfAccountWithNull()
         {
             using (var CONTEXT = new HANA_APP())

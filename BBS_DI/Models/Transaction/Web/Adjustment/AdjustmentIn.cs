@@ -44,6 +44,8 @@ namespace Models.Transaction.Web.Adjustment
 
         public int? DocEntry { get; set; }
 
+        public string DocNum_ { get; set; }
+
         public string Comments { get; set; }
 
         public string ScanDeviceId { get; set; }
@@ -102,7 +104,13 @@ namespace Models.Transaction.Web.Adjustment
 
         public decimal? QuantityScan { get; set; }
 
+        public decimal? QuantityPosted { get; set; }
+
+        public decimal? EstQuantityPosted_ { get; set; }
+
         public string LineStatus { get; set; }
+
+        public decimal? UnitPriceTc { get; set; }
 
         public int? UomEntry { get; set; }
 
@@ -154,6 +162,7 @@ namespace Models.Transaction.Web.Adjustment
 
         public string Status { get; set; }
 
+        public string Information { get; set; }
     }
 
 
@@ -214,7 +223,19 @@ namespace Models.Transaction.Web.Adjustment
                             ORDER BY T0.""Id"" ASC
                 ";
 
+
                 model = CONTEXT.Database.SqlQuery<AdjustmentInModel>(ssql, id).Single();
+
+                if(model.DocEntry != null)
+                {
+                    string getDocNum = @"SELECT T1.""DocNum""
+                        FROM ""Tx_AdjustmentIn"" T0
+                        INNER JOIN """ + DbProvider.dbSap_Name + @""".""OIGN"" T1 ON T0.""DocEntry"" = T1.""DocEntry""
+                        WHERE T0.""Id"" = :p0 
+                        ORDER BY T0.""Id"" ASC
+                    ";
+                    model.DocNum_ = CONTEXT.Database.SqlQuery<string>(getDocNum, id).FirstOrDefault();
+                }
 
                 model.ListDetails_ = this.AdjustmentIn_Details(CONTEXT, id);
                 model.ListAttachments_ = this.GetAdjustmentIn_Attachments(id);
@@ -255,8 +276,18 @@ namespace Models.Transaction.Web.Adjustment
 
         public List<AdjustmentIn_ItemModel> AdjustmentIn_Details(HANA_APP CONTEXT, long id = 0)
         {
-            string ssql = @"SELECT T0.*
+            string ssql = @"SELECT T0.*, 
+                    CASE WHEN T1.""Status"" = 'Draft' THEN 
+                        T0.""QuantityScan"" - (SELECT 
+                                COALESCE( COUNT(Tx.""TagId""), 0) 
+                                FROM ""Tx_AdjustmentIn_Item_Tag"" Tx
+                                INNER JOIN ""Tm_Item_Warehouse_Tag"" Ty ON Tx.""TagId"" = Ty.""TagId"" AND Ty.""Status"" = 'A'
+                                WHERE Tx.""DetId"" = T0.""DetId""
+                            ) 
+                    ELSE NULL 
+                    END AS ""EstQuantityPosted_""
                 FROM ""Tx_AdjustmentIn_Item"" T0
+                INNER JOIN ""Tx_AdjustmentIn"" T1 ON T0.""Id"" = T1.""Id""
                 WHERE T0.""Id"" =:p0
                 ORDER BY T0.""DetId"" ASC
             ";
@@ -424,28 +455,38 @@ namespace Models.Transaction.Web.Adjustment
 
         }
 
-
         public void Post(int userId, long id)
         {
+            SAPbobsCOM.Company oCompany = null;
 
             using (var CONTEXT = new HANA_APP())
             {
-
                 using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
                 {
                     try
                     {
+                        oCompany = SAPCachedCompany.GetCompany();
+                        oCompany.StartTransaction();
+
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn__UpdateItem\"(:p0,:p1)", userId, id);
+
                         String keyValue;
                         keyValue = id.ToString();
 
+                        AdjustmentInModel syncAdjustmentIn = GetById(userId, id);
                         Tx_AdjustmentIn tx_AdjustmentIn = CONTEXT.Tx_AdjustmentIn.Find(id);
 
                         SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "before", "Tx_AdjustmentIn", "post", "Id", keyValue);
 
                         if (tx_AdjustmentIn != null)
                         {
+                            string docEntry = AddGoodsReceipt(oCompany, userId, id, syncAdjustmentIn);
+
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+
+                            tx_AdjustmentIn.DocEntry = Convert.ToInt32(docEntry);
                             tx_AdjustmentIn.Status = "Posted";
+
                             tx_AdjustmentIn.IsAfterPosted = "Y";
                             tx_AdjustmentIn.ModifiedDate = dtModified;
                             tx_AdjustmentIn.ModifiedUser = userId;
@@ -453,14 +494,24 @@ namespace Models.Transaction.Web.Adjustment
                             CONTEXT.SaveChanges();
                         }
 
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn__InsertItemTag\"(:p0,:p1)", userId, id);
                         SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "after", "Tx_AdjustmentIn", "post", "Id", keyValue);
 
+                        if (oCompany.InTransaction)
+                        {
+                            oCompany.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_Commit);
+                        }
 
                         CONTEXT_TRANS.Commit();
                     }
 
                     catch (Exception ex)
                     {
+                        if (oCompany.InTransaction)
+                        {
+                            oCompany.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                        }
+
                         CONTEXT_TRANS.Rollback();
 
                         string errorMassage;
@@ -475,9 +526,76 @@ namespace Models.Transaction.Web.Adjustment
 
                         throw new Exception(errorMassage);
                     }
+                    finally
+                    {
+                        SAPCachedCompany.Release(oCompany);
+                    }
+                }
+                
+            }
+
+        }
+
+        private string AddGoodsReceipt(Company oCompany, int userId, long id, AdjustmentInModel model)
+        {
+            string result = "";
+
+            string CoaAdjustment = GeneralGetList.GetSAPCoaAdjustment(model.AdjustmentTypeCode);
+            int nErr;
+            string errMsg;
+            SAPbobsCOM.Documents oDocument = (SAPbobsCOM.Documents)oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oInventoryGenEntry);
+            oDocument.DocDate = model.TransDate ?? DateTime.Now;
+
+            if (!string.IsNullOrWhiteSpace(model.Comments))
+            {
+                oDocument.Comments = model.Comments;
+            }
+
+            oDocument.UserFields.Fields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
+            oDocument.UserFields.Fields.Item("U_IDU_WebTransNo").Value = model.TransNo;
+            oDocument.UserFields.Fields.Item("U_IDU_AdjustmentType").Value = model.AdjustmentTypeName;
+
+            if(model.ListDetails_.Count > 0)
+            {
+                foreach(var item in model.ListDetails_)
+                {
+                    if(item.QuantityPosted > 0)
+                    {
+                        oDocument.Lines.ItemCode = item.ItemCode;
+                        oDocument.Lines.ItemDescription = item.ItemName;
+
+                        oDocument.Lines.Price = (double)(item.UnitPriceTc ?? 0m);
+                        oDocument.Lines.Quantity = double.Parse(item.QuantityPosted.ToString());
+                        oDocument.Lines.AccountCode = CoaAdjustment;
+                        oDocument.Lines.WarehouseCode = item.WhsCode;
+
+                        //if (item.UomEntry != null)
+                        //{
+                        //    oDocument.Lines.UoMEntry = Convert.ToInt32(item.UomEntry);
+                        //}
+
+                        oDocument.Lines.UserFields.Fields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
+                        oDocument.Lines.UserFields.Fields.Item("U_IDU_DetId").Value = Convert.ToInt32(item.DetId);
+
+                        oDocument.Lines.Add();
+                    }
                 }
             }
 
+            int docAdd = oDocument.Add();
+            if (docAdd != 0)
+            {
+                nErr = oCompany.GetLastErrorCode();
+                errMsg = oCompany.GetLastErrorDescription();
+
+                SapCompany.CleanUp(oDocument);
+
+                throw new Exception("[VALIDATION] - Add Goods Receipt : " + nErr.ToString() + "|" + errMsg);
+            }
+            result = oCompany.GetNewObjectKey();
+            SapCompany.CleanUp(oDocument);
+
+            return result;
         }
 
         public void Cancel(int userId, long Id, string cancelReason)
@@ -547,9 +665,16 @@ namespace Models.Transaction.Web.Adjustment
 
                 model = CONTEXT.Database.SqlQuery<AdjustmentInItemTagView___>(sql, id, detId).FirstOrDefault();
 
-                sql = @"SELECT ROW_NUMBER() OVER (ORDER BY ""DetDetId"") AS ""RowNo"", T0.* 
-                            FROM ""Tx_AdjustmentIn_Item_Tag"" T0   
-                            WHERE T0.""Id""=:p0 AND ""DetId"" = :p1 ";
+                sql = @"SELECT ROW_NUMBER() OVER (ORDER BY T0.""DetDetId"") AS ""RowNo"", T0.*,
+                        CASE WHEN COALESCE(T3.""TagId"", '') = '' THEN 'New Entry'
+                             WHEN T3.""Status"" = 'I' THEN 'Reactivation'
+                             WHEN T1.""WhsCode"" != T3.""WhsCode"" THEN 'Change Warehouse'
+                        ELSE 'Invalid' END AS ""Information""
+                        FROM ""Tx_AdjustmentIn_Item_Tag"" T0  
+                        INNER JOIN ""Tx_AdjustmentIn"" T1 ON T0.""Id"" = T1.""Id""  
+                        LEFT JOIN ""Tm_Item_Warehouse_Tag"" T3 ON T0.""TagId"" = T3.""TagId""
+                        WHERE T0.""Id""=:p0 AND ""DetId"" = :p1 
+                ";
 
                 model.AdjustmentIn_Item_TagModel___ = CONTEXT.Database.SqlQuery<AdjustmentIn_Item_TagModel>(sql, id, detId).ToList();
             }

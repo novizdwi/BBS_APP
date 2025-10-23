@@ -793,6 +793,8 @@
     <Property Name="CreatedUser" Type="Int32" />
     <Property Name="ModifiedDate" Type="DateTime" />
     <Property Name="ModifiedUser" Type="Int32" />
+    <Property Name="UnitPriceTc" Type="Decimal" Precision="21" Scale="2" />
+    <Property Name="QuantityPosted" Type="Decimal" Precision="21" Scale="2" />
   </EntityType>
   <EntityType Name="Tx_AdjustmentIn_Item_Tag">
     <Key>
@@ -879,6 +881,7 @@
     <Property Name="CreatedUser" Type="Int32" />
     <Property Name="ModifiedDate" Type="DateTime" />
     <Property Name="ModifiedUser" Type="Int32" />
+    <Property Name="QuantityPosted" Type="Decimal" Precision="21" Scale="2" />
   </EntityType>
   <EntityType Name="Tx_AdjustmentOut_Item_Tag">
     <Key>

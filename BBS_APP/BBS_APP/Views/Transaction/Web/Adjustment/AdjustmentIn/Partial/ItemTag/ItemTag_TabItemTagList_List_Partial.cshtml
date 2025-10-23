@@ -36,24 +36,36 @@
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
     });
 
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "EventType";
+    //    column.Name = "EventType";
+    //    column.Caption = "Event Type";
+    //    column.Width = 100;
+    //    column.ColumnType = MVCxGridViewColumnType.TextBox;
+    //    column.Visible = true;
+
+    //    column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+    //});
+
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "Status";
+    //    column.Name = "Status";
+    //    column.Caption = "Status";
+    //    column.Width = 80;
+    //    column.ColumnType = MVCxGridViewColumnType.TextBox;
+    //    column.Visible = true;
+
+    //    column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+    //});
+
     settings.Columns.Add(column =>
     {
-        column.FieldName = "EventType";
-        column.Name = "EventType";
-        column.Caption = "Event Type";
-        column.Width = 100;
-        column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Visible = true;
-
-        column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
-    });
-
-    settings.Columns.Add(column =>
-    {
-        column.FieldName = "Status";
-        column.Name = "Status";
-        column.Caption = "Status";
-        column.Width = 80;
+        column.FieldName = "Information";
+        column.Name = "Information";
+        column.Caption = "Information";
+        column.Width = 120;
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Visible = true;
 
