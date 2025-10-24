@@ -186,8 +186,10 @@
                             node3.Text = "Inventory";
                             AddNode(dataTable, node3, "Transfer In", "TransferIn");
                             AddNode(dataTable, node3, "Transfer Out", "TransferOut");
-                            AddNode(dataTable, node3, "Stock Opname", "StockOpname");
+                            AddNode(dataTable, node3, "Ticket Stock Opname", "TicketStockOpname");
+                            AddNode(dataTable, node3, "Stock Opname Summary", "StockOpnameSummary");
                         });
+
                         node2.Nodes.Add(node3 =>
                         {
                             node3.Text = "Purchasing";
@@ -302,8 +304,8 @@
                 var treeView = s as MVCxTreeView;
 
 
-            //remove jika node folder empty
-            var j = treeView.Nodes.Count;
+                //remove jika node folder empty
+                var j = treeView.Nodes.Count;
                 if (Session["isAdmin"] == "Y")
                 {
 
@@ -318,14 +320,14 @@
                 }
 
 
-            //tambahkan style di
-            j = treeView.Nodes.Count;
+                //tambahkan style di
+                j = treeView.Nodes.Count;
                 for (int i = 0; i < j; i++)
                 {
                     var node1 = (MVCxTreeViewNode)treeView.Nodes[i];
-                //StyleNodeDetail(node1);
+                    //StyleNodeDetail(node1);
 
-                StyleMenuNode(node1, node1.Name);
+                    StyleMenuNode(node1, node1.Name);
                 }
 
 
@@ -338,8 +340,8 @@
                 }
                 else
                 {
-                //Models.Authentication.User.UserGetList.UpdateLastController((int)Session["userId"], ViewContext.Controller.ValueProvider.GetValue("controller").RawValue.ToString());
-            }
+                    //Models.Authentication.User.UserGetList.UpdateLastController((int)Session["userId"], ViewContext.Controller.ValueProvider.GetValue("controller").RawValue.ToString());
+                }
 
 
                 if (node != null)
