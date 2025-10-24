@@ -32,5 +32,6 @@ namespace BBS_DI.Models._EF
         public Nullable<int> UomEntry { get; set; }
         public string Uom { get; set; }
         public string Comments { get; set; }
+        public string FreeText { get; set; }
     }
 }
