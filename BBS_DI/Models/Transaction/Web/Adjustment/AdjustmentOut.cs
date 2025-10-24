@@ -461,11 +461,11 @@ namespace Models.Transaction.Web.Adjustment
                 {
                     try
                     {
-                        oCompany = SAPCachedCompany.GetCompany();
-                        oCompany.StartTransaction();
-
                         CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentOut__UpdateItem\"(:p0,:p1)", userId, id);
                         CONTEXT.SaveChanges();
+
+                        oCompany = SAPCachedCompany.GetCompany();
+                        oCompany.StartTransaction();
 
                         String keyValue;
                         keyValue = id.ToString();
