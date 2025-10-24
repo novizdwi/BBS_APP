@@ -681,6 +681,7 @@
     <Compile Include="Controllers\Authentication\User\UserController.List.Export.cs" />
     <Compile Include="Controllers\Authentication\User\UserController.Nav.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CommonFileHelper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Report\ReportAlert\ReportAlertController.cs" />
     <Compile Include="Controllers\Report\ReportAlert\ReportAlertController.ListDetail.cs" />
@@ -721,6 +722,18 @@
     <Compile Include="Controllers\Setting\Report\ReportController.List.cs" />
     <Compile Include="Controllers\Setting\Report\ReportController.List.Export.cs" />
     <Compile Include="Controllers\Setting\Report\ReportController.Nav.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.CancelReason.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.Nav.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.Tab.Attachment.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.Tab.Attachment.Detail.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.ViewItemTag.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentOut\AdjustmentOutController.CancelReason.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentOut\AdjustmentOutController.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentOut\AdjustmentOutController.Nav.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentOut\AdjustmentOutController.Tab.Attachment.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentOut\AdjustmentOutController.Tab.Attachment.Detail.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentOut\AdjustmentOutController.ViewItemTag.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferRequest\TransferRequestController.Tab.Detail.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferRequest\TransferRequestController.Nav.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferRequest\TransferRequestController.List.cs" />

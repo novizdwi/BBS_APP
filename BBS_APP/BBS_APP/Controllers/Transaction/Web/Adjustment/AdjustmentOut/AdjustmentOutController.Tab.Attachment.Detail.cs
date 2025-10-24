@@ -12,8 +12,8 @@ using System.Net;
 using Models.Transaction.Web.Adjustment;
 using Models._Utils;
 using System.IO;
-using BBS_APP;
 using BBS_DI.Models._EF;
+using BBS_APP;
 
 namespace Controllers.Transaction.Web.Adjustment
 {
