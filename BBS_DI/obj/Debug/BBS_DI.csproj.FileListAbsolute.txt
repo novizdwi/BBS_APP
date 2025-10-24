@@ -51,3 +51,4 @@ C:\LegionShared\Project\BBS\BBS_DI\obj\Debug\BBS_DI.csproj.CoreCompileInputs.cac
 C:\LegionShared\Project\BBS\BBS_DI\obj\Debug\BBS_DI.csproj.CopyComplete
 C:\LegionShared\Project\BBS\BBS_DI\obj\Debug\BBS_DI.dll
 C:\LegionShared\Project\BBS\BBS_DI\obj\Debug\BBS_DI.pdb
+C:\LegionShared\Project\BBS\BBS_DI\obj\Debug\BBS_DI.csprojAssemblyReference.cache
