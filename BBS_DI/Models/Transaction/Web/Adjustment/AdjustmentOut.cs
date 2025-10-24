@@ -134,6 +134,10 @@ namespace Models.Transaction.Web.Adjustment
 
         public string ItemName { get; set; }
 
+        public string WhsCode { get; set; }
+
+        public string WhsName { get; set; }
+
         public List<AdjustmentOut_Item_TagModel> AdjustmentOut_Item_TagModel___ { get; set; }
 
     }
@@ -228,7 +232,7 @@ namespace Models.Transaction.Web.Adjustment
                 {
                     string getDocNum = @"SELECT T1.""DocNum""
                         FROM ""Tx_AdjustmentOut"" T0
-                        INNER JOIN """ + DbProvider.dbSap_Name + @""".""OIGN"" T1 ON T0.""DocEntry"" = T1.""DocEntry""
+                        INNER JOIN """ + DbProvider.dbSap_Name + @""".""OIGE"" T1 ON T0.""DocEntry"" = T1.""DocEntry""
                         WHERE T0.""Id"" = :p0 
                         ORDER BY T0.""Id"" ASC
                     ";
@@ -275,15 +279,11 @@ namespace Models.Transaction.Web.Adjustment
         public List<AdjustmentOut_ItemModel> AdjustmentOut_Details(HANA_APP CONTEXT, long id = 0)
         {
             string ssql = @"SELECT T0.*, 
-                    CASE WHEN T2.""Status"" = 'Draft' THEN 
-                        T0.""QuantityScan"" - (SELECT 
-                                COALESCE( COUNT(Tx.""TagId""), 0) 
-                                FROM ""Tx_AdjustmentOut_Item_Tag"" Tx
-                                INNER JOIN ""Tm_Item_Warehouse_Tag"" Ty ON Tx.""TagId"" = Ty.""TagId"" AND Ty.""Status"" = 'A'
-                                WHERE Tx.""DetId"" = T0.""DetId""
-                            ) 
-                    ELSE NULL 
-                    END AS ""EstQuantityPosted_""
+                     COALESCE ( (SELECT COUNT(Tx.""TagId"")
+                        FROM ""Tx_AdjustmentOut_Item_Tag"" Tx
+                        INNER JOIN ""Tm_Item_Warehouse_Tag"" Ty ON Tx.""TagId"" = Ty.""TagId"" AND T2.""WhsCode"" = Ty.""WhsCode""  AND Ty.""Status"" = 'A'
+                        WHERE Tx.""DetId"" = T0.""DetId""
+                    ) , 0) AS ""EstQuantityPosted_""
                 FROM ""Tx_AdjustmentOut_Item"" T0
                 INNER JOIN ""Tx_AdjustmentOut"" T2 ON T0.""Id"" = T2.""Id""
                 WHERE T0.""Id"" =:p0
@@ -292,7 +292,6 @@ namespace Models.Transaction.Web.Adjustment
             var AdjustmentOut = CONTEXT.Database.SqlQuery<AdjustmentOut_ItemModel>(ssql, id).ToList();
             return AdjustmentOut;
         }
-
 
         public AdjustmentOutModel NavFirst(int userId)
         {
@@ -449,9 +448,8 @@ namespace Models.Transaction.Web.Adjustment
                 }
 
             }
-
-
         }
+
 
         public void Post(int userId, long id)
         {
@@ -467,6 +465,7 @@ namespace Models.Transaction.Web.Adjustment
                         oCompany.StartTransaction();
 
                         CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentOut__UpdateItem\"(:p0,:p1)", userId, id);
+                        CONTEXT.SaveChanges();
 
                         String keyValue;
                         keyValue = id.ToString();
@@ -656,20 +655,23 @@ namespace Models.Transaction.Web.Adjustment
             AdjustmentOutItemTagView___ model = new AdjustmentOutItemTagView___();
             using (var CONTEXT = new HANA_APP())
             {
-                sql = @"SELECT T0.""Id"", T0.""DetId"", T0.""ItemCode"", T0.""ItemName""
+                sql = @"SELECT T0.""Id"", T0.""DetId"", T0.""ItemCode"", T0.""ItemName"", T1.""WhsCode""
                                 FROM ""Tx_AdjustmentOut_Item"" T0   
+                                INNER JOIN ""Tx_AdjustmentOut"" T1 ON T0.""Id"" = T1.""Id""
                                 WHERE T0.""Id""=:p0 AND ""DetId"" = :p1 ";
 
                 model = CONTEXT.Database.SqlQuery<AdjustmentOutItemTagView___>(sql, id, detId).FirstOrDefault();
 
                 sql = @"SELECT ROW_NUMBER() OVER (ORDER BY T0.""DetDetId"") AS ""RowNo"", T0.*,
-                        CASE WHEN COALESCE(T3.""TagId"", '') = '' THEN 'New Entry'
-                             WHEN T3.""Status"" = 'I' THEN 'Reactivation'
-                             WHEN T1.""WhsCode"" != T3.""WhsCode"" THEN 'Change Warehouse'
-                        ELSE 'Invalid' END AS ""Information""
+                        CASE WHEN T1.""Status"" = 'Draft' THEN 
+                             CASE WHEN COALESCE(T3.""TagId"", '') = '' THEN 'Tag Id not Exists in master item'
+                                  WHEN T1.""WhsCode"" != T3.""WhsCode"" THEN 'Tag Id in different Warehouse'
+                                  WHEN T3.""Status"" != 'A' THEN 'Tag Id is not acitve'
+                             ELSE 'Valid' END 
+                        ELSE T0.""Status"" END AS ""Information""
                         FROM ""Tx_AdjustmentOut_Item_Tag"" T0  
                         INNER JOIN ""Tx_AdjustmentOut"" T1 ON T0.""Id"" = T1.""Id""  
-                        LEFT JOIN ""Tm_Item_Warehouse_Tag"" T3 ON T0.""TagId"" = T3.""TagId""
+                        LEFT JOIN ""Tm_Item_Warehouse_Tag"" T3 ON T0.""TagId"" = T3.""TagId"" 
                         WHERE T0.""Id""=:p0 AND ""DetId"" = :p1 
                 ";
 

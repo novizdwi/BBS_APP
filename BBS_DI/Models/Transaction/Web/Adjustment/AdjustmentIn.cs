@@ -470,6 +470,7 @@ namespace Models.Transaction.Web.Adjustment
 
                         CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn__UpdateItem\"(:p0,:p1)", userId, id);
 
+
                         String keyValue;
                         keyValue = id.ToString();
 
@@ -666,10 +667,12 @@ namespace Models.Transaction.Web.Adjustment
                 model = CONTEXT.Database.SqlQuery<AdjustmentInItemTagView___>(sql, id, detId).FirstOrDefault();
 
                 sql = @"SELECT ROW_NUMBER() OVER (ORDER BY T0.""DetDetId"") AS ""RowNo"", T0.*,
-                        CASE WHEN COALESCE(T3.""TagId"", '') = '' THEN 'New Entry'
-                             WHEN T3.""Status"" = 'I' THEN 'Reactivation'
-                             WHEN T1.""WhsCode"" != T3.""WhsCode"" THEN 'Change Warehouse'
-                        ELSE 'Invalid' END AS ""Information""
+                        CASE WHEN T1.""Status"" = 'Draft' THEN 
+                            CASE WHEN COALESCE(T3.""TagId"", '') = '' THEN 'New Entry'
+                                 WHEN T3.""Status"" = 'I' THEN 'Reactivation'
+                                 WHEN T1.""WhsCode"" != T3.""WhsCode"" THEN 'Change Warehouse'
+                            ELSE 'Invalid' END 
+                        ELSE T0.""Status"" END AS ""Information""
                         FROM ""Tx_AdjustmentIn_Item_Tag"" T0  
                         INNER JOIN ""Tx_AdjustmentIn"" T1 ON T0.""Id"" = T1.""Id""  
                         LEFT JOIN ""Tm_Item_Warehouse_Tag"" T3 ON T0.""TagId"" = T3.""TagId""

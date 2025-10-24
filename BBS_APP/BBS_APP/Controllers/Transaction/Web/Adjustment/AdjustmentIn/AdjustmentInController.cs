@@ -112,7 +112,7 @@ namespace Controllers.Transaction.Web.Adjustment
             adjustmentInService = new AdjustmentInService();
             adjustmentInModel._FormMode = FormModeEnum.Edit;
 
-            adjustmentInService.Update(adjustmentInModel);
+            //adjustmentInService.Update(adjustmentInModel);
             //adjustmentInService.PostAPI(userId, adjustmentInModel.Id);
             adjustmentInService.Post(userId, adjustmentInModel.Id);
             adjustmentInModel = adjustmentInService.GetById(userId, adjustmentInModel.Id);

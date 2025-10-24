@@ -105,6 +105,55 @@
         txt.Width = 230;
     });
 
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "TransType";
+        itemSettings.FieldName = "TransType";
+        itemSettings.ClientVisible = false;
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "TransType";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Width = 230;
+    });
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "CancelReason";
+        itemSettings.FieldName = "CancelReason";
+        itemSettings.ClientVisible = false;
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "CancelReason";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Width = 230;
+    });
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "WhsCode";
+        itemSettings.FieldName = "WhsCode";
+        itemSettings.ClientVisible = false;
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "WhsCode";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Width = 230;
+    });
+
     groupItem_Col1.Items.Add(itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
@@ -240,6 +289,30 @@
         cbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
         cbo.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         cbo.Width = 230;
+    });
+
+    groupItem_Col3.Items.Add(itemSettings =>
+    {
+
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.DateEdit;
+        itemSettings.Caption = "CreatedDate";
+        itemSettings.FieldName = "CreatedDate";
+        itemSettings.ClientVisible = false;
+
+        var txt = (DateEditSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "CreatedDate";
+        txt.ShowModelErrors = true;
+
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Properties.NullText = "dd/MM/yyyy";
+        txt.Properties.EditFormat = EditFormat.Custom;
+        txt.Properties.EditFormatString = "dd/MM/yyyy";
+        txt.Properties.EditFormat = EditFormat.Date;
+
+        txt.Properties.ClientSideEvents.ParseDate = "function (s,e){ { ParseDateEdit(s,e);  } }";
+        txt.Width = 230;
     });
 
     if (Model._FormMode != Models.FormModeEnum.New)

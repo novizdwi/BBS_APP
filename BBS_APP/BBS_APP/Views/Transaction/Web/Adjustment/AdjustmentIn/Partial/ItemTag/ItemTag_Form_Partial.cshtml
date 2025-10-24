@@ -98,6 +98,21 @@
         txt.Width = 230;
     });
 
+    groupItem_Col2.Items.Add(itemSettings =>
+    {
+        itemSettings.Name = "WhsCode";
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Whs Code";
+        itemSettings.FieldName = "WhsCode";
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "WhsCode";
+        txt.ShowModelErrors = true;
+        txt.ReadOnly = true;
+        txt.ControlStyle.CssClass = "editor";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Width = 230;
+    });
+
     groupItem_Col1.Items.AddTabbedGroupItem(group =>
     {
         group.Name = "ViewViewItemTag_TabItemTag";
