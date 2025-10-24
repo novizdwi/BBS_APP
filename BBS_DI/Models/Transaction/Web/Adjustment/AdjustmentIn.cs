@@ -465,11 +465,11 @@ namespace Models.Transaction.Web.Adjustment
                 {
                     try
                     {
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn__UpdateItem\"(:p0,:p1)", userId, id);
+                        CONTEXT.SaveChanges();
+
                         oCompany = SAPCachedCompany.GetCompany();
                         oCompany.StartTransaction();
-
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn__UpdateItem\"(:p0,:p1)", userId, id);
-
 
                         String keyValue;
                         keyValue = id.ToString();
