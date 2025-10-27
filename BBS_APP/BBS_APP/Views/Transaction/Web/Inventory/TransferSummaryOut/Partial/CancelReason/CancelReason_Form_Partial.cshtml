@@ -1,6 +1,6 @@
 ﻿@using Models;
 
-@model Models.Transaction.Web.Inventory.TransferRequestModel
+@model Models.Transaction.Web.Inventory.TransferSummaryOutModel
 
 @Html.DevExpress().TextBox(
         settings =>
@@ -50,7 +50,7 @@
         itemSettings.ShowCaption = DefaultBoolean.False;
         itemSettings.ColCount = 1;
     });
-
+    
     groupItem_Col1.Items.Add(itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Memo;
@@ -70,7 +70,6 @@
 
     groupItem_Col1.Items.Add(itemSettings =>
     {
-        itemSettings.Caption = "";
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Button;
 
         var btnSettings = (ButtonSettings)itemSettings.NestedExtensionSettings;
@@ -79,7 +78,7 @@
         btnSettings.Width = 30;
         btnSettings.ClientSideEvents.Click = "btnUpdateReasonOnClick";
 
-
+ 
         btnSettings.Styles.Style.Paddings.Padding = 0;
 
     });

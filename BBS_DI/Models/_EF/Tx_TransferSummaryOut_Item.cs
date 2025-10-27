@@ -12,14 +12,13 @@ namespace BBS_DI.Models._EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Tx_TransferRequest_Item
+    public partial class Tx_TransferSummaryOut_Item
     {
         public Nullable<long> Id { get; set; }
         public long DetId { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<int> CreatedUser { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public Nullable<int> ModifiedUser { get; set; }
+        public Nullable<long> BaseEntry { get; set; }
+        public Nullable<int> BaseLine { get; set; }
+        public string BaseType { get; set; }
         public string ItemCode { get; set; }
         public string ItemName { get; set; }
         public string FromWhsCode { get; set; }
@@ -32,6 +31,9 @@ namespace BBS_DI.Models._EF
         public Nullable<int> UomEntry { get; set; }
         public string Uom { get; set; }
         public string Comments { get; set; }
-        public string FreeText { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<int> CreatedUser { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public Nullable<int> ModifiedUser { get; set; }
     }
 }

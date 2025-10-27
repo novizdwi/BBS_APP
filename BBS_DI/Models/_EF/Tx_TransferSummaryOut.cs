@@ -12,7 +12,7 @@ namespace BBS_DI.Models._EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Tx_TransferRequest
+    public partial class Tx_TransferSummaryOut
     {
         public long Id { get; set; }
         public string TransType { get; set; }
@@ -21,6 +21,9 @@ namespace BBS_DI.Models._EF
         public Nullable<long> DocEntry { get; set; }
         public string DocNum { get; set; }
         public Nullable<System.DateTime> DocDate { get; set; }
+        public Nullable<long> BaseEntry { get; set; }
+        public string BaseDocNum { get; set; }
+        public string BaseType { get; set; }
         public string VendorCode { get; set; }
         public string VendorName { get; set; }
         public string Address { get; set; }
@@ -30,6 +33,7 @@ namespace BBS_DI.Models._EF
         public string ToWhsName { get; set; }
         public Nullable<int> PriceList { get; set; }
         public string PriceListName { get; set; }
+        public string ScanDeviceId { get; set; }
         public string Status { get; set; }
         public string IsAfterPosted { get; set; }
         public string Comments { get; set; }

@@ -44,6 +44,10 @@ namespace Models.Transaction.Web.Inventory
 
         public DateTime? TransDate { get; set; }
 
+        public long? BaseEntry { get; set; }
+
+        public string BaseDocNum { get; set; }
+
         public string VendorCode { get; set; }
 
         public string VendorName { get; set; }

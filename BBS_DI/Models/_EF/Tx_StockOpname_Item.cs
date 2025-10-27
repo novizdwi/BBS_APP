@@ -12,26 +12,20 @@ namespace BBS_DI.Models._EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Tx_TransferRequest_Item
+    public partial class Tx_StockOpname_Item
     {
         public Nullable<long> Id { get; set; }
         public long DetId { get; set; }
+        public string ItemCode { get; set; }
+        public string ItemName { get; set; }
+        public string WhsCode { get; set; }
+        public Nullable<decimal> Quantity { get; set; }
+        public Nullable<decimal> QuantityScan { get; set; }
+        public Nullable<int> UomEntry { get; set; }
+        public string Uom { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedUser { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> ModifiedUser { get; set; }
-        public string ItemCode { get; set; }
-        public string ItemName { get; set; }
-        public string FromWhsCode { get; set; }
-        public string FromWhsName { get; set; }
-        public string ToWhsCode { get; set; }
-        public string ToWhsName { get; set; }
-        public Nullable<decimal> Quantity { get; set; }
-        public Nullable<decimal> QuantityOpen { get; set; }
-        public Nullable<decimal> QuantityScan { get; set; }
-        public Nullable<int> UomEntry { get; set; }
-        public string Uom { get; set; }
-        public string Comments { get; set; }
-        public string FreeText { get; set; }
     }
 }
