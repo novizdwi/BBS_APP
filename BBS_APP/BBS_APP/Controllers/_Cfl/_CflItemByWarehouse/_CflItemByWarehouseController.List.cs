@@ -27,6 +27,19 @@ namespace Controllers._Cfl
             cflParam.Header = Request["hidden_CflHeader"];
             cflParam.SqlWhere = Request["hidden_CflSqlWhere"];
 
+            if (cflParam.Type == "TransferRequest")
+            {
+                var hidden_CflDocId = (string)Request["hidden_CflDocId"];
+                hidden_CflDocId = hidden_CflDocId.Replace("'", "''");
+
+                cflParam.SqlWhere = string.Format(" AND " +
+                                                " T0.\"WhsCode\"= (SELECT T0_.\"FromWhsCode\" FROM \"Tx_TransferRequest\" T0_ WHERE T0_.\"Id\"={0} ) " +
+                                                " ", hidden_CflDocId);
+
+
+            }
+
+
             cflParam.IsMulti = Request["hidden_CflIsMulti"];
 
             return cflParam;

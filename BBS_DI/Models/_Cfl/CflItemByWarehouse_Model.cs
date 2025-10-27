@@ -42,7 +42,7 @@ namespace Models._Cfl
 
         public string UomCode { get; set; }
 
-        public string Quantity { get; set; }
+        public decimal Quantity { get; set; }
     }
 
     public class CflItemByWarehouse_Model

@@ -201,11 +201,11 @@
 
 
     function RefreshAfterSuccess(response) {
-        //var tab = ASPxClientTabControl.Cast("TabDetail");
+        var tab = ASPxClientTabControl.Cast("TabDetail");
 
-        //if (tab.GetActiveTabIndex != 0) {
-        //    tab.SetActiveTabIndex(0);
-        //}
+        if (tab.GetActiveTabIndex != 0) {
+            tab.SetActiveTabIndex(0);
+        }
 
         $("#contentForm").html(response);
 
@@ -822,12 +822,13 @@
             },
             success: function (response) {
                 gvTransferRequestDetail.PerformCallback();
+                OnSuccessMsgBox();             
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 OnFailure(jqXhr, textStatus, errorThrown)
             },
             complete: function () {
-                OnComplete()
+                OnComplete();
             }
         });
 

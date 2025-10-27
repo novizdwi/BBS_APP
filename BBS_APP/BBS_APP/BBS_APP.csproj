@@ -645,7 +645,7 @@
     <Content Include="Views\_Cfl\_CflPurchaseOrder\Partial\_CflPurchaseOrder_Panel_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Inventory\TransferRequest\Partial\TransferRequest_Form_Btn_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Inventory\TransferRequest\Partial\TransferRequest_Form_Partial.cshtml" />
-    <Content Include="Views\Transaction\Web\Inventory\TransferRequest\Partial\TransferRequest_Form_TabDetail_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferRequest\Partial\TransferRequest_Form_TabDetail_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Inventory\TransferRequest\Partial\TransferRequest_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Inventory\TransferRequest\Partial\TransferRequest_Panel_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Inventory\TransferRequest\TransferRequest.cshtml" />
