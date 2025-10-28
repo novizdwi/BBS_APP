@@ -8,11 +8,11 @@
     <script src="~/Scripts/Test/DXR.js"></script>
 }
 
-@model Models.Transaction.Web.Purchasing.GoodsReceiptPOModel
+@model Models.Transaction.Web.Inventory.RequestStockOpnameModel
 
 
 @{
-    ViewBag.Title = "Goods Receipt PO";
+    ViewBag.Title = "Request Stock Opname";
 }
 
 
@@ -47,11 +47,15 @@
 
     function SetBtnStatus() {
 
+        var btnNew = ASPxClientButton.Cast('btnNew');
+        btnNew.SetEnabled(true);
+
         var grpBtnAdd = formLayouBtn.GetItemByName('grpBtnAdd');
         var btnAdd = ASPxClientButton.Cast('btnAdd');
 
         var grpBtnUpdate = formLayouBtn.GetItemByName('grpBtnUpdate');
         var btnUpdate = ASPxClientButton.Cast('btnUpdate');
+        btnAdd.SetEnabled(false);
 
         var btnRefresh = ASPxClientButton.Cast('btnRefresh');
 
@@ -68,7 +72,7 @@
                 grpBtnAdd.SetVisible(true);
                 grpBtnUpdate.SetVisible(false);
 
-                //btnAdd.SetEnabled(false);
+                btnAdd.SetEnabled(true);
                 btnUpdate.SetEnabled(false);
                 btnRefresh.SetEnabled(false);
 
@@ -87,13 +91,14 @@
                 switch (Status.GetValue()) {
                     case 'Draft':
                         btnUpdate.SetEnabled(true);
+
                         btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(true);
                         btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(true);
 
                         break;
                     case 'Posted':
-
                         btnUpdate.SetEnabled(true);
+
                         btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(false);
                         btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(true);
 
@@ -104,6 +109,12 @@
                         btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(false);
                         btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(false);
 
+                        break;
+                    case 'Closed':
+                        btnUpdate.SetEnabled(false);
+
+                        btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(false);
+                        btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(false);
                         break;
                     default:
                         break;
@@ -167,7 +178,7 @@
 
 
     function BeforeSave() {
-
+        /*
         var tab = ASPxClientTabControl.Cast("TabDetail");
         var tabPageCount = tab.GetTabCount();
         for (var i = 0; i < tabPageCount; i++) {
@@ -183,7 +194,7 @@
                 return false;
             }
         }
-
+        */
         return true;
 
     }
@@ -205,42 +216,13 @@
         //ExpiredTypeOnValueChange();
     }
 
-    function btnRefreshItemOnClick(s, e) {
-        if (!confirm('This action may takes time, are you sure want to refresh item detail?'))
-        {
-            return;
-        }
 
-        var key = Id.GetValue();
-        var formData = GetFormData();
-
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("RefreshItem", "GoodsReceiptPO")',
-            data: formData,
-            beforeSend: function () {
-                OnBegin();
-            },
-            success: function (response) {
-                RefreshAfterSuccess(response);
-                OnSuccessMsgBox();
-            },
-            error: function (jqXhr, textStatus, errorThrown) {
-                OnFailure(jqXhr, textStatus, errorThrown)
-            },
-            complete: function () {
-                OnComplete()
-            }
-        });
-
-
-    }
 
     function OnClickBtnNew(s, e) {
 
         $.ajax({
             type: "POST",
-            url: "@Url.Action("DetailPartial", "GoodsReceiptPO")",
+            url: "@Url.Action("DetailPartial", "RequestStockOpname")",
             beforeSend: function () {
                 OnBegin();
             },
@@ -265,8 +247,8 @@
     function GetFormData() {
         var formData = $('#formDetail').serializeObject();
 
-        var Details_ = GetGvDetails('gvDetail');
-        $.extend(formData, { Details_: Details_ });
+        //var Details_ = GetGvDetails('gvDetail');
+        $.extend(formData);
         return formData;
     }
 
@@ -280,7 +262,7 @@
 
         $.ajax({
             type: "POST",
-            url: '@Url.Action("Add", "GoodsReceiptPO")',
+            url: '@Url.Action("Add", "RequestStockOpname")',
             data: formData,
             beforeSend: function () {
                 OnBegin();
@@ -309,7 +291,7 @@
 
         $.ajax({
             type: "POST",
-            url: '@Url.Action("Update", "GoodsReceiptPO")',
+            url: '@Url.Action("Update", "RequestStockOpname")',
             data: formData,
             beforeSend: function () {
                 OnBegin();
@@ -338,7 +320,7 @@
     function OnClickBtnNavFirst(s, e) {
         $.ajax({
             type: "POST",
-            url: "@Url.Action("NavFirst", "GoodsReceiptPO")",
+            url: "@Url.Action("NavFirst", "RequestStockOpname")",
             beforeSend: function () {
                 OnBegin();
             },
@@ -360,7 +342,7 @@
 
         $.ajax({
             type: "POST",
-            url: '@Url.Action("NavPrevious", "GoodsReceiptPO")',
+            url: '@Url.Action("NavPrevious", "RequestStockOpname")',
             data: { Id: key },
             beforeSend: function () {
                 OnBegin();
@@ -382,7 +364,7 @@
         key = Id.GetValue();
         $.ajax({
             type: "POST",
-            url: '@Url.Action("NavNext", "GoodsReceiptPO")',
+            url: '@Url.Action("NavNext", "RequestStockOpname")',
             data: { Id: key },
             beforeSend: function () {
                 OnBegin();
@@ -405,7 +387,7 @@
     function OnClickBtnNavLast(s, e) {
         $.ajax({
             type: "POST",
-            url: "@Url.Action("NavLast", "GoodsReceiptPO")",
+            url: "@Url.Action("NavLast", "RequestStockOpname")",
             beforeSend: function () {
                 OnBegin();
             },
@@ -429,7 +411,7 @@
 
         $.ajax({
             type: "POST",
-            url: '@Url.Action("DetailPartial", "GoodsReceiptPO")',
+            url: '@Url.Action("DetailPartial", "RequestStockOpname")',
             data: { Id: key },
             beforeSend: function () {
                 OnBegin();
@@ -453,7 +435,7 @@
     function OnClickBtnListFind(s, e) {
         var popup = ASPxClientPopupControl.Cast("popupList");
 
-        var gv = ASPxClientGridView.Cast('gvGoodsReceiptPOList');
+        var gv = ASPxClientGridView.Cast('gvRequestStockOpnameList');
         if (gv == null) {
             popup.Show();
         } else {
@@ -482,7 +464,7 @@
 
                     $.ajax({
                         type: "POST",
-                        url: '@Url.Action("Post", "GoodsReceiptPO")',
+                        url: '@Url.Action("Post", "RequestStockOpname")',
                         data: formData,
                         beforeSend: function () {
                             OnBegin();
@@ -522,20 +504,7 @@
     function btnShowCancelReasonOnClick(s, e, Id) {
         var popup = ASPxClientPopupControl.Cast("popupCancelReason");
 
-        popup.callbackUrl = '@Url.Action("CancelReason_PopupListOnDemandPartial", "GoodsReceiptPO")' + '?Id=' + Id;
-        popup.PerformCallback();
-
-        if (!popup.IsVisible()) {
-            loadingPanel.Show();
-        }
-    }
-
-    function OnClickChooseItem(s, e, detId) {
-        key = Id.GetValue();
-
-        var popup = ASPxClientPopupControl.Cast("popupItemTag");
-
-        popup.callbackUrl = '@Url.Action("ViewItemTag_PopupListOnDemandPartial", "GoodsReceiptPO")' + '?Id=' + key + '&DetId=' + detId;
+        popup.callbackUrl = '@Url.Action("CancelReason_PopupListOnDemandPartial", "RequestStockOpname")' + '?Id=' + Id;
         popup.PerformCallback();
 
         if (!popup.IsVisible()) {
@@ -545,6 +514,7 @@
 
     function btnUpdateReasonOnClick(s, e) {
         key = Id.GetValue();
+
         var reason = CancelReason2.GetValue();
         if (reason == "" || reason == null) {
             return;
@@ -552,7 +522,7 @@
 
         $.ajax({
             type: "POST",
-            url: '@Url.Action("Cancel", "GoodsReceiptPO")',
+            url: '@Url.Action("Cancel", "RequestStockOpname")',
             data: { Id: key, CancelReason: reason },
             beforeSend: function () {
                 OnBegin();
@@ -576,7 +546,7 @@
     function OnClickChoose(s, e, key) {
         $.ajax({
             type: "POST",
-            url: '@Url.Action("DetailPartial", "GoodsReceiptPO")',
+            url: '@Url.Action("DetailPartial", "RequestStockOpname")',
             data: { Id: key },
             beforeSend: function () {
                 OnBegin();
@@ -595,10 +565,9 @@
         });
     }
 
-    function BtnCflPOOnClick(s, e) {
-        cflPurchaseOrderPopupListGoodsReceiptPO.Show();
+    function BtnCflWhsCodeOnClick(s, e) {
+        cflWarehousePopupListRequestStockOpname.Show();
     }
-
 </script>
 
 
@@ -650,9 +619,9 @@
 
 
 
-@Html.Partial("Partial/GoodsReceiptPO_Form_Btn_Partial")
+@Html.Partial("Partial/RequestStockOpname_Form_Btn_Partial")
 
-@using (Ajax.BeginForm("mantap", "GoodsReceiptPO", null,
+@using (Ajax.BeginForm("mantap", "RequestStockOpname", null,
 new AjaxOptions
 {
     HttpMethod = "POST",
@@ -673,42 +642,33 @@ new
 }))
 {
     <div id="contentForm" style="padding-top:79px">
-        @Html.Partial("Partial/GoodsReceiptPO_Form_Partial")
+        @Html.Partial("Partial/RequestStockOpname_Form_Partial")
 
     </div>
 }
 
 
 @{
-    var cflPurchaseOrder_ParamModel = new CflPurchaseOrder_ParamModel();
-    cflPurchaseOrder_ParamModel.Name = "GoodsReceiptPO";
-    cflPurchaseOrder_ParamModel.Type = "GoodsReceiptPO";
-    cflPurchaseOrder_ParamModel.Header = " Goods Receipt PO";
-    cflPurchaseOrder_ParamModel.SqlWhere = " ";
-    cflPurchaseOrder_ParamModel.IsMulti = "N";
+    var cflWarehouse_ParamModel = new CflWarehouse_ParamModel();
+    cflWarehouse_ParamModel.Name = "RequestStockOpname";
+    cflWarehouse_ParamModel.Type = "RequestStockOpname";
+    cflWarehouse_ParamModel.Header = " Stock Opname";
+    cflWarehouse_ParamModel.SqlWhere = " ";
+    cflWarehouse_ParamModel.IsMulti = "N";
 }
 
 
 
 <script type="text/javascript">
+    function OnClickChoose_CflWarehouseRequestStockOpname(s, e, data) {
+        WhsCode.SetValue(data.WhsCode);
+        WhsName.SetValue(data.WhsName);
 
-
-    function OnClickChoose_cflPurchaseOrderGoodsReceiptPO(s, e, data) {
-        VendorCode.SetValue(data.VendorCode);
-        VendorName.SetValue(data.VendorName);
-
-        BaseEntry.SetValue(data.DocEntry);
-        BaseDocNum.SetValue(data.DocNum);
-
-        Comments.SetValue("Based on PO: " + data.DocNum + " - " + data.Comments);
-        cflPurchaseOrderPopupListGoodsReceiptPO.Hide();
+        cflWarehousePopupListRequestStockOpname.Hide();
 
     }
-
-
 </script>
-@Html.Partial("~/Views/_Cfl/_CflPurchaseOrder/Partial/_CflPurchaseOrder_Panel_List_Partial.cshtml", cflPurchaseOrder_ParamModel)
-
+@Html.Partial("~/Views/_Cfl/_CflWarehouse/Partial/_CflWarehouse_Panel_List_Partial.cshtml", cflWarehouse_ParamModel)
 
 @*
     -----------------------------------------------------------------------------
@@ -734,33 +694,6 @@ new
 
 @Html.Partial("Partial/CancelReason/CancelReason_Partial")
 
-
-@*-------------------------------------------------
-    ViewItemTag
-    -------------------------------------------------*@
-<script>
-
-    function popupItemTag_EndCallback(s, e) {
-        $.validator.unobtrusive.parse("#ItemTag_formDetail");
-
-        var popup = ASPxClientPopupControl.Cast("popupItemTag");
-        if (!popup.IsVisible()) {
-            loadingPanel.Hide();
-            popup.ShowAtPos(400, 100);
-        }
-    }
-
-    function ViewItemTag_OnClickBtnCancel(s, e) {
-        var popup = ASPxClientPopupControl.Cast("popupItemTag");
-        popup.Hide();
-    }
-
-
-</script>
-
-@Html.Partial("Partial/ItemTag/ItemTag_Partial")
-
-
 @*
     -----------------------------------------------------------------------------
     gvShipList
@@ -768,7 +701,7 @@ new
 *@
 
 
-@Html.Partial("Partial/GoodsReceiptPO_Panel_List_Partial")
+@Html.Partial("Partial/RequestStockOpname_Panel_List_Partial")
 
 
 @Html.Partial("~/Views/_CrystalReport/Layout/Print_Panel_Partial.cshtml")

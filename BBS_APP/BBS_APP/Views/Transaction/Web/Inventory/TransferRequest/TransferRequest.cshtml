@@ -48,14 +48,12 @@
     function SetBtnStatus() {
 
         var btnNew = ASPxClientButton.Cast('btnNew');
-        //btnNew.SetEnabled(false);
 
         var grpBtnAdd = formLayouBtn.GetItemByName('grpBtnAdd');
         var btnAdd = ASPxClientButton.Cast('btnAdd');
 
         var grpBtnUpdate = formLayouBtn.GetItemByName('grpBtnUpdate');
         var btnUpdate = ASPxClientButton.Cast('btnUpdate');
-        //btnAdd.SetEnabled(false);
 
         var btnRefresh = ASPxClientButton.Cast('btnRefresh');
 
@@ -72,7 +70,7 @@
                 grpBtnAdd.SetVisible(true);
                 grpBtnUpdate.SetVisible(false);
 
-                //btnAdd.SetEnabled(false);
+                btnAdd.SetEnabled(true);
                 btnUpdate.SetEnabled(false);
                 btnRefresh.SetEnabled(false);
 
@@ -84,7 +82,7 @@
                 grpBtnAdd.SetVisible(false);
                 grpBtnUpdate.SetVisible(true);
 
-                //btnAdd.SetEnabled(false);
+                btnAdd.SetEnabled(false);
                 btnRefresh.SetEnabled(true);
                 btnUpdate.SetEnabled(true);
                 var Status = ASPxClientComboBox.Cast('Status');
@@ -527,7 +525,7 @@
 
     function btnUpdateReasonOnClick(s, e) {
         key = Id.GetValue();
-        var reason = CancelReason.GetValue();
+        var reason = CancelReason2.GetValue();
         if (reason == "" || reason == null) {
             return;
         }
