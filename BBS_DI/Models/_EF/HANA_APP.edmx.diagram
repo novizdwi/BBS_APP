@@ -73,7 +73,6 @@
         <EntityTypeShape EntityType="Model1.Tx_Request_StockOpname" Width="1.5" PointX="22.75" PointY="17.75" />
         <EntityTypeShape EntityType="Model1.Tx_StockOpname" Width="1.5" PointX="22.75" PointY="22.75" />
         <EntityTypeShape EntityType="Model1.Tx_StockOpname_Item" Width="1.5" PointX="24.75" PointY="0.75" />
-        <EntityTypeShape EntityType="Model1.Tx_StockOpname_Item_Tag" Width="1.5" PointX="24.75" PointY="5.75" />
         <EntityTypeShape EntityType="Model1.Tx_TransferIn" Width="1.5" PointX="24.75" PointY="10.75" />
         <EntityTypeShape EntityType="Model1.Tx_TransferIn_Item" Width="1.5" PointX="24.75" PointY="18.75" />
         <EntityTypeShape EntityType="Model1.Tx_TransferIn_Item_Tag" Width="1.5" PointX="18.75" PointY="24.75" />
@@ -85,6 +84,7 @@
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut" Width="1.5" PointX="6.75" PointY="26.75" />
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Item" Width="1.5" PointX="26.75" PointY="12.75" />
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Item_Tag" Width="1.5" PointX="26.75" PointY="18.75" />
+        <EntityTypeShape EntityType="Model1.Tx_StockOpname_Item_Tag" Width="1.5" PointX="21.375" PointY="27.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

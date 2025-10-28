@@ -235,6 +235,7 @@ CREATE COLUMN TABLE "Tx_StockOpname_Item_Tag" (
     "Quantity" DECIMAL(21,6),
     "EventType" NVARCHAR(100),
     "Status" NVARCHAR(50),
+    "PostResultNote" NVARCHAR(500),
     "CreatedDate" TIMESTAMP,
     "CreatedUser" INTEGER,
     "ModifiedDate" TIMESTAMP,
