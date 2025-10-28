@@ -23,6 +23,7 @@ namespace BBS_DI.Models._EF
         public Nullable<System.DateTime> DocDate { get; set; }
         public Nullable<long> BaseEntry { get; set; }
         public string BaseDocNum { get; set; }
+        public string BaseType { get; set; }
         public string VendorCode { get; set; }
         public string VendorName { get; set; }
         public string Address { get; set; }

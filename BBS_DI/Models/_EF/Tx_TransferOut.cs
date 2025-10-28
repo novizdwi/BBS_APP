@@ -30,8 +30,8 @@ namespace BBS_DI.Models._EF
         public string FromWhsName { get; set; }
         public string ToWhsCode { get; set; }
         public string ToWhsName { get; set; }
-        public Nullable<int> PriecList { get; set; }
-        public string PriecListName { get; set; }
+        public Nullable<int> PriceList { get; set; }
+        public string PriceListName { get; set; }
         public string ScanDeviceId { get; set; }
         public string Status { get; set; }
         public string IsAfterPosted { get; set; }

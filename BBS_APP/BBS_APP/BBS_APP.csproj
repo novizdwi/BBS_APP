@@ -686,6 +686,14 @@
     <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\ItemTag\ItemTag_Panel_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\ItemTag\ItemTag_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\ItemTag\ItemTag_TabItemTagList_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\RequestStockOpname\Partial\CancelReason\CancelReason_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\RequestStockOpname\Partial\CancelReason\CancelReason_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\RequestStockOpname\Partial\CancelReason\CancelReason_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\RequestStockOpname\Partial\RequestStockOpname_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\RequestStockOpname\Partial\RequestStockOpname_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\RequestStockOpname\Partial\RequestStockOpname_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\RequestStockOpname\Partial\RequestStockOpname_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\RequestStockOpname\RequestStockOpname.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -768,6 +776,10 @@
     <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentOut\AdjustmentOutController.Tab.Attachment.cs" />
     <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentOut\AdjustmentOutController.Tab.Attachment.Detail.cs" />
     <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentOut\AdjustmentOutController.ViewItemTag.cs" />
+    <Compile Include="Controllers\Transaction\Web\Inventory\RequestStockOpname\RequestStockOpnameController.CancelReason.cs" />
+    <Compile Include="Controllers\Transaction\Web\Inventory\RequestStockOpname\RequestStockOpnameController.cs" />
+    <Compile Include="Controllers\Transaction\Web\Inventory\RequestStockOpname\RequestStockOpnameController.List.cs" />
+    <Compile Include="Controllers\Transaction\Web\Inventory\RequestStockOpname\RequestStockOpnameController.Nav.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferRequest\TransferRequestController.Tab.Detail.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferRequest\TransferRequestController.Nav.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferRequest\TransferRequestController.List.cs" />
@@ -827,6 +839,7 @@
     <Folder Include="Rpts\Layout\" />
     <Folder Include="Rpts\Models\" />
     <Folder Include="Views\Authentication\Login\Partial\" />
+    <Folder Include="Views\GeneralSetting\" />
     <Folder Include="Views\Logout\" />
     <Folder Include="Views\Master\" />
   </ItemGroup>

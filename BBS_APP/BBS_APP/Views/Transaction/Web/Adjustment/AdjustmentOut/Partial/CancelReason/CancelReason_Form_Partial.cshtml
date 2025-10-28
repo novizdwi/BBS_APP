@@ -56,10 +56,9 @@
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Memo;
         itemSettings.Caption = "Reason";
         itemSettings.FieldName = "CancelReason";
-        itemSettings.Name = "grpCancelReason";
 
         var txt = (MemoSettings)itemSettings.NestedExtensionSettings;
-        txt.Name = "CancelReason";
+        txt.Name = "CancelReason2";
         txt.ShowModelErrors = true;
         txt.ControlStyle.CssClass = "editor";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;

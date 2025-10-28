@@ -176,11 +176,14 @@ CREATE COLUMN TABLE "Tx_Request_StockOpname" (
     "TransType" NVARCHAR(50),
     "TransNo" NVARCHAR(50),
     "WhsCode" NVARCHAR(50),
+    "WhsName" NVARCHAR(100),
+    
     "StartDate" TIMESTAMP,
     "EndDate" TIMESTAMP,
     "Description" NVARCHAR(100),
-    
     "Status" NVARCHAR(50),
+    "CancelReason" NVARCHAR(50),
+
     "CreatedDate" TIMESTAMP,
     "CreatedUser" INTEGER,
     "ModifiedDate" TIMESTAMP,
