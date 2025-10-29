@@ -12,18 +12,33 @@ namespace BBS_DI.Models._EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Tx_StockOpname
+    public partial class Tx_TransferSummaryIn
     {
         public long Id { get; set; }
         public string TransType { get; set; }
         public string TransNo { get; set; }
         public Nullable<System.DateTime> TransDate { get; set; }
-        public Nullable<long> RequestId { get; set; }
-        public string RequestNo { get; set; }
-        public string WhsCode { get; set; }
+        public Nullable<long> DocEntry { get; set; }
+        public string DocNum { get; set; }
+        public Nullable<System.DateTime> DocDate { get; set; }
+        public Nullable<long> BaseEntry { get; set; }
+        public string BaseDocNum { get; set; }
+        public string BaseType { get; set; }
+        public string VendorCode { get; set; }
+        public string VendorName { get; set; }
+        public string Address { get; set; }
+        public string FromWhsCode { get; set; }
+        public string FromWhsName { get; set; }
+        public string ToWhsCode { get; set; }
+        public string ToWhsName { get; set; }
+        public Nullable<int> PriceList { get; set; }
+        public string PriceListName { get; set; }
         public string ScanDeviceId { get; set; }
         public string Status { get; set; }
+        public string IsAfterPosted { get; set; }
         public string Comments { get; set; }
+        public string JournalRemarks { get; set; }
+        public string CancelReason { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedUser { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }

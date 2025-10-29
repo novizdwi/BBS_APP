@@ -189,6 +189,8 @@
     <Compile Include="Models\Setting\ReportGroupModel.cs" />
     <Compile Include="Models\Setting\ReportModel.cs" />
     <Compile Include="Models\Setting\Report__List_Model.cs" />
+    <Compile Include="Models\Transaction\Web\Inventory\TransferSummaryInService.cs" />
+    <Compile Include="Models\Transaction\Web\Inventory\TransferSummaryIn__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\TransferSummaryOut__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\TransferSummaryOutService.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\TransferInService.cs" />
@@ -465,6 +467,15 @@
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\_EF\Tx_TransferRequest_Item.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_TransferSummaryIn.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_TransferSummaryIn_Item.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_TransferSummaryIn_Item_Tag.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\_EF\Tx_TransferSummaryOut.cs">

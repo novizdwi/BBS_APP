@@ -18,7 +18,7 @@ namespace Models.Transaction.Web.Inventory
 {
     #region Models
 
-    public class TransferSummaryOutModel
+    public class TransferSummaryInModel
     {
         private FormModeEnum _FormModeEnum = FormModeEnum.New;
 
@@ -82,18 +82,18 @@ namespace Models.Transaction.Web.Inventory
 
         public string CancelReason { get; set; }
 
-        public List<TransferSummaryOut_DetailModel> ListDetails_ = new List<TransferSummaryOut_DetailModel>();
+        public List<TransferSummaryIn_DetailModel> ListDetails_ = new List<TransferSummaryIn_DetailModel>();
 
-        public TransferSummaryOut_Detail Details_ { get; set; }
+        public TransferSummaryIn_Detail Details_ { get; set; }
     }
-    public class TransferSummaryOut_Detail
+    public class TransferSummaryIn_Detail
     {
         public List<long> deletedRowKeys { get; set; }
-        public List<TransferSummaryOut_DetailModel> insertedRowValues { get; set; }
-        public List<TransferSummaryOut_DetailModel> modifiedRowValues { get; set; }
+        public List<TransferSummaryIn_DetailModel> insertedRowValues { get; set; }
+        public List<TransferSummaryIn_DetailModel> modifiedRowValues { get; set; }
     }
 
-    public class TransferSummaryOut_DetailModel
+    public class TransferSummaryIn_DetailModel
     {
 
         private FormModeEnum _FormModeEnum = FormModeEnum.New;
@@ -141,7 +141,7 @@ namespace Models.Transaction.Web.Inventory
         public string LineStatus { get; set; }
     }
 
-    public class TransferSummaryOutItemTagView___
+    public class TransferSummaryInItemTagView___
     {
         public long Id { get; set; }
 
@@ -151,10 +151,10 @@ namespace Models.Transaction.Web.Inventory
 
         public string ItemName { get; set; }
 
-        public List<TransferSummaryOutItemTagModel> TransferSummaryOutItemTagModel___ { get; set; }
+        public List<TransferSummaryInItemTagModel> TransferSummaryInItemTagModel___ { get; set; }
     }
 
-    public class TransferSummaryOutItemTagModel
+    public class TransferSummaryInItemTagModel
     {
         public int RowNo { get; set; }
 
@@ -177,7 +177,7 @@ namespace Models.Transaction.Web.Inventory
         public string Status { get; set; }
     }
 
-    public class TransferSummaryOutAddResultModel
+    public class GRPOAddResultModel
     {
         public string DocEntry { get; set; }
         public Dictionary<long, int> LineMapping { get; set; } // LineId -> LineNum
@@ -187,18 +187,18 @@ namespace Models.Transaction.Web.Inventory
 
     #region Services
 
-    public class TransferSummaryOutService
+    public class TransferSummaryInService
     {
 
-        public TransferSummaryOutModel GetNewModel(int userId)
+        public TransferSummaryInModel GetNewModel(int userId)
         {
-            TransferSummaryOutModel model = new TransferSummaryOutModel();
+            TransferSummaryInModel model = new TransferSummaryInModel();
             model.Status = "Draft";
             model.TransDate = DateTime.Now;
             return model;
         }
 
-        public TransferSummaryOutModel GetById(int userId, long id = 0)
+        public TransferSummaryInModel GetById(int userId, long id = 0)
         {
             using (var CONTEXT = new HANA_APP())
             {
@@ -206,58 +206,58 @@ namespace Models.Transaction.Web.Inventory
             }
         }
 
-        public TransferSummaryOutModel GetById(HANA_APP CONTEXT, int userId, long id = 0)
+        public TransferSummaryInModel GetById(HANA_APP CONTEXT, int userId, long id = 0)
         {
-            TransferSummaryOutModel model = null;
+            TransferSummaryInModel model = null;
             if (id != 0)
             {
                 string ssql = @"SELECT *, T1.""FirstName"" AS ""UserName"" 
-                            FROM ""Tx_TransferSummaryOut"" T0
+                            FROM ""Tx_TransferSummaryIn"" T0
                             LEFT JOIN ""Tm_User"" T1 ON T0.""ModifiedUser"" = T1.""Id""
                             WHERE T0.""Id"" = :p0 
                             ORDER BY T0.""Id"" ASC
                 ";
 
-                model = CONTEXT.Database.SqlQuery<TransferSummaryOutModel>(ssql, id).Single();
+                model = CONTEXT.Database.SqlQuery<TransferSummaryInModel>(ssql, id).Single();
 
-                model.ListDetails_ = this.TransferSummaryOut_Details(CONTEXT, id);
+                model.ListDetails_ = this.TransferSummaryIn_Details(CONTEXT, id);
             }
 
             return model;
         }
-        public List<TransferSummaryOut_DetailModel> TransferSummaryOut_Details(long id = 0)
+        public List<TransferSummaryIn_DetailModel> TransferSummaryIn_Details(long id = 0)
         {
             using (var CONTEXT = new HANA_APP())
             {
-                return TransferSummaryOut_Details(CONTEXT, id);
+                return TransferSummaryIn_Details(CONTEXT, id);
             }
 
         }
 
-        public List<TransferSummaryOut_DetailModel> TransferSummaryOut_Details(HANA_APP CONTEXT, long id = 0)
+        public List<TransferSummaryIn_DetailModel> TransferSummaryIn_Details(HANA_APP CONTEXT, long id = 0)
         {
             string ssql = @"SELECT * 
-                FROM ""Tx_TransferSummaryOut_Item"" 
+                FROM ""Tx_TransferSummaryIn_Item"" 
                 WHERE ""Id"" =:p0
                 ORDER BY ""DetId"" ASC
             ";
-            var goodsReceiptPO = CONTEXT.Database.SqlQuery<TransferSummaryOut_DetailModel>(ssql, id).ToList();
+            var goodsReceiptPO = CONTEXT.Database.SqlQuery<TransferSummaryIn_DetailModel>(ssql, id).ToList();
             return goodsReceiptPO;
         }
 
-        public TransferSummaryOutModel NavFirst(int userId)
+        public TransferSummaryInModel NavFirst(int userId)
         {
-            TransferSummaryOutModel model = null;
+            TransferSummaryInModel model = null;
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "TransferSummaryOut");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "TransferSummaryIn");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;
                 }
 
-                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tx_TransferSummaryOut\" T0 WHERE 1=1 " + sqlCriteria + " ORDER BY T0.\"Id\" ASC").FirstOrDefault();
+                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tx_TransferSummaryIn\" T0 WHERE 1=1 " + sqlCriteria + " ORDER BY T0.\"Id\" ASC").FirstOrDefault();
 
                 model = this.GetById(CONTEXT, userId, Id.HasValue ? Id.Value : 0);
             }
@@ -265,19 +265,19 @@ namespace Models.Transaction.Web.Inventory
             return model;
 
         }
-        public TransferSummaryOutModel NavPrevious(int userId, long id = 0)
+        public TransferSummaryInModel NavPrevious(int userId, long id = 0)
         {
-            TransferSummaryOutModel model = null;
+            TransferSummaryInModel model = null;
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "TransferSummaryOut");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "TransferSummaryIn");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;
                 }
 
-                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tx_TransferSummaryOut\" T0 WHERE T0.\"Id\"<:p0 " + sqlCriteria + "  ORDER BY T0.\"Id\" DESC", id).FirstOrDefault();
+                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tx_TransferSummaryIn\" T0 WHERE T0.\"Id\"<:p0 " + sqlCriteria + "  ORDER BY T0.\"Id\" DESC", id).FirstOrDefault();
                 if (Id.HasValue)
                 {
                     model = this.GetById(CONTEXT, userId, Id.Value);
@@ -293,19 +293,19 @@ namespace Models.Transaction.Web.Inventory
             return model;
         }
 
-        public TransferSummaryOutModel NavNext(int userId, long id = 0)
+        public TransferSummaryInModel NavNext(int userId, long id = 0)
         {
-            TransferSummaryOutModel model = null;
+            TransferSummaryInModel model = null;
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "TransferSummaryOut");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "TransferSummaryIn");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;
                 }
 
-                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tx_TransferSummaryOut\" T0 WHERE T0.\"Id\">:p0 " + sqlCriteria + "  ORDER BY T0.\"Id\" ASC", id).FirstOrDefault();
+                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tx_TransferSummaryIn\" T0 WHERE T0.\"Id\">:p0 " + sqlCriteria + "  ORDER BY T0.\"Id\" ASC", id).FirstOrDefault();
                 if (Id.HasValue)
                 {
                     model = this.GetById(CONTEXT, userId, Id.Value);
@@ -320,19 +320,19 @@ namespace Models.Transaction.Web.Inventory
             return model;
         }
 
-        public TransferSummaryOutModel NavLast(int userId)
+        public TransferSummaryInModel NavLast(int userId)
         {
-            TransferSummaryOutModel model = null;
+            TransferSummaryInModel model = null;
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "TransferSummaryOut");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "TransferSummaryIn");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;
                 }
 
-                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tx_TransferSummaryOut\" T0 WHERE 1=1 " + sqlCriteria + "  ORDER BY T0.\"Id\" DESC").FirstOrDefault();
+                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tx_TransferSummaryIn\" T0 WHERE 1=1 " + sqlCriteria + "  ORDER BY T0.\"Id\" DESC").FirstOrDefault();
 
                 model = this.GetById(CONTEXT, userId, Id.HasValue ? Id.Value : 0);
             }
@@ -347,13 +347,13 @@ namespace Models.Transaction.Web.Inventory
             {
                 using (var CONTEXT = new HANA_APP())
                 {
-                    CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_AddItemDetail\"(:p0,:p1,'Refresh')", userId, id);
+                    CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryIn_AddItemDetail\"(:p0,:p1,'Refresh')", userId, id);
                 }
             }
             return ret;
         }
 
-        public long Add(TransferSummaryOutModel model)
+        public long Add(TransferSummaryInModel model)
         {
             long Id = 0;
 
@@ -366,30 +366,30 @@ namespace Models.Transaction.Web.Inventory
                     {
                         try
                         {
-                            Tx_TransferSummaryOut Tx_TransferSummaryOut = new Tx_TransferSummaryOut();
-                            CopyProperty.CopyProperties(model, Tx_TransferSummaryOut, false);
+                            Tx_TransferSummaryIn Tx_TransferSummaryIn = new Tx_TransferSummaryIn();
+                            CopyProperty.CopyProperties(model, Tx_TransferSummaryIn, false);
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                            Tx_TransferSummaryOut.TransType = "TransferSummaryOut";
-                            Tx_TransferSummaryOut.CreatedDate = dtModified;
-                            Tx_TransferSummaryOut.CreatedUser = model._UserId;
-                            Tx_TransferSummaryOut.ModifiedDate = dtModified;
-                            Tx_TransferSummaryOut.ModifiedUser = model._UserId;
+                            Tx_TransferSummaryIn.TransType = "TransferSummaryIn";
+                            Tx_TransferSummaryIn.CreatedDate = dtModified;
+                            Tx_TransferSummaryIn.CreatedUser = model._UserId;
+                            Tx_TransferSummaryIn.ModifiedDate = dtModified;
+                            Tx_TransferSummaryIn.ModifiedUser = model._UserId;
 
                             string dateX = model.TransDate.Value.ToString("yyyy-MM-dd");
-                            string transNo = CONTEXT.Database.SqlQuery<string>("CALL \"SpSysGetNumbering\" (" + model._UserId.ToString() + ",'TransferSummaryOut','" + dateX + "','') ").SingleOrDefault();
-                            Tx_TransferSummaryOut.TransNo = transNo;
+                            string transNo = CONTEXT.Database.SqlQuery<string>("CALL \"SpSysGetNumbering\" (" + model._UserId.ToString() + ",'TransferSummaryIn','" + dateX + "','') ").SingleOrDefault();
+                            Tx_TransferSummaryIn.TransNo = transNo;
 
-                            CONTEXT.Tx_TransferSummaryOut.Add(Tx_TransferSummaryOut);
+                            CONTEXT.Tx_TransferSummaryIn.Add(Tx_TransferSummaryIn);
                             CONTEXT.SaveChanges();
-                            Id = Tx_TransferSummaryOut.Id;
+                            Id = Tx_TransferSummaryIn.Id;
 
                             String keyValue;
-                            keyValue = Tx_TransferSummaryOut.Id.ToString();
+                            keyValue = Tx_TransferSummaryIn.Id.ToString();
                             
-                            SpNotif.SpSysControllerTransNotif(model._UserId, "TransferSummaryOut", CONTEXT, "after", "TransferSummaryOut", "add", "Id", keyValue);
+                            SpNotif.SpSysControllerTransNotif(model._UserId, "TransferSummaryIn", CONTEXT, "after", "TransferSummaryIn", "add", "Id", keyValue);
 
-                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_AddItemDetail\"(:p0,:p1,'Add')", model._UserId, Id);
+                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryIn_AddItemDetail\"(:p0,:p1,'Add')", model._UserId, Id);
 
                             CONTEXT_TRANS.Commit();
                         }
@@ -418,7 +418,7 @@ namespace Models.Transaction.Web.Inventory
 
         }
 
-        public void Update(TransferSummaryOutModel model)
+        public void Update(TransferSummaryInModel model)
         {
             if (model != null)
             {
@@ -433,33 +433,33 @@ namespace Models.Transaction.Web.Inventory
                                 String keyValue;
                                 keyValue = model.Id.ToString();
                                 
-                                SpNotif.SpSysControllerTransNotif(model._UserId, "TransferSummaryOut", CONTEXT, "before", "TransferSummaryOut", "update", "Id", keyValue);
+                                SpNotif.SpSysControllerTransNotif(model._UserId, "TransferSummaryIn", CONTEXT, "before", "TransferSummaryIn", "update", "Id", keyValue);
 
 
-                                Tx_TransferSummaryOut Tx_TransferSummaryOut = CONTEXT.Tx_TransferSummaryOut.Find(model.Id);
+                                Tx_TransferSummaryIn Tx_TransferSummaryIn = CONTEXT.Tx_TransferSummaryIn.Find(model.Id);
                                 DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                                Tx_TransferSummaryOut.ModifiedDate = dtModified;
-                                Tx_TransferSummaryOut.ModifiedUser = model._UserId;
+                                Tx_TransferSummaryIn.ModifiedDate = dtModified;
+                                Tx_TransferSummaryIn.ModifiedUser = model._UserId;
 
-                                if (Tx_TransferSummaryOut != null)
+                                if (Tx_TransferSummaryIn != null)
                                 {
                                     var exceptColumns = new string[] { "Id", "TransNo", "CreatedUser" };
-                                    CopyProperty.CopyProperties(model, Tx_TransferSummaryOut, false, exceptColumns);
-                                    Tx_TransferSummaryOut.ModifiedDate = dtModified;
-                                    Tx_TransferSummaryOut.ModifiedUser = model._UserId;
+                                    CopyProperty.CopyProperties(model, Tx_TransferSummaryIn, false, exceptColumns);
+                                    Tx_TransferSummaryIn.ModifiedDate = dtModified;
+                                    Tx_TransferSummaryIn.ModifiedUser = model._UserId;
 
                                     //if (model.StartDate != null)
                                     //{
-                                    //    Tx_TransferSummaryOut.Status2 = "On Progress";
+                                    //    Tx_TransferSummaryIn.Status2 = "On Progress";
                                     //}
                                     //else
                                     //{
-                                    //    Tx_TransferSummaryOut.Status2 = "Open";
+                                    //    Tx_TransferSummaryIn.Status2 = "Open";
                                     //}
 
                                     //if (model.EndDate != null)
                                     //{
-                                    //    Tx_TransferSummaryOut.Status2 = "Close";
+                                    //    Tx_TransferSummaryIn.Status2 = "Close";
                                     //}
                                     CONTEXT.SaveChanges();
 
@@ -485,13 +485,13 @@ namespace Models.Transaction.Web.Inventory
                                     //    {
                                     //        foreach (var detId in model.Details_.deletedRowKeys)
                                     //        {
-                                    //            TransferSummaryOut_DetailModel detailModel = new TransferSummaryOut_DetailModel();
+                                    //            TransferSummaryIn_DetailModel detailModel = new TransferSummaryIn_DetailModel();
                                     //            detailModel.DetId = detId;
                                     //            Detail_Delete(CONTEXT, detailModel);
                                     //        }
                                     //    }
                                     //}
-                                    SpNotif.SpSysControllerTransNotif(model._UserId, "TransferSummaryOut", CONTEXT, "after", "TransferSummaryOut", "update", "Id", keyValue);
+                                    SpNotif.SpSysControllerTransNotif(model._UserId, "TransferSummaryIn", CONTEXT, "after", "TransferSummaryIn", "update", "Id", keyValue);
                                     
                                 }
 
@@ -523,39 +523,39 @@ namespace Models.Transaction.Web.Inventory
 
         }
 
-        //public long Detail_Add(HANA_APP CONTEXT, TransferSummaryOut_DetailModel model, long Id, int UserId)
+        //public long Detail_Add(HANA_APP CONTEXT, TransferSummaryIn_DetailModel model, long Id, int UserId)
         //{
         //    long DetId = 0;
 
         //    if (model != null)
         //    {
 
-        //        Tx_TransferSummaryOut_Item Tx_TransferSummaryOut_Item = new Tx_TransferSummaryOut_Item();
+        //        Tx_TransferSummaryIn_Item Tx_TransferSummaryIn_Item = new Tx_TransferSummaryIn_Item();
 
-        //        CopyProperty.CopyProperties(model, Tx_TransferSummaryOut_Item, false);
+        //        CopyProperty.CopyProperties(model, Tx_TransferSummaryIn_Item, false);
 
         //        DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-        //        Tx_TransferSummaryOut_Item.Id = Id;
-        //        Tx_TransferSummaryOut_Item.CreatedDate = dtModified;
-        //        Tx_TransferSummaryOut_Item.CreatedUser = UserId;
-        //        Tx_TransferSummaryOut_Item.ModifiedDate = dtModified;
-        //        Tx_TransferSummaryOut_Item.ModifiedUser = UserId;
+        //        Tx_TransferSummaryIn_Item.Id = Id;
+        //        Tx_TransferSummaryIn_Item.CreatedDate = dtModified;
+        //        Tx_TransferSummaryIn_Item.CreatedUser = UserId;
+        //        Tx_TransferSummaryIn_Item.ModifiedDate = dtModified;
+        //        Tx_TransferSummaryIn_Item.ModifiedUser = UserId;
         //        if (model.StartDate != null && model.EndDate == null)
         //        {
-        //            Tx_TransferSummaryOut_Item.Status = "On Progress";
+        //            Tx_TransferSummaryIn_Item.Status = "On Progress";
         //        }
         //        else if (model.StartDate != null && model.EndDate != null)
         //        {
-        //            Tx_TransferSummaryOut_Item.Status = "Close";
+        //            Tx_TransferSummaryIn_Item.Status = "Close";
         //        }
         //        else
         //        {
-        //            Tx_TransferSummaryOut_Item.Status = "Open";
+        //            Tx_TransferSummaryIn_Item.Status = "Open";
         //        }
 
-        //        CONTEXT.Tx_TransferSummaryOut_Item.Add(Tx_TransferSummaryOut_Item);
+        //        CONTEXT.Tx_TransferSummaryIn_Item.Add(Tx_TransferSummaryIn_Item);
         //        CONTEXT.SaveChanges();
-        //        DetId = Tx_TransferSummaryOut_Item.DetId;
+        //        DetId = Tx_TransferSummaryIn_Item.DetId;
 
         //    }
 
@@ -563,34 +563,34 @@ namespace Models.Transaction.Web.Inventory
 
         //}
 
-        //public void Detail_Update(HANA_APP CONTEXT, TransferSummaryOut_DetailModel model, int UserId)
+        //public void Detail_Update(HANA_APP CONTEXT, TransferSummaryIn_DetailModel model, int UserId)
         //{
         //    if (model != null)
         //    {
 
-        //        Tx_TransferSummaryOut_Item Tx_TransferSummaryOut_Item = CONTEXT.Tx_TransferSummaryOut_Item.Find(model.DetId);
+        //        Tx_TransferSummaryIn_Item Tx_TransferSummaryIn_Item = CONTEXT.Tx_TransferSummaryIn_Item.Find(model.DetId);
 
-        //        if (Tx_TransferSummaryOut_Item != null)
+        //        if (Tx_TransferSummaryIn_Item != null)
         //        {
         //            var exceptColumns = new string[] { "DetId", "Id" };
-        //            CopyProperty.CopyProperties(model, Tx_TransferSummaryOut_Item, false, exceptColumns);
+        //            CopyProperty.CopyProperties(model, Tx_TransferSummaryIn_Item, false, exceptColumns);
 
 
         //            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
 
-        //            Tx_TransferSummaryOut_Item.ModifiedDate = dtModified;
-        //            Tx_TransferSummaryOut_Item.ModifiedUser = UserId;
+        //            Tx_TransferSummaryIn_Item.ModifiedDate = dtModified;
+        //            Tx_TransferSummaryIn_Item.ModifiedUser = UserId;
         //            if (model.StartDate != null && model.EndDate == null)
         //            {
-        //                Tx_TransferSummaryOut_Item.Status = "On Progress";
+        //                Tx_TransferSummaryIn_Item.Status = "On Progress";
         //            }
         //            else if (model.StartDate != null && model.EndDate != null)
         //            {
-        //                Tx_TransferSummaryOut_Item.Status = "Close";
+        //                Tx_TransferSummaryIn_Item.Status = "Close";
         //            }
         //            else
         //            {
-        //                Tx_TransferSummaryOut_Item.Status = "Open";
+        //                Tx_TransferSummaryIn_Item.Status = "Open";
         //            }
         //            CONTEXT.SaveChanges();
 
@@ -601,14 +601,14 @@ namespace Models.Transaction.Web.Inventory
 
         //}
 
-        //public void Detail_Delete(HANA_APP CONTEXT, TransferSummaryOut_DetailModel model)
+        //public void Detail_Delete(HANA_APP CONTEXT, TransferSummaryIn_DetailModel model)
         //{
         //    if (model.DetId != null)
         //    {
         //        if (model.DetId != 0)
         //        {
 
-        //            CONTEXT.Database.ExecuteSqlCommand("DELETE FROM \"Tx_TransferSummaryOut_Item\"  WHERE \"DetId\"=:p0", model.DetId);
+        //            CONTEXT.Database.ExecuteSqlCommand("DELETE FROM \"Tx_TransferSummaryIn_Item\"  WHERE \"DetId\"=:p0", model.DetId);
 
         //            CONTEXT.SaveChanges();
 
@@ -634,7 +634,7 @@ namespace Models.Transaction.Web.Inventory
         {
             SAPbobsCOM.Company oCompany = null;
 
-            TransferSummaryOutModel syncTransferSummaryOut = GetById(userId, id);
+            TransferSummaryInModel syncGRPO = GetById(userId, id);
             using (var CONTEXT = new HANA_APP())
             {
 
@@ -649,46 +649,46 @@ namespace Models.Transaction.Web.Inventory
                         keyValue = id.ToString();
 
 
-                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "before", "Tx_TransferSummaryOut", "post", "Id", keyValue);
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", CONTEXT, "before", "Tx_TransferSummaryIn", "post", "Id", keyValue);
 
-                        Tx_TransferSummaryOut tx_TransferSummaryOut = CONTEXT.Tx_TransferSummaryOut.Find(id);
-                        if (tx_TransferSummaryOut != null)
+                        Tx_TransferSummaryIn tx_TransferSummaryIn = CONTEXT.Tx_TransferSummaryIn.Find(id);
+                        if (tx_TransferSummaryIn != null)
                         {
-                            TransferSummaryOutAddResultModel TransferSummaryOutResult = AddTransferSummaryOut(oCompany, userId, id, syncTransferSummaryOut);
+                            GRPOAddResultModel GRPOResult = AddTransferSummaryIn(oCompany, userId, id, syncGRPO);
                             string ssql = @"SELECT ""DocNum"" 
                                 FROM """+ DbProvider.dbSap_Name +@""".""OPDN"" T0
-                                WHERE T0.""DocEntry"" = "+ TransferSummaryOutResult.DocEntry + @" 
+                                WHERE T0.""DocEntry"" = "+ GRPOResult.DocEntry + @" 
                              ";
 
                             string docNum = CONTEXT.Database.SqlQuery<string>(ssql, id).FirstOrDefault();
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
 
-                            //tx_TransferSummaryOut.PostingDate = dtModified;
-                            tx_TransferSummaryOut.DocEntry = Convert.ToInt64(TransferSummaryOutResult.DocEntry) ;
-                            tx_TransferSummaryOut.DocNum = docNum;
+                            //tx_TransferSummaryIn.PostingDate = dtModified;
+                            tx_TransferSummaryIn.DocEntry = Convert.ToInt64(GRPOResult.DocEntry) ;
+                            tx_TransferSummaryIn.DocNum = docNum;
 
-                            tx_TransferSummaryOut.Status = "Posted";
-                            tx_TransferSummaryOut.IsAfterPosted = "Y";
-                            tx_TransferSummaryOut.ModifiedDate = dtModified;
-                            tx_TransferSummaryOut.ModifiedUser = userId;
+                            tx_TransferSummaryIn.Status = "Posted";
+                            tx_TransferSummaryIn.IsAfterPosted = "Y";
+                            tx_TransferSummaryIn.ModifiedDate = dtModified;
+                            tx_TransferSummaryIn.ModifiedUser = userId;
 
                             CONTEXT.SaveChanges();
 
                             var caseStatements = string.Join(" ",
-                            TransferSummaryOutResult.LineMapping.Select(kv => $"WHEN T0.\"DetId\" = {kv.Key} THEN {kv.Value}"));
+                            GRPOResult.LineMapping.Select(kv => $"WHEN T0.\"DetId\" = {kv.Key} THEN {kv.Value}"));
 
-                            var whereIn = string.Join(", ",TransferSummaryOutResult.LineMapping.Keys);
+                            var whereIn = string.Join(", ",GRPOResult.LineMapping.Keys);
 
                             string sqlLine = $@"
-                                UPDATE ""Tx_TransferSummaryOut_Item"" T0
+                                UPDATE ""Tx_TransferSummaryIn_Item"" T0
                                 SET ""LineNum"" = CASE {caseStatements} END
                                 WHERE T0.""DetId"" IN ({whereIn})";
                             CONTEXT.Database.ExecuteSqlCommand(sqlLine);
                         }
 
-                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "post", "Id", keyValue);
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateStatus\"(:p0,:p1,'post')", userId, id);
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", CONTEXT, "after", "Tx_TransferSummaryIn", "post", "Id", keyValue);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryIn_UpdateStatus\"(:p0,:p1,'post')", userId, id);
 
                         CONTEXT_TRANS.Commit();
                     }
@@ -720,9 +720,9 @@ namespace Models.Transaction.Web.Inventory
         }
 
 
-        private TransferSummaryOutAddResultModel AddTransferSummaryOut(Company oCompany, int userId, long id, TransferSummaryOutModel model)
+        private GRPOAddResultModel AddTransferSummaryIn(Company oCompany, int userId, long id, TransferSummaryInModel model)
         {
-            TransferSummaryOutAddResultModel result = new TransferSummaryOutAddResultModel();
+            GRPOAddResultModel result = new GRPOAddResultModel();
 
             int nErr;
             string errMsg;
@@ -790,7 +790,7 @@ namespace Models.Transaction.Web.Inventory
 
                 SapCompany.CleanUp(oDocument);
 
-                throw new Exception("[VALIDATION] - Add Transfer Summary Out : " + nErr.ToString() + "|" + errMsg);
+                throw new Exception("[VALIDATION] - Add Transfer Summary In : " + nErr.ToString() + "|" + errMsg);
             }
             result.DocEntry = oCompany.GetNewObjectKey();
             result.LineMapping = insertedLineIds;
@@ -810,23 +810,23 @@ namespace Models.Transaction.Web.Inventory
                         String keyValue;
                         keyValue = Id.ToString();
 
-                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "before", "Tx_TransferSummaryOut", "cancel", "Id", keyValue);
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", CONTEXT, "before", "Tx_TransferSummaryIn", "cancel", "Id", keyValue);
 
-                        Tx_TransferSummaryOut tx_TransferSummaryOut = CONTEXT.Tx_TransferSummaryOut.Find(Id);
-                        if (tx_TransferSummaryOut != null)
+                        Tx_TransferSummaryIn tx_TransferSummaryIn = CONTEXT.Tx_TransferSummaryIn.Find(Id);
+                        if (tx_TransferSummaryIn != null)
                         {
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                            tx_TransferSummaryOut.Status = "Cancel";
-                            tx_TransferSummaryOut.CancelReason = cancelReason;
-                            tx_TransferSummaryOut.ModifiedDate = dtModified;
-                            tx_TransferSummaryOut.ModifiedUser = userId;
+                            tx_TransferSummaryIn.Status = "Cancel";
+                            tx_TransferSummaryIn.CancelReason = cancelReason;
+                            tx_TransferSummaryIn.ModifiedDate = dtModified;
+                            tx_TransferSummaryIn.ModifiedUser = userId;
 
                             CONTEXT.SaveChanges();
                         }
 
-                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "cancel", "Id", keyValue);
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", CONTEXT, "after", "Tx_TransferSummaryIn", "cancel", "Id", keyValue);
 
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateStatus\"(:p0,:p1,'cancel')", userId, Id);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryIn_UpdateStatus\"(:p0,:p1,'cancel')", userId, Id);
 
                         CONTEXT_TRANS.Commit();
                     }
@@ -853,24 +853,24 @@ namespace Models.Transaction.Web.Inventory
         }
 
 
-        public TransferSummaryOutItemTagView___ GetItemTags(long id, long detId)
+        public TransferSummaryInItemTagView___ GetItemTags(long id, long detId)
         {
             string sql = null;
-            TransferSummaryOutItemTagView___ model = new TransferSummaryOutItemTagView___();
+            TransferSummaryInItemTagView___ model = new TransferSummaryInItemTagView___();
 
             using (var CONTEXT = new HANA_APP())
             {
                 sql = @"SELECT T0.""Id"", T0.""DetId"", T0.""ItemCode"", T0.""ItemName""
-                                FROM ""Tx_TransferSummaryOut_Item"" T0   
+                                FROM ""Tx_TransferSummaryIn_Item"" T0   
                                 WHERE T0.""Id""=:p0 AND ""DetId"" = :p1 ";
 
-                model = CONTEXT.Database.SqlQuery<TransferSummaryOutItemTagView___>(sql, id, detId).FirstOrDefault();
+                model = CONTEXT.Database.SqlQuery<TransferSummaryInItemTagView___>(sql, id, detId).FirstOrDefault();
 
                 sql = @"SELECT ROW_NUMBER() OVER (ORDER BY ""DetDetId"") AS ""RowNo"", T0.* 
-                            FROM ""Tx_TransferSummaryOut_Item_Tag"" T0   
+                            FROM ""Tx_TransferSummaryIn_Item_Tag"" T0   
                             WHERE T0.""Id""=:p0 AND ""DetId"" = :p1 ";
 
-                model.TransferSummaryOutItemTagModel___ = CONTEXT.Database.SqlQuery<TransferSummaryOutItemTagModel>(sql, id, detId).ToList();
+                model.TransferSummaryInItemTagModel___ = CONTEXT.Database.SqlQuery<TransferSummaryInItemTagModel>(sql, id, detId).ToList();
             }
 
             return model;

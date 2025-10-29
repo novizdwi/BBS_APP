@@ -12,7 +12,7 @@ namespace BBS_DI.Models._EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Tx_StockOpname_Item_Tag
+    public partial class Tx_TransferSummaryIn_Item_Tag
     {
         public Nullable<long> Id { get; set; }
         public Nullable<long> DetId { get; set; }
@@ -23,7 +23,8 @@ namespace BBS_DI.Models._EF
         public Nullable<decimal> Quantity { get; set; }
         public string EventType { get; set; }
         public string Status { get; set; }
-        public string PostResultNote { get; set; }
+        public Nullable<long> BaseId { get; set; }
+        public Nullable<long> BaseDetId { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedUser { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }

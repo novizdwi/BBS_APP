@@ -694,6 +694,19 @@
     <Content Include="Views\Transaction\Web\Inventory\TransferSummaryOut\Partial\TransferSummaryOut_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Inventory\TransferSummaryOut\Partial\TransferSummaryOut_Panel_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Inventory\TransferSummaryOut\TransferSummaryOut.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferSummaryIn\Partial\CancelReason\CancelReason_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferSummaryIn\Partial\CancelReason\CancelReason_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferSummaryIn\Partial\CancelReason\CancelReason_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferSummaryIn\Partial\ItemTag\ItemTag_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferSummaryIn\Partial\ItemTag\ItemTag_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferSummaryIn\Partial\ItemTag\ItemTag_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferSummaryIn\Partial\ItemTag\ItemTag_TabItemTagList_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferSummaryIn\Partial\TransferSummaryIn_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferSummaryIn\Partial\TransferSummaryIn_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferSummaryIn\Partial\TransferSummaryIn_Form_TabDetail_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferSummaryIn\Partial\TransferSummaryIn_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferSummaryIn\Partial\TransferSummaryIn_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferSummaryIn\TransferSummaryIn.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -845,7 +858,6 @@
     <Folder Include="Views\Authentication\Login\Partial\" />
     <Folder Include="Views\Logout\" />
     <Folder Include="Views\Master\" />
-    <Folder Include="Views\Transaction\Web\Inventory\TransferSummaryIn\Partial\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BBS_DI\BBS_DI.csproj">
