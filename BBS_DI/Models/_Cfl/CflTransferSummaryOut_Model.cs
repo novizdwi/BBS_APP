@@ -16,7 +16,7 @@ using System.Linq;
 
 namespace Models._Cfl
 {
-    public class CflTransferRequest_ParamModel
+    public class CflTransferSummaryOut_ParamModel
     {
         public string Type { get; set; }
         public string Name { get; set; }
@@ -25,7 +25,7 @@ namespace Models._Cfl
         public string IsMulti { get; set; }//"Y","N"
     }
 
-    public class CflTransferRequest_View__
+    public class CflTransferSummaryOut_View__
     {
         public string Id { get; set; }
         public string TransNo { get; set; }
@@ -41,17 +41,17 @@ namespace Models._Cfl
         public string Comments { get; set; }
     }
 
-    public class CflTransferRequest_Model
+    public class CflTransferSummaryOut_Model
     {
         public static string ssql = @"
             SELECT DISTINCT T0.""Id"", T0.""TransNo"", 
                 T0.""TransDate"", T0.""FromWhsCode"", T0.""FromWhsName"", 
                 T0.""ToWhsCode"", T0.""ToWhsName"", T0.""Comments""
-                FROM ""Tx_TransferRequest"" T0
-                WHERE T0.""Status"" = 'Posted'               
+                FROM ""Tx_TransferSummaryOut"" T0
+                WHERE T0.""Status"" = 'Posted' AND IFNULL(T0.""DocEntry"",0) <> 0              
         ";
                 
-        public static void SetBindingData(GridViewModel state, int userId, CflTransferRequest_ParamModel cflParam)
+        public static void SetBindingData(GridViewModel state, int userId, CflTransferSummaryOut_ParamModel cflParam)
         {
             string sqlCriteria = GetSqlFromGridViewModelState.getHanaCriteria(state);
             string sqlSort = GetSqlFromGridViewModelState.getHanaSort(state);
@@ -83,16 +83,16 @@ namespace Models._Cfl
 
 
 
-        public static void GetData(GridViewCustomBindingGetDataArgs e, List<CflTransferRequest_View__> dataList)
+        public static void GetData(GridViewCustomBindingGetDataArgs e, List<CflTransferSummaryOut_View__> dataList)
         {
 
             e.Data = dataList;
 
         }
 
-        public static int GetRowCount(HANA_APP CONTEXT, int userId, CflTransferRequest_ParamModel cflParam, string sqlCriteria)
+        public static int GetRowCount(HANA_APP CONTEXT, int userId, CflTransferSummaryOut_ParamModel cflParam, string sqlCriteria)
         {
-            var Cfl_Sql = CflTransferRequest_Model.ssql;
+            var Cfl_Sql = CflTransferSummaryOut_Model.ssql;
 
             Cfl_Sql = Cfl_Sql.Replace("{DbSap}", DbProvider.dbSap_Name);
             Cfl_Sql = Cfl_Sql.Replace("{UserId}", userId.ToString());
@@ -121,10 +121,10 @@ namespace Models._Cfl
             return dataRowCount;
         }
 
-        public static List<CflTransferRequest_View__> GetDataList(HANA_APP CONTEXT, int userId, CflTransferRequest_ParamModel cflBpParam, string sqlCriteria, string sqlSort, int PageIndex, int PageSize)
+        public static List<CflTransferSummaryOut_View__> GetDataList(HANA_APP CONTEXT, int userId, CflTransferSummaryOut_ParamModel cflBpParam, string sqlCriteria, string sqlSort, int PageIndex, int PageSize)
         {
 
-            var Cfl_Sql = CflTransferRequest_Model.ssql;
+            var Cfl_Sql = CflTransferSummaryOut_Model.ssql;
 
             Cfl_Sql = Cfl_Sql.Replace("{DbSap}", DbProvider.dbSap_Name);
             Cfl_Sql = Cfl_Sql.Replace("{UserId}", userId.ToString());
@@ -145,7 +145,7 @@ namespace Models._Cfl
             ssql = "SELECT T0.* FROM (" + Cfl_Sql + ") T0  WHERE 1=1 " + sqlCriteria;
             string ssqlLimit = string.Format(" LIMIT {0} OFFSET {1} ", PageSize, (PageIndex) * PageSize);
 
-            var items = CONTEXT.Database.SqlQuery<CflTransferRequest_View__>(ssql + sqlSort + ssqlLimit).ToList();
+            var items = CONTEXT.Database.SqlQuery<CflTransferSummaryOut_View__>(ssql + sqlSort + ssqlLimit).ToList();
 
             return items;
 
@@ -158,20 +158,20 @@ namespace Models._Cfl
             return viewModel;
         }
 
-        public static GridViewSettings CreateExportGridViewSettings(CflTransferRequest_ParamModel cflTransferRequestParam)
+        public static GridViewSettings CreateExportGridViewSettings(CflTransferSummaryOut_ParamModel cflTransferSummaryOutParam)
         {
 
             GridViewSettings settings = new GridViewSettings();
 
             settings.Name = "List Transfer Request";
 
-            if (cflTransferRequestParam.Header != "")
+            if (cflTransferSummaryOutParam.Header != "")
             {
-                settings.Name = "List Transfer Request " + cflTransferRequestParam.Header;
+                settings.Name = "List Transfer Request " + cflTransferSummaryOutParam.Header;
             }
 
-            settings.KeyFieldName = "Tx_TransferRequest___.Id";
-            settings.Columns.Add("Tx_TransferRequest___.TransNo");
+            settings.KeyFieldName = "Tx_TransferSummaryOut___.Id";
+            settings.Columns.Add("Tx_TransferSummaryOut___.TransNo");
 
             return settings;
         }

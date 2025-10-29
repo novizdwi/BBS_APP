@@ -1,6 +1,6 @@
 ﻿@using Models._Cfl
 
-@model Models._Cfl.CflTransferRequest_ParamModel
+@model Models._Cfl.CflTransferSummaryOut_ParamModel
 
 @{
     GridViewModel viewModel = new GridViewModel();
@@ -14,8 +14,8 @@
 
 @Html.DevExpress().PopupControl(settings =>
 {
-    settings.Name = string.Format("cflTransferRequestPopupList{0}", Model.Name);
-    settings.CallbackRouteValues = new { Controller = "_CflTransferRequest", Action = "PopupListLoadOnDemandPartial" };
+    settings.Name = string.Format("cflTransferSummaryOutPopupList{0}", Model.Name);
+    settings.CallbackRouteValues = new { Controller = "_CflTransferSummaryOut", Action = "PopupListLoadOnDemandPartial" };
     settings.CloseAction = CloseAction.OuterMouseClick;
     settings.Height = Unit.Percentage(100);
 
@@ -48,14 +48,14 @@
     {
         Html.DevExpress().HyperLink(settingsChoose =>
         {
-            settingsChoose.Name = "cflTransferRequestPopupList" + Model.Name + "Cancel";
+            settingsChoose.Name = "cflTransferSummaryOutPopupList" + Model.Name + "Cancel";
             settingsChoose.NavigateUrl = "javascript:void(0)";
             settingsChoose.Properties.Text = "Cancel";
             settingsChoose.Height = 20;
-            settingsChoose.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ cflTransferRequestPopupList{0}.Hide(); }}", Model.Name);
+            settingsChoose.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ cflTransferSummaryOutPopupList{0}.Hide(); }}", Model.Name);
         }).GetHtml();
 
-        Html.RenderPartial("Partial/_CflTransferRequest_List_Partial", viewModel);
+        Html.RenderPartial("Partial/_CflTransferSummaryOut_List_Partial", viewModel);
 
     });
 
@@ -69,12 +69,6 @@
     };
 
     string additionParam = "";
-
-    if (Model.Type == "TransferSummaryOut")
-    {
-        additionParam = " e.customArgs['hidden_CflDocId'] = BaseEntry.GetValue(); ";
-    }
-
 
     if (Model.Type == "TransferSummaryIn")
     {
@@ -91,7 +85,7 @@
     };
 
     settings.ClientSideEvents.BeginCallback = string.Format("function(s, e) {{ {0}  e.customArgs['hidden_CflType']=s.cpPopupFind_CflType; e.customArgs['hidden_CflName']=s.cpPopupFind_CflName;  e.customArgs['hidden_CflHeader']=s.cpPopupFind_CflHeader; e.customArgs['hidden_CflSqlWhere']=s.cpPopupFind_CflSqlWhere;e.customArgs['hidden_CflIsMulti']=s.cpPopupFind_CflIsMulti; }}", additionParam);
-    settings.ClientSideEvents.Resize = string.Format("function(s, e) {{ GridviewInPopupAdjustSize(cflTransferRequestPopupList{0},gvCflTransferRequestList{0},50); }}", Model.Name);
-    settings.ClientSideEvents.EndCallback = string.Format("function(s, e) {{ GridviewInPopupAdjustSize(cflTransferRequestPopupList{0},gvCflTransferRequestList{0},50); }}", Model.Name);
+    settings.ClientSideEvents.Resize = string.Format("function(s, e) {{ GridviewInPopupAdjustSize(cflTransferSummaryOutPopupList{0},gvCflTransferSummaryOutList{0},50); }}", Model.Name);
+    settings.ClientSideEvents.EndCallback = string.Format("function(s, e) {{ GridviewInPopupAdjustSize(cflTransferSummaryOutPopupList{0},gvCflTransferSummaryOutList{0},50); }}", Model.Name);
 
 }).GetHtml()

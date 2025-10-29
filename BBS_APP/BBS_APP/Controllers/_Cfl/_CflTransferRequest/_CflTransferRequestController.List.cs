@@ -51,6 +51,18 @@ namespace Controllers._Cfl
 
             }
 
+            if (cflParam.Type == "TransferSummaryIn")
+            {
+
+                var hidden_CflDocId = (string)Request["hidden_CflDocId"];
+                hidden_CflDocId = hidden_CflDocId.Replace("'", "''");
+
+                cflParam.SqlWhere = string.Format(" AND " +
+                                                " T0.\"Id\" NOT IN (SELECT T0_.\"BaseEntry\" FROM \"Tx_TransferSummaryIn\" T0_ WHERE T0_.\"Status\"='Cancel' ) AND " +
+                                                " T0.\"Id\" IN (SELECT T0_.\"BaseEntry\" FROM \"Tx_TransferSummaryOut\" T0_ WHERE T0_.\"Status\"='Posted' AND IFNULL(T0_.\"DocEntry\",0) <> 0 ) " +
+                                                " ", hidden_CflDocId);
+              }
+
             return cflParam;
         }
 

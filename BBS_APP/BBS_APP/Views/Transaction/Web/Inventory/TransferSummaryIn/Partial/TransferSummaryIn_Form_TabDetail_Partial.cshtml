@@ -82,12 +82,60 @@
 
     settings.Columns.Add(column =>
     {
-        column.FieldName = "WhsCode";
-        column.Name = "WhsCode";
+        column.FieldName = "FromWhsCode";
+        column.Name = "FromWhsCode";
         column.Caption = "Whse Code";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 100;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "FromWhsName";
+        column.Name = "FromWhsName";
+        column.Caption = "Whse Name";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 150;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ToWhsCode";
+        column.Name = "ToWhsCode";
+        column.Caption = "To Whse Code";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 100;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ToWhsName";
+        column.Name = "ToWhsName";
+        column.Caption = "To Whse Name";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 150;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
 
@@ -172,50 +220,50 @@
 
     });
 
-    settings.Columns.Add(column =>
-    {
-        column.FieldName = "DocEntry";
-        column.Name = "DocEntry";
-        column.Caption = "Doc Entry";
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "DocEntry";
+    //    column.Name = "DocEntry";
+    //    column.Caption = "Doc Entry";
 
-        column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 80;
-        column.Settings.AllowSort = DefaultBoolean.False;
-        column.ReadOnly = true;
+    //    column.ColumnType = MVCxGridViewColumnType.TextBox;
+    //    column.Width = 0;
+    //    column.Settings.AllowSort = DefaultBoolean.False;
+    //    column.ReadOnly = true;
 
-        var txt = column.PropertiesEdit as TextBoxProperties;
-        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-    });
+    //    var txt = column.PropertiesEdit as TextBoxProperties;
+    //    txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+    //});
 
-    settings.Columns.Add(column =>
-    {
-        column.FieldName = "LineNum";
-        column.Name = "LineNum";
-        column.Caption = "Line Num";
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "LineNum";
+    //    column.Name = "LineNum";
+    //    column.Caption = "Line Num";
 
-        column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 80;
-        column.Settings.AllowSort = DefaultBoolean.False;
-        column.ReadOnly = true;
+    //    column.ColumnType = MVCxGridViewColumnType.TextBox;
+    //    column.Width = 0;
+    //    column.Settings.AllowSort = DefaultBoolean.False;
+    //    column.ReadOnly = true;
 
-        var txt = column.PropertiesEdit as TextBoxProperties;
-        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-    });
+    //    var txt = column.PropertiesEdit as TextBoxProperties;
+    //    txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+    //});
 
-    settings.Columns.Add(column =>
-    {
-        column.FieldName = "LineStatus";
-        column.Name = "LineStatus";
-        column.Caption = "Line Status";
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "LineStatus";
+    //    column.Name = "LineStatus";
+    //    column.Caption = "Line Status";
 
-        column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 120;
-        column.Settings.AllowSort = DefaultBoolean.False;
-        column.ReadOnly = true;
+    //    column.ColumnType = MVCxGridViewColumnType.TextBox;
+    //    column.Width = 0;
+    //    column.Settings.AllowSort = DefaultBoolean.False;
+    //    column.ReadOnly = true;
 
-        var txt = column.PropertiesEdit as TextBoxProperties;
-        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-    });
+    //    var txt = column.PropertiesEdit as TextBoxProperties;
+    //    txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+    //});
 
     settings.Settings.ShowFooter = true;
 

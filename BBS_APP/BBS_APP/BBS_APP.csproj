@@ -709,6 +709,8 @@
     <Content Include="Views\Transaction\Web\Inventory\TransferSummaryIn\TransferSummaryIn.cshtml" />
     <Content Include="Views\_Cfl\_CflTransferRequest\Partial\_CflTransferRequest_List_Partial.cshtml" />
     <Content Include="Views\_Cfl\_CflTransferRequest\Partial\_CflTransferRequest_Panel_List_Partial.cshtml" />
+    <Content Include="Views\_Cfl\_CflTransferSummaryOut\Partial\_CflTransferSummaryOut_List_Partial.cshtml" />
+    <Content Include="Views\_Cfl\_CflTransferSummaryOut\Partial\_CflTransferSummaryOut_Panel_List_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -795,6 +797,11 @@
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferRequest\TransferRequestController.List.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferRequest\TransferRequestController.CancelReason.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferRequest\TransferRequestController.cs" />
+    <Compile Include="Controllers\Transaction\Web\Inventory\TransferSummaryIn\TransferSummaryInController.CancelReason.cs" />
+    <Compile Include="Controllers\Transaction\Web\Inventory\TransferSummaryIn\TransferSummaryInController.cs" />
+    <Compile Include="Controllers\Transaction\Web\Inventory\TransferSummaryIn\TransferSummaryInController.List.cs" />
+    <Compile Include="Controllers\Transaction\Web\Inventory\TransferSummaryIn\TransferSummaryInController.Nav.cs" />
+    <Compile Include="Controllers\Transaction\Web\Inventory\TransferSummaryIn\TransferSummaryInController.ViewItemTag.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferSummaryOut\TransferSummaryOutController.CancelReason.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferSummaryOut\TransferSummaryOutController.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferSummaryOut\TransferSummaryOutController.List.cs" />
@@ -821,6 +828,8 @@
     <Compile Include="Controllers\_Cfl\_CflItemByWarehouse\_CflItemByWarehouseController.List.Export.cs" />
     <Compile Include="Controllers\_Cfl\_CflItem\_CflItemController.List.cs" />
     <Compile Include="Controllers\_Cfl\_CflItem\_CflItemController.List.Export.cs" />
+    <Compile Include="Controllers\_Cfl\_CflTransferSummaryOut\_CflTransferSummaryOutController.List.cs" />
+    <Compile Include="Controllers\_Cfl\_CflTransferSummaryOut\_CflTransferSummaryOutController.List.Export.cs" />
     <Compile Include="Controllers\_Cfl\_CflTransferRequest\_CflTransferRequestController.List.cs" />
     <Compile Include="Controllers\_Cfl\_CflTransferRequest\_CflTransferRequestController.List.Export.cs" />
     <Compile Include="Controllers\_Cfl\_CflPurchaseOrder\_CflPurchaseOrderController.List.cs" />

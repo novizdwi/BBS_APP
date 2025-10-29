@@ -104,7 +104,7 @@
         txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Width = 230;
     });
-    
+
     groupItem_Col1.Items.Add(itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
@@ -199,6 +199,7 @@
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
         txt.Name = "DocEntry";
         txt.ShowModelErrors = true;
+        txt.ReadOnly = true;
         txt.ControlStyle.CssClass = "editornoimage";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
         txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
@@ -209,7 +210,7 @@
     {
         itemSettings.Name = "grpDocNum";
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
-        itemSettings.Caption = "SAP Doc Num";
+        itemSettings.Caption = "SAP DocNum";
         itemSettings.FieldName = "DocNum";
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
         txt.Name = "DocNum";
@@ -217,6 +218,7 @@
         txt.ReadOnly = true;
         txt.ControlStyle.CssClass = "editor";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Width = 230;
     });
 

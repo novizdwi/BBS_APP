@@ -44,9 +44,9 @@
 
 @Html.DevExpress().GridView(settings =>
 {
-    settings.Name = "gvCflTransferRequestList" + cpGvFind_CflName;
+    settings.Name = "gvCflTransferSummaryOutList" + cpGvFind_CflName;
     settings.KeyFieldName = "Id";
-    settings.CallbackRouteValues = new { Controller = "_CflTransferRequest", Action = "ListPartial" };
+    settings.CallbackRouteValues = new { Controller = "_CflTransferSummaryOut", Action = "ListPartial" };
 
     if (cpGvFind_CflIsMulti == "N")
     {
@@ -61,10 +61,10 @@
 
                     Html.DevExpress().HyperLink(settingsHL =>
                     {
-                        settingsHL.Name = "cflTransferRequestChoose_" + cpGvFind_CflName + DataBinder.Eval(c.DataItem, "Id") + "_" + Guid.NewGuid().ToString();
+                        settingsHL.Name = "cflTransferSummaryOutChoose_" + cpGvFind_CflName + DataBinder.Eval(c.DataItem, "Id") + "_" + Guid.NewGuid().ToString();
                         settingsHL.NavigateUrl = "javascript:void(0)";
                         settingsHL.Properties.Text = "Choose";
-                        settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ OnClickChoose_cflTransferRequest{1}(s, e, {0}); }}", new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(c.DataItem), cpGvFind_CflName);
+                        settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ OnClickChoose_cflTransferSummaryOut{1}(s, e, {0}); }}", new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(c.DataItem), cpGvFind_CflName);
                     }).GetHtml()
 
 
@@ -103,7 +103,7 @@
     {
         column.FieldName = "TransNo";
         column.Name = "TransNo";
-        column.Caption = "Request No.";
+        column.Caption = "Transfer Out No.";
         column.Width = 120;
         column.ColumnType = MVCxGridViewColumnType.TextBox;
 
@@ -151,17 +151,17 @@
 
     settings.CustomBindingRouteValuesCollection.Add(
         GridViewOperationType.Paging,
-        new { Controller = "_CflTransferRequest", Action = "ListPaging" }
+        new { Controller = "_CflTransferSummaryOut", Action = "ListPaging" }
     );
 
     settings.CustomBindingRouteValuesCollection.Add(
         GridViewOperationType.Filtering,
-        new { Controller = "_CflTransferRequest", Action = "ListFiltering" }
+        new { Controller = "_CflTransferSummaryOut", Action = "ListFiltering" }
     );
 
     settings.CustomBindingRouteValuesCollection.Add(
         GridViewOperationType.Sorting,
-        new { Controller = "_CflTransferRequest", Action = "ListSorting" }
+        new { Controller = "_CflTransferSummaryOut", Action = "ListSorting" }
     );
 
 
@@ -181,11 +181,6 @@
 
     string additionParam = "";
 
-    if (cpGvFind_CflType == "TransferSummaryOut")
-    {
-        additionParam = " e.customArgs['hidden_CflDocId'] = BaseEntry.GetValue(); ";
-    }
-
     if (cpGvFind_CflType == "TransferSummaryIn")
     {
         additionParam = " e.customArgs['hidden_CflDocId'] = BaseEntry.GetValue(); ";
@@ -193,7 +188,7 @@
     //additionParam += " e.customArgs['hidden_IsFindCurrentBranch']=IsFindCflBookingOrderCurrentBranch" + cpGvFind_CflName + ".GetValue(); ";
 
     settings.ClientSideEvents.BeginCallback = string.Format("function(s, e) {{ {0}  e.customArgs['hidden_CflType']=s.cpGvFind_CflType; e.customArgs['hidden_CflName']=s.cpGvFind_CflName; e.customArgs['hidden_CflHeader']=s.cpGvFind_CflHeader; e.customArgs['hidden_CflSqlWhere']=s.cpGvFind_CflSqlWhere;e.customArgs['hidden_CflIsMulti']=s.cpGvFind_CflIsMulti; }}", additionParam);
-    settings.ClientSideEvents.SelectionChanged = string.Format("function(s, e) {{ OnSelectionChanged_CflTransferRequest{0}(s, e); }}", cpGvFind_CflName);
+    settings.ClientSideEvents.SelectionChanged = string.Format("function(s, e) {{ OnSelectionChanged_CflTransferSummaryOut{0}(s, e); }}", cpGvFind_CflName);
 
     foreach (GridViewDataColumn column in settings.Columns)
     {
