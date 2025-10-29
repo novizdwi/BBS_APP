@@ -116,9 +116,13 @@ namespace Models.Transaction.Web.Inventory
 
         public string FreeText { get; set; }
 
-        public string WhsCode { get; set; }
+        public string FromWhsCode { get; set; }
 
-        public string WhsName { get; set; }
+        public string FromWhsName { get; set; }
+
+        public string ToWhsCode { get; set; }
+
+        public string ToWhsName { get; set; }
 
         public decimal? Quantity { get; set; }
 
@@ -643,7 +647,7 @@ namespace Models.Transaction.Web.Inventory
                     try
                     {
                         oCompany = SAPCachedCompany.GetCompany();
-                        oCompany.StartTransaction();
+                        //oCompany.StartTransaction();
 
                         String keyValue;
                         keyValue = id.ToString();
@@ -655,47 +659,48 @@ namespace Models.Transaction.Web.Inventory
                         if (tx_TransferSummaryOut != null)
                         {
                             TransferSummaryOutAddResultModel TransferSummaryOutResult = AddTransferSummaryOut(oCompany, userId, id, syncTransferSummaryOut);
-                            string ssql = @"SELECT ""DocNum"" 
-                                FROM """+ DbProvider.dbSap_Name +@""".""OPDN"" T0
-                                WHERE T0.""DocEntry"" = "+ TransferSummaryOutResult.DocEntry + @" 
-                             ";
 
-                            string docNum = CONTEXT.Database.SqlQuery<string>(ssql, id).FirstOrDefault();
+                            if (!string.IsNullOrEmpty(TransferSummaryOutResult.DocEntry))
+                            {
+                                //oCompany.EndTransaction(BoWfTransOpt.wf_Commit);
 
-                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                                string ssql = @"SELECT ""DocNum"" 
+                                            FROM """ + DbProvider.dbSap_Name + @""".""OWTR"" T0
+                                            WHERE T0.""DocEntry"" = " + TransferSummaryOutResult.DocEntry + @" 
+                                            ";
 
-                            //tx_TransferSummaryOut.PostingDate = dtModified;
-                            tx_TransferSummaryOut.DocEntry = Convert.ToInt64(TransferSummaryOutResult.DocEntry) ;
-                            tx_TransferSummaryOut.DocNum = docNum;
+                                string docNum = CONTEXT.Database.SqlQuery<string>(ssql, id).FirstOrDefault();
 
-                            tx_TransferSummaryOut.Status = "Posted";
-                            tx_TransferSummaryOut.IsAfterPosted = "Y";
-                            tx_TransferSummaryOut.ModifiedDate = dtModified;
-                            tx_TransferSummaryOut.ModifiedUser = userId;
+                                DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
 
-                            CONTEXT.SaveChanges();
+                                //tx_TransferSummaryOut.PostingDate = dtModified;
+                                tx_TransferSummaryOut.DocEntry = Convert.ToInt64(TransferSummaryOutResult.DocEntry);
+                                tx_TransferSummaryOut.DocNum = docNum;
+                                tx_TransferSummaryOut.DocDate = (DateTime)syncTransferSummaryOut.TransDate;
 
-                            var caseStatements = string.Join(" ",
-                            TransferSummaryOutResult.LineMapping.Select(kv => $"WHEN T0.\"DetId\" = {kv.Key} THEN {kv.Value}"));
+                                tx_TransferSummaryOut.Status = "Posted";
+                                tx_TransferSummaryOut.IsAfterPosted = "Y";
+                                tx_TransferSummaryOut.ModifiedDate = dtModified;
+                                tx_TransferSummaryOut.ModifiedUser = userId;
 
-                            var whereIn = string.Join(", ",TransferSummaryOutResult.LineMapping.Keys);
+                                CONTEXT.SaveChanges();
 
-                            string sqlLine = $@"
-                                UPDATE ""Tx_TransferSummaryOut_Item"" T0
-                                SET ""LineNum"" = CASE {caseStatements} END
-                                WHERE T0.""DetId"" IN ({whereIn})";
-                            CONTEXT.Database.ExecuteSqlCommand(sqlLine);
+                                SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "post", "Id", keyValue);
+                            
+                                CONTEXT_TRANS.Commit();
+                            }                            
                         }
 
-                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "post", "Id", keyValue);
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateStatus\"(:p0,:p1,'post')", userId, id);
-
-                        CONTEXT_TRANS.Commit();
                     }
 
                     catch (Exception ex)
                     {
                         CONTEXT_TRANS.Rollback();
+
+                        //if (oCompany.InTransaction)
+                        //{
+                        //    oCompany.EndTransaction(BoWfTransOpt.wf_RollBack);
+                        //}
 
                         string errorMassage;
                         if (ex.Message.Substring(12) == "[VALIDATION]")
@@ -729,28 +734,29 @@ namespace Models.Transaction.Web.Inventory
             string newEntry_ = string.Empty;
             //SAPbobsCOM.Recordset rsDetailSO = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset);
 
-            SAPbobsCOM.Documents oDocument = (SAPbobsCOM.Documents)oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oPurchaseDeliveryNotes);
+            SAPbobsCOM.StockTransfer oInventoryTransfer = (SAPbobsCOM.StockTransfer)oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oStockTransfer);
 
-            oDocument.DocDate = (DateTime)model.TransDate;
-            oDocument.DocDueDate = (DateTime)model.TransDate;
-            oDocument.TaxDate = (DateTime)model.TransDate;
+            oInventoryTransfer.UserFields.Fields.Item("U_IDU_WebId").Value = model.Id.ToString();
+            oInventoryTransfer.UserFields.Fields.Item("U_IDU_WebTransNo").Value = model.TransNo;
 
-            oDocument.CardCode = model.VendorCode;
-            oDocument.CardName = model.VendorCode;
+            oInventoryTransfer.DocDate = (DateTime)model.TransDate;
+            oInventoryTransfer.DueDate = (DateTime)model.TransDate;
+            oInventoryTransfer.TaxDate = (DateTime)model.TransDate;
 
-            if (model.RefNo != null)
-            {
-                oDocument.NumAtCard = model.RefNo;
-            }
+            oInventoryTransfer.FromWarehouse = model.FromWhsCode;
+            oInventoryTransfer.ToWarehouse = model.ToWhsCode;
+
+            //oDocument.CardCode = model.VendorCode;
+            //oDocument.CardName = model.VendorCode;
 
             if (model.Comments != null)
             {
-                oDocument.Comments = model.Comments;
+                oInventoryTransfer.Comments = model.Comments;
             }
 
             if (model.Address != null)
             {
-                oDocument.Address = model.Address;
+                oInventoryTransfer.Address = model.Address;
             }
 
             var insertedLineIds = new Dictionary<long, int>();
@@ -759,36 +765,39 @@ namespace Models.Transaction.Web.Inventory
             {
                 foreach (var item in model.ListDetails_)
                 {
-                    oDocument.Lines.BaseType = 22;
-                    oDocument.Lines.BaseEntry = Convert.ToInt32(item.BaseEntry);
-                    oDocument.Lines.BaseLine = Convert.ToInt32(item.BaseLine);
+                    //oDocument.Lines.BaseType = InvBaseDocTypeEnum.InventoryTransferRequest;
+                    //oDocument.Lines.BaseEntry = Convert.ToInt32(model.BaseEntry);
+                    //oDocument.Lines.BaseLine = Convert.ToInt32(item.BaseLine);
 
-                    oDocument.Lines.ItemCode = item.ItemCode;
-                    oDocument.Lines.WarehouseCode = item.WhsCode;
-                    oDocument.Lines.Quantity = (double)item.Quantity;
+
+
+                    oInventoryTransfer.Lines.ItemCode = item.ItemCode;
+                    oInventoryTransfer.Lines.FromWarehouseCode = item.FromWhsCode;
+                    oInventoryTransfer.Lines.WarehouseCode = item.ToWhsCode;
+                    oInventoryTransfer.Lines.Quantity = (double)item.QuantityScan;
 
                     if (item.UomEntry != null)
                     {
-                        oDocument.Lines.UoMEntry = Convert.ToInt32(item.UomEntry);
+                        oInventoryTransfer.Lines.UoMEntry = Convert.ToInt32(item.UomEntry);
                     }
 
                     if (item.FreeText != null)
                     {
-                        oDocument.Lines.FreeText = item.FreeText;
+                        oInventoryTransfer.Lines.UserFields.Fields.Item("U_H_KET").Value = item.FreeText;
                     }
 
-                    oDocument.Lines.Add();
+                    oInventoryTransfer.Lines.Add();
                     insertedLineIds.Add(Convert.ToInt64(item.DetId), i);
                     i += 1;
                 }
             }
 
-            if (oDocument.Add() != 0)
+            if (oInventoryTransfer.Add() != 0)
             {
                 nErr = oCompany.GetLastErrorCode();
                 errMsg = oCompany.GetLastErrorDescription();
 
-                SapCompany.CleanUp(oDocument);
+                SapCompany.CleanUp(oInventoryTransfer);
 
                 throw new Exception("[VALIDATION] - Add Transfer Summary Out : " + nErr.ToString() + "|" + errMsg);
             }

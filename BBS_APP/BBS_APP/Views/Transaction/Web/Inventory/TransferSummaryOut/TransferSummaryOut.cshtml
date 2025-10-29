@@ -595,8 +595,8 @@
         });
     }
 
-    function BtnCflPOOnClick(s, e) {
-        cflPurchaseOrderPopupListTransferSummaryOut.Show();
+    function BtnCflTransferRequestOnClick(s, e) {
+        cflTransferRequestPopupListTransferSummaryOut.Show();
     }
 
 </script>
@@ -680,12 +680,12 @@ new
 
 
 @{
-    var cflPurchaseOrder_ParamModel = new CflPurchaseOrder_ParamModel();
-    cflPurchaseOrder_ParamModel.Name = "TransferSummaryOut";
-    cflPurchaseOrder_ParamModel.Type = "TransferSummaryOut";
-    cflPurchaseOrder_ParamModel.Header = " Transfer Summary Out";
-    cflPurchaseOrder_ParamModel.SqlWhere = " ";
-    cflPurchaseOrder_ParamModel.IsMulti = "N";
+    var cflTransferRequest_ParamModel = new CflTransferRequest_ParamModel();
+    cflTransferRequest_ParamModel.Name = "TransferSummaryOut";
+    cflTransferRequest_ParamModel.Type = "TransferSummaryOut";
+    cflTransferRequest_ParamModel.Header = " Transfer Summary Out";
+    cflTransferRequest_ParamModel.SqlWhere = " ";
+    cflTransferRequest_ParamModel.IsMulti = "N";
 }
 
 
@@ -693,21 +693,24 @@ new
 <script type="text/javascript">
 
 
-    function OnClickChoose_cflPurchaseOrderTransferSummaryOut(s, e, data) {
-        VendorCode.SetValue(data.VendorCode);
-        VendorName.SetValue(data.VendorName);
+    function OnClickChoose_cflTransferRequestTransferSummaryOut(s, e, data) {
+        FromWhsCode.SetValue(data.FromWhsCode);
+        FromWhsName.SetValue(data.FromWhsName);
 
-        BaseEntry.SetValue(data.DocEntry);
-        BaseDocNum.SetValue(data.DocNum);
+        ToWhsCode.SetValue(data.ToWhsCode);
+        ToWhsName.SetValue(data.ToWhsName);
 
-        Comments.SetValue("Based on PO: " + data.DocNum + " - " + data.Comments);
-        cflPurchaseOrderPopupListTransferSummaryOut.Hide();
+        BaseEntry.SetValue(data.Id);
+        BaseDocNum.SetValue(data.TransNo);
+
+        Comments.SetValue("Based on Transfer Request: " + data.TransNo + " - " + data.Comments);
+        cflTransferRequestPopupListTransferSummaryOut.Hide();
 
     }
 
 
 </script>
-@Html.Partial("~/Views/_Cfl/_CflPurchaseOrder/Partial/_CflPurchaseOrder_Panel_List_Partial.cshtml", cflPurchaseOrder_ParamModel)
+@Html.Partial("~/Views/_Cfl/_CflTransferRequest/Partial/_CflTransferRequest_Panel_List_Partial.cshtml", cflTransferRequest_ParamModel)
 
 
 @*

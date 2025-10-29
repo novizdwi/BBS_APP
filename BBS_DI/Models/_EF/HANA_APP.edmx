@@ -1392,6 +1392,7 @@
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
           <Property Name="BaseId" Type="bigint" />
           <Property Name="BaseDetId" Type="bigint" />
+          <Property Name="BaseDetDetId" Type="bigint" />
           <Property Name="CreatedDate" Type="timestamp" />
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
@@ -1472,6 +1473,7 @@
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
           <Property Name="BaseId" Type="bigint" />
           <Property Name="BaseDetId" Type="bigint" />
+          <Property Name="BaseDetDetId" Type="bigint" />
           <Property Name="CreatedDate" Type="timestamp" />
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
@@ -3038,6 +3040,7 @@
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="BaseId" Type="Int64" />
           <Property Name="BaseDetId" Type="Int64" />
+          <Property Name="BaseDetDetId" Type="Int64" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
@@ -3118,6 +3121,7 @@
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="BaseId" Type="Int64" />
           <Property Name="BaseDetId" Type="Int64" />
+          <Property Name="BaseDetDetId" Type="Int64" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
@@ -4584,6 +4588,7 @@
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="BaseDetDetId" ColumnName="BaseDetDetId" />
                 <ScalarProperty Name="BaseDetId" ColumnName="BaseDetId" />
                 <ScalarProperty Name="BaseId" ColumnName="BaseId" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
@@ -4667,6 +4672,7 @@
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="BaseDetDetId" ColumnName="BaseDetDetId" />
                 <ScalarProperty Name="BaseDetId" ColumnName="BaseDetId" />
                 <ScalarProperty Name="BaseId" ColumnName="BaseId" />
                 <ScalarProperty Name="Status" ColumnName="Status" />

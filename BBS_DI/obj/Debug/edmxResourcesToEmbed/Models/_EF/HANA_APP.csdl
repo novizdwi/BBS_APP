@@ -1472,6 +1472,7 @@
     <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="BaseId" Type="Int64" />
     <Property Name="BaseDetId" Type="Int64" />
+    <Property Name="BaseDetDetId" Type="Int64" />
     <Property Name="CreatedDate" Type="DateTime" />
     <Property Name="CreatedUser" Type="Int32" />
     <Property Name="ModifiedDate" Type="DateTime" />
@@ -1552,6 +1553,7 @@
     <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="BaseId" Type="Int64" />
     <Property Name="BaseDetId" Type="Int64" />
+    <Property Name="BaseDetDetId" Type="Int64" />
     <Property Name="CreatedDate" Type="DateTime" />
     <Property Name="CreatedUser" Type="Int32" />
     <Property Name="ModifiedDate" Type="DateTime" />

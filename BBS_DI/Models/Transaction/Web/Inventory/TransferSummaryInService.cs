@@ -116,9 +116,13 @@ namespace Models.Transaction.Web.Inventory
 
         public string FreeText { get; set; }
 
-        public string WhsCode { get; set; }
+        public string FromWhsCode { get; set; }
 
-        public string WhsName { get; set; }
+        public string FromWhsName { get; set; }
+
+        public string ToWhsCode { get; set; }
+
+        public string ToWhsName { get; set; }
 
         public decimal? Quantity { get; set; }
 
@@ -729,28 +733,29 @@ namespace Models.Transaction.Web.Inventory
             string newEntry_ = string.Empty;
             //SAPbobsCOM.Recordset rsDetailSO = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset);
 
-            SAPbobsCOM.Documents oDocument = (SAPbobsCOM.Documents)oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oPurchaseDeliveryNotes);
+            SAPbobsCOM.StockTransfer oInventoryTransfer = (SAPbobsCOM.StockTransfer)oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oStockTransfer);
 
-            oDocument.DocDate = (DateTime)model.TransDate;
-            oDocument.DocDueDate = (DateTime)model.TransDate;
-            oDocument.TaxDate = (DateTime)model.TransDate;
+            oInventoryTransfer.UserFields.Fields.Item("U_IDU_WebId").Value = model.Id.ToString();
+            oInventoryTransfer.UserFields.Fields.Item("U_IDU_WebTransNo").Value = model.TransNo;
 
-            oDocument.CardCode = model.VendorCode;
-            oDocument.CardName = model.VendorCode;
+            oInventoryTransfer.DocDate = (DateTime)model.TransDate;
+            oInventoryTransfer.DueDate = (DateTime)model.TransDate;
+            oInventoryTransfer.TaxDate = (DateTime)model.TransDate;
 
-            if (model.RefNo != null)
-            {
-                oDocument.NumAtCard = model.RefNo;
-            }
+            oInventoryTransfer.FromWarehouse = model.FromWhsCode;
+            oInventoryTransfer.ToWarehouse = model.ToWhsCode;
+
+            //oDocument.CardCode = model.VendorCode;
+            //oDocument.CardName = model.VendorCode;
 
             if (model.Comments != null)
             {
-                oDocument.Comments = model.Comments;
+                oInventoryTransfer.Comments = model.Comments;
             }
 
             if (model.Address != null)
             {
-                oDocument.Address = model.Address;
+                oInventoryTransfer.Address = model.Address;
             }
 
             var insertedLineIds = new Dictionary<long, int>();
@@ -759,36 +764,39 @@ namespace Models.Transaction.Web.Inventory
             {
                 foreach (var item in model.ListDetails_)
                 {
-                    oDocument.Lines.BaseType = 22;
-                    oDocument.Lines.BaseEntry = Convert.ToInt32(item.BaseEntry);
-                    oDocument.Lines.BaseLine = Convert.ToInt32(item.BaseLine);
+                    //oDocument.Lines.BaseType = InvBaseDocTypeEnum.InventoryTransferRequest;
+                    //oDocument.Lines.BaseEntry = Convert.ToInt32(model.BaseEntry);
+                    //oDocument.Lines.BaseLine = Convert.ToInt32(item.BaseLine);
 
-                    oDocument.Lines.ItemCode = item.ItemCode;
-                    oDocument.Lines.WarehouseCode = item.WhsCode;
-                    oDocument.Lines.Quantity = (double)item.Quantity;
+
+
+                    oInventoryTransfer.Lines.ItemCode = item.ItemCode;
+                    oInventoryTransfer.Lines.FromWarehouseCode = item.FromWhsCode;
+                    oInventoryTransfer.Lines.WarehouseCode = item.ToWhsCode;
+                    oInventoryTransfer.Lines.Quantity = (double)item.QuantityScan;
 
                     if (item.UomEntry != null)
                     {
-                        oDocument.Lines.UoMEntry = Convert.ToInt32(item.UomEntry);
+                        oInventoryTransfer.Lines.UoMEntry = Convert.ToInt32(item.UomEntry);
                     }
 
                     if (item.FreeText != null)
                     {
-                        oDocument.Lines.FreeText = item.FreeText;
+                        oInventoryTransfer.Lines.UserFields.Fields.Item("U_H_KET").Value = item.FreeText;
                     }
 
-                    oDocument.Lines.Add();
+                    oInventoryTransfer.Lines.Add();
                     insertedLineIds.Add(Convert.ToInt64(item.DetId), i);
                     i += 1;
                 }
             }
 
-            if (oDocument.Add() != 0)
+            if (oInventoryTransfer.Add() != 0)
             {
                 nErr = oCompany.GetLastErrorCode();
                 errMsg = oCompany.GetLastErrorDescription();
 
-                SapCompany.CleanUp(oDocument);
+                SapCompany.CleanUp(oInventoryTransfer);
 
                 throw new Exception("[VALIDATION] - Add Transfer Summary In : " + nErr.ToString() + "|" + errMsg);
             }

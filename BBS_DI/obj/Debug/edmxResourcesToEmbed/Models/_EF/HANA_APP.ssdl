@@ -1387,6 +1387,7 @@
     <Property Name="Status" Type="nvarchar" MaxLength="50" />
     <Property Name="BaseId" Type="bigint" />
     <Property Name="BaseDetId" Type="bigint" />
+    <Property Name="BaseDetDetId" Type="bigint" />
     <Property Name="CreatedDate" Type="timestamp" />
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
@@ -1467,6 +1468,7 @@
     <Property Name="Status" Type="nvarchar" MaxLength="50" />
     <Property Name="BaseId" Type="bigint" />
     <Property Name="BaseDetId" Type="bigint" />
+    <Property Name="BaseDetDetId" Type="bigint" />
     <Property Name="CreatedDate" Type="timestamp" />
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
