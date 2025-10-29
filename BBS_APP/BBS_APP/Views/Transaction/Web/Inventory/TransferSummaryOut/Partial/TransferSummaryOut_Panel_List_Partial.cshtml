@@ -1,7 +1,7 @@
 ﻿@Html.DevExpress().PopupControl(settings =>
 {
     settings.Name = "popupList";
-    settings.CallbackRouteValues = new { Controller = "GoodsReceiptPO", Action = "PopupListLoadOnDemandPartial" };
+    settings.CallbackRouteValues = new { Controller = "TransferSummaryOut", Action = "PopupListLoadOnDemandPartial" };
     settings.CloseAction = CloseAction.OuterMouseClick;
     settings.PopupVerticalAlign = PopupVerticalAlign.Below;
     settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
@@ -72,7 +72,7 @@
                 cb.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
                 cb.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
                 cb.Checked = false;
-                cb.Properties.ClientSideEvents.CheckedChanged = "function(s,e) {{  gvGoodsReceiptPOList.PerformCallback(); }}";
+                cb.Properties.ClientSideEvents.CheckedChanged = "function(s,e) {{  gvTransferSummaryOutList.PerformCallback(); }}";
 
             });
 
@@ -95,8 +95,8 @@
                 txt.Properties.EditFormatString = "dd/MM/yyyy";
 
 
-                txt.Properties.ClientSideEvents.ValueChanged = "function(s,e) {{   if(IsFindTransDate.GetValue()) {  gvGoodsReceiptPOList.PerformCallback(); } }}";
-                txt.Properties.ClientSideEvents.ParseDate = "function (s,e){ { ParseDateEdit(s,e); if(IsFindTransDate.GetValue()) {  gvGoodsReceiptPOList.PerformCallback(); } } }";
+                txt.Properties.ClientSideEvents.ValueChanged = "function(s,e) {{   if(IsFindTransDate.GetValue()) {  gvTransferSummaryOutList.PerformCallback(); } }}";
+                txt.Properties.ClientSideEvents.ParseDate = "function (s,e){ { ParseDateEdit(s,e); if(IsFindTransDate.GetValue()) {  gvTransferSummaryOutList.PerformCallback(); } } }";
             });
 
             groupItem_Col1.Items.Add(itemSettings =>
@@ -118,20 +118,20 @@
                 txt.Properties.EditFormatString = "dd/MM/yyyy";
 
 
-                txt.Properties.ClientSideEvents.ValueChanged = "function(s,e) {{ if(IsFindTransDate.GetValue()) {  gvGoodsReceiptPOList.PerformCallback(); } }}";
-                txt.Properties.ClientSideEvents.ParseDate = "function (s,e){ { ParseDateEdit(s,e); if(IsFindTransDate.GetValue()) {  gvGoodsReceiptPOList.PerformCallback(); } } }";
+                txt.Properties.ClientSideEvents.ValueChanged = "function(s,e) {{ if(IsFindTransDate.GetValue()) {  gvTransferSummaryOutList.PerformCallback(); } }}";
+                txt.Properties.ClientSideEvents.ParseDate = "function (s,e){ { ParseDateEdit(s,e); if(IsFindTransDate.GetValue()) {  gvTransferSummaryOutList.PerformCallback(); } } }";
 
             });
         }).GetHtml();
 
 
 
-        Html.RenderPartial("Partial/GoodsReceiptPO_List_Partial");
+        Html.RenderPartial("Partial/TransferSummaryOut_List_Partial");
 
     });
 
-    settings.ClientSideEvents.Resize = string.Format("function(s, e) {{ GridviewInPopupAdjustSize(popupList,gvGoodsReceiptPOList,50); }}", "");
-    settings.ClientSideEvents.EndCallback = string.Format("function(s, e) {{ GridviewInPopupAdjustSize(popupList,gvGoodsReceiptPOList,50); }}", "");
+    settings.ClientSideEvents.Resize = string.Format("function(s, e) {{ GridviewInPopupAdjustSize(popupList,gvTransferSummaryOutList,50); }}", "");
+    settings.ClientSideEvents.EndCallback = string.Format("function(s, e) {{ GridviewInPopupAdjustSize(popupList,gvTransferSummaryOutList,50); }}", "");
 
     settings.PreRender = (sender, e) =>
     {

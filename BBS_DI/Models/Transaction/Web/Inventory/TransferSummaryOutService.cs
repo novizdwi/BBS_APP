@@ -688,7 +688,7 @@ namespace Models.Transaction.Web.Inventory
                         }
 
                         SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "post", "Id", keyValue);
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdatePOStatus\"(:p0,:p1,'post')", userId, id);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateStatus\"(:p0,:p1,'post')", userId, id);
 
                         CONTEXT_TRANS.Commit();
                     }
@@ -790,7 +790,7 @@ namespace Models.Transaction.Web.Inventory
 
                 SapCompany.CleanUp(oDocument);
 
-                throw new Exception("[VALIDATION] - Add Goods Receipt PO : " + nErr.ToString() + "|" + errMsg);
+                throw new Exception("[VALIDATION] - Add Transfer Summary Out : " + nErr.ToString() + "|" + errMsg);
             }
             result.DocEntry = oCompany.GetNewObjectKey();
             result.LineMapping = insertedLineIds;
@@ -826,7 +826,7 @@ namespace Models.Transaction.Web.Inventory
 
                         SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "cancel", "Id", keyValue);
 
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdatePOStatus\"(:p0,:p1,'cancel')", userId, Id);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateStatus\"(:p0,:p1,'cancel')", userId, Id);
 
                         CONTEXT_TRANS.Commit();
                     }

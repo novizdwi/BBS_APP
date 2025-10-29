@@ -14,9 +14,9 @@
 
 @Html.DevExpress().GridView(settings=>
 {
-    settings.Name = "gvGoodsReceiptPOList";
+    settings.Name = "gvTransferSummaryOutList";
     settings.KeyFieldName = "Id";
-    settings.CallbackRouteValues =  new { Controller = "GoodsReceiptPO", Action = "ListPartial" };
+    settings.CallbackRouteValues =  new { Controller = "TransferSummaryOut", Action = "ListPartial" };
 
     settings.Columns.Add(column =>
     {
@@ -28,7 +28,7 @@
             ViewContext.Writer.Write(
 
              Html.DevExpress().HyperLink(settingsHL => {
-                 settingsHL.Name = "gvGoodsReceiptPOListChoose_" + Guid.NewGuid();
+                 settingsHL.Name = "gvTransferSummaryOutListChoose_" + Guid.NewGuid();
                  settingsHL.NavigateUrl = "javascript:void(0)";
                  settingsHL.Properties.Text = "Choose";
                  settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ OnClickChoose(s, e, '{0}'); }}", DataBinder.Eval(c.DataItem, "Id"));
@@ -131,17 +131,17 @@
 
     settings.CustomBindingRouteValuesCollection.Add(
         GridViewOperationType.Paging,
-        new { Controller = "GoodsReceiptPO", Action = "ListPaging" }
+        new { Controller = "TransferSummaryOut", Action = "ListPaging" }
     );
 
     settings.CustomBindingRouteValuesCollection.Add(
         GridViewOperationType.Filtering,
-        new { Controller = "GoodsReceiptPO", Action = "ListFiltering" }
+        new { Controller = "TransferSummaryOut", Action = "ListFiltering" }
     );
 
     settings.CustomBindingRouteValuesCollection.Add(
         GridViewOperationType.Sorting,
-        new { Controller = "GoodsReceiptPO", Action = "ListSorting" }
+        new { Controller = "TransferSummaryOut", Action = "ListSorting" }
     );
 
 
