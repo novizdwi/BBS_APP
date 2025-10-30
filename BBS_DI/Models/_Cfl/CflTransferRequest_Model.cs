@@ -35,6 +35,9 @@ namespace Models._Cfl
         public string FromWhsCode { get; set; }
         public string FromWhsName { get; set; }
 
+        public string TransitWhsCode { get; set; }
+        public string TransitWhsName { get; set; }
+
         public string ToWhsCode { get; set; }
         public string ToWhsName { get; set; }
 
@@ -46,9 +49,13 @@ namespace Models._Cfl
         public static string ssql = @"
             SELECT DISTINCT T0.""Id"", T0.""TransNo"", 
                 T0.""TransDate"", T0.""FromWhsCode"", T0.""FromWhsName"", 
+                IFNULL(T1.""U_IDU_WhsTransit"",'') AS ""TransitWhsCode"",
+                IFNULL(T2.""WhsName"",'') AS ""TransitWhsName"",
                 T0.""ToWhsCode"", T0.""ToWhsName"", T0.""Comments""
                 FROM ""Tx_TransferRequest"" T0
-                WHERE T0.""Status"" = 'Posted'               
+                LEFT JOIN ""{DbSap}"".""OWHS"" T1 ON T1.""WhsCode"" = T0.""FromWhsCode""
+                LEFT JOIN ""{DbSap}"".""OWHS"" T2 ON T2.""WhsCode"" = IFNULL(T1.""U_IDU_WhsTransit"",'')
+                WHERE T0.""Status"" = 'Posted' AND T1.""Inactive"" = 'N'              
         ";
                 
         public static void SetBindingData(GridViewModel state, int userId, CflTransferRequest_ParamModel cflParam)

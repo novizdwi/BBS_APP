@@ -68,6 +68,10 @@ namespace Models.Transaction.Web.Inventory
         [Required(ErrorMessage = "required")]
         public string ToWhsName { get; set; }
 
+        public string TransitWhsCode { get; set; }
+
+        public string TransitWhsName { get; set; }
+
         public string Address { get; set; }
 
         public string RefNo { get; set; }
@@ -123,6 +127,10 @@ namespace Models.Transaction.Web.Inventory
         public string ToWhsCode { get; set; }
 
         public string ToWhsName { get; set; }
+
+        public string TransitWhsCode { get; set; }
+
+        public string TransitWhsName { get; set; }
 
         public decimal? Quantity { get; set; }
 

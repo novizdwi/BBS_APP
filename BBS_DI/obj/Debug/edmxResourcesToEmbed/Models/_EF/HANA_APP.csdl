@@ -1430,6 +1430,8 @@
     <Property Name="CreatedUser" Type="Int32" />
     <Property Name="ModifiedDate" Type="DateTime" />
     <Property Name="ModifiedUser" Type="Int32" />
+    <Property Name="TransitWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TransitWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Tx_TransferSummaryIn_Item">
     <Key>
@@ -1456,6 +1458,8 @@
     <Property Name="CreatedUser" Type="Int32" />
     <Property Name="ModifiedDate" Type="DateTime" />
     <Property Name="ModifiedUser" Type="Int32" />
+    <Property Name="TransitWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TransitWhsName" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Tx_TransferSummaryIn_Item_Tag">
     <Key>
@@ -1511,6 +1515,8 @@
     <Property Name="CreatedUser" Type="Int32" />
     <Property Name="ModifiedDate" Type="DateTime" />
     <Property Name="ModifiedUser" Type="Int32" />
+    <Property Name="TransitWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TransitWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Tx_TransferSummaryOut_Item">
     <Key>
@@ -1537,6 +1543,8 @@
     <Property Name="CreatedUser" Type="Int32" />
     <Property Name="ModifiedDate" Type="DateTime" />
     <Property Name="ModifiedUser" Type="Int32" />
+    <Property Name="TransitWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TransitWhsName" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Tx_TransferSummaryOut_Item_Tag">
     <Key>
