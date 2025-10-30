@@ -107,8 +107,6 @@ namespace Models.Transaction.Web.Inventory
 
         public string ItemName { get; set; }
 
-        public string Comments { get; set; }
-
         public string FromWhsCode { get; set; }
 
         public string FromWhsName { get; set; }
@@ -126,6 +124,8 @@ namespace Models.Transaction.Web.Inventory
         public int? UomEntry { get; set; }
 
         public string Uom { get; set; }
+               
+        public string Comments { get; set; }
     }
 
     public class TransferRequestItemTagView___
@@ -354,11 +354,11 @@ namespace Models.Transaction.Web.Inventory
                             String keyValue;
                             keyValue = Tx_TransferRequest.Id.ToString();
 
-                            CONTEXT.Database.ExecuteSqlCommand(
-                            "CALL \"SpGoodsReceiptPO_AddItemDetail\" ({0}, {1}, {2})",
-                            model._UserId,
-                            keyValue
-                        );
+                        //    CONTEXT.Database.ExecuteSqlCommand(
+                        //    "CALL \"SpGoodsReceiptPO_AddItemDetail\" ({0}, {1}, {2})",
+                        //    model._UserId,
+                        //    keyValue
+                        //);
 
                             SpNotif.SpSysTransNotif(model._UserId, CONTEXT, "after", "Tx_TransferRequest", "add", "Id", keyValue);
 
@@ -420,49 +420,36 @@ namespace Models.Transaction.Web.Inventory
                                     Tx_TransferRequest.ModifiedDate = dtModified;
                                     Tx_TransferRequest.ModifiedUser = model._UserId;
 
-                                    //if (model.StartDate != null)
-                                    //{
-                                    //    Tx_TransferRequest.Status2 = "On Progress";
-                                    //}
-                                    //else
-                                    //{
-                                    //    Tx_TransferRequest.Status2 = "Open";
-                                    //}
-
-                                    //if (model.EndDate != null)
-                                    //{
-                                    //    Tx_TransferRequest.Status2 = "Close";
-                                    //}
                                     CONTEXT.SaveChanges();
 
-                                    //if (model.Details_ != null)
-                                    //{
-                                    //    if (model.Details_.insertedRowValues != null)
-                                    //    {
-                                    //        foreach (var detail in model.Details_.insertedRowValues)
-                                    //        {
-                                    //            Detail_Add(CONTEXT, detail, model.Id, model._UserId);
-                                    //        }
-                                    //    }
+                                    if (model.Details_ != null)
+                                    {
+                                        if (model.Details_.insertedRowValues != null)
+                                        {
+                                            foreach (var detail in model.Details_.insertedRowValues)
+                                            {
+                                                Detail_Add(CONTEXT, detail, model.Id, model._UserId);
+                                            }
+                                        }
 
-                                    //    if (model.Details_.modifiedRowValues != null)
-                                    //    {
-                                    //        foreach (var detail in model.Details_.modifiedRowValues)
-                                    //        {
-                                    //            Detail_Update(CONTEXT, detail, model._UserId);
-                                    //        }
-                                    //    }
+                                        if (model.Details_.modifiedRowValues != null)
+                                        {
+                                            foreach (var detail in model.Details_.modifiedRowValues)
+                                            {
+                                                Detail_Update(CONTEXT, detail, model._UserId);
+                                            }
+                                        }
 
-                                    //    if (model.Details_.deletedRowKeys != null)
-                                    //    {
-                                    //        foreach (var detId in model.Details_.deletedRowKeys)
-                                    //        {
-                                    //            TransferRequest_DetailModel detailModel = new TransferRequest_DetailModel();
-                                    //            detailModel.DetId = detId;
-                                    //            Detail_Delete(CONTEXT, detailModel);
-                                    //        }
-                                    //    }
-                                    //}
+                                        if (model.Details_.deletedRowKeys != null)
+                                        {
+                                            foreach (var detId in model.Details_.deletedRowKeys)
+                                            {
+                                                TransferRequest_DetailModel detailModel = new TransferRequest_DetailModel();
+                                                detailModel.DetId = detId;
+                                                Detail_Delete(CONTEXT, detailModel);
+                                            }
+                                        }
+                                    }
                                     SpNotif.SpSysControllerTransNotif(model._UserId, "TransferRequest", CONTEXT, "after", "TransferRequest", "update", "Id", keyValue);
                                     
                                 }
@@ -495,100 +482,149 @@ namespace Models.Transaction.Web.Inventory
 
         }
 
-        //public long Detail_Add(HANA_APP CONTEXT, TransferRequest_DetailModel model, long Id, int UserId)
-        //{
-        //    long DetId = 0;
+        public long Detail_Add(HANA_APP CONTEXT, TransferRequest_DetailModel model, long Id, int UserId)
+        {
+            long DetId = 0;
 
-        //    if (model != null)
-        //    {
+            if (model != null)
+            {
 
-        //        Tx_TransferRequest_Item Tx_TransferRequest_Item = new Tx_TransferRequest_Item();
+                Tx_TransferRequest_Item Tx_TransferRequest_Item = new Tx_TransferRequest_Item();
 
-        //        CopyProperty.CopyProperties(model, Tx_TransferRequest_Item, false);
+                CopyProperty.CopyProperties(model, Tx_TransferRequest_Item, false);
 
-        //        DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-        //        Tx_TransferRequest_Item.Id = Id;
-        //        Tx_TransferRequest_Item.CreatedDate = dtModified;
-        //        Tx_TransferRequest_Item.CreatedUser = UserId;
-        //        Tx_TransferRequest_Item.ModifiedDate = dtModified;
-        //        Tx_TransferRequest_Item.ModifiedUser = UserId;
-        //        if (model.StartDate != null && model.EndDate == null)
-        //        {
-        //            Tx_TransferRequest_Item.Status = "On Progress";
-        //        }
-        //        else if (model.StartDate != null && model.EndDate != null)
-        //        {
-        //            Tx_TransferRequest_Item.Status = "Close";
-        //        }
-        //        else
-        //        {
-        //            Tx_TransferRequest_Item.Status = "Open";
-        //        }
-
-        //        CONTEXT.Tx_TransferRequest_Item.Add(Tx_TransferRequest_Item);
-        //        CONTEXT.SaveChanges();
-        //        DetId = Tx_TransferRequest_Item.DetId;
-
-        //    }
-
-        //    return DetId;
-
-        //}
-
-        //public void Detail_Update(HANA_APP CONTEXT, TransferRequest_DetailModel model, int UserId)
-        //{
-        //    if (model != null)
-        //    {
-
-        //        Tx_TransferRequest_Item Tx_TransferRequest_Item = CONTEXT.Tx_TransferRequest_Item.Find(model.DetId);
-
-        //        if (Tx_TransferRequest_Item != null)
-        //        {
-        //            var exceptColumns = new string[] { "DetId", "Id" };
-        //            CopyProperty.CopyProperties(model, Tx_TransferRequest_Item, false, exceptColumns);
+                DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                Tx_TransferRequest_Item.Id = Id;
+                Tx_TransferRequest_Item.CreatedDate = dtModified;
+                Tx_TransferRequest_Item.CreatedUser = UserId;
+                Tx_TransferRequest_Item.ModifiedDate = dtModified;
+                Tx_TransferRequest_Item.ModifiedUser = UserId;               
 
 
-        //            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                CONTEXT.Tx_TransferRequest_Item.Add(Tx_TransferRequest_Item);
+                CONTEXT.SaveChanges();
+                DetId = Tx_TransferRequest_Item.DetId;
 
-        //            Tx_TransferRequest_Item.ModifiedDate = dtModified;
-        //            Tx_TransferRequest_Item.ModifiedUser = UserId;
-        //            if (model.StartDate != null && model.EndDate == null)
-        //            {
-        //                Tx_TransferRequest_Item.Status = "On Progress";
-        //            }
-        //            else if (model.StartDate != null && model.EndDate != null)
-        //            {
-        //                Tx_TransferRequest_Item.Status = "Close";
-        //            }
-        //            else
-        //            {
-        //                Tx_TransferRequest_Item.Status = "Open";
-        //            }
-        //            CONTEXT.SaveChanges();
+            }
 
-        //        }
+            return DetId;
 
+        }
 
-        //    }
+        public void Detail_Update(HANA_APP CONTEXT, TransferRequest_DetailModel model, int UserId)
+        {
+            if (model != null)
+            {
 
-        //}
+                Tx_TransferRequest_Item Tx_TransferRequest_Item = CONTEXT.Tx_TransferRequest_Item.Find(model.DetId);
 
-        //public void Detail_Delete(HANA_APP CONTEXT, TransferRequest_DetailModel model)
-        //{
-        //    if (model.DetId != null)
-        //    {
-        //        if (model.DetId != 0)
-        //        {
-
-        //            CONTEXT.Database.ExecuteSqlCommand("DELETE FROM \"Tx_TransferRequest_Item\"  WHERE \"DetId\"=:p0", model.DetId);
-
-        //            CONTEXT.SaveChanges();
+                if (Tx_TransferRequest_Item != null)
+                {
+                    var exceptColumns = new string[] { "DetId", "Id" };
+                    CopyProperty.CopyProperties(model, Tx_TransferRequest_Item, false, exceptColumns);
 
 
-        //        }
-        //    }
+                    DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
 
-        //}
+                    Tx_TransferRequest_Item.ModifiedDate = dtModified;
+                    Tx_TransferRequest_Item.ModifiedUser = UserId;
+                   
+                    CONTEXT.SaveChanges();
+
+                }
+
+
+            }
+
+        }
+
+        public void Detail_Delete(HANA_APP CONTEXT, TransferRequest_DetailModel model)
+        {
+            if (model.DetId != null)
+            {
+                if (model.DetId != 0)
+                {
+
+                    CONTEXT.Database.ExecuteSqlCommand("DELETE FROM \"Tx_TransferRequest_Item\"  WHERE \"DetId\"=:p0", model.DetId);
+
+                    CONTEXT.SaveChanges();
+
+
+                }
+            }
+
+        }
+
+        public bool ChooseItem(int UserId, long Id, string[] data)
+        {
+            if (data != null)
+            {
+                using (var CONTEXT = new HANA_APP())
+                {
+
+                    using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            String keyValue;
+                            keyValue = Id.ToString();
+                            SpNotif.SpSysTransNotif(UserId, CONTEXT, "before", "TransferRequest", "ChooseItem", "Id", keyValue);
+
+                            string sqlWhere;
+                            if (data == null)
+                            {
+                                sqlWhere = "";
+                            }
+                            else if (data.Length == 0)
+                            {
+                                sqlWhere = "";
+                            }
+                            else
+                            {
+                                for (var i = 0; i < data.Length; i++)
+                                {
+                                    data[i] = "'" + data[i].Replace("'", "''") + "'";
+                                }
+
+                                sqlWhere = string.Join(",", data);
+                            }
+
+
+                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferRequest_ChooseItem\"(:p0,:p1,:p2)", UserId, Id, sqlWhere);
+
+
+                            keyValue = Id.ToString();
+                            SpNotif.SpSysTransNotif(UserId, CONTEXT, "after", "TransferRequest", "ChooseItem", "Id", keyValue);
+
+
+                            CONTEXT_TRANS.Commit();
+                        }
+
+                        catch (Exception ex)
+                        {
+                            CONTEXT_TRANS.Rollback();
+
+                            string errorMessage;
+                            if (ex.Message.Substring(12) == "[VALIDATION]")
+                            {
+                                errorMessage = ex.Message;
+                            }
+                            else
+                            {
+                                errorMessage = string.Format("[VALIDATION] {0} ", ex.Message);
+                            }
+
+                            throw new Exception(errorMessage);
+                        }
+                    }
+                }
+
+
+            }
+
+            return true;
+
+        }
 
         public void Post(int userId, long id)
         {

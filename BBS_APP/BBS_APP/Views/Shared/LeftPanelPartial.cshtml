@@ -196,10 +196,9 @@
                         {
                             node3.Text = "Inventory";
                             AddNode(dataTable, node3, "Transfer Request", "TransferRequest");
-                            AddNode(dataTable, node3, "Transfer In", "TransferIn");
-                            AddNode(dataTable, node3, "Transfer Out", "TransferOut");
-                            AddNode(dataTable, node3, "Request Stock Opname", "RequestStockOpname");
-                            AddNode(dataTable, node3, "Stock Opname Summary", "StockOpnameSummary");
+                            AddNode(dataTable, node3, "Transfer Summary In", "TransferSummaryIn");
+                            AddNode(dataTable, node3, "Transfer Summary Out", "TransferSummaryOut");
+                            AddNode(dataTable, node3, "Stock Opname", "StockOpname");
                         });
                         node2.Nodes.Add(node3 =>
                         {
@@ -229,8 +228,8 @@
                         node2.Nodes.Add(node3 =>
                         {
                             node3.Text = "Inventory";
-                            AddNode(dataTable, node3, "Transfer In", "TransferIn");
-                            AddNode(dataTable, node3, "Transfer Out", "TransferOut");
+                            AddNode(dataTable, node3, "Transfer Scan In", "TransferIn");
+                            AddNode(dataTable, node3, "Transfer Scan Out", "TransferOut");
                             AddNode(dataTable, node3, "Stock Opname", "StockOpname");
                         });
                         node2.Nodes.Add(node3 =>

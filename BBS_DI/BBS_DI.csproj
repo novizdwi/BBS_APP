@@ -193,7 +193,15 @@
     <Compile Include="Models\Transaction\Web\Adjustment\AdjustmentOut.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\RequestStockOpname__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\RequestStockOpnameService.cs" />
+    <Compile Include="Models\Transaction\Web\Inventory\TransferSummaryInService.cs" />
+    <Compile Include="Models\Transaction\Web\Inventory\TransferSummaryIn__List_Model.cs" />
+    <Compile Include="Models\Transaction\Web\Inventory\TransferSummaryOut__List_Model.cs" />
+    <Compile Include="Models\Transaction\Web\Inventory\TransferSummaryOutService.cs" />
+    <Compile Include="Models\Transaction\Web\Inventory\TransferInService.cs" />
+    <Compile Include="Models\Transaction\Web\Inventory\TransferOutService.cs" />
+    <Compile Include="Models\Transaction\Web\Inventory\TransferIn__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\TransferRequestService.cs" />
+    <Compile Include="Models\Transaction\Web\Inventory\TransferOut__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\TransferRequest__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Purchasing\GoodsReceiptPOService.cs" />
     <Compile Include="Models\Transaction\Web\Purchasing\PurchaseOrderService.cs" />
@@ -210,9 +218,13 @@
     </Compile>
     <Compile Include="Models\_Cfl\CflBp_Model.cs" />
     <Compile Include="Models\_Cfl\CflDynamic_Model.cs" />
+    <Compile Include="Models\_Cfl\CflItemByWarehouse_Model.cs" />
     <Compile Include="Models\_Cfl\CflItem_Model.cs" />
     <Compile Include="Models\_Cfl\CflCoa_Model.cs" />
+    <Compile Include="Models\_Cfl\CflTransferSummaryOut_Model.cs" />
+    <Compile Include="Models\_Cfl\CflTransferRequest_Model.cs" />
     <Compile Include="Models\_Cfl\CflPurchaseOrder_Model.cs" />
+    <Compile Include="Models\_Cfl\CflToWarehouse_Model.cs" />
     <Compile Include="Models\_Cfl\CflWarehouse_Model.cs" />
     <Compile Include="Models\_CrystalReport\CrystalReportParam.cs" />
     <Compile Include="Models\_EF\EfIduHanaRsExtensionsApp.cs" />
@@ -461,6 +473,15 @@
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\_EF\Tx_TransferRequest_Item.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_TransferSummaryIn.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_TransferSummaryIn_Item.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_TransferSummaryIn_Item_Tag.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\_EF\Tx_TransferSummaryOut.cs">

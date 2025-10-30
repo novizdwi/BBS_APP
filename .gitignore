@@ -4,3 +4,22 @@
 
 /.vs
 /BBS_APP/BBS_APP/obj/Debug/build.force
+# VS / .NET
+bin/
+obj/
+*.user
+*.suo
+*.pdb
+*.cache
+*.log
+*.ide/
+.vs/
+_TestResults/
+*.nupkg
+*.snupkg
+*.ldb
+*.db
+# EF / designer temp
+edmxResourcesToEmbed/
+Debug/
+Release/

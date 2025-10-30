@@ -199,11 +199,11 @@
 
 
     function RefreshAfterSuccess(response) {
-        //var tab = ASPxClientTabControl.Cast("TabDetail");
+        var tab = ASPxClientTabControl.Cast("TabDetail");
 
-        //if (tab.GetActiveTabIndex != 0) {
-        //    tab.SetActiveTabIndex(0);
-        //}
+        if (tab.GetActiveTabIndex != 0) {
+            tab.SetActiveTabIndex(0);
+        }
 
         $("#contentForm").html(response);
 
@@ -245,7 +245,7 @@
     function GetFormData() {
         var formData = $('#formDetail').serializeObject();
 
-        var Details_ = GetGvDetails('gvDetail');
+        var Details_ = GetGvDetails('gvTransferRequestDetail');
         $.extend(formData, { Details_: Details_ });
         return formData;
     }
@@ -511,7 +511,7 @@
     }
 
     function OnClickChooseItem(s, e, detId) {
-        key = Id.GetValue();
+        @*key = Id.GetValue();
 
         var popup = ASPxClientPopupControl.Cast("popupItemTag");
 
@@ -520,7 +520,7 @@
 
         if (!popup.IsVisible()) {
             loadingPanel.Show();
-        }
+        }*@
     }
 
     function btnUpdateReasonOnClick(s, e) {
@@ -599,32 +599,241 @@
 </script>
 <script type="text/javascript">
 
-    function gvDetailOnBeginCallback(s, e) {
+    function gvTransferRequestDetailOnBeginCallback(s, e) {
         e.customArgs['cbId'] = Id.GetValue();
     }
 
-    function gvDetailOnEndCallback(s, e) {
+    function gvTransferRequestDetailOnEndCallback(s, e) {
 
     }
 
-    function gvDetailOnCustomButtonClick(s, e) {
+    function gvTransferRequestDetailOnCustomButtonClick(s, e) {
+
+        if (e.buttonID == "deleteButton") {
+            //if (confirm('Delete line transaction?')) {
+                //s.batchEditApi.StartEdit(e.visibleIndex);
+                //var rowValues = s.batchEditHelper.GetRowValues(e.visibleIndex);
+                //gvTransferRequestDetailCalculateSummary(s, rowValues, e.visibleIndex, true);
+                //s.DeleteRow(e.visibleIndex);
+                //s.GetBatchEditHelper().CanUpdate();
+
+                var vi = e.visibleIndex;
+
+                // Pastikan nilai editor di-commit ke batch cache
+                s.batchEditApi.EndEdit();
+
+                // Ambil nilai langsung dari cache batch edit
+                var fields = ["Qty", "Price", "Discount", "Amount"]; // ganti sesuai kolom
+                var rowValues = {};
+                fields.forEach(function (f) {
+                    rowValues[f] = s.batchEditApi.GetCellValue(vi, f);
+                });
+
+                // Hitung ulang summary (sebelum hapus, jika logika Anda perlu)
+                gvTransferRequestDetailCalculateSummary(s, rowValues, vi, true);
+
+                // Hapus baris di batch
+                s.DeleteRow(vi);
+
+            //}
+        }
+
     }
 
 
-    function gvDetailOnBatchEditStartEditing(s, e) {
+    function gvTransferRequestDetailOnBatchEditStartEditing(s, e) {
     }
 
-    function gvDetailOnBatchEditEndEditing(s, e) {
+    function gvTransferRequestDetailOnBatchEditEndEditing(s, e) {
     }
 
-    function gvDetailOnBatchEditRowValidating(s, e) {
+    function gvTransferRequestDetailOnBatchEditRowValidating(s, e) {
     }
 
-    function gvDetailCalculateSummary(grid, rowValues, visibleIndex, isDeleting) {
+    function gvTransferRequestDetailCalculateSummary(grid, rowValues, visibleIndex, isDeleting) {
     }
 
 </script>
 
+@*
+    ----------------------------------------------------------------------------
+        CflWarehouse
+
+    ----------------------------------------------------------------------------
+*@
+
+@{
+    var cflWarehouse_ParamModel = new CflWarehouse_ParamModel();
+    cflWarehouse_ParamModel.Name = "TransferRequest";
+    cflWarehouse_ParamModel.Type = "TransferRequest";
+    cflWarehouse_ParamModel.SqlWhere = "   ";
+    cflWarehouse_ParamModel.Header = "";
+
+    cflWarehouse_ParamModel.IsMulti = "N";
+}
+
+
+
+<script type="text/javascript">
+
+    function BtnCflWarehousePopupListTransferRequestOnClick(s, e) {
+
+        //cflCrmWorkOrderHdrPopupListDeliveryOrder.Show();
+
+        var popup = ASPxClientPopupControl.Cast("cflWarehousePopupListTransferRequest");
+
+        var gv = ASPxClientGridView.Cast('gvCflWarehouseListTransferRequest');
+
+        if (gv == null) {
+            popup.Show();
+        } else {
+            popup.SetContentHtml("");
+            popup.PerformCallback();
+            popup.Show();
+        }
+
+    }
+
+
+    function OnClickChoose_CflWarehouseTransferRequest(s, e, data) {
+        FromWhsCode.SetValue(data.WhsCode);
+        FromWhsName.SetValue(data.WhsName);
+
+        cflWarehousePopupListTransferRequest.Hide();
+
+    }
+
+
+
+
+</script>
+@Html.Partial("~/Views/_Cfl/_CflWarehouse/Partial/_CflWarehouse_Panel_List_Partial.cshtml", cflWarehouse_ParamModel)
+
+@*
+    ----------------------------------------------------------------------------
+        CflToWarehouse
+
+    ----------------------------------------------------------------------------
+*@
+
+@{
+    var cflToWarehouse_ParamModel = new CflToWarehouse_ParamModel();
+    cflToWarehouse_ParamModel.Name = "TransferRequest";
+    cflToWarehouse_ParamModel.Type = "TransferRequest";
+    cflToWarehouse_ParamModel.SqlWhere = "   ";
+    cflToWarehouse_ParamModel.Header = "";
+
+    cflToWarehouse_ParamModel.IsMulti = "N";
+}
+
+
+
+<script type="text/javascript">
+
+    function BtnCflToWarehousePopupListTransferRequestOnClick(s, e) {
+
+        //cflCrmWorkOrderHdrPopupListDeliveryOrder.Show();
+
+        var popup = ASPxClientPopupControl.Cast("cflToWarehousePopupListTransferRequest");
+
+        var gv = ASPxClientGridView.Cast('gvCflToWarehouseListTransferRequest');
+
+        if (gv == null) {
+            popup.Show();
+        } else {
+            popup.SetContentHtml("");
+            popup.PerformCallback();
+            popup.Show();
+        }
+
+    }
+
+
+    function OnClickChoose_CflToWarehouseTransferRequest(s, e, data) {
+        ToWhsCode.SetValue(data.WhsCode);
+        ToWhsName.SetValue(data.WhsName);
+
+        cflToWarehousePopupListTransferRequest.Hide();
+
+    }
+
+
+
+
+</script>
+@Html.Partial("~/Views/_Cfl/_CflToWarehouse/Partial/_CflToWarehouse_Panel_List_Partial.cshtml", cflToWarehouse_ParamModel)
+
+@*
+    -----------------------------------------------------------------------------
+    gvCflItemByWarehouseList
+    -----------------------------------------------------------------------------
+*@
+
+
+@{
+    var cflItemByWarehouse_ParamModel = new CflItemByWarehouse_ParamModel();
+    cflItemByWarehouse_ParamModel.Name = "TransferRequest";
+    cflItemByWarehouse_ParamModel.Type = "TransferRequest";
+    cflItemByWarehouse_ParamModel.SqlWhere = "    ";
+    cflItemByWarehouse_ParamModel.Header = "";
+
+    cflItemByWarehouse_ParamModel.IsMulti = "Y";
+}
+
+
+
+<script type="text/javascript">
+
+    function BtnCflItemByWarehousePopupListTransferRequestOnClick(s, e) {
+
+        var popup = ASPxClientPopupControl.Cast("cflItemByWarehousePopupListTransferRequest");
+
+        var gv = ASPxClientGridView.Cast('gvCflItemByWarehouseListTransferRequest');
+
+        if (gv == null) {
+            popup.Show();
+        } else {
+            popup.SetContentHtml("");
+            popup.PerformCallback();
+            popup.Show();
+        }
+    }
+
+
+    function OnClickChoose_CflItemByWarehouseTransferRequest(s, e) {
+        gvCflItemByWarehouseListTransferRequest.GetSelectedFieldValues('ItemCode', GetSelectedFieldValuesCallback_CflItemByWarehouse);
+    }
+
+
+    function GetSelectedFieldValuesCallback_CflItemByWarehouse(values) {
+        cflItemByWarehousePopupListTransferRequest.Hide();
+
+        key = Id.GetValue();
+        fromWhsCodeKey = FromWhsCode.GetValue();
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("ChooseItem", "TransferRequest")',
+            data: { Id: key, Data: values },
+            beforeSend: function () {
+                OnBegin();
+            },
+            success: function (response) {
+                gvTransferRequestDetail.PerformCallback();
+                OnSuccessMsgBox();             
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                OnFailure(jqXhr, textStatus, errorThrown)
+            },
+            complete: function () {
+                OnComplete();
+            }
+        });
+
+    }
+
+</script>
+@Html.Partial("~/Views/_Cfl/_CflItemByWarehouse/Partial/_CflItemByWarehouse_Panel_List_Partial.cshtml", cflItemByWarehouse_ParamModel)
 
 
 @Html.Partial("Partial/TransferRequest_Form_Btn_Partial")
