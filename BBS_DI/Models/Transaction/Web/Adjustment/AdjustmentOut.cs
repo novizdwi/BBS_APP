@@ -165,6 +165,8 @@ namespace Models.Transaction.Web.Adjustment
         public string Status { get; set; }
 
         public string Information { get; set; }
+
+        public string PostResultNote { get; set; }
     }
 
 

@@ -76,12 +76,10 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_AdjustmentIn> Tx_AdjustmentIn { get; set; }
         public virtual DbSet<Tx_AdjustmentIn_Attachment> Tx_AdjustmentIn_Attachment { get; set; }
         public virtual DbSet<Tx_AdjustmentIn_Item> Tx_AdjustmentIn_Item { get; set; }
-        public virtual DbSet<Tx_AdjustmentIn_Item_Tag> Tx_AdjustmentIn_Item_Tag { get; set; }
         public virtual DbSet<Tx_AdjustmentIn_Location> Tx_AdjustmentIn_Location { get; set; }
         public virtual DbSet<Tx_AdjustmentOut> Tx_AdjustmentOut { get; set; }
         public virtual DbSet<Tx_AdjustmentOut_Attachment> Tx_AdjustmentOut_Attachment { get; set; }
         public virtual DbSet<Tx_AdjustmentOut_Item> Tx_AdjustmentOut_Item { get; set; }
-        public virtual DbSet<Tx_AdjustmentOut_Item_Tag> Tx_AdjustmentOut_Item_Tag { get; set; }
         public virtual DbSet<Tx_AdjustmentOut_Location> Tx_AdjustmentOut_Location { get; set; }
         public virtual DbSet<Tx_GoodIssue> Tx_GoodIssue { get; set; }
         public virtual DbSet<Tx_GoodsReceiptPO> Tx_GoodsReceiptPO { get; set; }
@@ -93,7 +91,6 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_Request_StockOpname> Tx_Request_StockOpname { get; set; }
         public virtual DbSet<Tx_StockOpname> Tx_StockOpname { get; set; }
         public virtual DbSet<Tx_StockOpname_Item> Tx_StockOpname_Item { get; set; }
-        public virtual DbSet<Tx_TransferIn> Tx_TransferIn { get; set; }
         public virtual DbSet<Tx_TransferIn_Item> Tx_TransferIn_Item { get; set; }
         public virtual DbSet<Tx_TransferIn_Item_Tag> Tx_TransferIn_Item_Tag { get; set; }
         public virtual DbSet<Tx_TransferOut> Tx_TransferOut { get; set; }
@@ -105,5 +102,8 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_TransferSummaryOut_Item> Tx_TransferSummaryOut_Item { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut_Item_Tag> Tx_TransferSummaryOut_Item_Tag { get; set; }
         public virtual DbSet<Tx_StockOpname_Item_Tag> Tx_StockOpname_Item_Tag { get; set; }
+        public virtual DbSet<Tx_AdjustmentIn_Item_Tag> Tx_AdjustmentIn_Item_Tag { get; set; }
+        public virtual DbSet<Tx_AdjustmentOut_Item_Tag> Tx_AdjustmentOut_Item_Tag { get; set; }
+        public virtual DbSet<Tx_TransferIn> Tx_TransferIn { get; set; }
     }
 }

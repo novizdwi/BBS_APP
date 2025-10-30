@@ -31,8 +31,6 @@ namespace BBS_DI.Models._EF
         public string FromWhsName { get; set; }
         public string ToWhsCode { get; set; }
         public string ToWhsName { get; set; }
-        public Nullable<int> PriecList { get; set; }
-        public string PriecListName { get; set; }
         public string ScanDeviceId { get; set; }
         public string Status { get; set; }
         public string IsAfterPosted { get; set; }
@@ -43,5 +41,7 @@ namespace BBS_DI.Models._EF
         public Nullable<int> CreatedUser { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> ModifiedUser { get; set; }
+        public string PriceList { get; set; }
+        public string PriceListName { get; set; }
     }
 }
