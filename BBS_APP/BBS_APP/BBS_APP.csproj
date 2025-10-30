@@ -711,6 +711,48 @@
     <Content Include="Views\_Cfl\_CflTransferRequest\Partial\_CflTransferRequest_Panel_List_Partial.cshtml" />
     <Content Include="Views\_Cfl\_CflTransferSummaryOut\Partial\_CflTransferSummaryOut_List_Partial.cshtml" />
     <Content Include="Views\_Cfl\_CflTransferSummaryOut\Partial\_CflTransferSummaryOut_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentIn.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\AdjustmentIn_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\AdjustmentIn_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\AdjustmentIn_Form_TabAttachment_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\AdjustmentIn_Form_TabDetail_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\AdjustmentIn_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\AdjustmentIn_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\Attachment\Attachment_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\Attachment\Attachment_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\Attachment\Attachment_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\CancelReason\CancelReason_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\CancelReason\CancelReason_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\CancelReason\CancelReason_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\ItemTag\ItemTag_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\ItemTag\ItemTag_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\ItemTag\ItemTag_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\ItemTag\ItemTag_TabItemTagList_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\AdjustmentOut.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\AdjustmentOut_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\AdjustmentOut_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\AdjustmentOut_Form_TabAttachment_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\AdjustmentOut_Form_TabDetail_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\AdjustmentOut_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\AdjustmentOut_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\Attachment\Attachment_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\Attachment\Attachment_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\Attachment\Attachment_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\CancelReason\CancelReason_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\CancelReason\CancelReason_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\CancelReason\CancelReason_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\ItemTag\ItemTag_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\ItemTag\ItemTag_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\ItemTag\ItemTag_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\ItemTag\ItemTag_TabItemTagList_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\RequestStockOpname\Partial\CancelReason\CancelReason_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\RequestStockOpname\Partial\CancelReason\CancelReason_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\RequestStockOpname\Partial\CancelReason\CancelReason_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\RequestStockOpname\Partial\RequestStockOpname_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\RequestStockOpname\Partial\RequestStockOpname_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\RequestStockOpname\Partial\RequestStockOpname_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\RequestStockOpname\Partial\RequestStockOpname_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\RequestStockOpname\RequestStockOpname.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -740,6 +782,7 @@
     <Compile Include="Controllers\Authentication\User\UserController.List.Export.cs" />
     <Compile Include="Controllers\Authentication\User\UserController.Nav.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CommonFileHelper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Report\ReportAlert\ReportAlertController.cs" />
     <Compile Include="Controllers\Report\ReportAlert\ReportAlertController.ListDetail.cs" />
@@ -869,6 +912,7 @@
     <Folder Include="Rpts\Layout\" />
     <Folder Include="Rpts\Models\" />
     <Folder Include="Views\Authentication\Login\Partial\" />
+    <Folder Include="Views\GeneralSetting\" />
     <Folder Include="Views\Logout\" />
     <Folder Include="Views\Master\" />
   </ItemGroup>

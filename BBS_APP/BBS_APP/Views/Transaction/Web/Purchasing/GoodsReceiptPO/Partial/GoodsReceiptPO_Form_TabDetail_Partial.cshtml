@@ -31,6 +31,8 @@
     settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
     settings.Columns.Add("Id", "Id").Visible = false;
     settings.Columns.Add("DetId", "DetId").Visible = false;
+    settings.Columns.Add("IdPDO", "IdPDO").Width = 0;
+    settings.Columns.Add("PDODocNum_", "Production No").Width = 200;
 
     settings.Columns.Add(column =>
     {
@@ -40,7 +42,7 @@
 
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 100;
+        column.Width = 150;
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
         column.ReadOnly = true;
 
@@ -71,7 +73,7 @@
         column.Caption = "Item Name";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 200;
+        column.Width = 220;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
 
@@ -163,7 +165,7 @@
         column.Caption = "Free Text";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 200;
+        column.Width = 220;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
 
@@ -180,6 +182,22 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 80;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+    });
+    
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "GRDocNum_";
+        column.Name = "GRDocNum_";
+        column.Caption = "GR No.";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 100;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
 
@@ -209,7 +227,7 @@
         column.Caption = "Line Status";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 120;
+        column.Width = 0;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
 

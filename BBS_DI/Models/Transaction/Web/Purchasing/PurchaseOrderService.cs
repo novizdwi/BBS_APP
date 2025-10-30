@@ -68,17 +68,19 @@ namespace Models.Transaction.Web.Purchasing
 
         public string CancelReason { get; set; }
 
-        public List<PurchaseOrder_DetailModel> ListDetails_ = new List<PurchaseOrder_DetailModel>();
+        public List<PurchaseOrder_ItemModel> ListDetails_ = new List<PurchaseOrder_ItemModel>();
 
-        public PurchaseOrder_Detail Details_ { get; set; }
+        public PurchaseOrder_Item Details_ { get; set; }
     }
-    public class PurchaseOrder_Detail
+
+    public class PurchaseOrder_Item
     {
         public List<long> deletedRowKeys { get; set; }
-        public List<PurchaseOrder_DetailModel> insertedRowValues { get; set; }
-        public List<PurchaseOrder_DetailModel> modifiedRowValues { get; set; }
+        public List<PurchaseOrder_ItemModel> insertedRowValues { get; set; }
+        public List<PurchaseOrder_ItemModel> modifiedRowValues { get; set; }
     }
-    public class PurchaseOrder_DetailModel
+
+    public class PurchaseOrder_ItemModel
     {
 
         private FormModeEnum _FormModeEnum = FormModeEnum.New;
@@ -122,6 +124,10 @@ namespace Models.Transaction.Web.Purchasing
         public long? LineNum { get; set; }
 
         public string LineStatus { get; set; }
+
+        public int? IdPDO { get; set; }
+
+        public string PDODocNum_ { get; set; }
     }
 
     public class PurchaseOrderItemTagView___
@@ -134,7 +140,7 @@ namespace Models.Transaction.Web.Purchasing
 
         public string ItemName { get; set; }
 
-        public List<PurchaseOrderItemTagModel> PurchaseOrderItemTagModel___ { get; set; }
+        public List<PurchaseOrderItemTagModel> PurchaseOrder_Item_TagModel___ { get; set; }
     }
 
     public class PurchaseOrderItemTagModel
@@ -195,28 +201,30 @@ namespace Models.Transaction.Web.Purchasing
 
                 model = CONTEXT.Database.SqlQuery<PurchaseOrderModel>(ssql, id).Single();
 
-                model.ListDetails_ = this.PurchaseOrder_Details(CONTEXT, id);
+                model.ListDetails_ = this.PurchaseOrder_Items(CONTEXT, id);
             }
 
             return model;
         }
-        public List<PurchaseOrder_DetailModel> PurchaseOrder_Details(long id = 0)
+
+        public List<PurchaseOrder_ItemModel> PurchaseOrder_Items(long id = 0)
         {
             using (var CONTEXT = new HANA_APP())
             {
-                return PurchaseOrder_Details(CONTEXT, id);
+                return PurchaseOrder_Items(CONTEXT, id);
             }
 
         }
 
-        public List<PurchaseOrder_DetailModel> PurchaseOrder_Details(HANA_APP CONTEXT, long id = 0)
+        public List<PurchaseOrder_ItemModel> PurchaseOrder_Items(HANA_APP CONTEXT, long id = 0)
         {
-            string ssql = @"SELECT * 
-                FROM ""Tx_PurchaseOrder_Item"" 
-                WHERE ""Id"" =:p0
-                ORDER BY ""DetId"" ASC
+            string ssql = @"SELECT T0.*, T1.""DocNum"" AS ""PDODocNum_""
+                FROM ""Tx_PurchaseOrder_Item"" T0
+                LEFT JOIN """ + DbProvider.dbSap_Name + @""".""OWOR"" T1 ON T0.""IdPDO"" = T1.""DocEntry""
+                WHERE T0.""Id"" =:p0
+                ORDER BY T0.""DetId"" ASC
             ";
-            var purchaseOrder = CONTEXT.Database.SqlQuery<PurchaseOrder_DetailModel>(ssql, id).ToList();
+            var purchaseOrder = CONTEXT.Database.SqlQuery<PurchaseOrder_ItemModel>(ssql, id).ToList();
             return purchaseOrder;
         }
 
@@ -712,7 +720,7 @@ namespace Models.Transaction.Web.Purchasing
                             FROM ""Tx_PurchaseOrder_Item_Tag"" T0   
                             WHERE T0.""Id""=:p0 AND ""DetId"" = :p1 ";
 
-                model.PurchaseOrderItemTagModel___ = CONTEXT.Database.SqlQuery<PurchaseOrderItemTagModel>(sql, id, detId).ToList();
+                model.PurchaseOrder_Item_TagModel___ = CONTEXT.Database.SqlQuery<PurchaseOrderItemTagModel>(sql, id, detId).ToList();
             }
 
             return model;

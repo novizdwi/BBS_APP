@@ -691,6 +691,99 @@ namespace Models._Utils
             return dt;
         }
 
+        public static DataTable GetSAPCodeOfAccount()
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                string ssql = @"
+                    SELECT ""AcctCode"" AS ""Code"", ""AcctName"" AS ""Name""
+                    FROM ""{0}"".""OACT""
+                    WHERE ""Levels"" = 6
+                    ORDER BY ""AcctCode"" ASC
+                ";
+
+                ssql = string.Format(ssql, DbProvider.dbSap_Name);
+                return GetDataTable(CONTEXT, ssql);
+            }
+        }
+
+        public static string GetSAPCoaAdjustment(string code)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                string ssql = @"
+                    SELECT T0.""U_IDU_Account"" AS ""Code""
+                    FROM ""{0}"".""@ADJUSTMENTTYPE"" AS T0
+                    WHERE T0.""Code"" = '{1}'
+                ";
+
+                ssql = string.Format(ssql, DbProvider.dbSap_Name, code);
+                return CONTEXT.Database.SqlQuery<string>(ssql).FirstOrDefault();
+            }
+        }
+
+        public static DataTable GetSAPCodeOfAccountWithNull()
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                string ssql = @"
+                    SELECT NULL AS ""Code"", NULL AS ""Name"" FROM DUMMY
+                        UNION ALL
+                    SELECT ""AcctCode"" AS ""Code"", ""AcctName"" AS ""Name""
+                    FROM ""{0}"".""OACT""
+                    WHERE ""Levels"" = 6
+                ";
+
+                ssql = string.Format(ssql, DbProvider.dbSap_Name);
+                return GetDataTable(CONTEXT, ssql);
+            }
+        }
+
+        public static DataTable GetSAPAdjustmentTypeWithNull(string adjustmentType = "IN" )
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                string ssql = @"
+                    SELECT NULL AS ""Code"", NULL AS ""Name"" FROM DUMMY
+                        UNION ALL
+                    SELECT T0.""Code"" AS ""Code"", T0.""Name"" AS ""Name""
+                    FROM ""{0}"".""@ADJUSTMENTTYPE"" AS T0
+                    WHERE ""U_IDU_Type"" = {1}
+                ";
+
+                ssql = string.Format(ssql, DbProvider.dbSap_Name, adjustmentType);
+                return GetDataTable(CONTEXT, ssql);
+            }
+        }
+
+        public static DataTable GetSAPAdjustmentType(string adjustmentType = "IN" )
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                string ssql = @"
+                    SELECT T0.""Code"" AS ""Code"", T0.""Name"" AS ""Name""
+                    FROM ""{0}"".""@ADJUSTMENTTYPE"" AS T0
+                    WHERE ""U_IDU_Type"" = {1}
+                ";
+
+                ssql = string.Format(ssql, DbProvider.dbSap_Name, adjustmentType);
+                return GetDataTable(CONTEXT, ssql);
+            }
+        }
+
+
+        public static DataTable GetSAPUserFields(string TableId)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                string ssql = @"SELECT T0.""FldValue"" AS ""Code"", T0.""Descr"" AS ""Name""
+                            FROM ""{0}"".""UFD1"" T0 WHERE T0.""TableID"" = '{1}' ORDER BY T0.""FldValue"" ASC ";
+
+                ssql = string.Format(ssql, DbProvider.dbSap_Name, TableId);
+                return GetDataTable(CONTEXT, ssql);
+            }
+        }
+
     }
 
 

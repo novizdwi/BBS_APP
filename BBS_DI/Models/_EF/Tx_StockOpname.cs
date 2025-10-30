@@ -18,8 +18,7 @@ namespace BBS_DI.Models._EF
         public string TransType { get; set; }
         public string TransNo { get; set; }
         public Nullable<System.DateTime> TransDate { get; set; }
-        public Nullable<long> RequestId { get; set; }
-        public string RequestNo { get; set; }
+        public Nullable<long> TicketId { get; set; }
         public string WhsCode { get; set; }
         public string ScanDeviceId { get; set; }
         public string Status { get; set; }
