@@ -217,6 +217,36 @@
     }
 
 
+     function btnAddItemOnClick(s, e) {
+        if (!confirm('This action may takes time, are you sure want to refresh item detail?'))
+        {
+            return;
+        }
+
+        var key = Id.GetValue();
+        var formData = GetFormData();
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("AddItem", "TransferOut")',
+            data: formData,
+            beforeSend: function () {
+                OnBegin();
+            },
+            success: function (response) {
+                RefreshAfterSuccess(response);
+                OnSuccessMsgBox();
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                OnFailure(jqXhr, textStatus, errorThrown)
+            },
+            complete: function () {
+                OnComplete()
+            }
+        });
+
+
+    }
 
     function OnClickBtnNew(s, e) {
 

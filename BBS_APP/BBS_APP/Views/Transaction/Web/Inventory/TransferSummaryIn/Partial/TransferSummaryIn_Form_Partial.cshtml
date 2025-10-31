@@ -105,7 +105,7 @@
         txt.Width = 230;
     });
 
-    
+
     groupItem_Col1.Items.Add(itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
@@ -268,6 +268,8 @@
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
         itemSettings.Caption = "Warehouse Code";
         itemSettings.FieldName = "FromWhsCode";
+        itemSettings.ClientVisible = false;
+
         var txt = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
         txt.Name = "FromWhsCode";
         txt.ReadOnly = true;
@@ -291,8 +293,48 @@
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
         itemSettings.Caption = "Warehouse";
         itemSettings.FieldName = "FromWhsName";
+        itemSettings.ClientVisible = false;
+
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
         txt.Name = "FromWhsName";
+        txt.ShowModelErrors = true;
+        txt.ReadOnly = true;
+        txt.ControlStyle.CssClass = "editor";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Width = 230;
+    });
+
+    groupItem_Col2.Items.Add(itemSettings =>
+    {
+        itemSettings.Name = "grpTransitWhsCode";
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
+        itemSettings.Caption = "Transit Warehouse";
+        itemSettings.FieldName = "TransitWhsCode";
+        var txt = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "TransitWhsCode";
+        txt.ReadOnly = true;
+        txt.ShowModelErrors = true;
+
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        //txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Properties.ValidationSettings.Display = Display.Dynamic;
+        //txt.Width = 100;
+
+        // Hide the default DropDown button
+        txt.Properties.DropDownButton.Visible = false;
+        txt.Properties.ButtonStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Width = 230;
+    });
+
+    groupItem_Col2.Items.Add(itemSettings =>
+    {
+        itemSettings.Name = "grpTransitWhsName";
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Warehouse";
+        itemSettings.FieldName = "TransitWhsName";
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "TransitWhsName";
         txt.ShowModelErrors = true;
         txt.ReadOnly = true;
         txt.ControlStyle.CssClass = "editor";
@@ -337,6 +379,7 @@
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
         txt.Width = 230;
     });
+
 
     //groupItem_Col2.Items.Add(itemSettings =>
     //{

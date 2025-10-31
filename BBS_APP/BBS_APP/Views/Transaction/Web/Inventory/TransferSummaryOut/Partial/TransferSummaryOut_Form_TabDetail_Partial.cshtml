@@ -103,7 +103,7 @@
         column.Caption = "Whse Name";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 150;
+        column.Width = 200;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
 
@@ -135,7 +135,39 @@
         column.Caption = "To Whse Name";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 150;
+        column.Width = 200;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "TransitWhsCode";
+        column.Name = "TransitWhsCode";
+        column.Caption = "Transit";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 100;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "TransitWhsName";
+        column.Name = "TransitWhsName";
+        column.Caption = "Transit Whse Name";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 200;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
 
@@ -189,20 +221,20 @@
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
     });
 
-    settings.Columns.Add(column =>
-    {
-        column.FieldName = "Uom";
-        column.Name = "Uom";
-        column.Caption = "UoM";
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "Uom";
+    //    column.Name = "Uom";
+    //    column.Caption = "UoM";
 
-        column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 100;
-        column.Settings.AllowSort = DefaultBoolean.False;
-        column.ReadOnly = true;
+    //    column.ColumnType = MVCxGridViewColumnType.TextBox;
+    //    column.Width = 100;
+    //    column.Settings.AllowSort = DefaultBoolean.False;
+    //    column.ReadOnly = true;
 
-        var txt = column.PropertiesEdit as TextBoxProperties;
-        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-    });
+    //    var txt = column.PropertiesEdit as TextBoxProperties;
+    //    txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+    //});
 
     settings.Columns.Add(column =>
     {

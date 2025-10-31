@@ -683,7 +683,7 @@ new
     var cflTransferSummaryOut_ParamModel = new CflTransferSummaryOut_ParamModel();
     cflTransferSummaryOut_ParamModel.Name = "TransferSummaryIn";
     cflTransferSummaryOut_ParamModel.Type = "TransferSummaryIn";
-    cflTransferSummaryOut_ParamModel.Header = " Goods Receipt PO";
+    cflTransferSummaryOut_ParamModel.Header = "Transfer Summary In";
     cflTransferSummaryOut_ParamModel.SqlWhere = " ";
     cflTransferSummaryOut_ParamModel.IsMulti = "N";
 }
@@ -699,6 +699,9 @@ new
 
         ToWhsCode.SetValue(data.ToWhsCode);
         ToWhsName.SetValue(data.ToWhsName);
+
+        TransitWhsCode.SetValue(data.TransitWhsCode);
+        TransitWhsName.SetValue(data.TransitWhsName);
 
         BaseEntry.SetValue(data.Id);
         BaseDocNum.SetValue(data.TransNo);

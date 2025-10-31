@@ -36,7 +36,7 @@ namespace Controllers._Cfl
                 hidden_CflDocId = hidden_CflDocId.Replace("'", "''");
 
                 cflParam.SqlWhere = string.Format(" AND " +
-                                                " T0.\"Id\" NOT IN (SELECT T0_.\"BaseEntry\" FROM \"Tx_TransferSummaryIn\" T0_ WHERE T0_.\"Status\"='Cancel' )" +
+                                                " T0.\"Id\" NOT IN (SELECT T0_.\"BaseEntry\" FROM \"Tx_TransferSummaryIn\" T0_ WHERE T0_.\"Status\"<>'Cancel' )" +
                                                 " ", hidden_CflDocId);
               }
 

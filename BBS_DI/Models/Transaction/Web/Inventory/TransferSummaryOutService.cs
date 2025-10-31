@@ -68,6 +68,10 @@ namespace Models.Transaction.Web.Inventory
         [Required(ErrorMessage = "required")]
         public string ToWhsName { get; set; }
 
+        public string TransitWhsCode { get; set; }
+
+        public string TransitWhsName { get; set; }
+
         public string Address { get; set; }
 
         public string RefNo { get; set; }
@@ -123,6 +127,10 @@ namespace Models.Transaction.Web.Inventory
         public string ToWhsCode { get; set; }
 
         public string ToWhsName { get; set; }
+
+        public string TransitWhsCode { get; set; }
+
+        public string TransitWhsName { get; set; }
 
         public decimal? Quantity { get; set; }
 
@@ -662,8 +670,6 @@ namespace Models.Transaction.Web.Inventory
 
                             if (!string.IsNullOrEmpty(TransferSummaryOutResult.DocEntry))
                             {
-                                //oCompany.EndTransaction(BoWfTransOpt.wf_Commit);
-
                                 string ssql = @"SELECT ""DocNum"" 
                                             FROM """ + DbProvider.dbSap_Name + @""".""OWTR"" T0
                                             WHERE T0.""DocEntry"" = " + TransferSummaryOutResult.DocEntry + @" 
@@ -744,7 +750,7 @@ namespace Models.Transaction.Web.Inventory
             oInventoryTransfer.TaxDate = (DateTime)model.TransDate;
 
             oInventoryTransfer.FromWarehouse = model.FromWhsCode;
-            oInventoryTransfer.ToWarehouse = model.ToWhsCode;
+            oInventoryTransfer.ToWarehouse = model.TransitWhsCode;
 
             //oDocument.CardCode = model.VendorCode;
             //oDocument.CardName = model.VendorCode;
@@ -769,11 +775,9 @@ namespace Models.Transaction.Web.Inventory
                     //oDocument.Lines.BaseEntry = Convert.ToInt32(model.BaseEntry);
                     //oDocument.Lines.BaseLine = Convert.ToInt32(item.BaseLine);
 
-
-
                     oInventoryTransfer.Lines.ItemCode = item.ItemCode;
                     oInventoryTransfer.Lines.FromWarehouseCode = item.FromWhsCode;
-                    oInventoryTransfer.Lines.WarehouseCode = item.ToWhsCode;
+                    oInventoryTransfer.Lines.WarehouseCode = item.TransitWhsCode;
                     oInventoryTransfer.Lines.Quantity = (double)item.QuantityScan;
 
                     if (item.UomEntry != null)

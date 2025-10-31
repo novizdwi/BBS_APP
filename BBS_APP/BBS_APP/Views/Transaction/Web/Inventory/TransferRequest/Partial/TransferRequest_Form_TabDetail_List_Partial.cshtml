@@ -246,7 +246,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.SpinEdit;
         //column.ReadOnly = true;
-            
+
         if (ViewBag.ReadOnly)
         {
 
@@ -309,20 +309,20 @@
     //    txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
     //});
 
-    settings.Columns.Add(column =>
-    {
-        column.FieldName = "Uom";
-        column.Name = "Uom";
-        column.Caption = "UoM";
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "Uom";
+    //    column.Name = "Uom";
+    //    column.Caption = "UoM";
 
-        column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 100;
-        column.Settings.AllowSort = DefaultBoolean.False;
-        column.ReadOnly = true;
+    //    column.ColumnType = MVCxGridViewColumnType.TextBox;
+    //    column.Width = 100;
+    //    column.Settings.AllowSort = DefaultBoolean.False;
+    //    column.ReadOnly = true;
 
-        var txt = column.PropertiesEdit as TextBoxProperties;
-        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-    });
+    //    var txt = column.PropertiesEdit as TextBoxProperties;
+    //    txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+    //});
 
     //settings.Columns.Add(column =>
     //{

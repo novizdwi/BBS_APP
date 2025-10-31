@@ -331,6 +331,32 @@ namespace Models.Transaction.Web.Inventory
             return model;
         }
 
+        public bool AddItem(int userId, long id)
+        {
+            bool ret = true;
+            if (id != 0)
+            {
+                using (var CONTEXT = new HANA_APP())
+                {
+                    CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferOut_AddItemDetail\"(:p0,:p1,'Refresh')", userId, id);
+                }
+            }
+            return ret;
+        }
+
+        public bool AddItemTag(int userId, long id)
+        {
+            bool ret = true;
+            if (id != 0)
+            {
+                using (var CONTEXT = new HANA_APP())
+                {
+                    CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferOut_AddTagDetail\"(:p0,:p1,'Refresh')", userId, id);
+                }
+            }
+            return ret;
+        }
+
         public long Add(TransferOutModel model)
         {
             long Id = 0;

@@ -38,6 +38,9 @@ namespace Models._Cfl
         public string ToWhsCode { get; set; }
         public string ToWhsName { get; set; }
 
+        public string TransitWhsCode { get; set; }
+        public string TransitWhsName { get; set; }
+
         public string Comments { get; set; }
     }
 
@@ -45,7 +48,8 @@ namespace Models._Cfl
     {
         public static string ssql = @"
             SELECT DISTINCT T0.""Id"", T0.""TransNo"", 
-                T0.""TransDate"", T0.""FromWhsCode"", T0.""FromWhsName"", 
+                T0.""TransDate"", T0.""FromWhsCode"", T0.""FromWhsName"",
+                T0.""TransitWhsCode"", T0.""TransitWhsName"",
                 T0.""ToWhsCode"", T0.""ToWhsName"", T0.""Comments""
                 FROM ""Tx_TransferSummaryOut"" T0
                 WHERE T0.""Status"" = 'Posted' AND IFNULL(T0.""DocEntry"",0) <> 0              
