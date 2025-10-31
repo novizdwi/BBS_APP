@@ -66,9 +66,9 @@
     {
         column.FieldName = "TransDate";
         column.Name = "TransDate";
-        column.Caption = "Document Date";
+        column.Caption = "Trans Date";
         column.ColumnType = MVCxGridViewColumnType.DateEdit;
-        column.Width = Unit.Percentage(30);
+        column.Width = Unit.Percentage(35);
 
         var txt = column.PropertiesEdit as DateEditProperties;
         txt.EditFormat = EditFormat.Date;
@@ -79,15 +79,15 @@
     settings.Columns.Add(column =>
     {
         column.FieldName = "VendorCode";
-        column.Caption = "VendorCode.";
-        column.Name = "Vendor Code";
+        column.Caption = "Vendor Code";
+        column.Name = "VendorCode";
         column.Width = Unit.Percentage(50);
     });
 
     settings.Columns.Add(column =>
     {
         column.FieldName = "VendorName";
-        column.Caption = "VendorName";
+        column.Caption = "Vendor Name";
         column.Name = "Vendor Name";
         column.Width = Unit.Percentage(100);
     });
@@ -95,8 +95,8 @@
     settings.Columns.Add(column =>
     {
         column.FieldName = "DocNum";
-        column.Caption = "DocNum";
-        column.Name = "SAP Doc Num";
+        column.Caption = "PO Doc Num";
+        column.Name = "DocNum";
         column.Width = Unit.Percentage(80);
     });
 
@@ -105,6 +105,14 @@
         column.FieldName = "Status";
         column.Caption = "Status";
         column.Name = "Status";
+        column.Width = Unit.Percentage(50);
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CreatedUserName";
+        column.Caption = "Created User";
+        column.Name = "CreatedUserName";
         column.Width = Unit.Percentage(50);
     });
 

@@ -46,7 +46,7 @@
 
         column.Settings.AllowDragDrop = DefaultBoolean.False;
         column.Settings.AllowSort = DefaultBoolean.False;
-        column.Width = 70;
+        column.Width = 65;
     });
 
     settings.Settings.ShowFilterRow = true;
@@ -59,14 +59,14 @@
         column.FieldName = "TransNo";
         column.Caption = "Trans No";
         column.Name = "TransNo";
-        column.Width = Unit.Percentage(50);
+        column.Width = Unit.Percentage(30);
     });
 
     settings.Columns.Add(column =>
     {
         column.FieldName = "TransDate";
         column.Name = "TransDate";
-        column.Caption = "Document Date";
+        column.Caption = "Trans Date";
         column.ColumnType = MVCxGridViewColumnType.DateEdit;
         column.Width = Unit.Percentage(30);
 
@@ -79,25 +79,33 @@
     settings.Columns.Add(column =>
     {
         column.FieldName = "VendorCode";
-        column.Caption = "VendorCode.";
-        column.Name = "Vendor Code";
-        column.Width = Unit.Percentage(50);
+        column.Caption = "Vendor Code";
+        column.Name = "VendorCode";
+        column.Width = Unit.Percentage(30);
     });
 
     settings.Columns.Add(column =>
     {
         column.FieldName = "VendorName";
-        column.Caption = "VendorName";
-        column.Name = "Vendor Name";
+        column.Caption = "Vendor Name";
+        column.Name = "VendorName";
         column.Width = Unit.Percentage(100);
     });
 
     settings.Columns.Add(column =>
     {
-        column.FieldName = "DocNum";
-        column.Caption = "DocNum";
-        column.Name = "SAP Doc Num";
-        column.Width = Unit.Percentage(80);
+        column.FieldName = "BaseDocNum";
+        column.Caption = "PO Doc Num";
+        column.Name = "BaseDocNum";
+        column.Width = Unit.Percentage(45);
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "GrpoDocNum";
+        column.Caption = "GRPO Doc Num";
+        column.Name = "GrpoDocNum";
+        column.Width = Unit.Percentage(45);
     });
 
     settings.Columns.Add(column =>
@@ -105,7 +113,7 @@
         column.FieldName = "Status";
         column.Caption = "Status";
         column.Name = "Status";
-        column.Width = Unit.Percentage(50);
+        column.Width = Unit.Percentage(25);
     });
 
     settings.SettingsPager.Position = PagerPosition.Bottom;

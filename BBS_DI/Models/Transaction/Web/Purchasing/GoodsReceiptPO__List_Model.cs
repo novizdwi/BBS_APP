@@ -39,7 +39,9 @@ namespace Models.Transaction.Web.Purchasing
 
         public DateTime? DocDate { get; set; }
 
-        public string DocNum { get; set; }
+        public string BaseDocNum { get; set; }
+
+        public string GrpoDocNum { get; set; }
 
         public string Status { get; set; }
 
@@ -51,9 +53,10 @@ namespace Models.Transaction.Web.Purchasing
 
     public class GoodsReceiptPO__List_Model
     {
-        static string ViewSql = "SELECT *" +
-                                "FROM \"Tx_GoodsReceiptPO\" T0 " +
-                                "ORDER BY T0.\"CreatedDate\" DESC";
+        static string ViewSql = "SELECT T0.*, T1.\"DocNum\" AS \"GrpoDocNum\" " +
+            "FROM \"Tx_GoodsReceiptPO\" T0 " +
+            "LEFT JOIN \""+ DbProvider.dbSap_Name + "\".\"OPDN\" T1 ON T0.\"DocEntry\" = T1.\"DocEntry\" "+
+        "ORDER BY T0.\"CreatedDate\" DESC";
 
         public static void SetBindingData(GridViewModel state, int userId, ListFindParamGoodsReceiptPO cflParam)
         {

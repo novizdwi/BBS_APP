@@ -27,6 +27,9 @@
     settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
     settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
 
+    //settings.Settings.ShowFilterRow = true;
+    //settings.Settings.ShowFilterRowMenu = true;
+
     settings.CommandColumn.Width = 70;
     settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
     settings.Columns.Add("Id", "Id").Visible = false;
@@ -150,7 +153,7 @@
         column.Caption = "UoM";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 100;
+        column.Width = 0;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
 
@@ -188,16 +191,16 @@
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
     });
-    
+
 
     settings.Columns.Add(column =>
     {
         column.FieldName = "GRDocNum_";
         column.Name = "GRDocNum_";
-        column.Caption = "GR No.";
+        column.Caption = "Goods Receipt No";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 100;
+        column.Width = 120;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
 

@@ -43,6 +43,8 @@ namespace Models.Transaction.Web.Inventory
 
         public string Status { get; set; }
 
+        public string CreatedUserName { get; set; }
+
         public DateTime? StartDate { get; set; }
 
         public DateTime? EndDate { get; set; }
@@ -51,9 +53,10 @@ namespace Models.Transaction.Web.Inventory
 
     public class StockOpnameScan__List_Model
     {
-        static string ViewSql = "SELECT *" +
-                                "FROM \"Tx_StockOpname\" T0 " +
-                                "ORDER BY T0.\"CreatedDate\" DESC";
+        static string ViewSql = "SELECT T0.*, T1.\"FirstName\" AS \"CreatedUserName\"  " +
+                        "FROM \"Tx_StockOpname\" T0 " +
+                        "INNER JOIN \"Tm_User\" T1 ON T0.\"CreatedUser\" = T1.\"Id\" " +
+                        "ORDER BY T0.\"CreatedDate\" DESC";
 
         public static void SetBindingData(GridViewModel state, int userId, ListFindParamStockOpnameScan cflParam)
         {
