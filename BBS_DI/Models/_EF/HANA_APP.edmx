@@ -1056,12 +1056,12 @@
           <Property Name="TransType" Type="nvarchar" MaxLength="50" />
           <Property Name="TransNo" Type="nvarchar" MaxLength="50" />
           <Property Name="TransDate" Type="timestamp" />
-          <Property Name="RequestId" Type="bigint" />
-          <Property Name="RequestNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="TicketId" Type="bigint" />
           <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
           <Property Name="ScanDeviceId" Type="nvarchar" MaxLength="1000" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
           <Property Name="Comments" Type="nvarchar" MaxLength="254" />
+          <Property Name="CancelReason" Type="nvarchar" MaxLength="500" />
           <Property Name="CreatedDate" Type="timestamp" />
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
@@ -1350,6 +1350,8 @@
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
+          <Property Name="TransitWhsCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="TransitWhsName" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Tx_TransferSummaryIn_Item">
           <Key>
@@ -1376,6 +1378,8 @@
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
+          <Property Name="TransitWhsCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="TransitWhsName" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Tx_TransferSummaryIn_Item_Tag">
           <Key>
@@ -1431,6 +1435,8 @@
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
+          <Property Name="TransitWhsCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="TransitWhsName" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Tx_TransferSummaryOut_Item">
           <Key>
@@ -1457,6 +1463,8 @@
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
+          <Property Name="TransitWhsCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="TransitWhsName" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Tx_TransferSummaryOut_Item_Tag">
           <Key>
@@ -1635,7 +1643,6 @@
           <EntitySet Name="Tx_PurchaseOrder_Item" EntityType="Model1.Tx_PurchaseOrder_Item" />
           <EntitySet Name="Tx_PurchaseOrder_Item_Tag" EntityType="Model1.Tx_PurchaseOrder_Item_Tag" />
           <EntitySet Name="Tx_Request_StockOpname" EntityType="Model1.Tx_Request_StockOpname" />
-          <EntitySet Name="Tx_StockOpname" EntityType="Model1.Tx_StockOpname" />
           <EntitySet Name="Tx_StockOpname_Item" EntityType="Model1.Tx_StockOpname_Item" />
           <EntitySet Name="Tx_StockOpname_Item_Tag" EntityType="Model1.Tx_StockOpname_Item_Tag" />
           <EntitySet Name="Tx_TransferIn" EntityType="Model1.Tx_TransferIn" />
@@ -1652,6 +1659,7 @@
           <EntitySet Name="Tx_TransferSummaryOut" EntityType="Model1.Tx_TransferSummaryOut" />
           <EntitySet Name="Tx_TransferSummaryOut_Item" EntityType="Model1.Tx_TransferSummaryOut_Item" />
           <EntitySet Name="Tx_TransferSummaryOut_Item_Tag" EntityType="Model1.Tx_TransferSummaryOut_Item_Tag" />
+          <EntitySet Name="Tx_StockOpname" EntityType="Model1.Tx_StockOpname" />
         </EntityContainer>
         <EntityType Name="Tm_Alert">
           <Key>
@@ -2696,25 +2704,6 @@
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
-        <EntityType Name="Tx_StockOpname">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TransType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TransNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TransDate" Type="DateTime" />
-          <Property Name="RequestId" Type="Int64" />
-          <Property Name="RequestNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ScanDeviceId" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" />
-          <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
-        </EntityType>
         <EntityType Name="Tx_StockOpname_Item">
           <Key>
             <PropertyRef Name="DetId" />
@@ -2998,6 +2987,8 @@
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
+          <Property Name="TransitWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TransitWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tx_TransferSummaryIn_Item">
           <Key>
@@ -3024,6 +3015,8 @@
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
+          <Property Name="TransitWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TransitWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tx_TransferSummaryIn_Item_Tag">
           <Key>
@@ -3079,6 +3072,8 @@
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
+          <Property Name="TransitWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TransitWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tx_TransferSummaryOut_Item">
           <Key>
@@ -3105,6 +3100,8 @@
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
+          <Property Name="TransitWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TransitWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tx_TransferSummaryOut_Item_Tag">
           <Key>
@@ -3122,6 +3119,25 @@
           <Property Name="BaseId" Type="Int64" />
           <Property Name="BaseDetId" Type="Int64" />
           <Property Name="BaseDetDetId" Type="Int64" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Tx_StockOpname">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TransNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TransDate" Type="DateTime" />
+          <Property Name="TicketId" Type="Int64" />
+          <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ScanDeviceId" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="CancelReason" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
@@ -4239,26 +4255,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tx_StockOpname">
-            <EntityTypeMapping TypeName="Model1.Tx_StockOpname">
-              <MappingFragment StoreEntitySet="Tx_StockOpname">
-                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="ScanDeviceId" ColumnName="ScanDeviceId" />
-                <ScalarProperty Name="WhsCode" ColumnName="WhsCode" />
-                <ScalarProperty Name="RequestNo" ColumnName="RequestNo" />
-                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
-                <ScalarProperty Name="TransDate" ColumnName="TransDate" />
-                <ScalarProperty Name="TransNo" ColumnName="TransNo" />
-                <ScalarProperty Name="TransType" ColumnName="TransType" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Tx_StockOpname_Item">
             <EntityTypeMapping TypeName="Model1.Tx_StockOpname_Item">
               <MappingFragment StoreEntitySet="Tx_StockOpname_Item">
@@ -4522,6 +4518,8 @@
           <EntitySetMapping Name="Tx_TransferSummaryIn">
             <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryIn">
               <MappingFragment StoreEntitySet="Tx_TransferSummaryIn">
+                <ScalarProperty Name="TransitWhsName" ColumnName="TransitWhsName" />
+                <ScalarProperty Name="TransitWhsCode" ColumnName="TransitWhsCode" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -4557,6 +4555,8 @@
           <EntitySetMapping Name="Tx_TransferSummaryIn_Item">
             <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryIn_Item">
               <MappingFragment StoreEntitySet="Tx_TransferSummaryIn_Item">
+                <ScalarProperty Name="TransitWhsName" ColumnName="TransitWhsName" />
+                <ScalarProperty Name="TransitWhsCode" ColumnName="TransitWhsCode" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -4606,6 +4606,8 @@
           <EntitySetMapping Name="Tx_TransferSummaryOut">
             <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryOut">
               <MappingFragment StoreEntitySet="Tx_TransferSummaryOut">
+                <ScalarProperty Name="TransitWhsName" ColumnName="TransitWhsName" />
+                <ScalarProperty Name="TransitWhsCode" ColumnName="TransitWhsCode" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -4641,6 +4643,8 @@
           <EntitySetMapping Name="Tx_TransferSummaryOut_Item">
             <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryOut_Item">
               <MappingFragment StoreEntitySet="Tx_TransferSummaryOut_Item">
+                <ScalarProperty Name="TransitWhsName" ColumnName="TransitWhsName" />
+                <ScalarProperty Name="TransitWhsCode" ColumnName="TransitWhsCode" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -4683,6 +4687,26 @@
                 <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
                 <ScalarProperty Name="DetDetId" ColumnName="DetDetId" />
                 <ScalarProperty Name="DetId" ColumnName="DetId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tx_StockOpname">
+            <EntityTypeMapping TypeName="Model1.Tx_StockOpname">
+              <MappingFragment StoreEntitySet="Tx_StockOpname">
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CancelReason" ColumnName="CancelReason" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ScanDeviceId" ColumnName="ScanDeviceId" />
+                <ScalarProperty Name="WhsCode" ColumnName="WhsCode" />
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="TransDate" ColumnName="TransDate" />
+                <ScalarProperty Name="TransNo" ColumnName="TransNo" />
+                <ScalarProperty Name="TransType" ColumnName="TransType" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

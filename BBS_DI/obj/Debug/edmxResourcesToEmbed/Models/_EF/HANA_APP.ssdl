@@ -1051,12 +1051,12 @@
     <Property Name="TransType" Type="nvarchar" MaxLength="50" />
     <Property Name="TransNo" Type="nvarchar" MaxLength="50" />
     <Property Name="TransDate" Type="timestamp" />
-    <Property Name="RequestId" Type="bigint" />
-    <Property Name="RequestNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="TicketId" Type="bigint" />
     <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
     <Property Name="ScanDeviceId" Type="nvarchar" MaxLength="1000" />
     <Property Name="Status" Type="nvarchar" MaxLength="50" />
     <Property Name="Comments" Type="nvarchar" MaxLength="254" />
+    <Property Name="CancelReason" Type="nvarchar" MaxLength="500" />
     <Property Name="CreatedDate" Type="timestamp" />
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
@@ -1345,6 +1345,8 @@
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
     <Property Name="ModifiedUser" Type="int" />
+    <Property Name="TransitWhsCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="TransitWhsName" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="Tx_TransferSummaryIn_Item">
     <Key>
@@ -1371,6 +1373,8 @@
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
     <Property Name="ModifiedUser" Type="int" />
+    <Property Name="TransitWhsCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="TransitWhsName" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="Tx_TransferSummaryIn_Item_Tag">
     <Key>
@@ -1426,6 +1430,8 @@
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
     <Property Name="ModifiedUser" Type="int" />
+    <Property Name="TransitWhsCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="TransitWhsName" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="Tx_TransferSummaryOut_Item">
     <Key>
@@ -1452,6 +1458,8 @@
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
     <Property Name="ModifiedUser" Type="int" />
+    <Property Name="TransitWhsCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="TransitWhsName" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="Tx_TransferSummaryOut_Item_Tag">
     <Key>

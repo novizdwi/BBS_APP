@@ -1107,26 +1107,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Tx_StockOpname">
-      <EntityTypeMapping TypeName="Model1.Tx_StockOpname">
-        <MappingFragment StoreEntitySet="Tx_StockOpname">
-          <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-          <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="Comments" ColumnName="Comments" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="ScanDeviceId" ColumnName="ScanDeviceId" />
-          <ScalarProperty Name="WhsCode" ColumnName="WhsCode" />
-          <ScalarProperty Name="RequestNo" ColumnName="RequestNo" />
-          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
-          <ScalarProperty Name="TransDate" ColumnName="TransDate" />
-          <ScalarProperty Name="TransNo" ColumnName="TransNo" />
-          <ScalarProperty Name="TransType" ColumnName="TransType" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Tx_StockOpname_Item">
       <EntityTypeMapping TypeName="Model1.Tx_StockOpname_Item">
         <MappingFragment StoreEntitySet="Tx_StockOpname_Item">
@@ -1390,6 +1370,8 @@
     <EntitySetMapping Name="Tx_TransferSummaryIn">
       <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryIn">
         <MappingFragment StoreEntitySet="Tx_TransferSummaryIn">
+          <ScalarProperty Name="TransitWhsName" ColumnName="TransitWhsName" />
+          <ScalarProperty Name="TransitWhsCode" ColumnName="TransitWhsCode" />
           <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -1425,6 +1407,8 @@
     <EntitySetMapping Name="Tx_TransferSummaryIn_Item">
       <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryIn_Item">
         <MappingFragment StoreEntitySet="Tx_TransferSummaryIn_Item">
+          <ScalarProperty Name="TransitWhsName" ColumnName="TransitWhsName" />
+          <ScalarProperty Name="TransitWhsCode" ColumnName="TransitWhsCode" />
           <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -1474,6 +1458,8 @@
     <EntitySetMapping Name="Tx_TransferSummaryOut">
       <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryOut">
         <MappingFragment StoreEntitySet="Tx_TransferSummaryOut">
+          <ScalarProperty Name="TransitWhsName" ColumnName="TransitWhsName" />
+          <ScalarProperty Name="TransitWhsCode" ColumnName="TransitWhsCode" />
           <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -1509,6 +1495,8 @@
     <EntitySetMapping Name="Tx_TransferSummaryOut_Item">
       <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryOut_Item">
         <MappingFragment StoreEntitySet="Tx_TransferSummaryOut_Item">
+          <ScalarProperty Name="TransitWhsName" ColumnName="TransitWhsName" />
+          <ScalarProperty Name="TransitWhsCode" ColumnName="TransitWhsCode" />
           <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -1551,6 +1539,26 @@
           <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
           <ScalarProperty Name="DetDetId" ColumnName="DetDetId" />
           <ScalarProperty Name="DetId" ColumnName="DetId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tx_StockOpname">
+      <EntityTypeMapping TypeName="Model1.Tx_StockOpname">
+        <MappingFragment StoreEntitySet="Tx_StockOpname">
+          <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CancelReason" ColumnName="CancelReason" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ScanDeviceId" ColumnName="ScanDeviceId" />
+          <ScalarProperty Name="WhsCode" ColumnName="WhsCode" />
+          <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+          <ScalarProperty Name="TransDate" ColumnName="TransDate" />
+          <ScalarProperty Name="TransNo" ColumnName="TransNo" />
+          <ScalarProperty Name="TransType" ColumnName="TransType" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

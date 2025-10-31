@@ -192,18 +192,23 @@
                             AddNode(dataTable, node3, "Adjustment In", "AdjustmentIn");
                             AddNode(dataTable, node3, "Adjustment Out", "AdjustmentOut");
                         });
+
                         node2.Nodes.Add(node3 =>
                         {
                             node3.Text = "Inventory";
                             AddNode(dataTable, node3, "Transfer Request", "TransferRequest");
-                            AddNode(dataTable, node3, "Transfer Summary In", "TransferSummaryIn");
-                            AddNode(dataTable, node3, "Transfer Summary Out", "TransferSummaryOut");
-                            AddNode(dataTable, node3, "Stock Opname", "StockOpname");
+                            AddNode(dataTable, node3, "Transfer In", "TransferIn");
+                            AddNode(dataTable, node3, "Transfer Out", "TransferOut");
+
+                            AddNode(dataTable, node3, "Stock Opname Request ", "RequestStockOpname");
+                            AddNode(dataTable, node3, "Stock Opname Scan List", "StockOpnameScan");
+                            AddNode(dataTable, node3, "Stock Opname Summary", "StockOpnameSummary");
                         });
+
                         node2.Nodes.Add(node3 =>
                         {
                             node3.Text = "Purchasing";
-                            AddNode(dataTable, node3, "PO Scan Summary", "PurchaseOrder");
+                            AddNode(dataTable, node3, "PO Scan List", "PurchaseOrderScan");
                             AddNode(dataTable, node3, "Goods Receipt PO", "GoodsReceiptPO");
                         });
 
