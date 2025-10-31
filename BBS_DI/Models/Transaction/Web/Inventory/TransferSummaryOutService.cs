@@ -670,8 +670,6 @@ namespace Models.Transaction.Web.Inventory
 
                             if (!string.IsNullOrEmpty(TransferSummaryOutResult.DocEntry))
                             {
-                                //oCompany.EndTransaction(BoWfTransOpt.wf_Commit);
-
                                 string ssql = @"SELECT ""DocNum"" 
                                             FROM """ + DbProvider.dbSap_Name + @""".""OWTR"" T0
                                             WHERE T0.""DocEntry"" = " + TransferSummaryOutResult.DocEntry + @" 
@@ -776,8 +774,6 @@ namespace Models.Transaction.Web.Inventory
                     //oDocument.Lines.BaseType = InvBaseDocTypeEnum.InventoryTransferRequest;
                     //oDocument.Lines.BaseEntry = Convert.ToInt32(model.BaseEntry);
                     //oDocument.Lines.BaseLine = Convert.ToInt32(item.BaseLine);
-
-
 
                     oInventoryTransfer.Lines.ItemCode = item.ItemCode;
                     oInventoryTransfer.Lines.FromWarehouseCode = item.FromWhsCode;

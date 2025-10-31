@@ -189,7 +189,7 @@ namespace Models.Transaction.Web.Inventory
         public string Status { get; set; }
     }
 
-    public class GRPOAddResultModel
+    public class TransferSummaryInAddResultModel
     {
         public string DocEntry { get; set; }
         public Dictionary<long, int> LineMapping { get; set; } // LineId -> LineNum
@@ -646,7 +646,7 @@ namespace Models.Transaction.Web.Inventory
         {
             SAPbobsCOM.Company oCompany = null;
 
-            TransferSummaryInModel syncGRPO = GetById(userId, id);
+            TransferSummaryInModel syncTransferSummaryIn = GetById(userId, id);
             using (var CONTEXT = new HANA_APP())
             {
 
@@ -666,43 +666,38 @@ namespace Models.Transaction.Web.Inventory
                         Tx_TransferSummaryIn tx_TransferSummaryIn = CONTEXT.Tx_TransferSummaryIn.Find(id);
                         if (tx_TransferSummaryIn != null)
                         {
-                            GRPOAddResultModel GRPOResult = AddTransferSummaryIn(oCompany, userId, id, syncGRPO);
-                            string ssql = @"SELECT ""DocNum"" 
-                                FROM """+ DbProvider.dbSap_Name +@""".""OPDN"" T0
-                                WHERE T0.""DocEntry"" = "+ GRPOResult.DocEntry + @" 
-                             ";
+                            TransferSummaryInAddResultModel TransferSummaryInResult = AddTransferSummaryIn(oCompany, userId, id, syncTransferSummaryIn);
 
-                            string docNum = CONTEXT.Database.SqlQuery<string>(ssql, id).FirstOrDefault();
+                            if (!string.IsNullOrEmpty(TransferSummaryInResult.DocEntry))
+                            {
+                                string ssql = @"SELECT ""DocNum"" 
+                                            FROM """ + DbProvider.dbSap_Name + @""".""OWTR"" T0
+                                            WHERE T0.""DocEntry"" = " + TransferSummaryInResult.DocEntry + @" 
+                                            ";
 
-                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                                string docNum = CONTEXT.Database.SqlQuery<string>(ssql, id).FirstOrDefault();
 
-                            //tx_TransferSummaryIn.PostingDate = dtModified;
-                            tx_TransferSummaryIn.DocEntry = Convert.ToInt64(GRPOResult.DocEntry) ;
-                            tx_TransferSummaryIn.DocNum = docNum;
 
-                            tx_TransferSummaryIn.Status = "Posted";
-                            tx_TransferSummaryIn.IsAfterPosted = "Y";
-                            tx_TransferSummaryIn.ModifiedDate = dtModified;
-                            tx_TransferSummaryIn.ModifiedUser = userId;
+                                DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
 
-                            CONTEXT.SaveChanges();
+                                //tx_TransferSummaryIn.PostingDate = dtModified;
+                                tx_TransferSummaryIn.DocEntry = Convert.ToInt64(TransferSummaryInResult.DocEntry);
+                                tx_TransferSummaryIn.DocNum = docNum;
 
-                            var caseStatements = string.Join(" ",
-                            GRPOResult.LineMapping.Select(kv => $"WHEN T0.\"DetId\" = {kv.Key} THEN {kv.Value}"));
+                                tx_TransferSummaryIn.Status = "Posted";
+                                tx_TransferSummaryIn.IsAfterPosted = "Y";
+                                tx_TransferSummaryIn.ModifiedDate = dtModified;
+                                tx_TransferSummaryIn.ModifiedUser = userId;
 
-                            var whereIn = string.Join(", ",GRPOResult.LineMapping.Keys);
+                                CONTEXT.SaveChanges();
 
-                            string sqlLine = $@"
-                                UPDATE ""Tx_TransferSummaryIn_Item"" T0
-                                SET ""LineNum"" = CASE {caseStatements} END
-                                WHERE T0.""DetId"" IN ({whereIn})";
-                            CONTEXT.Database.ExecuteSqlCommand(sqlLine);
+                                SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", CONTEXT, "after", "Tx_TransferSummaryIn", "post", "Id", keyValue);
+
+                                CONTEXT_TRANS.Commit();
+                            }                          
+
+                          
                         }
-
-                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", CONTEXT, "after", "Tx_TransferSummaryIn", "post", "Id", keyValue);
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryIn_UpdateStatus\"(:p0,:p1,'post')", userId, id);
-
-                        CONTEXT_TRANS.Commit();
                     }
 
                     catch (Exception ex)
@@ -732,9 +727,9 @@ namespace Models.Transaction.Web.Inventory
         }
 
 
-        private GRPOAddResultModel AddTransferSummaryIn(Company oCompany, int userId, long id, TransferSummaryInModel model)
+        private TransferSummaryInAddResultModel AddTransferSummaryIn(Company oCompany, int userId, long id, TransferSummaryInModel model)
         {
-            GRPOAddResultModel result = new GRPOAddResultModel();
+            TransferSummaryInAddResultModel result = new TransferSummaryInAddResultModel();
 
             int nErr;
             string errMsg;
@@ -750,7 +745,7 @@ namespace Models.Transaction.Web.Inventory
             oInventoryTransfer.DueDate = (DateTime)model.TransDate;
             oInventoryTransfer.TaxDate = (DateTime)model.TransDate;
 
-            oInventoryTransfer.FromWarehouse = model.FromWhsCode;
+            oInventoryTransfer.FromWarehouse = model.TransitWhsCode;
             oInventoryTransfer.ToWarehouse = model.ToWhsCode;
 
             //oDocument.CardCode = model.VendorCode;
@@ -776,10 +771,8 @@ namespace Models.Transaction.Web.Inventory
                     //oDocument.Lines.BaseEntry = Convert.ToInt32(model.BaseEntry);
                     //oDocument.Lines.BaseLine = Convert.ToInt32(item.BaseLine);
 
-
-
                     oInventoryTransfer.Lines.ItemCode = item.ItemCode;
-                    oInventoryTransfer.Lines.FromWarehouseCode = item.FromWhsCode;
+                    oInventoryTransfer.Lines.FromWarehouseCode = item.TransitWhsCode;
                     oInventoryTransfer.Lines.WarehouseCode = item.ToWhsCode;
                     oInventoryTransfer.Lines.Quantity = (double)item.QuantityScan;
 
@@ -842,7 +835,7 @@ namespace Models.Transaction.Web.Inventory
 
                         SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", CONTEXT, "after", "Tx_TransferSummaryIn", "cancel", "Id", keyValue);
 
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryIn_UpdateStatus\"(:p0,:p1,'cancel')", userId, Id);
+                        //CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryIn_UpdateStatus\"(:p0,:p1,'cancel')", userId, Id);
 
                         CONTEXT_TRANS.Commit();
                     }
