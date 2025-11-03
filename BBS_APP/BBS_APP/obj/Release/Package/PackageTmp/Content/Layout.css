@@ -127,18 +127,25 @@ html
     float: right;
 }
 
-.header-logo
+/*.header-logo
 {
-    background: url('Images/mjl.svg') no-repeat center;
-    height: 35px;
-    width: 250px;
+    background: url('Images/logoBBS.png') no-repeat content-box;
+    height: 1280px;
+    width: 1280px;
+}*/
+
+.header-logo {
+    background: url('Images/logoBBS.png') center/contain no-repeat;
+    background-position: left top;
+    width: clamp(140px, 15vw, 240px); /* minimum, preferensi, maksimum */
+    aspect-ratio: 4.5 / 1; /* sesuaikan rasio logo Anda */
+    height: auto; /* biar ikut aspect-ratio */
 }
 
 @media (max-width: 359px)
 {
-    .header-logo
-    {
-        background: url('Images/mjl-small.svg') no-repeat center;
+    .header-logo {
+        background: url('Images/logoBBS.png') no-repeat center/contain;
         width: 35px;
     }
 }

@@ -51,13 +51,13 @@ C:\LegionShared\GIT\BBS_APP\BBS_DI\obj\Debug\BBS_DI.csproj.CoreCompileInputs.cac
 C:\LegionShared\GIT\BBS_APP\BBS_DI\obj\Debug\BBS_DI.csproj.CopyComplete
 C:\LegionShared\GIT\BBS_APP\BBS_DI\obj\Debug\BBS_DI.dll
 C:\LegionShared\GIT\BBS_APP\BBS_DI\obj\Debug\BBS_DI.pdb
+C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\EntityFramework.dll
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\BBS_DI.dll.config
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\BBS_DI.dll
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\BBS_DI.pdb
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\DevExpress.Data.v20.1.dll
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\DevExpress.Web.Mvc5.v20.1.dll
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\DevExpress.Web.v20.1.dll
-C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\EntityFramework.dll
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\EntityFramework.SqlServer.dll
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\Sap.Data.Hana.v4.5.dll
 C:\LegionShared\Project\BBS\BBS_DI\bin\Debug\DevExpress.Web.ASPxHtmlEditor.v20.1.dll

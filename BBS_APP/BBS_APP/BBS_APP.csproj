@@ -43,6 +43,11 @@
     <IncludeIisSettings>false</IncludeIisSettings>
     <IncludeAppPool>true</IncludeAppPool>
   </PropertyGroup>
+  <PropertyGroup>
+    <SelfContained>false</SelfContained>
+    <RuntimeIdentifier>
+    </RuntimeIdentifier>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
@@ -311,6 +316,7 @@
     <Reference Include="Sap.Data.Hana.v4.5, Version=2.17.22.0, Culture=neutral, PublicKeyToken=0326b8ea63db4bc4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Program Files\sap\hdbclient\ado.net\v4.5\Sap.Data.Hana.v4.5.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -465,6 +471,7 @@
     <Content Include="Content\icons\dxiconsmaterial.woff2" />
     <Content Include="Rpts\Report1.rpt" />
     <Content Include="Rpts\Report2.rpt" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.0.js" />
     <Content Include="Scripts\jquery-2.2.0.min.js" />
@@ -563,7 +570,6 @@
     <Content Include="Views\Setting\GeneralSetting\GeneralSetting.cshtml" />
     <Content Include="Views\Setting\GeneralSetting\Partial\GeneralSetting_Form_Btn_Partial.cshtml" />
     <Content Include="Views\Setting\GeneralSetting\Partial\GeneralSetting_Form_Partial.cshtml" />
-    <Content Include="Views\Setting\GeneralSetting\Partial\GeneralSetting_TabCoa_List_Partial.cshtml" />
     <Content Include="Views\Setting\GeneralSetting\Partial\GeneralSetting_TabItem_List_Partial.cshtml" />
     <Content Include="Views\Setting\Layout\Layout.cshtml" />
     <Content Include="Views\Setting\Layout\Partial\Layout_Form_Btn_Partial.cshtml" />
@@ -766,6 +772,7 @@
     <Content Include="Views\Transaction\Web\Inventory\StockOpnameScan\Partial\StockOpname_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Inventory\StockOpnameScan\Partial\StockOpname_Panel_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Inventory\StockOpnameScan\StockOpnameScan.cshtml" />
+    <Content Include="Views\Setting\GeneralSetting\Partial\GeneralSetting_TabAdjustmentCoa_List_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -943,7 +950,6 @@
     <Folder Include="Content\Images\menu\" />
     <Folder Include="Content\Temp\" />
     <Folder Include="Controllers\Master\" />
-    <Folder Include="Properties\" />
     <Folder Include="Rpts\Layout\" />
     <Folder Include="Rpts\Models\" />
     <Folder Include="Views\Authentication\Login\Partial\" />

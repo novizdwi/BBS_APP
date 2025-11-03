@@ -17,6 +17,8 @@
     settings.Name = string.Format("cflPurchaseOrderPopupList{0}", Model.Name);
     settings.CallbackRouteValues = new { Controller = "_CflPurchaseOrder", Action = "PopupListLoadOnDemandPartial" };
     settings.CloseAction = CloseAction.OuterMouseClick;
+    settings.Height = Unit.Percentage(100);
+
     settings.PopupVerticalAlign = PopupVerticalAlign.Below;
     settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
 
@@ -35,42 +37,23 @@
 
     settings.ShowPageScrollbarWhenModal = true;
 
-    settings.EnableHotTrack = true;
+    //settings.EnableHotTrack = true;
     //settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
 
     settings.LoadContentViaCallback = LoadContentViaCallback.OnFirstShow;
     settings.PopupElementID = "ShowButton";
-    settings.HeaderText = "Choose PurchaseOrder " + Model.Header;
+    settings.HeaderText = "Choose Po" + Model.Header;
 
     settings.SetContent(() =>
     {
-
-        //Html.DevExpress().HyperLink(settingsHL =>
-        //{
-        //    settingsHL.Name = "gvCflPurchaseOrderList" + Model.Name + "_GvExportTo";
-        //    settingsHL.NavigateUrl = "javascript:void(0)";
-        //    settingsHL.Properties.Text = "Excel";
-        //    settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ GvCflExportTo(gvCflPurchaseOrderList{1}, '{0}'); }}", @Url.Action("ExportTo", "_CflPurchaseOrder"), Model.Name);
-        //    settingsHL.Height = 20;
-        //}).GetHtml();
-
-        if (Model.IsMulti == "Y")
+        Html.DevExpress().HyperLink(settingsChoose =>
         {
-            //ViewContext.Writer.Write("&nbsp;|&nbsp;");
-            Html.DevExpress().HyperLink(settingsChoose =>
-            {
-                settingsChoose.Name = "gvCflPurchaseOrder" + Model.Name + "Choose";
-                settingsChoose.NavigateUrl = "javascript:void(0)";
-                settingsChoose.Properties.Text = "Choose";
-                settingsChoose.Height = 20;
-                settingsChoose.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ OnClickChoose_CflPurchaseOrder{0}(s, e); }}", Model.Name);
-            }).GetHtml();
-
-            ViewContext.Writer.Write("&nbsp;|&nbsp;");
-        }
-
-
-        
+            settingsChoose.Name = "cflPurchaseOrderPopupList" + Model.Name + "Cancel";
+            settingsChoose.NavigateUrl = "javascript:void(0)";
+            settingsChoose.Properties.Text = "Cancel";
+            settingsChoose.Height = 20;
+            settingsChoose.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ cflPurchaseOrderPopupList{0}.Hide(); }}", Model.Name);
+        }).GetHtml();
 
         Html.RenderPartial("Partial/_CflPurchaseOrder_List_Partial", viewModel);
 
@@ -86,22 +69,22 @@
     };
 
     string additionParam = "";
+    //if (Model.Type == "GoodReceiptPo")
+    //{
+    //    additionParam = " e.customArgs['hidden_CflBpCode'] = BpCode.GetValue(); ";
+    //}
 
-    additionParam = " e.customArgs['hidden_CflDocId']=Id.GetValue(); ";
-
-
+    //additionParam += " e.customArgs['hidden_IsFindCurrentBranch']=(ASPxClientCheckBox.Cast('IsFindCflBookingOrderCurrentBranch" + Model.Name + "')==null)?'Y':(ASPxClientCheckBox.Cast('IsFindCflBookingOrderCurrentBranch" + Model.Name + "').GetStateInput())==null?'Y':IsFindCflBookingOrderCurrentBranch" + Model.Name + ".GetValue(); ";
 
     settings.PreRender = (sender, e) =>
     {
         ASPxPopupControl popup = (ASPxPopupControl)sender;
-        popup.Width = 700;
+        popup.Width = 1000;
         popup.Height = 500;
     };
 
-    settings.ClientSideEvents.BeginCallback = string.Format("function(s, e) {{ {0}  e.customArgs['hidden_CflType']=s.cpPopupFind_CflType; e.customArgs['hidden_CflName']=s.cpPopupFind_CflName; e.customArgs['hidden_CflHeader']=s.cpPopupFind_CflHeader; e.customArgs['hidden_CflSqlWhere']=s.cpPopupFind_CflSqlWhere;e.customArgs['hidden_CflIsMulti']=s.cpPopupFind_CflIsMulti; }}", additionParam);
-    settings.ClientSideEvents.Resize = string.Format("function(s, e) {{ GridviewInPopupAdjustSize(cflPurchaseOrderPopupList{0},gvCflPurchaseOrderList{0}); }}", Model.Name);
-    settings.ClientSideEvents.EndCallback = string.Format("function(s, e) {{ GridviewInPopupAdjustSize(cflPurchaseOrderPopupList{0},gvCflPurchaseOrderList{0}); }}", Model.Name);
-
-
+    settings.ClientSideEvents.BeginCallback = string.Format("function(s, e) {{ {0}  e.customArgs['hidden_CflType']=s.cpPopupFind_CflType; e.customArgs['hidden_CflName']=s.cpPopupFind_CflName;  e.customArgs['hidden_CflHeader']=s.cpPopupFind_CflHeader; e.customArgs['hidden_CflSqlWhere']=s.cpPopupFind_CflSqlWhere;e.customArgs['hidden_CflIsMulti']=s.cpPopupFind_CflIsMulti; }}", additionParam);
+    settings.ClientSideEvents.Resize = string.Format("function(s, e) {{ GridviewInPopupAdjustSize(cflPurchaseOrderPopupList{0},gvCflPurchaseOrderList{0},50); }}", Model.Name);
+    settings.ClientSideEvents.EndCallback = string.Format("function(s, e) {{ GridviewInPopupAdjustSize(cflPurchaseOrderPopupList{0},gvCflPurchaseOrderList{0},50); }}", Model.Name);
 
 }).GetHtml()
