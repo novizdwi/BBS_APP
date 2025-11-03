@@ -193,6 +193,8 @@
     <Compile Include="Models\Transaction\Web\Adjustment\AdjustmentOut.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\RequestStockOpname__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\RequestStockOpnameService.cs" />
+    <Compile Include="Models\Transaction\Web\Inventory\StockOpnameScanService.cs" />
+    <Compile Include="Models\Transaction\Web\Inventory\StockOpnameScan__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\TransferSummaryInService.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\TransferSummaryIn__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\TransferSummaryOut__List_Model.cs" />
@@ -204,6 +206,8 @@
     <Compile Include="Models\Transaction\Web\Inventory\TransferOut__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\TransferRequest__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Purchasing\GoodsReceiptPOService.cs" />
+    <Compile Include="Models\Transaction\Web\Purchasing\PurchaseOrderScanService.cs" />
+    <Compile Include="Models\Transaction\Web\Purchasing\PurchaseOrderScan__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Purchasing\PurchaseOrderService.cs" />
     <Compile Include="Models\Transaction\Web\Purchasing\GoodsReceiptPO__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Purchasing\PurchaseOrder__List_Model.cs" />
