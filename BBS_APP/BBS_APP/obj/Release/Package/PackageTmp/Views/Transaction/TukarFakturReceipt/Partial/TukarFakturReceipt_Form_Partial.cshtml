@@ -1,0 +1,312 @@
+﻿@using Models.Transaction.Receipt;
+@using System.Web.Script.Serialization;
+
+@{
+    ViewBag.Id = Model.Id;
+    ViewBag.ReadOnly = (Model.Status == "Draft" ? false : true);
+}
+
+@model Models.Transaction.TukarFakturReceipt.TukarFakturReceiptModel
+
+@Html.DevExpress().TextBox(
+        settings =>
+        {
+            settings.Name = "Id";
+            settings.ControlStyle.CssClass = "editor";
+            settings.ShowModelErrors = true;
+            settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            settings.ClientVisible = false;
+        }
+).Bind(Model.Id).GetHtml() 
+
+
+
+@Html.DevExpress().FormLayout(settings =>
+{
+    settings.Name = "formLayout";
+    settings.EncodeHtml = false;
+    settings.Width = Unit.Percentage(100);
+    settings.AlignItemCaptionsInAllGroups = true;
+    settings.ShowItemCaptionColon = false;
+    settings.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+    settings.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+
+
+    var groupItem = settings.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.Caption = "";
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
+        itemSettings.ColCount = 1;
+
+        itemSettings.GroupBoxStyle.Caption.Paddings.Padding = 5;
+        itemSettings.GroupBoxStyle.Caption.Font.Size = 14;
+        itemSettings.GroupBoxStyle.Caption.ForeColor = System.Drawing.Color.Orange;
+
+    });
+
+
+    groupItem.Items.AddEmptyItem().Height = 8;
+
+    var groupItem_2 = groupItem.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        itemSettings.ColCount = 3;
+    });
+
+    var groupItem_3 = groupItem.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        itemSettings.ColCount = 3;
+    });
+
+
+    var groupItem_Col1 = groupItem_2.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        itemSettings.ColCount = 1;
+        itemSettings.CssClass = "groupCol";
+    });
+
+
+
+    var groupItem_Col2 = groupItem_2.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        itemSettings.ColCount = 1;
+        itemSettings.CssClass = "groupCol";
+    });
+
+    var groupItem_Col3 = groupItem_2.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        itemSettings.ColCount = 1;
+        itemSettings.CssClass = "groupCol";
+    });
+
+    
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "No TFR";
+        itemSettings.FieldName = "NoTglTerima";
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "NoTglTerima";
+        txt.ReadOnly = true;
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editor";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        //txt.Width = 180;
+    });
+
+    //groupItem_Col1.Items.Add(
+    // itemSettings =>
+    // {
+    //     itemSettings.Caption = "Tgl Terima";
+    // }
+    // )
+    // .SetNestedContent(() =>
+    // {
+    //     ViewContext.Writer.Write("<table><tr><td style=\"padding-right:5px;\">");
+
+    //     Html.DevExpress().DateEditFor(i => i.TglTerima, s =>
+    //     {
+    //         s.Name = "TglTerima";
+    //         //s.Width = 100;
+    //         s.ShowModelErrors = true;
+    //         s.ControlStyle.CssClass = "editor";
+    //         s.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+    //         s.ReadOnly = ViewBag.ReadOnly;
+    //         s.Properties.NullText = "dd/MM/yyyy";
+    //         s.Properties.EditFormat = EditFormat.Custom;
+    //         s.Properties.EditFormatString = "d/M/yy";
+    //         s.Properties.DisplayFormatString = "dd/MM/yyyy";
+    //         s.ControlStyle.CssClass = "editornoimage";
+
+    //         s.Properties.ValidationSettings.Display = Display.Dynamic;
+    //         s.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+    //     }).Render();
+
+    //     ViewContext.Writer.Write("</td></tr></table>");
+    // });
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.DateEdit;
+        itemSettings.Caption = "Tanggal Terima";
+        itemSettings.FieldName = "TglTerima";
+
+        var txt = (DateEditSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "TglTerima";
+        txt.ShowModelErrors = true;
+        txt.ReadOnly = true;
+
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Properties.NullText = "dd/MM/yyyy";
+        txt.Properties.EditFormat = EditFormat.Custom;
+        txt.Properties.EditFormatString = "dd/MM/yyyy";
+        txt.Properties.EditFormat = EditFormat.Date;
+
+        txt.Properties.DropDownButton.Visible = false;
+        //txt.Properties.ClientSideEvents.ParseDate = "function (s,e){ { ParseDateEdit(s,e);  } }";
+
+    });
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.Name = "grpNoTtd";
+        //itemSettings.Caption = "Warehouse Code<span id='WarehouseCode_Mandatory' class='dxflRequired_Metropolis'></span>";
+        itemSettings.Caption = "No TTD";
+        itemSettings.FieldName = "NoTtd";
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
+
+        var cbo = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
+        cbo.Name = "NoTtd";
+        cbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+        cbo.ShowModelErrors = true;
+        cbo.ReadOnly = true;
+
+        cbo.ControlStyle.CssClass = "editornoimage";
+        cbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        cbo.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        cbo.Properties.ValidationSettings.Display = Display.Dynamic;
+        //cbo.Width = 200;
+
+        // Hide the default DropDown button
+        cbo.Properties.DropDownButton.Visible = false;
+
+        cbo.Properties.ButtonStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        EditButton lookUpButton = new EditButton();
+        lookUpButton.Text = "";
+        lookUpButton.Image.Url = "~/Content/Images/buttonnew/find-hitam.png";
+        lookUpButton.Image.Width = 15;
+
+        cbo.Properties.Buttons.Add(lookUpButton);
+        cbo.Properties.ClientSideEvents.ButtonClick = "BtnCflNoTtdPopupListTukarFakturReceiptOnClick";
+    });
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Nama Penerima";
+        itemSettings.FieldName = "NamaPenerima";
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "NamaPenerima";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editor";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        //txt.Width = 180;
+
+    });
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Resi";
+        itemSettings.FieldName = "Resi";
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "Resi";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editor";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        //txt.Width = 180;
+
+    });
+
+    
+
+    groupItem_Col2.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Metode Kirim";
+        itemSettings.FieldName = "MetodeKirim";
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "MetodeKirim";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editor";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        //txt.Width = 180;
+
+    });
+
+    groupItem_Col2.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Pengiriman";
+        itemSettings.FieldName = "Pengiriman";
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "Pengiriman";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editor";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        //txt.Width = 180;
+
+    });
+    groupItem_Col2.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Memo;
+        itemSettings.Caption = "Keterangan";
+        itemSettings.FieldName = "Keterangan";
+
+        var txt = (MemoSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "Keterangan";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editor";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Height = 90;
+        //txt.Width = 180;
+
+    });
+    groupItem_Col3.Items.Add(m => Model.Status, itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
+        itemSettings.Caption = "Status";
+        itemSettings.FieldName = "Status";
+        //itemSettings.Width = 300;
+
+        ComboBoxSettings cbo = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
+        cbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+        cbo.Name = "Status";
+        cbo.ReadOnly = true;
+        cbo.ShowModelErrors = true;
+        cbo.Properties.TextField = "Name";
+        cbo.Properties.ValueField = "Code";
+        cbo.Properties.ValueType = typeof(string);
+        cbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        cbo.Properties.DropDownButton.Visible = false;
+
+        cbo.Properties.DataSource = Models._Utils.GeneralGetList.GetList("Receipt_Status");
+
+        cbo.ControlStyle.CssClass = "editornoimage";
+        cbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        cbo.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        //cbo.Width = 100;
+    });
+}).GetHtml()
+
+
+

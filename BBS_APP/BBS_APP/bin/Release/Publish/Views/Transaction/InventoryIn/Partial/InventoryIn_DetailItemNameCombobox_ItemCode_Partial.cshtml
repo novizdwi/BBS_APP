@@ -1,0 +1,32 @@
+﻿
+@Html.DevExpress().ComboBox(
+    settings =>
+    {
+        settings.Name = "gvDetail_ItemCode";
+        settings.Properties.ClientInstanceName = "gvDetail_ItemCode";
+        settings.Properties.DropDownWidth = Unit.Percentage(149);
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+        settings.ShowModelErrors = true;
+        settings.Width = Unit.Percentage(149);
+        settings.ReadOnly = true;
+
+        settings.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        // Hide the default DropDown button
+        settings.Properties.DropDownButton.Visible = false;
+        settings.ControlStyle.CssClass = "editornoimage";
+        settings.Properties.ButtonStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        EditButton lookUpButton = new EditButton();
+        lookUpButton.Text = "";
+        lookUpButton.Image.Url =  "~/Content/Images/buttonnew/find-hitam.png";
+        lookUpButton.Image.Width = 15;
+        lookUpButton.Visible = false;
+        settings.Properties.Buttons.Add(lookUpButton);
+        settings.Properties.ClientSideEvents.ButtonClick = "BtnItemCodeOnClick";
+
+    }
+
+    ).GetHtml()
+
+

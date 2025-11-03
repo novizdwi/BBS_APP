@@ -1,0 +1,312 @@
+﻿@using Models;
+@using Models._Cfl;
+@{
+    var Id = Convert.ToInt64(Request["cbId"]);
+
+    if (ViewBag.Id != null)
+    {
+        Id = ViewBag.Id;
+    }
+
+}
+
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvDetail";
+    settings.KeyFieldName = "DetId";
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    //settings.Settings.VerticalScrollableHeight = 350;
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+
+    settings.Width = Unit.Percentage(100);
+    settings.Height = Unit.Percentage(100);
+
+    settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+    settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
+    settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+    settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+    settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
+
+
+    settings.CommandColumn.Visible = true;
+    settings.CommandColumn.ShowDeleteButton = true;
+    settings.CommandColumn.ShowNewButtonInHeader = true;
+    settings.CommandColumn.Width = 50;
+    settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
+    settings.Columns.Add("Id", "Id").Visible = false;
+    settings.Columns.Add("DetId", "DetId").Visible = false;
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ShipCode";
+        column.Name = "ShipCode";
+        column.Caption = "Tongkang";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 100;
+        column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+        //if (Model.Status == "Draft" || Model.Status == "Open")
+        //{
+        column.SetEditItemTemplateContent(c =>
+        {
+            ViewContext.Writer.Write(
+                 Html.Partial("Partial/FreshWaterControl_DetailShipCombobox_ShipCode_Partial")
+             );
+        });
+        //}
+        //    else
+        //    {
+
+        //}
+        txt.ClientInstanceName = "gvDetail_ShipCode";
+
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ShipId";
+        column.Name = "ShipId";
+        column.Caption = "ShipId";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 0;
+        column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        txt.ClientInstanceName = "gvDetail_ShipId";
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ShipName";
+        column.Name = "ShipName";
+        column.Caption = "ShipName";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 0;
+        column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        txt.ClientInstanceName = "gvDetail_ShipName";
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Voyage";
+        column.Name = "Voyage";
+        column.Caption = "Voyage";
+
+
+        column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+        column.Width = 100;
+        //column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as SpinEditProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        //txt.ClientInstanceName = "gvDetail_ShipName";
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ROB";
+        column.Name = "ROB";
+        column.Caption = "R.O.B";
+
+
+        column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+        column.Width = 100;
+        //column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as SpinEditProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        //txt.ClientInstanceName = "gvDetail_ShipName";
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Date";
+        column.Name = "Date";
+        column.Caption = "Tanggal";
+
+
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.Width = 100;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as DateEditProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "QtyTerima";
+        column.Name = "QtyTerima";
+        column.Caption = "Qty Terima";
+
+
+        column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+        column.Width = 100;
+        //column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as SpinEditProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        //txt.ClientInstanceName = "gvDetail_ShipName";
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Supplier";
+        column.Name = "Supplier";
+        column.Caption = "Supplier";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 150;
+        //column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        //txt.ClientInstanceName = "gvDetail_ShipName";
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "QtyTotal";
+        column.Name = "QtyTotal";
+        column.Caption = "Total Qty";
+
+
+        column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+        column.Width = 100;
+        //column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as SpinEditProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        //txt.ClientInstanceName = "gvDetail_ShipName";
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Pemakaian";
+        column.Name = "Pemakaian";
+        column.Caption = "Pemakaian";
+
+
+        column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+        column.Width = 100;
+        //column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as SpinEditProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        //txt.ClientInstanceName = "gvDetail_ShipName";
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Balance";
+        column.Name = "Balance";
+        column.Caption = "Balance";
+
+
+        column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+        column.Width = 100;
+        //column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as SpinEditProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        //txt.ClientInstanceName = "gvDetail_ShipName";
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Customer";
+        column.Name = "Customer";
+        column.Caption = "Customer";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 100;
+        //column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        //txt.ClientInstanceName = "gvDetail_ShipName";
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Route";
+        column.Name = "Route";
+        column.Caption = "Route";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 150;
+        //column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        //txt.ClientInstanceName = "gvDetail_ShipName";
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Remark";
+        column.Name = "Remark";
+        column.Caption = "Catatan";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 250;
+        //column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        //txt.ClientInstanceName = "gvDetail_ShipName";
+    });
+    
+    settings.Settings.ShowFooter = true;
+
+    settings.ClientSideEvents.BeginCallback = "gvDetailOnBeginCallback";
+    settings.ClientSideEvents.EndCallback = "gvDetailOnEndCallback";
+
+    settings.ClientSideEvents.BatchEditStartEditing = "gvDetailOnBatchEditStartEditing";
+    settings.ClientSideEvents.BatchEditEndEditing = "gvDetailOnBatchEditEndEditing";
+    settings.ClientSideEvents.BatchEditRowValidating = "gvDetailOnBatchEditRowValidating";
+
+}).Bind(Model.ListDetails_).GetHtml()
+

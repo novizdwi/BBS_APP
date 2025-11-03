@@ -1,0 +1,266 @@
+﻿@using Models;
+@using Models._Cfl;
+@{
+    var Id = Convert.ToInt64(Request["cbId"]);
+
+    if (ViewBag.Id != null)
+    {
+        Id = ViewBag.Id;
+    }
+
+}
+
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvDetail";
+    settings.KeyFieldName = "DetId";
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollableHeight = 350;
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+
+    settings.Width = Unit.Percentage(100);
+    settings.Height = Unit.Percentage(100);
+
+    settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+    settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
+    settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+    settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+    settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
+
+
+    settings.CommandColumn.Visible = true;
+    settings.CommandColumn.ShowDeleteButton = true;
+    settings.CommandColumn.ShowNewButtonInHeader = true;
+    settings.CommandColumn.Width = 50;
+    settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
+
+    settings.Columns.Add("Id", "Id").Visible = false;
+    settings.Columns.Add("DetId", "DetId").Visible = false;
+
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "ItemCode";
+    //    column.Name = "ItemCode";
+    //    column.Caption = "Code";
+
+
+    //    column.ColumnType = MVCxGridViewColumnType.ComboBox;
+    //    column.Width = 150;
+    //    column.Settings.AllowSort = DefaultBoolean.False;
+
+    //    var cbo = column.PropertiesEdit as ComboBoxProperties;
+    //    cbo.DropDownStyle = DropDownStyle.DropDown;
+    //    cbo.DropDownButton.Visible = false;
+
+    //    EditButton lookUpButton = new EditButton();
+    //    lookUpButton.Text = "";
+    //    lookUpButton.Image.Url = "~/Content/Images/buttonnew/find-hitam.png";
+    //    lookUpButton.Image.Width = 15;
+
+    //    cbo.Buttons.Add(lookUpButton);
+    //    cbo.ClientSideEvents.ButtonClick = "BtnItemCodeOnClick";
+
+    //});
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ItemCodeKey";
+        column.Name = "ItemCodeKey";
+        column.Caption = "Batch";
+
+        column.SetDataItemTemplateContent(c =>
+        {
+
+            string valText = (string)DataBinder.Eval(c.DataItem, "ItemCode");
+
+            string valLinkControlerName = "GoodIssue";
+
+
+            string valId = (string)DataBinder.Eval(c.DataItem, "ItemCodeKey");
+
+            string valManBtchNum = (string)DataBinder.Eval(c.DataItem, "ManBtchNum");
+            if (valManBtchNum == "Y")
+            {
+
+                ViewContext.Writer.Write(
+
+                    Html.DevExpress().HyperLink(settingsHL =>
+                    {
+                        settingsHL.Name = "BtnColumnLink_" + Guid.NewGuid();
+                        settingsHL.NavigateUrl = "javascript:void(0)";
+                        settingsHL.Properties.Text = "Batch";
+                        settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ gvGoodIssueDetailOnCustomButtonClick(s, e, '{0}'); }}", valId);
+
+                    }).GetHtml()
+
+                );
+            }
+            else
+            {
+                ViewContext.Writer.Write(
+
+                    Html.DevExpress().Label(settingsHL =>
+                    {
+                        settingsHL.Name = "BtnColumnLink_" + Guid.NewGuid();
+                        settingsHL.Text = "Non Batch";
+
+                    }).GetHtml()
+
+                );
+            }
+        });
+
+
+
+
+
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        column.CellStyle.ForeColor = System.Drawing.Color.Black;
+        column.ReadOnly = true;
+
+
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ItemCode";
+        column.Name = "ItemCode";
+        column.Caption = "Item Code";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 100;
+        column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+        column.SetEditItemTemplateContent(c =>
+        {
+
+            ViewContext.Writer.Write(
+                 Html.Partial("Partial/GoodIssue_DetailItemNameCombobox_ItemCode_Partial")
+             );
+
+
+        });
+
+
+
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.ForeColor = System.Drawing.Color.Black;
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ItemDescription";
+        column.Name = "ItemDescription";
+        column.Caption = "Description";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 350;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ClientInstanceName = "gvDetail_ItemDescription";
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ManBtchNum";
+        column.Name = "ManBtchNum";
+        column.Caption = "ManBtchNum";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 0;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ClientInstanceName = "gvDetail_ManBtchNum";
+
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Qty";
+        column.Name = "Qty";
+        column.Caption = "Qty";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 70;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        //txt.ClientInstanceName = "gvDocContentReferenceDetail_Reference";
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "UomEntry";
+        column.Name = "UomEntry";
+        column.Caption = "UomEntry";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 0;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ClientInstanceName = "gvDetail_UomEntry";
+
+    });
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "UoMCode";
+        column.Name = "UoMCode";
+        column.Caption = "UoM";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 80;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ClientInstanceName = "gvDetail_UoMCode";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Remark";
+        column.Name = "Remark";
+        column.Caption = "Remark";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 300;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        //txt.ClientInstanceName = "gvDocContentReferenceDetail_Reference";
+    });
+
+
+
+    settings.Settings.ShowFooter = true;
+
+    settings.ClientSideEvents.BeginCallback = "gvDetailOnBeginCallback";
+    settings.ClientSideEvents.EndCallback = "gvDetailOnEndCallback";
+
+    settings.ClientSideEvents.BatchEditStartEditing = "gvDetailOnBatchEditStartEditing";
+    settings.ClientSideEvents.BatchEditEndEditing = "gvDetailOnBatchEditEndEditing";
+    settings.ClientSideEvents.BatchEditRowValidating = "gvDetailOnBatchEditRowValidating";
+
+}).Bind(Model).GetHtml()
+
