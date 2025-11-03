@@ -68,7 +68,7 @@
         column.Name = "TransDate";
         column.Caption = "Document Date";
         column.ColumnType = MVCxGridViewColumnType.DateEdit;
-        column.Width = Unit.Percentage(30);
+        column.Width = Unit.Percentage(50);
 
         var txt = column.PropertiesEdit as DateEditProperties;
         txt.EditFormat = EditFormat.Date;
@@ -78,17 +78,41 @@
 
     settings.Columns.Add(column =>
     {
-        column.FieldName = "VendorCode";
-        column.Caption = "VendorCode.";
-        column.Name = "Vendor Code";
+        column.FieldName = "FromWhsName";
+        column.Caption = "Warehouse Name";
+        column.Name = "From Whs Name";
+        column.Width = Unit.Percentage(100);
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "TransitWhsCode";
+        column.Caption = "Transit Warehouse";
+        column.Name = "TransitWhsCode";
         column.Width = Unit.Percentage(50);
     });
 
     settings.Columns.Add(column =>
     {
-        column.FieldName = "VendorName";
-        column.Caption = "VendorName";
-        column.Name = "Vendor Name";
+        column.FieldName = "TransitWhsName";
+        column.Caption = "Transit Warehouse Name";
+        column.Name = "TransitWhsName";
+        column.Width = Unit.Percentage(100);
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ToWhsCode";
+        column.Caption = "To Warehouse";
+        column.Name = "ToWhsCode";
+        column.Width = Unit.Percentage(50);
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ToWhsName";
+        column.Caption = "To Warehouse Name";
+        column.Name = "ToWhsName";
         column.Width = Unit.Percentage(100);
     });
 
