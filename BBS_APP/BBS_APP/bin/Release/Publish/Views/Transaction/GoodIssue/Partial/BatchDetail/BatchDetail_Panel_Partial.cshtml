@@ -1,0 +1,102 @@
+﻿@Html.DevExpress().PopupControl(settings =>
+{
+    settings.Name = "popupBatchDetail";
+    settings.CallbackRouteValues = new { Controller = "GoodIssue", Action = "BatchDetail_PopupListOnDemandPartial" };
+    settings.CloseAction = CloseAction.OuterMouseClick;
+    settings.PopupVerticalAlign = PopupVerticalAlign.Below;
+    settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+
+    settings.CloseAnimationType = AnimationType.Fade;
+    settings.PopupAnimationType = AnimationType.Fade;
+
+    settings.ShowFooter = true;
+    settings.AllowDragging = true;
+    settings.AllowResize = true;
+    settings.ShowCollapseButton = true;
+    settings.ShowMaximizeButton = true;
+    settings.ShowRefreshButton = true;
+    settings.FooterText = "";
+    settings.Styles.Footer.Paddings.Padding = 0;
+
+    settings.ShowPageScrollbarWhenModal = true;
+
+    settings.EnableHotTrack = true;
+
+    settings.LoadContentViaCallback = LoadContentViaCallback.OnFirstShow;
+    settings.ClientSideEvents.EndCallback = "popupBatchDetail_EndCallback";
+    settings.PopupElementID = "ShowButton";
+    settings.HeaderText = "Batch Detail";
+    settings.ScrollBars = ScrollBars.Both;
+
+
+    settings.SetContent(() =>
+    {
+        Html.DevExpress().FormLayout(Fsettings =>
+        {
+            Fsettings.Name = "f";
+            Fsettings.EncodeHtml = false;
+            Fsettings.Height = Unit.Pixel(16);
+            Fsettings.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
+            var groupBtn = Fsettings.Items.AddGroupItem(groupBtnSettings =>
+            {
+                groupBtnSettings.Caption = "";
+                groupBtnSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+                groupBtnSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+                groupBtnSettings.ColCount = 2;
+                groupBtnSettings.SettingsItems.ShowCaption = DefaultBoolean.False;
+                groupBtnSettings.CellStyle.Paddings.Padding = 0;
+                groupBtnSettings.Items.Add(itemSettings =>
+                {
+                    itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Button;
+                    itemSettings.VerticalAlign = FormLayoutVerticalAlign.Top;
+                    itemSettings.Name = "grpBtnAdd";
+
+                    var btnSettings = (ButtonSettings)itemSettings.NestedExtensionSettings;
+                    btnSettings.Name = "linkAddBatchDetail";
+                    btnSettings.Text = "Save";
+                    btnSettings.ClientSideEvents.Click = string.Format("function(s, e) {{ OnClickBtnAddBatchDetail(s, e); }}");
+                    btnSettings.Width = Unit.Percentage(90);
+                    btnSettings.ImagePosition = ImagePosition.Left;
+                    btnSettings.Images.Image.Url = "~/Content/Images/buttonnew/save.png";
+                    btnSettings.Styles.Style.Paddings.Padding = 0;
+                    btnSettings.Styles.Style.CssClass = "btn-shadow btn-margin";
+
+
+                });
+                groupBtnSettings.Items.Add(itemSettings =>
+                {
+                    itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Button;
+                    itemSettings.VerticalAlign = FormLayoutVerticalAlign.Top;
+                    itemSettings.Name = "grpBtnDelete";
+
+
+                    var btnSettings = (ButtonSettings)itemSettings.NestedExtensionSettings;
+                    btnSettings.Name = "linkDelete";
+                    btnSettings.Text = "Delete";
+                    btnSettings.ClientSideEvents.Click = string.Format("function(s, e) {{ OnClickBtnDeleteBatchDetail(s, e); }}");
+                    btnSettings.Width = Unit.Percentage(90);
+                    btnSettings.ImagePosition = ImagePosition.Left;
+                    btnSettings.Images.Image.Url = "~/Content/Images/buttonnew/delete.png";
+                    btnSettings.Styles.Style.Paddings.Padding = 0;
+                    btnSettings.Styles.Style.CssClass = "btn-shadow";
+
+
+                });
+                
+            });
+        }).GetHtml();
+        
+        Html.RenderPartial("Partial/BatchDetail/BatchDetail_Form_Partial");
+
+    });
+
+    settings.PreRender = (sender, e) =>
+    {
+        ASPxPopupControl popup = (ASPxPopupControl)sender;
+
+        popup.Width = 500;
+        popup.Height = 500;
+    };
+
+
+}).GetHtml()
