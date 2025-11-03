@@ -1,8 +1,6 @@
 @using System.Data;
-@*@{
-        //ViewBag.Title = "Home";
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }*@
+
+@{ Layout = "~/Views/Shared/_mainLayout2_0.cshtml"; }
 
 @functions{
 
@@ -11,16 +9,19 @@
     {
         if (node.NavigateUrl != "")
         {
-            node.NodeStyle.ForeColor = System.Drawing.Color.FromName("#e2e2e2");
-            node.NodeStyle.BackColor = System.Drawing.Color.FromName("#292a2d");
-            node.NodeStyle.Font.Underline = true;
+            //node.NodeStyle.ForeColor = System.Drawing.Color.FromName("#116959");
+            //node.NodeStyle.BackColor = System.Drawing.Color.FromName("#f8f2f2");
+            //node.NodeStyle.Font.Underline = true;
+
             node.NodeStyle.HoverStyle.ForeColor = System.Drawing.Color.White;
             node.NodeStyle.HoverStyle.BackColor = System.Drawing.Color.FromName("#FF8800");
 
             node.NodeStyle.SelectedStyle.ForeColor = System.Drawing.Color.White;
             node.NodeStyle.SelectedStyle.BackColor = System.Drawing.Color.FromName("#116959");
+
             node.Image.Url = "~/Content/Images/button/menu_default.png";
             node.Image.Height = 15;
+
             node.Image.UrlSelected = "~/Content/Images/button/menu_selected.png";
         }
 
@@ -35,8 +36,8 @@
     {
         if (node.NavigateUrl != "")
         {
-            //node.NodeStyle.ForeColor = System.Drawing.Color.White;
-            //node.NodeStyle.SelectedStyle.ForeColor = System.Drawing.Color.Black;
+            node.NodeStyle.ForeColor = System.Drawing.Color.White;
+            node.NodeStyle.SelectedStyle.ForeColor = System.Drawing.Color.Black;
 
             node.Image.Url = "~/Content/Images/menu/" + imageUrl + "-putih.png";
 
@@ -84,8 +85,8 @@
                 //if (foundRows.Length != 0)
                 //{
                 node.Nodes.Add(new MVCxTreeViewNode[] {
-                    new MVCxTreeViewNode(text,"mn" +  name,null,DevExpressHelper.GetUrl( new { controller = name, Action = "Detail" } ))
-                });
+                new MVCxTreeViewNode(text,"mn" +  name,null,DevExpressHelper.GetUrl( new { controller = name, Action = "Detail" } ))
+            });
                 //}
             }
 
@@ -107,8 +108,8 @@
                 if (foundRows.Length != 0)
                 {
                     node.Nodes.Add(new MVCxTreeViewNode[] {
-                        new MVCxTreeViewNode(text,"mn" +  name,null,DevExpressHelper.GetUrl( new { controller = name, Action = "Detail" } ))
-                    });
+                new MVCxTreeViewNode(text,"mn" +  name,null,DevExpressHelper.GetUrl( new { controller = name, Action = "Detail" } ))
+            });
                 }
             }
         }
@@ -127,19 +128,9 @@
     {
         var tv = Html.DevExpress().TreeView(settings =>
         {
+            settings.Name = "MailFilter";
+            settings.Width = 301;
 
-            settings.Name = "tableOfContentsTreeView";
-            settings.EnableNodeTextWrapping = true;
-            settings.AllowSelectNode = true;
-            settings.Width = Unit.Percentage(100);
-            //settings.ShowExpandButtons = false;
-            settings.ControlStyle.ForeColor = System.Drawing.Color.FromName("#e2e2e2");
-            settings.SyncSelectionMode = SyncSelectionMode.None;
-            settings.NodeLinkMode = ItemLinkMode.ContentBounds;
-            settings.Styles.Node.CssClass = "tree-view-node";
-            settings.Styles.Node.HoverStyle.CssClass = "hovered";
-            settings.Styles.Elbow.CssClass = "tree-view-elbow";
-            settings.ClientSideEvents.NodeClick = "function(s, e) { e.node.SetExpanded(!e.node.GetExpanded());}";
             if (Session["MenuNodes"] == null)
             {
 
@@ -152,8 +143,6 @@
                 {
                     dataTable = Models._Utils.GeneralGetList.GetMenuUrls((int)Session["userId"]);
                 }
-
-
 
                 settings.Nodes.Add(node1 =>
                 {
@@ -196,13 +185,19 @@
                         {
                             node3.Text = "Inventory";
                             AddNode(dataTable, node3, "Transfer Request", "TransferRequest");
+                            AddNode(dataTable, node3, "Transfer In", "TransferIn");
+                            AddNode(dataTable, node3, "Transfer Out", "TransferOut");
                             AddNode(dataTable, node3, "Transfer Summary In ", "TransferSummaryIn");
                             AddNode(dataTable, node3, "Transfer Summary Out ", "TransferSummaryOut");
-                            AddNode(dataTable, node3, "Stock Opname", "StockOpname");
+                            AddNode(dataTable, node3, "Stock Opname Request ", "RequestStockOpname");
+                            AddNode(dataTable, node3, "Stock Opname Scan List", "StockOpnameScan");
+                            AddNode(dataTable, node3, "Stock Opname Summary", "StockOpnameSummary");
                         });
+
                         node2.Nodes.Add(node3 =>
                         {
                             node3.Text = "Purchasing";
+                            AddNode(dataTable, node3, "PO Scan List", "PurchaseOrderScan");
                             AddNode(dataTable, node3, "PO Scan Summary", "PurchaseOrder");
                             AddNode(dataTable, node3, "Goods Receipt PO", "GoodsReceiptPO");
                         });
@@ -228,8 +223,8 @@
                         node2.Nodes.Add(node3 =>
                         {
                             node3.Text = "Inventory";
-                            AddNode(dataTable, node3, "Transfer Scan In", "TransferIn");
-                            AddNode(dataTable, node3, "Transfer Scan Out", "TransferOut");
+                            AddNode(dataTable, node3, "Transfer In", "TransferIn");
+                            AddNode(dataTable, node3, "Transfer Out", "TransferOut");
                             AddNode(dataTable, node3, "Stock Opname", "StockOpname");
                         });
                         node2.Nodes.Add(node3 =>
@@ -368,14 +363,56 @@
         return tv;
     }
 
-        }
+}
 
-@{
-    <h3 class="section-caption contents-caption">Menu</h3>
-    TreeViewExtension tv;
-    tv = getTreeView();
+@section Left {
+    @* DXCOMMENT: Configure TreeView that allows filtering the displayed mail messages *@
+
+    @{
+        TreeViewExtension tv;
+        tv = getTreeView();
         tv.GetHtml();
+    }
+
+
 }
 
 
+@Html.DevExpress().Splitter(settings =>
+{
+    settings.Name = "ContentSplitter";
+    settings.Orientation = System.Web.UI.WebControls.Orientation.Vertical;
+    settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    //settings.ClientSideEvents.PaneResized = "OutlookController.ContentSplitterPaneResized";
+    //settings.Styles.Pane.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(0);
+    //settings.Styles.Pane.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+
+    settings.Panes.Add(subpane =>
+    {
+        subpane.Name = "MessageBody";
+        // subpane.PaneStyle.CssClass = "mlist";
+        subpane.SetContent(RenderBody().ToHtmlString());
+        subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+    });
+
+    settings.Panes.Add(subpane =>
+    {
+        subpane.Name = "MessageFooter";
+        subpane.PaneStyle.CssClass = "MessageFooterPane";
+        subpane.ShowCollapseForwardButton = DefaultBoolean.True;
+        subpane.ShowCollapseBackwardButton = DefaultBoolean.True;
+        subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+        subpane.Collapsed = false;
+
+
+        subpane.Size = System.Web.UI.WebControls.Unit.Pixel(40);
+        subpane.SetContent("<div id=\"MessageText\" class=\"message\"></div>");
+
+    });
+
+
+    settings.SaveStateToCookies = true;
+
+}).GetHtml()
 
