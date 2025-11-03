@@ -327,6 +327,7 @@ C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\Microsoft.Owin.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\Microsoft.Web.Infrastructure.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\Newtonsoft.Json.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\Owin.dll
+C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\Sap.Data.Hana.v4.5.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\System.Net.Http.Formatting.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\System.Web.Helpers.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\System.Web.Http.dll
@@ -353,6 +354,9 @@ C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\EntityFramework.SqlServer.xml
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\log4net.xml
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\Microsoft.Owin.xml
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\Newtonsoft.Json.xml
+C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\Sap.Data.Hana.v4.5.pdb
+C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\Sap.Data.Hana.v4.5.xml
+C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\Sap.Data.Hana.v4.5.dll.config
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\System.Net.Http.Formatting.xml
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\System.Web.Helpers.xml
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\System.Web.Http.xml
