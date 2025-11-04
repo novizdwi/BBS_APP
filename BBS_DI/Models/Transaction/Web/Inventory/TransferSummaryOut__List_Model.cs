@@ -37,6 +37,18 @@ namespace Models.Transaction.Web.Inventory
 
         public string VendorName { get; set; }
 
+        public string FromWhsCode { get; set; }
+
+        public string FromWhsName { get; set; }
+
+        public string TransitWhsCode { get; set; }
+
+        public string TransitWhsName { get; set; }
+
+        public string ToWhsCode { get; set; }
+
+        public string ToWhsName { get; set; }
+
         public DateTime? DocDate { get; set; }
 
         public string DocNum { get; set; }

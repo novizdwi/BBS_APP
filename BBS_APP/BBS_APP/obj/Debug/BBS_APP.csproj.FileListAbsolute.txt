@@ -224,14 +224,14 @@ C:\LegionShared\GIT\BBS_APP\BBS_APP\BBS_APP\bin\DevExpress.DataAccess.v20.1.UI.d
 C:\LegionShared\GIT\BBS_APP\BBS_APP\BBS_APP\bin\DevExpress.XtraGrid.v20.1.dll
 C:\LegionShared\GIT\BBS_APP\BBS_APP\BBS_APP\bin\DevExpress.XtraDiagram.v20.1.dll
 C:\LegionShared\GIT\BBS_APP\BBS_APP\BBS_APP\bin\DevExpress.Diagram.v20.1.Core.dll
-C:\LegionShared\GIT\BBS_APP\BBS_APP\BBS_APP\bin\BBS_APP.dll.config
 C:\LegionShared\GIT\BBS_APP\BBS_APP\BBS_APP\bin\BBS_APP.pdb
+C:\LegionShared\GIT\BBS_APP\BBS_APP\BBS_APP\bin\BBS_DI.pdb
+C:\LegionShared\GIT\BBS_APP\BBS_APP\BBS_APP\bin\BBS_APP.dll.config
 C:\LegionShared\GIT\BBS_APP\BBS_APP\BBS_APP\bin\CrystalDecisions.CrystalReports.Engine.dll
 C:\LegionShared\GIT\BBS_APP\BBS_APP\BBS_APP\bin\CrystalDecisions.Shared.dll
 C:\LegionShared\GIT\BBS_APP\BBS_APP\BBS_APP\bin\CrystalDecisions.Web.dll
 C:\LegionShared\GIT\BBS_APP\BBS_APP\BBS_APP\bin\Sap.Data.Hana.v4.5.dll
 C:\LegionShared\GIT\BBS_APP\BBS_APP\BBS_APP\bin\stdole.dll
-C:\LegionShared\GIT\BBS_APP\BBS_APP\BBS_APP\bin\BBS_DI.pdb
 C:\LegionShared\GIT\BBS_APP\BBS_APP\BBS_APP\bin\BBS_DI.dll.config
 C:\LegionShared\GIT\BBS_APP\BBS_APP\BBS_APP\bin\EntityFramework.xml
 C:\LegionShared\GIT\BBS_APP\BBS_APP\BBS_APP\bin\EntityFramework.SqlServer.xml
