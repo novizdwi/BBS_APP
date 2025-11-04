@@ -37,6 +37,8 @@ namespace Models.Transaction.Web.Inventory
 
         public string WhsCode { get; set; }
 
+        public string WhsName { get; set; }
+
         public string Status { get; set; }
 
         public string CreatedUserName { get; set; }
@@ -49,10 +51,11 @@ namespace Models.Transaction.Web.Inventory
 
     public class StockOpnameScan__List_Model
     {
-        static string ViewSql = "SELECT T0.*, T1.\"FirstName\" AS \"CreatedUserName\"  " +
+        static string ViewSql = "SELECT T0.*, T1.\"FirstName\" AS \"CreatedUserName\", T2.\"WhsName\" " +
                         "FROM \"Tx_StockOpname\" T0 " +
                         "INNER JOIN \"Tm_User\" T1 ON T0.\"CreatedUser\" = T1.\"Id\" " +
-                        "ORDER BY T0.\"CreatedDate\" DESC";
+                        "LEFT JOIN \"" + DbProvider.dbSap_Name + "\".\"OWHS\" T2 ON T0.\"WhsCode\" = T2.\"WhsCode\" "+
+                        "ORDER BY T0.\"CreatedDate\" DESC ";
 
         public static void SetBindingData(GridViewModel state, int userId, ListFindParamStockOpnameScan cflParam)
         {

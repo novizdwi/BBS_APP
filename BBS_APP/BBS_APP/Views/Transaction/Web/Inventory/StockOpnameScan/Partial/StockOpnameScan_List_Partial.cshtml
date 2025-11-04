@@ -82,6 +82,22 @@
         column.Name = "RequestNo";
         column.Width = Unit.Percentage(50);
     });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "WhsCode";
+        column.Caption = "Whs Code";
+        column.Name = "WhsCode";
+        column.Width = Unit.Percentage(40);
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "WhsName";
+        column.Caption = "Whs Name";
+        column.Name = "WhsName";
+        column.Width = Unit.Percentage(50);
+    });
     
     settings.Columns.Add(column =>
     {
