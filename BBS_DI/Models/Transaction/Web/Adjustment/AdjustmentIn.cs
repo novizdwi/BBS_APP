@@ -64,8 +64,12 @@ namespace Models.Transaction.Web.Adjustment
 
         public string CancelReason { get; set; }
 
-
         public int? ModifiedUser { get; set; }
+
+        public string CheckNeedApproval_ { get; set; }
+
+        public string ApprovalStatus { get; set; }
+
         public List<AdjustmentIn_ItemModel> ListDetails_ = new List<AdjustmentIn_ItemModel>();
 
         public AdjustmentIn_Detail Details_ { get; set; }

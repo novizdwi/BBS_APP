@@ -766,11 +766,11 @@
     <Content Include="Views\Transaction\Web\Inventory\StockOpnameScan\Partial\ItemTag\ItemTag_Panel_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Inventory\StockOpnameScan\Partial\ItemTag\ItemTag_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Inventory\StockOpnameScan\Partial\ItemTag\ItemTag_TabItemTagList_List_Partial.cshtml" />
-    <Content Include="Views\Transaction\Web\Inventory\StockOpnameScan\Partial\StockOpname_Form_Btn_Partial.cshtml" />
-    <Content Include="Views\Transaction\Web\Inventory\StockOpnameScan\Partial\StockOpname_Form_Partial.cshtml" />
-    <Content Include="Views\Transaction\Web\Inventory\StockOpnameScan\Partial\StockOpname_Form_TabDetail_Partial.cshtml" />
-    <Content Include="Views\Transaction\Web\Inventory\StockOpnameScan\Partial\StockOpname_List_Partial.cshtml" />
-    <Content Include="Views\Transaction\Web\Inventory\StockOpnameScan\Partial\StockOpname_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\StockOpnameScan\Partial\StockOpnameScan_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\StockOpnameScan\Partial\StockOpnameScan_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\StockOpnameScan\Partial\StockOpnameScan_Form_TabDetail_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\StockOpnameScan\Partial\StockOpnameScan_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\StockOpnameScan\Partial\StockOpnameScan_Panel_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Inventory\StockOpnameScan\StockOpnameScan.cshtml" />
     <Content Include="Views\Setting\GeneralSetting\Partial\GeneralSetting_TabAdjustmentCoa_List_Partial.cshtml" />
     <None Include="Web.Debug.config">

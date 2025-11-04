@@ -125,12 +125,13 @@
     groupItem_Col1.Items.Add(itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
-        itemSettings.Caption = "CancelReason";
-        itemSettings.FieldName = "CancelReason";
+        itemSettings.Caption = "RequestId";
+        itemSettings.FieldName = "RequestId";
         itemSettings.ClientVisible = false;
 
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
-        txt.Name = "CancelReason";
+        txt.Name = "RequestId";
+        txt.ReadOnly = true;
         txt.ShowModelErrors = true;
         txt.ControlStyle.CssClass = "editornoimage";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
@@ -141,12 +142,12 @@
     groupItem_Col1.Items.Add(itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
-        itemSettings.Caption = "Doc Entry";
-        itemSettings.FieldName = "DocEntry";
-        itemSettings.ClientVisible = false;
+        itemSettings.Caption = "Request No";
+        itemSettings.FieldName = "RequestNo";
 
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
-        txt.Name = "DocEntry";
+        txt.Name = "RequestNo";
+        txt.ReadOnly = true;
         txt.ShowModelErrors = true;
         txt.ControlStyle.CssClass = "editornoimage";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
@@ -164,7 +165,7 @@
         var txt = (DateEditSettings)itemSettings.NestedExtensionSettings;
         txt.Name = "TransDate";
         txt.ShowModelErrors = true;
-
+        txt.ReadOnly = true;
         txt.ControlStyle.CssClass = "editornoimage";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
         txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
@@ -189,41 +190,36 @@
 
     groupItem_Col1.Items.Add(itemSettings =>
     {
-        itemSettings.Name = "grpVendorCode";
-        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
-        itemSettings.Caption = "VendorCode";
-        itemSettings.FieldName = "VendorCode";
-        var txt = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
-        txt.Name = "VendorCode";
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Whs Code";
+        itemSettings.FieldName = "WhsCode";
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "WhsCode";
         txt.ReadOnly = true;
         txt.ShowModelErrors = true;
-
         txt.ControlStyle.CssClass = "editornoimage";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        //txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-        txt.Properties.ValidationSettings.Display = Display.Dynamic;
-        //txt.Width = 100;
-
-        // Hide the default DropDown button
-        txt.Properties.DropDownButton.Visible = false;
-        txt.Properties.ButtonStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Width = 230;
     });
 
     groupItem_Col1.Items.Add(itemSettings =>
     {
-        itemSettings.Name = "grpVendorName";
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
-        itemSettings.Caption = "Vendor Name";
-        itemSettings.FieldName = "VendorName";
+        itemSettings.Caption = "Whs Name";
+        itemSettings.FieldName = "WhsName";
+
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
-        txt.Name = "VendorName";
-        txt.ShowModelErrors = true;
+        txt.Name = "WhsName";
         txt.ReadOnly = true;
-        txt.ControlStyle.CssClass = "editor";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Width = 230;
     });
+
 
     groupItem_Col2.Items.Add(itemSettings =>
     {
@@ -231,23 +227,9 @@
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
         itemSettings.Caption = "Device Id";
         itemSettings.FieldName = "ScanDeviceId";
+
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
         txt.Name = "ScanDeviceId";
-        txt.ShowModelErrors = true;
-        txt.ReadOnly = true;
-        txt.ControlStyle.CssClass = "editor";
-        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        txt.Width = 230;
-    });
-
-    groupItem_Col2.Items.Add(itemSettings =>
-    {
-        itemSettings.Name = "grpDocNum";
-        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
-        itemSettings.Caption = "SAP Doc Num";
-        itemSettings.FieldName = "DocNum";
-        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
-        txt.Name = "DocNum";
         txt.ShowModelErrors = true;
         txt.ReadOnly = true;
         txt.ControlStyle.CssClass = "editor";
@@ -278,6 +260,22 @@
         cbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
         cbo.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         cbo.Width = 230;
+    });
+
+    groupItem_Col3.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "CancelReason";
+        itemSettings.FieldName = "CancelReason";
+        itemSettings.ClientVisible = false;
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "CancelReason";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Width = 230;
     });
 
     if (Model._FormMode != Models.FormModeEnum.New)
@@ -376,110 +374,6 @@
                     Html.Partial("Partial/StockOpnameScan_Form_TabDetail_Partial", Model)
                 );
 
-            });
-
-        });
-        group.Items.Add(item =>
-        {
-            item.Name = "TabAddresses";
-            item.Caption = "      Address      ";
-            item.SetNestedContent(() =>
-            {
-                Html.DevExpress().FormLayout(frm =>
-                {
-                    frm.Name = "formLayoutLogistic";
-                    frm.EncodeHtml = false;
-                    frm.Width = Unit.Percentage(100);
-                    frm.Height = 250;
-                    frm.AlignItemCaptionsInAllGroups = true;
-                    frm.ShowItemCaptionColon = false;
-
-                    //var groupItem_main = frm.Items.AddGroupItem(itemSettings =>
-                    //{
-                    //    itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
-                    //    itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
-                    //    itemSettings.ShowCaption = DefaultBoolean.False;
-                    //    itemSettings.ColCount = 1;
-
-                    //});
-
-                    var groupItem_1 = frm.Items.AddGroupItem(itemSettings =>
-                    {
-                        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
-                        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
-                        itemSettings.ShowCaption = DefaultBoolean.False;
-                        itemSettings.ColCount = 2;
-
-                    });
-
-                    var groupItem_1_1 = groupItem_1.Items.AddGroupItem(itemSettings =>
-                    {
-                        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
-                        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
-                        itemSettings.ShowCaption = DefaultBoolean.False;
-                        itemSettings.ColCount = 1;
-                        itemSettings.Width = Unit.Percentage(20);
-                        itemSettings.GroupBoxStyle.Caption.Paddings.Padding = 0;
-                        itemSettings.ParentContainerStyle.Paddings.Padding = 0;
-                        itemSettings.CellStyle.Paddings.Padding = 0;
-                    });
-
-                    var groupItem_1_2 = groupItem_1.Items.AddGroupItem(itemSettings =>
-                    {
-                        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
-                        itemSettings.SettingsItems.HorizontalAlign = FormLayoutHorizontalAlign.Left;
-                        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
-                        itemSettings.ShowCaption = DefaultBoolean.False;
-                        itemSettings.ColCount = 1;
-                        itemSettings.Width = Unit.Percentage(80);
-                        itemSettings.GroupBoxStyle.Caption.Paddings.Padding = 0;
-                        itemSettings.ParentContainerStyle.Paddings.Padding = 0;
-                        itemSettings.CellStyle.Paddings.Padding = 0;
-                    });
-
-                    var groupItem_2_1 = groupItem_3.Items.AddGroupItem(itemSettings =>
-                    {
-                        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
-                        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
-                        itemSettings.ShowCaption = DefaultBoolean.False;
-                        itemSettings.ColCount = 1;
-                        itemSettings.Width = Unit.Percentage(20);
-                        itemSettings.GroupBoxStyle.Caption.Paddings.Padding = 0;
-                        itemSettings.ParentContainerStyle.Paddings.Padding = 0;
-                        itemSettings.CellStyle.Paddings.Padding = 0;
-                    });
-
-                    var groupItem_2_2 = groupItem_3.Items.AddGroupItem(itemSettings =>
-                    {
-                        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
-                        itemSettings.SettingsItems.HorizontalAlign = FormLayoutHorizontalAlign.Left;
-                        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
-                        itemSettings.ShowCaption = DefaultBoolean.False;
-                        itemSettings.ColCount = 1;
-                        itemSettings.GroupBoxStyle.Caption.Paddings.Padding = 0;
-                        itemSettings.ParentContainerStyle.Paddings.Padding = 0;
-                        itemSettings.CellStyle.Paddings.Padding = 0;
-                        itemSettings.Width = Unit.Percentage(80);
-                    });
-
-                    groupItem_1_1.Items.Add(itemSettings =>
-                    {
-                        itemSettings.Name = "grpAddress";
-                        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Memo;
-                        itemSettings.Caption = "Address";
-                        itemSettings.FieldName = "Address";
-                        itemSettings.CaptionSettings.HorizontalAlign = FormLayoutHorizontalAlign.Right;
-                        var txt = (MemoSettings)itemSettings.NestedExtensionSettings;
-                        txt.Name = "Address";
-                        txt.ShowModelErrors = true;
-                        txt.ReadOnly = true;
-                        txt.ControlStyle.CssClass = "editor";
-                        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-                        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-                        txt.Width = 450;
-                        txt.Height = 50;
-                    });
-                }).GetHtml();
             });
 
         });

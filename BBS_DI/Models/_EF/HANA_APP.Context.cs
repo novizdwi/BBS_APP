@@ -91,6 +91,7 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_PurchaseOrder_Item> Tx_PurchaseOrder_Item { get; set; }
         public virtual DbSet<Tx_PurchaseOrder_Item_Tag> Tx_PurchaseOrder_Item_Tag { get; set; }
         public virtual DbSet<Tx_Request_StockOpname> Tx_Request_StockOpname { get; set; }
+        public virtual DbSet<Tx_StockOpname> Tx_StockOpname { get; set; }
         public virtual DbSet<Tx_StockOpname_Item> Tx_StockOpname_Item { get; set; }
         public virtual DbSet<Tx_StockOpname_Item_Tag> Tx_StockOpname_Item_Tag { get; set; }
         public virtual DbSet<Tx_TransferIn> Tx_TransferIn { get; set; }
@@ -107,6 +108,5 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_TransferSummaryOut> Tx_TransferSummaryOut { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut_Item> Tx_TransferSummaryOut_Item { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut_Item_Tag> Tx_TransferSummaryOut_Item_Tag { get; set; }
-        public virtual DbSet<Tx_StockOpname> Tx_StockOpname { get; set; }
     }
 }

@@ -31,7 +31,7 @@
             menuSettings.Items.Add(item =>
             {
                 item.Enabled = false;
-                item.SetTemplateContent(template => ViewContext.Writer.Write("<h1><b>PO Scan List</b></h1>"));
+                item.SetTemplateContent(template => ViewContext.Writer.Write("<h1><b>Stock Opname Scan List</b></h1>"));
                 item.ItemStyle.Width = Unit.Percentage(100);
             });
 
@@ -70,8 +70,6 @@
                     btnSettings.Styles.Style.Paddings.Padding = 0;
 
                 });
-
-
 
                 groupBtnSettings.Items.Add(itemSettings =>
                 {

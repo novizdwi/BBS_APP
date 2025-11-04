@@ -33,13 +33,9 @@ namespace Models.Transaction.Web.Inventory
 
         public DateTime? TransDate { get; set; }
 
-        public string VendorCode { get; set; }
+        public string RequestNo { get; set; }
 
-        public string VendorName { get; set; }
-
-        public DateTime? DocDate { get; set; }
-
-        public string DocNum { get; set; }
+        public string WhsCode { get; set; }
 
         public string Status { get; set; }
 

@@ -11,7 +11,6 @@
 
 }
 
-
 @Html.DevExpress().GridView(settings=>
 {
     settings.Name = "gvStockOpnameScanList";
@@ -78,28 +77,12 @@
 
     settings.Columns.Add(column =>
     {
-        column.FieldName = "VendorCode";
-        column.Caption = "VendorCode.";
-        column.Name = "Vendor Code";
+        column.FieldName = "RequestNo";
+        column.Caption = "Request No";
+        column.Name = "RequestNo";
         column.Width = Unit.Percentage(50);
     });
-
-    settings.Columns.Add(column =>
-    {
-        column.FieldName = "Vendor Name";
-        column.Caption = "VendorName";
-        column.Name = "VendorName";
-        column.Width = Unit.Percentage(100);
-    });
-
-    settings.Columns.Add(column =>
-    {
-        column.FieldName = "DocNum";
-        column.Caption = "SAP Doc Num";
-        column.Name = "DocNum";
-        column.Width = Unit.Percentage(80);
-    });
-
+    
     settings.Columns.Add(column =>
     {
         column.FieldName = "Status";

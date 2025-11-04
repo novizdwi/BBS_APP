@@ -78,6 +78,10 @@ namespace Models.Transaction.Web.Purchasing
 
         public string CancelReason { get; set; }
 
+        public string CheckNeedApproval_ { get; set; }
+
+        public string ApprovalStatus { get; set; }
+
         public List<GoodsReceiptPO_DetailModel> ListDetails_ = new List<GoodsReceiptPO_DetailModel>();
 
         public GoodsReceiptPO_Detail Details_ { get; set; }
