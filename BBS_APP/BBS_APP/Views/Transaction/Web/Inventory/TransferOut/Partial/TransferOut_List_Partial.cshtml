@@ -78,16 +78,8 @@
 
     settings.Columns.Add(column =>
     {
-        column.FieldName = "FromWhsCode";
-        column.Caption = "FromWhsCode.";
-        column.Name = "From Whs Code";
-        column.Width = Unit.Percentage(50);
-    });
-
-    settings.Columns.Add(column =>
-    {
         column.FieldName = "FromWhsName";
-        column.Caption = "FromWhsName";
+        column.Caption = "Warehouse Name";
         column.Name = "From Whs Name";
         column.Width = Unit.Percentage(100);
     });
@@ -95,7 +87,7 @@
     settings.Columns.Add(column =>
     {
         column.FieldName = "ToWhsCode";
-        column.Caption = "ToWhsCode.";
+        column.Caption = "To Warehouse";
         column.Name = "To Whs Code";
         column.Width = Unit.Percentage(50);
     });
@@ -103,7 +95,7 @@
     settings.Columns.Add(column =>
     {
         column.FieldName = "ToWhsName";
-        column.Caption = "ToWhsName";
+        column.Caption = "To Warehouse Name";
         column.Name = "To Whs Name";
         column.Width = Unit.Percentage(100);
     });

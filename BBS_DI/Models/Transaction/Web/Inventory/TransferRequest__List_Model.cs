@@ -47,7 +47,7 @@ namespace Models.Transaction.Web.Inventory
 
         public DateTime? DocDate { get; set; }
 
-        public long DocEntry { get; set; }
+        public long? DocEntry { get; set; }
 
         public string Status { get; set; }
 
