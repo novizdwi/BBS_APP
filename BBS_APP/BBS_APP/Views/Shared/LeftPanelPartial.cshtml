@@ -84,8 +84,8 @@
                 //if (foundRows.Length != 0)
                 //{
                 node.Nodes.Add(new MVCxTreeViewNode[] {
-                    new MVCxTreeViewNode(text,"mn" +  name,null,DevExpressHelper.GetUrl( new { controller = name, Action = "Detail" } ))
-                });
+                new MVCxTreeViewNode(text,"mn" +  name,null,DevExpressHelper.GetUrl( new { controller = name, Action = "Detail" } ))
+            });
                 //}
             }
 
@@ -93,8 +93,8 @@
             else
             {
                 node.Nodes.Add(new MVCxTreeViewNode[] {
-                    new MVCxTreeViewNode(text)
-                });
+                new MVCxTreeViewNode(text)
+            });
             }
 
         }
@@ -107,8 +107,8 @@
                 if (foundRows.Length != 0)
                 {
                     node.Nodes.Add(new MVCxTreeViewNode[] {
-                        new MVCxTreeViewNode(text,"mn" +  name,null,DevExpressHelper.GetUrl( new { controller = name, Action = "Detail" } ))
-                    });
+                    new MVCxTreeViewNode(text,"mn" +  name,null,DevExpressHelper.GetUrl( new { controller = name, Action = "Detail" } ))
+                });
                 }
             }
         }
@@ -132,8 +132,8 @@
             settings.EnableNodeTextWrapping = true;
             settings.AllowSelectNode = true;
             settings.Width = Unit.Percentage(100);
-            //settings.ShowExpandButtons = false;
-            settings.ControlStyle.ForeColor = System.Drawing.Color.FromName("#e2e2e2");
+        //settings.ShowExpandButtons = false;
+        settings.ControlStyle.ForeColor = System.Drawing.Color.FromName("#e2e2e2");
             settings.SyncSelectionMode = SyncSelectionMode.None;
             settings.NodeLinkMode = ItemLinkMode.ContentBounds;
             settings.Styles.Node.CssClass = "tree-view-node";
@@ -161,10 +161,10 @@
 
                     node1.Nodes.Add(node2 =>
                     {
-                        //node2.Text = "Monitoring";
-                        //AddNode(dataTable, node2, "Status Permintaan User", "MaterialRequestStatus");
+                    //node2.Text = "Monitoring";
+                    //AddNode(dataTable, node2, "Status Permintaan User", "MaterialRequestStatus");
 
-                        node2.Text = "Item";
+                    node2.Text = "Item";
                         AddNode(dataTable, node2, "RFID", "Rfid");
 
 
@@ -197,9 +197,8 @@
                         {
                             node3.Text = "Inventory";
                             AddNode(dataTable, node3, "Transfer Request", "TransferRequest");
-                            AddNode(dataTable, node3, "Transfer In", "TransferIn");
-                            AddNode(dataTable, node3, "Transfer Out", "TransferOut");
-
+                            AddNode(dataTable, node3, "Transfer Summary In ", "TransferSummaryIn");
+                            AddNode(dataTable, node3, "Transfer Summary Out ", "TransferSummaryOut");
                             AddNode(dataTable, node3, "Stock Opname Request ", "RequestStockOpname");
                             AddNode(dataTable, node3, "Stock Opname Scan List", "StockOpnameScan");
                             AddNode(dataTable, node3, "Stock Opname Summary", "StockOpnameSummary");
@@ -250,8 +249,8 @@
 
                     node1.Text = "Report";
 
-                    //AddNode(dataTable, node1, "Alert", "ReportAlert");
-                    AddNode(dataTable, node1, "Query", "ReportQuery");
+                //AddNode(dataTable, node1, "Alert", "ReportAlert");
+                AddNode(dataTable, node1, "Query", "ReportQuery");
                     AddNode(dataTable, node1, "Report", "ReportCustom");
                 });
 
@@ -319,8 +318,8 @@
                 var treeView = s as MVCxTreeView;
 
 
-                //remove jika node folder empty
-                var j = treeView.Nodes.Count;
+            //remove jika node folder empty
+            var j = treeView.Nodes.Count;
                 if (Session["isAdmin"] == "Y")
                 {
 
@@ -335,14 +334,14 @@
                 }
 
 
-                //tambahkan style di
-                j = treeView.Nodes.Count;
+            //tambahkan style di
+            j = treeView.Nodes.Count;
                 for (int i = 0; i < j; i++)
                 {
                     var node1 = (MVCxTreeViewNode)treeView.Nodes[i];
-                    //StyleNodeDetail(node1);
+                //StyleNodeDetail(node1);
 
-                    StyleMenuNode(node1, node1.Name);
+                StyleMenuNode(node1, node1.Name);
                 }
 
 
@@ -355,8 +354,8 @@
                 }
                 else
                 {
-                    //Models.Authentication.User.UserGetList.UpdateLastController((int)Session["userId"], ViewContext.Controller.ValueProvider.GetValue("controller").RawValue.ToString());
-                }
+                //Models.Authentication.User.UserGetList.UpdateLastController((int)Session["userId"], ViewContext.Controller.ValueProvider.GetValue("controller").RawValue.ToString());
+            }
 
 
                 if (node != null)
@@ -373,13 +372,13 @@
         return tv;
     }
 
-        }
+}
 
 @{
     <h3 class="section-caption contents-caption">Menu</h3>
     TreeViewExtension tv;
     tv = getTreeView();
-        tv.GetHtml();
+    tv.GetHtml();
 }
 
 
