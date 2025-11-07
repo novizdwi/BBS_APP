@@ -37,7 +37,6 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tm_ApprovalTemplate> Tm_ApprovalTemplate { get; set; }
         public virtual DbSet<Tm_ApprovalTemplate_Position> Tm_ApprovalTemplate_Position { get; set; }
         public virtual DbSet<Tm_ApprovalTemplate_Role> Tm_ApprovalTemplate_Role { get; set; }
-        public virtual DbSet<Tm_ApprovalTemplate_Stage> Tm_ApprovalTemplate_Stage { get; set; }
         public virtual DbSet<Tm_ApprovalTemplate_User> Tm_ApprovalTemplate_User { get; set; }
         public virtual DbSet<Tm_GeneralSetting> Tm_GeneralSetting { get; set; }
         public virtual DbSet<Tm_GeneralSetting_Coa> Tm_GeneralSetting_Coa { get; set; }
@@ -108,5 +107,6 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_TransferSummaryOut> Tx_TransferSummaryOut { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut_Item> Tx_TransferSummaryOut_Item { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut_Item_Tag> Tx_TransferSummaryOut_Item_Tag { get; set; }
+        public virtual DbSet<Tm_ApprovalTemplate_Stage> Tm_ApprovalTemplate_Stage { get; set; }
     }
 }

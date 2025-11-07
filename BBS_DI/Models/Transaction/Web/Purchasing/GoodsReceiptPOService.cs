@@ -248,6 +248,12 @@ namespace Models.Transaction.Web.Purchasing
                     model.DocNum_ = CONTEXT.Database.SqlQuery<string>(getDocNum, id).FirstOrDefault();
                 }
 
+                //if (model.Id > 0)
+                //{
+                //    ssql = "CALL \"SpSysCheckNeedApproval\" (" + userId.ToString() + "," + model.Id.ToString() + ",'GoodsReceiptPO') ";
+                //    model.CheckNeedApproval_ = CONTEXT.Database.SqlQuery<string>(ssql).FirstOrDefault();
+                //}
+
                 model.ListDetails_ = this.GoodsReceiptPO_Details(CONTEXT, id);
             }
 

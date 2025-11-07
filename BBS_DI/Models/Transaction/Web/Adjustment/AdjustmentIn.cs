@@ -243,6 +243,12 @@ namespace Models.Transaction.Web.Adjustment
                     model.DocNum_ = CONTEXT.Database.SqlQuery<string>(getDocNum, id).FirstOrDefault();
                 }
 
+                //if (model.Id > 0)
+                //{
+                //    ssql = "CALL \"SpSysCheckNeedApproval\" (" + userId.ToString() + "," + model.Id.ToString() + ",'GoodsReceiptPO') ";
+                //    model.CheckNeedApproval_ = CONTEXT.Database.SqlQuery<string>(ssql).FirstOrDefault();
+                //}
+
                 model.ListDetails_ = this.AdjustmentIn_Details(CONTEXT, id);
                 model.ListAttachments_ = this.GetAdjustmentIn_Attachments(id);
 

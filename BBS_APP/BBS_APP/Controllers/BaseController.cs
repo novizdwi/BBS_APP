@@ -427,7 +427,7 @@ namespace Controllers
                     }
 
 
-                    string[] arrAction = { "detail", "add", "update", "post", "cancel", "paid", "process", "reject", "sendemailtoreqestor", "finish", "duplicate", "revision", "reopen", "readytosell", "stoptosell", "delivered" };
+                    string[] arrAction = { "detail", "add", "update", "post", "cancel", "approve", "reject", "waiting" };
 
                     string[] arrControlerAttachment = { "miceinquiry" };
 

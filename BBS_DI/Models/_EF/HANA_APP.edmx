@@ -178,9 +178,6 @@
           <Property Name="DetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StageId" Type="int" />
           <Property Name="Step" Type="int" />
-          <Property Name="RuleType" Type="nvarchar" MaxLength="50" />
-          <Property Name="Value1" Type="int" />
-          <Property Name="Value2" Type="int" />
           <Property Name="SortCode" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="timestamp" />
           <Property Name="CreatedUser" Type="int" />
@@ -1590,7 +1587,6 @@
           <EntitySet Name="Tm_ApprovalTemplate" EntityType="Model1.Tm_ApprovalTemplate" />
           <EntitySet Name="Tm_ApprovalTemplate_Position" EntityType="Model1.Tm_ApprovalTemplate_Position" />
           <EntitySet Name="Tm_ApprovalTemplate_Role" EntityType="Model1.Tm_ApprovalTemplate_Role" />
-          <EntitySet Name="Tm_ApprovalTemplate_Stage" EntityType="Model1.Tm_ApprovalTemplate_Stage" />
           <EntitySet Name="Tm_ApprovalTemplate_User" EntityType="Model1.Tm_ApprovalTemplate_User" />
           <EntitySet Name="Tm_GeneralSetting" EntityType="Model1.Tm_GeneralSetting" />
           <EntitySet Name="Tm_GeneralSetting_Coa" EntityType="Model1.Tm_GeneralSetting_Coa" />
@@ -1661,6 +1657,7 @@
           <EntitySet Name="Tx_TransferSummaryOut" EntityType="Model1.Tx_TransferSummaryOut" />
           <EntitySet Name="Tx_TransferSummaryOut_Item" EntityType="Model1.Tx_TransferSummaryOut_Item" />
           <EntitySet Name="Tx_TransferSummaryOut_Item_Tag" EntityType="Model1.Tx_TransferSummaryOut_Item_Tag" />
+          <EntitySet Name="Tm_ApprovalTemplate_Stage" EntityType="Model1.Tm_ApprovalTemplate_Stage" />
         </EntityContainer>
         <EntityType Name="Tm_Alert">
           <Key>
@@ -1822,23 +1819,6 @@
           <Property Name="DetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleId" Type="Int32" />
           <Property Name="IsTick" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDate" Type="DateTime" />
-          <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
-        </EntityType>
-        <EntityType Name="Tm_ApprovalTemplate_Stage">
-          <Key>
-            <PropertyRef Name="DetId" />
-          </Key>
-          <Property Name="Id" Type="Int32" />
-          <Property Name="DetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StageId" Type="Int32" />
-          <Property Name="Step" Type="Int32" />
-          <Property Name="RuleType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Value1" Type="Int32" />
-          <Property Name="Value2" Type="Int32" />
-          <Property Name="SortCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
@@ -3145,6 +3125,20 @@
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
+        <EntityType Name="Tm_ApprovalTemplate_Stage">
+          <Key>
+            <PropertyRef Name="DetId" />
+          </Key>
+          <Property Name="Id" Type="Int32" />
+          <Property Name="DetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StageId" Type="Int32" />
+          <Property Name="Step" Type="Int32" />
+          <Property Name="SortCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3323,24 +3317,6 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="IsTick" ColumnName="IsTick" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="DetId" ColumnName="DetId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tm_ApprovalTemplate_Stage">
-            <EntityTypeMapping TypeName="Model1.Tm_ApprovalTemplate_Stage">
-              <MappingFragment StoreEntitySet="Tm_ApprovalTemplate_Stage">
-                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="SortCode" ColumnName="SortCode" />
-                <ScalarProperty Name="Value2" ColumnName="Value2" />
-                <ScalarProperty Name="Value1" ColumnName="Value1" />
-                <ScalarProperty Name="RuleType" ColumnName="RuleType" />
-                <ScalarProperty Name="Step" ColumnName="Step" />
-                <ScalarProperty Name="StageId" ColumnName="StageId" />
                 <ScalarProperty Name="DetId" ColumnName="DetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -4709,6 +4685,21 @@
                 <ScalarProperty Name="ItemName" ColumnName="ItemName" />
                 <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
                 <ScalarProperty Name="DetDetId" ColumnName="DetDetId" />
+                <ScalarProperty Name="DetId" ColumnName="DetId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tm_ApprovalTemplate_Stage">
+            <EntityTypeMapping TypeName="Model1.Tm_ApprovalTemplate_Stage">
+              <MappingFragment StoreEntitySet="Tm_ApprovalTemplate_Stage">
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="SortCode" ColumnName="SortCode" />
+                <ScalarProperty Name="Step" ColumnName="Step" />
+                <ScalarProperty Name="StageId" ColumnName="StageId" />
                 <ScalarProperty Name="DetId" ColumnName="DetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
