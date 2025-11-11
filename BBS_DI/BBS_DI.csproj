@@ -197,6 +197,8 @@
     <Compile Include="Models\Setting\Report__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Adjustment\AdjustmentIn.cs" />
     <Compile Include="Models\Transaction\Web\Adjustment\AdjustmentOut.cs" />
+    <Compile Include="Models\Transaction\Web\Inventory\StockSummaryOpname__List_Model.cs" />
+    <Compile Include="Models\Transaction\Web\Inventory\StockSummaryOpnameService.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\StockOpnameScanService.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\StockOpnameScan__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\RequestStockOpname__List_Model.cs" />
@@ -229,6 +231,7 @@
     <Compile Include="Models\_Cfl\CflItemByWarehouse_Model.cs" />
     <Compile Include="Models\_Cfl\CflItem_Model.cs" />
     <Compile Include="Models\_Cfl\CflCoa_Model.cs" />
+    <Compile Include="Models\_Cfl\CflStockOpname_Model.cs" />
     <Compile Include="Models\_Cfl\CflTransferSummaryOut_Model.cs" />
     <Compile Include="Models\_Cfl\CflTransferRequest_Model.cs" />
     <Compile Include="Models\_Cfl\CflPurchaseOrder_Model.cs" />
@@ -438,6 +441,9 @@
     <Compile Include="Models\_EF\Tx_GoodsReceiptPO_Item_Tag.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\_EF\Tx_GoodsReceiptPO_Ref.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\_EF\Tx_PurchaseOrder.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
@@ -451,6 +457,18 @@
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\_EF\Tx_StockOpname.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_StockOpnameSummary.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_StockOpnameSummary_Item.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_StockOpnameSummary_Item_Tag.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_StockOpnameSummary_Ref.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\_EF\Tx_StockOpname_Item.cs">

@@ -12,23 +12,19 @@ namespace BBS_DI.Models._EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Tx_GoodsReceiptPO
+    public partial class Tx_StockSummaryOpname
     {
         public long Id { get; set; }
         public string TransType { get; set; }
         public string TransNo { get; set; }
         public Nullable<System.DateTime> TransDate { get; set; }
-        public string VendorCode { get; set; }
-        public string VendorName { get; set; }
+        public Nullable<long> RequestId { get; set; }
+        public string RequestNo { get; set; }
+        public string WhsCode { get; set; }
+        public string WhsName { get; set; }
         public string Address { get; set; }
-        public Nullable<long> DocEntry { get; set; }
-        public string DocNum { get; set; }
-        public Nullable<System.DateTime> DocDate { get; set; }
-        public string RefNo { get; set; }
         public string Status { get; set; }
-        public Nullable<long> BaseEntry { get; set; }
-        public string BaseDocNum { get; set; }
-        public Nullable<System.DateTime> PostingDate { get; set; }
+        public string ApprovalStatus { get; set; }
         public string IsAfterPosted { get; set; }
         public string Comments { get; set; }
         public string CancelReason { get; set; }
@@ -36,6 +32,5 @@ namespace BBS_DI.Models._EF
         public Nullable<int> CreatedUser { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> ModifiedUser { get; set; }
-        public string ApprovalStatus { get; set; }
     }
 }

@@ -84,8 +84,38 @@ namespace Models.Transaction.Web.Purchasing
 
         public List<GoodsReceiptPO_DetailModel> ListDetails_ = new List<GoodsReceiptPO_DetailModel>();
 
+        public List<GoodsReceiptPO_RefModel> ListRef_ = new List<GoodsReceiptPO_RefModel>();
+
         public GoodsReceiptPO_Detail Details_ { get; set; }
     }
+
+    public class GoodsReceiptPO_RefModel
+    {
+        private FormModeEnum _FormModeEnum = FormModeEnum.New;
+
+        public FormModeEnum _FormMode
+        {
+            get { return this._FormModeEnum; }
+            set { this._FormModeEnum = value; }
+        }
+
+        public int _UserId { get; set; }
+
+        public long? Id { get; set; }
+
+        public long? DetId { get; set; }
+
+        public long? BaseId { get; set; }
+
+        public string BaseNo { get; set; }
+
+        public string ScanDeviceId { get; set; }
+
+        public string Comments { get; set; }
+
+        public string BaseCreatedUser_ { get; set; }
+    }
+
     public class GoodsReceiptPO_Detail
     {
         public List<long> deletedRowKeys { get; set; }

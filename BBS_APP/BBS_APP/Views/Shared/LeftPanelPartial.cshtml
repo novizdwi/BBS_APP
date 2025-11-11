@@ -201,14 +201,14 @@
                             AddNode(dataTable, node3, "Transfer Summary Out ", "TransferSummaryOut");
                             AddNode(dataTable, node3, "Stock Opname Request ", "RequestStockOpname");
                             AddNode(dataTable, node3, "Stock Opname Scan List", "StockOpnameScan");
-                            AddNode(dataTable, node3, "Stock Opname Summary", "StockOpnameSummary");
+                            AddNode(dataTable, node3, "Stock Opname Summary", "StockSummaryOpname");
                         });
 
                         node2.Nodes.Add(node3 =>
                         {
                             node3.Text = "Purchasing";
                             AddNode(dataTable, node3, "PO Scan List", "PurchaseOrderScan");
-                            AddNode(dataTable, node3, "Goods Receipt PO", "GoodsReceiptPO");
+                            AddNode(dataTable, node3, "GRPO Summary", "GoodsReceiptPO");
                         });
 
                     });
@@ -235,6 +235,7 @@
                             AddNode(dataTable, node3, "Transfer Scan In", "TransferIn");
                             AddNode(dataTable, node3, "Transfer Scan Out", "TransferOut");
                             AddNode(dataTable, node3, "Stock Opname", "StockOpname");
+                            AddNode(dataTable, node3, "Stock Opname Summary", "StockSummaryOpname");
                         });
                         node2.Nodes.Add(node3 =>
                         {
