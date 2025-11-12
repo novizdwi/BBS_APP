@@ -76,6 +76,10 @@ namespace Models.Transaction.Web.Inventory
 
         public string CancelReason { get; set; }
 
+        public string CreatedDate_ { get; set; }
+
+        public string ModifiedDate_ { get; set; }
+
         public List<StockSummaryOpname_DetailModel> ListDetail_ = new List<StockSummaryOpname_DetailModel>();
 
         public List<StockSummaryOpname_RefModel> ListRef_ = new List<StockSummaryOpname_RefModel>();
@@ -131,7 +135,7 @@ namespace Models.Transaction.Web.Inventory
 
         public decimal? Quantity { get; set; }
 
-        public decimal? QuantityOpen { get; set; }
+        public decimal? QuantityValid  { get; set; }
 
         public decimal? QuantityScan { get; set; }
 
@@ -177,7 +181,7 @@ namespace Models.Transaction.Web.Inventory
 
         public string BaseNo { get; set; }
 
-        public DateTime? BaseTransDate { get; set; }
+        public DateTime? BaseCreatedDate { get; set; }
 
         public string ScanDeviceId { get; set; }
 
@@ -265,7 +269,9 @@ namespace Models.Transaction.Web.Inventory
             StockSummaryOpnameModel model = null;
             if (id != 0)
             {
-                string ssql = @"SELECT *, T1.""FirstName"" AS ""UserName"" 
+                string ssql = @"SELECT *, T1.""FirstName"" AS ""UserName"" ,
+                            TO_VARCHAR(T0.""CreatedDate"", 'DD/MM/YYYY') AS ""CreatedDate_"",
+                            TO_VARCHAR(T0.""ModifiedDate"", 'DD/MM/YYYY') AS ""ModifiedDate_""
                             FROM ""Tx_StockSummaryOpname"" T0
                             LEFT JOIN ""Tm_User"" T1 ON T0.""ModifiedUser"" = T1.""Id""
                             WHERE T0.""Id"" = :p0 
@@ -315,6 +321,7 @@ namespace Models.Transaction.Web.Inventory
             var StockSummaryOpname = CONTEXT.Database.SqlQuery<StockSummaryOpname_DetailModel>(ssql, id).ToList();
             return StockSummaryOpname;
         }
+
         public List<StockSummaryOpname_RefModel> StockSummaryOpname_Refs(long id = 0)
         {
             using (var CONTEXT = new HANA_APP())
@@ -439,7 +446,11 @@ namespace Models.Transaction.Web.Inventory
             {
                 using (var CONTEXT = new HANA_APP())
                 {
-                    CONTEXT.Database.ExecuteSqlCommand("CALL \"SpStockSummaryOpname_AddItemDetail\"(:p0,:p1,'Refresh')", userId, id);
+                    using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                    {
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpStockSummaryOpname__AddItemDetail\"(:p0,:p1,'Refresh')", userId, id);
+                        CONTEXT_TRANS.Commit();
+                    }
                 }
             }
             return ret;
@@ -481,7 +492,7 @@ namespace Models.Transaction.Web.Inventory
                             
                             SpNotif.SpSysControllerTransNotif(model._UserId, "StockSummaryOpname", CONTEXT, "after", "StockSummaryOpname", "add", "Id", keyValue);
 
-                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpStockSummaryOpname_AddItemDetail\"(:p0,:p1,'Add')", model._UserId, Id);
+                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpStockSummaryOpname__AddItemDetail\"(:p0,:p1,'Add')", model._UserId, Id);
 
                             CONTEXT_TRANS.Commit();
                         }

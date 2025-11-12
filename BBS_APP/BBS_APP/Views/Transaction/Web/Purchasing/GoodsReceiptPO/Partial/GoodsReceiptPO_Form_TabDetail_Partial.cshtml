@@ -197,7 +197,7 @@
     {
         column.FieldName = "GRDocNum_";
         column.Name = "GRDocNum_";
-        column.Caption = "Goods Receipt No";
+        column.Caption = "RPF No";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 120;
@@ -207,7 +207,7 @@
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
     });
-
+    /*
     settings.Columns.Add(column =>
     {
         column.FieldName = "LineNum";
@@ -222,6 +222,7 @@
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
     });
+    */
 
     settings.Columns.Add(column =>
     {

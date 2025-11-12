@@ -110,8 +110,8 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tm_ApprovalTemplate_Stage> Tm_ApprovalTemplate_Stage { get; set; }
         public virtual DbSet<Tx_GoodsReceiptPO_Ref> Tx_GoodsReceiptPO_Ref { get; set; }
         public virtual DbSet<Tx_StockSummaryOpname> Tx_StockSummaryOpname { get; set; }
-        public virtual DbSet<Tx_StockSummaryOpname_Item> Tx_StockSummaryOpname_Item { get; set; }
         public virtual DbSet<Tx_StockSummaryOpname_Item_Tag> Tx_StockSummaryOpname_Item_Tag { get; set; }
         public virtual DbSet<Tx_StockSummaryOpname_Ref> Tx_StockSummaryOpname_Ref { get; set; }
+        public virtual DbSet<Tx_StockSummaryOpname_Item> Tx_StockSummaryOpname_Item { get; set; }
     }
 }

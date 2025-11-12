@@ -35,7 +35,6 @@
     settings.Columns.Add("Id", "Id").Visible = false;
     settings.Columns.Add("DetId", "DetId").Visible = false;
     settings.Columns.Add("IdPDO", "IdPDO").Width = 0;
-    settings.Columns.Add("PDODocNum_", "Production No").Width = 200;
 
     settings.Columns.Add(column =>
     {
@@ -101,6 +100,7 @@
 
     });
 
+    /*
     settings.Columns.Add(column =>
     {
         column.FieldName = "Quantity";
@@ -130,12 +130,28 @@
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
     });
+    */
 
     settings.Columns.Add(column =>
     {
         column.FieldName = "QuantityScan";
         column.Name = "QuantityScan";
-        column.Caption = "Qty Scan";
+        column.Caption = "Quantity";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 80;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "QuantityValid";
+        column.Name = "QuantityValid";
+        column.Caption = "Qty Valid";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 80;
@@ -192,7 +208,7 @@
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
     });
 
-    
+
     settings.Columns.Add(column =>
     {
         column.FieldName = "LineStatus";

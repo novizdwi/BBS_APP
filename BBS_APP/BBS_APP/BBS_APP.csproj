@@ -813,6 +813,7 @@
     <Content Include="Views\_Cfl\_CflStockOpname\Partial\_CflStockOpname_List_Partial.cshtml" />
     <Content Include="Views\_Cfl\_CflStockOpname\Partial\_CflStockOpname_Panel_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Inventory\StockSummaryOpname\Partial\StockSummaryOpname_Form_TabRef_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Purchasing\GoodsReceiptPO\Partial\GoodsReceiptPO_Form_TabRef_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -957,6 +958,7 @@
     <Compile Include="Controllers\Transaction\Web\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.Nav.cs" />
     <Compile Include="Controllers\Transaction\Web\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.ViewItemTag.cs" />
     <Compile Include="Controllers\Transaction\Web\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.CancelReason.cs" />
+    <Compile Include="Controllers\Transaction\Web\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.Tab.Ref.cs" />
     <Compile Include="Controllers\Transaction\Web\Purchasing\PurchaseOrderScan\PurchaseOrderScanController.ViewItemTag.cs" />
     <Compile Include="Controllers\Transaction\Web\Purchasing\PurchaseOrderScan\PurchaseOrderScanController.CancelReason.cs" />
     <Compile Include="Controllers\Transaction\Web\Purchasing\PurchaseOrderScan\PurchaseOrderScanController.List.cs" />
