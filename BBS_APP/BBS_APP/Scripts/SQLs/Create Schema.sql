@@ -381,7 +381,9 @@ CREATE COLUMN TABLE "Tx_StockSummaryOpname_Item" (
     "UnitPriceTc" DECIMAL(21,2),
     "UomEntry" INTEGER,
     "Uom" NVARCHAR(50),
-    
+    "AcctCode" NVARCHAR(100),
+    "AcctName" NVARCHAR(100),
+
     "CreatedDate" TIMESTAMP,
     "CreatedUser" INTEGER,
     "ModifiedDate" TIMESTAMP,

@@ -156,12 +156,12 @@
     groupItem_Col1.Items.Add(itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
-        itemSettings.Caption = "Doc Entry";
-        itemSettings.FieldName = "BaseEntry";
+        itemSettings.Caption = "Inventory No";
+        itemSettings.FieldName = "DocNum_";
         itemSettings.ClientVisible = false;
 
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
-        txt.Name = "BaseEntry";
+        txt.Name = "DocNum_";
         txt.ShowModelErrors = true;
         txt.ControlStyle.CssClass = "editornoimage";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;

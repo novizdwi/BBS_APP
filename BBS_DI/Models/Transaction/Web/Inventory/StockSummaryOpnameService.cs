@@ -127,6 +127,12 @@ namespace Models.Transaction.Web.Inventory
 
         public string ItemName { get; set; }
 
+        public string AcctCode { get; set; }
+
+        public string AcctName { get; set; }
+
+        public decimal? UnitPriceTc { get; set; }
+
         public string FreeText { get; set; }
 
         public string WhsCode { get; set; }
@@ -283,7 +289,7 @@ namespace Models.Transaction.Web.Inventory
                 {
                     string getDocNum = @"SELECT T1.""DocNum""
                     FROM ""Tx_StockSummaryOpname"" T0
-                    INNER JOIN """ + DbProvider.dbSap_Name + @""".""OPDN"" T1 ON T0.""DocEntry"" = T1.""DocEntry""
+                    INNER JOIN """ + DbProvider.dbSap_Name + @""".""OIQR"" T1 ON T0.""DocEntry"" = T1.""DocEntry""
                     WHERE T0.""Id"" = :p0 
                     ORDER BY T0.""Id"" ASC
                 ";
@@ -848,6 +854,11 @@ namespace Models.Transaction.Web.Inventory
                         line.CountedQuantity = Convert.ToDouble(item.QuantityValid);
                         line.UoMCode = item.Uom?? "" ;
 
+                        line.Price = (double)item.UnitPriceTc;
+                        
+                        line.InventoryOffsetIncreaseAccount = item.AcctCode;
+                        line.InventoryOffsetDecreaseAccount = item.AcctCode;
+
                         line.UserFields.Item("U_IDU_WebId").Value = Convert.ToInt32(item.Id);
                         line.UserFields.Item("U_IDU_DetId").Value = Convert.ToInt32(item.DetId);
                     }
@@ -1032,7 +1043,7 @@ namespace Models.Transaction.Web.Inventory
                         {
                             //if (tx_StockSummaryOpname.IsAfterPosted == "Y")
                             //{
-                            //    Cancel_GoodReceiptPo(oCompany, Convert.ToInt32(tx_StockSummaryOpname.DocEntry));
+                            //    Cancel_InventoryPosting(oCompany, Convert.ToInt32(tx_StockSummaryOpname.DocEntry));
                             //    CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_InsertItemTag\"(:p0,:p1, 'StockSummaryOpname','I')", userId, Id);
                             //}
 
@@ -1047,7 +1058,7 @@ namespace Models.Transaction.Web.Inventory
 
                         SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "after", "Tx_StockSummaryOpname", "cancel", "Id", keyValue);
 
-                        //CONTEXT.Database.ExecuteSqlCommand("CALL \"SpStockSummaryOpname_UpdatePOStatus\"(:p0,:p1,'cancel')", userId, Id);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpStockSummaryOpname_UpdateStockOpnameStatus\"(:p0,:p1,'cancel')", userId, Id);
                         oCompany.EndTransaction(BoWfTransOpt.wf_Commit);
 
                         CONTEXT_TRANS.Commit();
@@ -1083,36 +1094,36 @@ namespace Models.Transaction.Web.Inventory
 
         }
 
-        public bool Cancel_GoodReceiptPo(SAPbobsCOM.Company oCompany, int id)
-        {
-            int nErr;
-            string errMsg;
+        //public bool Cancel_InventoryPosting(SAPbobsCOM.Company oCompany, int id)
+        //{
+        //    int nErr;
+        //    string errMsg;
 
-            if (id != 0)
-            {
-                SAPbobsCOM.Documents oDocument = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oPurchaseDeliveryNotes);
-                SAPbobsCOM.Documents oCancelDocument = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oPurchaseDeliveryNotes);
+        //    if (id != 0)
+        //    {
+        //        SAPbobsCOM.Documents oDocument = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oPurchaseDeliveryNotes);
+        //        SAPbobsCOM.Documents oCancelDocument = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oPurchaseDeliveryNotes);
 
-                if (oDocument.GetByKey(id))
-                {
-                    oCancelDocument = oDocument.CreateCancellationDocument();
-                    if (oCancelDocument.Add() != 0)
-                    {
-                        nErr = oCompany.GetLastErrorCode();
-                        errMsg = oCompany.GetLastErrorDescription();
+        //        if (oDocument.GetByKey(id))
+        //        {
+        //            oCancelDocument = oDocument.CreateCancellationDocument();
+        //            if (oCancelDocument.Add() != 0)
+        //            {
+        //                nErr = oCompany.GetLastErrorCode();
+        //                errMsg = oCompany.GetLastErrorDescription();
 
-                        SapCompany.CleanUp(oDocument);
+        //                SapCompany.CleanUp(oDocument);
 
-                        throw new Exception("[VALIDATION] - Cancel GRPO |" + nErr.ToString() + "|" + errMsg);
-                    }
+        //                throw new Exception("[VALIDATION] - Cancel GRPO |" + nErr.ToString() + "|" + errMsg);
+        //            }
 
-                }
+        //        }
                 
-                SapCompany.CleanUp(oDocument);
-            }
+        //        SapCompany.CleanUp(oDocument);
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
 
         public StockSummaryOpnameItemTagView___ GetItemTags(long id, long detId)
         {

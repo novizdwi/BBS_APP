@@ -24,6 +24,8 @@ namespace BBS_DI.Models._EF
         public Nullable<decimal> UnitPriceTc { get; set; }
         public Nullable<int> UomEntry { get; set; }
         public string Uom { get; set; }
+        public string AcctCode { get; set; }
+        public string AcctName { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedUser { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
