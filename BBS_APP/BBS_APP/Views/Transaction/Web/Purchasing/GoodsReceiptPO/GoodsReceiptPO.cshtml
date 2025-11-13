@@ -264,6 +264,7 @@
 
     function GetFormData() {
         var formData = $('#formDetail').serializeObject();
+        console.log(formData );
 
         var Details_ = GetGvDetails('gvDetail');
         $.extend(formData, { Details_: Details_ });
@@ -597,6 +598,35 @@
 
     function BtnCflPOOnClick(s, e) {
         cflPurchaseOrderPopupListGoodsReceiptPO.Show();
+    }
+
+    function OnClickbaseId(s, e, baseId) {
+        var guid = CreateGuid();
+        window.open('', guid);
+        SubmitForm(guid, '@Url.Action("Detail", "PurchaseOrderScan")', 'post', {
+            Id: baseId
+        });
+    }
+
+    function gvRefOnBeginCallback(s, e) {
+        e.customArgs['cbId'] = Id.GetValue();
+    }
+
+    function gvRefOnEndCallback(s, e) {
+
+    }
+
+    function gvRefOnCustomButtonClick(s, e) {
+    }
+
+
+    function gvRefOnBatchEditStartEditing(s, e) {
+    }
+
+    function gvRefOnBatchEditEndEditing(s, e) {
+    }
+
+    function gvRefOnBatchEditRowValidating(s, e) {
     }
 
 </script>

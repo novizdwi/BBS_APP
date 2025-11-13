@@ -448,7 +448,7 @@ namespace Models.Transaction.Web.Inventory
                 {
                     using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
                     {
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpStockSummaryOpname__AddItemDetail\"(:p0,:p1,'Refresh')", userId, id);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpStockSummaryOpname_AddItemDetail\"(:p0,:p1,'Refresh')", userId, id);
                         CONTEXT_TRANS.Commit();
                     }
                 }
@@ -492,7 +492,7 @@ namespace Models.Transaction.Web.Inventory
                             
                             SpNotif.SpSysControllerTransNotif(model._UserId, "StockSummaryOpname", CONTEXT, "after", "StockSummaryOpname", "add", "Id", keyValue);
 
-                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpStockSummaryOpname__AddItemDetail\"(:p0,:p1,'Add')", model._UserId, Id);
+                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpStockSummaryOpname_AddItemDetail\"(:p0,:p1,'Add')", model._UserId, Id);
 
                             CONTEXT_TRANS.Commit();
                         }
@@ -723,126 +723,152 @@ namespace Models.Transaction.Web.Inventory
 
         public void Post(int userId, long id)
         {
-            //try
-            //{
-            //    PostSAP(userId, id);
+            try
+            {
+                PostSAP(userId, id);
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw ex;
-            //}
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        //public void PostSAP(int userId, long id)
-        //{
-        //    SAPbobsCOM.Company oCompany = null;
-        //    StockSummaryOpnameModel syncGRPO = GetById(userId, id);
+        public void PostSAP(int userId, long id)
+        {
+            SAPbobsCOM.Company oCompany = null;
+            StockSummaryOpnameModel StockSummaryOpname = GetById(userId, id);
 
-        //    using (var CONTEXT = new HANA_APP())
-        //    {
+            using (var CONTEXT = new HANA_APP())
+            {
 
-        //        using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
-        //        {
-        //            try
-        //            {
-        //                oCompany = SAPCachedCompany.GetCompany();
-        //                oCompany.StartTransaction();
+                using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        oCompany = SAPCachedCompany.GetCompany();
+                        oCompany.StartTransaction();
 
-        //                String keyValue;
-        //                keyValue = id.ToString();
+                        String keyValue;
+                        keyValue = id.ToString();
 
+                        SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "before", "Tx_StockSummaryOpname", "post", "Id", keyValue);
 
-        //                SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "before", "Tx_StockSummaryOpname", "post", "Id", keyValue);
+                        Tx_StockSummaryOpname tx_StockSummaryOpname = CONTEXT.Tx_StockSummaryOpname.Find(id);
+                        if (tx_StockSummaryOpname == null)
+                        {
+                            throw new Exception($"[VALIDATION] - Data not found");
+                        }
 
-        //                Tx_StockSummaryOpname tx_StockSummaryOpname = CONTEXT.Tx_StockSummaryOpname.Find(id);
-        //                if (tx_StockSummaryOpname == null)
-        //                {
-        //                    throw new Exception($"[VALIDATION] - GRPO Data not found");
-        //                }
+                        if(StockSummaryOpname.ListDetail_.All(q => q.QuantityValid == 0) )
+                        {
+                            throw new Exception($"[VALIDATION] - No record created");
+                        }
 
-        //                GRPOAddResultModel GRPOResult = AddStockSummaryOpname(oCompany, userId, id, syncGRPO);
-        //                if(GRPOResult != null)
-        //                {
-        //                    //insert RFID items to pending
-        //                    CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_InsertItemTag\"(:p0,:p1, 'StockSummaryOpname','P')", userId, id);
-        //                }
+                        int docEntry = AddInventoryPosting(oCompany, userId, id, StockSummaryOpname);
+                        if(docEntry <= 0)
+                        {
+                            throw new Exception($"[VALIDATION] - No inventory posting created");
+                        }
 
-        //                List<GoodsReceiptResultModel> GRResult  = AddReceiveFromProduction(oCompany, userId, id, syncGRPO);
+                        DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
 
-        //                DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                        tx_StockSummaryOpname.DocEntry = docEntry;
+                        tx_StockSummaryOpname.Status = "Posted";
+                        tx_StockSummaryOpname.IsAfterPosted = "Y";
+                        tx_StockSummaryOpname.ModifiedDate = dtModified;
+                        tx_StockSummaryOpname.ModifiedUser = userId;
 
-        //                tx_StockSummaryOpname.Status = "Posted";
-        //                tx_StockSummaryOpname.IsAfterPosted = "Y";
-        //                tx_StockSummaryOpname.ModifiedDate = dtModified;
-        //                tx_StockSummaryOpname.ModifiedUser = userId;
+                        CONTEXT.SaveChanges();
 
-        //                CONTEXT.SaveChanges();
+                        SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "after", "Tx_StockSummaryOpname", "post", "Id", keyValue);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpStockSummaryOpname_UpdateStockOpnameStatus\"(:p0,:p1,'post')", userId, id);
 
-        //                var caseStatements = string.Join(" ",
-        //                    GRPOResult.LineMapping.Select(kv => $"WHEN T0.\"DetId\" = {kv.Key} THEN {kv.Value}"));
+                        if (oCompany.InTransaction)
+                        {
+                            oCompany.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_Commit);
+                        }
 
-        //                string sqlLine = $@"
-        //                    UPDATE ""Tx_StockSummaryOpname_Item"" T0 
-        //                    SET ""LineNum"" = CASE {caseStatements} END,
-        //                        ""DocEntry"" = {GRPOResult.DocEntry}
-        //                    ";
-        //                var whereIn = string.Join(", ", GRPOResult.LineMapping.Keys);
+                        CONTEXT_TRANS.Commit();
+                    }
 
-        //                if (GRResult.Count > 0) {
-        //                var GRStatements = string.Join(" ",
-        //                    GRResult.Select(kv => $"WHEN T0.\"DetId\" = {kv.DetId} THEN {kv.GoodsReceiptId}"));
-        //                    sqlLine += ",";
-        //                    sqlLine += @"
-        //                            ""GoodsReceiptDocEntry"" = CASE " + GRStatements + " END ";
-        //                    whereIn = string.Join(", ", GRPOResult.LineMapping.Keys.Union(GRResult.Select(x => x.DetId)).ToList());
-        //                }
+                    catch (Exception ex)
+                    {
+                        if (oCompany.InTransaction)
+                        {
+                            oCompany.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                        }
 
-        //                sqlLine += @" WHERE T0.""DetId"" IN ("+ whereIn + ")";
+                        CONTEXT_TRANS.Rollback();
 
-        //                CONTEXT.Database.ExecuteSqlCommand(sqlLine);
+                        string errorMassage;
+                        if (ex.Message.Substring(12) == "[VALIDATION]")
+                        {
+                            errorMassage = ex.Message;
+                        }
+                        else
+                        {
+                            errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                        }
 
+                        throw new Exception(errorMassage);
+                    }
+                    finally
+                    {
+                        SAPCachedCompany.Release(oCompany);
+                    }
+                }
+            }
 
-        //                SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "after", "Tx_StockSummaryOpname", "post", "Id", keyValue);
-        //                CONTEXT.Database.ExecuteSqlCommand("CALL \"SpStockSummaryOpname_UpdatePOStatus\"(:p0,:p1,'post')", userId, id);
+        }
 
-        //                if (oCompany.InTransaction)
-        //                {
-        //                    oCompany.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_Commit);
-        //                }
+        private int AddInventoryPosting(Company oCompany, int userId, long id, StockSummaryOpnameModel model)
+        {
+            int newDocEntry = -1;
+            int nErr;
+            string errMsg;
 
-        //                CONTEXT_TRANS.Commit();
-        //            }
+            SAPbobsCOM.CompanyService oCS = (SAPbobsCOM.CompanyService)oCompany.GetCompanyService();
+            SAPbobsCOM.InventoryPostingsService oInventoryPostingsService = oCS.GetBusinessService(SAPbobsCOM.ServiceTypes.InventoryPostingsService);
+            SAPbobsCOM.InventoryPosting oDocument = oInventoryPostingsService.GetDataInterface(SAPbobsCOM.InventoryPostingsServiceDataInterfaces.ipsInventoryPosting);
 
-        //            catch (Exception ex)
-        //            {
-        //                if (oCompany.InTransaction)
-        //                {
-        //                    oCompany.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
-        //                }
+            oDocument.PostingDate = (DateTime)model.TransDate;
+            
+            oDocument.UserFields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
+            oDocument.UserFields.Item("U_IDU_WebTransNo").Value = model.TransNo;
+            if(model.ListDetail_.Count > 0)
+            {
+                foreach(var item in model.ListDetail_)
+                {
+                    if(item.QuantityValid > 0)
+                    {
+                        InventoryPostingLine line = oDocument.InventoryPostingLines.Add();
+                        line.ItemCode = item.ItemCode;
+                        line.WarehouseCode = item.WhsCode;
+                        line.CountedQuantity = Convert.ToDouble(item.QuantityValid);
+                        line.UoMCode = item.Uom?? "" ;
 
-        //                CONTEXT_TRANS.Rollback();
+                        line.UserFields.Item("U_IDU_WebId").Value = Convert.ToInt32(item.Id);
+                        line.UserFields.Item("U_IDU_DetId").Value = Convert.ToInt32(item.DetId);
+                    }
+                }
+            }
 
-        //                string errorMassage;
-        //                if (ex.Message.Substring(12) == "[VALIDATION]")
-        //                {
-        //                    errorMassage = ex.Message;
-        //                }
-        //                else
-        //                {
-        //                    errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
-        //                }
+            InventoryPostingParams oParams = oInventoryPostingsService.Add(oDocument);
+            newDocEntry = oParams.DocumentEntry;
 
-        //                throw new Exception(errorMassage);
-        //            }
-        //            finally
-        //            {
-        //                SAPCachedCompany.Release(oCompany);
-        //            }
-        //        }
-        //    }
+            if (newDocEntry <= 0)
+            {
+                nErr = oCompany.GetLastErrorCode();
+                errMsg = oCompany.GetLastErrorDescription();
 
-        //}
+                SapCompany.CleanUp(oDocument);
+
+                throw new Exception("[VALIDATION] - Inventory Posting : " + nErr.ToString() + "|" + errMsg);
+            }
+
+            return newDocEntry;
+        }
 
 
         //private GRPOAddResultModel AddStockSummaryOpname(Company oCompany, int userId, long id, StockSummaryOpnameModel model)
@@ -879,7 +905,7 @@ namespace Models.Transaction.Web.Inventory
 
         //    oDocument.UserFields.Fields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
         //    oDocument.UserFields.Fields.Item("U_IDU_WebTransNo").Value = model.TransNo;
-            
+
         //    int i = 0;
         //    Dictionary<long, int> InsertedLine = new Dictionary<long, int>();
         //    if (model.ListDetails_.Count > 0)
@@ -931,7 +957,7 @@ namespace Models.Transaction.Web.Inventory
         //    return result;
         //}
 
-        
+
 
         private List<GoodsReceiptResultModel> AddReceiveFromProduction(Company oCompany, int userId, long id, StockSummaryOpnameModel model)
         {

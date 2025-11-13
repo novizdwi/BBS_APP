@@ -25,5 +25,7 @@ namespace BBS_DI.Models._EF
         public Nullable<decimal> OnOrder { get; set; }
         public Nullable<int> UomEntry { get; set; }
         public string Uom { get; set; }
+        public string StockOpnameCoaCode { get; set; }
+        public string StockOpnameCoaName { get; set; }
     }
 }

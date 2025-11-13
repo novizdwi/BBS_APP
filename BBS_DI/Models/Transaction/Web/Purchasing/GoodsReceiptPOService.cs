@@ -113,6 +113,8 @@ namespace Models.Transaction.Web.Purchasing
 
         public string BaseNo { get; set; }
 
+        public DateTime? BaseCreatedDate { get; set; }
+
         public string ScanDeviceId { get; set; }
 
         public string Comments { get; set; }
@@ -169,6 +171,8 @@ namespace Models.Transaction.Web.Purchasing
         public decimal? QuantityOpen { get; set; }
 
         public decimal? QuantityScan { get; set; }
+
+        public decimal? QuantityValid { get; set; }
 
         public int? UomEntry { get; set; }
 
@@ -291,6 +295,7 @@ namespace Models.Transaction.Web.Purchasing
                 //}
 
                 model.ListDetails_ = this.GoodsReceiptPO_Details(CONTEXT, id);
+                model.ListRef_ = this.GoodsReceiptPO_Refs(CONTEXT, id);
             }
 
             return model;

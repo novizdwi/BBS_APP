@@ -473,7 +473,7 @@ namespace Models.Transaction.Web.Adjustment
                 {
                     try
                     {
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentOut__UpdateItem\"(:p0,:p1)", userId, id);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentOut_UpdateItem\"(:p0,:p1)", userId, id);
                         CONTEXT.SaveChanges();
 
                         oCompany = SAPCachedCompany.GetCompany();
@@ -503,7 +503,7 @@ namespace Models.Transaction.Web.Adjustment
                             CONTEXT.SaveChanges();
                         }
 
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentOut__UpdateItemTag\"(:p0,:p1)", userId, id);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentOut_UpdateItemTag\"(:p0,:p1)", userId, id);
                         SpNotif.SpSysControllerTransNotif(userId, "AdjustmentOut", CONTEXT, "after", "Tx_AdjustmentOut", "post", "Id", keyValue);
 
                         if (oCompany.InTransaction)

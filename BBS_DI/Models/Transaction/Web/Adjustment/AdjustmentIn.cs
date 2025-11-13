@@ -477,7 +477,7 @@ namespace Models.Transaction.Web.Adjustment
                 {
                     try
                     {
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn__UpdateItem\"(:p0,:p1)", userId, id);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn_UpdateItem\"(:p0,:p1)", userId, id);
                         CONTEXT.SaveChanges();
 
                         oCompany = SAPCachedCompany.GetCompany();
@@ -507,7 +507,7 @@ namespace Models.Transaction.Web.Adjustment
                             CONTEXT.SaveChanges();
                         }
 
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn__InsertItemTag\"(:p0,:p1)", userId, id);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn_InsertItemTag\"(:p0,:p1)", userId, id);
                         SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "after", "Tx_AdjustmentIn", "post", "Id", keyValue);
 
                         if (oCompany.InTransaction)

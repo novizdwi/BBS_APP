@@ -17,12 +17,12 @@ namespace BBS_DI.Models._EF
         public long Id { get; set; }
         public string TransType { get; set; }
         public string TransNo { get; set; }
+        public Nullable<int> DocEntry { get; set; }
         public Nullable<System.DateTime> TransDate { get; set; }
         public Nullable<long> RequestId { get; set; }
         public string RequestNo { get; set; }
         public string WhsCode { get; set; }
         public string WhsName { get; set; }
-        public string Address { get; set; }
         public string Status { get; set; }
         public string ApprovalStatus { get; set; }
         public string IsAfterPosted { get; set; }

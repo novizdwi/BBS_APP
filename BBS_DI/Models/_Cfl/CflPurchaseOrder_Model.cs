@@ -98,13 +98,12 @@ namespace Models._Cfl
             Cfl_Sql = Cfl_Sql.Replace("{DbSap}", DbProvider.dbSap_Name);
             Cfl_Sql = Cfl_Sql.Replace("{UserId}", userId.ToString());
 
-            if (sqlCriteria == null)
+            if (sqlCriteria == null || string.IsNullOrWhiteSpace(sqlCriteria))
             {
                 sqlCriteria = "";
             }
 
-
-            if (sqlCriteria != "")
+            if (!string.IsNullOrWhiteSpace(sqlCriteria))
             {
                 sqlCriteria = " AND (" + sqlCriteria + ")";
             }
@@ -131,10 +130,14 @@ namespace Models._Cfl
             Cfl_Sql = Cfl_Sql.Replace("{UserId}", userId.ToString());
 
 
-
-            if (sqlCriteria == null)
+            if (sqlCriteria == null || string.IsNullOrWhiteSpace(sqlCriteria))
             {
                 sqlCriteria = "";
+            }
+
+            if (!string.IsNullOrWhiteSpace(sqlCriteria) )
+            {
+                sqlCriteria = " AND (" + sqlCriteria + ")";
             }
             if (sqlSort == null)
             {
