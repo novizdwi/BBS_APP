@@ -45,7 +45,7 @@
 @Html.DevExpress().GridView(settings =>
 {
     settings.Name = "gvCflPurchaseOrderList" + cpGvFind_CflName;
-    settings.KeyFieldName = "DocEntry";
+    settings.KeyFieldName = "Id";
     settings.CallbackRouteValues = new { Controller = "_CflPurchaseOrder", Action = "ListPartial" };
 
     if (cpGvFind_CflIsMulti == "N")

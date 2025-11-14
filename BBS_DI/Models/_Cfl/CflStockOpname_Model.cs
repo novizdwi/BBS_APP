@@ -27,10 +27,12 @@ namespace Models._Cfl
 
     public class CflStockOpname_View__
     {
-        public string RequestId { get; set; }
+        public string Id { get; set; }
+
+        public int? RequestId { get; set; }
         public string RequestNo { get; set; }
 
-        public string TransDate { get; set; }
+        public DateTime? TransDate { get; set; }
 
         public string WhsCode { get; set; }
         public string WhsName { get; set; }
@@ -41,16 +43,16 @@ namespace Models._Cfl
     public class CflStockOpname_Model
     {
         public static string ssql = @"
-        SELECT DISTINCT T0.""RequestId"", T0.""RequestNo"", T0.""TransDate"", T0.""Comments"", T0.""WhsCode"", T1.""WhsName""
-            FROM ""Tx_StockOpname"" T0 "+
-        @"LEFT JOIN """+ DbProvider.dbSap_Name + @""".""OWHS"" T1 ON T0.""WhsCode"" = T1.""WhsCode""
-        WHERE T0.""Status"" = 'Posted'
-            AND NOT EXISTS(
-                SELECT T1.""Id""
-                FROM ""Tx_StockSummaryOpname"" T1
-                WHERE T0.""RequestId"" = T1.""RequestId"" 
-                AND T1.""Status"" NOT IN ('Cancel')
-            )
+            SELECT DISTINCT T0.""RequestId"" AS ""Id"", T0.""RequestId"", T0.""RequestNo"", T0.""TransDate"", T0.""Comments"", T0.""WhsCode"", T1.""WhsName""
+                FROM ""Tx_StockOpname"" T0 " +
+            @"LEFT JOIN """+ DbProvider.dbSap_Name + @""".""OWHS"" T1 ON T0.""WhsCode"" = T1.""WhsCode""
+            WHERE T0.""Status"" = 'Posted'
+                AND NOT EXISTS(
+                    SELECT T1.""Id""
+                    FROM ""Tx_StockSummaryOpname"" T1
+                    WHERE T0.""RequestId"" = T1.""RequestId"" 
+                    AND T1.""Status"" NOT IN ('Cancel')
+                )
         ";
                 
         public static void SetBindingData(GridViewModel state, int userId, CflStockOpname_ParamModel cflParam)

@@ -45,7 +45,7 @@
 @Html.DevExpress().GridView(settings =>
 {
     settings.Name = "gvCflStockOpnameList" + cpGvFind_CflName;
-    settings.KeyFieldName = "DocEntry";
+    settings.KeyFieldName = "Id";
     settings.CallbackRouteValues = new { Controller = "_CflStockOpname", Action = "ListPartial" };
 
     if (cpGvFind_CflIsMulti == "N")
@@ -61,7 +61,7 @@
 
                     Html.DevExpress().HyperLink(settingsHL =>
                     {
-                        settingsHL.Name = "cflStockOpnameChoose_" + cpGvFind_CflName + DataBinder.Eval(c.DataItem, "RequestId") + "_" + Guid.NewGuid().ToString();
+                        settingsHL.Name = "cflStockOpnameChoose_" + cpGvFind_CflName + DataBinder.Eval(c.DataItem, "Id") + "_" + Guid.NewGuid().ToString();
                         settingsHL.NavigateUrl = "javascript:void(0)";
                         settingsHL.Properties.Text = "Choose";
                         settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ OnClickChoose_cflStockOpname{1}(s, e, {0}); }}", new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(c.DataItem), cpGvFind_CflName);

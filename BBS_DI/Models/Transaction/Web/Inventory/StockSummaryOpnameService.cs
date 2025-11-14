@@ -785,6 +785,8 @@ namespace Models.Transaction.Web.Inventory
                         tx_StockSummaryOpname.ModifiedDate = dtModified;
                         tx_StockSummaryOpname.ModifiedUser = userId;
 
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_InsertItemTag\"(:p0,:p1, 'StockSummaryOpname','P')", userId, keyValue);
+
                         CONTEXT.SaveChanges();
 
                         SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "after", "Tx_StockSummaryOpname", "post", "Id", keyValue);
@@ -1045,6 +1047,7 @@ namespace Models.Transaction.Web.Inventory
                             //{
                             //    Cancel_InventoryPosting(oCompany, Convert.ToInt32(tx_StockSummaryOpname.DocEntry));
                             //    CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_InsertItemTag\"(:p0,:p1, 'StockSummaryOpname','I')", userId, Id);
+                            //    CONTEXT.Database.ExecuteSqlCommand("CALL \"SpStockSummaryOpname_UpdateStockOpnameStatus\"(:p0,:p1,'cancel')", userId, Id);
                             //}
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
@@ -1058,7 +1061,6 @@ namespace Models.Transaction.Web.Inventory
 
                         SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "after", "Tx_StockSummaryOpname", "cancel", "Id", keyValue);
 
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpStockSummaryOpname_UpdateStockOpnameStatus\"(:p0,:p1,'cancel')", userId, Id);
                         oCompany.EndTransaction(BoWfTransOpt.wf_Commit);
 
                         CONTEXT_TRANS.Commit();

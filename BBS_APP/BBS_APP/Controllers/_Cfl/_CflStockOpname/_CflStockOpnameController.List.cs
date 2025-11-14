@@ -28,6 +28,7 @@ namespace Controllers._Cfl
             cflParam.Header = Request["hidden_CflHeader"];
             cflParam.SqlWhere = Request["hidden_CflSqlWhere"];
             cflParam.IsMulti = Request["hidden_CflIsMulti"];
+            
             return cflParam;
         }
 
@@ -36,7 +37,7 @@ namespace Controllers._Cfl
         {
             int userId = (int)Session["userId"];
 
-            var cflStockOpnameParam = GetParam(Request, userId);  
+            var cflStockOpnameParam = GetParam(Request, userId);
 
             var viewModel = GetListModel(cflStockOpnameParam.Name);
             ProcessCustomBinding(userId, cflStockOpnameParam, viewModel);
@@ -49,7 +50,7 @@ namespace Controllers._Cfl
         {
             int userId = (int)Session["userId"];
 
-            var cflStockOpnameParam = GetParam(Request, userId);  
+            var cflStockOpnameParam = GetParam(Request, userId);
 
             var viewModel = GetListModel(cflStockOpnameParam.Name);
             viewModel.ApplyPagingState(pager);
@@ -63,7 +64,7 @@ namespace Controllers._Cfl
         {
             int userId = (int)Session["userId"];
 
-            var cflStockOpnameParam = GetParam(Request, userId);  
+            var cflStockOpnameParam = GetParam(Request, userId);
 
             var viewModel = GetListModel(cflStockOpnameParam.Name);
             viewModel.ApplyFilteringState(filteringState);
@@ -77,7 +78,7 @@ namespace Controllers._Cfl
         {
             int userId = (int)Session["userId"];
 
-            var cflStockOpnameParam = GetParam(Request, userId);  
+            var cflStockOpnameParam = GetParam(Request, userId);
 
             var viewModel = GetListModel(cflStockOpnameParam.Name);
             viewModel.ApplySortingState(column, reset);
@@ -85,8 +86,6 @@ namespace Controllers._Cfl
 
             return PartialView(VIEW_LIST_PARTIAL, viewModel);
         }
-
-
 
         static GridViewModel GetListModel(string name)
         {
@@ -100,9 +99,9 @@ namespace Controllers._Cfl
         }
 
         static void ProcessCustomBinding(int userId, CflStockOpname_ParamModel cflStockOpnameParam, GridViewModel viewModel)
-        { 
+        {
 
-            CflStockOpname_Model.SetBindingData(viewModel, userId, cflStockOpnameParam ); 
+            CflStockOpname_Model.SetBindingData(viewModel, userId, cflStockOpnameParam);
 
         }
 
@@ -110,12 +109,12 @@ namespace Controllers._Cfl
         {
             int userId = (int)Session["userId"];
 
-            var cflStockOpnameParam = GetParam(Request, userId);  
+            var cflStockOpnameParam = GetParam(Request, userId);
 
             var viewModel = GetListModel(cflStockOpnameParam.Name);
             ProcessCustomBinding(userId, cflStockOpnameParam, viewModel);
 
-            ViewBag.viewModel = viewModel; 
+            ViewBag.viewModel = viewModel;
 
             return PartialView(VIEW_PANEL_LIST_PARTIAL, cflStockOpnameParam);
         }

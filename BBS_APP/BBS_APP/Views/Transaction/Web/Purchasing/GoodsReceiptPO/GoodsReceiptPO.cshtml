@@ -596,10 +596,6 @@
         });
     }
 
-    function BtnCflPOOnClick(s, e) {
-        cflPurchaseOrderPopupListGoodsReceiptPO.Show();
-    }
-
     function OnClickbaseId(s, e, baseId) {
         var guid = CreateGuid();
         window.open('', guid);
@@ -629,6 +625,9 @@
     function gvRefOnBatchEditRowValidating(s, e) {
     }
 
+    function BtnCflPOOnClick(s, e) {
+        cflPurchaseOrderPopupListGoodsReceiptPO.Show();
+    }
 </script>
 
 
@@ -714,7 +713,7 @@ new
     cflPurchaseOrder_ParamModel.Name = "GoodsReceiptPO";
     cflPurchaseOrder_ParamModel.Type = "GoodsReceiptPO";
     cflPurchaseOrder_ParamModel.Header = " Goods Receipt PO";
-    cflPurchaseOrder_ParamModel.SqlWhere = " ";
+    cflPurchaseOrder_ParamModel.SqlWhere = "";
     cflPurchaseOrder_ParamModel.IsMulti = "N";
 }
 

@@ -27,10 +27,12 @@ namespace Models._Cfl
 
     public class CflPurchaseOrder_View__
     {
-        public string DocEntry { get; set; }
+        public string Id { get; set; }
+
+        public int? DocEntry { get; set; }
         public string DocNum { get; set; }
 
-        public string TransDate { get; set; }
+        public DateTime? TransDate { get; set; }
 
         public string VendorCode { get; set; }
         public string VendorName { get; set; }
@@ -41,7 +43,7 @@ namespace Models._Cfl
     public class CflPurchaseOrder_Model
     {
         public static string ssql = @"
-            SELECT DISTINCT T0.""DocEntry"", T0.""DocNum"", T0.""TransDate"", T0.""VendorCode"", T0.""VendorName"", T0.""Comments""
+            SELECT DISTINCT T0.""DocEntry"" AS ""Id"", T0.""DocEntry"", T0.""DocNum"", T0.""TransDate"", T0.""VendorCode"", T0.""VendorName"", T0.""Comments""
                 FROM ""Tx_PurchaseOrder"" T0
                 WHERE T0.""Status"" = 'Posted'
                 AND NOT EXISTS(
