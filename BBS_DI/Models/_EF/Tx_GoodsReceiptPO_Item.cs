@@ -22,6 +22,7 @@ namespace BBS_DI.Models._EF
         public Nullable<decimal> Quantity { get; set; }
         public Nullable<decimal> QuantityOpen { get; set; }
         public Nullable<decimal> QuantityScan { get; set; }
+        public Nullable<decimal> QuantityValid { get; set; }
         public Nullable<decimal> UnitPriceTc { get; set; }
         public Nullable<int> UomEntry { get; set; }
         public string Uom { get; set; }

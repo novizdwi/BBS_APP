@@ -4,15 +4,15 @@ using DevExpress.Data.Linq;
 using DevExpress.Data.Linq.Helpers;
 using DevExpress.Web.Mvc;
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using Models;
-
 using Models._Utils;
-using Models._Ef;
-using Models._Cfl;
+using System.Data;
+using System.Dynamic;
 using BBS_DI.Models._EF;
-using System.Linq;
+using Models._Ef;
 
 namespace Models._Cfl
 {
@@ -23,19 +23,59 @@ namespace Models._Cfl
         public string Header { get; set; }
         public string SqlWhere { get; set; }
         public string IsMulti { get; set; }//"Y","N"
+
     }
 
     public class CflPurchaseOrder_View__
     {
-        public string DocEntry { get; set; }
-        public string DocNum { get; set; }
+        public Int32 Id { get; set; }
 
-        public string TransDate { get; set; }
+        public DateTime? TransDate { get; set; }
 
-        public string VendorCode { get; set; }
-        public string VendorName { get; set; }
+        public string TransNo { get; set; }
 
-        public string Comments { get; set; }
+        public string TransType { get; set; }
+
+        public string Status { get; set; }
+
+        public string ShippingType { get; set; }
+
+        public int? UnitId { get; set; }
+
+        public string UnitName { get; set; }
+
+        public int? DriverId { get; set; }
+
+        public string DriverName { get; set; }
+
+        public string WarehouseCodeFrom { get; set; }
+
+        public string WarehouseNameFrom { get; set; }
+
+        public string WarehouseCodeTo { get; set; }
+
+        public string WarehouseNameTo { get; set; }
+
+        public Int32? BinAbsEntry { get; set; }
+
+        public string BinCode { get; set; }
+
+        public string ItemCode { get; set; }
+
+        public string ItemName { get; set; }
+
+        public string TransferType { get; set; }
+
+        public decimal? QtyTransfer { get; set; }
+
+        public decimal? QtyAfterMF { get; set; }
+
+        public decimal? QtyReceipt { get; set; }
+
+        public string Remarks { get; set; }
+
+        public string DONo { get; set; }
+
     }
 
     public class CflPurchaseOrder_Model
@@ -49,88 +89,83 @@ namespace Models._Cfl
                     FROM ""Tx_GoodsReceiptPO"" T1 
                     WHERE T0.""DocEntry"" = T1.""BaseEntry"" 
                     AND T1.""Status"" NOT IN ('Cancel')
-                )
+                ) 
         ";
-                
-        public static void SetBindingData(GridViewModel state, int userId, CflPurchaseOrder_ParamModel cflParam)
+
+        public static void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e, int userId, CflPurchaseOrder_ParamModel cflPurchaseOrderParam)
         {
-            string sqlCriteria = GetSqlFromGridViewModelState.getHanaCriteria(state);
-            string sqlSort = GetSqlFromGridViewModelState.getHanaSort(state);
+            var Cfl_Sql = CflPurchaseOrder_Model.ssql;
+            
+            Cfl_Sql = Cfl_Sql.Replace("{UserId}", userId.ToString());
 
-            using (var CONTEXT = new HANA_APP())
+            string sqlCriteria = GetSqlFromGridViewModelState.getHanaCriteria(e.State);
+            if (sqlCriteria != "")
             {
-                var dataRowCount = GetRowCount(CONTEXT, userId, cflParam, sqlCriteria);
-                var dataList = GetDataList(CONTEXT, userId, cflParam, sqlCriteria, sqlSort, state.Pager.PageIndex, state.Pager.PageSize);
-
-                state.ProcessCustomBinding(
-                  new GridViewCustomBindingGetDataRowCountHandler(args =>
-                  {
-                      GetDataRowCount(args, dataRowCount);
-                  }),
-                  new GridViewCustomBindingGetDataHandler(args =>
-                  {
-                      GetData(args, dataList);
-                  })
-              );
+                sqlCriteria = " AND (" + sqlCriteria + ")";
             }
-        }
 
-        public static void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e, int dataRowCount)
-        { 
-           
+            if (cflPurchaseOrderParam.SqlWhere != "")
+            {
+                sqlCriteria = cflPurchaseOrderParam.SqlWhere + sqlCriteria;
+            }
+
+            int dataRowCount;
+            string ssql = "";
+            ssql = "SELECT COUNT(*) AS IDU FROM (" + Cfl_Sql + ") T0  WHERE 1=1 " + sqlCriteria;
+            dataRowCount = DbProvider.dbApp.Database.SqlQuery<int>(ssql).FirstOrDefault<int>();
+
             e.DataRowCount = dataRowCount;
 
         }
 
-
-
-        public static void GetData(GridViewCustomBindingGetDataArgs e, List<CflPurchaseOrder_View__> dataList)
+        public static void GetData(GridViewCustomBindingGetDataArgs e, int userId, CflPurchaseOrder_ParamModel cflPurchaseOrderParam)
         {
 
-            e.Data = dataList;
+            string sqlCriteria = GetSqlFromGridViewModelState.getHanaCriteria(e.State);
+            string sqlSort = GetSqlFromGridViewModelState.getHanaSort(e.State);
+            e.Data = GetDataList(userId, cflPurchaseOrderParam, sqlCriteria, sqlSort, e.State.Pager.PageIndex, e.State.Pager.PageSize);
 
         }
 
-        public static int GetRowCount(HANA_APP CONTEXT, int userId, CflPurchaseOrder_ParamModel cflParam, string sqlCriteria)
+        public static List<CflPurchaseOrder_View__> GetDataList(int userId, CflPurchaseOrder_ParamModel cflPurchaseOrderParam, string sqlCriteria, string sqlSort, int PageIndex, int PageSize)
         {
-            var Cfl_Sql = CflPurchaseOrder_Model.ssql;
-
-            Cfl_Sql = Cfl_Sql.Replace("{DbSap}", DbProvider.dbSap_Name);
-            Cfl_Sql = Cfl_Sql.Replace("{UserId}", userId.ToString());
-
             if (sqlCriteria == null)
             {
                 sqlCriteria = "";
             }
-
+            if (sqlSort == null)
+            {
+                sqlSort = "";
+            }
 
             if (sqlCriteria != "")
             {
                 sqlCriteria = " AND (" + sqlCriteria + ")";
             }
 
-            if (cflParam.SqlWhere != "")
+            if (cflPurchaseOrderParam.SqlWhere != "")
             {
-                sqlCriteria = cflParam.SqlWhere + sqlCriteria;
+                sqlCriteria = cflPurchaseOrderParam.SqlWhere + sqlCriteria;
             }
 
-            int dataRowCount;
-            string ssql = "";
-            ssql = "SELECT COUNT(*) AS IDU FROM (" + Cfl_Sql + ") T0  WHERE 1=1 " + sqlCriteria;
-            dataRowCount = CONTEXT.Database.SqlQuery<int>(ssql).FirstOrDefault<int>();
+            var CflPurchaseOrders_ = GetDataList(userId, sqlCriteria, sqlSort, PageIndex, PageSize);
 
-            return dataRowCount;
+            if (CflPurchaseOrders_.Count == 0)
+            {
+                CflPurchaseOrder_View__ item = new CflPurchaseOrder_View__();
+                CflPurchaseOrders_.Add(item);
+            }
+
+            return CflPurchaseOrders_;
+
         }
 
-        public static List<CflPurchaseOrder_View__> GetDataList(HANA_APP CONTEXT, int userId, CflPurchaseOrder_ParamModel cflBpParam, string sqlCriteria, string sqlSort, int PageIndex, int PageSize)
+        public static List<CflPurchaseOrder_View__> GetDataList(int userId, string sqlCriteria, string sqlSort, int PageIndex, int PageSize)
         {
 
             var Cfl_Sql = CflPurchaseOrder_Model.ssql;
 
-            Cfl_Sql = Cfl_Sql.Replace("{DbSap}", DbProvider.dbSap_Name);
             Cfl_Sql = Cfl_Sql.Replace("{UserId}", userId.ToString());
-
-
 
             if (sqlCriteria == null)
             {
@@ -141,47 +176,40 @@ namespace Models._Cfl
                 sqlSort = "";
             }
 
-
             string ssql = "";
-            ssql = "SELECT T0.* FROM (" + Cfl_Sql + ") T0  WHERE 1=1 " + sqlCriteria + " ORDER BY T0.\"DocEntry\" DESC ";
+            ssql = "SELECT T0.* FROM (" + Cfl_Sql + ") T0  WHERE 1=1 " + sqlCriteria;
             string ssqlLimit = string.Format(" LIMIT {0} OFFSET {1} ", PageSize, (PageIndex) * PageSize);
 
-            var items = CONTEXT.Database.SqlQuery<CflPurchaseOrder_View__>(ssql + sqlSort + ssqlLimit).ToList();
+            var items = DbProvider.dbApp.Database.SqlQuery<CflPurchaseOrder_View__>(ssql + sqlSort + ssqlLimit).ToList();
 
             return items;
 
         }
 
+
         public static GridViewModel CreateGridViewModel()
         {
             var viewModel = new GridViewModel();
-
             return viewModel;
         }
 
+
         public static GridViewSettings CreateExportGridViewSettings(CflPurchaseOrder_ParamModel cflPurchaseOrderParam)
         {
-
             GridViewSettings settings = new GridViewSettings();
-
-            settings.Name = "List Purchase Order";
+            settings.Name = "List PurchaseOrder";
 
             if (cflPurchaseOrderParam.Header != "")
             {
-                settings.Name = "List Purchase Order " + cflPurchaseOrderParam.Header;
+                settings.Name = "List PurchaseOrder " + cflPurchaseOrderParam.Header;
             }
 
-            settings.KeyFieldName = "Tx_PurchaseOrder___.Id";
-            settings.Columns.Add("Tx_PurchaseOrder___.TransNo");
-
+            settings.KeyFieldName = "Id";
+            settings.Columns.Add("PurchaseOrderName");
             return settings;
         }
 
 
-       
-
-
     }
-
 
 }

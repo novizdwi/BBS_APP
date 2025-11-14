@@ -1,0 +1,1158 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Transactions;
+using Models._Utils;
+using Models._Ef;
+using BBS_DI.Models._EF;
+
+using Models._Sap;
+using SAPbobsCOM;
+
+namespace Models.Transaction.Web.Inventory
+{
+    #region Models
+
+    public class StockSummaryOpnameModel
+    {
+        private FormModeEnum _FormModeEnum = FormModeEnum.New;
+
+        public FormModeEnum _FormMode
+        {
+            get { return this._FormModeEnum; }
+            set { this._FormModeEnum = value; }
+        }
+
+        public int _UserId { get; set; }
+
+        public int? CreatedUser { get; set; }
+
+        public int? ModifiedUser { get; set; }
+
+        public DateTime? ModifiedDate { get; set; }
+
+        public string UserName { get; set; }
+
+        public string TransType { get; set; }
+
+        public long Id { get; set; }
+
+        public long? RequestId { get; set; }
+
+        public string RequestNo { get; set; }
+
+        public string TransNo { get; set; }
+
+        public DateTime? TransDate { get; set; }
+
+        [Required(ErrorMessage = "required")]
+        public string WhsCode { get; set; }
+
+        [Required(ErrorMessage = "required")]
+        public string WhsName { get; set; }
+
+        public string Address { get; set; }
+
+        public long? DocEntry { get; set; }
+
+        public string DocNum_ { get; set; }
+
+        public string ScanDeviceId { get; set; }
+
+        public string Status { get; set; }
+
+        public string CheckNeedApproval_ { get; set; }
+
+        public string ApprovalStatus { get; set; }
+
+        public string IsAfterPosted { get; set; }
+
+        public string Comments { get; set; }
+
+        public string CancelReason { get; set; }
+
+        public string CreatedDate_ { get; set; }
+
+        public string ModifiedDate_ { get; set; }
+
+        public List<StockSummaryOpname_DetailModel> ListDetail_ = new List<StockSummaryOpname_DetailModel>();
+
+        public List<StockSummaryOpname_RefModel> ListRef_ = new List<StockSummaryOpname_RefModel>();
+
+        public StockSummaryOpname_Ref Refs_ { get; set; }
+
+        public StockSummaryOpname_Detail Details_ { get; set; }
+    }
+
+    public class StockSummaryOpname_Detail
+    {
+        public List<long> deletedRowKeys { get; set; }
+        public List<StockSummaryOpname_DetailModel> insertedRowValues { get; set; }
+        public List<StockSummaryOpname_DetailModel> modifiedRowValues { get; set; }
+    }
+
+    public class StockSummaryOpname_DetailModel
+    {
+
+        private FormModeEnum _FormModeEnum = FormModeEnum.New;
+
+        public FormModeEnum _FormMode
+        {
+            get { return this._FormModeEnum; }
+            set { this._FormModeEnum = value; }
+        }
+
+        public int _UserId { get; set; }
+
+        public long? Id { get; set; }
+
+        public long? DetId { get; set; }
+
+        public int? IdPDO { get; set; }
+
+        public string PDODocNum_ { get; set; }
+
+        public int? GoodsReceiptDocEntry { get; set; }
+
+        public string GRDocNum_ { get; set; }
+
+        public string Bagian { get; set; }
+
+        public string ItemCode { get; set; }
+
+        public string ItemName { get; set; }
+
+        public string AcctCode { get; set; }
+
+        public string AcctName { get; set; }
+
+        public decimal? UnitPriceTc { get; set; }
+
+        public string FreeText { get; set; }
+
+        public string WhsCode { get; set; }
+
+        public string WhsName { get; set; }
+
+        public decimal? Quantity { get; set; }
+
+        public decimal? QuantityValid  { get; set; }
+
+        public decimal? QuantityScan { get; set; }
+
+        public int? UomEntry { get; set; }
+
+        public string Uom { get; set; }
+
+        public long? DocEntry { get; set; }
+
+        public long? LineNum { get; set; }
+
+        public long? BaseEntry { get; set; }
+
+        public int? BaseLine { get; set; }
+
+        public string LineStatus { get; set; }
+    }
+
+    public class StockSummaryOpname_Ref
+    {
+        public List<long> deletedRowKeys { get; set; }
+        public List<StockSummaryOpname_RefModel> insertedRowValues { get; set; }
+        public List<StockSummaryOpname_RefModel> modifiedRowValues { get; set; }
+    }
+
+    public class StockSummaryOpname_RefModel
+    {
+        private FormModeEnum _FormModeEnum = FormModeEnum.New;
+
+        public FormModeEnum _FormMode
+        {
+            get { return this._FormModeEnum; }
+            set { this._FormModeEnum = value; }
+        }
+
+        public int _UserId { get; set; }
+
+        public long? Id { get; set; }
+
+        public long? DetId { get; set; }
+
+        public long? BaseId { get; set; }
+
+        public string BaseNo { get; set; }
+
+        public DateTime? BaseCreatedDate { get; set; }
+
+        public string ScanDeviceId { get; set; }
+
+        public string Comments { get; set; }
+
+        public string BaseCreatedUser_ { get; set; }
+    }
+
+
+    public class StockSummaryOpnameItemTagView___
+    {
+        public long Id { get; set; }
+
+        public long DetId { get; set; }
+
+        public string ItemCode { get; set; }
+
+        public string ItemName { get; set; }
+
+        public List<StockSummaryOpnameItemTagModel> StockSummaryOpnameItemTagModel___ { get; set; }
+    }
+
+    public class StockSummaryOpnameItemTagModel
+    {
+        public int RowNo { get; set; }
+
+        public long Id { get; set; }
+
+        public long DetId { get; set; }
+
+        public long DetDetId { get; set; }
+
+        public string ItemCode { get; set; }
+
+        public string ItemName { get; set; }
+
+        public string TagId { get; set; }
+
+        public decimal? Quantity { get; set; }
+
+        public string EventType { get; set; }
+
+        public string Status { get; set; }
+    }
+
+    public class GRPOAddResultModel
+    {
+        public string DocEntry { get; set; }
+
+        public Dictionary<long, int> LineMapping { get; set; } // LineId -> LineNum
+    }
+
+    public class GoodsReceiptResultModel
+    {
+        public long DetId { get; set; }
+
+        public long? GoodsReceiptId { get; set; }
+    }
+
+    #endregion
+
+    #region Services
+
+    public class StockSummaryOpnameService
+    {
+
+        public StockSummaryOpnameModel GetNewModel(int userId)
+        {
+            StockSummaryOpnameModel model = new StockSummaryOpnameModel();
+            model.Status = "Draft";
+            model.TransDate = DateTime.Now;
+            return model;
+        }
+
+        public StockSummaryOpnameModel GetById(int userId, long id = 0)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                return GetById(CONTEXT, userId, id);
+            }
+        }
+
+        public StockSummaryOpnameModel GetById(HANA_APP CONTEXT, int userId, long id = 0)
+        {
+            StockSummaryOpnameModel model = null;
+            if (id != 0)
+            {
+                string ssql = @"SELECT *, T1.""FirstName"" AS ""UserName"" ,
+                            TO_VARCHAR(T0.""CreatedDate"", 'DD/MM/YYYY') AS ""CreatedDate_"",
+                            TO_VARCHAR(T0.""ModifiedDate"", 'DD/MM/YYYY') AS ""ModifiedDate_""
+                            FROM ""Tx_StockSummaryOpname"" T0
+                            LEFT JOIN ""Tm_User"" T1 ON T0.""ModifiedUser"" = T1.""Id""
+                            WHERE T0.""Id"" = :p0 
+                            ORDER BY T0.""Id"" ASC
+                ";
+                model = CONTEXT.Database.SqlQuery<StockSummaryOpnameModel>(ssql, id).Single();
+
+                if (model.DocEntry != null)
+                {
+                    string getDocNum = @"SELECT T1.""DocNum""
+                    FROM ""Tx_StockSummaryOpname"" T0
+                    INNER JOIN """ + DbProvider.dbSap_Name + @""".""OIQR"" T1 ON T0.""DocEntry"" = T1.""DocEntry""
+                    WHERE T0.""Id"" = :p0 
+                    ORDER BY T0.""Id"" ASC
+                ";
+                    model.DocNum_ = CONTEXT.Database.SqlQuery<string>(getDocNum, id).FirstOrDefault();
+                }
+
+                //if (model.Id > 0)
+                //{
+                //    ssql = "CALL \"SpSysCheckNeedApproval\" (" + userId.ToString() + "," + model.Id.ToString() + ",'StockSummaryOpname') ";
+                //    model.CheckNeedApproval_ = CONTEXT.Database.SqlQuery<string>(ssql).FirstOrDefault();
+                //}
+
+                model.ListDetail_ = this.StockSummaryOpname_Details(CONTEXT, id);
+                model.ListRef_ = this.StockSummaryOpname_Refs(CONTEXT, id);
+            }
+
+            return model;
+        }
+        public List<StockSummaryOpname_DetailModel> StockSummaryOpname_Details(long id = 0)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                return StockSummaryOpname_Details(CONTEXT, id);
+            }
+
+        }
+
+        public List<StockSummaryOpname_DetailModel> StockSummaryOpname_Details(HANA_APP CONTEXT, long id = 0)
+        {
+            string ssql = @"SELECT T0.*
+                FROM ""Tx_StockSummaryOpname_Item"" T0
+                WHERE T0.""Id"" =:p0
+                ORDER BY T0.""DetId"" ASC
+            ";
+            var StockSummaryOpname = CONTEXT.Database.SqlQuery<StockSummaryOpname_DetailModel>(ssql, id).ToList();
+            return StockSummaryOpname;
+        }
+
+        public List<StockSummaryOpname_RefModel> StockSummaryOpname_Refs(long id = 0)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                return StockSummaryOpname_Refs(CONTEXT, id);
+            }
+
+        }
+
+        public List<StockSummaryOpname_RefModel> StockSummaryOpname_Refs(HANA_APP CONTEXT, long id = 0)
+        {
+            string ssql = @"SELECT T0.*, T1.""TransDate"", T2.""FirstName"" AS ""BaseCreatedUser_""
+                FROM ""Tx_StockSummaryOpname_Ref"" T0
+                INNER JOIN ""Tx_StockOpname"" T1 ON T0.""BaseId"" = T1.""Id""
+                LEFT JOIN ""Tm_User"" T2 ON T0.""BaseCreatedUser"" = T2.""Id""
+                WHERE T0.""Id"" =:p0
+                ORDER BY T0.""DetId"" ASC
+            ";
+            var StockSummaryOpname = CONTEXT.Database.SqlQuery<StockSummaryOpname_RefModel>(ssql, id).ToList();
+            return StockSummaryOpname;
+        }
+
+        public StockSummaryOpnameModel NavFirst(int userId)
+        {
+            StockSummaryOpnameModel model = null;
+            using (var CONTEXT = new HANA_APP())
+            {
+                string sqlCriteria = "";
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "StockSummaryOpname");
+                if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
+                {
+                    sqlCriteria = " AND " + formAuthorizeSqlWhere;
+                }
+
+                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tx_StockSummaryOpname\" T0 WHERE 1=1 " + sqlCriteria + " ORDER BY T0.\"Id\" ASC").FirstOrDefault();
+
+                model = this.GetById(CONTEXT, userId, Id.HasValue ? Id.Value : 0);
+            }
+
+            return model;
+
+        }
+        public StockSummaryOpnameModel NavPrevious(int userId, long id = 0)
+        {
+            StockSummaryOpnameModel model = null;
+            using (var CONTEXT = new HANA_APP())
+            {
+                string sqlCriteria = "";
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "StockSummaryOpname");
+                if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
+                {
+                    sqlCriteria = " AND " + formAuthorizeSqlWhere;
+                }
+
+                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tx_StockSummaryOpname\" T0 WHERE T0.\"Id\"<:p0 " + sqlCriteria + "  ORDER BY T0.\"Id\" DESC", id).FirstOrDefault();
+                if (Id.HasValue)
+                {
+                    model = this.GetById(CONTEXT, userId, Id.Value);
+                }
+            }
+
+            if (model == null)
+            {
+                model = this.NavFirst(userId);
+            }
+
+
+            return model;
+        }
+
+        public StockSummaryOpnameModel NavNext(int userId, long id = 0)
+        {
+            StockSummaryOpnameModel model = null;
+            using (var CONTEXT = new HANA_APP())
+            {
+                string sqlCriteria = "";
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "StockSummaryOpname");
+                if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
+                {
+                    sqlCriteria = " AND " + formAuthorizeSqlWhere;
+                }
+
+                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tx_StockSummaryOpname\" T0 WHERE T0.\"Id\">:p0 " + sqlCriteria + "  ORDER BY T0.\"Id\" ASC", id).FirstOrDefault();
+                if (Id.HasValue)
+                {
+                    model = this.GetById(CONTEXT, userId, Id.Value);
+                }
+            }
+
+            if (model == null)
+            {
+                model = this.NavFirst(userId);
+            }
+
+            return model;
+        }
+
+        public StockSummaryOpnameModel NavLast(int userId)
+        {
+            StockSummaryOpnameModel model = null;
+            using (var CONTEXT = new HANA_APP())
+            {
+                string sqlCriteria = "";
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "StockSummaryOpname");
+                if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
+                {
+                    sqlCriteria = " AND " + formAuthorizeSqlWhere;
+                }
+
+                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tx_StockSummaryOpname\" T0 WHERE 1=1 " + sqlCriteria + "  ORDER BY T0.\"Id\" DESC").FirstOrDefault();
+
+                model = this.GetById(CONTEXT, userId, Id.HasValue ? Id.Value : 0);
+            }
+
+            return model;
+        }
+
+        public bool RefreshItem(int userId, long id)
+        {
+            bool ret = true;
+            if (id != 0)
+            {
+                using (var CONTEXT = new HANA_APP())
+                {
+                    using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                    {
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpStockSummaryOpname_AddItemDetail\"(:p0,:p1,'Refresh')", userId, id);
+                        CONTEXT_TRANS.Commit();
+                    }
+                }
+            }
+            return ret;
+        }
+
+        public long Add(StockSummaryOpnameModel model)
+        {
+            long Id = 0;
+
+            if (model != null)
+            {
+                using (var CONTEXT = new HANA_APP())
+                {
+
+                    using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            Tx_StockSummaryOpname Tx_StockSummaryOpname = new Tx_StockSummaryOpname();
+                            CopyProperty.CopyProperties(model, Tx_StockSummaryOpname, false);
+
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                            Tx_StockSummaryOpname.TransType = "StockSummaryOpname";
+                            Tx_StockSummaryOpname.CreatedDate = dtModified;
+                            Tx_StockSummaryOpname.CreatedUser = model._UserId;
+                            Tx_StockSummaryOpname.ModifiedDate = dtModified;
+                            Tx_StockSummaryOpname.ModifiedUser = model._UserId;
+
+                            string dateX = model.TransDate.Value.ToString("yyyy-MM-dd");
+                            string transNo = CONTEXT.Database.SqlQuery<string>("CALL \"SpSysGetNumbering\" (" + model._UserId.ToString() + ",'StockSummaryOpname','" + dateX + "','') ").SingleOrDefault();
+                            Tx_StockSummaryOpname.TransNo = transNo;
+
+                            CONTEXT.Tx_StockSummaryOpname.Add(Tx_StockSummaryOpname);
+                            CONTEXT.SaveChanges();
+                            Id = Tx_StockSummaryOpname.Id;
+
+                            String keyValue;
+                            keyValue = Tx_StockSummaryOpname.Id.ToString();
+                            
+                            SpNotif.SpSysControllerTransNotif(model._UserId, "StockSummaryOpname", CONTEXT, "after", "StockSummaryOpname", "add", "Id", keyValue);
+
+                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpStockSummaryOpname_AddItemDetail\"(:p0,:p1,'Add')", model._UserId, Id);
+
+                            CONTEXT_TRANS.Commit();
+                        }
+
+                        catch (Exception ex)
+                        {
+                            CONTEXT_TRANS.Rollback();
+
+                            string errorMassage;
+                            if (ex.Message.Substring(12) == "[VALIDATION]")
+                            {
+                                errorMassage = ex.Message;
+                            }
+                            else
+                            {
+                                errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                            }
+
+                            throw new Exception(errorMassage);
+                        }
+                    }
+                }
+            }
+
+            return Id;
+
+        }
+
+        public void Update(StockSummaryOpnameModel model)
+        {
+            if (model != null)
+            {
+                if (model != null)
+                {
+                    using (var CONTEXT = new HANA_APP())
+                    {
+                        using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                        {
+                            try
+                            {
+                                String keyValue;
+                                keyValue = model.Id.ToString();
+                                
+                                SpNotif.SpSysControllerTransNotif(model._UserId, "StockSummaryOpname", CONTEXT, "before", "StockSummaryOpname", "update", "Id", keyValue);
+
+
+                                Tx_StockSummaryOpname Tx_StockSummaryOpname = CONTEXT.Tx_StockSummaryOpname.Find(model.Id);
+                                DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                                Tx_StockSummaryOpname.ModifiedDate = dtModified;
+                                Tx_StockSummaryOpname.ModifiedUser = model._UserId;
+
+                                if (Tx_StockSummaryOpname != null)
+                                {
+                                    var exceptColumns = new string[] { "Id", "TransNo", "CreatedUser" };
+                                    CopyProperty.CopyProperties(model, Tx_StockSummaryOpname, false, exceptColumns);
+                                    Tx_StockSummaryOpname.ModifiedDate = dtModified;
+                                    Tx_StockSummaryOpname.ModifiedUser = model._UserId;
+
+                                    //if (model.StartDate != null)
+                                    //{
+                                    //    Tx_StockSummaryOpname.Status2 = "On Progress";
+                                    //}
+                                    //else
+                                    //{
+                                    //    Tx_StockSummaryOpname.Status2 = "Open";
+                                    //}
+
+                                    //if (model.EndDate != null)
+                                    //{
+                                    //    Tx_StockSummaryOpname.Status2 = "Close";
+                                    //}
+                                    CONTEXT.SaveChanges();
+
+                                    //if (model.Details_ != null)
+                                    //{
+                                    //    if (model.Details_.insertedRowValues != null)
+                                    //    {
+                                    //        foreach (var detail in model.Details_.insertedRowValues)
+                                    //        {
+                                    //            Detail_Add(CONTEXT, detail, model.Id, model._UserId);
+                                    //        }
+                                    //    }
+
+                                    //    if (model.Details_.modifiedRowValues != null)
+                                    //    {
+                                    //        foreach (var detail in model.Details_.modifiedRowValues)
+                                    //        {
+                                    //            Detail_Update(CONTEXT, detail, model._UserId);
+                                    //        }
+                                    //    }
+
+                                    //    if (model.Details_.deletedRowKeys != null)
+                                    //    {
+                                    //        foreach (var detId in model.Details_.deletedRowKeys)
+                                    //        {
+                                    //            StockSummaryOpname_DetailModel detailModel = new StockSummaryOpname_DetailModel();
+                                    //            detailModel.DetId = detId;
+                                    //            Detail_Delete(CONTEXT, detailModel);
+                                    //        }
+                                    //    }
+                                    //}
+                                    SpNotif.SpSysControllerTransNotif(model._UserId, "StockSummaryOpname", CONTEXT, "after", "StockSummaryOpname", "update", "Id", keyValue);
+                                    
+                                }
+
+                                CONTEXT_TRANS.Commit();
+                            }
+
+                            catch (Exception ex)
+                            {
+                                CONTEXT_TRANS.Rollback();
+
+                                string errorMassage;
+                                if (ex.Message.Substring(12) == "[VALIDATION]")
+                                {
+                                    errorMassage = ex.Message;
+                                }
+                                else
+                                {
+                                    errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                                }
+
+                                throw new Exception(errorMassage);
+                            }
+                        }
+                    }
+                }
+
+            }
+
+
+        }
+
+        //public long Detail_Add(HANA_APP CONTEXT, StockSummaryOpname_DetailModel model, long Id, int UserId)
+        //{
+        //    long DetId = 0;
+
+        //    if (model != null)
+        //    {
+
+        //        Tx_StockSummaryOpname_Item Tx_StockSummaryOpname_Item = new Tx_StockSummaryOpname_Item();
+
+        //        CopyProperty.CopyProperties(model, Tx_StockSummaryOpname_Item, false);
+
+        //        DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+        //        Tx_StockSummaryOpname_Item.Id = Id;
+        //        Tx_StockSummaryOpname_Item.CreatedDate = dtModified;
+        //        Tx_StockSummaryOpname_Item.CreatedUser = UserId;
+        //        Tx_StockSummaryOpname_Item.ModifiedDate = dtModified;
+        //        Tx_StockSummaryOpname_Item.ModifiedUser = UserId;
+        //        if (model.StartDate != null && model.EndDate == null)
+        //        {
+        //            Tx_StockSummaryOpname_Item.Status = "On Progress";
+        //        }
+        //        else if (model.StartDate != null && model.EndDate != null)
+        //        {
+        //            Tx_StockSummaryOpname_Item.Status = "Close";
+        //        }
+        //        else
+        //        {
+        //            Tx_StockSummaryOpname_Item.Status = "Open";
+        //        }
+
+        //        CONTEXT.Tx_StockSummaryOpname_Item.Add(Tx_StockSummaryOpname_Item);
+        //        CONTEXT.SaveChanges();
+        //        DetId = Tx_StockSummaryOpname_Item.DetId;
+
+        //    }
+
+        //    return DetId;
+
+        //}
+
+        //public void Detail_Update(HANA_APP CONTEXT, StockSummaryOpname_DetailModel model, int UserId)
+        //{
+        //    if (model != null)
+        //    {
+
+        //        Tx_StockSummaryOpname_Item Tx_StockSummaryOpname_Item = CONTEXT.Tx_StockSummaryOpname_Item.Find(model.DetId);
+
+        //        if (Tx_StockSummaryOpname_Item != null)
+        //        {
+        //            var exceptColumns = new string[] { "DetId", "Id" };
+        //            CopyProperty.CopyProperties(model, Tx_StockSummaryOpname_Item, false, exceptColumns);
+
+
+        //            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+
+        //            Tx_StockSummaryOpname_Item.ModifiedDate = dtModified;
+        //            Tx_StockSummaryOpname_Item.ModifiedUser = UserId;
+        //            if (model.StartDate != null && model.EndDate == null)
+        //            {
+        //                Tx_StockSummaryOpname_Item.Status = "On Progress";
+        //            }
+        //            else if (model.StartDate != null && model.EndDate != null)
+        //            {
+        //                Tx_StockSummaryOpname_Item.Status = "Close";
+        //            }
+        //            else
+        //            {
+        //                Tx_StockSummaryOpname_Item.Status = "Open";
+        //            }
+        //            CONTEXT.SaveChanges();
+
+        //        }
+
+
+        //    }
+
+        //}
+
+        //public void Detail_Delete(HANA_APP CONTEXT, StockSummaryOpname_DetailModel model)
+        //{
+        //    if (model.DetId != null)
+        //    {
+        //        if (model.DetId != 0)
+        //        {
+
+        //            CONTEXT.Database.ExecuteSqlCommand("DELETE FROM \"Tx_StockSummaryOpname_Item\"  WHERE \"DetId\"=:p0", model.DetId);
+
+        //            CONTEXT.SaveChanges();
+
+
+        //        }
+        //    }
+
+        //}
+
+        public void Post(int userId, long id)
+        {
+            try
+            {
+                PostSAP(userId, id);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void PostSAP(int userId, long id)
+        {
+            SAPbobsCOM.Company oCompany = null;
+            StockSummaryOpnameModel StockSummaryOpname = GetById(userId, id);
+
+            using (var CONTEXT = new HANA_APP())
+            {
+
+                using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        oCompany = SAPCachedCompany.GetCompany();
+                        oCompany.StartTransaction();
+
+                        String keyValue;
+                        keyValue = id.ToString();
+
+                        SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "before", "Tx_StockSummaryOpname", "post", "Id", keyValue);
+
+                        Tx_StockSummaryOpname tx_StockSummaryOpname = CONTEXT.Tx_StockSummaryOpname.Find(id);
+                        if (tx_StockSummaryOpname == null)
+                        {
+                            throw new Exception($"[VALIDATION] - Data not found");
+                        }
+
+                        if(StockSummaryOpname.ListDetail_.All(q => q.QuantityValid == 0) )
+                        {
+                            throw new Exception($"[VALIDATION] - No record created");
+                        }
+
+                        int docEntry = AddInventoryPosting(oCompany, userId, id, StockSummaryOpname);
+                        if(docEntry <= 0)
+                        {
+                            throw new Exception($"[VALIDATION] - No inventory posting created");
+                        }
+
+                        DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+
+                        tx_StockSummaryOpname.DocEntry = docEntry;
+                        tx_StockSummaryOpname.Status = "Posted";
+                        tx_StockSummaryOpname.IsAfterPosted = "Y";
+                        tx_StockSummaryOpname.ModifiedDate = dtModified;
+                        tx_StockSummaryOpname.ModifiedUser = userId;
+
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_InsertItemTag\"(:p0,:p1, 'StockSummaryOpname','P')", userId, keyValue);
+
+                        CONTEXT.SaveChanges();
+
+                        SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "after", "Tx_StockSummaryOpname", "post", "Id", keyValue);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpStockSummaryOpname_UpdateStockOpnameStatus\"(:p0,:p1,'post')", userId, id);
+
+                        if (oCompany.InTransaction)
+                        {
+                            oCompany.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_Commit);
+                        }
+
+                        CONTEXT_TRANS.Commit();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        if (oCompany.InTransaction)
+                        {
+                            oCompany.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                        }
+
+                        CONTEXT_TRANS.Rollback();
+
+                        string errorMassage;
+                        if (ex.Message.Substring(12) == "[VALIDATION]")
+                        {
+                            errorMassage = ex.Message;
+                        }
+                        else
+                        {
+                            errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                        }
+
+                        throw new Exception(errorMassage);
+                    }
+                    finally
+                    {
+                        SAPCachedCompany.Release(oCompany);
+                    }
+                }
+            }
+
+        }
+
+        private int AddInventoryPosting(Company oCompany, int userId, long id, StockSummaryOpnameModel model)
+        {
+            int newDocEntry = -1;
+            int nErr;
+            string errMsg;
+
+            SAPbobsCOM.CompanyService oCS = (SAPbobsCOM.CompanyService)oCompany.GetCompanyService();
+            SAPbobsCOM.InventoryPostingsService oInventoryPostingsService = oCS.GetBusinessService(SAPbobsCOM.ServiceTypes.InventoryPostingsService);
+            SAPbobsCOM.InventoryPosting oDocument = oInventoryPostingsService.GetDataInterface(SAPbobsCOM.InventoryPostingsServiceDataInterfaces.ipsInventoryPosting);
+
+            oDocument.PostingDate = (DateTime)model.TransDate;
+            
+            oDocument.UserFields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
+            oDocument.UserFields.Item("U_IDU_WebTransNo").Value = model.TransNo;
+            if(model.ListDetail_.Count > 0)
+            {
+                foreach(var item in model.ListDetail_)
+                {
+                    if(item.QuantityValid > 0)
+                    {
+                        InventoryPostingLine line = oDocument.InventoryPostingLines.Add();
+                        line.ItemCode = item.ItemCode;
+                        line.WarehouseCode = item.WhsCode;
+                        line.CountedQuantity = Convert.ToDouble(item.QuantityValid);
+                        line.UoMCode = item.Uom?? "" ;
+
+                        line.Price = (double)item.UnitPriceTc;
+                        
+                        line.InventoryOffsetIncreaseAccount = item.AcctCode;
+                        line.InventoryOffsetDecreaseAccount = item.AcctCode;
+
+                        line.UserFields.Item("U_IDU_WebId").Value = Convert.ToInt32(item.Id);
+                        line.UserFields.Item("U_IDU_DetId").Value = Convert.ToInt32(item.DetId);
+                    }
+                }
+            }
+
+            InventoryPostingParams oParams = oInventoryPostingsService.Add(oDocument);
+            newDocEntry = oParams.DocumentEntry;
+
+            if (newDocEntry <= 0)
+            {
+                nErr = oCompany.GetLastErrorCode();
+                errMsg = oCompany.GetLastErrorDescription();
+
+                SapCompany.CleanUp(oDocument);
+
+                throw new Exception("[VALIDATION] - Inventory Posting : " + nErr.ToString() + "|" + errMsg);
+            }
+
+            return newDocEntry;
+        }
+
+
+        //private GRPOAddResultModel AddStockSummaryOpname(Company oCompany, int userId, long id, StockSummaryOpnameModel model)
+        //{
+        //    GRPOAddResultModel result = new GRPOAddResultModel();
+
+        //    int nErr;
+        //    string errMsg;
+        //    //SAPbobsCOM.Recordset rsDetailSO = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset);
+
+        //    SAPbobsCOM.Documents oDocument = (SAPbobsCOM.Documents)oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oPurchaseDeliveryNotes);
+
+        //    oDocument.DocDate = (DateTime)model.TransDate;
+        //    oDocument.DocDueDate = (DateTime)model.TransDate;
+        //    oDocument.TaxDate = (DateTime)model.TransDate;
+
+        //    oDocument.CardCode = model.VendorCode;
+        //    oDocument.CardName = model.VendorCode;
+
+        //    if (model.RefNo != null)
+        //    {
+        //        oDocument.NumAtCard = model.RefNo;
+        //    }
+
+        //    if (model.Comments != null)
+        //    {
+        //        oDocument.Comments = model.Comments;
+        //    }
+
+        //    if (model.Address != null)
+        //    {
+        //        oDocument.Address = model.Address;
+        //    }
+
+        //    oDocument.UserFields.Fields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
+        //    oDocument.UserFields.Fields.Item("U_IDU_WebTransNo").Value = model.TransNo;
+
+        //    int i = 0;
+        //    Dictionary<long, int> InsertedLine = new Dictionary<long, int>();
+        //    if (model.ListDetails_.Count > 0)
+        //    {
+        //        foreach (var item in model.ListDetails_)
+        //        {
+        //            oDocument.Lines.BaseType = 22;
+        //            oDocument.Lines.BaseEntry = Convert.ToInt32(item.BaseEntry);
+        //            oDocument.Lines.BaseLine = Convert.ToInt32(item.BaseLine);
+
+        //            //oDocument.Lines.ItemCode = item.ItemCode;
+        //            oDocument.Lines.WarehouseCode = item.WhsCode;
+        //            oDocument.Lines.Quantity = (double)item.QuantityScan;
+
+        //            if (item.UomEntry != null)
+        //            {
+        //                oDocument.Lines.UoMEntry = Convert.ToInt32(item.UomEntry);
+        //            }
+
+        //            //if (item.FreeText != null)
+        //            //{
+        //            //    oDocument.Lines.FreeText = item.FreeText;
+        //            //}
+
+        //            oDocument.Lines.UserFields.Fields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
+        //            oDocument.Lines.UserFields.Fields.Item("U_IDU_DetId").Value = Convert.ToInt32(item.DetId);
+
+        //            oDocument.Lines.Add();
+        //            InsertedLine.Add(Convert.ToInt64(item.DetId) , i);
+        //            i ++;
+        //        }
+        //    }
+
+        //    int docAdd = oDocument.Add();
+        //    if (docAdd != 0)
+        //    {
+        //        nErr = oCompany.GetLastErrorCode();
+        //        errMsg = oCompany.GetLastErrorDescription();
+
+        //        SapCompany.CleanUp(oDocument);
+
+        //        throw new Exception("[VALIDATION] - Add Goods Receipt PO : " + nErr.ToString() + "|" + errMsg);
+        //    }
+
+        //    result.DocEntry = oCompany.GetNewObjectKey();
+        //    result.LineMapping = InsertedLine;
+
+        //    SapCompany.CleanUp(oDocument);
+        //    return result;
+        //}
+
+
+
+        private List<GoodsReceiptResultModel> AddReceiveFromProduction(Company oCompany, int userId, long id, StockSummaryOpnameModel model)
+        {
+            List<GoodsReceiptResultModel> result = new List<GoodsReceiptResultModel>();
+            int nErr;
+            string errMsg;
+            
+            if (model.ListDetail_.Count > 0)
+            {
+                foreach (var item in model.ListDetail_)
+                {
+                    SAPbobsCOM.Documents oDocument = (SAPbobsCOM.Documents)oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oInventoryGenEntry);
+                    oDocument.DocDate = model.TransDate?? DateTime.Now;
+
+                    oDocument.UserFields.Fields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
+                    oDocument.UserFields.Fields.Item("U_IDU_WebTransNo").Value = model.TransNo;
+
+                    oDocument.Lines.BaseType = 202;
+                    oDocument.Lines.BaseEntry = item.IdPDO ?? 0;
+                    oDocument.Lines.Quantity = double.Parse(item.QuantityScan.ToString());
+
+                    oDocument.Lines.UserFields.Fields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
+                    oDocument.Lines.UserFields.Fields.Item("U_IDU_DetId").Value = Convert.ToInt32(item.DetId);
+
+                    oDocument.Lines.Add();
+
+                    if (oDocument.Add() != 0)
+                    {
+
+                        nErr = oCompany.GetLastErrorCode();
+                        errMsg = oCompany.GetLastErrorDescription();
+
+                        SapCompany.CleanUp(oDocument);
+
+                        throw new Exception("[VALIDATION] - Add ReceiptProduction | " + nErr.ToString() + "|" + errMsg);
+
+                    }
+                    string docEntry =  oCompany.GetNewObjectKey();
+                    result.Add( 
+                        new GoodsReceiptResultModel
+                        {
+                            DetId = Convert.ToInt64(item.DetId),
+                            GoodsReceiptId = Convert.ToInt32(docEntry)
+                        }
+                    );
+                }
+            }
+
+            return result;
+        }
+
+        public void Cancel(int userId, long Id, string cancelReason)
+        {
+            SAPbobsCOM.Company oCompany = SAPCachedCompany.GetCompany();
+
+            using (var CONTEXT = new HANA_APP())
+            {
+
+                using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        oCompany.StartTransaction();
+
+                        String keyValue;
+                        keyValue = Id.ToString();
+
+                        SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "before", "Tx_StockSummaryOpname", "cancel", "Id", keyValue);
+
+                        Tx_StockSummaryOpname tx_StockSummaryOpname = CONTEXT.Tx_StockSummaryOpname.Find(Id);
+                        if (tx_StockSummaryOpname != null)
+                        {
+                            //if (tx_StockSummaryOpname.IsAfterPosted == "Y")
+                            //{
+                            //    Cancel_InventoryPosting(oCompany, Convert.ToInt32(tx_StockSummaryOpname.DocEntry));
+                            //    CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_InsertItemTag\"(:p0,:p1, 'StockSummaryOpname','I')", userId, Id);
+                            //    CONTEXT.Database.ExecuteSqlCommand("CALL \"SpStockSummaryOpname_UpdateStockOpnameStatus\"(:p0,:p1,'cancel')", userId, Id);
+                            //}
+
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                            tx_StockSummaryOpname.Status = "Cancel";
+                            tx_StockSummaryOpname.CancelReason = cancelReason;
+                            tx_StockSummaryOpname.ModifiedDate = dtModified;
+                            tx_StockSummaryOpname.ModifiedUser = userId;
+
+                            CONTEXT.SaveChanges();
+                        }
+
+                        SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "after", "Tx_StockSummaryOpname", "cancel", "Id", keyValue);
+
+                        oCompany.EndTransaction(BoWfTransOpt.wf_Commit);
+
+                        CONTEXT_TRANS.Commit();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        if (oCompany.InTransaction)
+                        {
+                            oCompany.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
+                        }
+
+                        CONTEXT_TRANS.Rollback();
+
+                        string errorMessage;
+                        if (ex.Message.StartsWith("[VALIDATION]"))
+                        {
+                            errorMessage = ex.Message;
+                        }
+                        else
+                        {
+                            errorMessage = $"[VALIDATION] {ex.Message}";
+                        }
+
+                        throw new Exception(errorMessage);
+                    }
+                    finally
+                    {
+                        SAPCachedCompany.Release(oCompany);
+                    }
+                }
+            }
+
+        }
+
+        //public bool Cancel_InventoryPosting(SAPbobsCOM.Company oCompany, int id)
+        //{
+        //    int nErr;
+        //    string errMsg;
+
+        //    if (id != 0)
+        //    {
+        //        SAPbobsCOM.Documents oDocument = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oPurchaseDeliveryNotes);
+        //        SAPbobsCOM.Documents oCancelDocument = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oPurchaseDeliveryNotes);
+
+        //        if (oDocument.GetByKey(id))
+        //        {
+        //            oCancelDocument = oDocument.CreateCancellationDocument();
+        //            if (oCancelDocument.Add() != 0)
+        //            {
+        //                nErr = oCompany.GetLastErrorCode();
+        //                errMsg = oCompany.GetLastErrorDescription();
+
+        //                SapCompany.CleanUp(oDocument);
+
+        //                throw new Exception("[VALIDATION] - Cancel GRPO |" + nErr.ToString() + "|" + errMsg);
+        //            }
+
+        //        }
+                
+        //        SapCompany.CleanUp(oDocument);
+        //    }
+
+        //    return true;
+        //}
+
+        public StockSummaryOpnameItemTagView___ GetItemTags(long id, long detId)
+        {
+            string sql = null;
+            StockSummaryOpnameItemTagView___ model = new StockSummaryOpnameItemTagView___();
+
+            using (var CONTEXT = new HANA_APP())
+            {
+                sql = @"SELECT T0.""Id"", T0.""DetId"", T0.""ItemCode"", T0.""ItemName""
+                                FROM ""Tx_StockSummaryOpname_Item"" T0   
+                                WHERE T0.""Id""=:p0 AND ""DetId"" = :p1 ";
+
+                model = CONTEXT.Database.SqlQuery<StockSummaryOpnameItemTagView___>(sql, id, detId).FirstOrDefault();
+
+                sql = @"SELECT ROW_NUMBER() OVER (ORDER BY ""DetDetId"") AS ""RowNo"", T0.* 
+                            FROM ""Tx_StockSummaryOpname_Item_Tag"" T0   
+                            WHERE T0.""Id""=:p0 AND ""DetId"" = :p1 ";
+
+                model.StockSummaryOpnameItemTagModel___ = CONTEXT.Database.SqlQuery<StockSummaryOpnameItemTagModel>(sql, id, detId).ToList();
+            }
+
+            return model;
+        }
+
+    }
+
+
+    #endregion
+
+}

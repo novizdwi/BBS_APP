@@ -44,29 +44,25 @@ namespace Models.Transaction.Web.Inventory
 
         public DateTime? TransDate { get; set; }
 
-        [Required(ErrorMessage = "required")]
-        public string VendorCode { get; set; }
+        public string RequestNo { get; set; }
 
-        [Required(ErrorMessage = "required")]
-        public string VendorName { get; set; }
+        public long? RequestId { get; set; }
 
-        public string Address { get; set; }
+        public string WhsCode { get; set; }
 
-        public long? DocEntry { get; set; }
-
-        public string DocNum { get; set; }
-
-        public string RefNo { get; set; }
+        public string WhsName { get; set; }
 
         public string ScanDeviceId { get; set; }
 
         public string Status { get; set; }
 
-        public string IsAfterPosted { get; set; }
-
         public string Comments { get; set; }
 
         public string CancelReason { get; set; }
+
+        public string CreatedDate_ { get; set; }
+
+        public string ModifiedDate_ { get; set; }
 
         public List<StockOpnameScan_ItemModel> ListDetails_ = new List<StockOpnameScan_ItemModel>();
 
@@ -97,13 +93,9 @@ namespace Models.Transaction.Web.Inventory
 
         public long? DetId { get; set; }
 
-        public string Bagian { get; set; }
-
         public string ItemCode { get; set; }
 
         public string ItemName { get; set; }
-
-        public string FreeText { get; set; }
 
         public string WhsCode { get; set; }
 
@@ -111,23 +103,11 @@ namespace Models.Transaction.Web.Inventory
 
         public decimal? Quantity { get; set; }
 
-        public decimal? QuantityOpen { get; set; }
-
         public decimal? QuantityScan { get; set; }
 
         public int? UomEntry { get; set; }
 
         public string Uom { get; set; }
-
-        public long? DocEntry { get; set; }
-
-        public long? LineNum { get; set; }
-
-        public string LineStatus { get; set; }
-
-        public int? IdPDO { get; set; }
-
-        public string PDODocNum_ { get; set; }
     }
 
     public class StockOpnameScanItemTagView___
@@ -192,9 +172,12 @@ namespace Models.Transaction.Web.Inventory
             StockOpnameScanModel model = null;
             if (id != 0)
             {
-                string ssql = @"SELECT *, T1.""FirstName"" AS ""UserName"" 
+                string ssql = @"SELECT *, T1.""FirstName"" AS ""UserName"", T2.""WhsName"",
+                            TO_VARCHAR(T0.""CreatedDate"", 'DD/MM/YYYY') AS ""CreatedDate_"",
+                            TO_VARCHAR(T0.""ModifiedDate"", 'DD/MM/YYYY') AS ""ModifiedDate_""
                             FROM ""Tx_StockOpname"" T0
                             LEFT JOIN ""Tm_User"" T1 ON T0.""ModifiedUser"" = T1.""Id""
+                            LEFT JOIN """ + DbProvider.dbSap_Name + @""".""OWHS"" T2 ON T0.""WhsCode"" = T2.""WhsCode""
                             WHERE T0.""Id"" = :p0 
                             ORDER BY T0.""Id"" ASC
                 ";
@@ -218,9 +201,8 @@ namespace Models.Transaction.Web.Inventory
 
         public List<StockOpnameScan_ItemModel> StockOpname_Items(HANA_APP CONTEXT, long id = 0)
         {
-            string ssql = @"SELECT T0.*, T1.""DocNum"" AS ""PDODocNum_""
+            string ssql = @"SELECT T0.*
                 FROM ""Tx_StockOpname_Item"" T0
-                LEFT JOIN """ + DbProvider.dbSap_Name + @""".""OWOR"" T1 ON T0.""IdPDO"" = T1.""DocEntry""
                 WHERE T0.""Id"" =:p0
                 ORDER BY T0.""DetId"" ASC
             ";
@@ -419,54 +401,13 @@ namespace Models.Transaction.Web.Inventory
 
                                 if (Tx_StockOpname != null)
                                 {
-                                    var exceptColumns = new string[] { "Id", "TransNo", "CreatedUser" };
+                                    var exceptColumns = new string[] { "Id", "TransType", "TransNo", "RequestId", "RequestNo", "WhsCode", "ScanDeviceId", "CreatedUser", "CreatedDate" };
                                     CopyProperty.CopyProperties(model, Tx_StockOpname, false, exceptColumns);
                                     Tx_StockOpname.ModifiedDate = dtModified;
                                     Tx_StockOpname.ModifiedUser = model._UserId;
 
-                                    //if (model.StartDate != null)
-                                    //{
-                                    //    Tx_StockOpname.Status2 = "On Progress";
-                                    //}
-                                    //else
-                                    //{
-                                    //    Tx_StockOpname.Status2 = "Open";
-                                    //}
-
-                                    //if (model.EndDate != null)
-                                    //{
-                                    //    Tx_StockOpname.Status2 = "Close";
-                                    //}
                                     CONTEXT.SaveChanges();
-
-                                    //if (model.Details_ != null)
-                                    //{
-                                    //    if (model.Details_.insertedRowValues != null)
-                                    //    {
-                                    //        foreach (var detail in model.Details_.insertedRowValues)
-                                    //        {
-                                    //            Detail_Add(CONTEXT, detail, model.Id, model._UserId);
-                                    //        }
-                                    //    }
-
-                                    //    if (model.Details_.modifiedRowValues != null)
-                                    //    {
-                                    //        foreach (var detail in model.Details_.modifiedRowValues)
-                                    //        {
-                                    //            Detail_Update(CONTEXT, detail, model._UserId);
-                                    //        }
-                                    //    }
-
-                                    //    if (model.Details_.deletedRowKeys != null)
-                                    //    {
-                                    //        foreach (var detId in model.Details_.deletedRowKeys)
-                                    //        {
-                                    //            StockOpname_DetailModel detailModel = new StockOpname_DetailModel();
-                                    //            detailModel.DetId = detId;
-                                    //            Detail_Delete(CONTEXT, detailModel);
-                                    //        }
-                                    //    }
-                                    //}
+                                    
                                     SpNotif.SpSysControllerTransNotif(model._UserId, "StockOpname", CONTEXT, "after", "StockOpname", "update", "Id", keyValue);
                                     
                                 }
@@ -498,102 +439,7 @@ namespace Models.Transaction.Web.Inventory
 
 
         }
-
-        //public long Detail_Add(HANA_APP CONTEXT, StockOpname_DetailModel model, long Id, int UserId)
-        //{
-        //    long DetId = 0;
-
-        //    if (model != null)
-        //    {
-
-        //        Tx_StockOpname_Item Tx_StockOpname_Item = new Tx_StockOpname_Item();
-
-        //        CopyProperty.CopyProperties(model, Tx_StockOpname_Item, false);
-
-        //        DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-        //        Tx_StockOpname_Item.Id = Id;
-        //        Tx_StockOpname_Item.CreatedDate = dtModified;
-        //        Tx_StockOpname_Item.CreatedUser = UserId;
-        //        Tx_StockOpname_Item.ModifiedDate = dtModified;
-        //        Tx_StockOpname_Item.ModifiedUser = UserId;
-        //        if (model.StartDate != null && model.EndDate == null)
-        //        {
-        //            Tx_StockOpname_Item.Status = "On Progress";
-        //        }
-        //        else if (model.StartDate != null && model.EndDate != null)
-        //        {
-        //            Tx_StockOpname_Item.Status = "Close";
-        //        }
-        //        else
-        //        {
-        //            Tx_StockOpname_Item.Status = "Open";
-        //        }
-
-        //        CONTEXT.Tx_StockOpname_Item.Add(Tx_StockOpname_Item);
-        //        CONTEXT.SaveChanges();
-        //        DetId = Tx_StockOpname_Item.DetId;
-
-        //    }
-
-        //    return DetId;
-
-        //}
-
-        //public void Detail_Update(HANA_APP CONTEXT, StockOpname_DetailModel model, int UserId)
-        //{
-        //    if (model != null)
-        //    {
-
-        //        Tx_StockOpname_Item Tx_StockOpname_Item = CONTEXT.Tx_StockOpname_Item.Find(model.DetId);
-
-        //        if (Tx_StockOpname_Item != null)
-        //        {
-        //            var exceptColumns = new string[] { "DetId", "Id" };
-        //            CopyProperty.CopyProperties(model, Tx_StockOpname_Item, false, exceptColumns);
-
-
-        //            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-
-        //            Tx_StockOpname_Item.ModifiedDate = dtModified;
-        //            Tx_StockOpname_Item.ModifiedUser = UserId;
-        //            if (model.StartDate != null && model.EndDate == null)
-        //            {
-        //                Tx_StockOpname_Item.Status = "On Progress";
-        //            }
-        //            else if (model.StartDate != null && model.EndDate != null)
-        //            {
-        //                Tx_StockOpname_Item.Status = "Close";
-        //            }
-        //            else
-        //            {
-        //                Tx_StockOpname_Item.Status = "Open";
-        //            }
-        //            CONTEXT.SaveChanges();
-
-        //        }
-
-
-        //    }
-
-        //}
-
-        //public void Detail_Delete(HANA_APP CONTEXT, StockOpname_DetailModel model)
-        //{
-        //    if (model.DetId != null)
-        //    {
-        //        if (model.DetId != 0)
-        //        {
-
-        //            CONTEXT.Database.ExecuteSqlCommand("DELETE FROM \"Tx_StockOpname_Item\"  WHERE \"DetId\"=:p0", model.DetId);
-
-        //            CONTEXT.SaveChanges();
-
-
-        //        }
-        //    }
-
-        //}
-
+        
         public void Post(int userId, long id)
         {
 

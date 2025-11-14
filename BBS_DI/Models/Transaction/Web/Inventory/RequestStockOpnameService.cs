@@ -301,7 +301,6 @@ namespace Models.Transaction.Web.Inventory
                                 
                                 SpNotif.SpSysControllerTransNotif(model._UserId, "RequestStockOpname", CONTEXT, "before", "RequestStockOpname", "update", "Id", keyValue);
 
-
                                 Tx_Request_StockOpname Tx_Request_StockOpname = CONTEXT.Tx_Request_StockOpname.Find(model.Id);
                                 DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
                                 Tx_Request_StockOpname.ModifiedDate = dtModified;

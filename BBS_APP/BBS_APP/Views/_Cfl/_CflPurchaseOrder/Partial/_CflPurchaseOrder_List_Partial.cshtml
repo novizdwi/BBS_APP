@@ -35,6 +35,7 @@
         cpGvFind_CflSqlWhere = Request["hidden_CflSqlWhere"];
     }
 
+
     if (Request["hidden_CflIsMulti"] != null)
     {
         cpGvFind_CflIsMulti = Request["hidden_CflIsMulti"];
@@ -44,7 +45,7 @@
 
 @Html.DevExpress().GridView(settings =>
 {
-    settings.Name = "gvCflPurchaseOrderList" + cpGvFind_CflName;
+    settings.Name = "gvCflPurchaseOrderListGoodsReceiptPO";
     settings.KeyFieldName = "DocEntry";
     settings.CallbackRouteValues = new { Controller = "_CflPurchaseOrder", Action = "ListPartial" };
 
@@ -59,21 +60,21 @@
 
                 ViewContext.Writer.Write(
 
-                    Html.DevExpress().HyperLink(settingsHL =>
-                    {
-                        settingsHL.Name = "cflPurchaseOrderChoose_" + cpGvFind_CflName + DataBinder.Eval(c.DataItem, "DocEntry") + "_" + Guid.NewGuid().ToString();
-                        settingsHL.NavigateUrl = "javascript:void(0)";
-                        settingsHL.Properties.Text = "Choose";
-                        settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ OnClickChoose_cflPurchaseOrder{1}(s, e, {0}); }}", new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(c.DataItem), cpGvFind_CflName);
-                    }).GetHtml()
+                 Html.DevExpress().HyperLink(settingsHL =>
+                 {
+                     settingsHL.Name = "CflPurchaseOrderChoose_" + cpGvFind_CflName + DataBinder.Eval(c.DataItem, "DocEntry") + "_" + Guid.NewGuid().ToString();
+                     settingsHL.NavigateUrl = "javascript:void(0)";
+                     settingsHL.Properties.Text = "Choose";
+                     settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ OnClickChoose_CflPurchaseOrder{1}(s, e, {0}); }}", new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(c.DataItem), cpGvFind_CflName);
+                 }).GetHtml()
 
 
-                );
+             );
             });
             column.SetHeaderTemplateContent(c =>
             {
                 ViewContext.Writer.Write(
-                    "#Action#"
+                   "#Action#"
                 );
             });
 
@@ -123,7 +124,8 @@
     });
 
     settings.Columns.Add("VendorCode", "Vendor Code").Width = 100;
-    settings.Columns.Add("VendorName", "Vendor Name").Width = 100; 
+    settings.Columns.Add("VendorName", "Vendor Name").Width = 100;
+
 
     settings.SettingsPager.Position = PagerPosition.Bottom;
     settings.SettingsPager.FirstPageButton.Visible = true;
@@ -175,15 +177,49 @@
         e.Properties["cpGvFind_CflSqlWhere"] = cpGvFind_CflSqlWhere;
         e.Properties["cpGvFind_CflIsMulti"] = cpGvFind_CflIsMulti;
 
+        //if (cpGvFind_CflType == "HotelVoucher_Hotel")
+        //{
+        //    string cpGvFind_CflHotelType = "";
+
+        //    if (Request["hidden_CflHotelType"] != null)
+        //    {
+        //        cpGvFind_CflHotelType = Request["hidden_CflHotelType"];
+        //        e.Properties["cpGvFind_CflHotelType"] = cpGvFind_CflHotelType;
+        //    }
+        //}
+
     };
 
     string additionParam = "";
 
-    //if (cpGvFind_CflType == "GoodReceiptPo")
-    //{
-    //    additionParam = " e.customArgs['hidden_CflBpCode'] = BpCode.GetValue(); ";
-    //}
-    //additionParam += " e.customArgs['hidden_IsFindCurrentBranch']=IsFindCflBookingOrderCurrentBranch" + cpGvFind_CflName + ".GetValue(); ";
+    if (cpGvFind_CflType == "PaymentIn")
+    {
+        additionParam = " e.customArgs['hidden_CflCustomerCode'] = CustomerCode.GetValue(); ";
+    }else if (cpGvFind_CflType == "PaymentOut")
+    {
+        additionParam = " e.customArgs['hidden_CflVendorCode'] = VendorCode.GetValue(); ";
+    }
+    else if (cpGvFind_CflType == "InventoryTransfer")
+    {
+        additionParam = " e.customArgs['hidden_bpcode'] = BpCode.GetValue(); ";
+    }
+    else if (cpGvFind_CflType == "Ship")
+    {
+        additionParam = " e.customArgs['hidden_bpcode'] = BpCode.GetValue(); ";
+    }
+    else if (cpGvFind_CflType == "Bill")
+    {
+        additionParam = " e.customArgs['hidden_bpcode'] = BpCode.GetValue(); ";
+    }
+    else if (cpGvFind_CflType == "PurchaseOrder")
+    {
+        additionParam = " e.customArgs['hidden_bpcode'] = BpCode.GetValue(); ";
+    }
+    else if (cpGvFind_CflType == "SalesOrder")
+    {
+        additionParam = " e.customArgs['hidden_bpcode'] = BpCode.GetValue(); ";
+    }
+    //additionParam += " e.customArgs['hidden_IsFindCurrentBranch']=IsFindCflPurchaseOrderCurrentBranch" + cpGvFind_CflName + ".GetValue(); ";
 
     settings.ClientSideEvents.BeginCallback = string.Format("function(s, e) {{ {0}  e.customArgs['hidden_CflType']=s.cpGvFind_CflType; e.customArgs['hidden_CflName']=s.cpGvFind_CflName; e.customArgs['hidden_CflHeader']=s.cpGvFind_CflHeader; e.customArgs['hidden_CflSqlWhere']=s.cpGvFind_CflSqlWhere;e.customArgs['hidden_CflIsMulti']=s.cpGvFind_CflIsMulti; }}", additionParam);
     settings.ClientSideEvents.SelectionChanged = string.Format("function(s, e) {{ OnSelectionChanged_CflPurchaseOrder{0}(s, e); }}", cpGvFind_CflName);
@@ -193,6 +229,7 @@
         column.Settings.AllowAutoFilterTextInputTimer = DevExpress.Utils.DefaultBoolean.False;
 
     }
+
 
     settings.BeforeGetCallbackResult = (sender, e) =>
     {

@@ -12,7 +12,6 @@ using System.Net;
 using Models._Cfl;
 
 
-
 namespace Controllers._Cfl
 {
     public partial class _CflPurchaseOrderController : BaseController
@@ -20,41 +19,39 @@ namespace Controllers._Cfl
         string VIEW_LIST_PARTIAL = "Partial/_CflPurchaseOrder_List_Partial";
         string VIEW_PANEL_LIST_PARTIAL = "Partial/_CflPurchaseOrder_Panel_List_Partial";
 
-        public CflPurchaseOrder_ParamModel GetParam(HttpRequestBase Request, int userId = 0)
+        public CflPurchaseOrder_ParamModel GetParam(HttpRequestBase Request)
         {
             var cflParam = new CflPurchaseOrder_ParamModel();
             cflParam.Type = Request["hidden_CflType"];
             cflParam.Name = Request["hidden_CflName"];
             cflParam.Header = Request["hidden_CflHeader"];
             cflParam.SqlWhere = Request["hidden_CflSqlWhere"];
-            cflParam.IsMulti = Request["hidden_CflIsMulti"];
 
-            if (cflParam.Type == "GoodReceiptPo")
+            if (cflParam.Type == "InventoryReceipt")
             {
-                //var hidden_CflSlpCode = (string)Request["hidden_CflSlpCode"];
-                //hidden_CflSlpCode = hidden_CflSlpCode.Replace("'", "''");
-
-                //cflParam.SqlWhere = string.Format(" AND Tx_Delivery___.SalesEmployeeId='{0}' ", hidden_CflSlpCode);
-                //var hidden_CflBpCode = (string)Request["hidden_CflBpCode"];
-                //hidden_CflBpCode = hidden_CflBpCode.Replace("'", "''");
-
-                //cflParam.SqlWhere = string.Format(" AND Tx_PurchaseOrder___.BpCode='{0}' ", hidden_CflBpCode);
-
+                cflParam.SqlWhere = string.Format(@"                 
+                    AND NOT EXISTS(
+                        SELECT T1.""Id""
+                        FROM ""Tx_GoodsReceiptPO"" T1
+                        WHERE T0.""DocEntry"" = T1.""BaseEntry""
+                        AND T1.""Status"" NOT IN('Cancel')
+                    )  
+                ");
             }
+
+            cflParam.IsMulti = Request["hidden_CflIsMulti"];
 
             return cflParam;
         }
-
 
         public ActionResult ListPartial()
         {
             int userId = (int)Session["userId"];
 
-            var cflPurchaseOrderParam = GetParam(Request, userId);  
+            var cflPurchaseOrderParam = GetParam(Request);
 
             var viewModel = GetListModel(cflPurchaseOrderParam.Name);
             ProcessCustomBinding(userId, cflPurchaseOrderParam, viewModel);
-
             return PartialView(VIEW_LIST_PARTIAL, viewModel);
         }
 
@@ -63,7 +60,7 @@ namespace Controllers._Cfl
         {
             int userId = (int)Session["userId"];
 
-            var cflPurchaseOrderParam = GetParam(Request, userId);  
+            var cflPurchaseOrderParam = GetParam(Request);
 
             var viewModel = GetListModel(cflPurchaseOrderParam.Name);
             viewModel.ApplyPagingState(pager);
@@ -77,12 +74,11 @@ namespace Controllers._Cfl
         {
             int userId = (int)Session["userId"];
 
-            var cflPurchaseOrderParam = GetParam(Request, userId);  
+            var cflPurchaseOrderParam = GetParam(Request);
 
             var viewModel = GetListModel(cflPurchaseOrderParam.Name);
             viewModel.ApplyFilteringState(filteringState);
             ProcessCustomBinding(userId, cflPurchaseOrderParam, viewModel);
-
             return PartialView(VIEW_LIST_PARTIAL, viewModel);
         }
 
@@ -91,7 +87,7 @@ namespace Controllers._Cfl
         {
             int userId = (int)Session["userId"];
 
-            var cflPurchaseOrderParam = GetParam(Request, userId);  
+            var cflPurchaseOrderParam = GetParam(Request);
 
             var viewModel = GetListModel(cflPurchaseOrderParam.Name);
             viewModel.ApplySortingState(column, reset);
@@ -114,9 +110,19 @@ namespace Controllers._Cfl
         }
 
         static void ProcessCustomBinding(int userId, CflPurchaseOrder_ParamModel cflPurchaseOrderParam, GridViewModel viewModel)
-        { 
+        {
 
-            CflPurchaseOrder_Model.SetBindingData(viewModel, userId, cflPurchaseOrderParam ); 
+            viewModel.ProcessCustomBinding(
+              new GridViewCustomBindingGetDataRowCountHandler(args =>
+              {
+                  CflPurchaseOrder_Model.GetDataRowCount(args, userId, cflPurchaseOrderParam);
+              }),
+              new GridViewCustomBindingGetDataHandler(args =>
+              {
+                  CflPurchaseOrder_Model.GetData(args, userId, cflPurchaseOrderParam);
+              })
+          );
+
 
         }
 
@@ -124,12 +130,12 @@ namespace Controllers._Cfl
         {
             int userId = (int)Session["userId"];
 
-            var cflPurchaseOrderParam = GetParam(Request, userId);  
+            var cflPurchaseOrderParam = GetParam(Request);
 
             var viewModel = GetListModel(cflPurchaseOrderParam.Name);
             ProcessCustomBinding(userId, cflPurchaseOrderParam, viewModel);
 
-            ViewBag.viewModel = viewModel; 
+            ViewBag.viewModel = viewModel;
 
             return PartialView(VIEW_PANEL_LIST_PARTIAL, cflPurchaseOrderParam);
         }

@@ -3,10 +3,10 @@
 
 
 @if (false)
-{ 
-<script src="~/Scripts/ASPxScriptIntelliSense.js" type="text/javascript"></script>
-<script src="~/Scripts/jquery-2.2.0.intellisense.js"></script>
-<script src="~/Scripts/Test/DXR.js"></script> 
+{
+    <script src="~/Scripts/ASPxScriptIntelliSense.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery-2.2.0.intellisense.js"></script>
+    <script src="~/Scripts/Test/DXR.js"></script>
 }
 
 
@@ -191,9 +191,9 @@
         }
 
         var formData = $('#formDetail').serializeObject();
-        var DetailCoas_ = GetGvDetails('gvGeneralSettingCoaDetail');
-        var DetailItems_ = GetGvDetails('gvGeneralSettingItemDetail');
-        $.extend(formData, { DetailCoas_: DetailCoas_ }, { DetailItems_: DetailItems_ });
+        //var DetailCoas_ = GetGvDetails('gvGeneralSettingCoaDetail');
+        //var DetailItems_ = GetGvDetails('gvGeneralSettingItemDetail');
+        //$.extend(formData, { DetailCoas_: DetailCoas_ }, { DetailItems_: DetailItems_ });
 
         $.ajax({
             type: "POST",
@@ -270,7 +270,9 @@
 
 
 <script type="text/javascript">
-
+    function BtnCflStockOpnameCoaCodePopupListOnClick(s, e) {
+        cflCoaPopupListStockOpname.Show();
+    }
 
 
 </script>
@@ -278,8 +280,8 @@
 
 @Html.Partial("Partial/GeneralSetting_Form_Btn_Partial")
 
-@* 
---------------------------------------------------------------------------------------------
+@*
+    --------------------------------------------------------------------------------------------
 *@
 
 @using (Ajax.BeginForm("mantap", "GeneralSetting", null,
@@ -301,11 +303,11 @@ new
     style = "height: 200px; width: 100%;",
     autocomplete = "off"
 }))
-{ 
-<div id="contentForm" style="padding-top: 1em">
-@Html.Partial("Partial/GeneralSetting_Form_Partial")
+{
+    <div id="contentForm" style="padding-top: 1em">
+        @Html.Partial("Partial/GeneralSetting_Form_Partial")
 
-</div> 
+    </div>
 }
 
 @Html.DevExpress().LoadingPanel(
@@ -323,9 +325,9 @@ new
 
 
 @*
------------------------------------------------------------------------------
-gvCflItemList
------------------------------------------------------------------------------
+    -----------------------------------------------------------------------------
+    gvCflItemList
+    -----------------------------------------------------------------------------
 *@
 
 
@@ -357,9 +359,9 @@ gvCflItemList
 
 
 @*
------------------------------------------------------------------------------
-gvCflItemList
------------------------------------------------------------------------------
+    -----------------------------------------------------------------------------
+    gvCflItemList
+    -----------------------------------------------------------------------------
 *@
 
 
@@ -391,9 +393,9 @@ gvCflItemList
 
 
 @*
------------------------------------------------------------------------------
-gvCflItemList
------------------------------------------------------------------------------
+    -----------------------------------------------------------------------------
+    gvCflItemList
+    -----------------------------------------------------------------------------
 *@
 
 
@@ -425,6 +427,38 @@ gvCflItemList
 
 
 
+@*
+    -----------------------------------------------------------------------------
+    gvCflCoaBankIncomingList
+    -----------------------------------------------------------------------------
+*@
+
+@{
+    var cflCoaStockOpname_ParamModel = new CflCoa_ParamModel();
+    cflCoaStockOpname_ParamModel.Name = "StockOpname";
+    cflCoaStockOpname_ParamModel.Type = "GeneralSetting";
+    cflCoaStockOpname_ParamModel.Header = "";
+    cflCoaStockOpname_ParamModel.SqlWhere = "";
+    cflCoaStockOpname_ParamModel.IsMulti = "N";
+}
+
+
+
+<script type="text/javascript">
+
+    function OnClickChoose_CflCoaStockOpname(s, e, data) {
+        var StockOpnameCoaCode = ASPxClientTextBox.Cast("StockOpnameCoaCode");
+        StockOpnameCoaCode.SetValue(data.ActId);
+        var StockOpnameCoaName = ASPxClientTextBox.Cast("StockOpnameCoaName");
+        StockOpnameCoaName.SetValue(data.AcctName);
+
+        cflCoaPopupListStockOpname.Hide();
+
+    }
+
+
+</script>
+@Html.Partial("~/Views/_Cfl/_CflCoa/Partial/_CflCoa_Panel_List_Partial.cshtml", cflCoaStockOpname_ParamModel)
 
 
 
@@ -432,9 +466,9 @@ gvCflItemList
 
 
 @*
------------------------------------------------------------------------------
-gvCflCoaList
------------------------------------------------------------------------------
+    -----------------------------------------------------------------------------
+    gvCflCoaList
+    -----------------------------------------------------------------------------
 *@
 
 @{

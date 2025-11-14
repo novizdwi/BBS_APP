@@ -64,8 +64,12 @@ namespace Models.Transaction.Web.Adjustment
 
         public string CancelReason { get; set; }
 
-
         public int? ModifiedUser { get; set; }
+
+        public string CheckNeedApproval_ { get; set; }
+
+        public string ApprovalStatus { get; set; }
+
         public List<AdjustmentIn_ItemModel> ListDetails_ = new List<AdjustmentIn_ItemModel>();
 
         public AdjustmentIn_Detail Details_ { get; set; }
@@ -238,6 +242,12 @@ namespace Models.Transaction.Web.Adjustment
                     ";
                     model.DocNum_ = CONTEXT.Database.SqlQuery<string>(getDocNum, id).FirstOrDefault();
                 }
+
+                //if (model.Id > 0)
+                //{
+                //    ssql = "CALL \"SpSysCheckNeedApproval\" (" + userId.ToString() + "," + model.Id.ToString() + ",'GoodsReceiptPO') ";
+                //    model.CheckNeedApproval_ = CONTEXT.Database.SqlQuery<string>(ssql).FirstOrDefault();
+                //}
 
                 model.ListDetails_ = this.AdjustmentIn_Details(CONTEXT, id);
                 model.ListAttachments_ = this.GetAdjustmentIn_Attachments(id);
@@ -467,7 +477,7 @@ namespace Models.Transaction.Web.Adjustment
                 {
                     try
                     {
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn__UpdateItem\"(:p0,:p1)", userId, id);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn_UpdateItem\"(:p0,:p1)", userId, id);
                         CONTEXT.SaveChanges();
 
                         oCompany = SAPCachedCompany.GetCompany();
@@ -497,7 +507,7 @@ namespace Models.Transaction.Web.Adjustment
                             CONTEXT.SaveChanges();
                         }
 
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn__InsertItemTag\"(:p0,:p1)", userId, id);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn_InsertItemTag\"(:p0,:p1)", userId, id);
                         SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "after", "Tx_AdjustmentIn", "post", "Id", keyValue);
 
                         if (oCompany.InTransaction)

@@ -18,9 +18,6 @@ namespace BBS_DI.Models._EF
         public int DetId { get; set; }
         public Nullable<int> StageId { get; set; }
         public Nullable<int> Step { get; set; }
-        public string RuleType { get; set; }
-        public Nullable<int> Value1 { get; set; }
-        public Nullable<int> Value2 { get; set; }
         public string SortCode { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedUser { get; set; }
