@@ -35,7 +35,22 @@
     settings.Columns.Add("Id", "Id").Visible = false;
     settings.Columns.Add("DetId", "DetId").Visible = false;
     settings.Columns.Add("IdPDO", "IdPDO").Width = 0;
-    settings.Columns.Add("PDODocNum_", "Production No").Width = 200;
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PDODocNum_";
+        column.Name = "PDODocNum_";
+        column.Caption = "Production No";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 200;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+    });
 
     settings.Columns.Add(column =>
     {

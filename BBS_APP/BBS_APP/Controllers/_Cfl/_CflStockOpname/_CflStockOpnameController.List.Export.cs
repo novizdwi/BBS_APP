@@ -20,14 +20,10 @@ namespace Controllers._Cfl
             var pageIndex = Request["hidden_CpGvFind_PageIndex"];
             var pageSize = Request["hidden_CpGvFind_PageSize"];
 
+            var cflStockOpnameParam = GetParam(Request);
 
-            string branchCode = (string)Session["branchCode"];
-
-            var cflPoParam = GetParam(Request, userId);
-
-
-            List<CflStockOpname_View__> items = null;//CflPo_Model.GetDataList(userId, cflPoParam, filterExpression, sortExpression, Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize));
-            return GridViewExportHelper.ExportTypes["XLS"].Method(GridViewExportHelper.ExportGridViewSettings(cflPoParam), items);
+            List<CflStockOpname_View__> items = CflStockOpname_Model.GetDataList(userId, cflStockOpnameParam, filterExpression, sortExpression, Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize));
+            return GridViewExportHelper.ExportTypes["XLS"].Method(GridViewExportHelper.ExportGridViewSettings(cflStockOpnameParam), items);
 
         }
 
@@ -71,19 +67,19 @@ namespace Controllers._Cfl
         public partial class GridViewExportHelper
         {
             static GridViewSettings exportGridViewSettings;
-            public static GridViewSettings ExportGridViewSettings(CflStockOpname_ParamModel cflPoParam)
+            public static GridViewSettings ExportGridViewSettings(CflStockOpname_ParamModel cflStockOpnameParam)
             {
                 //get
                 //{
                 if (exportGridViewSettings == null)
-                    exportGridViewSettings = CreateExportGridViewSettings(cflPoParam);
+                    exportGridViewSettings = CreateExportGridViewSettings(cflStockOpnameParam);
                 return exportGridViewSettings;
                 //}
             }
-            static GridViewSettings CreateExportGridViewSettings(CflStockOpname_ParamModel cflPoParam)
+            static GridViewSettings CreateExportGridViewSettings(CflStockOpname_ParamModel cflStockOpnameParam)
             {
 
-                GridViewSettings settings = CflStockOpname_Model.CreateExportGridViewSettings(cflPoParam);
+                GridViewSettings settings = CflStockOpname_Model.CreateExportGridViewSettings(cflStockOpnameParam);
 
 
                 return settings;

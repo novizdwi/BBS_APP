@@ -626,7 +626,13 @@
     }
 
     function BtnCflPOOnClick(s, e) {
-        cflPurchaseOrderPopupListGoodsReceiptPO.Show();
+        var popupPurchaseOrder = ASPxClientPopupControl.Cast("cflPurchaseOrderPopupListGoodsReceiptPO");
+
+        popupPurchaseOrder.SetContentHtml("");
+        popupPurchaseOrder.PerformCallback();
+        popupPurchaseOrder.Show();
+
+        //cflPurchaseOrderPopupListGoodsReceiptPO.Show();
     }
 </script>
 
@@ -713,7 +719,7 @@ new
     cflPurchaseOrder_ParamModel.Name = "GoodsReceiptPO";
     cflPurchaseOrder_ParamModel.Type = "GoodsReceiptPO";
     cflPurchaseOrder_ParamModel.Header = " Goods Receipt PO";
-    cflPurchaseOrder_ParamModel.SqlWhere = "";
+    cflPurchaseOrder_ParamModel.SqlWhere = " ";
     cflPurchaseOrder_ParamModel.IsMulti = "N";
 }
 
