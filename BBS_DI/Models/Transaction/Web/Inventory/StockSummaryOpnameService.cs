@@ -145,6 +145,10 @@ namespace Models.Transaction.Web.Inventory
 
         public decimal? QuantityScan { get; set; }
 
+        public decimal? OnHand { get; set; }
+
+        public decimal? QtyVariance { get; set; }
+
         public int? UomEntry { get; set; }
 
         public string Uom { get; set; }
@@ -319,8 +323,9 @@ namespace Models.Transaction.Web.Inventory
 
         public List<StockSummaryOpname_DetailModel> StockSummaryOpname_Details(HANA_APP CONTEXT, long id = 0)
         {
-            string ssql = @"SELECT T0.*
+            string ssql = @"SELECT T0.*, COALESCE(T1.""OnHand"",0) AS ""OnHand"", (COALESCE(T0.""QuantityValid"",0) - COALESCE(T1.""OnHand"",0)) AS ""QtyVariance""
                 FROM ""Tx_StockSummaryOpname_Item"" T0
+                LEFT JOIN ""Tm_Item_Warehouse"" T1 ON T0.""ItemCode"" = T1.""ItemCode"" AND T0.""WhsCode"" = T1.""WhsCode""
                 WHERE T0.""Id"" =:p0
                 ORDER BY T0.""DetId"" ASC
             ";

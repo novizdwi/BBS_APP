@@ -28,53 +28,15 @@ namespace Models._Cfl
 
     public class CflPurchaseOrder_View__
     {
-        public Int32 Id { get; set; }
+        public int? DocEntry { get; set; }
+        public string DocNum { get; set; }
 
         public DateTime? TransDate { get; set; }
 
-        public string TransNo { get; set; }
+        public string VendorCode { get; set; }
+        public string VendorName { get; set; }
 
-        public string TransType { get; set; }
-
-        public string Status { get; set; }
-
-        public string ShippingType { get; set; }
-
-        public int? UnitId { get; set; }
-
-        public string UnitName { get; set; }
-
-        public int? DriverId { get; set; }
-
-        public string DriverName { get; set; }
-
-        public string WarehouseCodeFrom { get; set; }
-
-        public string WarehouseNameFrom { get; set; }
-
-        public string WarehouseCodeTo { get; set; }
-
-        public string WarehouseNameTo { get; set; }
-
-        public Int32? BinAbsEntry { get; set; }
-
-        public string BinCode { get; set; }
-
-        public string ItemCode { get; set; }
-
-        public string ItemName { get; set; }
-
-        public string TransferType { get; set; }
-
-        public decimal? QtyTransfer { get; set; }
-
-        public decimal? QtyAfterMF { get; set; }
-
-        public decimal? QtyReceipt { get; set; }
-
-        public string Remarks { get; set; }
-
-        public string DONo { get; set; }
+        public string Comments { get; set; }
 
     }
 
