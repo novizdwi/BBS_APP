@@ -125,7 +125,7 @@ namespace Models._Cfl
             return dataRowCount;
         }
 
-        public static List<CflTransferSummaryOut_View__> GetDataList(HANA_APP CONTEXT, int userId, CflTransferSummaryOut_ParamModel cflBpParam, string sqlCriteria, string sqlSort, int PageIndex, int PageSize)
+        public static List<CflTransferSummaryOut_View__> GetDataList(HANA_APP CONTEXT, int userId, CflTransferSummaryOut_ParamModel cflParam, string sqlCriteria, string sqlSort, int PageIndex, int PageSize)
         {
 
             var Cfl_Sql = CflTransferSummaryOut_Model.ssql;
@@ -139,6 +139,17 @@ namespace Models._Cfl
             {
                 sqlCriteria = "";
             }
+
+            if (sqlCriteria != "")
+            {
+                sqlCriteria = " AND (" + sqlCriteria + ")";
+            }
+
+            if (cflParam.SqlWhere != "")
+            {
+                sqlCriteria = cflParam.SqlWhere + sqlCriteria;
+            }
+
             if (sqlSort == null)
             {
                 sqlSort = "";
