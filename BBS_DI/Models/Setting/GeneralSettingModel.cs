@@ -18,11 +18,15 @@ namespace Models.Setting.GeneralSetting
 
     public class GeneralSettingModel
     {
-        
+
         public int _UserId { get; set; }
 
         public int Id { get; set; }
-        
+
+        public string StockOpnameCoaCode {get;set;}
+
+        public string StockOpnameCoaName  {get;set;}
+
         public List<GeneralSetting_AdjustmentCoaModel> ListCoas_ = new List<GeneralSetting_AdjustmentCoaModel>();
 
         public GeneralSetting_AdjustmentCoas DetailCoas_ { get; set; }

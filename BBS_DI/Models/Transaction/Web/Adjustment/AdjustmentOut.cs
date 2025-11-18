@@ -64,8 +64,12 @@ namespace Models.Transaction.Web.Adjustment
 
         public string CancelReason { get; set; }
 
+        public string CheckNeedApproval_ { get; set; }
+
+        public string ApprovalStatus { get; set; }
 
         public int? ModifiedUser { get; set; }
+
         public List<AdjustmentOut_ItemModel> ListDetails_ = new List<AdjustmentOut_ItemModel>();
 
         public AdjustmentOut_Detail Details_ { get; set; }
@@ -165,6 +169,8 @@ namespace Models.Transaction.Web.Adjustment
         public string Status { get; set; }
 
         public string Information { get; set; }
+
+        public string PostResultNote { get; set; }
     }
 
 
@@ -238,6 +244,12 @@ namespace Models.Transaction.Web.Adjustment
                     ";
                     model.DocNum_ = CONTEXT.Database.SqlQuery<string>(getDocNum, id).FirstOrDefault();
                 }
+
+                //if (model.Id > 0)
+                //{
+                //    ssql = "CALL \"SpSysCheckNeedApproval\" (" + userId.ToString() + "," + model.Id.ToString() + ",'GoodsReceiptPO') ";
+                //    model.CheckNeedApproval_ = CONTEXT.Database.SqlQuery<string>(ssql).FirstOrDefault();
+                //}
 
                 model.ListDetails_ = this.AdjustmentOut_Details(CONTEXT, id);
                 model.ListAttachments_ = this.GetAdjustmentOut_Attachments(id);
@@ -461,7 +473,7 @@ namespace Models.Transaction.Web.Adjustment
                 {
                     try
                     {
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentOut__UpdateItem\"(:p0,:p1)", userId, id);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentOut_UpdateItem\"(:p0,:p1)", userId, id);
                         CONTEXT.SaveChanges();
 
                         oCompany = SAPCachedCompany.GetCompany();
@@ -491,7 +503,7 @@ namespace Models.Transaction.Web.Adjustment
                             CONTEXT.SaveChanges();
                         }
 
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentOut__UpdateItemTag\"(:p0,:p1)", userId, id);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentOut_UpdateItemTag\"(:p0,:p1)", userId, id);
                         SpNotif.SpSysControllerTransNotif(userId, "AdjustmentOut", CONTEXT, "after", "Tx_AdjustmentOut", "post", "Id", keyValue);
 
                         if (oCompany.InTransaction)

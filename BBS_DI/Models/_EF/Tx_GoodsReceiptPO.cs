@@ -26,6 +26,7 @@ namespace BBS_DI.Models._EF
         public Nullable<System.DateTime> DocDate { get; set; }
         public string RefNo { get; set; }
         public string Status { get; set; }
+        public string ApprovalStatus { get; set; }
         public Nullable<long> BaseEntry { get; set; }
         public string BaseDocNum { get; set; }
         public Nullable<System.DateTime> PostingDate { get; set; }

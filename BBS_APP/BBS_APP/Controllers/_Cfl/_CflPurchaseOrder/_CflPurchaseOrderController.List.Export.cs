@@ -20,14 +20,10 @@ namespace Controllers._Cfl
             var pageIndex = Request["hidden_CpGvFind_PageIndex"];
             var pageSize = Request["hidden_CpGvFind_PageSize"];
 
+            var cflPurchaseOrderParam = GetParam(Request);
 
-            string branchCode = (string)Session["branchCode"];
-
-            var cflPoParam = GetParam(Request, userId);
-
-
-            List<CflPurchaseOrder_View__> items = null;//CflPo_Model.GetDataList(userId, cflPoParam, filterExpression, sortExpression, Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize));
-            return GridViewExportHelper.ExportTypes["XLS"].Method(GridViewExportHelper.ExportGridViewSettings(cflPoParam), items);
+            List<CflPurchaseOrder_View__> items = CflPurchaseOrder_Model.GetDataList(userId, cflPurchaseOrderParam, filterExpression, sortExpression, Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize));
+            return GridViewExportHelper.ExportTypes["XLS"].Method(GridViewExportHelper.ExportGridViewSettings(cflPurchaseOrderParam), items);
 
         }
 
@@ -71,19 +67,19 @@ namespace Controllers._Cfl
         public partial class GridViewExportHelper
         {
             static GridViewSettings exportGridViewSettings;
-            public static GridViewSettings ExportGridViewSettings(CflPurchaseOrder_ParamModel cflPoParam)
+            public static GridViewSettings ExportGridViewSettings(CflPurchaseOrder_ParamModel cflPurchaseOrderParam)
             {
                 //get
                 //{
                 if (exportGridViewSettings == null)
-                    exportGridViewSettings = CreateExportGridViewSettings(cflPoParam);
+                    exportGridViewSettings = CreateExportGridViewSettings(cflPurchaseOrderParam);
                 return exportGridViewSettings;
                 //}
             }
-            static GridViewSettings CreateExportGridViewSettings(CflPurchaseOrder_ParamModel cflPoParam)
+            static GridViewSettings CreateExportGridViewSettings(CflPurchaseOrder_ParamModel cflPurchaseOrderParam)
             {
 
-                GridViewSettings settings = CflPurchaseOrder_Model.CreateExportGridViewSettings(cflPoParam);
+                GridViewSettings settings = CflPurchaseOrder_Model.CreateExportGridViewSettings(cflPurchaseOrderParam);
 
 
                 return settings;

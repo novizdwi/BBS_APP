@@ -1,6 +1,16 @@
 ﻿@using Models;
 @using Models.Transaction.Web.Purchasing;
 
+@{
+    var Id = Convert.ToInt64(Request["cbId"]);
+
+    if (ViewBag.Id != null)
+    {
+        Id = ViewBag.Id;
+    }
+    string status = Models._Ef.DbProvider.dbApp.Database.SqlQuery<string>("SELECT TOP 1 T0.\"Status\" FROM \"Tx_AdjustmentOut\" T0 WHERE T0.\"Id\"=:p0", Id).FirstOrDefault();
+
+}
 
 @Html.DevExpress().GridView(settings =>
 {
@@ -65,7 +75,19 @@
         column.FieldName = "Information";
         column.Name = "Information";
         column.Caption = "Information";
-        column.Width = 120;
+        column.Width = status != "Posted" ? 120 : 0;
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Visible = true;
+
+        column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PostResultNote";
+        column.Name = "PostResultNote";
+        column.Caption = "PostResultNote";
+        column.Width = status == "Posted" ? 120 : 0;
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Visible = true;
 

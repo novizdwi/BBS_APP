@@ -78,10 +78,50 @@ namespace Models.Transaction.Web.Purchasing
 
         public string CancelReason { get; set; }
 
+        public string CheckNeedApproval_ { get; set; }
+
+        public string ApprovalStatus { get; set; }
+
+        public string CreatedDate_ { get; set; }
+
+        public string ModifiedDate_ { get; set; }
+
         public List<GoodsReceiptPO_DetailModel> ListDetails_ = new List<GoodsReceiptPO_DetailModel>();
+
+        public List<GoodsReceiptPO_RefModel> ListRef_ = new List<GoodsReceiptPO_RefModel>();
 
         public GoodsReceiptPO_Detail Details_ { get; set; }
     }
+
+    public class GoodsReceiptPO_RefModel
+    {
+        private FormModeEnum _FormModeEnum = FormModeEnum.New;
+
+        public FormModeEnum _FormMode
+        {
+            get { return this._FormModeEnum; }
+            set { this._FormModeEnum = value; }
+        }
+
+        public int _UserId { get; set; }
+
+        public long? Id { get; set; }
+
+        public long? DetId { get; set; }
+
+        public long? BaseId { get; set; }
+
+        public string BaseNo { get; set; }
+
+        public DateTime? BaseCreatedDate { get; set; }
+
+        public string ScanDeviceId { get; set; }
+
+        public string Comments { get; set; }
+
+        public string BaseCreatedUser_ { get; set; }
+    }
+
     public class GoodsReceiptPO_Detail
     {
         public List<long> deletedRowKeys { get; set; }
@@ -131,6 +171,8 @@ namespace Models.Transaction.Web.Purchasing
         public decimal? QuantityOpen { get; set; }
 
         public decimal? QuantityScan { get; set; }
+
+        public decimal? QuantityValid { get; set; }
 
         public int? UomEntry { get; set; }
 
@@ -225,7 +267,9 @@ namespace Models.Transaction.Web.Purchasing
             GoodsReceiptPOModel model = null;
             if (id != 0)
             {
-                string ssql = @"SELECT *, T1.""FirstName"" AS ""UserName"" 
+                string ssql = @"SELECT *, T1.""FirstName"" AS ""UserName"",
+                            TO_VARCHAR(T0.""CreatedDate"", 'DD/MM/YYYY') AS ""CreatedDate_"",
+                            TO_VARCHAR(T0.""ModifiedDate"", 'DD/MM/YYYY') AS ""ModifiedDate_""
                             FROM ""Tx_GoodsReceiptPO"" T0
                             LEFT JOIN ""Tm_User"" T1 ON T0.""ModifiedUser"" = T1.""Id""
                             WHERE T0.""Id"" = :p0 
@@ -244,7 +288,14 @@ namespace Models.Transaction.Web.Purchasing
                     model.DocNum_ = CONTEXT.Database.SqlQuery<string>(getDocNum, id).FirstOrDefault();
                 }
 
+                //if (model.Id > 0)
+                //{
+                //    ssql = "CALL \"SpSysCheckNeedApproval\" (" + userId.ToString() + "," + model.Id.ToString() + ",'GoodsReceiptPO') ";
+                //    model.CheckNeedApproval_ = CONTEXT.Database.SqlQuery<string>(ssql).FirstOrDefault();
+                //}
+
                 model.ListDetails_ = this.GoodsReceiptPO_Details(CONTEXT, id);
+                model.ListRef_ = this.GoodsReceiptPO_Refs(CONTEXT, id);
             }
 
             return model;
@@ -268,6 +319,28 @@ namespace Models.Transaction.Web.Purchasing
                 ORDER BY T0.""DetId"" ASC
             ";
             var goodsReceiptPO = CONTEXT.Database.SqlQuery<GoodsReceiptPO_DetailModel>(ssql, id).ToList();
+            return goodsReceiptPO;
+        }
+
+        public List<GoodsReceiptPO_RefModel> GoodsReceiptPO_Refs(long id = 0)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                return GoodsReceiptPO_Refs(CONTEXT, id);
+            }
+
+        }
+
+        public List<GoodsReceiptPO_RefModel> GoodsReceiptPO_Refs(HANA_APP CONTEXT, long id = 0)
+        {
+            string ssql = @"SELECT T0.*, T1.""TransDate"", T2.""FirstName"" AS ""BaseCreatedUser_""
+                FROM ""Tx_GoodsReceiptPO_Ref"" T0
+                INNER JOIN ""Tx_PurchaseOrder"" T1 ON T0.""BaseId"" = T1.""Id""
+                LEFT JOIN ""Tm_User"" T2 ON T0.""BaseCreatedUser"" = T2.""Id""
+                WHERE T0.""Id"" =:p0
+                ORDER BY T0.""DetId"" ASC
+            ";
+            var goodsReceiptPO = CONTEXT.Database.SqlQuery<GoodsReceiptPO_RefModel>(ssql, id).ToList();
             return goodsReceiptPO;
         }
 
@@ -690,8 +763,11 @@ namespace Models.Transaction.Web.Purchasing
                             //insert RFID items to pending
                             CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_InsertItemTag\"(:p0,:p1, 'GoodsReceiptPO','P')", userId, id);
                         }
-
-                        List<GoodsReceiptResultModel> GRResult  = AddReceiveFromProduction(oCompany, userId, id, syncGRPO);
+                        List<GoodsReceiptResultModel> GRResult = new List<GoodsReceiptResultModel>();
+                        if (syncGRPO.ListDetails_.Any(q => q.IdPDO.GetValueOrDefault() != 0))
+                        {
+                            GRResult = AddReceiveFromProduction(oCompany, userId, id, syncGRPO);
+                        }
 
                         DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
 
@@ -869,40 +945,45 @@ namespace Models.Transaction.Web.Purchasing
             {
                 foreach (var item in model.ListDetails_)
                 {
-                    SAPbobsCOM.Documents oDocument = (SAPbobsCOM.Documents)oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oInventoryGenEntry);
-                    oDocument.DocDate = model.TransDate?? DateTime.Now;
-
-                    oDocument.UserFields.Fields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
-                    oDocument.UserFields.Fields.Item("U_IDU_WebTransNo").Value = model.TransNo;
-
-                    oDocument.Lines.BaseType = 202;
-                    oDocument.Lines.BaseEntry = item.IdPDO ?? 0;
-                    oDocument.Lines.Quantity = double.Parse(item.QuantityScan.ToString());
-
-                    oDocument.Lines.UserFields.Fields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
-                    oDocument.Lines.UserFields.Fields.Item("U_IDU_DetId").Value = Convert.ToInt32(item.DetId);
-
-                    oDocument.Lines.Add();
-
-                    if (oDocument.Add() != 0)
+                    if(item.IdPDO != 0)
                     {
+                        SAPbobsCOM.Documents oDocument = (SAPbobsCOM.Documents)oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oInventoryGenEntry);
+                        oDocument.DocDate = model.TransDate?? DateTime.Now;
 
-                        nErr = oCompany.GetLastErrorCode();
-                        errMsg = oCompany.GetLastErrorDescription();
+                        oDocument.UserFields.Fields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
+                        oDocument.UserFields.Fields.Item("U_IDU_WebTransNo").Value = model.TransNo;
 
-                        SapCompany.CleanUp(oDocument);
+                        oDocument.Lines.BaseType = 202;
+                        oDocument.Lines.BaseEntry = item.IdPDO ?? 0;
+                        oDocument.Lines.Quantity = double.Parse(item.QuantityScan.ToString());
 
-                        throw new Exception("[VALIDATION] - Add ReceiptProduction | " + nErr.ToString() + "|" + errMsg);
+                        oDocument.Lines.UserFields.Fields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
+                        oDocument.Lines.UserFields.Fields.Item("U_IDU_DetId").Value = Convert.ToInt32(item.DetId);
+
+                        oDocument.Lines.Add();
+
+                        if (oDocument.Add() != 0)
+                        {
+
+                            nErr = oCompany.GetLastErrorCode();
+                            errMsg = oCompany.GetLastErrorDescription();
+
+                            SapCompany.CleanUp(oDocument);
+
+                            throw new Exception("[VALIDATION] - Add ReceiptProduction | " + nErr.ToString() + "|" + errMsg);
+
+                        }
+                        string docEntry =  oCompany.GetNewObjectKey();
+                        result.Add( 
+                            new GoodsReceiptResultModel
+                            {
+                                DetId = Convert.ToInt64(item.DetId),
+                                GoodsReceiptId = Convert.ToInt32(docEntry)
+                            }
+                        );
 
                     }
-                    string docEntry =  oCompany.GetNewObjectKey();
-                    result.Add( 
-                        new GoodsReceiptResultModel
-                        {
-                            DetId = Convert.ToInt64(item.DetId),
-                            GoodsReceiptId = Convert.ToInt32(docEntry)
-                        }
-                    );
+
                 }
             }
 

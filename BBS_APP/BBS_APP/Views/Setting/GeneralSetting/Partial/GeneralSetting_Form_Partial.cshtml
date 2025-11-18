@@ -44,7 +44,9 @@
 
     });
 
+
     groupItem.Items.AddEmptyItem().Height = 25;
+
 
     groupItem.Items.AddTabbedGroupItem(group =>
     {
@@ -90,6 +92,54 @@
                         itemSettings.ShowCaption = DefaultBoolean.False;
                         itemSettings.ColCount = 1;
 
+                    });
+
+
+                    groupItemTab_Col1.Items.Add(itemSettings =>
+                    {
+
+                        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
+                        itemSettings.Caption = "Stock Opname Coa Code";
+                        itemSettings.FieldName = "StockOpnameCoaCode";
+                        var txt = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
+                        txt.Name = "StockOpnameCoaCode";
+                        txt.ShowModelErrors = true;
+
+                        txt.ControlStyle.CssClass = "editor";
+                        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+                        txt.Properties.ValidationSettings.Display = Display.Dynamic;
+                        txt.Width = 100;
+
+                        // Hide the default DropDown button
+                        txt.Properties.DropDownButton.Visible = false;
+                        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+                        EditButton lookUpButton = new EditButton();
+                        lookUpButton.Text = "";
+                        lookUpButton.Image.Url = "~/Content/Images/buttonnew/find-hitam.png";
+                        lookUpButton.Image.Width = 15;
+
+                        txt.Properties.Buttons.Add(lookUpButton);
+                        txt.Properties.ClientSideEvents.ButtonClick = "BtnCflStockOpnameCoaCodePopupListOnClick";
+
+                    });
+
+
+                    groupItemTab_Col1.Items.Add(itemSettings =>
+                    {
+                        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+                        itemSettings.Caption = "Stock Opname Coa Name";
+                        itemSettings.FieldName = "StockOpnameCoaName";
+                        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+                        txt.Name = "StockOpnameCoaName";
+                        txt.ReadOnly = true;
+                        txt.ShowModelErrors = true;
+
+                        txt.ControlStyle.CssClass = "editor";
+                        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                        txt.Properties.ValidationSettings.Display = Display.Dynamic;
+                        txt.Width = 300;
                     });
 
                 }).GetHtml();

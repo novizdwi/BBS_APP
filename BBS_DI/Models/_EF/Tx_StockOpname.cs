@@ -24,6 +24,7 @@ namespace BBS_DI.Models._EF
         public string ScanDeviceId { get; set; }
         public string Status { get; set; }
         public string Comments { get; set; }
+        public string CancelReason { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedUser { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }

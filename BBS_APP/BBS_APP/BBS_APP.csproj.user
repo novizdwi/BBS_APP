@@ -27,7 +27,7 @@
     <DevExtremeLayoutPage />
     <DevExtremeSelectedDataContextName>HANA_APP %28MJL_DI.Models._EF%29</DevExtremeSelectedDataContextName>
     <WebStackScaffolding_AreaDialogWidth>600</WebStackScaffolding_AreaDialogWidth>
-    <NameOfLastUsedPublishProfile>UAT_MJL_SERVER</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>FolderProfile</NameOfLastUsedPublishProfile>
     <ProjectView>ShowAllFiles</ProjectView>
   </PropertyGroup>
   <ProjectExtensions>
