@@ -161,7 +161,6 @@ CREATE COLUMN TABLE "Tx_PurchaseOrder_Item" (
     "Uom" NVARCHAR(50),
     "LineStatus" NVARCHAR(50),
     "IdPDO" INTEGER,
-    
     "CreatedDate" TIMESTAMP,
     "CreatedUser" INTEGER,
     "ModifiedDate" TIMESTAMP,

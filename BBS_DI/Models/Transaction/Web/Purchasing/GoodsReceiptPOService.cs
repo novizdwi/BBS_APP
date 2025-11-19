@@ -893,7 +893,7 @@ namespace Models.Transaction.Web.Purchasing
                     oDocument.Lines.BaseLine = Convert.ToInt32(item.BaseLine);
 
                     //oDocument.Lines.ItemCode = item.ItemCode;
-                    oDocument.Lines.WarehouseCode = item.WhsCode;
+                    //oDocument.Lines.WarehouseCode = item.WhsCode;
                     oDocument.Lines.Quantity = (double)item.QuantityScan;
 
                     if (item.UomEntry != null)
