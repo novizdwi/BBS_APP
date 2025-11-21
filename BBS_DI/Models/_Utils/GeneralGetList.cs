@@ -191,7 +191,19 @@ namespace Models._Utils
             }
         }
 
+        public static DataTable GetItemList()
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                return GetItemList(CONTEXT);
+            }
+        }
 
+        public static DataTable GetItemList(HANA_APP CONTEXT)
+        { 
+            var ssql = @"SELECT DISTINCT ""ItemCode"" FROM ""Tm_Item"" ";
+            return GetDataTable(CONTEXT, ssql);
+        }
 
         public static DataTable GetList(string strType)
         {
@@ -282,6 +294,32 @@ namespace Models._Utils
             var ssql = @"SELECT T0.""Code"", T0.""Name""  FROM ""Ts_List"" T0   WHERE T0.""Type""=:p0  AND T0.""Category""=:p1 ORDER BY T0.""Sort"" ";
 
             return GetDataTable(CONTEXT, ssql, strType, strCategory);
+
+        }
+
+        public static string GetUserWarehouse(int userId = -1)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                return GetUserWarehouse(CONTEXT, userId);
+            }
+        }
+
+        public static string GetUserWarehouse(HANA_APP CONTEXT, int userId = -1)
+        {
+            var ssql = @"SELECT T0.""WhsCode"" AS ""Code"", T1.""WhsName"" AS ""Name"" 
+                FROM ""Tm_User_Warehouse"" T0   
+                INNER JOIN """ + DbProvider.dbSap_Name + @""".""OWHS"" T1 ON T0.""WhsCode"" = T1.""WhsCode""
+                WHERE T0.""Id""=:p0  AND T0.""IsTick"" = 'Y'  ";
+            if(userId == 1)
+            {
+                ssql = @"SELECT DISTINCT T0.""WhsCode"" AS ""Code"", T1.""WhsName"" AS ""Name"" 
+                    FROM ""Tm_User_Warehouse"" T0 
+                    INNER JOIN """ + DbProvider.dbSap_Name + @""".""OWHS"" T1 ON T0.""WhsCode"" = T1.""WhsCode""
+                    WHERE T0.""IsTick"" = 'Y' ";
+            }
+
+            return GetValue<string>(CONTEXT, ssql, userId);
 
         }
 

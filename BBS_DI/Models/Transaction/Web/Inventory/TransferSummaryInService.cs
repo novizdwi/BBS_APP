@@ -655,7 +655,7 @@ namespace Models.Transaction.Web.Inventory
                     try
                     {
                         oCompany = SAPCachedCompany.GetCompany();
-                        oCompany.StartTransaction();
+                        //oCompany.StartTransaction();
 
                         String keyValue;
                         keyValue = id.ToString();
@@ -666,23 +666,22 @@ namespace Models.Transaction.Web.Inventory
                         Tx_TransferSummaryIn tx_TransferSummaryIn = CONTEXT.Tx_TransferSummaryIn.Find(id);
                         if (tx_TransferSummaryIn != null)
                         {
-                            TransferSummaryInAddResultModel TransferSummaryInResult = AddTransferSummaryIn(oCompany, userId, id, syncTransferSummaryIn);
+                            string docEntry_ = AddTransferSummaryIn(oCompany, userId, id, syncTransferSummaryIn);
 
-                            if (!string.IsNullOrEmpty(TransferSummaryInResult.DocEntry))
+                            if (!string.IsNullOrEmpty(docEntry_))
                             {
                                 string ssql = @"SELECT ""DocNum"" 
                                             FROM """ + DbProvider.dbSap_Name + @""".""OWTR"" T0
-                                            WHERE T0.""DocEntry"" = " + TransferSummaryInResult.DocEntry + @" 
+                                            WHERE T0.""DocEntry"" = " + docEntry_ + @" 
                                             ";
 
                                 string docNum = CONTEXT.Database.SqlQuery<string>(ssql, id).FirstOrDefault();
 
-
                                 DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-
-                                //tx_TransferSummaryIn.PostingDate = dtModified;
-                                tx_TransferSummaryIn.DocEntry = Convert.ToInt64(TransferSummaryInResult.DocEntry);
+                                
+                                tx_TransferSummaryIn.DocEntry = Convert.ToInt64(docEntry_);
                                 tx_TransferSummaryIn.DocNum = docNum;
+                                tx_TransferSummaryIn.DocDate = (DateTime)syncTransferSummaryIn.TransDate;
 
                                 tx_TransferSummaryIn.Status = "Posted";
                                 tx_TransferSummaryIn.IsAfterPosted = "Y";
@@ -694,10 +693,9 @@ namespace Models.Transaction.Web.Inventory
                                 SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", CONTEXT, "after", "Tx_TransferSummaryIn", "post", "Id", keyValue);
 
                                 CONTEXT_TRANS.Commit();
-                            }                          
-
-                          
+                            }
                         }
+
                     }
 
                     catch (Exception ex)
@@ -726,10 +724,9 @@ namespace Models.Transaction.Web.Inventory
 
         }
 
-
-        private TransferSummaryInAddResultModel AddTransferSummaryIn(Company oCompany, int userId, long id, TransferSummaryInModel model)
+        private string AddTransferSummaryIn(Company oCompany, int userId, long id, TransferSummaryInModel model)
         {
-            TransferSummaryInAddResultModel result = new TransferSummaryInAddResultModel();
+            string result;
 
             int nErr;
             string errMsg;
@@ -759,21 +756,15 @@ namespace Models.Transaction.Web.Inventory
             if (model.Address != null)
             {
                 oInventoryTransfer.Address = model.Address;
-            }
+            } 
 
-            var insertedLineIds = new Dictionary<long, int>();
-            int i = 0;
             if (model.ListDetails_.Count > 0)
             {
                 foreach (var item in model.ListDetails_)
                 {
-                    //oDocument.Lines.BaseType = InvBaseDocTypeEnum.InventoryTransferRequest;
-                    //oDocument.Lines.BaseEntry = Convert.ToInt32(model.BaseEntry);
-                    //oDocument.Lines.BaseLine = Convert.ToInt32(item.BaseLine);
-
                     oInventoryTransfer.Lines.ItemCode = item.ItemCode;
-                    oInventoryTransfer.Lines.FromWarehouseCode = item.TransitWhsCode;
-                    oInventoryTransfer.Lines.WarehouseCode = item.ToWhsCode;
+                    oInventoryTransfer.Lines.FromWarehouseCode = model.TransitWhsCode;
+                    oInventoryTransfer.Lines.WarehouseCode = model.ToWhsCode;
                     oInventoryTransfer.Lines.Quantity = (double)item.QuantityScan;
 
                     if (item.UomEntry != null)
@@ -781,14 +772,7 @@ namespace Models.Transaction.Web.Inventory
                         oInventoryTransfer.Lines.UoMEntry = Convert.ToInt32(item.UomEntry);
                     }
 
-                    if (item.FreeText != null)
-                    {
-                        oInventoryTransfer.Lines.UserFields.Fields.Item("U_H_KET").Value = item.FreeText;
-                    }
-
                     oInventoryTransfer.Lines.Add();
-                    insertedLineIds.Add(Convert.ToInt64(item.DetId), i);
-                    i += 1;
                 }
             }
 
@@ -799,13 +783,14 @@ namespace Models.Transaction.Web.Inventory
 
                 SapCompany.CleanUp(oInventoryTransfer);
 
-                throw new Exception("[VALIDATION] - Add Transfer Summary In : " + nErr.ToString() + "|" + errMsg);
+                throw new Exception("[VALIDATION] - Add Transfer Summary Out : " + nErr.ToString() + "|" + errMsg);
             }
-            result.DocEntry = oCompany.GetNewObjectKey();
-            result.LineMapping = insertedLineIds;
+            result = oCompany.GetNewObjectKey(); 
 
             return result;
         }
+
+            
 
         public void Cancel(int userId, long Id, string cancelReason)
         {

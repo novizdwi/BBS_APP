@@ -814,6 +814,10 @@
     <Content Include="Views\_Cfl\_CflStockOpname\Partial\_CflStockOpname_Panel_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Inventory\StockSummaryOpname\Partial\StockSummaryOpname_Form_TabRef_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Purchasing\GoodsReceiptPO\Partial\GoodsReceiptPO_Form_TabRef_Partial.cshtml" />
+    <Content Include="Views\Master\Item\RfidMonitoring\Partial\RfidMonitoring_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Master\Item\RfidMonitoring\Partial\RfidMonitoring_Form_Partial.cshtml" />
+    <Content Include="Views\Master\Item\RfidMonitoring\Partial\RfidMonitoring_Form_TabReference_List_Partial.cshtml" />
+    <Content Include="Views\Master\Item\RfidMonitoring\RfidMonitoring.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -845,6 +849,8 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommonFileHelper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Master\Item\RfidMonitoring\RfidMonitoringController.cs" />
+    <Compile Include="Controllers\Master\Item\RfidMonitoring\RfidMonitoringController.Tab.Reference.cs" />
     <Compile Include="Controllers\Report\ReportAlert\ReportAlertController.cs" />
     <Compile Include="Controllers\Report\ReportAlert\ReportAlertController.ListDetail.cs" />
     <Compile Include="Controllers\Report\ReportAlert\ReportAlertController.ListDetail.Export.cs" />
@@ -1013,13 +1019,11 @@
     <Folder Include="Content\Attachment\Ship\" />
     <Folder Include="Content\Images\menu\" />
     <Folder Include="Content\Temp\" />
-    <Folder Include="Controllers\Master\" />
     <Folder Include="Rpts\Layout\" />
     <Folder Include="Rpts\Models\" />
     <Folder Include="Views\Authentication\Login\Partial\" />
     <Folder Include="Views\GeneralSetting\" />
     <Folder Include="Views\Logout\" />
-    <Folder Include="Views\Master\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BBS_DI\BBS_DI.csproj">

@@ -785,10 +785,10 @@ namespace Models.Transaction.Web.Inventory
                         oInventoryTransfer.Lines.UoMEntry = Convert.ToInt32(item.UomEntry);
                     }
 
-                    if (item.FreeText != null)
-                    {
-                        oInventoryTransfer.Lines.UserFields.Fields.Item("U_H_KET").Value = item.FreeText;
-                    }
+                    //if (item.FreeText != null)
+                    //{
+                    //    oInventoryTransfer.Lines.UserFields.Fields.Item("U_H_KET").Value = item.FreeText;
+                    //}
 
                     oInventoryTransfer.Lines.Add();
                     insertedLineIds.Add(Convert.ToInt64(item.DetId), i);

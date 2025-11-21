@@ -1,5 +1,9 @@
 INSERT INTO "Ts_Menu" VALUES ('Master', 'Master', NULL, NULL, 10);
 INSERT INTO "Ts_Menu" VALUES ('Item', 'Item', NULL, 'Master', 1001);
+INSERT INTO "Ts_Menu" VALUES ('RfidMonitoring', 'RFID', NULL, 'Item', 1001);
+INSERT INTO "Ts_Menu" VALUES ('RfidMonitoring/Detail#User', 'Detail - User', 'RfidMonitoring/Detail', 'RfidMonitoring', 100101);
+INSERT INTO "Ts_Menu" VALUES ('RfidMonitoring/Detail#All', 'Detail - All', 'RfidMonitoring/Detail', 'RfidMonitoring', 100102);
+
 INSERT INTO "Ts_Menu" VALUES ('Transaction', 'Transaction', NULL, NULL, 20);
 INSERT INTO "Ts_Menu" VALUES ('Web', 'Web', NULL, 'Transaction', 2001);
 INSERT INTO "Ts_Menu" VALUES ('Inventory', 'Inventory', NULL, 'Web', 200101);
