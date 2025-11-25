@@ -62,6 +62,8 @@ namespace Models.Transaction.Web.Inventory
 
         public long? DocEntry { get; set; }
 
+        public string DocNum { get; set; }
+
         public string DocNum_ { get; set; }
 
         public string ScanDeviceId { get; set; }
@@ -196,6 +198,8 @@ namespace Models.Transaction.Web.Inventory
         public DateTime? BaseCreatedDate { get; set; }
 
         public string ScanDeviceId { get; set; }
+
+        public string Status { get; set; }
 
         public string Comments { get; set; }
 

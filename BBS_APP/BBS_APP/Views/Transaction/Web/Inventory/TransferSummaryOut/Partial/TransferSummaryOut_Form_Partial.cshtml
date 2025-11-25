@@ -612,6 +612,17 @@
 
         });
 
+        group.Items.Add(item =>
+        {
+            item.Name = "TabScanRefList";
+            item.Caption = "Scan List";
+            item.SetNestedContent(() =>
+            {
+                ViewContext.Writer.Write(
+                    Html.Partial("Partial/TransferSummaryOut_Form_TabRef_Partial", Model.ListRef_)
+                );
+            });
+        });
     });
 
 }).GetHtml()

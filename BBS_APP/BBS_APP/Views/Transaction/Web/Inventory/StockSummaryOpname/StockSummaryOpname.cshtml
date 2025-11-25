@@ -724,14 +724,14 @@ new
 <script type="text/javascript">
 
 
-    function OnClickChoose_cflStockOpnameStockSummaryOpname(s, e, data) {
+    function OnClickChoose_CflStockOpnameStockSummaryOpname(s, e, data) {
         WhsCode.SetValue(data.WhsCode);
         WhsName.SetValue(data.WhsName);
 
         RequestId.SetValue(data.RequestId);
         RequestNo.SetValue(data.RequestNo);
 
-        Comments.SetValue("Based on Request: " + data.RequestNo );
+        Comments.SetValue("Based on web Request No: " + data.RequestNo );
         cflStockOpnamePopupListStockSummaryOpname.Hide();
 
     }

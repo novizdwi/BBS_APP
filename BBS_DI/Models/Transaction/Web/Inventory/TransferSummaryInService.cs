@@ -90,6 +90,8 @@ namespace Models.Transaction.Web.Inventory
 
         public List<TransferSummaryIn_DetailModel> ListDetails_ = new List<TransferSummaryIn_DetailModel>();
 
+        public List<TransferSummaryIn_RefModel> ListRef_ = new List<TransferSummaryIn_RefModel>();
+
         public TransferSummaryIn_Detail Details_ { get; set; }
     }
     public class TransferSummaryIn_Detail
@@ -97,6 +99,37 @@ namespace Models.Transaction.Web.Inventory
         public List<long> deletedRowKeys { get; set; }
         public List<TransferSummaryIn_DetailModel> insertedRowValues { get; set; }
         public List<TransferSummaryIn_DetailModel> modifiedRowValues { get; set; }
+    }
+
+    public class TransferSummaryIn_RefModel
+    {
+        private FormModeEnum _FormModeEnum = FormModeEnum.New;
+
+        public FormModeEnum _FormMode
+        {
+            get { return this._FormModeEnum; }
+            set { this._FormModeEnum = value; }
+        }
+
+        public int _UserId { get; set; }
+
+        public long? Id { get; set; }
+
+        public long? DetId { get; set; }
+
+        public long? BaseId { get; set; }
+
+        public string BaseNo { get; set; }
+
+        public DateTime? BaseCreatedDate { get; set; }
+
+        public string ScanDeviceId { get; set; }
+
+        public string Status { get; set; }
+
+        public string Comments { get; set; }
+
+        public string BaseCreatedUser_ { get; set; }
     }
 
     public class TransferSummaryIn_DetailModel
@@ -234,11 +267,35 @@ namespace Models.Transaction.Web.Inventory
 
                 model = CONTEXT.Database.SqlQuery<TransferSummaryInModel>(ssql, id).Single();
 
+                model.ListRef_ = this.TransferSummaryIn_Refs(CONTEXT, id);
                 model.ListDetails_ = this.TransferSummaryIn_Details(CONTEXT, id);
             }
 
             return model;
         }
+
+        public List<TransferSummaryIn_RefModel> TransferSummaryIn_Refs(long id = 0)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                return TransferSummaryIn_Refs(CONTEXT, id);
+            }
+
+        }
+
+        public List<TransferSummaryIn_RefModel> TransferSummaryIn_Refs(HANA_APP CONTEXT, long id = 0)
+        {
+            string ssql = @"SELECT T0.*, T1.""TransDate"", T2.""FirstName"" AS ""BaseCreatedUser_""
+                FROM ""Tx_TransferSummaryIn_Ref"" T0
+                INNER JOIN ""Tx_TransferIn"" T1 ON T0.""BaseId"" = T1.""Id""
+                LEFT JOIN ""Tm_User"" T2 ON T0.""BaseCreatedUser"" = T2.""Id""
+                WHERE T0.""Id"" =:p0
+                ORDER BY T0.""DetId"" ASC
+            ";
+            var result = CONTEXT.Database.SqlQuery<TransferSummaryIn_RefModel>(ssql, id).ToList();
+            return result;
+        }
+
         public List<TransferSummaryIn_DetailModel> TransferSummaryIn_Details(long id = 0)
         {
             using (var CONTEXT = new HANA_APP())

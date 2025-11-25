@@ -818,6 +818,8 @@
     <Content Include="Views\Master\Item\RfidMonitoring\Partial\RfidMonitoring_Form_Partial.cshtml" />
     <Content Include="Views\Master\Item\RfidMonitoring\Partial\RfidMonitoring_Form_TabReference_List_Partial.cshtml" />
     <Content Include="Views\Master\Item\RfidMonitoring\RfidMonitoring.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferSummaryOut\Partial\TransferSummaryOut_Form_TabRef_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferSummaryIn\Partial\TransferSummaryIn_Form_TabRef_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -949,11 +951,13 @@
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferRequest\TransferRequestController.List.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferRequest\TransferRequestController.CancelReason.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferRequest\TransferRequestController.cs" />
+    <Compile Include="Controllers\Transaction\Web\Inventory\TransferSummaryIn\TransferSummaryInController.Tab.Ref.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferSummaryIn\TransferSummaryInController.CancelReason.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferSummaryIn\TransferSummaryInController.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferSummaryIn\TransferSummaryInController.List.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferSummaryIn\TransferSummaryInController.Nav.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferSummaryIn\TransferSummaryInController.ViewItemTag.cs" />
+    <Compile Include="Controllers\Transaction\Web\Inventory\TransferSummaryOut\TransferSummaryOutController.Tab.Ref.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferSummaryOut\TransferSummaryOutController.CancelReason.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferSummaryOut\TransferSummaryOutController.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferSummaryOut\TransferSummaryOutController.List.cs" />

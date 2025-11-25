@@ -296,8 +296,8 @@ namespace Models.Transaction.Web.Purchasing
                 //    model.CheckNeedApproval_ = CONTEXT.Database.SqlQuery<string>(ssql).FirstOrDefault();
                 //}
 
-                model.ListDetails_ = this.GoodsReceiptPO_Details(CONTEXT, id);
                 model.ListRef_ = this.GoodsReceiptPO_Refs(CONTEXT, id);
+                model.ListDetails_ = this.GoodsReceiptPO_Details(CONTEXT, id);
             }
 
             return model;

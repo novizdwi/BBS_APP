@@ -13,7 +13,7 @@
 {
     settings.Name = "gvRef";
     settings.KeyFieldName = "DetId";
-    settings.CallbackRouteValues = new { Controller = "StockSummaryOpname", Action = "TabRefListPartial" };
+    settings.CallbackRouteValues = new { Controller = "TransferSummaryOut", Action = "TabRefListPartial" };
     settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
     //settings.Settings.VerticalScrollableHeight = 350;
     settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
@@ -35,6 +35,7 @@
     settings.Columns.Add("Id", "Id").Visible = false;
     settings.Columns.Add("DetId", "DetId").Visible = false;
     settings.Columns.Add("BaseId", "BaseId").Width = 0;
+
 
     settings.Columns.Add(column =>
     {

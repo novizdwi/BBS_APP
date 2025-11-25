@@ -3,7 +3,7 @@
 
 @{
     /**/
-
+    ViewBag.UserId = (int)Session["userId"];
     ViewBag.Id = Model.Id;
     ViewBag.ReadOnly = Model.Status == "Draft" ? false: true;
 
@@ -104,7 +104,7 @@
         txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Width = 230;
     });
-    
+
 
     groupItem_Col1.Items.Add(itemSettings =>
     {
@@ -279,6 +279,24 @@
         txt.ControlStyle.CssClass = "editor";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
         txt.Width = 230;
+    });
+
+    groupItem_Col2.Items.Add(m => Model.IsOpeningBalance, itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.CheckBox;
+        itemSettings.Caption = "Opening Balance";
+        itemSettings.ClientVisible = ViewBag.UserId == 1 ? true : false;
+
+        var chk = (CheckBoxSettings)itemSettings.NestedExtensionSettings;
+        chk.Name = "IsOpeningBalance";
+        chk.ReadOnly = !(Model.Status == "Draft" );
+        chk.Properties.ValueType = typeof(string);
+        chk.Properties.ValueChecked = "Y";
+        chk.Properties.ValueUnchecked = "N";
+        chk.ShowModelErrors = true;
+        chk.ControlStyle.CssClass = "editor";
+        chk.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+
     });
 
     groupItem_Col3.Items.Add(m => Model.Status, itemSettings =>
