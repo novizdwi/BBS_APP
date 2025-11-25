@@ -783,7 +783,7 @@ namespace Models.Transaction.Web.Purchasing
 
                         tx_GoodsReceiptPO.PostingDate = dtModified;
                         tx_GoodsReceiptPO.DocEntry = Convert.ToInt64(GRPOResult.DocEntry);
-                        tx_GoodsReceiptPO.DocNum = docNum;
+                        //tx_GoodsReceiptPO.DocNum = docNum;
 
                         tx_GoodsReceiptPO.Status = "Posted";
                         tx_GoodsReceiptPO.IsAfterPosted = "Y";
