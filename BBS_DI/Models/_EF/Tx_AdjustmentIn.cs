@@ -18,10 +18,12 @@ namespace BBS_DI.Models._EF
         public string TransType { get; set; }
         public string TransNo { get; set; }
         public Nullable<System.DateTime> TransDate { get; set; }
+        public Nullable<System.DateTime> PostingDate { get; set; }
         public string AdjustmentTypeCode { get; set; }
         public string AdjustmentTypeName { get; set; }
         public string Status { get; set; }
         public string IsAfterPosted { get; set; }
+        public string IsOpeningBalance { get; set; }
         public Nullable<int> DocEntry { get; set; }
         public string Comments { get; set; }
         public string ScanDeviceId { get; set; }

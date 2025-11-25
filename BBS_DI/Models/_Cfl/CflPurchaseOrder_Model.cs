@@ -36,6 +36,8 @@ namespace Models._Cfl
         public string VendorCode { get; set; }
         public string VendorName { get; set; }
 
+        public string Address { get; set; }
+
         public string Comments { get; set; }
 
     }
@@ -44,14 +46,15 @@ namespace Models._Cfl
     {
         public static string ssql = @"
             SELECT DISTINCT T0.""DocEntry"", T0.""DocNum"", T0.""TransDate"", T0.""VendorCode"", T0.""VendorName"", T0.""Comments""
-                FROM ""Tx_PurchaseOrder"" T0
-                WHERE T0.""Status"" = 'Posted'
-                AND NOT EXISTS(
-                    SELECT T1.""Id""
-                    FROM ""Tx_GoodsReceiptPO"" T1 
-                    WHERE T0.""DocEntry"" = T1.""BaseEntry"" 
-                    AND T1.""Status"" NOT IN ('Cancel')
-                ) 
+            FROM ""Tx_PurchaseOrder"" T0
+            WHERE T0.""Status"" = 'Posted'
+		    AND NOT EXISTS(
+			    SELECT 1
+			    FROM ""Tx_GoodsReceiptPO"" Tx
+			    INNER JOIN ""Tx_GoodsReceiptPO_Ref"" Ty ON Tx.""Id"" = Ty.""Id""			
+			    WHERE Ty.""BaseId"" = T0.""Id""
+                AND Tx.""Status"" != 'Cancel'
+		    )
         ";
 
         public static void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e, int userId, CflPurchaseOrder_ParamModel cflPurchaseOrderParam)

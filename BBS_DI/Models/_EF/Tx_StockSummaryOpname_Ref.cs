@@ -20,6 +20,7 @@ namespace BBS_DI.Models._EF
         public string BaseNo { get; set; }
         public string ScanDeviceId { get; set; }
         public string Comments { get; set; }
+        public string Status { get; set; }
         public Nullable<System.DateTime> BaseCreatedDate { get; set; }
         public Nullable<int> BaseCreatedUser { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

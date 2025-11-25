@@ -23,10 +23,10 @@ namespace BBS_DI.Models._EF
         public Nullable<decimal> Quantity { get; set; }
         public string EventType { get; set; }
         public string Status { get; set; }
+        public string PostResultNote { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedUser { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> ModifiedUser { get; set; }
-        public string PostResultNote { get; set; }
     }
 }

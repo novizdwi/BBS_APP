@@ -19,6 +19,7 @@ namespace BBS_DI.Models._EF
         public string TransNo { get; set; }
         public Nullable<int> DocEntry { get; set; }
         public Nullable<System.DateTime> TransDate { get; set; }
+        public Nullable<System.DateTime> PostingDate { get; set; }
         public Nullable<long> RequestId { get; set; }
         public string RequestNo { get; set; }
         public string WhsCode { get; set; }

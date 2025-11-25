@@ -164,6 +164,7 @@
         var txt = (DateEditSettings)itemSettings.NestedExtensionSettings;
         txt.Name = "TransDate";
         txt.ShowModelErrors = true;
+        txt.ReadOnly = true;
 
         txt.ControlStyle.CssClass = "editornoimage";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
@@ -171,18 +172,7 @@
         txt.Properties.NullText = "dd/MM/yyyy";
         txt.Properties.EditFormat = EditFormat.Custom;
         txt.Properties.EditFormatString = "dd/MM/yyyy";
-        txt.Properties.EditFormat = EditFormat.Date;
-
-        if (Model.Status == "Draft" || Model.Status == "Open")
-        {
-            txt.ReadOnly = false;
-        }
-        else
-        {
-            txt.Properties.DropDownButton.Visible = false;
-            txt.ReadOnly = true;
-        }
-
+        txt.Properties.EditFormat = EditFormat.Date; 
         txt.Properties.ClientSideEvents.ParseDate = "function (s,e){ { ParseDateEdit(s,e);  } }";
         txt.Width = 230;
     });
@@ -191,7 +181,7 @@
     {
         itemSettings.Name = "grpVendorCode";
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
-        itemSettings.Caption = "VendorCode";
+        itemSettings.Caption = "Vendor Code";
         itemSettings.FieldName = "VendorCode";
         var txt = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
         txt.Name = "VendorCode";
@@ -477,7 +467,7 @@
                         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
                         txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
                         txt.Width = 450;
-                        txt.Height = 50;
+                        txt.Height = 100;
                     });
                 }).GetHtml();
             });

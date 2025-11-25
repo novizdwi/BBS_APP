@@ -38,6 +38,8 @@ namespace Models.Transaction.Web.Adjustment
 
         public DateTime? TransDate { get; set; }
 
+        public DateTime? PostingDate { get; set; }
+
         public string Status { get; set; }
 
         public string IsAfterPosted { get; set; }
@@ -67,6 +69,8 @@ namespace Models.Transaction.Web.Adjustment
         public string CheckNeedApproval_ { get; set; }
 
         public string ApprovalStatus { get; set; }
+
+        public string IsOpeningBalance { get; set; }
 
         public int? ModifiedUser { get; set; }
 
@@ -492,7 +496,7 @@ namespace Models.Transaction.Web.Adjustment
                             string docEntry = AddGoodsIssue(oCompany, userId, id, syncAdjustmentOut);
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-
+                            tx_AdjustmentOut.PostingDate = dtModified;
                             tx_AdjustmentOut.DocEntry = Convert.ToInt32(docEntry);
                             tx_AdjustmentOut.Status = "Posted";
 
@@ -553,7 +557,7 @@ namespace Models.Transaction.Web.Adjustment
             int nErr;
             string errMsg;
             SAPbobsCOM.Documents oDocument = (SAPbobsCOM.Documents)oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oInventoryGenExit);
-            oDocument.DocDate = model.TransDate ?? DateTime.Now;
+            oDocument.DocDate = DateTime.Now;
 
             if (!string.IsNullOrWhiteSpace(model.Comments))
             {

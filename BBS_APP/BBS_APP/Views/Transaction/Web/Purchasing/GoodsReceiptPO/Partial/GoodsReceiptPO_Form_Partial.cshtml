@@ -214,7 +214,7 @@
         var txt = (DateEditSettings)itemSettings.NestedExtensionSettings;
         txt.Name = "TransDate";
         txt.ShowModelErrors = true;
-
+        txt.ReadOnly = true;
         txt.ControlStyle.CssClass = "editornoimage";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
         txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
@@ -223,15 +223,28 @@
         txt.Properties.EditFormatString = "dd/MM/yyyy";
         txt.Properties.EditFormat = EditFormat.Date;
 
-        if (Model.Status == "Draft" || Model.Status == "Open")
-        {
-            txt.ReadOnly = false;
-        }
-        else
-        {
-            txt.Properties.DropDownButton.Visible = false;
-            txt.ReadOnly = true;
-        }
+        txt.Properties.ClientSideEvents.ParseDate = "function (s,e){ { ParseDateEdit(s,e);  } }";
+        txt.Width = 230;
+    });
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.DateEdit;
+        itemSettings.Caption = "Posting Date";
+        itemSettings.FieldName = "PostingDate";
+
+        var txt = (DateEditSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "PostingDate";
+        txt.ShowModelErrors = true;
+        txt.ReadOnly = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Properties.NullText = "dd/MM/yyyy";
+        txt.Properties.EditFormat = EditFormat.Custom;
+        txt.Properties.EditFormatString = "dd/MM/yyyy";
+        txt.Properties.EditFormat = EditFormat.Date;
 
         txt.Properties.ClientSideEvents.ParseDate = "function (s,e){ { ParseDateEdit(s,e);  } }";
         txt.Width = 230;
@@ -435,17 +448,6 @@
 
         });
 
-        group.Items.Add(item =>
-        {
-            item.Name = "TabScanRefList";
-            item.Caption = "Scan List";
-            item.SetNestedContent(() =>
-            {
-                ViewContext.Writer.Write(
-                    Html.Partial("Partial/GoodsReceiptPO_Form_TabRef_Partial", Model.ListRef_)
-                );
-            });
-        });
 
         group.Items.Add(item =>
         {
@@ -545,13 +547,24 @@
                         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
                         txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
                         txt.Width = 450;
-                        txt.Height = 50;
+                        txt.Height = 100;
                     });
                 }).GetHtml();
             });
 
         });
 
+        group.Items.Add(item =>
+        {
+            item.Name = "TabScanRefList";
+            item.Caption = "Scan List";
+            item.SetNestedContent(() =>
+            {
+                ViewContext.Writer.Write(
+                    Html.Partial("Partial/GoodsReceiptPO_Form_TabRef_Partial", Model.ListRef_)
+                );
+            });
+        });
     });
 
 }).GetHtml()

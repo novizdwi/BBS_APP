@@ -117,6 +117,8 @@ namespace Models.Transaction.Web.Purchasing
 
         public string ScanDeviceId { get; set; }
 
+        public string Status { get; set; }
+
         public string Comments { get; set; }
 
         public string BaseCreatedUser_ { get; set; }
@@ -769,10 +771,19 @@ namespace Models.Transaction.Web.Purchasing
                             GRResult = AddReceiveFromProduction(oCompany, userId, id, syncGRPO);
                         }
 
+                        //string ssql = @"SELECT ""DocNum"" 
+                        //    FROM """ + DbProvider.dbSap_Name + @""".""OPDN"" T0
+                        //    WHERE T0.""DocEntry"" = " + GRPOResult.DocEntry + @" 
+                        //";
+
+                        //string docNum = CONTEXT.Database.SqlQuery<string>(ssql, id).FirstOrDefault();
+
+
                         DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
 
                         tx_GoodsReceiptPO.PostingDate = dtModified;
                         tx_GoodsReceiptPO.DocEntry = Convert.ToInt64(GRPOResult.DocEntry);
+                        tx_GoodsReceiptPO.DocNum = docNum;
 
                         tx_GoodsReceiptPO.Status = "Posted";
                         tx_GoodsReceiptPO.IsAfterPosted = "Y";
@@ -857,9 +868,9 @@ namespace Models.Transaction.Web.Purchasing
 
             SAPbobsCOM.Documents oDocument = (SAPbobsCOM.Documents)oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oPurchaseDeliveryNotes);
 
-            oDocument.DocDate = (DateTime)model.TransDate;
-            oDocument.DocDueDate = (DateTime)model.TransDate;
-            oDocument.TaxDate = (DateTime)model.TransDate;
+            oDocument.DocDate = DateTime.Now;
+            oDocument.DocDueDate = DateTime.Now;
+            oDocument.TaxDate = DateTime.Now;
 
             oDocument.CardCode = model.VendorCode;
             oDocument.CardName = model.VendorCode;
@@ -952,6 +963,7 @@ namespace Models.Transaction.Web.Purchasing
 
                         oDocument.UserFields.Fields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
                         oDocument.UserFields.Fields.Item("U_IDU_WebTransNo").Value = model.TransNo;
+                        oDocument.Comments = model.Comments;
 
                         oDocument.Lines.BaseType = 202;
                         oDocument.Lines.BaseEntry = item.IdPDO ?? 0;

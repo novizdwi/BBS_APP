@@ -706,7 +706,9 @@ new
         BaseEntry.SetValue(data.Id);
         BaseDocNum.SetValue(data.TransNo);
 
-        Comments.SetValue("Based on Transfer Request: " + data.TransNo + " - " + data.Comments);
+        var comment = "Based on Transfer Request Web: " + data.TransNo + (data.Comments ? " - " + data.Comments : "");
+        Comments.SetValue(comment);
+
         cflTransferRequestPopupListTransferSummaryOut.Hide();
 
     }

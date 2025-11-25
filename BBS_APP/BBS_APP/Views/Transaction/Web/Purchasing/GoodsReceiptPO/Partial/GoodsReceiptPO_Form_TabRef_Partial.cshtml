@@ -36,6 +36,7 @@
     settings.Columns.Add("DetId", "DetId").Visible = false;
     settings.Columns.Add("BaseId", "BaseId").Width = 0;
 
+
     settings.Columns.Add(column =>
     {
 
@@ -93,6 +94,8 @@
         column.Width = 300;
 
     });
+
+    settings.Columns.Add("Status", "Status").Width = 100;
 
     settings.Columns.Add(column =>
     {

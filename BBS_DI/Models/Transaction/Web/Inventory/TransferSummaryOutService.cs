@@ -44,6 +44,8 @@ namespace Models.Transaction.Web.Inventory
 
         public DateTime? TransDate { get; set; }
 
+        public DateTime? PostingDate { get; set; }
+
         public long? DocEntry { get; set; }
 
         public string DocNum { get; set; }
@@ -682,7 +684,7 @@ namespace Models.Transaction.Web.Inventory
                                 //tx_TransferSummaryOut.PostingDate = dtModified;
                                 tx_TransferSummaryOut.DocEntry = Convert.ToInt64(TransferSummaryOutResult.DocEntry);
                                 tx_TransferSummaryOut.DocNum = docNum;
-                                tx_TransferSummaryOut.DocDate = (DateTime)syncTransferSummaryOut.TransDate;
+                                tx_TransferSummaryOut.PostingDate = dtModified;
 
                                 tx_TransferSummaryOut.Status = "Posted";
                                 tx_TransferSummaryOut.IsAfterPosted = "Y";
@@ -745,9 +747,9 @@ namespace Models.Transaction.Web.Inventory
             oInventoryTransfer.UserFields.Fields.Item("U_IDU_WebId").Value = model.Id.ToString();
             oInventoryTransfer.UserFields.Fields.Item("U_IDU_WebTransNo").Value = model.TransNo;
 
-            oInventoryTransfer.DocDate = (DateTime)model.TransDate;
-            oInventoryTransfer.DueDate = (DateTime)model.TransDate;
-            oInventoryTransfer.TaxDate = (DateTime)model.TransDate;
+            oInventoryTransfer.DocDate = DateTime.Now;
+            oInventoryTransfer.DueDate = DateTime.Now;
+            oInventoryTransfer.TaxDate = DateTime.Now;
 
             oInventoryTransfer.FromWarehouse = model.FromWhsCode;
             oInventoryTransfer.ToWarehouse = model.TransitWhsCode;

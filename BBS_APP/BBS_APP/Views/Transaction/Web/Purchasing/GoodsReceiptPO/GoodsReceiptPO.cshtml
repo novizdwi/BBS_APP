@@ -731,11 +731,11 @@ new
     function OnClickChoose_CflPurchaseOrderGoodsReceiptPO(s, e, data) {
         VendorCode.SetValue(data.VendorCode);
         VendorName.SetValue(data.VendorName);
-
         BaseEntry.SetValue(data.DocEntry);
-        BaseDocNum.SetValue(data.DocNum);
+        BaseDocNum.SetValue(data.DocNum); 
 
-        Comments.SetValue("Based on PO: " + data.DocNum + " - " + data.Comments);
+        var comment = "Based on PO: " + data.DocNum + (data.Comments ? " - " + data.Comments : "");
+        Comments.SetValue(comment);
         cflPurchaseOrderPopupListGoodsReceiptPO.Hide();
 
     }

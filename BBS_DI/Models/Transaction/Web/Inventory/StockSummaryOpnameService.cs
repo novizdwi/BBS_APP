@@ -50,6 +50,8 @@ namespace Models.Transaction.Web.Inventory
 
         public DateTime? TransDate { get; set; }
 
+        public DateTime? PostingDate { get; set; }
+
         [Required(ErrorMessage = "required")]
         public string WhsCode { get; set; }
 
@@ -783,8 +785,9 @@ namespace Models.Transaction.Web.Inventory
                         }
 
                         DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-
+                        
                         tx_StockSummaryOpname.DocEntry = docEntry;
+                        tx_StockSummaryOpname.PostingDate = dtModified;
                         tx_StockSummaryOpname.Status = "Posted";
                         tx_StockSummaryOpname.IsAfterPosted = "Y";
                         tx_StockSummaryOpname.ModifiedDate = dtModified;
@@ -845,7 +848,7 @@ namespace Models.Transaction.Web.Inventory
             SAPbobsCOM.InventoryPostingsService oInventoryPostingsService = oCS.GetBusinessService(SAPbobsCOM.ServiceTypes.InventoryPostingsService);
             SAPbobsCOM.InventoryPosting oDocument = oInventoryPostingsService.GetDataInterface(SAPbobsCOM.InventoryPostingsServiceDataInterfaces.ipsInventoryPosting);
 
-            oDocument.PostingDate = (DateTime)model.TransDate;
+            oDocument.PostingDate = DateTime.Now;
             
             oDocument.UserFields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
             oDocument.UserFields.Item("U_IDU_WebTransNo").Value = model.TransNo;

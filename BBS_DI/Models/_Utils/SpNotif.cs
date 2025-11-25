@@ -79,6 +79,7 @@ namespace Models._Utils
         public static Boolean SpSysControllerTransNotif(int userId, string ControllerName, HANA_APP CONTEXT, string category, string objCode, string transType, string fieldKeys, string fieldValues, string fieldParentValues)
         {
             string errorMassage;
+            string x = "CALL \"Sp" + ControllerName + "__TransNotif\" (" + userId.ToString() + ",'" + category.Replace("'", "''") + "','" + objCode.Replace("'", "''") + "','" + transType.Replace("'", "''") + "','" + fieldKeys.Replace("'", "''") + "','" + fieldValues.Replace("'", "''") + "','" + fieldParentValues.Replace("'", "''") + "') ";
 
             //SpNotifMessage massage = CONTEXT.Database.SqlQuery<SpNotifMessage>("CALL \"SpSysTransNotif\" (:p0,:p1,:p2,:p3,:p4,:p5) '", category, objCode, transType, fieldKeys, fieldValues, fieldParentValues).Single();
             SpNotifMessage massage = CONTEXT.Database.SqlQuery<SpNotifMessage>("CALL \"Sp" + ControllerName + "__TransNotif\" (" + userId.ToString() + ",'" + category.Replace("'", "''") + "','" + objCode.Replace("'", "''") + "','" + transType.Replace("'", "''") + "','" + fieldKeys.Replace("'", "''") + "','" + fieldValues.Replace("'", "''") + "','" + fieldParentValues.Replace("'", "''") + "') ").Single();

@@ -18,6 +18,7 @@ namespace BBS_DI.Models._EF
         public string TransType { get; set; }
         public string TransNo { get; set; }
         public Nullable<System.DateTime> TransDate { get; set; }
+        public Nullable<System.DateTime> PostingDate { get; set; }
         public Nullable<long> DocEntry { get; set; }
         public string DocNum { get; set; }
         public Nullable<System.DateTime> DocDate { get; set; }
@@ -29,11 +30,12 @@ namespace BBS_DI.Models._EF
         public string Address { get; set; }
         public string FromWhsCode { get; set; }
         public string FromWhsName { get; set; }
+        public string TransitWhsCode { get; set; }
+        public string TransitWhsName { get; set; }
         public string ToWhsCode { get; set; }
         public string ToWhsName { get; set; }
         public Nullable<int> PriceList { get; set; }
         public string PriceListName { get; set; }
-        public string ScanDeviceId { get; set; }
         public string Status { get; set; }
         public string IsAfterPosted { get; set; }
         public string Comments { get; set; }
@@ -43,7 +45,5 @@ namespace BBS_DI.Models._EF
         public Nullable<int> CreatedUser { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> ModifiedUser { get; set; }
-        public string TransitWhsCode { get; set; }
-        public string TransitWhsName { get; set; }
     }
 }

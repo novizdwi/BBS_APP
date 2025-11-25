@@ -38,6 +38,8 @@ namespace Models.Transaction.Web.Adjustment
 
         public DateTime? TransDate { get; set; }
 
+        public DateTime? PostingDate { get; set; }
+
         public string Status { get; set; }
 
         public string IsAfterPosted { get; set; }
@@ -69,6 +71,8 @@ namespace Models.Transaction.Web.Adjustment
         public string CheckNeedApproval_ { get; set; }
 
         public string ApprovalStatus { get; set; }
+
+        public string IsOpeningBalance { get; set; }
 
         public List<AdjustmentIn_ItemModel> ListDetails_ = new List<AdjustmentIn_ItemModel>();
 
@@ -496,7 +500,7 @@ namespace Models.Transaction.Web.Adjustment
                             string docEntry = AddGoodsReceipt(oCompany, userId, id, syncAdjustmentIn);
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-
+                            tx_AdjustmentIn.PostingDate = dtModified;
                             tx_AdjustmentIn.DocEntry = Convert.ToInt32(docEntry);
                             tx_AdjustmentIn.Status = "Posted";
 
@@ -557,7 +561,7 @@ namespace Models.Transaction.Web.Adjustment
             int nErr;
             string errMsg;
             SAPbobsCOM.Documents oDocument = (SAPbobsCOM.Documents)oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oInventoryGenEntry);
-            oDocument.DocDate = model.TransDate ?? DateTime.Now;
+            oDocument.DocDate = DateTime.Now;
 
             if (!string.IsNullOrWhiteSpace(model.Comments))
             {
