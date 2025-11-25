@@ -619,6 +619,35 @@
 
     function OnLookupBeginCallback(s, e) {
     }
+
+    function gvRefOnBeginCallback(s, e) {
+        e.customArgs['cbId'] = Id.GetValue();
+    }
+
+    function gvRefOnEndCallback(s, e) {
+
+    }
+
+    function gvRefOnCustomButtonClick(s, e) {
+    }
+
+
+    function gvRefOnBatchEditStartEditing(s, e) {
+    }
+
+    function gvRefOnBatchEditEndEditing(s, e) {
+    }
+
+    function gvRefOnBatchEditRowValidating(s, e) {
+    }
+
+    function OnClickbaseId(s, e, baseId) {
+        var guid = CreateGuid();
+        window.open('', guid);
+        SubmitForm(guid, '@Url.Action("Detail", "TransferIn")', 'post', {
+            Id: baseId
+        });
+    }
 </script>
 <script type="text/javascript">
 
