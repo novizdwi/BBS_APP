@@ -12,19 +12,20 @@ namespace BBS_DI.Models._EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Tm_Item_Warehouse_Tag_Log
+    public partial class Tx_TransferSummaryOut_Ref
     {
-        public long LogId { get; set; }
-        public string ItemCode { get; set; }
-        public string ItemName { get; set; }
-        public string WhsCode { get; set; }
-        public string WhsName { get; set; }
-        public string OldTagId { get; set; }
-        public string NewTagId { get; set; }
-        public string ActionNote { get; set; }
+        public Nullable<long> Id { get; set; }
+        public long DetId { get; set; }
+        public string BaseId { get; set; }
+        public string BaseNo { get; set; }
+        public string ScanDeviceId { get; set; }
+        public string Comments { get; set; }
+        public string Status { get; set; }
+        public Nullable<System.DateTime> BaseCreatedDate { get; set; }
+        public Nullable<int> BaseCreatedUser { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedUser { get; set; }
-        public string BaseType { get; set; }
-        public string Event { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public Nullable<int> ModifiedUser { get; set; }
     }
 }

@@ -752,7 +752,8 @@ namespace Models.Transaction.Web.Inventory
                                 CONTEXT.SaveChanges();
 
                                 SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "post", "Id", keyValue);
-                            
+                             
+
                                 CONTEXT_TRANS.Commit();
                             }                            
                         }
@@ -899,8 +900,7 @@ namespace Models.Transaction.Web.Inventory
 
                         SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "cancel", "Id", keyValue);
 
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateStatus\"(:p0,:p1,'cancel')", userId, Id);
-
+                        
                         CONTEXT_TRANS.Commit();
                     }
 
