@@ -50,9 +50,9 @@ namespace Models.Transaction.Web.Inventory
 
         public string DocNum { get; set; }
 
-        public long? BaseEntry { get; set; }
+        public long? RequestId { get; set; }
 
-        public string BaseDocNum { get; set; }
+        public string RequestNo { get; set; }
 
         public string VendorCode { get; set; }
 
@@ -168,11 +168,17 @@ namespace Models.Transaction.Web.Inventory
 
         public string TransitWhsName { get; set; }
 
-        public decimal? Quantity { get; set; }
+        public decimal? QuantityRequest { get; set; }
 
         public decimal? QuantityOpen { get; set; }
 
+        public decimal? QuantityOpen_ { get; set; }
+
         public decimal? QuantityScan { get; set; }
+
+        public decimal? QuantityValid { get; set; }
+
+        public decimal? QuantityPosted { get; set; }
 
         public int? UomEntry { get; set; }
 
@@ -182,9 +188,9 @@ namespace Models.Transaction.Web.Inventory
 
         public long? LineNum { get; set; }
 
-        public long? BaseEntry { get; set; }
+        public long? RequestId { get; set; }
 
-        public int? BaseLine { get; set; }
+        public int? RequestRequestDetId { get; set; }
 
         public string LineStatus { get; set; }
     }
@@ -308,10 +314,11 @@ namespace Models.Transaction.Web.Inventory
 
         public List<TransferSummaryOut_DetailModel> TransferSummaryOut_Details(HANA_APP CONTEXT, long id = 0)
         {
-            string ssql = @"SELECT * 
-                FROM ""Tx_TransferSummaryOut_Item"" 
-                WHERE ""Id"" =:p0
-                ORDER BY ""DetId"" ASC
+            string ssql = @"SELECT T0.*, T1.""QuantityOpen"" AS ""QuantityOpen_""
+                FROM ""Tx_TransferSummaryOut_Item"" T0
+                LEFT JOIN ""Tx_TransferRequest_Item"" T1 ON T0.""RequestDetId"" = T1.""DetId""
+                WHERE T0.""Id"" =:p0
+                ORDER BY T0.""DetId"" ASC
             ";
             var goodsReceiptPO = CONTEXT.Database.SqlQuery<TransferSummaryOut_DetailModel>(ssql, id).ToList();
             return goodsReceiptPO;
@@ -705,11 +712,8 @@ namespace Models.Transaction.Web.Inventory
         public void PostSAP(int userId, long id)
         {
             SAPbobsCOM.Company oCompany = null;
-
-            TransferSummaryOutModel syncTransferSummaryOut = GetById(userId, id);
             using (var CONTEXT = new HANA_APP())
             {
-
                 using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
                 {
                     try
@@ -720,13 +724,25 @@ namespace Models.Transaction.Web.Inventory
                         String keyValue;
                         keyValue = id.ToString();
 
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateItem\"(:p0,:p1, 'before')", userId, id);
+                        CONTEXT.SaveChanges();
+
+                        TransferSummaryOutModel syncTransferSummaryOut = GetById(userId, id);
 
                         SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "before", "Tx_TransferSummaryOut", "post", "Id", keyValue);
+
+                        if (syncTransferSummaryOut.ListDetails_.All(q => !q.QuantityPosted.HasValue || q.QuantityPosted == 0 ) )
+                        {
+                            throw new Exception("No record posted");
+                        }
 
                         Tx_TransferSummaryOut tx_TransferSummaryOut = CONTEXT.Tx_TransferSummaryOut.Find(id);
                         if (tx_TransferSummaryOut != null)
                         {
-                            TransferSummaryOutAddResultModel TransferSummaryOutResult = AddTransferSummaryOut(oCompany, userId, id, syncTransferSummaryOut);
+                            TransferSummaryOutAddResultModel TransferSummaryOutResult = new TransferSummaryOutAddResultModel();
+                            TransferSummaryOutResult.DocEntry = 4382.ToString();
+
+                            //TransferSummaryOutAddResultModel TransferSummaryOutResult = AddTransferSummaryOut(oCompany, userId, id, syncTransferSummaryOut);
 
                             if (!string.IsNullOrEmpty(TransferSummaryOutResult.DocEntry))
                             {
@@ -739,7 +755,7 @@ namespace Models.Transaction.Web.Inventory
 
                                 DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
 
-                                //tx_TransferSummaryOut.PostingDate = dtModified;
+                                tx_TransferSummaryOut.PostingDate = dtModified;
                                 tx_TransferSummaryOut.DocEntry = Convert.ToInt64(TransferSummaryOutResult.DocEntry);
                                 tx_TransferSummaryOut.DocNum = docNum;
                                 tx_TransferSummaryOut.PostingDate = dtModified;
@@ -751,6 +767,8 @@ namespace Models.Transaction.Web.Inventory
 
                                 CONTEXT.SaveChanges();
 
+                                CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_TransferItemTag\"(:p0,:p1, 'TransferSummaryOut', 'A')", userId, id);
+                                CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateItem\"(:p0,:p1, 'after')", userId, id);
                                 SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "post", "Id", keyValue);
                              
 
@@ -791,7 +809,6 @@ namespace Models.Transaction.Web.Inventory
 
         }
 
-
         private TransferSummaryOutAddResultModel AddTransferSummaryOut(Company oCompany, int userId, long id, TransferSummaryOutModel model)
         {
             TransferSummaryOutAddResultModel result = new TransferSummaryOutAddResultModel();
@@ -830,7 +847,7 @@ namespace Models.Transaction.Web.Inventory
             int i = 0;
             if (model.ListDetails_.Count > 0)
             {
-                foreach (var item in model.ListDetails_)
+                foreach (var item in model.ListDetails_.Where(x => x.QuantityPosted.HasValue && x.QuantityPosted > 0) )
                 {
                     //oDocument.Lines.BaseType = InvBaseDocTypeEnum.InventoryTransferRequest;
                     //oDocument.Lines.BaseEntry = Convert.ToInt32(model.BaseEntry);
@@ -839,7 +856,7 @@ namespace Models.Transaction.Web.Inventory
                     oInventoryTransfer.Lines.ItemCode = item.ItemCode;
                     oInventoryTransfer.Lines.FromWarehouseCode = item.FromWhsCode;
                     oInventoryTransfer.Lines.WarehouseCode = item.TransitWhsCode;
-                    oInventoryTransfer.Lines.Quantity = (double)item.QuantityScan;
+                    oInventoryTransfer.Lines.Quantity = (double)item.QuantityPosted;
 
                     if (item.UomEntry != null)
                     {

@@ -26,5 +26,7 @@ namespace BBS_DI.Models._EF
         public Nullable<int> CreatedUser { get; set; }
         public string BaseType { get; set; }
         public string Event { get; set; }
+        public string OldStatus { get; set; }
+        public string NewStatus { get; set; }
     }
 }

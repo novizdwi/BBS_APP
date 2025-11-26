@@ -40,7 +40,7 @@
 
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 120;
+        column.Width = 200;
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
         column.ReadOnly = true;
 
@@ -114,38 +114,6 @@
 
     settings.Columns.Add(column =>
     {
-        column.FieldName = "ToWhsCode";
-        column.Name = "ToWhsCode";
-        column.Caption = "To Whse Code";
-
-        column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 100;
-        column.Settings.AllowSort = DefaultBoolean.False;
-        column.ReadOnly = true;
-
-        var txt = column.PropertiesEdit as TextBoxProperties;
-        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-
-    });
-
-    settings.Columns.Add(column =>
-    {
-        column.FieldName = "ToWhsName";
-        column.Name = "ToWhsName";
-        column.Caption = "To Whse Name";
-
-        column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 200;
-        column.Settings.AllowSort = DefaultBoolean.False;
-        column.ReadOnly = true;
-
-        var txt = column.PropertiesEdit as TextBoxProperties;
-        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-
-    });
-
-    settings.Columns.Add(column =>
-    {
         column.FieldName = "TransitWhsCode";
         column.Name = "TransitWhsCode";
         column.Caption = "Transit";
@@ -178,9 +146,41 @@
 
     settings.Columns.Add(column =>
     {
-        column.FieldName = "Quantity";
-        column.Name = "Quantity";
-        column.Caption = "Qty";
+        column.FieldName = "ToWhsCode";
+        column.Name = "ToWhsCode";
+        column.Caption = "To Whse Code";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 100;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ToWhsName";
+        column.Name = "ToWhsName";
+        column.Caption = "To Whse Name";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 200;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "QuantityRequest";
+        column.Name = "QuantityRequest";
+        column.Caption = "Qty Request";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 80;
@@ -193,8 +193,8 @@
 
     settings.Columns.Add(column =>
     {
-        column.FieldName = "QuantityOpen";
-        column.Name = "QuantityOpen";
+        column.FieldName = "QuantityOpen_";
+        column.Name = "QuantityOpen_";
         column.Caption = "Qty Open";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
@@ -211,6 +211,21 @@
         column.FieldName = "QuantityScan";
         column.Name = "QuantityScan";
         column.Caption = "Qty Scan";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 80;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "QuantityValid";
+        column.Name = "QuantityValid";
+        column.Caption = "Qty Valid";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 80;

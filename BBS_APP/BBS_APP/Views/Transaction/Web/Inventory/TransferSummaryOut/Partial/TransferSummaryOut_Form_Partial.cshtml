@@ -109,11 +109,11 @@
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
         itemSettings.Caption = "Request Id";
-        itemSettings.FieldName = "BaseEntry";
+        itemSettings.FieldName = "RequestId";
         itemSettings.ClientVisible = false;
 
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
-        txt.Name = "BaseEntry";
+        txt.Name = "RequestId";
         txt.ShowModelErrors = true;
         txt.ControlStyle.CssClass = "editornoimage";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
@@ -123,27 +123,28 @@
 
     groupItem_Col1.Items.Add(itemSettings =>
     {
-        itemSettings.Name = "grpBaseDocNum";
+        itemSettings.Name = "grpRequestNo";
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
         itemSettings.Caption = "Request No.";
-        itemSettings.FieldName = "BaseDocNum";
+        itemSettings.FieldName = "RequestNo";
         var txt = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
-        txt.Name = "BaseDocNum";
-        txt.ReadOnly = true;
+        txt.Name = "RequestNo";
+        txt.ReadOnly = Model.Id == 0? false : true;
         txt.ShowModelErrors = true;
         txt.Width = 230;
 
         txt.ControlStyle.CssClass = "editornoimage";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        //txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        if(Model.Id != 0)
+        {
+            txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        }
+
         txt.Properties.ValidationSettings.Display = Display.Dynamic;
-        //txt.Width = 100;
 
-        // Hide the default DropDown button
-        txt.Properties.DropDownButton.Visible = false;
-        txt.Properties.ButtonStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Properties.DropDownButton.Visible = false; 
 
-        if (Model.Status == "Draft")
+        if (Model.Status == "Draft" && Model.Id == 0)
         {
             EditButton lookUpButton = new EditButton();
             lookUpButton.Text = "";
@@ -506,7 +507,7 @@
             });
 
         });
-        
+
         group.Items.Add(item =>
         {
             item.Name = "TabScanRefList";
