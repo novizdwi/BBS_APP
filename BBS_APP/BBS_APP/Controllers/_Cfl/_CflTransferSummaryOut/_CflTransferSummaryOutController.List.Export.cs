@@ -20,14 +20,10 @@ namespace Controllers._Cfl
             var pageIndex = Request["hidden_CpGvFind_PageIndex"];
             var pageSize = Request["hidden_CpGvFind_PageSize"];
 
+            var cflTransferSummaryOutParam = GetParam(Request);
 
-            string branchCode = (string)Session["branchCode"];
-
-            var cflPoParam = GetParam(Request, userId);
-
-
-            List<CflTransferSummaryOut_View__> items = null;//CflPo_Model.GetDataList(userId, cflPoParam, filterExpression, sortExpression, Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize));
-            return GridViewExportHelper.ExportTypes["XLS"].Method(GridViewExportHelper.ExportGridViewSettings(cflPoParam), items);
+            List<CflTransferSummaryOut_View__> items = CflTransferSummaryOut_Model.GetDataList(userId, cflTransferSummaryOutParam, filterExpression, sortExpression, Convert.ToInt32(pageIndex), Convert.ToInt32(pageSize));
+            return GridViewExportHelper.ExportTypes["XLS"].Method(GridViewExportHelper.ExportGridViewSettings(cflTransferSummaryOutParam), items);
 
         }
 
@@ -71,19 +67,19 @@ namespace Controllers._Cfl
         public partial class GridViewExportHelper
         {
             static GridViewSettings exportGridViewSettings;
-            public static GridViewSettings ExportGridViewSettings(CflTransferSummaryOut_ParamModel cflPoParam)
+            public static GridViewSettings ExportGridViewSettings(CflTransferSummaryOut_ParamModel cflTransferSummaryOutParam)
             {
                 //get
                 //{
                 if (exportGridViewSettings == null)
-                    exportGridViewSettings = CreateExportGridViewSettings(cflPoParam);
+                    exportGridViewSettings = CreateExportGridViewSettings(cflTransferSummaryOutParam);
                 return exportGridViewSettings;
                 //}
             }
-            static GridViewSettings CreateExportGridViewSettings(CflTransferSummaryOut_ParamModel cflPoParam)
+            static GridViewSettings CreateExportGridViewSettings(CflTransferSummaryOut_ParamModel cflTransferSummaryOutParam)
             {
 
-                GridViewSettings settings = CflTransferSummaryOut_Model.CreateExportGridViewSettings(cflPoParam);
+                GridViewSettings settings = CflTransferSummaryOut_Model.CreateExportGridViewSettings(cflTransferSummaryOutParam);
 
 
                 return settings;
