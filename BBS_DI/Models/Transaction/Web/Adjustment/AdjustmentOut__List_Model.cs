@@ -16,16 +16,16 @@ using System.Data.Entity;
 using System.Threading.Tasks;
 
 
-namespace Models.Transaction.Web.Inventory
+namespace Models.Transaction.Web.Adjustment
 {
-    public class ListFindParamTransferIn
+    public class ListFindParamAdjustmentOut
     {
         public bool IsFindTransDate { get; set; }
         public DateTime? TransDate_From { get; set; }
         public DateTime? TransDate_To { get; set; }
     }
 
-    public class TransferInView___
+    public class AdjustmentOutView___
     {
         public long Id { get; set; }
 
@@ -33,45 +33,39 @@ namespace Models.Transaction.Web.Inventory
 
         public DateTime? TransDate { get; set; }
 
-        public string BaseDocNum { get; set; }
-
         public string VendorCode { get; set; }
 
         public string VendorName { get; set; }
 
-        public string FromWhsCode { get; set; }
-
-        public string FromWhsName { get; set; }
-
-        public string ToWhsCode { get; set; }
-
-        public string ToWhsName { get; set; }
-
         public DateTime? DocDate { get; set; }
 
-        public long? DocEntry { get; set; }
+        public string BaseDocNum { get; set; }
+
+        public string GrpoDocNum { get; set; }
 
         public string Status { get; set; }
 
-        public string Comments { get; set; }
+        public DateTime? StartDate { get; set; }
+
+        public DateTime? EndDate { get; set; }
 
     }
 
-    public class TransferIn__List_Model
+    public class AdjustmentOut__List_Model
     {
-        static string ViewSql = "SELECT T0.*, T1.\"TransNo\" AS \"SummaryOutTransNo\" " +
-                                "FROM \"Tx_TransferIn\" T0 " +
-                                "LEFT JOIN \"Tx_TransferSummaryOut\" T1 ON T0.\"BaseEntry\" =T1.\"Id\"  " +
-                                "ORDER BY T0.\"CreatedDate\" DESC";
+        static string ViewSql = "SELECT T0.*, T1.\"DocNum\" AS \"GrpoDocNum\" " +
+            "FROM \"Tx_AdjustmentOut\" T0 " +
+            "LEFT JOIN \""+ DbProvider.dbSap_Name + "\".\"OIGN\" T1 ON T0.\"DocEntry\" = T1.\"DocEntry\" "+
+        "ORDER BY T0.\"CreatedDate\" DESC";
 
-        public static void SetBindingData(GridViewModel state, int userId, ListFindParamTransferIn cflParam)
+        public static void SetBindingData(GridViewModel state, int userId, ListFindParamAdjustmentOut cflParam)
         {
             string sqlCriteria = GetSqlFromGridViewModelState.getHanaCriteria(state);
             string sqlSort = GetSqlFromGridViewModelState.getHanaSort(state);
 
             using (var CONTEXT = new HANA_APP())
             {
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "TransferIn");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "AdjustmentOut");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     if (string.IsNullOrEmpty(sqlCriteria))
@@ -106,12 +100,12 @@ namespace Models.Transaction.Web.Inventory
             e.DataRowCount = dataRowCount;
         }
 
-        public static void GetData(GridViewCustomBindingGetDataArgs e, List<TransferInView___> dataList)
+        public static void GetData(GridViewCustomBindingGetDataArgs e, List<AdjustmentOutView___> dataList)
         {
             e.Data = dataList;
         }
 
-        public static int GetRowCount(HANA_APP CONTEXT, int userId, ListFindParamTransferIn param, string sqlCriteria)
+        public static int GetRowCount(HANA_APP CONTEXT, int userId, ListFindParamAdjustmentOut param, string sqlCriteria)
         {
 
             if (sqlCriteria == null)
@@ -163,7 +157,7 @@ namespace Models.Transaction.Web.Inventory
             return dataRowCount;
         }
 
-        public static List<TransferInView___> GetDataList(HANA_APP CONTEXT, int userId, ListFindParamTransferIn param, string sqlCriteria, string sqlSort, int PageIndex, int PageSize)
+        public static List<AdjustmentOutView___> GetDataList(HANA_APP CONTEXT, int userId, ListFindParamAdjustmentOut param, string sqlCriteria, string sqlSort, int PageIndex, int PageSize)
         {
 
 
@@ -187,7 +181,7 @@ namespace Models.Transaction.Web.Inventory
                 sqlSort = " ORDER BY \"TransDate\" DESC ";
             }
 
-            var views = new List<TransferInView___>();
+            var views = new List<AdjustmentOutView___>();
 
             string ssql = "";
             ssql = "SELECT T0.* FROM (" + ViewSql + ") T0  WHERE 1=1 " + sqlCriteria;
@@ -202,32 +196,32 @@ namespace Models.Transaction.Web.Inventory
                     if ((param.TransDate_From != null) && (param.TransDate_To != null))
                     {
                         //ssql = ssql + " AND \"TransDate\">=:p0 AND \"TransDate\"<=:p1 ";
-                        views = CONTEXT.Database.SqlQuery<TransferInView___>(ssql + sqlSort + ssqlLimit, param.TransDate_From.Value.Date, param.TransDate_To.Value.Date).ToList();
+                        views = CONTEXT.Database.SqlQuery<AdjustmentOutView___>(ssql + sqlSort + ssqlLimit, param.TransDate_From.Value.Date, param.TransDate_To.Value.Date).ToList();
                     }
                     else if (param.TransDate_From != null)
                     {
                         //ssql = ssql + " AND \"TransDate\">=:p0 ";
-                        views = CONTEXT.Database.SqlQuery<TransferInView___>(ssql + sqlSort + ssqlLimit, param.TransDate_From.Value.Date).ToList();
+                        views = CONTEXT.Database.SqlQuery<AdjustmentOutView___>(ssql + sqlSort + ssqlLimit, param.TransDate_From.Value.Date).ToList();
                     }
                     else if (param.TransDate_To != null)
                     {
                         //ssql = ssql + " AND \"TransDate\"<=:p0 ";
-                        views = CONTEXT.Database.SqlQuery<TransferInView___>(ssql + sqlSort + ssqlLimit, param.TransDate_To.Value.Date).ToList();
+                        views = CONTEXT.Database.SqlQuery<AdjustmentOutView___>(ssql + sqlSort + ssqlLimit, param.TransDate_To.Value.Date).ToList();
                     }
                 }
                 else
                 {
-                    views = CONTEXT.Database.SqlQuery<TransferInView___>(ssql + sqlSort + ssqlLimit).ToList();
+                    views = CONTEXT.Database.SqlQuery<AdjustmentOutView___>(ssql + sqlSort + ssqlLimit).ToList();
                 }
             }
             else
             {
-                views = CONTEXT.Database.SqlQuery<TransferInView___>(ssql + sqlSort + ssqlLimit).ToList();
+                views = CONTEXT.Database.SqlQuery<AdjustmentOutView___>(ssql + sqlSort + ssqlLimit).ToList();
             }
 
             if (views.Count == 0)
             {
-                TransferInView___ view = new TransferInView___();
+                AdjustmentOutView___ view = new AdjustmentOutView___();
                 views.Add(view);
             }
 
@@ -257,10 +251,6 @@ namespace Models.Transaction.Web.Inventory
             settings.Columns.Add("TransDate", "Trans Date");
             settings.Columns.Add("VendorCode", "Vendor Code");
             settings.Columns.Add("VendorName", "Vendor Name");
-            settings.Columns.Add("FromWhsCode", "From Whs Code");
-            settings.Columns.Add("FromWhsName", "From Whs Name");
-            settings.Columns.Add("ToWhsCode", "To Whs Code");
-            settings.Columns.Add("ToWhsName", "To Whs Name");
             settings.Columns.Add("DocNum", "Doc Num");
             settings.Columns.Add("Status", "Status");
             return settings;

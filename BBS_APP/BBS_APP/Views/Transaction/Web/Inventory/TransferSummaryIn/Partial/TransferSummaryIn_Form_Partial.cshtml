@@ -108,13 +108,14 @@
 
     groupItem_Col1.Items.Add(itemSettings =>
     {
+        itemSettings.Name = "grpBaseId";
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
-        itemSettings.Caption = "Request Id";
-        itemSettings.FieldName = "BaseEntry";
+        itemSettings.Caption = "Transfer Out Id";
+        itemSettings.FieldName = "BaseId";
         itemSettings.ClientVisible = false;
 
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
-        txt.Name = "BaseEntry";
+        txt.Name = "BaseId";
         txt.ShowModelErrors = true;
         txt.ControlStyle.CssClass = "editornoimage";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
@@ -124,12 +125,12 @@
 
     groupItem_Col1.Items.Add(itemSettings =>
     {
-        itemSettings.Name = "grpBaseDocNum";
+        itemSettings.Name = "grpBaseTransNo";
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
         itemSettings.Caption = "Transfer Out No.";
-        itemSettings.FieldName = "BaseDocNum";
+        itemSettings.FieldName = "BaseTransNo";
         var txt = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
-        txt.Name = "BaseDocNum";
+        txt.Name = "BaseTransNo";
         txt.ReadOnly = true;
         txt.ShowModelErrors = true;
         txt.Width = 230;
@@ -144,7 +145,7 @@
         txt.Properties.DropDownButton.Visible = false;
         txt.Properties.ButtonStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
-        if (Model.Status == "Draft")
+        if (Model.Status == "Draft" && Model.Id == 0)
         {
             EditButton lookUpButton = new EditButton();
             lookUpButton.Text = "";
@@ -156,6 +157,25 @@
         }
 
     });
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.Name = "grpBaseType";
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "BaseType";
+        itemSettings.FieldName = "BaseType";
+        itemSettings.ClientVisible = false;
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "BaseType";
+        txt.ShowModelErrors = true;
+        txt.ReadOnly = true;
+        txt.ControlStyle.CssClass = "editor";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Width = 230;
+    });
+
 
     groupItem_Col1.Items.Add(itemSettings =>
     {

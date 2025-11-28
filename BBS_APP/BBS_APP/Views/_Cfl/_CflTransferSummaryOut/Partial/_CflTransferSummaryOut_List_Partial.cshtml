@@ -46,7 +46,7 @@
 @Html.DevExpress().GridView(settings =>
 {
     settings.Name = "gvCflTransferSummaryOutListGoodsReceiptPO";
-    settings.KeyFieldName = "DocEntry";
+    settings.KeyFieldName = "Id";
     settings.CallbackRouteValues = new { Controller = "_CflTransferSummaryOut", Action = "ListPartial" };
 
     if (cpGvFind_CflIsMulti == "N")
@@ -62,7 +62,7 @@
 
                  Html.DevExpress().HyperLink(settingsHL =>
                  {
-                     settingsHL.Name = "CflTransferSummaryOutChoose_" + cpGvFind_CflName + DataBinder.Eval(c.DataItem, "DocEntry") + "_" + Guid.NewGuid().ToString();
+                     settingsHL.Name = "CflTransferSummaryOutChoose_" + cpGvFind_CflName + DataBinder.Eval(c.DataItem, "Id") + "_" + Guid.NewGuid().ToString();
                      settingsHL.NavigateUrl = "javascript:void(0)";
                      settingsHL.Properties.Text = "Choose";
                      settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ OnClickChoose_CflTransferSummaryOut{1}(s, e, {0}); }}", new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(c.DataItem), cpGvFind_CflName);
@@ -98,13 +98,13 @@
     settings.Settings.ShowFilterRowMenu = true;
 
 
-    settings.Columns.Add("DocEntry", "DocEntry").Width = 0;
+    settings.Columns.Add("Id", "Id").Width = 0;
 
     settings.Columns.Add(column =>
     {
-        column.FieldName = "DocNum";
-        column.Name = "DocNum";
-        column.Caption = "Doc Num";
+        column.FieldName = "TransNo";
+        column.Name = "TransNo";
+        column.Caption = "Transfer Out No.";
         column.Width = 120;
         column.ColumnType = MVCxGridViewColumnType.TextBox;
 
@@ -123,8 +123,10 @@
         txt.EditFormatString = "dd/MM/yyyy";
     });
 
-    settings.Columns.Add("VendorCode", "Vendor Code").Width = 100;
-    settings.Columns.Add("VendorName", "Vendor Name").Width = 100;
+    settings.Columns.Add("FromWhsCode", "From Whs Code").Width = 100;
+    settings.Columns.Add("TransitWhsCode", "Transit Whs Code").Width = 100;
+    settings.Columns.Add("BaseType", "BaseType").Width = 0;
+    settings.Columns.Add("ToWhsCode", "To Whs Code").Width = 100;
 
 
     settings.SettingsPager.Position = PagerPosition.Bottom;

@@ -197,7 +197,9 @@
     <Compile Include="Models\Setting\ReportModel.cs" />
     <Compile Include="Models\Setting\Report__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Adjustment\AdjustmentIn.cs" />
+    <Compile Include="Models\Transaction\Web\Adjustment\AdjustmentOut__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Adjustment\AdjustmentOut.cs" />
+    <Compile Include="Models\Transaction\Web\Adjustment\AdjustmentIn__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\StockSummaryOpname__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\StockSummaryOpnameService.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\StockOpnameScanService.cs" />
@@ -508,7 +510,10 @@
     <Compile Include="Models\_EF\Tx_TransferSummaryIn_Item.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\_EF\Tx_TransferSummaryIn_Item_Tag.cs">
+    <Compile Include="Models\_EF\Tx_TransferSummaryIn_Item_tag.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_TransferSummaryIn_Item_Tag1.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\_EF\Tx_TransferSummaryIn_Ref.cs">

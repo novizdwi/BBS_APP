@@ -28,8 +28,9 @@ namespace Models._Cfl
 
     public class CflTransferSummaryOut_View__
     {
-        public int? DocEntry { get; set; }
-        public string DocNum { get; set; }
+        public int? Id { get; set; }
+        public string TransNo { get; set; }
+        public string BaseType { get; set; }
 
         public DateTime? TransDate { get; set; }
 
@@ -46,7 +47,7 @@ namespace Models._Cfl
     public class CflTransferSummaryOut_Model
     {
         public static string ssql = @"
-            SELECT DISTINCT T0.""Id"", T0.""TransNo"", 
+            SELECT DISTINCT T0.""Id"", T0.""TransNo"", T0.""TransType"" AS ""BaseType"",
                 T0.""TransDate"", 
                 T0.""FromWhsCode"", 
                 T0.""FromWhsName"", 
@@ -57,6 +58,7 @@ namespace Models._Cfl
                 T0.""Comments""
             FROM ""Tx_TransferSummaryOut"" T0
             WHERE T0.""Status"" = 'Posted' 
+
         ";
 
         public static void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e, int userId, CflTransferSummaryOut_ParamModel cflTransferSummaryOutParam)

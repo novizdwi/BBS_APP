@@ -100,6 +100,7 @@
        settings.Settings.ShowFilterRow = true;
        settings.Settings.ShowFilterRowMenu = true;
 
+       settings.Columns.Add("ActId", "COA Code");
        
        settings.Columns.Add(column =>
        {
@@ -111,10 +112,6 @@
 
            column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
        });
-
-       settings.Columns.Add("ActId", "COA Code");
-
-
 
        if (cpGvFind_PageIndex == 0)
        {

@@ -27,22 +27,23 @@ namespace Controllers._Cfl
             cflParam.Header = Request["hidden_CflHeader"];
             cflParam.SqlWhere = Request["hidden_CflSqlWhere"];
 
-            if (cflParam.Type == "InventoryReceipt")
+            if (cflParam.Type == "TransferSummaryIn")
             {
                 cflParam.SqlWhere = string.Format(@"                 
                 AND NOT EXISTS(
                     SELECT 1
-                    FROM ""Tx_TransferOut"" Ta
+                    FROM ""Tx_TransferIn"" Ta
                     WHERE Ta.""Status"" = 'Posted'
                     AND T0.""Id"" = Ta.""BaseEntry""
+                    AND COALESCE(Ta.""BaseEntry"", 0) != 0
                     AND NOT EXISTS(
                         SELECT 1
-                        FROM ""Tx_TransferSummaryOut"" Tx
-                        INNER JOIN ""Tx_TransferSummaryOut_Ref"" Ty ON Tx.""Id"" = Ty.""Id""
+                        FROM ""Tx_TransferSummaryIn"" Tx
+                        INNER JOIN ""Tx_TransferSummaryIn_Ref"" Ty ON Tx.""Id"" = Ty.""Id""
                         WHERE Ty.""BaseId"" = Ta.""Id""
                         AND Tx.""Status"" != 'Cancel'
                     )
-                ");
+               ) ");
             }
 
             cflParam.IsMulti = Request["hidden_CflIsMulti"];

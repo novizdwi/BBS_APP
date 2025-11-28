@@ -50,9 +50,11 @@ namespace Models.Transaction.Web.Inventory
 
         public string DocNum { get; set; }
 
-        public long? BaseEntry { get; set; }
+        public long? BaseId { get; set; }
 
-        public string BaseDocNum { get; set; }
+        public string BaseTransNo { get; set; }
+
+        public string BaseType { get; set; }
 
         public string VendorCode { get; set; }
 
@@ -169,9 +171,13 @@ namespace Models.Transaction.Web.Inventory
 
         public decimal? Quantity { get; set; }
 
-        public decimal? QuantityOpen { get; set; }
+        public decimal? QuantityOpen_ { get; set; }
 
         public decimal? QuantityScan { get; set; }
+
+        public decimal? QuantityValid { get; set; }
+
+        public decimal? QuantityPosted { get; set; }
 
         public int? UomEntry { get; set; }
 
@@ -181,9 +187,9 @@ namespace Models.Transaction.Web.Inventory
 
         public long? LineNum { get; set; }
 
-        public long? BaseEntry { get; set; }
+        public long? BaseId { get; set; }
 
-        public int? BaseLine { get; set; }
+        public int? BaseDetId { get; set; }
 
         public string LineStatus { get; set; }
     }
@@ -307,10 +313,11 @@ namespace Models.Transaction.Web.Inventory
 
         public List<TransferSummaryIn_DetailModel> TransferSummaryIn_Details(HANA_APP CONTEXT, long id = 0)
         {
-            string ssql = @"SELECT * 
-                FROM ""Tx_TransferSummaryIn_Item"" 
-                WHERE ""Id"" =:p0
-                ORDER BY ""DetId"" ASC
+            string ssql = @"SELECT T0.* , T1.""QuantityToReceipt"" AS ""QuantityOpen_"" 
+                FROM ""Tx_TransferSummaryIn_Item"" T0
+                LEFT JOIN ""Tx_TransferSummaryOut_Item"" T1 ON T0.""BaseDetId"" = T1.""DetId""
+                WHERE T0.""Id"" =:p0
+                ORDER BY T0.""DetId"" ASC
             ";
             var goodsReceiptPO = CONTEXT.Database.SqlQuery<TransferSummaryIn_DetailModel>(ssql, id).ToList();
             return goodsReceiptPO;
@@ -719,10 +726,16 @@ namespace Models.Transaction.Web.Inventory
                         String keyValue;
                         keyValue = id.ToString();
 
-
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryIn_UpdateItem\"(:p0,:p1, 'before')", userId, id);
+                        CONTEXT.SaveChanges();
                         SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", CONTEXT, "before", "Tx_TransferSummaryIn", "post", "Id", keyValue);
 
                         Tx_TransferSummaryIn tx_TransferSummaryIn = CONTEXT.Tx_TransferSummaryIn.Find(id);
+                        if (syncTransferSummaryIn.ListDetails_.All(q => !q.QuantityPosted.HasValue || q.QuantityPosted == 0))
+                        {
+                            throw new Exception("No record posted");
+                        }
+
                         if (tx_TransferSummaryIn != null)
                         {
                             string docEntry_ = AddTransferSummaryIn(oCompany, userId, id, syncTransferSummaryIn);
@@ -749,6 +762,8 @@ namespace Models.Transaction.Web.Inventory
 
                                 CONTEXT.SaveChanges();
 
+                                CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_TransferItemTag\"(:p0,:p1, 'TransferSummaryIn', 'A')", userId, id);
+                                CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryIn_UpdateItem\"(:p0,:p1, 'after')", userId, id);
                                 SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", CONTEXT, "after", "Tx_TransferSummaryIn", "post", "Id", keyValue);
 
                                 CONTEXT_TRANS.Commit();
@@ -819,12 +834,12 @@ namespace Models.Transaction.Web.Inventory
 
             if (model.ListDetails_.Count > 0)
             {
-                foreach (var item in model.ListDetails_)
+                foreach (var item in model.ListDetails_.Where(x => x.QuantityPosted.HasValue && x.QuantityPosted > 0))
                 {
                     oInventoryTransfer.Lines.ItemCode = item.ItemCode;
                     oInventoryTransfer.Lines.FromWarehouseCode = model.TransitWhsCode;
                     oInventoryTransfer.Lines.WarehouseCode = model.ToWhsCode;
-                    oInventoryTransfer.Lines.Quantity = (double)item.QuantityScan;
+                    oInventoryTransfer.Lines.Quantity = (double)item.QuantityPosted;
 
                     if (item.UomEntry != null)
                     {

@@ -22,8 +22,8 @@ namespace BBS_DI.Models._EF
         public Nullable<long> DocEntry { get; set; }
         public string DocNum { get; set; }
         public Nullable<System.DateTime> DocDate { get; set; }
-        public Nullable<long> BaseEntry { get; set; }
-        public string BaseDocNum { get; set; }
+        public Nullable<long> BaseId { get; set; }
+        public string BaseTransNo { get; set; }
         public string BaseType { get; set; }
         public string VendorCode { get; set; }
         public string VendorName { get; set; }
@@ -37,6 +37,7 @@ namespace BBS_DI.Models._EF
         public Nullable<int> PriceList { get; set; }
         public string PriceListName { get; set; }
         public string Status { get; set; }
+        public string ApprovalStatus { get; set; }
         public string IsAfterPosted { get; set; }
         public string Comments { get; set; }
         public string JournalRemarks { get; set; }

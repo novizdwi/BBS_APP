@@ -78,6 +78,14 @@
 
     settings.Columns.Add(column =>
     {
+        column.FieldName = "BaseDocNum";
+        column.Caption = "BaseDocNum";
+        column.Name = "Summary Out Trans No";
+        column.Width = Unit.Percentage(45);
+    });
+
+    settings.Columns.Add(column =>
+    {
         column.FieldName = "FromWhsName";
         column.Caption = "Warehouse Name";
         column.Name = "From Whs Name";

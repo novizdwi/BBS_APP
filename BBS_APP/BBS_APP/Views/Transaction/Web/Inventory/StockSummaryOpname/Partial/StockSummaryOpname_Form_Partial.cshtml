@@ -191,7 +191,7 @@
         txt.Properties.DropDownButton.Visible = false;
         txt.Properties.ButtonStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
-        if (Model.Status == "Draft")
+        if (Model.Status == "Draft" && Model.Id == 0)
         {
             EditButton lookUpButton = new EditButton();
             lookUpButton.Text = "";

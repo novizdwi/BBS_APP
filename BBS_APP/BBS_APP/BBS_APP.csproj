@@ -911,6 +911,8 @@
     <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.Tab.Attachment.cs" />
     <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.Tab.Attachment.Detail.cs" />
     <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.ViewItemTag.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentIn\AdjustmentInController.List.cs" />
+    <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentOut\AdjustmentOutController.List.cs" />
     <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentOut\AdjustmentOutController.CancelReason.cs" />
     <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentOut\AdjustmentOutController.cs" />
     <Compile Include="Controllers\Transaction\Web\Adjustment\AdjustmentOut\AdjustmentOutController.Nav.cs" />

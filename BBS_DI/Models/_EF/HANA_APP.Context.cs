@@ -95,6 +95,7 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_StockOpname> Tx_StockOpname { get; set; }
         public virtual DbSet<Tx_StockOpname_Item> Tx_StockOpname_Item { get; set; }
         public virtual DbSet<Tx_StockOpname_Item_Tag> Tx_StockOpname_Item_Tag { get; set; }
+        public virtual DbSet<Tx_StockSummaryOpname> Tx_StockSummaryOpname { get; set; }
         public virtual DbSet<Tx_StockSummaryOpname_Item> Tx_StockSummaryOpname_Item { get; set; }
         public virtual DbSet<Tx_StockSummaryOpname_Item_Tag> Tx_StockSummaryOpname_Item_Tag { get; set; }
         public virtual DbSet<Tx_StockSummaryOpname_Ref> Tx_StockSummaryOpname_Ref { get; set; }
@@ -104,16 +105,16 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_TransferOut> Tx_TransferOut { get; set; }
         public virtual DbSet<Tx_TransferOut_Item> Tx_TransferOut_Item { get; set; }
         public virtual DbSet<Tx_TransferOut_Item_Tag> Tx_TransferOut_Item_Tag { get; set; }
+        public virtual DbSet<Tx_TransferSummaryOut> Tx_TransferSummaryOut { get; set; }
+        public virtual DbSet<Tx_TransferSummaryOut_Item> Tx_TransferSummaryOut_Item { get; set; }
+        public virtual DbSet<Tx_TransferSummaryOut_Item_Tag> Tx_TransferSummaryOut_Item_Tag { get; set; }
+        public virtual DbSet<Tx_TransferSummaryOut_Ref> Tx_TransferSummaryOut_Ref { get; set; }
+        public virtual DbSet<Tx_TransferSummaryIn_Ref> Tx_TransferSummaryIn_Ref { get; set; }
         public virtual DbSet<Tx_TransferRequest> Tx_TransferRequest { get; set; }
         public virtual DbSet<Tx_TransferRequest_Item> Tx_TransferRequest_Item { get; set; }
         public virtual DbSet<Tx_TransferSummaryIn> Tx_TransferSummaryIn { get; set; }
         public virtual DbSet<Tx_TransferSummaryIn_Item> Tx_TransferSummaryIn_Item { get; set; }
-        public virtual DbSet<Tx_TransferSummaryIn_Item_Tag> Tx_TransferSummaryIn_Item_Tag { get; set; }
-        public virtual DbSet<Tx_TransferSummaryIn_Ref> Tx_TransferSummaryIn_Ref { get; set; }
-        public virtual DbSet<Tx_StockSummaryOpname> Tx_StockSummaryOpname { get; set; }
-        public virtual DbSet<Tx_TransferSummaryOut> Tx_TransferSummaryOut { get; set; }
-        public virtual DbSet<Tx_TransferSummaryOut_Item_Tag> Tx_TransferSummaryOut_Item_Tag { get; set; }
-        public virtual DbSet<Tx_TransferSummaryOut_Ref> Tx_TransferSummaryOut_Ref { get; set; }
-        public virtual DbSet<Tx_TransferSummaryOut_Item> Tx_TransferSummaryOut_Item { get; set; }
+        public virtual DbSet<Tx_TransferSummaryIn_Item_tag> Tx_TransferSummaryIn_Item_tag { get; set; }
+        public virtual DbSet<Tx_TransferSummaryIn_Item_Tag1> Tx_TransferSummaryIn_Item_Tag1 { get; set; }
     }
 }

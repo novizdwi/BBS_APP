@@ -739,16 +739,16 @@ namespace Models.Transaction.Web.Inventory
                         Tx_TransferSummaryOut tx_TransferSummaryOut = CONTEXT.Tx_TransferSummaryOut.Find(id);
                         if (tx_TransferSummaryOut != null)
                         {
-                            TransferSummaryOutAddResultModel TransferSummaryOutResult = new TransferSummaryOutAddResultModel();
-                            TransferSummaryOutResult.DocEntry = 4382.ToString();
+                            //TransferSummaryOutAddResultModel TransferSummaryOutResult = new TransferSummaryOutAddResultModel();
+                            //string docEntry_ = 4382.ToString();
 
-                            //TransferSummaryOutAddResultModel TransferSummaryOutResult = AddTransferSummaryOut(oCompany, userId, id, syncTransferSummaryOut);
+                            string docEntry_ = AddTransferSummaryOut(oCompany, userId, id, syncTransferSummaryOut);
 
-                            if (!string.IsNullOrEmpty(TransferSummaryOutResult.DocEntry))
+                            if (!string.IsNullOrEmpty(docEntry_))
                             {
                                 string ssql = @"SELECT ""DocNum"" 
                                             FROM """ + DbProvider.dbSap_Name + @""".""OWTR"" T0
-                                            WHERE T0.""DocEntry"" = " + TransferSummaryOutResult.DocEntry + @" 
+                                            WHERE T0.""DocEntry"" = " + docEntry_ + @" 
                                             ";
 
                                 string docNum = CONTEXT.Database.SqlQuery<string>(ssql, id).FirstOrDefault();
@@ -756,7 +756,7 @@ namespace Models.Transaction.Web.Inventory
                                 DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
 
                                 tx_TransferSummaryOut.PostingDate = dtModified;
-                                tx_TransferSummaryOut.DocEntry = Convert.ToInt64(TransferSummaryOutResult.DocEntry);
+                                tx_TransferSummaryOut.DocEntry = Convert.ToInt64(docEntry_);
                                 tx_TransferSummaryOut.DocNum = docNum;
                                 tx_TransferSummaryOut.PostingDate = dtModified;
 
@@ -809,9 +809,9 @@ namespace Models.Transaction.Web.Inventory
 
         }
 
-        private TransferSummaryOutAddResultModel AddTransferSummaryOut(Company oCompany, int userId, long id, TransferSummaryOutModel model)
+        private string AddTransferSummaryOut(Company oCompany, int userId, long id, TransferSummaryOutModel model)
         {
-            TransferSummaryOutAddResultModel result = new TransferSummaryOutAddResultModel();
+            string result ;
 
             int nErr;
             string errMsg;
@@ -883,8 +883,7 @@ namespace Models.Transaction.Web.Inventory
 
                 throw new Exception("[VALIDATION] - Add Transfer Summary Out : " + nErr.ToString() + "|" + errMsg);
             }
-            result.DocEntry = oCompany.GetNewObjectKey();
-            result.LineMapping = insertedLineIds;
+            result = oCompany.GetNewObjectKey();
 
             return result;
         }
