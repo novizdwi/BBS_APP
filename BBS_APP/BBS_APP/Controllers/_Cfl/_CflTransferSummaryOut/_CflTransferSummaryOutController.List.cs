@@ -30,7 +30,7 @@ namespace Controllers._Cfl
             if (cflParam.Type == "TransferSummaryIn")
             {
                 cflParam.SqlWhere = string.Format(@"                 
-                AND NOT EXISTS(
+                AND EXISTS(
                     SELECT 1
                     FROM ""Tx_TransferIn"" Ta
                     WHERE Ta.""Status"" = 'Posted'

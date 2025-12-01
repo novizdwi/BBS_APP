@@ -295,6 +295,7 @@
           <Property Name="OnHand" Type="decimal" Precision="21" Scale="6" />
           <Property Name="IsCommitted" Type="decimal" Precision="21" Scale="2" />
           <Property Name="OnOrder" Type="decimal" Precision="21" Scale="2" />
+          <Property Name="DeactiveRemarks" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Tm_Item_Warehouse_Tag_Log">
           <Key>
@@ -862,6 +863,36 @@
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
         </EntityType>
+        <EntityType Name="Tx_DeactiveTag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransType" Type="nvarchar" MaxLength="50" />
+          <Property Name="TransNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="TransDate" Type="timestamp" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="PostingDate" Type="timestamp" />
+          <Property Name="CreatedDate" Type="timestamp" />
+          <Property Name="CreatedUser" Type="int" />
+          <Property Name="ModifiedDate" Type="timestamp" />
+          <Property Name="ModifiedUser" Type="int" />
+        </EntityType>
+        <EntityType Name="Tx_DeactiveTag_Item">
+          <Key>
+            <PropertyRef Name="TagId" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="TagId" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
+          <Property Name="FreeText" Type="nvarchar" MaxLength="1000" />
+          <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="timestamp" />
+          <Property Name="CreatedUser" Type="int" />
+          <Property Name="ModifiedDate" Type="timestamp" />
+          <Property Name="ModifiedUser" Type="int" />
+        </EntityType>
         <EntityType Name="Tx_GoodIssue">
           <Key>
             <PropertyRef Name="Id" />
@@ -1407,6 +1438,7 @@
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
+          <Property Name="ApprovalStatus" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Tx_TransferRequest_Item">
           <Key>
@@ -1431,6 +1463,7 @@
           <Property Name="Uom" Type="nvarchar" MaxLength="50" />
           <Property Name="Comments" Type="nvarchar" MaxLength="254" />
           <Property Name="FreeText" Type="nvarchar" MaxLength="200" />
+          <Property Name="LineStatus" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Tx_TransferSummaryIn">
           <Key>
@@ -1624,7 +1657,8 @@
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
-          <Property Name="QuantityReceipt" Type="decimal" Precision="21" Scale="2" />
+          <Property Name="QuantityToReceipt" Type="decimal" Precision="21" Scale="2" />
+          <Property Name="LineStatus" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Tx_TransferSummaryOut_Item_Tag">
           <Key>
@@ -1724,6 +1758,8 @@
           <EntitySet Name="Tx_AdjustmentOut_Item" EntityType="Self.Tx_AdjustmentOut_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tx_AdjustmentOut_Item_Tag" EntityType="Self.Tx_AdjustmentOut_Item_Tag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tx_AdjustmentOut_Location" EntityType="Self.Tx_AdjustmentOut_Location" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
+          <EntitySet Name="Tx_DeactiveTag" EntityType="Self.Tx_DeactiveTag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
+          <EntitySet Name="Tx_DeactiveTag_Item" EntityType="Self.Tx_DeactiveTag_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tx_GoodIssue" EntityType="Self.Tx_GoodIssue" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tx_GoodsReceiptPO" EntityType="Self.Tx_GoodsReceiptPO" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tx_GoodsReceiptPO_Item" EntityType="Self.Tx_GoodsReceiptPO_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
@@ -1843,14 +1879,16 @@
           <EntitySet Name="Tx_TransferOut" EntityType="Model1.Tx_TransferOut" />
           <EntitySet Name="Tx_TransferOut_Item" EntityType="Model1.Tx_TransferOut_Item" />
           <EntitySet Name="Tx_TransferOut_Item_Tag" EntityType="Model1.Tx_TransferOut_Item_Tag" />
+          <EntitySet Name="Tx_TransferRequest" EntityType="Model1.Tx_TransferRequest" />
+          <EntitySet Name="Tx_TransferRequest_Item" EntityType="Model1.Tx_TransferRequest_Item" />
+          <EntitySet Name="Tx_TransferSummaryIn" EntityType="Model1.Tx_TransferSummaryIn" />
+          <EntitySet Name="Tx_TransferSummaryIn_Ref" EntityType="Model1.Tx_TransferSummaryIn_Ref" />
           <EntitySet Name="Tx_TransferSummaryOut" EntityType="Model1.Tx_TransferSummaryOut" />
           <EntitySet Name="Tx_TransferSummaryOut_Item" EntityType="Model1.Tx_TransferSummaryOut_Item" />
           <EntitySet Name="Tx_TransferSummaryOut_Item_Tag" EntityType="Model1.Tx_TransferSummaryOut_Item_Tag" />
           <EntitySet Name="Tx_TransferSummaryOut_Ref" EntityType="Model1.Tx_TransferSummaryOut_Ref" />
-          <EntitySet Name="Tx_TransferSummaryIn_Ref" EntityType="Model1.Tx_TransferSummaryIn_Ref" />
-          <EntitySet Name="Tx_TransferRequest" EntityType="Model1.Tx_TransferRequest" />
-          <EntitySet Name="Tx_TransferRequest_Item" EntityType="Model1.Tx_TransferRequest_Item" />
-          <EntitySet Name="Tx_TransferSummaryIn" EntityType="Model1.Tx_TransferSummaryIn" />
+          <EntitySet Name="Tx_DeactiveTag" EntityType="Model1.Tx_DeactiveTag" />
+          <EntitySet Name="Tx_DeactiveTag_Item" EntityType="Model1.Tx_DeactiveTag_Item" />
           <EntitySet Name="Tx_TransferSummaryIn_Item" EntityType="Model1.Tx_TransferSummaryIn_Item" />
           <EntitySet Name="Tx_TransferSummaryIn_Item_tag" EntityType="Model1.Tx_TransferSummaryIn_Item_tag" />
           <EntitySet Name="Tx_TransferSummaryIn_Item_Tag1" EntityType="Model1.Tx_TransferSummaryIn_Item_Tag1" />
@@ -2145,6 +2183,7 @@
           <Property Name="OnHand" Type="Decimal" Precision="21" Scale="6" />
           <Property Name="IsCommitted" Type="Decimal" Precision="21" Scale="2" />
           <Property Name="OnOrder" Type="Decimal" Precision="21" Scale="2" />
+          <Property Name="DeactiveRemarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tm_Item_Warehouse_Tag_Log">
           <Key>
@@ -3228,6 +3267,117 @@
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
+        <EntityType Name="Tx_TransferRequest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TransNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TransDate" Type="DateTime" />
+          <Property Name="DocEntry" Type="Int64" />
+          <Property Name="DocNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DocDate" Type="DateTime" />
+          <Property Name="VendorCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VendorName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="FromWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FromWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ToWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ToWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PriceList" Type="Int32" />
+          <Property Name="PriceListName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsAfterPosted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="JournalRemarks" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="CancelReason" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
+          <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Tx_TransferRequest_Item">
+          <Key>
+            <PropertyRef Name="DetId" />
+          </Key>
+          <Property Name="Id" Type="Int64" />
+          <Property Name="DetId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
+          <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FromWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FromWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ToWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ToWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="21" Scale="2" />
+          <Property Name="QuantityOpen" Type="Decimal" Precision="21" Scale="2" />
+          <Property Name="QuantityScan" Type="Decimal" Precision="21" Scale="2" />
+          <Property Name="UomEntry" Type="Int32" />
+          <Property Name="Uom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="FreeText" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LineStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Tx_TransferSummaryIn">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TransNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TransDate" Type="DateTime" />
+          <Property Name="PostingDate" Type="DateTime" />
+          <Property Name="DocEntry" Type="Int64" />
+          <Property Name="DocNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DocDate" Type="DateTime" />
+          <Property Name="BaseId" Type="Int64" />
+          <Property Name="BaseTransNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BaseType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VendorCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VendorName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="FromWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FromWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TransitWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TransitWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ToWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ToWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PriceList" Type="Int32" />
+          <Property Name="PriceListName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsAfterPosted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="JournalRemarks" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="CancelReason" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Tx_TransferSummaryIn_Ref">
+          <Key>
+            <PropertyRef Name="DetId" />
+          </Key>
+          <Property Name="Id" Type="Int64" />
+          <Property Name="DetId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BaseId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BaseNo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ScanDeviceId" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BaseCreatedDate" Type="DateTime" />
+          <Property Name="BaseCreatedUser" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
+        </EntityType>
         <EntityType Name="Tx_TransferSummaryOut">
           <Key>
             <PropertyRef Name="Id" />
@@ -3293,7 +3443,8 @@
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
-          <Property Name="QuantityReceipt" Type="Decimal" Precision="21" Scale="2" />
+          <Property Name="QuantityToReceipt" Type="Decimal" Precision="21" Scale="2" />
+          <Property Name="LineStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tx_TransferSummaryOut_Item_Tag">
           <Key>
@@ -3334,25 +3485,7 @@
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
-        <EntityType Name="Tx_TransferSummaryIn_Ref">
-          <Key>
-            <PropertyRef Name="DetId" />
-          </Key>
-          <Property Name="Id" Type="Int64" />
-          <Property Name="DetId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BaseId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BaseNo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ScanDeviceId" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BaseCreatedDate" Type="DateTime" />
-          <Property Name="BaseCreatedUser" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" />
-          <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
-        </EntityType>
-        <EntityType Name="Tx_TransferRequest">
+        <EntityType Name="Tx_DeactiveTag">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -3360,84 +3493,23 @@
           <Property Name="TransType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TransNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TransDate" Type="DateTime" />
-          <Property Name="DocEntry" Type="Int64" />
-          <Property Name="DocNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DocDate" Type="DateTime" />
-          <Property Name="VendorCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="VendorName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-          <Property Name="FromWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FromWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ToWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ToWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="PriceList" Type="Int32" />
-          <Property Name="PriceListName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsAfterPosted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-          <Property Name="JournalRemarks" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-          <Property Name="CancelReason" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="Remarks" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PostingDate" Type="DateTime" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
-        <EntityType Name="Tx_TransferRequest_Item">
+        <EntityType Name="Tx_DeactiveTag_Item">
           <Key>
-            <PropertyRef Name="DetId" />
+            <PropertyRef Name="TagId" />
           </Key>
-          <Property Name="Id" Type="Int64" />
-          <Property Name="DetId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CreatedDate" Type="DateTime" />
-          <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="TagId" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="FromWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FromWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ToWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ToWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Quantity" Type="Decimal" Precision="21" Scale="2" />
-          <Property Name="QuantityOpen" Type="Decimal" Precision="21" Scale="2" />
-          <Property Name="QuantityScan" Type="Decimal" Precision="21" Scale="2" />
-          <Property Name="UomEntry" Type="Int32" />
-          <Property Name="Uom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-          <Property Name="FreeText" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Tx_TransferSummaryIn">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TransType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TransNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TransDate" Type="DateTime" />
-          <Property Name="PostingDate" Type="DateTime" />
-          <Property Name="DocEntry" Type="Int64" />
-          <Property Name="DocNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DocDate" Type="DateTime" />
-          <Property Name="BaseId" Type="Int64" />
-          <Property Name="BaseTransNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BaseType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="VendorCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="VendorName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-          <Property Name="FromWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FromWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="TransitWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TransitWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ToWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ToWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="PriceList" Type="Int32" />
-          <Property Name="PriceListName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsAfterPosted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-          <Property Name="JournalRemarks" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-          <Property Name="CancelReason" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="FreeText" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
@@ -3814,6 +3886,7 @@
           <EntitySetMapping Name="Tm_Item_Warehouse_Tag">
             <EntityTypeMapping TypeName="Model1.Tm_Item_Warehouse_Tag">
               <MappingFragment StoreEntitySet="Tm_Item_Warehouse_Tag">
+                <ScalarProperty Name="DeactiveRemarks" ColumnName="DeactiveRemarks" />
                 <ScalarProperty Name="OnOrder" ColumnName="OnOrder" />
                 <ScalarProperty Name="IsCommitted" ColumnName="IsCommitted" />
                 <ScalarProperty Name="OnHand" ColumnName="OnHand" />
@@ -4971,6 +5044,121 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Tx_TransferRequest">
+            <EntityTypeMapping TypeName="Model1.Tx_TransferRequest">
+              <MappingFragment StoreEntitySet="Tx_TransferRequest">
+                <ScalarProperty Name="ApprovalStatus" ColumnName="ApprovalStatus" />
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CancelReason" ColumnName="CancelReason" />
+                <ScalarProperty Name="JournalRemarks" ColumnName="JournalRemarks" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="IsAfterPosted" ColumnName="IsAfterPosted" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PriceListName" ColumnName="PriceListName" />
+                <ScalarProperty Name="PriceList" ColumnName="PriceList" />
+                <ScalarProperty Name="ToWhsName" ColumnName="ToWhsName" />
+                <ScalarProperty Name="ToWhsCode" ColumnName="ToWhsCode" />
+                <ScalarProperty Name="FromWhsName" ColumnName="FromWhsName" />
+                <ScalarProperty Name="FromWhsCode" ColumnName="FromWhsCode" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
+                <ScalarProperty Name="VendorCode" ColumnName="VendorCode" />
+                <ScalarProperty Name="DocDate" ColumnName="DocDate" />
+                <ScalarProperty Name="DocNum" ColumnName="DocNum" />
+                <ScalarProperty Name="DocEntry" ColumnName="DocEntry" />
+                <ScalarProperty Name="TransDate" ColumnName="TransDate" />
+                <ScalarProperty Name="TransNo" ColumnName="TransNo" />
+                <ScalarProperty Name="TransType" ColumnName="TransType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tx_TransferRequest_Item">
+            <EntityTypeMapping TypeName="Model1.Tx_TransferRequest_Item">
+              <MappingFragment StoreEntitySet="Tx_TransferRequest_Item">
+                <ScalarProperty Name="LineStatus" ColumnName="LineStatus" />
+                <ScalarProperty Name="FreeText" ColumnName="FreeText" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Uom" ColumnName="Uom" />
+                <ScalarProperty Name="UomEntry" ColumnName="UomEntry" />
+                <ScalarProperty Name="QuantityScan" ColumnName="QuantityScan" />
+                <ScalarProperty Name="QuantityOpen" ColumnName="QuantityOpen" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ToWhsName" ColumnName="ToWhsName" />
+                <ScalarProperty Name="ToWhsCode" ColumnName="ToWhsCode" />
+                <ScalarProperty Name="FromWhsName" ColumnName="FromWhsName" />
+                <ScalarProperty Name="FromWhsCode" ColumnName="FromWhsCode" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="DetId" ColumnName="DetId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tx_TransferSummaryIn">
+            <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryIn">
+              <MappingFragment StoreEntitySet="Tx_TransferSummaryIn">
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CancelReason" ColumnName="CancelReason" />
+                <ScalarProperty Name="JournalRemarks" ColumnName="JournalRemarks" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="IsAfterPosted" ColumnName="IsAfterPosted" />
+                <ScalarProperty Name="ApprovalStatus" ColumnName="ApprovalStatus" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PriceListName" ColumnName="PriceListName" />
+                <ScalarProperty Name="PriceList" ColumnName="PriceList" />
+                <ScalarProperty Name="ToWhsName" ColumnName="ToWhsName" />
+                <ScalarProperty Name="ToWhsCode" ColumnName="ToWhsCode" />
+                <ScalarProperty Name="TransitWhsName" ColumnName="TransitWhsName" />
+                <ScalarProperty Name="TransitWhsCode" ColumnName="TransitWhsCode" />
+                <ScalarProperty Name="FromWhsName" ColumnName="FromWhsName" />
+                <ScalarProperty Name="FromWhsCode" ColumnName="FromWhsCode" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
+                <ScalarProperty Name="VendorCode" ColumnName="VendorCode" />
+                <ScalarProperty Name="BaseType" ColumnName="BaseType" />
+                <ScalarProperty Name="BaseTransNo" ColumnName="BaseTransNo" />
+                <ScalarProperty Name="BaseId" ColumnName="BaseId" />
+                <ScalarProperty Name="DocDate" ColumnName="DocDate" />
+                <ScalarProperty Name="DocNum" ColumnName="DocNum" />
+                <ScalarProperty Name="DocEntry" ColumnName="DocEntry" />
+                <ScalarProperty Name="PostingDate" ColumnName="PostingDate" />
+                <ScalarProperty Name="TransDate" ColumnName="TransDate" />
+                <ScalarProperty Name="TransNo" ColumnName="TransNo" />
+                <ScalarProperty Name="TransType" ColumnName="TransType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tx_TransferSummaryIn_Ref">
+            <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryIn_Ref">
+              <MappingFragment StoreEntitySet="Tx_TransferSummaryIn_Ref">
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="BaseCreatedUser" ColumnName="BaseCreatedUser" />
+                <ScalarProperty Name="BaseCreatedDate" ColumnName="BaseCreatedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="ScanDeviceId" ColumnName="ScanDeviceId" />
+                <ScalarProperty Name="BaseNo" ColumnName="BaseNo" />
+                <ScalarProperty Name="BaseId" ColumnName="BaseId" />
+                <ScalarProperty Name="DetId" ColumnName="DetId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tx_TransferSummaryOut">
             <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryOut">
               <MappingFragment StoreEntitySet="Tx_TransferSummaryOut">
@@ -5012,7 +5200,8 @@
           <EntitySetMapping Name="Tx_TransferSummaryOut_Item">
             <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryOut_Item">
               <MappingFragment StoreEntitySet="Tx_TransferSummaryOut_Item">
-                <ScalarProperty Name="QuantityReceipt" ColumnName="QuantityReceipt" />
+                <ScalarProperty Name="LineStatus" ColumnName="LineStatus" />
+                <ScalarProperty Name="QuantityToReceipt" ColumnName="QuantityToReceipt" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -5081,49 +5270,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tx_TransferSummaryIn_Ref">
-            <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryIn_Ref">
-              <MappingFragment StoreEntitySet="Tx_TransferSummaryIn_Ref">
+          <EntitySetMapping Name="Tx_DeactiveTag">
+            <EntityTypeMapping TypeName="Model1.Tx_DeactiveTag">
+              <MappingFragment StoreEntitySet="Tx_DeactiveTag">
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="BaseCreatedUser" ColumnName="BaseCreatedUser" />
-                <ScalarProperty Name="BaseCreatedDate" ColumnName="BaseCreatedDate" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="ScanDeviceId" ColumnName="ScanDeviceId" />
-                <ScalarProperty Name="BaseNo" ColumnName="BaseNo" />
-                <ScalarProperty Name="BaseId" ColumnName="BaseId" />
-                <ScalarProperty Name="DetId" ColumnName="DetId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tx_TransferRequest">
-            <EntityTypeMapping TypeName="Model1.Tx_TransferRequest">
-              <MappingFragment StoreEntitySet="Tx_TransferRequest">
-                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CancelReason" ColumnName="CancelReason" />
-                <ScalarProperty Name="JournalRemarks" ColumnName="JournalRemarks" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="IsAfterPosted" ColumnName="IsAfterPosted" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="PriceListName" ColumnName="PriceListName" />
-                <ScalarProperty Name="PriceList" ColumnName="PriceList" />
-                <ScalarProperty Name="ToWhsName" ColumnName="ToWhsName" />
-                <ScalarProperty Name="ToWhsCode" ColumnName="ToWhsCode" />
-                <ScalarProperty Name="FromWhsName" ColumnName="FromWhsName" />
-                <ScalarProperty Name="FromWhsCode" ColumnName="FromWhsCode" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
-                <ScalarProperty Name="VendorCode" ColumnName="VendorCode" />
-                <ScalarProperty Name="DocDate" ColumnName="DocDate" />
-                <ScalarProperty Name="DocNum" ColumnName="DocNum" />
-                <ScalarProperty Name="DocEntry" ColumnName="DocEntry" />
+                <ScalarProperty Name="PostingDate" ColumnName="PostingDate" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="TransDate" ColumnName="TransDate" />
                 <ScalarProperty Name="TransNo" ColumnName="TransNo" />
                 <ScalarProperty Name="TransType" ColumnName="TransType" />
@@ -5131,65 +5286,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tx_TransferRequest_Item">
-            <EntityTypeMapping TypeName="Model1.Tx_TransferRequest_Item">
-              <MappingFragment StoreEntitySet="Tx_TransferRequest_Item">
+          <EntitySetMapping Name="Tx_DeactiveTag_Item">
+            <EntityTypeMapping TypeName="Model1.Tx_DeactiveTag_Item">
+              <MappingFragment StoreEntitySet="Tx_DeactiveTag_Item">
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="WhsCode" ColumnName="WhsCode" />
                 <ScalarProperty Name="FreeText" ColumnName="FreeText" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="Uom" ColumnName="Uom" />
-                <ScalarProperty Name="UomEntry" ColumnName="UomEntry" />
-                <ScalarProperty Name="QuantityScan" ColumnName="QuantityScan" />
-                <ScalarProperty Name="QuantityOpen" ColumnName="QuantityOpen" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="ToWhsName" ColumnName="ToWhsName" />
-                <ScalarProperty Name="ToWhsCode" ColumnName="ToWhsCode" />
-                <ScalarProperty Name="FromWhsName" ColumnName="FromWhsName" />
-                <ScalarProperty Name="FromWhsCode" ColumnName="FromWhsCode" />
                 <ScalarProperty Name="ItemName" ColumnName="ItemName" />
                 <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
-                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="DetId" ColumnName="DetId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tx_TransferSummaryIn">
-            <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryIn">
-              <MappingFragment StoreEntitySet="Tx_TransferSummaryIn">
-                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CancelReason" ColumnName="CancelReason" />
-                <ScalarProperty Name="JournalRemarks" ColumnName="JournalRemarks" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="IsAfterPosted" ColumnName="IsAfterPosted" />
-                <ScalarProperty Name="ApprovalStatus" ColumnName="ApprovalStatus" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="PriceListName" ColumnName="PriceListName" />
-                <ScalarProperty Name="PriceList" ColumnName="PriceList" />
-                <ScalarProperty Name="ToWhsName" ColumnName="ToWhsName" />
-                <ScalarProperty Name="ToWhsCode" ColumnName="ToWhsCode" />
-                <ScalarProperty Name="TransitWhsName" ColumnName="TransitWhsName" />
-                <ScalarProperty Name="TransitWhsCode" ColumnName="TransitWhsCode" />
-                <ScalarProperty Name="FromWhsName" ColumnName="FromWhsName" />
-                <ScalarProperty Name="FromWhsCode" ColumnName="FromWhsCode" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
-                <ScalarProperty Name="VendorCode" ColumnName="VendorCode" />
-                <ScalarProperty Name="BaseType" ColumnName="BaseType" />
-                <ScalarProperty Name="BaseTransNo" ColumnName="BaseTransNo" />
-                <ScalarProperty Name="BaseId" ColumnName="BaseId" />
-                <ScalarProperty Name="DocDate" ColumnName="DocDate" />
-                <ScalarProperty Name="DocNum" ColumnName="DocNum" />
-                <ScalarProperty Name="DocEntry" ColumnName="DocEntry" />
-                <ScalarProperty Name="PostingDate" ColumnName="PostingDate" />
-                <ScalarProperty Name="TransDate" ColumnName="TransDate" />
-                <ScalarProperty Name="TransNo" ColumnName="TransNo" />
-                <ScalarProperty Name="TransType" ColumnName="TransType" />
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

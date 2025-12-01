@@ -432,6 +432,12 @@
     <Compile Include="Models\_EF\Tx_AdjustmentOut_Location.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\_EF\Tx_DeactiveTag.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_DeactiveTag_Item.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\_EF\Tx_GoodIssue.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>

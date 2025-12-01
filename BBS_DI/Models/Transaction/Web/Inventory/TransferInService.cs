@@ -64,6 +64,10 @@ namespace Models.Transaction.Web.Inventory
 
         public long? DocEntry { get; set; }
 
+        public string BaseEntry { get; set; }
+
+        public string BaseDocNum { get; set; }
+
         public string DocNum { get; set; }
 
         public string RefNo { get; set; }
