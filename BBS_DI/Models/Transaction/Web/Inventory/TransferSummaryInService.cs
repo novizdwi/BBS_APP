@@ -720,14 +720,15 @@ namespace Models.Transaction.Web.Inventory
                 {
                     try
                     {
-                        oCompany = SAPCachedCompany.GetCompany();
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryIn_UpdateItem\"(:p0,:p1, 'before')", userId, id);
+                        CONTEXT.SaveChanges();
+
                         //oCompany.StartTransaction();
+                        oCompany = SAPCachedCompany.GetCompany();
 
                         String keyValue;
                         keyValue = id.ToString();
 
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryIn_UpdateItem\"(:p0,:p1, 'before')", userId, id);
-                        CONTEXT.SaveChanges();
                         SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", CONTEXT, "before", "Tx_TransferSummaryIn", "post", "Id", keyValue);
 
                         Tx_TransferSummaryIn tx_TransferSummaryIn = CONTEXT.Tx_TransferSummaryIn.Find(id);
