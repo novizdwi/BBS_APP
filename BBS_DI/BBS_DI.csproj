@@ -216,6 +216,8 @@
     <Compile Include="Models\Transaction\Web\Inventory\TransferRequestService.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\TransferOut__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\TransferRequest__List_Model.cs" />
+    <Compile Include="Models\Transaction\Web\Item\DeactiveTag.cs" />
+    <Compile Include="Models\Transaction\Web\Item\DeactiveTag__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Purchasing\GoodsReceiptPOService.cs" />
     <Compile Include="Models\Transaction\Web\Purchasing\PurchaseOrderScanService.cs" />
     <Compile Include="Models\Transaction\Web\Purchasing\GoodsReceiptPO__List_Model.cs" />

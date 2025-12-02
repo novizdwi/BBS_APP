@@ -17,9 +17,12 @@ namespace BBS_DI.Models._EF
         public long Id { get; set; }
         public string TransType { get; set; }
         public string TransNo { get; set; }
+        public string ScanDeviceId { get; set; }
         public Nullable<System.DateTime> TransDate { get; set; }
-        public string Remarks { get; set; }
         public Nullable<System.DateTime> PostingDate { get; set; }
+        public string Status { get; set; }
+        public string Remarks { get; set; }
+        public string CancelReason { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedUser { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }

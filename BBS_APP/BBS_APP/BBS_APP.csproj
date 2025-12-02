@@ -820,6 +820,16 @@
     <Content Include="Views\Transaction\Web\Inventory\TransferSummaryIn\Partial\TransferSummaryIn_Form_TabRef_Partial.cshtml" />
     <Content Include="Views\_Cfl\_CflTransferSummaryOut\Partial\_CflTransferSummaryOut_List_Partial.cshtml" />
     <Content Include="Views\_Cfl\_CflTransferSummaryOut\Partial\_CflTransferSummaryOut_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Item\DeactiveTag\DeactiveTag.cshtml" />
+    <Content Include="Views\Transaction\Web\Item\DeactiveTag\Partial\DeactiveTag_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Item\DeactiveTag\Partial\DeactiveTag_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Item\DeactiveTag\Partial\DeactiveTag_Form_TabDetail_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Item\DeactiveTag\Partial\DeactiveTag_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Item\DeactiveTag\Partial\DeactiveTag_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Item\DeactiveTag\Partial\ItemTag\ItemTag_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Item\DeactiveTag\Partial\ItemTag\ItemTag_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Item\DeactiveTag\Partial\ItemTag\ItemTag_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Item\DeactiveTag\Partial\ItemTag\ItemTag_TabItemTagList_List_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -965,6 +975,13 @@
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferSummaryOut\TransferSummaryOutController.List.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferSummaryOut\TransferSummaryOutController.Nav.cs" />
     <Compile Include="Controllers\Transaction\Web\Inventory\TransferSummaryOut\TransferSummaryOutController.ViewItemTag.cs" />
+    <Compile Include="Controllers\Transaction\Web\Item\DeactiveTag\DeactiveTagController.CancelReason.cs" />
+    <Compile Include="Controllers\Transaction\Web\Item\DeactiveTag\DeactiveTagController.cs" />
+    <Compile Include="Controllers\Transaction\Web\Item\DeactiveTag\DeactiveTagController.List.cs" />
+    <Compile Include="Controllers\Transaction\Web\Item\DeactiveTag\DeactiveTagController.Nav.cs" />
+    <Compile Include="Controllers\Transaction\Web\Item\DeactiveTag\DeactiveTagController.Tab.Attachment.cs" />
+    <Compile Include="Controllers\Transaction\Web\Item\DeactiveTag\DeactiveTagController.Tab.Attachment.Detail.cs" />
+    <Compile Include="Controllers\Transaction\Web\Item\DeactiveTag\DeactiveTagController.ViewItemTag.cs" />
     <Compile Include="Controllers\Transaction\Web\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.cs" />
     <Compile Include="Controllers\Transaction\Web\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.List.cs" />
     <Compile Include="Controllers\Transaction\Web\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.Nav.cs" />
