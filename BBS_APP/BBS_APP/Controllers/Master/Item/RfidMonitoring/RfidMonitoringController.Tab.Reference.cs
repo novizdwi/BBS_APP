@@ -11,15 +11,12 @@ using System.Threading;
 using System.Net;
 
 using Models;
-using Models.Master.Item.RfidMonitoring;
+using Models.Master.Item;
 
 namespace Controllers.Master.Item
 {
     public partial class RfidMonitoringController : BaseController
     {
-
-        string VIEW_TAB_COMPONENT = "Partial/RfidMonitoring_Form_TabReference_List_Partial";
-
         public ActionResult TabTransListPartial()
         {
             int userId = (int)Session["userId"];
@@ -37,7 +34,7 @@ namespace Controllers.Master.Item
 
             var modelList = rfidMonitoringService.RfidMonitoring_GetReferences(userId, filterDate, itemCode, whsCode, tagId, status);
 
-            return PartialView(VIEW_TAB_COMPONENT, modelList);
+            return PartialView(VIEW_FORM_TABREFERENCE_PARTIAL, modelList);
         }
 
 

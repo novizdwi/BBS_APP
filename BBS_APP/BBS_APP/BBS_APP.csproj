@@ -830,6 +830,10 @@
     <Content Include="Views\Transaction\Web\Item\DeactiveTag\Partial\ItemTag\ItemTag_Panel_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Item\DeactiveTag\Partial\ItemTag\ItemTag_Partial.cshtml" />
     <Content Include="Views\Transaction\Web\Item\DeactiveTag\Partial\ItemTag\ItemTag_TabItemTagList_List_Partial.cshtml" />
+    <Content Include="Views\Master\Item\RfidMonitoring\Partial\ItemTag\ItemTag_Form_Partial.cshtml" />
+    <Content Include="Views\Master\Item\RfidMonitoring\Partial\ItemTag\ItemTag_Panel_Partial.cshtml" />
+    <Content Include="Views\Master\Item\RfidMonitoring\Partial\ItemTag\ItemTag_Partial.cshtml" />
+    <Content Include="Views\Master\Item\RfidMonitoring\Partial\ItemTag\ItemTag_TabItemTagList_List_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -861,6 +865,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommonFileHelper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Master\Item\RfidMonitoring\RfidMonitoringController.ViewItemTag.cs" />
     <Compile Include="Controllers\Master\Item\RfidMonitoring\RfidMonitoringController.cs" />
     <Compile Include="Controllers\Master\Item\RfidMonitoring\RfidMonitoringController.Tab.Reference.cs" />
     <Compile Include="Controllers\Report\ReportAlert\ReportAlertController.cs" />

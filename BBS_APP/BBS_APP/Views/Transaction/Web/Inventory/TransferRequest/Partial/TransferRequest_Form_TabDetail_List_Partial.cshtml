@@ -73,24 +73,6 @@
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
         column.ReadOnly = true;
 
-        //column.SetDataItemTemplateContent(c =>
-        //{
-        //    if (c.ItemIndex >= 0)
-        //    {
-        //        string itemCode = (string)DataBinder.Eval(c.DataItem, "ItemCode");
-
-        //        Html.DevExpress().HyperLink(settingsHL =>
-        //        {
-        //            settingsHL.Name = "ChooseDocument_" + DataBinder.Eval(c.DataItem, "Id") + "_" + Guid.NewGuid().ToString();
-        //            settingsHL.NavigateUrl = "javascript:void(0)";
-        //            settingsHL.Properties.Text = itemCode;
-        //            settings.ClientVisible = true;
-        //            settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ OnClickChooseItem(s, e, '{0}'); }}", DataBinder.Eval(c.DataItem, "DetId"));
-        //            settingsHL.ControlStyle.ForeColor = System.Drawing.Color.DarkBlue;
-
-        //        }).Render();
-        //    }
-        //});
     });
 
     settings.Columns.Add(column =>
@@ -116,7 +98,7 @@
         column.Caption = "From Whse Code";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 150;
+        column.Width = 0;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
 
@@ -132,7 +114,7 @@
         column.Caption = "From Whse Name";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 200;
+        column.Width = 0;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
 
@@ -148,7 +130,7 @@
         column.Caption = "To Whse Code";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 150;
+        column.Width = 0;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
 
@@ -164,7 +146,7 @@
         column.Caption = "To Whse Name";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 200;
+        column.Width = 0;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
 

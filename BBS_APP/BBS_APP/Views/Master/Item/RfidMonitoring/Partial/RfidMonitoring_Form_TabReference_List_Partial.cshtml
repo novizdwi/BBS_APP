@@ -24,6 +24,30 @@
 
     settings.Columns.Add(column =>
     {
+        column.Caption = "Action";
+        column.Name = "Action";
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.SetDataItemTemplateContent(c =>
+        {
+            if (c.ItemIndex >= 0)
+            {
+                Html.DevExpress().HyperLink(settingsHL =>
+                {
+                    settingsHL.Name = "ChooseRenewal_" + DataBinder.Eval(c.DataItem, "TagId") + "_" + Guid.NewGuid().ToString();
+                    settingsHL.NavigateUrl = "javascript:void(0)";
+                    settingsHL.Properties.Text = "View History";
+                    settings.ClientVisible = true;
+                    settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ OnClickChooseItem(s, e, '{0}'); }}", DataBinder.Eval(c.DataItem, "TagId"));
+                    settingsHL.ControlStyle.ForeColor = System.Drawing.Color.DarkBlue;
+                }).Render();
+            }
+
+        });
+    });
+
+
+    settings.Columns.Add(column =>
+    {
         column.FieldName = "TagId";
         column.Name = "TagId";
         column.Caption = "Tag Id";
@@ -152,7 +176,7 @@
         var txt = column.PropertiesEdit as DateEditProperties;
         txt.DisplayFormatString = "dd/MM/yyyy";
         txt.EditFormatString = "dd/MM/yyyy";
-        
+
         column.CellStyle.ForeColor = System.Drawing.Color.Black;
 
     });

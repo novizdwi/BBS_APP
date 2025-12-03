@@ -75,23 +75,7 @@
         txt.DisplayFormatString = "dd/MM/yyyy";
         txt.EditFormatString = "dd/MM/yyyy";
     });
-
-    settings.Columns.Add(column =>
-    {
-        column.FieldName = "VendorCode";
-        column.Caption = "VendorCode.";
-        column.Name = "Vendor Code";
-        column.Width = Unit.Percentage(50);
-    });
-
-    settings.Columns.Add(column =>
-    {
-        column.FieldName = "VendorName";
-        column.Caption = "VendorName";
-        column.Name = "Vendor Name";
-        column.Width = Unit.Percentage(100);
-    });
-
+    
     settings.Columns.Add(column =>
     {
         column.FieldName = "DocNum";

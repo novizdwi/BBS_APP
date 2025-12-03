@@ -2,27 +2,25 @@
 
 
 @if (false)
-{ 
-<script src="~/Scripts/ASPxScriptIntelliSense.js" type="text/javascript"></script>
-<script src="~/Scripts/jquery-2.2.0.intellisense.js"></script>
-<script src="~/Scripts/Test/DXR.js"></script> 
+{
+    <script src="~/Scripts/ASPxScriptIntelliSense.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery-2.2.0.intellisense.js"></script>
+    <script src="~/Scripts/Test/DXR.js"></script>
 }
 
-@model Models.Master.Item.RfidMonitoring.RfidMonitoringModel
+@model Models.Master.Item.RfidMonitoringModel
 
 
 @{
     ViewBag.Title = "RFID List";
 }
 
-
-
 <script type="text/javascript">
 
 
     $(document).ready(function () {
 
-        //SetBtnStatus(); 
+        //SetBtnStatus();
     }
     );
 
@@ -134,7 +132,7 @@
 
     }
 
-    function OnClickBtnRefresh(s, e) { 
+    function OnClickBtnRefresh(s, e) {
         $.ajax({
              type: "POST",
              url: "@Url.Action("DetailPartial", "RfidMonitoring")",
@@ -155,7 +153,7 @@
                  OnComplete()
              }
         });
-         
+
     }
 
     function OnClickBtnListFind(s, e) {
@@ -208,6 +206,18 @@
 
         e.customArgs['cbTagId'] = TagId.GetValue();
         e.customArgs['cbStatus'] = Status.GetValue();
+    }
+
+    function OnClickChooseItem(s, e, tagId) {
+
+        var popup = ASPxClientPopupControl.Cast("popupItemTag");
+
+        popup.callbackUrl = '@Url.Action("ViewItemTag_PopupListOnDemandPartial", "RfidMonitoring")' + '?TagId=' + tagId;
+        popup.PerformCallback();
+
+        if (!popup.IsVisible()) {
+            loadingPanel.Show();
+        }
     }
 
 </script>
@@ -303,18 +313,45 @@ new
     style = "height: 200px; width: 100%;",
     autocomplete = "off"
 }))
-{ 
-<div id="contentForm">
-@Html.Partial("Partial/RfidMonitoring_Form_Partial")
+{
+    <div id="contentForm">
+        @Html.Partial("Partial/RfidMonitoring_Form_Partial")
 
-</div> 
+    </div>
 }
 
 
+@*-------------------------------------------------
+    ViewItemTag
+    -------------------------------------------------*@
+<script>
+
+    function popupItemTag_EndCallback(s, e) {
+        $.validator.unobtrusive.parse("#ItemTag_formDetail");
+
+        var popup = ASPxClientPopupControl.Cast("popupItemTag");
+        if (!popup.IsVisible()) {
+            loadingPanel.Hide();
+            popup.ShowAtPos(400, 100);
+        }
+    }
+
+    function ViewItemTag_OnClickBtnCancel(s, e) {
+        var popup = ASPxClientPopupControl.Cast("popupItemTag");
+        popup.Hide();
+    }
+
+
+</script>
+
+@Html.Partial("Partial/ItemTag/ItemTag_Partial")
+
+
+
 @*
------------------------------------------------------------------------------
-loadingPanel
------------------------------------------------------------------------------
+    -----------------------------------------------------------------------------
+    loadingPanel
+    -----------------------------------------------------------------------------
 *@
 
 @Html.DevExpress().LoadingPanel(
