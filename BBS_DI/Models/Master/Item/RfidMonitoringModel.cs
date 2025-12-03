@@ -30,6 +30,8 @@ namespace Models.Master.Item.RfidMonitoring
 
         public string Status { get; set; }
 
+        public DateTime? FilterDate { get; set; }
+
         public List<RfidMonitoring_ReferenceModel> ListReferences_ = new List<RfidMonitoring_ReferenceModel>();
     }
 
@@ -64,14 +66,16 @@ namespace Models.Master.Item.RfidMonitoring
 
         public RfidMonitoringModel GetNewModel(int userId)
         {
+            DateTime filterDate= DateTime.Now.AddMonths(-1);
             RfidMonitoringModel model = new RfidMonitoringModel();
             model.UserId = -1;
+            model.FilterDate = filterDate;
             model.ItemCode = null;
             model.WhsCode = null;
             model.TagId = null;
             model.Status = null;
 
-            model.ListReferences_ = RfidMonitoring_GetReferences(userId, null, null, null, null);
+            model.ListReferences_ = RfidMonitoring_GetReferences(userId, filterDate, null, null, null, null);
 
             return model;
         }
@@ -80,16 +84,17 @@ namespace Models.Master.Item.RfidMonitoring
         //-------------------------------------
         //Detail  RfidMonitoring_Reference
         //-------------------------------------
-        public RfidMonitoringModel GetListByParam(int userId, string itemCode, string whsCode, string tagId, string status)
+        public RfidMonitoringModel GetListByParam(int userId, DateTime filterDate, string itemCode, string whsCode, string tagId, string status)
         {
             RfidMonitoringModel model = new RfidMonitoringModel();
             model.UserId = userId;
+            model.FilterDate = filterDate;
             model.ItemCode = itemCode;
             model.WhsCode = whsCode;
             model.TagId = tagId;
             model.Status = status;
 
-            model.ListReferences_ = this.RfidMonitoring_GetReferences(userId, itemCode, whsCode, tagId, status);
+            model.ListReferences_ = this.RfidMonitoring_GetReferences(userId, filterDate, itemCode, whsCode, tagId, status);
 
             return model;
         }
@@ -97,20 +102,34 @@ namespace Models.Master.Item.RfidMonitoring
         //-------------------------------------
         //Detail  RfidMonitoring_Reference
         //-------------------------------------
-        public List<RfidMonitoring_ReferenceModel> RfidMonitoring_GetReferences(int userId, string itemCode, string whsCode, string tagId, string status)
+        public List<RfidMonitoring_ReferenceModel> RfidMonitoring_GetReferences(int userId, DateTime filterDate, string itemCode, string whsCode, string tagId, string status)
         {
             using (var CONTEXT = new HANA_APP())
             {
-                return RfidMonitoring_GetReferences(CONTEXT, userId, itemCode, whsCode, tagId, status);
+                return RfidMonitoring_GetReferences(CONTEXT, userId, filterDate, itemCode, whsCode, tagId, status);
             }
         }
 
-
-        public List<RfidMonitoring_ReferenceModel> RfidMonitoring_GetReferences(HANA_APP CONTEXT, int? userId = -1, string itemCode = "", string whsCode = "", string tagId = "", string status = "")
+        public List<RfidMonitoring_ReferenceModel> RfidMonitoring_GetReferences(HANA_APP CONTEXT, int userId, DateTime filterDate, string itemCode = "", string whsCode = "", string tagId = "", string status = "")
         {
-            string ssql = @"CALL ""SpRfidMonitoring_GetReferences"" (:p0, :p1, :p2, :p3, :p4) ";
-            ssql = string.Format(ssql, DbProvider.dbSap_Name);
-            return CONTEXT.Database.SqlQuery<RfidMonitoring_ReferenceModel>(ssql, userId, itemCode, whsCode, tagId, status).ToList();
+            string sql = @"
+            CALL ""SpRfidMonitoring_GetReferences"" (
+                :p0, --userId
+                :p1, --filterDate
+                :p2, --itemCode
+                :p3, --whsCode
+                :p4, --tagId
+                :p5 --Status
+            )";
+
+            return CONTEXT.Database.SqlQuery<RfidMonitoring_ReferenceModel>(sql,
+                userId,
+                filterDate,
+                itemCode,
+                whsCode,
+                tagId,
+                status
+            ).ToList();
         }
 
     }

@@ -167,11 +167,14 @@
             }).join(',');
 
         }
-
+        var filterDate = null;
+        if (FilterDate.GetValue() != null) {
+            filterDate = FilterDate.GetDate().ToIduyyyymmdd();
+        }
         $.ajax({
             type: "POST",
-            url: '@Url.Action("DetailPartial", "RfidMonitoring")',
-            data: { itemCode: itemCodes, whsCode: WhsCode.GetValue(), tagId: TagId.GetValue(), status: Status.GetValue() },
+            url: '@Url.Action("Find", "RfidMonitoring")',
+            data: { filterDate: filterDate, itemCode: itemCodes, whsCode: WhsCode.GetValue(), tagId: TagId.GetValue(), status: Status.GetValue() },
             beforeSend: function () {
                 OnBegin();
             },
@@ -189,7 +192,7 @@
         });
     }
 
-    function gvRfidMonitoringReferenceDetailBeginCallback(s, e) {
+        function gvRfidMonitoringReferenceDetailBeginCallback(s, e) {
         var resultItemCodes = '';
         if (!((ItemCode.GetValue() == '') || (ItemCode.GetValue() == null))) {
             var objectCode = JSON.parse(ItemCode.GetValue());
@@ -198,9 +201,8 @@
             }).join(',');
 
         }
-        console.log("ItemCode ");
-        console.log(resultItemCodes);
 
+        e.customArgs['cbcbFilterDate'] = FilterDate.GetValue();
         e.customArgs['cbItemCode'] = resultItemCodes;
         e.customArgs['cbWhsCode'] = WhsCode.GetValue();
 

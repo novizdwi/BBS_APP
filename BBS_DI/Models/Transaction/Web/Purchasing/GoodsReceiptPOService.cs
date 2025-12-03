@@ -48,6 +48,8 @@ namespace Models.Transaction.Web.Purchasing
 
         public DateTime? TransDate { get; set; }
 
+        public DateTime? PostingDate { get; set; }
+
         [Required(ErrorMessage = "required")]
         public string VendorCode { get; set; }
 
@@ -763,7 +765,7 @@ namespace Models.Transaction.Web.Purchasing
                         if(GRPOResult != null)
                         {
                             //insert RFID items to pending
-                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_InsertItemTag\"(:p0,:p1, 'GoodsReceiptPO','P')", userId, id);
+                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_InsertItemTag\"(:p0,:p1, 'GoodsReceiptPO','A')", userId, id);
                         }
                         List<GoodsReceiptResultModel> GRResult = new List<GoodsReceiptResultModel>();
                         if (syncGRPO.ListDetails_.Any(q => q.IdPDO.GetValueOrDefault() != 0 && (q.QuantityValid > 0 && q.QuantityValid.HasValue )))

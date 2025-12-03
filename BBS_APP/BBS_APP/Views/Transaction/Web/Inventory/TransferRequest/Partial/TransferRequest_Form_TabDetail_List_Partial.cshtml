@@ -32,8 +32,7 @@
     settings.Height = Unit.Percentage(100);
 
     settings.CallbackRouteValues = new { Controller = "TransferRequest", Action = "TabDetailListPartial" };
-
-    settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+    
     settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
     settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
     settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;

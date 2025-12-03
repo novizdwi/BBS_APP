@@ -231,7 +231,7 @@
         txt.Properties.EditFormat = EditFormat.Date;
 
         txt.Properties.ClientSideEvents.ParseDate = "function (s,e){ { ParseDateEdit(s,e);  } }";
-        txt.Width = 230;
+        txt.Width = Model.Status == "Posted" ? 230 : 0;
     });
 
 
@@ -446,7 +446,7 @@
 
             });
         });
-        
+
     });
 
 }).GetHtml()

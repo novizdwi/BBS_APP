@@ -497,11 +497,19 @@ namespace Models.Transaction.Web.Adjustment
 
                         if (tx_AdjustmentIn != null)
                         {
-                            string docEntry = AddGoodsReceipt(oCompany, userId, id, syncAdjustmentIn);
+                            string docEntry = string.Empty;
+                            if (syncAdjustmentIn.IsOpeningBalance != "Y")
+                            {
+                                docEntry = AddGoodsReceipt(oCompany, userId, id, syncAdjustmentIn);
+                            }
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
                             tx_AdjustmentIn.PostingDate = dtModified;
-                            tx_AdjustmentIn.DocEntry = Convert.ToInt32(docEntry);
+                            if(!string.IsNullOrEmpty(docEntry))
+                            {
+                                tx_AdjustmentIn.DocEntry = Convert.ToInt32(docEntry);
+                            }
+
                             tx_AdjustmentIn.Status = "Posted";
 
                             tx_AdjustmentIn.IsAfterPosted = "Y";

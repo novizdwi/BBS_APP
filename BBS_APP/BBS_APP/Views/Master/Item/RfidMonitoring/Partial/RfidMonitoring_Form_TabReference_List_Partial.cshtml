@@ -34,7 +34,6 @@
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-        column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         column.CellStyle.ForeColor = System.Drawing.Color.Black;
         //column.EditFormSettings.Visible = DefaultBoolean.False;
 
@@ -54,7 +53,6 @@
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-        column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         column.CellStyle.ForeColor = System.Drawing.Color.Black;
         //column.EditFormSettings.Visible = DefaultBoolean.False;
 
@@ -74,13 +72,13 @@
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-        column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         column.CellStyle.ForeColor = System.Drawing.Color.Black;
         //column.EditFormSettings.Visible = DefaultBoolean.False;
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
     });
+
 
     settings.Columns.Add(column =>
     {
@@ -94,7 +92,6 @@
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-        column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         column.CellStyle.ForeColor = System.Drawing.Color.Black;
         //column.EditFormSettings.Visible = DefaultBoolean.False;
 
@@ -114,7 +111,6 @@
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-        column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         column.CellStyle.ForeColor = System.Drawing.Color.Black;
         //column.EditFormSettings.Visible = DefaultBoolean.False;
 
@@ -135,7 +131,6 @@
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-        column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         column.CellStyle.ForeColor = System.Drawing.Color.Black;
         //column.EditFormSettings.Visible = DefaultBoolean.False;
 
@@ -157,19 +152,24 @@
         var txt = column.PropertiesEdit as DateEditProperties;
         txt.DisplayFormatString = "dd/MM/yyyy";
         txt.EditFormatString = "dd/MM/yyyy";
-
-        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-        column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        
         column.CellStyle.ForeColor = System.Drawing.Color.Black;
-        column.EditFormSettings.Visible = DefaultBoolean.False;
 
     });
 
     settings.Settings.ShowFooter = true;
 
-    settings.ClientSideEvents.BeginCallback = "gvRfidMonitoringReferenceDetailBeginCallback";
+    settings.SettingsPager.Position = PagerPosition.Bottom;
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.AlwaysShowPager = true;
 
-    settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+
+    settings.Settings.ShowFooter = true;
+
+    settings.ClientSideEvents.BeginCallback = "gvRfidMonitoringReferenceDetailBeginCallback";
 
 }).Bind(Model).GetHtml()
 

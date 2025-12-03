@@ -20,6 +20,7 @@ namespace Controllers.Master.Item
 
         string VIEW_DETAIL = "RfidMonitoring";
         string VIEW_FORM_PARTIAL = "Partial/RfidMonitoring_Form_Partial";
+        string VIEW_FORM_TABREFERENCE_PARTIAL = "Partial/RfidMonitoring_Form_TabReference_List_Partial";
 
         RfidMonitoringService rfidMonitoringService;
 
@@ -42,20 +43,26 @@ namespace Controllers.Master.Item
             return View(VIEW_DETAIL, rfidMonitoringModel);
         }
 
-        public ActionResult DetailPartial(string itemCode = "", string whsCode = "", string tagId = "", string status = "")
+        public ActionResult DetailPartial(DateTime filterDate, string itemCode = "", string whsCode = "", string tagId = "", string status = "")
         {
             int userId = (int)Session["userId"];
 
             RfidMonitoringModel rfidMonitoringModel;
 
             rfidMonitoringService = new RfidMonitoringService();
-
-            ViewBag.initNew = true;
-
-            rfidMonitoringModel = rfidMonitoringService.GetListByParam(userId, itemCode, whsCode, tagId, status);
+            rfidMonitoringModel = rfidMonitoringService.GetNewModel(userId);
 
             return PartialView(VIEW_FORM_PARTIAL, rfidMonitoringModel);
         }
 
+        public ActionResult Find(DateTime filterDate, string itemCode = "", string whsCode = "", string tagId = "", string status = "")
+        {
+            int userId = (int)Session["userId"];
+            rfidMonitoringService = new RfidMonitoringService();
+            
+            var models = rfidMonitoringService.RfidMonitoring_GetReferences(userId, filterDate, itemCode, whsCode, tagId, status);
+
+            return PartialView(VIEW_FORM_TABREFERENCE_PARTIAL, models);
+        }
     }
 }

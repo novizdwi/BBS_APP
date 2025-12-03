@@ -797,7 +797,7 @@ namespace Models.Transaction.Web.Inventory
                         tx_StockSummaryOpname.ModifiedDate = dtModified;
                         tx_StockSummaryOpname.ModifiedUser = userId;
 
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_InsertItemTag\"(:p0,:p1, 'StockSummaryOpname','P')", userId, keyValue);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_InsertItemTag\"(:p0,:p1, 'StockSummaryOpname','A')", userId, keyValue);
 
                         CONTEXT.SaveChanges();
 
