@@ -151,7 +151,7 @@
 
         txt.ControlStyle.CssClass = "editor";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Properties.ValidationSettings.Display = Display.Dynamic;
         txt.Width = 230;
 
@@ -200,7 +200,7 @@
 
         txt.ControlStyle.CssClass = "editor";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Properties.ValidationSettings.Display = Display.Dynamic;
         txt.Width = 230;
 
@@ -403,7 +403,7 @@
                                settings1.Width = 90;
                                settings1.Height = 20;
                                settings1.RenderMode = ButtonRenderMode.Link;
-                               settings1.Text = "Add";
+                               settings1.Text = "Add Item";
                                settings1.ImagePosition = ImagePosition.Right;
                                settings1.ClientSideEvents.Click = "function (s,e) { BtnCflItemByWarehousePopupListTransferRequestOnClick(s,e); }";
                            }).GetHtml()

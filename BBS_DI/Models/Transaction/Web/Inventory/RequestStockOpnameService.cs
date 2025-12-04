@@ -237,6 +237,7 @@ namespace Models.Transaction.Web.Inventory
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
                             Tx_Request_StockOpname.TransType = "RequestStockOpname";
+                            Tx_Request_StockOpname.Status = "Posted";
 
                             Tx_Request_StockOpname.CreatedDate = dtModified;
                             Tx_Request_StockOpname.CreatedUser = model._UserId;

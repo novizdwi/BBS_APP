@@ -33,9 +33,13 @@ namespace Models.Transaction.Web.Adjustment
 
         public DateTime? TransDate { get; set; }
 
-        public string VendorCode { get; set; }
+        public string WhsCode { get; set; }
 
-        public string VendorName { get; set; }
+        public string ScanDeviceId { get; set; }
+
+        public string AdjustmentTypeName_ { get; set; }
+
+        public string IsOpeningBalance_ { get; set; }
 
         public DateTime? DocDate { get; set; }
 
@@ -53,7 +57,7 @@ namespace Models.Transaction.Web.Adjustment
 
     public class AdjustmentIn__List_Model
     {
-        static string ViewSql = "SELECT T0.*, T1.\"DocNum\" AS \"GrpoDocNum\" " +
+        static string ViewSql = "SELECT T0.*, INITCAP(T0.\"AdjustmentTypeName\") AS \"AdjustmentTypeName_\", T1.\"DocNum\" AS \"GrpoDocNum\", CASE WHEN T0.\"IsOpeningBalance\" = 'Y' THEN 'Yes' ELSE 'No' END AS \"IsOpeningBalance_\" " +
             "FROM \"Tx_AdjustmentIn\" T0 " +
             "LEFT JOIN \""+ DbProvider.dbSap_Name + "\".\"OIGN\" T1 ON T0.\"DocEntry\" = T1.\"DocEntry\" "+
         "ORDER BY T0.\"CreatedDate\" DESC";

@@ -525,7 +525,7 @@ namespace Models.Transaction.Web.Inventory
 
 
                     DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-
+                    Tx_TransferRequest_Item.Quantity = model.Quantity;
                     Tx_TransferRequest_Item.ModifiedDate = dtModified;
                     Tx_TransferRequest_Item.ModifiedUser = UserId;
                    

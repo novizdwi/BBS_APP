@@ -32,7 +32,8 @@
     settings.Height = Unit.Percentage(100);
 
     settings.CallbackRouteValues = new { Controller = "TransferRequest", Action = "TabDetailListPartial" };
-    
+
+    settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
     settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
     settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
     settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
@@ -82,7 +83,7 @@
         column.Caption = "Item Name";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 300;
+        column.Width = 400;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
 
@@ -171,8 +172,8 @@
         if (ViewBag.ReadOnly)
         {
 
-            column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
-            column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+            column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+            column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
             column.CellStyle.ForeColor = System.Drawing.Color.Black;
             column.EditFormSettings.Visible = DefaultBoolean.False;
         }
@@ -221,21 +222,16 @@
         column.Name = "QuantityOpen";
         column.Caption = "On Hand";
         column.HeaderStyle.HorizontalAlign = HorizontalAlign.Right;
-        column.Width = 0;
+        column.Width = 100;
         column.Settings.AllowSort = DefaultBoolean.True;
         column.Settings.SortMode = DevExpress.XtraGrid.ColumnSortMode.Value;
 
         column.ColumnType = MVCxGridViewColumnType.SpinEdit;
-        //column.ReadOnly = true;
-
-        if (ViewBag.ReadOnly)
-        {
-
-            column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
-            column.CellStyle.BackColor = System.Drawing.Color.Lavender;
-            column.CellStyle.ForeColor = System.Drawing.Color.Black;
-            column.EditFormSettings.Visible = DefaultBoolean.False;
-        }
+        column.ReadOnly = true;
+        
+        column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0"); ;
+        column.CellStyle.ForeColor = System.Drawing.Color.Black;
+        column.EditFormSettings.Visible = DefaultBoolean.False;
 
         var txt = column.PropertiesEdit as SpinEditProperties;
         txt.NumberType = SpinEditNumberType.Float;
@@ -245,34 +241,6 @@
         txt.SpinButtons.ShowIncrementButtons = false;
 
 
-        txt.ClientInstanceName = "gvTransferRequestDetail_Quantity";
-
-        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-        txt.Style.HorizontalAlign = HorizontalAlign.Right;
-
-        txt.AllowMouseWheel = false;
-        ASPxSummaryItem summaryItem = new ASPxSummaryItem(column.FieldName, DevExpress.Data.SummaryItemType.Sum);
-        summaryItem.Tag = column.FieldName + "_Sum";
-        summaryItem.DisplayFormat = "{0}";
-        settings.TotalSummary.Add(summaryItem);
-
-        column.SetFooterTemplateContent(c =>
-        {
-            Html.DevExpress().Label(lbSettings =>
-            {
-                string fieldName = (c.Column as GridViewDataColumn).FieldName;
-                lbSettings.Name = "gvTransferRequestDetailLabel" + fieldName + "Sum";
-                lbSettings.Properties.EnableClientSideAPI = true;
-                ASPxSummaryItem summaryItem1 = c.Grid.TotalSummary.First(i => i.Tag == (fieldName + "_Sum"));
-                lbSettings.Text = decimal.Parse(c.Grid.GetTotalSummaryValue(summaryItem1).ToString()).ToString("#");
-
-                lbSettings.CustomJSProperties = (sender, e) =>
-                {
-                    e.Properties["cpValue"] = c.Grid.GetTotalSummaryValue(summaryItem1).ToString();
-                };
-
-            }).Render();
-        });
     });
 
     //settings.Columns.Add(column =>
