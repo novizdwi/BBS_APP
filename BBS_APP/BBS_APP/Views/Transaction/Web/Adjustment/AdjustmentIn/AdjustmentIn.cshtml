@@ -682,6 +682,31 @@ function BtnCflPIllarsCodeOnClick(s, e) {
     function gvDetailCalculateSummary(grid, rowValues, visibleIndex, isDeleting) {
     }
 
+    function gvDetail_PillarsCodeOnChange(s, e, name) { 
+        var PillarsName = ASPxClientTextBox.Cast("gvAdjustmentInDetail_PillarsName");
+        PillarsName.SetValue(name);
+    }
+
+    function gvDetail_ClassCodeOnChange(s, e, name) { 
+        var ClassName = ASPxClientTextBox.Cast("gvAdjustmentInDetail_ClassName");
+        ClassName.SetValue(name);
+    }
+
+    function gvDetail_SubClass1CodeOnChange(s, e, name) { 
+        var SubClass1Name = ASPxClientTextBox.Cast("gvAdjustmentInDetail_SubClass1Name");
+        SubClass1Name.SetValue(name);
+    }
+
+    function gvDetail_SubClass2CodeOnChange(s, e, name) { 
+        var SubClass2Name = ASPxClientTextBox.Cast("gvAdjustmentInDetail_SubClass2Name");
+        SubClass2Name.SetValue(name);
+    }
+
+    function gvDetail_ProjectCodeOnChange(s, e, name) { 
+        var ProjectName = ASPxClientTextBox.Cast("gvAdjustmentInDetail_ProjectName");
+        ProjectName.SetValue(name);
+    }
+
 </script>
 
 

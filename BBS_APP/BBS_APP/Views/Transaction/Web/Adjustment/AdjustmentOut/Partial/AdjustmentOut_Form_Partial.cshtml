@@ -51,7 +51,7 @@
         itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
         itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
         itemSettings.ShowCaption = DefaultBoolean.False;
-        itemSettings.ColCount = 4;
+        itemSettings.ColCount = 3;
     });
 
     var groupItem_3 = groupItem.Items.AddGroupItem(itemSettings =>
@@ -261,7 +261,7 @@
         txt.Width = 230;
     });
 
-    groupItem_Col3.Items.Add(itemSettings =>
+    groupItem_Col2.Items.Add(itemSettings =>
     {
         itemSettings.Name = "grpScanDeviceId";
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
@@ -273,10 +273,11 @@
         txt.ReadOnly = true;
         txt.ControlStyle.CssClass = "editor";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Width = 230;
     });
 
-    groupItem_Col3.Items.Add(itemSettings =>
+    groupItem_Col2.Items.Add(itemSettings =>
     {
         itemSettings.Name = "grpDocNum_";
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
@@ -288,10 +289,11 @@
         txt.ReadOnly = true;
         txt.ControlStyle.CssClass = "editor";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Width = 230;
     });
 
-    groupItem_Col3.Items.Add(m => Model.IsOpeningBalance, itemSettings =>
+    groupItem_Col2.Items.Add(m => Model.IsOpeningBalance, itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.CheckBox;
         itemSettings.Caption = "Opening Balance";
@@ -309,7 +311,7 @@
 
     });
 
-    groupItem_Col4.Items.Add(m => Model.Status, itemSettings =>
+    groupItem_Col3.Items.Add(m => Model.Status, itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
         itemSettings.Caption = "Status";
@@ -334,7 +336,7 @@
         cbo.Width = 230;
     });
 
-    groupItem_Col4.Items.Add(itemSettings =>
+    groupItem_Col3.Items.Add(itemSettings =>
     {
 
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.DateEdit;
@@ -360,7 +362,7 @@
 
     if (Model._FormMode != Models.FormModeEnum.New)
     {
-        groupItem_Col4.Items.Add(itemSettings =>
+        groupItem_Col3.Items.Add(itemSettings =>
         {
             itemSettings.Caption = "Author";
         })
@@ -399,7 +401,7 @@
 
     if (!string.IsNullOrWhiteSpace(Model.CancelReason))
     {
-        groupItem_Col4.Items.Add(itemSettings =>
+        groupItem_Col3.Items.Add(itemSettings =>
         {
             itemSettings.Caption = "Cancel Reason";
         })
@@ -421,7 +423,7 @@
          });
     }
 
-    groupItem_Col4.Items.Add(m => Model.Comments, itemSettings =>
+    groupItem_Col3.Items.Add(m => Model.Comments, itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Memo;
         itemSettings.Caption = "Remarks";

@@ -126,8 +126,8 @@ C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\System.Web.WebPages.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\System.Web.WebPages.Razor.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\WebMatrix.Data.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\LumenWorks.Framework.IO.dll
-C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\BBS_APP.dll.config
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\BBS_APP.pdb
+C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\BBS_APP.dll.config
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\CrystalDecisions.CrystalReports.Engine.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\CrystalDecisions.Shared.dll
 C:\LegionShared\Project\BBS\BBS_APP\BBS_APP\bin\CrystalDecisions.Web.dll

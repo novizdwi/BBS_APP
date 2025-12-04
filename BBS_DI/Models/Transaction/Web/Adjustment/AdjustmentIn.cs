@@ -58,26 +58,6 @@ namespace Models.Transaction.Web.Adjustment
 
         public string WhsCode { get; set; }
 
-        public string PillarsCode { get; set; }
-
-        public string PillarsName { get; set; }
-
-        public string ClassCode { get; set; }
-
-        public string ClassName { get; set; }
-
-        public string SubClass1Code { get; set; }
-
-        public string SubClass1Name { get; set; }
-
-        public string SubClass2Code { get; set; }
-
-        public string SubClass2Name { get; set; }
-
-        public string ProjectCode { get; set; }
-
-        public string ProjectName { get; set; }
-
         public DateTime? CreatedDate { get; set; }
 
         public int? CreatedUser { get; set; }
@@ -86,13 +66,13 @@ namespace Models.Transaction.Web.Adjustment
 
         public string CancelReason { get; set; }
 
-        public int? ModifiedUser { get; set; }
-
         public string CheckNeedApproval_ { get; set; }
 
         public string ApprovalStatus { get; set; }
 
         public string IsOpeningBalance { get; set; }
+
+        public int? ModifiedUser { get; set; }
 
         public List<AdjustmentIn_ItemModel> ListDetails_ = new List<AdjustmentIn_ItemModel>();
 
@@ -100,11 +80,15 @@ namespace Models.Transaction.Web.Adjustment
 
         public List<AdjustmentIn_AttachmentModel> ListAttachments_ = new List<AdjustmentIn_AttachmentModel>();
 
-        public List<GetCodeNameModel> PillarsList { get; set; }
-        public List<GetCodeNameModel> ClassList { get; set; }
-        public List<GetCodeNameModel> SubClass1List { get; set; }
-        public List<GetCodeNameModel> SubClass2List { get; set; }
-        public List<GetCodeNameModel> ProjectList { get; set; }
+        //public List<GetCodeNameModel> PillarsList { get; set; }
+
+        //public List<GetCodeNameModel> ClassList { get; set; }
+
+        //public List<GetCodeNameModel> SubClass1List { get; set; }
+
+        //public List<GetCodeNameModel> SubClass2List { get; set; }
+
+        //public List<GetCodeNameModel> ProjectList { get; set; }
     }
 
     public class AdjustmentIn_Detail
@@ -135,6 +119,27 @@ namespace Models.Transaction.Web.Adjustment
         public string FreeText { get; set; }
 
         public string WhsCode { get; set; }
+        
+        public string PillarsCode { get; set; }
+
+        public string PillarsName { get; set; }
+
+        public string ClassCode { get; set; }
+
+        public string ClassName { get; set; }
+
+        public string SubClass1Code { get; set; }
+
+        public string SubClass1Name { get; set; }
+
+        public string SubClass2Code { get; set; }
+
+        public string SubClass2Name { get; set; }
+
+        public string ProjectCode { get; set; }
+
+        public string ProjectName { get; set; }
+
 
         public decimal? QuantityScan { get; set; }
 
@@ -281,14 +286,14 @@ namespace Models.Transaction.Web.Adjustment
 
                 model.ListDetails_ = this.AdjustmentIn_Details(CONTEXT, id);
                 model.ListAttachments_ = this.GetAdjustmentIn_Attachments(id);
-                if(method != "post")
-                {
-                    model.PillarsList = GeneralGetList.GetCostCenterList("1");
-                    model.ClassList = GeneralGetList.GetCostCenterList("2");
-                    model.SubClass1List = GeneralGetList.GetCostCenterList("3");
-                    model.SubClass2List = GeneralGetList.GetCostCenterList("4");
-                    model.ProjectList = GeneralGetList.GetProjectList();
-                }
+                //if(method != "post")
+                //{
+                //    model.PillarsList = GeneralGetList.GetCostCenterList("1");
+                //    model.ClassList = GeneralGetList.GetCostCenterList("2");
+                //    model.SubClass1List = GeneralGetList.GetCostCenterList("3");
+                //    model.SubClass2List = GeneralGetList.GetCostCenterList("4");
+                //    model.ProjectList = GeneralGetList.GetProjectList();
+                //}
 
             }
 
@@ -472,7 +477,17 @@ namespace Models.Transaction.Web.Adjustment
                                     Tx_AdjustmentIn.ModifiedUser = model._UserId;
                                     
                                     CONTEXT.SaveChanges();
-                                    
+                                    if (model.Details_ != null)
+                                    {
+                                        if (model.Details_.modifiedRowValues != null)
+                                        {
+                                            foreach (var detail in model.Details_.modifiedRowValues)
+                                            {
+                                                Detail_Update(CONTEXT, detail, model._UserId);
+                                            }
+                                        }
+                                    }
+
                                     SpNotif.SpSysControllerTransNotif(model._UserId, "AdjustmentIn", CONTEXT, "after", "AdjustmentIn", "update", "Id", keyValue);
 
                                 }
@@ -502,6 +517,30 @@ namespace Models.Transaction.Web.Adjustment
 
             }
 
+
+        }
+
+        public void Detail_Update(HANA_APP CONTEXT, AdjustmentIn_ItemModel model, int UserId)
+        {
+            if (model != null)
+            {
+
+                Tx_AdjustmentIn_Item tx_AdjustmentIn_Item = CONTEXT.Tx_AdjustmentIn_Item.Find(model.DetId);
+
+                if (tx_AdjustmentIn_Item != null)
+                {
+                    var exceptColumns = new string[] { "DetId", "Id" };
+                    CopyProperty.CopyProperties(model, tx_AdjustmentIn_Item, false, exceptColumns);
+
+                    DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                    tx_AdjustmentIn_Item.ModifiedDate = dtModified;
+                    tx_AdjustmentIn_Item.ModifiedUser = UserId;
+
+                    CONTEXT.SaveChanges();
+
+                }
+
+            }
 
         }
 
@@ -628,7 +667,11 @@ namespace Models.Transaction.Web.Adjustment
                         oDocument.Lines.AccountCode = CoaAdjustment;
                         oDocument.Lines.WarehouseCode = item.WhsCode;
 
-                        oDocument.Lines.CostingCode = model.PillarsCode;
+                        oDocument.Lines.CostingCode = item.PillarsCode;
+                        oDocument.Lines.CostingCode2 = item.ClassCode;
+                        oDocument.Lines.CostingCode3 = item.SubClass1Code;
+                        oDocument.Lines.CostingCode4 = item.SubClass2Code;
+                        oDocument.Lines.ProjectCode = item.ProjectCode;
 
                         //if (item.UomEntry != null)
                         //{

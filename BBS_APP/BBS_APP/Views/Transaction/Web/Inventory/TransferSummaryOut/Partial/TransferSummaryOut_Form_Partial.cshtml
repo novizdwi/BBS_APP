@@ -253,7 +253,7 @@
 
         txt.ControlStyle.CssClass = "editornoimage";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        //txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Properties.ValidationSettings.Display = Display.Dynamic;
 
         // Hide the default DropDown button
@@ -268,6 +268,7 @@
         itemSettings.Caption = "Warehouse";
         itemSettings.FieldName = "FromWhsName";
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Name = "FromWhsName";
         txt.ShowModelErrors = true;
         txt.ReadOnly = true;
@@ -289,7 +290,7 @@
 
         txt.ControlStyle.CssClass = "editornoimage";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        //txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Properties.ValidationSettings.Display = Display.Dynamic;
         //txt.Width = 100;
 
@@ -306,6 +307,7 @@
         itemSettings.Caption = "Warehouse";
         itemSettings.FieldName = "TransitWhsName";
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Name = "TransitWhsName";
         txt.ShowModelErrors = true;
         txt.ReadOnly = true;
@@ -327,7 +329,7 @@
 
         txt.ControlStyle.CssClass = "editornoimage";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        //txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Properties.ValidationSettings.Display = Display.Dynamic;
         //txt.Width = 100;
 
@@ -344,6 +346,7 @@
         itemSettings.Caption = "To Warehouse";
         itemSettings.FieldName = "ToWhsName";
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Name = "ToWhsName";
         txt.ShowModelErrors = true;
         txt.ReadOnly = true;

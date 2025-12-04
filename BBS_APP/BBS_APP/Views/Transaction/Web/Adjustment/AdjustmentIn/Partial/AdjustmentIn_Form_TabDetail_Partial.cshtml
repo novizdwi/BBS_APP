@@ -38,13 +38,14 @@
         column.FieldName = "ItemCode";
         column.Name = "ItemCode";
         column.Caption = "Item Code";
-
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 120;
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
         column.ReadOnly = true;
-
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         column.SetDataItemTemplateContent(c =>
         {
             if (c.ItemIndex >= 0)
@@ -75,6 +76,7 @@
         column.Width = 300;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
@@ -91,6 +93,7 @@
         column.Width = 100;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
@@ -107,6 +110,7 @@
         column.Width = 90;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
         txt.DisplayFormatString = "#,###";
@@ -122,6 +126,8 @@
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
         txt.DisplayFormatString = "#,###";
@@ -137,6 +143,7 @@
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
         txt.DisplayFormatString = "#,###";
@@ -152,7 +159,7 @@
         column.Width = 100;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
-
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
     });
@@ -164,13 +171,266 @@
         column.Caption = "Free Text";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 300;
+        column.Width = 0;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
-
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
 
+    });
+
+    //PillarsCode
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PillarsCode";
+        column.Name = "PillarsCode";
+        column.Caption = "Pillars Code";
+
+        column.ColumnType = MVCxGridViewColumnType.ComboBox;
+        var cbo = column.PropertiesEdit as ComboBoxProperties;
+        cbo.DataSource = Models._Utils.GeneralGetList.GetCostCenters("1");
+        cbo.ClientSideEvents.ValueChanged =
+            "function(s, e) { " +
+                "var item = s.GetSelectedItem(); " +
+                "var name = item ? item.GetColumnText('Name') : null;" +
+                "gvDetail_PillarsCodeOnChange(s, e, name);" +
+            "}";
+
+        cbo.TextField = "Code";
+        cbo.ValueField = "Code";
+        cbo.ValueType = typeof(string);
+
+        cbo.Columns.Add("Code", "Code", 80);
+        cbo.Columns.Add("Name", "Name", 200);
+        cbo.Width = 92;
+        cbo.TextFormatString = "{0}";
+
+        column.ReadOnly = false;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = ViewBag.ReadOnly;
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PillarsName";
+        column.Name = "PillarsName";
+        column.Caption = "Pillars Name";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 200;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ClientInstanceName = "gvAdjustmentInDetail_PillarsName";
+    });
+
+    //class
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ClassCode";
+        column.Name = "ClassCode";
+        column.Caption = "Class Code";
+
+        column.ColumnType = MVCxGridViewColumnType.ComboBox;
+        var cbo = column.PropertiesEdit as ComboBoxProperties;
+        cbo.DataSource = Models._Utils.GeneralGetList.GetCostCenters("1");
+        cbo.ClientSideEvents.ValueChanged =
+            "function(s, e) { " +
+                "var item = s.GetSelectedItem(); " +
+                "var name = item ? item.GetColumnText('Name') : null;" +
+                "gvDetail_ClassCodeOnChange(s, e, name);" +
+            "}";
+
+        cbo.TextField = "Code";
+        cbo.ValueField = "Code";
+        cbo.ValueType = typeof(string);
+
+        cbo.Columns.Add("Code", "Code", 80);
+        cbo.Columns.Add("Name", "Name", 200);
+        cbo.Width = 92;
+        cbo.TextFormatString = "{0}";
+
+        column.ReadOnly = false;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = ViewBag.ReadOnly;
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ClassName";
+        column.Name = "ClassName";
+        column.Caption = "Class Name";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 200;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ClientInstanceName = "gvAdjustmentInDetail_ClassName";
+    });
+
+    //SubClass1
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "SubClass1Code";
+        column.Name = "SubClass1Code";
+        column.Caption = "Subclass1 Code";
+
+        column.ColumnType = MVCxGridViewColumnType.ComboBox;
+        var cbo = column.PropertiesEdit as ComboBoxProperties;
+        cbo.DataSource = Models._Utils.GeneralGetList.GetCostCenters("1");
+        cbo.ClientSideEvents.ValueChanged =
+            "function(s, e) { " +
+                "var item = s.GetSelectedItem(); " +
+                "var name = item ? item.GetColumnText('Name') : null;" +
+                "gvDetail_SubClass1CodeOnChange(s, e, name);" +
+            "}";
+
+        cbo.TextField = "Code";
+        cbo.ValueField = "Code";
+        cbo.ValueType = typeof(string);
+
+        cbo.Columns.Add("Code", "Code", 80);
+        cbo.Columns.Add("Name", "Name", 200);
+        cbo.Width = 92;
+        cbo.TextFormatString = "{0}";
+
+        column.ReadOnly = false;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = ViewBag.ReadOnly;
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "SubClass1Name";
+        column.Name = "SubClass1Name";
+        column.Caption = "Subclass1 Name";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 200;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ClientInstanceName = "gvAdjustmentInDetail_SubClass1Name";
+    });
+
+    //SubClass2
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "SubClass2Code";
+        column.Name = "SubClass2Code";
+        column.Caption = "Subclass2 Code";
+
+        column.ColumnType = MVCxGridViewColumnType.ComboBox;
+        var cbo = column.PropertiesEdit as ComboBoxProperties;
+        cbo.DataSource = Models._Utils.GeneralGetList.GetCostCenters("1");
+        cbo.ClientSideEvents.ValueChanged =
+            "function(s, e) { " +
+                "var item = s.GetSelectedItem(); " +
+                "var name = item ? item.GetColumnText('Name') : null;" +
+                "gvDetail_SubClass2CodeOnChange(s, e, name);" +
+            "}";
+
+        cbo.TextField = "Code";
+        cbo.ValueField = "Code";
+        cbo.ValueType = typeof(string);
+
+        cbo.Columns.Add("Code", "Code", 80);
+        cbo.Columns.Add("Name", "Name", 200);
+        cbo.Width = 92;
+        cbo.TextFormatString = "{0}";
+
+        column.ReadOnly = false;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = ViewBag.ReadOnly;
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "SubClass2Name";
+        column.Name = "SubClass2Name";
+        column.Caption = "Subclass2 Name";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 200;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ClientInstanceName = "gvAdjustmentInDetail_SubClass2Name";
+    });
+
+    //Project
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ProjectCode";
+        column.Name = "ProjectCode";
+        column.Caption = "Project Code";
+
+        column.ColumnType = MVCxGridViewColumnType.ComboBox;
+        var cbo = column.PropertiesEdit as ComboBoxProperties;
+        cbo.DataSource = Models._Utils.GeneralGetList.GetCostCenters("1");
+        cbo.ClientSideEvents.ValueChanged =
+            "function(s, e) { " +
+                "var item = s.GetSelectedItem(); " +
+                "var name = item ? item.GetColumnText('Name') : null;" +
+                "gvDetail_ProjectCodeOnChange(s, e, name);" +
+            "}";
+
+        cbo.TextField = "Code";
+        cbo.ValueField = "Code";
+        cbo.ValueType = typeof(string);
+
+        cbo.Columns.Add("Code", "Code", 80);
+        cbo.Columns.Add("Name", "Name", 200);
+        cbo.Width = 92;
+        cbo.TextFormatString = "{0}";
+
+        column.ReadOnly = false;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = ViewBag.ReadOnly;
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ProjectName";
+        column.Name = "ProjectName";
+        column.Caption = "Project Name";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 200;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ClientInstanceName = "gvAdjustmentInDetail_ProjectName";
     });
 
     settings.Columns.Add(column =>
@@ -180,7 +440,7 @@
         column.Caption = "Line Status";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 0;
+        column.Width = 100;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
 

@@ -58,26 +58,6 @@ namespace Models.Transaction.Web.Adjustment
 
         public string WhsCode { get; set; }
 
-        public string PillarsCode { get; set; }
-
-        public string PillarsName { get; set; }
-
-        public string ClassCode { get; set; }
-
-        public string ClassName { get; set; }
-
-        public string SubClass1Code { get; set; }
-
-        public string SubClass1Name { get; set; }
-
-        public string SubClass2Code { get; set; }
-
-        public string SubClass2Name { get; set; }
-
-        public string ProjectCode { get; set; }
-
-        public string ProjectName { get; set; }
-
         public DateTime? CreatedDate { get; set; }
 
         public int? CreatedUser { get; set; }
@@ -99,6 +79,16 @@ namespace Models.Transaction.Web.Adjustment
         public AdjustmentOut_Detail Details_ { get; set; }
 
         public List<AdjustmentOut_AttachmentModel> ListAttachments_ = new List<AdjustmentOut_AttachmentModel>();
+
+        //public List<GetCodeNameModel> PillarsList { get; set; }
+
+        //public List<GetCodeNameModel> ClassList { get; set; }
+
+        //public List<GetCodeNameModel> SubClass1List { get; set; }
+
+        //public List<GetCodeNameModel> SubClass2List { get; set; }
+
+        //public List<GetCodeNameModel> ProjectList { get; set; }
     }
 
     public class AdjustmentOut_Detail
@@ -129,6 +119,26 @@ namespace Models.Transaction.Web.Adjustment
         public string FreeText { get; set; }
 
         public string WhsCode { get; set; }
+
+        public string PillarsCode { get; set; }
+
+        public string PillarsName { get; set; }
+
+        public string ClassCode { get; set; }
+
+        public string ClassName { get; set; }
+
+        public string SubClass1Code { get; set; }
+
+        public string SubClass1Name { get; set; }
+
+        public string SubClass2Code { get; set; }
+
+        public string SubClass2Name { get; set; }
+
+        public string ProjectCode { get; set; }
+
+        public string ProjectName { get; set; }
 
         public decimal? QuantityScan { get; set; }
 
@@ -235,15 +245,15 @@ namespace Models.Transaction.Web.Adjustment
             return model;
         }
 
-        public AdjustmentOutModel GetById(int userId, long id = 0)
+        public AdjustmentOutModel GetById(int userId, long id = 0, string method = "")
         {
             using (var CONTEXT = new HANA_APP())
             {
-                return GetById(CONTEXT, userId, id);
+                return GetById(CONTEXT, userId, id, method);
             }
         }
 
-        public AdjustmentOutModel GetById(HANA_APP CONTEXT, int userId, long id = 0)
+        public AdjustmentOutModel GetById(HANA_APP CONTEXT, int userId, long id = 0, string method = "")
         {
             AdjustmentOutModel model = null;
             if (id != 0)
@@ -278,6 +288,14 @@ namespace Models.Transaction.Web.Adjustment
                 model.ListDetails_ = this.AdjustmentOut_Details(CONTEXT, id);
                 model.ListAttachments_ = this.GetAdjustmentOut_Attachments(id);
 
+                //if (method != "post")
+                //{
+                //    model.PillarsList = GeneralGetList.GetCostCenterList("1");
+                //    model.ClassList = GeneralGetList.GetCostCenterList("2");
+                //    model.SubClass1List = GeneralGetList.GetCostCenterList("3");
+                //    model.SubClass2List = GeneralGetList.GetCostCenterList("4");
+                //    model.ProjectList = GeneralGetList.GetProjectList();
+                //}
             }
 
             return model;
@@ -455,7 +473,18 @@ namespace Models.Transaction.Web.Adjustment
                                     Tx_AdjustmentOut.ModifiedUser = model._UserId;
                                     
                                     CONTEXT.SaveChanges();
-                                    
+
+                                    if (model.Details_ != null)
+                                    {
+                                        if (model.Details_.modifiedRowValues != null)
+                                        {
+                                            foreach (var detail in model.Details_.modifiedRowValues)
+                                            {
+                                                Detail_Update(CONTEXT, detail, model._UserId);
+                                            }
+                                        }
+
+                                    }
                                     SpNotif.SpSysControllerTransNotif(model._UserId, "AdjustmentOut", CONTEXT, "after", "AdjustmentOut", "update", "Id", keyValue);
 
                                 }
@@ -486,6 +515,31 @@ namespace Models.Transaction.Web.Adjustment
             }
         }
 
+        public void Detail_Update(HANA_APP CONTEXT, AdjustmentOut_ItemModel model, int UserId)
+        {
+            if (model != null)
+            {
+
+                Tx_AdjustmentOut_Item tx_AdjustmentOut_Item = CONTEXT.Tx_AdjustmentOut_Item.Find(model.DetId);
+
+                if (tx_AdjustmentOut_Item != null)
+                {
+                    var exceptColumns = new string[] { "DetId", "Id" };
+                    CopyProperty.CopyProperties(model, tx_AdjustmentOut_Item, false, exceptColumns);
+
+                    DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                    tx_AdjustmentOut_Item.ModifiedDate = dtModified;
+                    tx_AdjustmentOut_Item.ModifiedUser = UserId;
+
+                    CONTEXT.SaveChanges();
+
+                }
+
+
+            }
+
+        }
+
 
         public void Post(int userId, long id)
         {
@@ -506,7 +560,7 @@ namespace Models.Transaction.Web.Adjustment
                         String keyValue;
                         keyValue = id.ToString();
 
-                        AdjustmentOutModel syncAdjustmentOut = GetById(userId, id);
+                        AdjustmentOutModel syncAdjustmentOut = GetById(userId, id, "post");
                         Tx_AdjustmentOut tx_AdjustmentOut = CONTEXT.Tx_AdjustmentOut.Find(id);
 
                         SpNotif.SpSysControllerTransNotif(userId, "AdjustmentOut", CONTEXT, "before", "Tx_AdjustmentOut", "post", "Id", keyValue);
@@ -604,6 +658,12 @@ namespace Models.Transaction.Web.Adjustment
                         oDocument.Lines.Quantity = double.Parse(item.QuantityPosted.ToString());
                         oDocument.Lines.AccountCode = CoaAdjustment;
                         oDocument.Lines.WarehouseCode = item.WhsCode;
+
+                        oDocument.Lines.CostingCode = item.PillarsCode;
+                        oDocument.Lines.CostingCode2 = item.ClassCode;
+                        oDocument.Lines.CostingCode3 = item.SubClass1Code;
+                        oDocument.Lines.CostingCode4 = item.SubClass2Code;
+                        oDocument.Lines.ProjectCode = item.ProjectCode;
 
                         //if (item.UomEntry != null)
                         //{
