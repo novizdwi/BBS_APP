@@ -834,6 +834,8 @@
     <Content Include="Views\Master\Item\RfidMonitoring\Partial\ItemTag\ItemTag_Panel_Partial.cshtml" />
     <Content Include="Views\Master\Item\RfidMonitoring\Partial\ItemTag\ItemTag_Partial.cshtml" />
     <Content Include="Views\Master\Item\RfidMonitoring\Partial\ItemTag\ItemTag_TabItemTagList_List_Partial.cshtml" />
+    <Content Include="Views\_Cfl\_CflCostCenter\Partial\_CflCostCenter_List_Partial.cshtml" />
+    <Content Include="Views\_Cfl\_CflCostCenter\Partial\_CflCostCenter_Panel_List_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1001,6 +1003,8 @@
     <Compile Include="Controllers\Transaction\Web\Purchasing\PurchaseOrderScan\PurchaseOrderScanController.cs" />
     <Compile Include="Controllers\_Cfl\_CflBp\_CflBpController.List.cs" />
     <Compile Include="Controllers\_Cfl\_CflBp\_CflBpController.List.Export.cs" />
+    <Compile Include="Controllers\_Cfl\_CflCostCenter\_CflCostCenterController.List.cs" />
+    <Compile Include="Controllers\_Cfl\_CflCostCenter\_CflCostCenterController.List.Export.cs" />
     <Compile Include="Controllers\_Cfl\_CflCoa\_CflCoaController.List.cs" />
     <Compile Include="Controllers\_Cfl\_CflCoa\_CflCoaController.List.Export.cs" />
     <Compile Include="Controllers\_Cfl\_CflDynamic\_CflDynamicController.List.cs" />

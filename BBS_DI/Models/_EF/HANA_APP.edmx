@@ -693,6 +693,16 @@
           <Property Name="PostingDate" Type="timestamp" />
           <Property Name="AdjustmentTypeCode" Type="nvarchar" MaxLength="100" />
           <Property Name="AdjustmentTypeName" Type="nvarchar" MaxLength="100" />
+          <Property Name="PillarsCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="PillarsName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClassCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="ClassName" Type="nvarchar" MaxLength="50" />
+          <Property Name="SubClass1Code" Type="nvarchar" MaxLength="10" />
+          <Property Name="SubClass1Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="SubClass2Code" Type="nvarchar" MaxLength="10" />
+          <Property Name="SubClass2Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProjectCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProjectName" Type="nvarchar" MaxLength="100" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
           <Property Name="IsAfterPosted" Type="varchar" MaxLength="1" />
           <Property Name="IsOpeningBalance" Type="varchar" MaxLength="1" />
@@ -785,6 +795,16 @@
           <Property Name="AdjustmentTypeCode" Type="nvarchar" MaxLength="100" />
           <Property Name="AdjustmentTypeName" Type="nvarchar" MaxLength="100" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="PillarsCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="PillarsName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClassCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="ClassName" Type="nvarchar" MaxLength="50" />
+          <Property Name="SubClass1Code" Type="nvarchar" MaxLength="10" />
+          <Property Name="SubClass1Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="SubClass2Code" Type="nvarchar" MaxLength="10" />
+          <Property Name="SubClass2Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProjectCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProjectName" Type="nvarchar" MaxLength="100" />
           <Property Name="IsAfterPosted" Type="varchar" MaxLength="1" />
           <Property Name="IsOpeningBalance" Type="varchar" MaxLength="1" />
           <Property Name="DocEntry" Type="int" />
@@ -1860,6 +1880,7 @@
           <EntitySet Name="Tx_AdjustmentOut_Item" EntityType="Model1.Tx_AdjustmentOut_Item" />
           <EntitySet Name="Tx_AdjustmentOut_Item_Tag" EntityType="Model1.Tx_AdjustmentOut_Item_Tag" />
           <EntitySet Name="Tx_AdjustmentOut_Location" EntityType="Model1.Tx_AdjustmentOut_Location" />
+          <EntitySet Name="Tx_DeactiveTag" EntityType="Model1.Tx_DeactiveTag" />
           <EntitySet Name="Tx_DeactiveTag_Item" EntityType="Model1.Tx_DeactiveTag_Item" />
           <EntitySet Name="Tx_GoodIssue" EntityType="Model1.Tx_GoodIssue" />
           <EntitySet Name="Tx_GoodsReceiptPO" EntityType="Model1.Tx_GoodsReceiptPO" />
@@ -1894,7 +1915,6 @@
           <EntitySet Name="Tx_TransferSummaryOut_Item" EntityType="Model1.Tx_TransferSummaryOut_Item" />
           <EntitySet Name="Tx_TransferSummaryOut_Item_Tag" EntityType="Model1.Tx_TransferSummaryOut_Item_Tag" />
           <EntitySet Name="Tx_TransferSummaryOut_Ref" EntityType="Model1.Tx_TransferSummaryOut_Ref" />
-          <EntitySet Name="Tx_DeactiveTag" EntityType="Model1.Tx_DeactiveTag" />
         </EntityContainer>
         <EntityType Name="Tm_Alert">
           <Key>
@@ -2584,6 +2604,16 @@
           <Property Name="PostingDate" Type="DateTime" />
           <Property Name="AdjustmentTypeCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AdjustmentTypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PillarsCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PillarsName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClassCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ClassName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass1Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass1Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass2Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass2Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsAfterPosted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="IsOpeningBalance" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
@@ -2676,6 +2706,16 @@
           <Property Name="AdjustmentTypeCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AdjustmentTypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PillarsCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PillarsName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClassCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ClassName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass1Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass1Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass2Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass2Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="IsAfterPosted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="IsOpeningBalance" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="DocEntry" Type="Int32" />
@@ -2749,6 +2789,24 @@
           <Property Name="BinAbsEntry" Type="Int32" />
           <Property Name="BinCode" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="TotalIssue" Type="Decimal" Precision="21" Scale="6" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Tx_DeactiveTag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TransNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ScanDeviceId" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="TransDate" Type="DateTime" />
+          <Property Name="PostingDate" Type="DateTime" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CancelReason" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
@@ -3575,24 +3633,6 @@
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
-        <EntityType Name="Tx_DeactiveTag">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TransType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TransNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ScanDeviceId" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="TransDate" Type="DateTime" />
-          <Property Name="PostingDate" Type="DateTime" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CancelReason" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" />
-          <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4336,6 +4376,16 @@
                 <ScalarProperty Name="IsOpeningBalance" ColumnName="IsOpeningBalance" />
                 <ScalarProperty Name="IsAfterPosted" ColumnName="IsAfterPosted" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
+                <ScalarProperty Name="SubClass2Name" ColumnName="SubClass2Name" />
+                <ScalarProperty Name="SubClass2Code" ColumnName="SubClass2Code" />
+                <ScalarProperty Name="SubClass1Name" ColumnName="SubClass1Name" />
+                <ScalarProperty Name="SubClass1Code" ColumnName="SubClass1Code" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="ClassCode" ColumnName="ClassCode" />
+                <ScalarProperty Name="PillarsName" ColumnName="PillarsName" />
+                <ScalarProperty Name="PillarsCode" ColumnName="PillarsCode" />
                 <ScalarProperty Name="AdjustmentTypeName" ColumnName="AdjustmentTypeName" />
                 <ScalarProperty Name="AdjustmentTypeCode" ColumnName="AdjustmentTypeCode" />
                 <ScalarProperty Name="PostingDate" ColumnName="PostingDate" />
@@ -4431,6 +4481,16 @@
                 <ScalarProperty Name="DocEntry" ColumnName="DocEntry" />
                 <ScalarProperty Name="IsOpeningBalance" ColumnName="IsOpeningBalance" />
                 <ScalarProperty Name="IsAfterPosted" ColumnName="IsAfterPosted" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
+                <ScalarProperty Name="SubClass2Name" ColumnName="SubClass2Name" />
+                <ScalarProperty Name="SubClass2Code" ColumnName="SubClass2Code" />
+                <ScalarProperty Name="SubClass1Name" ColumnName="SubClass1Name" />
+                <ScalarProperty Name="SubClass1Code" ColumnName="SubClass1Code" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="ClassCode" ColumnName="ClassCode" />
+                <ScalarProperty Name="PillarsName" ColumnName="PillarsName" />
+                <ScalarProperty Name="PillarsCode" ColumnName="PillarsCode" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="AdjustmentTypeName" ColumnName="AdjustmentTypeName" />
                 <ScalarProperty Name="AdjustmentTypeCode" ColumnName="AdjustmentTypeCode" />
@@ -4508,6 +4568,25 @@
                 <ScalarProperty Name="BinCode" ColumnName="BinCode" />
                 <ScalarProperty Name="BinAbsEntry" ColumnName="BinAbsEntry" />
                 <ScalarProperty Name="DetId" ColumnName="DetId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tx_DeactiveTag">
+            <EntityTypeMapping TypeName="Model1.Tx_DeactiveTag">
+              <MappingFragment StoreEntitySet="Tx_DeactiveTag">
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CancelReason" ColumnName="CancelReason" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PostingDate" ColumnName="PostingDate" />
+                <ScalarProperty Name="TransDate" ColumnName="TransDate" />
+                <ScalarProperty Name="ScanDeviceId" ColumnName="ScanDeviceId" />
+                <ScalarProperty Name="TransNo" ColumnName="TransNo" />
+                <ScalarProperty Name="TransType" ColumnName="TransType" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -5363,25 +5442,6 @@
                 <ScalarProperty Name="BaseNo" ColumnName="BaseNo" />
                 <ScalarProperty Name="BaseId" ColumnName="BaseId" />
                 <ScalarProperty Name="DetId" ColumnName="DetId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tx_DeactiveTag">
-            <EntityTypeMapping TypeName="Model1.Tx_DeactiveTag">
-              <MappingFragment StoreEntitySet="Tx_DeactiveTag">
-                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CancelReason" ColumnName="CancelReason" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="PostingDate" ColumnName="PostingDate" />
-                <ScalarProperty Name="TransDate" ColumnName="TransDate" />
-                <ScalarProperty Name="ScanDeviceId" ColumnName="ScanDeviceId" />
-                <ScalarProperty Name="TransNo" ColumnName="TransNo" />
-                <ScalarProperty Name="TransType" ColumnName="TransType" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

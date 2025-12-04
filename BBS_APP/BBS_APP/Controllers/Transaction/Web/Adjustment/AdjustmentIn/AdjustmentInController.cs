@@ -153,6 +153,12 @@ namespace Controllers.Transaction.Web.Adjustment
 
             return PartialView(VIEW_FORM_PARTIAL, adjustmentInModel);
         }
-        
+
+        public ActionResult GetPillars( string PillarsCode)
+        {
+            var list = Models._Utils.GeneralGetList.GetCostCenterList("1");
+            return PartialView("_ComboBoxPillars", list);
+        }
+
     }
 }

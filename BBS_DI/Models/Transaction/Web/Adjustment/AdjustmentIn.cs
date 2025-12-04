@@ -58,6 +58,26 @@ namespace Models.Transaction.Web.Adjustment
 
         public string WhsCode { get; set; }
 
+        public string PillarsCode { get; set; }
+
+        public string PillarsName { get; set; }
+
+        public string ClassCode { get; set; }
+
+        public string ClassName { get; set; }
+
+        public string SubClass1Code { get; set; }
+
+        public string SubClass1Name { get; set; }
+
+        public string SubClass2Code { get; set; }
+
+        public string SubClass2Name { get; set; }
+
+        public string ProjectCode { get; set; }
+
+        public string ProjectName { get; set; }
+
         public DateTime? CreatedDate { get; set; }
 
         public int? CreatedUser { get; set; }
@@ -79,6 +99,12 @@ namespace Models.Transaction.Web.Adjustment
         public AdjustmentIn_Detail Details_ { get; set; }
 
         public List<AdjustmentIn_AttachmentModel> ListAttachments_ = new List<AdjustmentIn_AttachmentModel>();
+
+        public List<GetCodeNameModel> PillarsList { get; set; }
+        public List<GetCodeNameModel> ClassList { get; set; }
+        public List<GetCodeNameModel> SubClass1List { get; set; }
+        public List<GetCodeNameModel> SubClass2List { get; set; }
+        public List<GetCodeNameModel> ProjectList { get; set; }
     }
 
     public class AdjustmentIn_Detail
@@ -213,15 +239,15 @@ namespace Models.Transaction.Web.Adjustment
             return model;
         }
 
-        public AdjustmentInModel GetById(int userId, long id = 0)
+        public AdjustmentInModel GetById(int userId, long id = 0, string method = "")
         {
             using (var CONTEXT = new HANA_APP())
             {
-                return GetById(CONTEXT, userId, id);
+                return GetById(CONTEXT, userId, id, method);
             }
         }
 
-        public AdjustmentInModel GetById(HANA_APP CONTEXT, int userId, long id = 0)
+        public AdjustmentInModel GetById(HANA_APP CONTEXT, int userId, long id = 0, string method ="")
         {
             AdjustmentInModel model = null;
             if (id != 0)
@@ -255,6 +281,14 @@ namespace Models.Transaction.Web.Adjustment
 
                 model.ListDetails_ = this.AdjustmentIn_Details(CONTEXT, id);
                 model.ListAttachments_ = this.GetAdjustmentIn_Attachments(id);
+                if(method != "post")
+                {
+                    model.PillarsList = GeneralGetList.GetCostCenterList("1");
+                    model.ClassList = GeneralGetList.GetCostCenterList("2");
+                    model.SubClass1List = GeneralGetList.GetCostCenterList("3");
+                    model.SubClass2List = GeneralGetList.GetCostCenterList("4");
+                    model.ProjectList = GeneralGetList.GetProjectList();
+                }
 
             }
 
@@ -490,7 +524,7 @@ namespace Models.Transaction.Web.Adjustment
                         String keyValue;
                         keyValue = id.ToString();
 
-                        AdjustmentInModel syncAdjustmentIn = GetById(userId, id);
+                        AdjustmentInModel syncAdjustmentIn = GetById(userId, id, "post");
                         Tx_AdjustmentIn tx_AdjustmentIn = CONTEXT.Tx_AdjustmentIn.Find(id);
 
                         SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "before", "Tx_AdjustmentIn", "post", "Id", keyValue);
@@ -579,7 +613,7 @@ namespace Models.Transaction.Web.Adjustment
             oDocument.UserFields.Fields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
             oDocument.UserFields.Fields.Item("U_IDU_WebTransNo").Value = model.TransNo;
             oDocument.UserFields.Fields.Item("U_IDU_AdjustmentType").Value = model.AdjustmentTypeName;
-
+            
             if(model.ListDetails_.Count > 0)
             {
                 foreach(var item in model.ListDetails_)
@@ -593,6 +627,8 @@ namespace Models.Transaction.Web.Adjustment
                         oDocument.Lines.Quantity = double.Parse(item.QuantityPosted.ToString());
                         oDocument.Lines.AccountCode = CoaAdjustment;
                         oDocument.Lines.WarehouseCode = item.WhsCode;
+
+                        oDocument.Lines.CostingCode = model.PillarsCode;
 
                         //if (item.UomEntry != null)
                         //{

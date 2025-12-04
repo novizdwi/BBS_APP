@@ -232,6 +232,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\_Cfl\CflBp_Model.cs" />
+    <Compile Include="Models\_Cfl\CflCostCenter.cs" />
     <Compile Include="Models\_Cfl\CflDynamic_Model.cs" />
     <Compile Include="Models\_Cfl\CflItemByWarehouse_Model.cs" />
     <Compile Include="Models\_Cfl\CflItem_Model.cs" />

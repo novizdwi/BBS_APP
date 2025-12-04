@@ -58,6 +58,26 @@ namespace Models.Transaction.Web.Adjustment
 
         public string WhsCode { get; set; }
 
+        public string PillarsCode { get; set; }
+
+        public string PillarsName { get; set; }
+
+        public string ClassCode { get; set; }
+
+        public string ClassName { get; set; }
+
+        public string SubClass1Code { get; set; }
+
+        public string SubClass1Name { get; set; }
+
+        public string SubClass2Code { get; set; }
+
+        public string SubClass2Name { get; set; }
+
+        public string ProjectCode { get; set; }
+
+        public string ProjectName { get; set; }
+
         public DateTime? CreatedDate { get; set; }
 
         public int? CreatedUser { get; set; }
