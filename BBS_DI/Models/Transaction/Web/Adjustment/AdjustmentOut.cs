@@ -493,7 +493,11 @@ namespace Models.Transaction.Web.Adjustment
 
                         if (tx_AdjustmentOut != null)
                         {
-                            string docEntry = AddGoodsIssue(oCompany, userId, id, syncAdjustmentOut);
+                            string docEntry = string.Empty;
+                            if (syncAdjustmentOut.IsOpeningBalance != "Y")
+                            {
+                                docEntry = AddGoodsIssue(oCompany, userId, id, syncAdjustmentOut);
+                            }
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
                             tx_AdjustmentOut.PostingDate = dtModified;
