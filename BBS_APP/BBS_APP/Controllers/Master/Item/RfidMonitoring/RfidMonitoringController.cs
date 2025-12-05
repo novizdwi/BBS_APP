@@ -43,11 +43,12 @@ namespace Controllers.Master.Item
             return View(VIEW_DETAIL, rfidMonitoringModel);
         }
 
-        public ActionResult DetailPartial(DateTime? filterDate = null, string itemCode = "", string whsCode = "", string tagId = "", string status = "")
+        public ActionResult DetailPartial(DateTime? fromDate = null, DateTime? toDate = null, string itemCode = "", string whsCode = "", string tagId = "", string status = "")
         {
             int userId = (int)Session["userId"];
-            filterDate = filterDate ?? DateTime.Now.AddMonths(-1);
-
+            fromDate = fromDate ?? DateTime.Now.AddMonths(-1);
+            toDate = toDate ?? DateTime.Now;
+            
             RfidMonitoringModel rfidMonitoringModel;
 
             rfidMonitoringService = new RfidMonitoringService();
@@ -56,13 +57,14 @@ namespace Controllers.Master.Item
             return PartialView(VIEW_FORM_PARTIAL, rfidMonitoringModel);
         }
 
-        public ActionResult Find(DateTime? filterDate = null, string itemCode = "", string whsCode = "", string tagId = "", string status = "")
+        public ActionResult Find(DateTime? fromDate = null, DateTime? toDate = null, string itemCode = "", string whsCode = "", string tagId = "", string status = "")
         {
             int userId = (int)Session["userId"];
-            DateTime filterDate2 = filterDate ?? DateTime.Now.AddMonths(-1);
+            DateTime fromDate2 = fromDate ?? DateTime.Now.AddMonths(-1);
+            DateTime toDate2 = toDate ?? DateTime.Now;
 
             rfidMonitoringService = new RfidMonitoringService();
-            RfidMonitoringModel models = rfidMonitoringService.Find(userId, filterDate2, itemCode, whsCode, tagId, status);
+            RfidMonitoringModel models = rfidMonitoringService.Find(userId, fromDate2, toDate2, itemCode, whsCode, tagId, status);
 
             return PartialView(VIEW_FORM_PARTIAL, models);
         }

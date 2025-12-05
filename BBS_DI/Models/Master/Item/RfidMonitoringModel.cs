@@ -22,6 +22,10 @@ namespace Models.Master.Item
     {
         public int UserId { get; set; }
 
+        public DateTime? FromDate { get; set; }
+
+        public DateTime? ToDate { get; set; }
+
         public string ItemCode { get; set; }
 
         public string WhsCode { get; set; }
@@ -29,8 +33,6 @@ namespace Models.Master.Item
         public string TagId { get; set; }
 
         public string Status { get; set; }
-
-        public DateTime? FilterDate { get; set; }
 
         public List<RfidMonitoring_ReferenceModel> ListReferences_ = new List<RfidMonitoring_ReferenceModel>();
     }
@@ -93,31 +95,35 @@ namespace Models.Master.Item
 
         public RfidMonitoringModel GetNewModel(int userId)
         {
-            DateTime filterDate= DateTime.Now.AddMonths(-1);
+            DateTime toDate = DateTime.Now;
+            DateTime fromDate = toDate.AddMonths(-1);
+
             RfidMonitoringModel model = new RfidMonitoringModel();
             model.UserId = userId;
-            model.FilterDate = filterDate;
+            model.FromDate = fromDate;
+            model.ToDate = toDate;
             model.ItemCode = null;
             model.WhsCode = null;
             model.TagId = null;
             model.Status = null;
 
-            model.ListReferences_ = RfidMonitoring_GetReferences(userId, filterDate, null, null, null, null);
+            model.ListReferences_ = RfidMonitoring_GetReferences(userId, fromDate, toDate, null, null, null, null);
 
             return model;
         }
 
-        public RfidMonitoringModel Find(int userId, DateTime filterDate, string itemCode, string whsCode, string tagId, string status)
+        public RfidMonitoringModel Find(int userId, DateTime fromDate, DateTime toDate, string itemCode, string whsCode, string tagId, string status)
         {
             RfidMonitoringModel model = new RfidMonitoringModel();
             model.UserId = userId;
-            model.FilterDate = filterDate;
+            model.FromDate = fromDate;
+            model.ToDate = toDate;
             model.ItemCode = itemCode;
             model.WhsCode = whsCode;
             model.TagId = tagId;
             model.Status = status;
 
-            model.ListReferences_ = this.RfidMonitoring_GetReferences(userId, filterDate, itemCode, whsCode, tagId, status);
+            model.ListReferences_ = this.RfidMonitoring_GetReferences(userId, fromDate, toDate, itemCode, whsCode, tagId, status);
             return model;
         }
 
@@ -125,17 +131,18 @@ namespace Models.Master.Item
         //-------------------------------------
         //Detail  RfidMonitoring_Reference
         //-------------------------------------
-        public RfidMonitoringModel GetListByParam(int userId, DateTime filterDate, string itemCode, string whsCode, string tagId, string status)
+        public RfidMonitoringModel GetListByParam(int userId, DateTime fromDate, DateTime toDate, string itemCode, string whsCode, string tagId, string status)
         {
             RfidMonitoringModel model = new RfidMonitoringModel();
             model.UserId = userId;
-            model.FilterDate = filterDate;
+            model.FromDate = fromDate;
+            model.ToDate = toDate;
             model.ItemCode = itemCode;
             model.WhsCode = whsCode;
             model.TagId = tagId;
             model.Status = status;
 
-            model.ListReferences_ = this.RfidMonitoring_GetReferences(userId, filterDate, itemCode, whsCode, tagId, status);
+            model.ListReferences_ = this.RfidMonitoring_GetReferences(userId, fromDate, toDate, itemCode, whsCode, tagId, status);
 
             return model;
         }
@@ -143,34 +150,36 @@ namespace Models.Master.Item
         //-------------------------------------
         //Detail  RfidMonitoring_Reference
         //-------------------------------------
-        public List<RfidMonitoring_ReferenceModel> RfidMonitoring_GetReferences(int userId, DateTime filterDate, string itemCode, string whsCode, string tagId, string status)
+        public List<RfidMonitoring_ReferenceModel> RfidMonitoring_GetReferences(int userId, DateTime fromDate, DateTime toDate, string itemCode, string whsCode, string tagId, string status)
         {
             using (var CONTEXT = new HANA_APP())
             {
-                return RfidMonitoring_GetReferences(CONTEXT, userId, filterDate, itemCode, whsCode, tagId, status);
+                return RfidMonitoring_GetReferences(CONTEXT, userId, fromDate, toDate, itemCode, whsCode, tagId, status);
             }
         }
 
-        public List<RfidMonitoring_ReferenceModel> RfidMonitoring_GetReferences(HANA_APP CONTEXT, int userId, DateTime filterDate, string itemCode = "", string whsCode = "", string tagId = "", string status = "")
+        public List<RfidMonitoring_ReferenceModel> RfidMonitoring_GetReferences(HANA_APP CONTEXT, int userId, DateTime fromDate, DateTime toDate, string itemCode = "", string whsCode = "", string tagId = "", string status = "")
         {
             string sql = @"
             CALL ""SpRfidMonitoring_GetReferences"" (
                 :p0, --userId
-                :p1, --filterDate
-                :p2, --itemCode
-                :p3, --whsCode
-                :p4, --tagId
-                :p5 --Status
+                :p1, --fromDate
+                :p2, --toDate
+                :p3, --itemCode
+                :p4, --whsCode
+                :p5, --tagId
+                :p6 --Status
             )";
 
-            return CONTEXT.Database.SqlQuery<RfidMonitoring_ReferenceModel>(sql,
+            return CONTEXT.Database.SqlQuery<RfidMonitoring_ReferenceModel>(sql, 
                 userId,
-                filterDate,
+                fromDate,
+                toDate,
                 itemCode,
                 whsCode,
                 tagId,
                 status
-            ).ToList();
+                ).ToList();
         }
 
         public RfidMonitoringItemTagView___ GetItemTags(string tagId)
