@@ -8,6 +8,7 @@
         Id = ViewBag.Id;
     }
     string status = Models._Ef.DbProvider.dbApp.Database.SqlQuery<string>("SELECT TOP 1 T0.\"Status\" FROM \"Tx_AdjustmentIn\" T0 WHERE T0.\"Id\"=:p0", Id).FirstOrDefault();
+    ViewBag.ReadOnly = Model.Status == "Draft" ? false : true;
 
 }
 
@@ -205,8 +206,8 @@
         cbo.Columns.Add("Name", "Name", 200);
         cbo.Width = 92;
         cbo.TextFormatString = "{0}";
+        cbo.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
-        column.ReadOnly = false;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = ViewBag.ReadOnly;
 
@@ -240,7 +241,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.ComboBox;
         var cbo = column.PropertiesEdit as ComboBoxProperties;
-        cbo.DataSource = Models._Utils.GeneralGetList.GetCostCenters("1");
+        cbo.DataSource = Models._Utils.GeneralGetList.GetCostCenters("2");
         cbo.ClientSideEvents.ValueChanged =
             "function(s, e) { " +
                 "var item = s.GetSelectedItem(); " +
@@ -256,8 +257,8 @@
         cbo.Columns.Add("Name", "Name", 200);
         cbo.Width = 92;
         cbo.TextFormatString = "{0}";
+        cbo.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
-        column.ReadOnly = false;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = ViewBag.ReadOnly;
 
@@ -291,7 +292,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.ComboBox;
         var cbo = column.PropertiesEdit as ComboBoxProperties;
-        cbo.DataSource = Models._Utils.GeneralGetList.GetCostCenters("1");
+        cbo.DataSource = Models._Utils.GeneralGetList.GetCostCenters("3");
         cbo.ClientSideEvents.ValueChanged =
             "function(s, e) { " +
                 "var item = s.GetSelectedItem(); " +
@@ -307,8 +308,8 @@
         cbo.Columns.Add("Name", "Name", 200);
         cbo.Width = 92;
         cbo.TextFormatString = "{0}";
+        cbo.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
-        column.ReadOnly = false;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = ViewBag.ReadOnly;
 
@@ -342,7 +343,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.ComboBox;
         var cbo = column.PropertiesEdit as ComboBoxProperties;
-        cbo.DataSource = Models._Utils.GeneralGetList.GetCostCenters("1");
+        cbo.DataSource = Models._Utils.GeneralGetList.GetCostCenters("4");
         cbo.ClientSideEvents.ValueChanged =
             "function(s, e) { " +
                 "var item = s.GetSelectedItem(); " +
@@ -358,8 +359,8 @@
         cbo.Columns.Add("Name", "Name", 200);
         cbo.Width = 92;
         cbo.TextFormatString = "{0}";
-
-        column.ReadOnly = false;
+        cbo.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = ViewBag.ReadOnly;
 
@@ -393,7 +394,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.ComboBox;
         var cbo = column.PropertiesEdit as ComboBoxProperties;
-        cbo.DataSource = Models._Utils.GeneralGetList.GetCostCenters("1");
+        cbo.DataSource = Models._Utils.GeneralGetList.GetProjects();
         cbo.ClientSideEvents.ValueChanged =
             "function(s, e) { " +
                 "var item = s.GetSelectedItem(); " +
@@ -409,8 +410,8 @@
         cbo.Columns.Add("Name", "Name", 200);
         cbo.Width = 92;
         cbo.TextFormatString = "{0}";
-
-        column.ReadOnly = false;
+        cbo.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = ViewBag.ReadOnly;
 
@@ -443,7 +444,7 @@
         column.Width = 100;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
-
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
     });
