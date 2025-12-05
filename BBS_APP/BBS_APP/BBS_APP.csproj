@@ -836,6 +836,18 @@
     <Content Include="Views\Master\Item\RfidMonitoring\Partial\ItemTag\ItemTag_TabItemTagList_List_Partial.cshtml" />
     <Content Include="Views\_Cfl\_CflCostCenter\Partial\_CflCostCenter_List_Partial.cshtml" />
     <Content Include="Views\_Cfl\_CflCostCenter\Partial\_CflCostCenter_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Purchasing\GoodsReceiptPO\Partial\GoodsReceiptPO_Form_BtnBottom_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Purchasing\PurchaseOrderScan\Partial\PurchaseOrderScan_Form_BtnBottom_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferSummaryOut\Partial\TransferSummaryOut_Form_BtnBottom_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferSummaryIn\Partial\TransferSummaryIn_Form_BtnBottom_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferRequest\Partial\TransferRequest_Form_BtnBottom_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferOut\Partial\TransferOut_Form_BtnBottom_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\TransferIn\Partial\TransferIn_Form_BtnBottom_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\StockSummaryOpname\Partial\StockSummaryOpname_Form_BtnBottom_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\StockOpnameScan\Partial\StockOpnameScan_Form_BtnBottom_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Inventory\RequestStockOpname\Partial\RequestStockOpname_Form_BtnBottom_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentOut\Partial\AdjustmentOut_Form_BtnBottom_Partial.cshtml" />
+    <Content Include="Views\Transaction\Web\Adjustment\AdjustmentIn\Partial\AdjustmentIn_Form_BtnBottom_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

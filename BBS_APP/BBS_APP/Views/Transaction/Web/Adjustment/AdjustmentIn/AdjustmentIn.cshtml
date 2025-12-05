@@ -18,11 +18,11 @@
 
 
 <script type="text/javascript">
-$(document).ready(function () {
+    $(document).ready(function () {
 
         SetBtnStatus();
     }
-);
+    );
 
 </script>
 
@@ -56,6 +56,10 @@ $(document).ready(function () {
 
         var btnRefresh = ASPxClientButton.Cast('btnRefresh');
 
+        var btnPost = ASPxClientButton.Cast('btnPost');
+
+        var btnCancel = ASPxClientButton.Cast('btnCancel');
+
         var formMode = '';
         if ((Id.GetValue() == '') || Id.GetValue() == '0') {
             formMode = 'new';
@@ -63,6 +67,8 @@ $(document).ready(function () {
             formMode = 'edit';
         }
 
+        btnPost.SetEnabled(false);
+        btnCancel.SetEnabled(false);
         switch (formMode) {
             case 'new':
 
@@ -72,9 +78,6 @@ $(document).ready(function () {
                 //btnAdd.SetEnabled(false);
                 btnUpdate.SetEnabled(false);
                 btnRefresh.SetEnabled(false);
-
-                btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(false);
-                btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(false);
                 break;
             case 'edit':
 
@@ -89,29 +92,20 @@ $(document).ready(function () {
                     case 'Draft':
                         btnUpdate.SetEnabled(true);
 
-                        btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(true);
-                        btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(true);
+                        btnPost.SetEnabled(true);
+                        btnCancel.SetEnabled(true);
 
                         break;
                     case 'Posted':
                         btnUpdate.SetEnabled(true);
 
-                        btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(false);
-                        btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(false);
-
                         break;
                     case 'Cancel':
                         btnUpdate.SetEnabled(false);
 
-                        btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(false);
-                        btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(false);
-
                         break;
                     case 'Closed':
                         btnUpdate.SetEnabled(false);
-
-                        btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(false);
-                        btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(false);
                         break;
                     default:
                         break;
@@ -211,34 +205,69 @@ function RefreshAfterSuccess(response) {
     MVCxClientUtils.FinalizeCallback();
     SetBtnStatus();
     //ExpiredTypeOnValueChange();
-}
+    }
 
+    function OnClickBtnNew(s, e) {
 
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("DetailPartial", "AdjustmentIn")",
+            beforeSend: function () {
+                OnBegin();
+            },
 
-function OnClickBtnNew(s, e) {
+            success: function (response) {
+                RefreshAfterSuccess(response);
+                OnSuccess();
+            },
 
-    $.ajax({
-        type: "POST",
-        url: "@Url.Action("DetailPartial", "AdjustmentIn")",
-        beforeSend: function () {
-            OnBegin();
-        },
+            error: function (jqXhr, textStatus, errorThrown) {
+                OnFailure(jqXhr, textStatus, errorThrown)
+            },
 
-        success: function (response) {
-            RefreshAfterSuccess(response);
-            OnSuccess();
-        },
+            complete: function () {
+                OnComplete()
+            }
+        });
 
-        error: function (jqXhr, textStatus, errorThrown) {
-            OnFailure(jqXhr, textStatus, errorThrown)
-        },
+    }
 
-        complete: function () {
-            OnComplete()
+    function OnClickBtnPost(s, e) {
+        if (BeforeSave() == false) {
+            return;
         }
-    });
 
-}
+        var formData = GetFormData();
+        if (confirm('Post transaction?')) {
+            key = Id.GetValue();
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Post", "AdjustmentIn")',
+                data: formData,
+                beforeSend: function () {
+                    OnBegin();
+                },
+                success: function (response) {
+                    RefreshAfterSuccess(response);
+                    OnSuccessMsgBox();
+
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    OnFailure(jqXhr, textStatus, errorThrown)
+                },
+                complete: function () {
+                    OnComplete()
+                }
+            });
+        }
+
+    }
+
+    function OnClickBtnCancel(s, e) {
+        key = Id.GetValue();
+        btnShowCancelReasonOnClick(s, e, key);
+    }
 
 
 function GetFormData() {
@@ -683,27 +712,27 @@ function BtnCflPIllarsCodeOnClick(s, e) {
     function gvDetailCalculateSummary(grid, rowValues, visibleIndex, isDeleting) {
     }
 
-    function gvDetail_PillarsCodeOnChange(s, e, name) { 
+    function gvDetail_PillarsCodeOnChange(s, e, name) {
         var PillarsName = ASPxClientTextBox.Cast("gvAdjustmentInDetail_PillarsName");
         PillarsName.SetValue(name);
     }
 
-    function gvDetail_ClassCodeOnChange(s, e, name) { 
+    function gvDetail_ClassCodeOnChange(s, e, name) {
         var ClassName = ASPxClientTextBox.Cast("gvAdjustmentInDetail_ClassName");
         ClassName.SetValue(name);
     }
 
-    function gvDetail_SubClass1CodeOnChange(s, e, name) { 
+    function gvDetail_SubClass1CodeOnChange(s, e, name) {
         var SubClass1Name = ASPxClientTextBox.Cast("gvAdjustmentInDetail_SubClass1Name");
         SubClass1Name.SetValue(name);
     }
 
-    function gvDetail_SubClass2CodeOnChange(s, e, name) { 
+    function gvDetail_SubClass2CodeOnChange(s, e, name) {
         var SubClass2Name = ASPxClientTextBox.Cast("gvAdjustmentInDetail_SubClass2Name");
         SubClass2Name.SetValue(name);
     }
 
-    function gvDetail_ProjectCodeOnChange(s, e, name) { 
+    function gvDetail_ProjectCodeOnChange(s, e, name) {
         var ProjectName = ASPxClientTextBox.Cast("gvAdjustmentInDetail_ProjectName");
         ProjectName.SetValue(name);
     }
@@ -884,3 +913,6 @@ function gvAdjustmentInAttachmentDetail_OnClickBtnDelete(DetId) {
 
 @Html.Partial("~/Views/_CrystalReport/Layout/Print_Panel_Partial.cshtml")
 
+
+
+@Html.Partial("Partial/AdjustmentIn_Form_BtnBottom_Partial")

@@ -425,6 +425,13 @@ a.tree-view-node.hovered
     z-index: 1;
 }
 
+.page-toolbar-wrapper-bottom {
+    position: fixed;
+    left: 272px !important;
+    right: 0;
+    z-index: 1;
+}
+
 @media(max-width: 959px) {
     .page-toolbar-wrapper {
         left: 0;

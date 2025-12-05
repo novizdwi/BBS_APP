@@ -57,6 +57,10 @@
 
         var btnRefresh = ASPxClientButton.Cast('btnRefresh');
 
+        var btnPost = ASPxClientButton.Cast('btnPost');
+
+        var btnCancel = ASPxClientButton.Cast('btnCancel');
+
         var formMode = '';
         if ((Id.GetValue() == '') || Id.GetValue() == '0') {
             formMode = 'new';
@@ -64,6 +68,8 @@
             formMode = 'edit';
         }
 
+        btnPost.SetEnabled(false);
+        btnCancel.SetEnabled(false);
         switch (formMode) {
             case 'new':
 
@@ -73,9 +79,7 @@
                 btnAdd.SetEnabled(true);
                 btnUpdate.SetEnabled(false);
                 btnRefresh.SetEnabled(false);
-
-                btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(false);
-                btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(false);
+                
                 break;
             case 'edit':
 
@@ -90,29 +94,21 @@
                     case 'Draft':
                         btnUpdate.SetEnabled(true);
 
-                        btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(true);
-                        btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(true);
+                        btnPost.SetEnabled(true);
+                        btnCancel.SetEnabled(true);
 
                         break;
                     case 'Posted':
                         btnUpdate.SetEnabled(true);
-
-                        btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(false);
-                        btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(true);
+                        btnCancel.SetEnabled(true);
 
                         break;
                     case 'Cancel':
                         btnUpdate.SetEnabled(false);
 
-                        btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(false);
-                        btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(false);
-
                         break;
                     case 'Closed':
                         btnUpdate.SetEnabled(false);
-
-                        btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(false);
-                        btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(false);
                         break;
                     default:
                         break;
@@ -239,6 +235,43 @@
             }
         });
 
+    }
+
+    function OnClickBtnPost(s, e) {
+        if (BeforeSave() == false) {
+            return;
+        }
+
+        var formData = GetFormData();
+        if (confirm('Post transaction?')) {
+            key = Id.GetValue();
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Post", "TransferRequest")',
+                data: formData,
+                beforeSend: function () {
+                    OnBegin();
+                },
+                success: function (response) {
+                    RefreshAfterSuccess(response);
+                    OnSuccessMsgBox();
+
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    OnFailure(jqXhr, textStatus, errorThrown)
+                },
+                complete: function () {
+                    OnComplete()
+                }
+            });
+        }
+
+    }
+
+    function OnClickBtnCancel(s, e) {
+        key = Id.GetValue();
+        btnShowCancelReasonOnClick(s, e, key);
     }
 
 
@@ -611,29 +644,29 @@
 
         if (e.buttonID == "deleteButton") {
             //if (confirm('Delete line transaction?')) {
-                //s.batchEditApi.StartEdit(e.visibleIndex);
-                //var rowValues = s.batchEditHelper.GetRowValues(e.visibleIndex);
-                //gvTransferRequestDetailCalculateSummary(s, rowValues, e.visibleIndex, true);
-                //s.DeleteRow(e.visibleIndex);
-                //s.GetBatchEditHelper().CanUpdate();
+            //s.batchEditApi.StartEdit(e.visibleIndex);
+            //var rowValues = s.batchEditHelper.GetRowValues(e.visibleIndex);
+            //gvTransferRequestDetailCalculateSummary(s, rowValues, e.visibleIndex, true);
+            //s.DeleteRow(e.visibleIndex);
+            //s.GetBatchEditHelper().CanUpdate();
 
-                var vi = e.visibleIndex;
+            var vi = e.visibleIndex;
 
-                // Pastikan nilai editor di-commit ke batch cache
-                s.batchEditApi.EndEdit();
+            // Pastikan nilai editor di-commit ke batch cache
+            s.batchEditApi.EndEdit();
 
-                // Ambil nilai langsung dari cache batch edit
-                var fields = ["Qty", "Price", "Discount", "Amount"]; // ganti sesuai kolom
-                var rowValues = {};
-                fields.forEach(function (f) {
-                    rowValues[f] = s.batchEditApi.GetCellValue(vi, f);
-                });
+            // Ambil nilai langsung dari cache batch edit
+            var fields = ["Qty", "Price", "Discount", "Amount"]; // ganti sesuai kolom
+            var rowValues = {};
+            fields.forEach(function (f) {
+                rowValues[f] = s.batchEditApi.GetCellValue(vi, f);
+            });
 
-                // Hitung ulang summary (sebelum hapus, jika logika Anda perlu)
-                gvTransferRequestDetailCalculateSummary(s, rowValues, vi, true);
+            // Hitung ulang summary (sebelum hapus, jika logika Anda perlu)
+            gvTransferRequestDetailCalculateSummary(s, rowValues, vi, true);
 
-                // Hapus baris di batch
-                s.DeleteRow(vi);
+            // Hapus baris di batch
+            s.DeleteRow(vi);
 
             //}
         }
@@ -820,7 +853,7 @@
             },
             success: function (response) {
                 gvTransferRequestDetail.PerformCallback();
-                OnSuccessMsgBox();             
+                OnSuccessMsgBox();
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 OnFailure(jqXhr, textStatus, errorThrown)
@@ -894,6 +927,8 @@ new
     gvShipList
     -----------------------------------------------------------------------------
 *@
+
+@Html.Partial("Partial/TransferRequest_Form_BtnBottom_Partial")
 
 
 @Html.Partial("Partial/TransferRequest_Panel_List_Partial")

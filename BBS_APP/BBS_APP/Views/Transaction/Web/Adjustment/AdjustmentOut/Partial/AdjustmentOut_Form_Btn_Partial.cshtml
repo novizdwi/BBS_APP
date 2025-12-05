@@ -219,53 +219,7 @@
 
                 });
 
-
-                groupBtnSettings.Items.Add(
-                   itemSettings =>
-                   {
-                       //itemSettings.ShowCaption=DefaultBoolean.False;
-                       itemSettings.Caption = "  ";
-                   }
-                   )
-                   .SetNestedContent(() =>
-                   {
-                       ViewContext.Writer.Write("<div>");
-
-                       Html.DevExpress().Menu(
-                           settings3 =>
-                           {
-                               settings3.Name = "btnMenuOther";
-                               settings3.Height = 33;
-                               settings3.Width = 132;
-                               settings3.ControlStyle.BackColor = System.Drawing.Color.FromName("#0b64c5");
-
-                               //settings3.ControlStyle.Border.BorderColor = System.Drawing.Color.FromName("#0f4d92");
-                               settings3.ControlStyle.Border.BorderWidth = 0;
-                               settings3.ControlStyle.CssClass = "dxbButtonSys dxbTSys btn-other";
-                               settings3.ClientSideEvents.ItemClick = "OnClickBtnMenuOther";
-                               settings3.Items.Add(item =>
-                               {
-                                   item.Image.Url = "~/Content/Images/buttonnew/Other.png";
-                                   item.Text = "Other";
-
-                                   item.Items.Add(itemOther =>
-                                   {
-                                       itemOther.Text = "Set Status";
-                                       itemOther.Items.Add("Post", "btnMenuSetStatusPost");
-                                       itemOther.Items.Add("Cancel", "btnMenuSetStatusCancel");
-                                   });
-
-
-                               });
-
-                           }).Render();
-
-
-                       ViewContext.Writer.Write("</div>");
-                   });
-
-                 
-
+                
         });
 
 

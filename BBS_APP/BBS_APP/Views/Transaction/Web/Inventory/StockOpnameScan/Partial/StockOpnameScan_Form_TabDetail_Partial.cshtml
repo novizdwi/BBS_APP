@@ -20,7 +20,8 @@
 
     settings.Width = Unit.Percentage(100);
     settings.Height = Unit.Percentage(100);
-    
+
+    settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
     settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
     settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
     settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
@@ -153,7 +154,7 @@
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
     });
-    
+
     settings.Settings.ShowFooter = true;
 
     settings.ClientSideEvents.BeginCallback = "gvDetailOnBeginCallback";
