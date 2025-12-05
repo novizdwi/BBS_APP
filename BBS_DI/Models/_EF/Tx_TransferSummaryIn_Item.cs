@@ -14,10 +14,10 @@ namespace BBS_DI.Models._EF
     
     public partial class Tx_TransferSummaryIn_Item
     {
-        public Nullable<long> Id { get; set; }
+        public int Id { get; set; }
         public long DetId { get; set; }
-        public Nullable<long> BaseEntry { get; set; }
-        public Nullable<int> BaseLine { get; set; }
+        public Nullable<long> BaseId { get; set; }
+        public Nullable<int> BaseDetId { get; set; }
         public string BaseType { get; set; }
         public string ItemCode { get; set; }
         public string ItemName { get; set; }
@@ -28,6 +28,8 @@ namespace BBS_DI.Models._EF
         public Nullable<decimal> Quantity { get; set; }
         public Nullable<decimal> QuantityOpen { get; set; }
         public Nullable<decimal> QuantityScan { get; set; }
+        public Nullable<decimal> QuantityValid { get; set; }
+        public Nullable<decimal> QuantityPosted { get; set; }
         public Nullable<int> UomEntry { get; set; }
         public string Uom { get; set; }
         public string Comments { get; set; }

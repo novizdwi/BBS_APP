@@ -33,5 +33,6 @@ namespace BBS_DI.Models._EF
         public string Uom { get; set; }
         public string Comments { get; set; }
         public string FreeText { get; set; }
+        public string LineStatus { get; set; }
     }
 }

@@ -27,5 +27,6 @@ namespace BBS_DI.Models._EF
         public Nullable<decimal> OnHand { get; set; }
         public Nullable<decimal> IsCommitted { get; set; }
         public Nullable<decimal> OnOrder { get; set; }
+        public string DeactiveRemarks { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace BBS_DI.Models._EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Tx_TransferSummaryIn_Item_Tag
+    public partial class Tx_TransferSummaryIn_Item_Tag1
     {
         public Nullable<long> Id { get; set; }
         public Nullable<long> DetId { get; set; }
