@@ -430,6 +430,7 @@ a.tree-view-node.hovered
     left: 272px !important;
     right: 0;
     z-index: 1;
+    bottom:0.2em !important;
 }
 
 @media(max-width: 959px) {
