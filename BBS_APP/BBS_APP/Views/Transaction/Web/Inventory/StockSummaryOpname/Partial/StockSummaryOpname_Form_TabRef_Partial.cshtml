@@ -20,8 +20,7 @@
 
     settings.Width = Unit.Percentage(100);
     settings.Height = Unit.Percentage(100);
-
-    settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+    
     settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
     settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
     settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
@@ -44,7 +43,7 @@
         column.Caption = "Scan No";
 
         column.ReadOnly = true;
-        column.CellStyle.ForeColor = System.Drawing.Color.Lavender;
+        column.CellStyle.ForeColor = System.Drawing.Color.FromName("#E0E0E0");
         column.Width = 300;
 
         column.SetDataItemTemplateContent(c =>

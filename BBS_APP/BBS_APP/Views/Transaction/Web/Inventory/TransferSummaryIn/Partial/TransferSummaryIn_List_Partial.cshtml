@@ -64,6 +64,14 @@
 
     settings.Columns.Add(column =>
     {
+        column.FieldName = "BaseTransNo";
+        column.Caption = "Transfer Out No";
+        column.Name = "TransNo";
+        column.Width = 120;
+    });
+
+    settings.Columns.Add(column =>
+    {
         column.FieldName = "TransDate";
         column.Name = "TransDate";
         column.Caption = "Document Date";

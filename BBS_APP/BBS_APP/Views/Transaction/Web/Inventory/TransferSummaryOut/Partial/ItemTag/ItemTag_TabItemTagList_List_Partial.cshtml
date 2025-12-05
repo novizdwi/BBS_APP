@@ -62,4 +62,18 @@
 
     settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
 
+    settings.HtmlDataCellPrepared = (s, e) =>
+    {
+        if (e.VisibleIndex >= 0)
+        {
+            ASPxGridView gridView = (ASPxGridView)s;
+            var Status = Convert.ToString(gridView.GetRowValues(e.VisibleIndex, "Status"));
+            if (Status == "Invalid")
+            {
+                e.Cell.BackColor = System.Drawing.Color.IndianRed;
+                e.Cell.ForeColor = System.Drawing.Color.White;
+            }
+        }
+    };
+    settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
 }).Bind(Model).GetHtml()

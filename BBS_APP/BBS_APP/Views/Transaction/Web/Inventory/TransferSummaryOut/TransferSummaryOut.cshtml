@@ -732,9 +732,9 @@ new
 
         TransitWhsCode.SetValue(data.TransitWhsCode);
         TransitWhsName.SetValue(data.TransitWhsName);
-
-        BaseEntry.SetValue(data.Id);
-        BaseDocNum.SetValue(data.TransNo);
+        
+        RequestId.SetValue(data.Id);
+        RequestNo.SetValue(data.TransNo);
 
         var comment = "Based on Transfer Request Web: " + data.TransNo + (data.Comments ? " - " + data.Comments : "");
         Comments.SetValue(comment);

@@ -11,7 +11,7 @@ using System.Threading;
 using System.Net;
 
 using Models;
-using Models.Master.Item.RfidMonitoring;
+using Models.Master.Item;
 
 namespace Controllers.Master.Item
 {
@@ -20,6 +20,7 @@ namespace Controllers.Master.Item
 
         string VIEW_DETAIL = "RfidMonitoring";
         string VIEW_FORM_PARTIAL = "Partial/RfidMonitoring_Form_Partial";
+        string VIEW_FORM_TABREFERENCE_PARTIAL = "Partial/RfidMonitoring_Form_TabReference_List_Partial";
 
         RfidMonitoringService rfidMonitoringService;
 
@@ -42,20 +43,28 @@ namespace Controllers.Master.Item
             return View(VIEW_DETAIL, rfidMonitoringModel);
         }
 
-        public ActionResult DetailPartial(string itemCode = "", string whsCode = "", string tagId = "", string status = "")
+        public ActionResult DetailPartial(DateTime? filterDate = null, string itemCode = "", string whsCode = "", string tagId = "", string status = "")
         {
             int userId = (int)Session["userId"];
+            filterDate = filterDate ?? DateTime.Now.AddMonths(-1);
 
             RfidMonitoringModel rfidMonitoringModel;
 
             rfidMonitoringService = new RfidMonitoringService();
-
-            ViewBag.initNew = true;
-
-            rfidMonitoringModel = rfidMonitoringService.GetListByParam(userId, itemCode, whsCode, tagId, status);
+            rfidMonitoringModel = rfidMonitoringService.GetNewModel(userId);
 
             return PartialView(VIEW_FORM_PARTIAL, rfidMonitoringModel);
         }
 
+        public ActionResult Find(DateTime? filterDate = null, string itemCode = "", string whsCode = "", string tagId = "", string status = "")
+        {
+            int userId = (int)Session["userId"];
+            DateTime filterDate2 = filterDate ?? DateTime.Now.AddMonths(-1);
+
+            rfidMonitoringService = new RfidMonitoringService();
+            RfidMonitoringModel models = rfidMonitoringService.Find(userId, filterDate2, itemCode, whsCode, tagId, status);
+
+            return PartialView(VIEW_FORM_PARTIAL, models);
+        }
     }
 }

@@ -16,6 +16,12 @@ using BBS_DI.Models._EF;
 
 namespace Models._Utils
 {
+    public class GetCodeNameModel
+    {
+        public string Code { get; set; }
+
+        public string Name { get; set; }
+    }
 
     public static class GeneralGetList
     {
@@ -297,7 +303,7 @@ namespace Models._Utils
 
         }
 
-        public static string GetUserWarehouse(int userId = -1)
+        public static DataTable GetUserWarehouse(int userId = -1)
         {
             using (var CONTEXT = new HANA_APP())
             {
@@ -305,21 +311,27 @@ namespace Models._Utils
             }
         }
 
-        public static string GetUserWarehouse(HANA_APP CONTEXT, int userId = -1)
+        public static DataTable GetUserWarehouse(HANA_APP CONTEXT, int userId = -1)
         {
-            var ssql = @"SELECT T0.""WhsCode"" AS ""Code"", T1.""WhsName"" AS ""Name"" 
-                FROM ""Tm_User_Warehouse"" T0   
-                INNER JOIN """ + DbProvider.dbSap_Name + @""".""OWHS"" T1 ON T0.""WhsCode"" = T1.""WhsCode""
-                WHERE T0.""Id""=:p0  AND T0.""IsTick"" = 'Y'  ";
-            if(userId == 1)
+            var ssql = "";
+            if (userId == 1)
             {
-                ssql = @"SELECT DISTINCT T0.""WhsCode"" AS ""Code"", T1.""WhsName"" AS ""Name"" 
-                    FROM ""Tm_User_Warehouse"" T0 
-                    INNER JOIN """ + DbProvider.dbSap_Name + @""".""OWHS"" T1 ON T0.""WhsCode"" = T1.""WhsCode""
-                    WHERE T0.""IsTick"" = 'Y' ";
+                ssql = @"SELECT DISTINCT T1.""WhsCode"" AS ""Code"", T1.""WhsName"" AS ""Name"" 
+                    FROM ""{0}"".""OWHS"" T1
+                    ";
+                ssql = string.Format(ssql, DbProvider.dbSap_Name);
+            }
+            else
+            {
+                ssql = @"SELECT T0.""WhsCode"" AS ""Code"", T1.""WhsName"" AS ""Name"" 
+                FROM ""Tm_User_Warehouse"" T0   
+                INNER JOIN ""{0}"".""OWHS"" T1 ON T0.""WhsCode"" = T1.""WhsCode""
+                WHERE T0.""Id""= '{1}'  AND T0.""IsTick"" = 'Y'  ";
+                ssql = string.Format(ssql, DbProvider.dbSap_Name, userId);
             }
 
-            return GetValue<string>(CONTEXT, ssql, userId);
+            var ret = GetDataTable(CONTEXT, ssql);
+            return ret;
 
         }
 
@@ -727,6 +739,104 @@ namespace Models._Utils
                 dt.Rows.Add(((IDictionary<string, object>)d).Values.ToArray());
             }
             return dt;
+        }
+
+        public static DataTable GetCostCenters(string dimCode)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                string ssql = @"
+                    SELECT ""OcrCode"" AS ""Code"", ""OcrName"" AS ""Name""
+                    FROM ""{0}"".""OOCR""
+                    WHERE ""DimCode"" = '{1}'
+                    AND ""Active"" = 'Y'
+                    ORDER BY ""OcrCode"" ASC
+                ";
+
+                ssql = string.Format(ssql, DbProvider.dbSap_Name, dimCode);
+                return GetDataTable(CONTEXT, ssql);
+            }
+        }
+
+        public static List<GetCodeNameModel> GetCostCenterList(string dimCode)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                string ssql = @"
+                    SELECT ""OcrCode"" AS ""Code"", ""OcrName"" AS ""Name""
+                    FROM ""{0}"".""OOCR""
+                    WHERE ""DimCode"" = '{1}'
+                    AND ""Active"" = 'Y'
+                    ORDER BY ""OcrCode"" ASC
+                ";
+
+                ssql = string.Format(ssql, DbProvider.dbSap_Name, dimCode);
+                List<GetCodeNameModel> list = CONTEXT.Database.SqlQuery<GetCodeNameModel>(ssql).ToList();
+                return list;
+            }
+        }
+
+        public static List<GetCodeNameModel> GetProjectList()
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                string ssql = @"
+                    SELECT ""PrjCode"" AS ""Code"", ""PrjName"" AS ""Name""
+                    FROM ""{0}"".""OPRJ""
+                    WHERE ""Locked"" = 'N'
+                    ORDER BY ""PrjCode"" ASC
+                ";
+
+                ssql = string.Format(ssql, DbProvider.dbSap_Name);
+                List<GetCodeNameModel> list = CONTEXT.Database.SqlQuery<GetCodeNameModel>(ssql).ToList();
+                return list;
+            }
+        }
+
+        public static string GetCostCenterName(string OcrCode)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                string ssql = @"
+                    SELECT ""OcrName"" AS ""Name""
+                    FROM ""{0}"".""OOCR""
+                    WHERE ""OcrCode"" = '{1}'
+                ";
+
+                ssql = string.Format(ssql, DbProvider.dbSap_Name, OcrCode);
+                return CONTEXT.Database.SqlQuery<string>(ssql).FirstOrDefault();
+            }
+        }
+
+        public static DataTable GetProjects()
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                string ssql = @"
+                    SELECT ""PrjCode"" AS ""Code"", ""PrjName"" AS ""Name""
+                    FROM ""{0}"".""OPRJ""
+                    WHERE ""Locked"" = 'N'
+                    ORDER BY ""PrjCode"" ASC
+                ";
+
+                ssql = string.Format(ssql, DbProvider.dbSap_Name);
+                return GetDataTable(CONTEXT, ssql);
+            }
+        }
+
+        public static string GetProjectName(string projectCode)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                string ssql = @"
+                    SELECT ""PrjName"" AS ""Name""
+                    FROM ""{0}"".""OPRJ""
+                    WHERE ""PrjCode"" = '{1}'
+                ";
+
+                ssql = string.Format(ssql, DbProvider.dbSap_Name, projectCode);
+                return CONTEXT.Database.SqlQuery<string>(ssql).FirstOrDefault();
+            }
         }
 
         public static DataTable GetSAPCodeOfAccount()

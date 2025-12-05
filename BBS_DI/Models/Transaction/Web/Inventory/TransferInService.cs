@@ -64,6 +64,10 @@ namespace Models.Transaction.Web.Inventory
 
         public long? DocEntry { get; set; }
 
+        public long? BaseEntry { get; set; }
+
+        public string BaseDocNum { get; set; }
+
         public string DocNum { get; set; }
 
         public string RefNo { get; set; }
@@ -423,54 +427,14 @@ namespace Models.Transaction.Web.Inventory
 
                                 if (Tx_TransferIn != null)
                                 {
-                                    var exceptColumns = new string[] { "Id", "TransNo", "CreatedUser" };
+                                    var exceptColumns = new string[] { "Id", "TransNo", "CreatedUser"};
                                     CopyProperty.CopyProperties(model, Tx_TransferIn, false, exceptColumns);
+                                    
                                     Tx_TransferIn.ModifiedDate = dtModified;
                                     Tx_TransferIn.ModifiedUser = model._UserId;
-
-                                    //if (model.StartDate != null)
-                                    //{
-                                    //    Tx_TransferIn.Status2 = "On Progress";
-                                    //}
-                                    //else
-                                    //{
-                                    //    Tx_TransferIn.Status2 = "Open";
-                                    //}
-
-                                    //if (model.EndDate != null)
-                                    //{
-                                    //    Tx_TransferIn.Status2 = "Close";
-                                    //}
+                                    
                                     CONTEXT.SaveChanges();
 
-                                    //if (model.Details_ != null)
-                                    //{
-                                    //    if (model.Details_.insertedRowValues != null)
-                                    //    {
-                                    //        foreach (var detail in model.Details_.insertedRowValues)
-                                    //        {
-                                    //            Detail_Add(CONTEXT, detail, model.Id, model._UserId);
-                                    //        }
-                                    //    }
-
-                                    //    if (model.Details_.modifiedRowValues != null)
-                                    //    {
-                                    //        foreach (var detail in model.Details_.modifiedRowValues)
-                                    //        {
-                                    //            Detail_Update(CONTEXT, detail, model._UserId);
-                                    //        }
-                                    //    }
-
-                                    //    if (model.Details_.deletedRowKeys != null)
-                                    //    {
-                                    //        foreach (var detId in model.Details_.deletedRowKeys)
-                                    //        {
-                                    //            TransferIn_DetailModel detailModel = new TransferIn_DetailModel();
-                                    //            detailModel.DetId = detId;
-                                    //            Detail_Delete(CONTEXT, detailModel);
-                                    //        }
-                                    //    }
-                                    //}
                                     SpNotif.SpSysControllerTransNotif(model._UserId, "TransferIn", CONTEXT, "after", "TransferIn", "update", "Id", keyValue);
                                     
                                 }

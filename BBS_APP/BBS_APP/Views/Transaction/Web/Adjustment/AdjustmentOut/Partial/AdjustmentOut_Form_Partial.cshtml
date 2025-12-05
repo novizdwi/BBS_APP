@@ -3,7 +3,7 @@
 
 @{
     /**/
-    ViewBag.UserId = Model._UserId;
+    ViewBag.UserId = (int)Session["userId"];
     ViewBag.Id = Model.Id;
     ViewBag.ReadOnly = Model.Status == "Draft" ? false: true;
 
@@ -81,6 +81,15 @@
     });
 
     var groupItem_Col3 = groupItem_2.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        itemSettings.ColCount = 1;
+        itemSettings.CssClass = "groupCol";
+    });
+
+    var groupItem_Col4 = groupItem_2.Items.AddGroupItem(itemSettings =>
     {
         itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
         itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
@@ -217,6 +226,7 @@
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.DateEdit;
         itemSettings.Caption = "Posting Date";
         itemSettings.FieldName = "PostingDate";
+        itemSettings.ClientVisible = Model.Status == "Posted" ? true : false;
 
         var txt = (DateEditSettings)itemSettings.NestedExtensionSettings;
         txt.Name = "PostingDate";
@@ -229,9 +239,10 @@
         txt.Properties.EditFormat = EditFormat.Custom;
         txt.Properties.EditFormatString = "dd/MM/yyyy";
         txt.Properties.EditFormat = EditFormat.Date;
+        txt.Width = 230;
 
         txt.Properties.ClientSideEvents.ParseDate = "function (s,e){ { ParseDateEdit(s,e);  } }";
-        txt.Width = 230;
+
     });
 
     groupItem_Col1.Items.Add(itemSettings =>
@@ -262,6 +273,7 @@
         txt.ReadOnly = true;
         txt.ControlStyle.CssClass = "editor";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Width = 230;
     });
 
@@ -277,7 +289,26 @@
         txt.ReadOnly = true;
         txt.ControlStyle.CssClass = "editor";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Width = 230;
+    });
+
+    groupItem_Col2.Items.Add(m => Model.IsOpeningBalance, itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.CheckBox;
+        itemSettings.Caption = "Opening Balance";
+        itemSettings.ClientVisible = ViewBag.UserId == 1 ? true : false;
+
+        var chk = (CheckBoxSettings)itemSettings.NestedExtensionSettings;
+        chk.Name = "IsOpeningBalance";
+        chk.ReadOnly = !(Model.Status == "Draft");
+        chk.Properties.ValueType = typeof(string);
+        chk.Properties.ValueChecked = "Y";
+        chk.Properties.ValueUnchecked = "N";
+        chk.ShowModelErrors = true;
+        chk.ControlStyle.CssClass = "editor";
+        chk.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+
     });
 
     groupItem_Col3.Items.Add(m => Model.Status, itemSettings =>

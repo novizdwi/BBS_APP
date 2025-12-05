@@ -1,4 +1,4 @@
-﻿@using Models.Master.Item.RfidMonitoring;
+﻿@using Models.Master.Item;
 @using System.Web.Script.Serialization;
 
 @{
@@ -6,7 +6,7 @@
 
 }
 
-@model Models.Master.Item.RfidMonitoring.RfidMonitoringModel
+@model Models.Master.Item.RfidMonitoringModel
 
 @Html.DevExpress().TextBox(
         settings =>
@@ -16,7 +16,7 @@
             settings.ClientVisible = false;
             settings.ShowModelErrors = true;
             settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-            settings.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+            settings.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         }
 
 ).Bind(Model.ItemCode).GetHtml()
@@ -32,7 +32,7 @@
 
     var groupItem = settings.Items.AddGroupItem(itemSettings =>
     {
-        itemSettings.Caption = "<b>Stock Opname Scan List</b>";
+        itemSettings.Caption = "<b>RFID Monitoring</b>";
         itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
         itemSettings.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
         itemSettings.ColCount = 1;
@@ -63,8 +63,6 @@
         itemSettings.Width = 500;
     });
 
-
-
     var groupItem_Col2 = groupItem_2.Items.AddGroupItem(itemSettings =>
     {
         itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
@@ -72,6 +70,25 @@
         itemSettings.ShowCaption = DefaultBoolean.False;
         itemSettings.ColCount = 1;
         itemSettings.Width = 500;
+    });
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.DateEdit;
+        itemSettings.Caption = "After Date";
+        itemSettings.FieldName = "FilterDate";
+        var txt = (DateEditSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "FilterDate";
+        txt.ShowModelErrors = true;
+
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        //txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Properties.NullText = "dd/MM/yyyy";
+        txt.Properties.EditFormat = EditFormat.Custom;
+        txt.Properties.EditFormatString = "dd/MM/yyyy";
+        txt.Properties.DisplayFormatInEditMode = true;
+
     });
 
     groupItem_Col1.Items.Add(itemSettings =>
@@ -132,7 +149,7 @@
         dropDownEdit.Properties.ClientSideEvents.DropDown = "SynchronizeListBoxValues";
     });
 
-    /*
+
     groupItem_Col1.Items.Add(m => Model.WhsCode, itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
@@ -143,21 +160,20 @@
         cbo.Properties.DropDownStyle = DropDownStyle.DropDown;
         cbo.Name = "WhsCode";
         cbo.ShowModelErrors = false;
-
-        cbo.Properties.DataSource = Models._Utils.GeneralGetList.GetUserWarehouse(ViewBag.UserId);
-        cbo.Properties.TextField = "Code";
-        cbo.Properties.ValueField = "Name";
+        cbo.Properties.TextField = "Name";
+        cbo.Properties.ValueField = "Code";
         cbo.Properties.ValueType = typeof(string);
         cbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
         cbo.Width = 300;
 
+        cbo.Properties.DataSource = Models._Utils.GeneralGetList.GetUserWarehouse(ViewBag.UserId);
 
         cbo.ControlStyle.CssClass = "editornoimage";
         cbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
         cbo.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
     });
-*/
-    groupItem_Col1.Items.Add(itemSettings =>
+
+    groupItem_Col2.Items.Add(itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
         itemSettings.Caption = "RFID";
@@ -172,7 +188,7 @@
         txt.Width = 300;
     });
 
-    groupItem_Col1.Items.Add(m => Model.Status, itemSettings =>
+    groupItem_Col2.Items.Add(m => Model.Status, itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
         itemSettings.FieldName = "Status";
@@ -188,7 +204,7 @@
         cbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
         cbo.Width = 300;
 
-        cbo.Properties.DataSource = Models._Utils.GeneralGetList.GetListPlusAll("RFIDStatus");
+        cbo.Properties.DataSource = Models._Utils.GeneralGetList.GetList("RFIDStatus");
 
         cbo.ControlStyle.CssClass = "editornoimage";
         cbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;

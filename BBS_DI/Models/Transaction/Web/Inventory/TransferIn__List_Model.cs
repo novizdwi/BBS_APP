@@ -33,6 +33,8 @@ namespace Models.Transaction.Web.Inventory
 
         public DateTime? TransDate { get; set; }
 
+        public string BaseDocNum { get; set; }
+
         public string VendorCode { get; set; }
 
         public string VendorName { get; set; }
@@ -57,8 +59,9 @@ namespace Models.Transaction.Web.Inventory
 
     public class TransferIn__List_Model
     {
-        static string ViewSql = "SELECT *" +
+        static string ViewSql = "SELECT T0.*, T1.\"TransNo\" AS \"SummaryOutTransNo\" " +
                                 "FROM \"Tx_TransferIn\" T0 " +
+                                "LEFT JOIN \"Tx_TransferSummaryOut\" T1 ON T0.\"BaseEntry\" =T1.\"Id\"  " +
                                 "ORDER BY T0.\"CreatedDate\" DESC";
 
         public static void SetBindingData(GridViewModel state, int userId, ListFindParamTransferIn cflParam)

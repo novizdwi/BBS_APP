@@ -24,6 +24,30 @@
 
     settings.Columns.Add(column =>
     {
+        column.Caption = "Action";
+        column.Name = "Action";
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.SetDataItemTemplateContent(c =>
+        {
+            if (c.ItemIndex >= 0)
+            {
+                Html.DevExpress().HyperLink(settingsHL =>
+                {
+                    settingsHL.Name = "ChooseRenewal_" + DataBinder.Eval(c.DataItem, "TagId") + "_" + Guid.NewGuid().ToString();
+                    settingsHL.NavigateUrl = "javascript:void(0)";
+                    settingsHL.Properties.Text = "View History";
+                    settings.ClientVisible = true;
+                    settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ OnClickChooseItem(s, e, '{0}'); }}", DataBinder.Eval(c.DataItem, "TagId"));
+                    settingsHL.ControlStyle.ForeColor = System.Drawing.Color.DarkBlue;
+                }).Render();
+            }
+
+        });
+    });
+
+
+    settings.Columns.Add(column =>
+    {
         column.FieldName = "TagId";
         column.Name = "TagId";
         column.Caption = "Tag Id";
@@ -34,7 +58,6 @@
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-        column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         column.CellStyle.ForeColor = System.Drawing.Color.Black;
         //column.EditFormSettings.Visible = DefaultBoolean.False;
 
@@ -54,7 +77,6 @@
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-        column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         column.CellStyle.ForeColor = System.Drawing.Color.Black;
         //column.EditFormSettings.Visible = DefaultBoolean.False;
 
@@ -74,13 +96,13 @@
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-        column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         column.CellStyle.ForeColor = System.Drawing.Color.Black;
         //column.EditFormSettings.Visible = DefaultBoolean.False;
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
     });
+
 
     settings.Columns.Add(column =>
     {
@@ -94,7 +116,6 @@
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-        column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         column.CellStyle.ForeColor = System.Drawing.Color.Black;
         //column.EditFormSettings.Visible = DefaultBoolean.False;
 
@@ -114,7 +135,6 @@
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-        column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         column.CellStyle.ForeColor = System.Drawing.Color.Black;
         //column.EditFormSettings.Visible = DefaultBoolean.False;
 
@@ -135,7 +155,6 @@
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-        column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         column.CellStyle.ForeColor = System.Drawing.Color.Black;
         //column.EditFormSettings.Visible = DefaultBoolean.False;
 
@@ -158,18 +177,23 @@
         txt.DisplayFormatString = "dd/MM/yyyy";
         txt.EditFormatString = "dd/MM/yyyy";
 
-        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-        column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         column.CellStyle.ForeColor = System.Drawing.Color.Black;
-        column.EditFormSettings.Visible = DefaultBoolean.False;
 
     });
 
     settings.Settings.ShowFooter = true;
 
-    settings.ClientSideEvents.BeginCallback = "gvRfidMonitoringReferenceDetailBeginCallback";
+    settings.SettingsPager.Position = PagerPosition.Bottom;
+    settings.SettingsPager.FirstPageButton.Visible = true;
+    settings.SettingsPager.LastPageButton.Visible = true;
+    settings.SettingsPager.AlwaysShowPager = true;
 
-    settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
+    settings.SettingsPager.PageSizeItemSettings.Visible = true;
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+
+    settings.Settings.ShowFooter = true;
+
+    settings.ClientSideEvents.BeginCallback = "gvRfidMonitoringReferenceDetailBeginCallback";
 
 }).Bind(Model).GetHtml()
 

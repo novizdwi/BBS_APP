@@ -11,7 +11,7 @@
             settings.ClientVisible = false;
             settings.ShowModelErrors = true;
             settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-            settings.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+            settings.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         }
 
     ).Bind(Model.Id).GetHtml()
@@ -21,10 +21,10 @@
     settings.Name = "formLayout";
     settings.EncodeHtml = false;
     settings.Width = Unit.Percentage(100);
-    settings.AlignItemCaptionsInAllGroups = true; 
+    settings.AlignItemCaptionsInAllGroups = true;
     settings.ShowItemCaptionColon = false;
-    
-    
+
+
     var groupItem = settings.Items.AddGroupItem(itemSettings =>
     {
         itemSettings.Caption = "Approval";
@@ -33,10 +33,10 @@
 
         itemSettings.GroupBoxStyle.Caption.Paddings.Padding = 5;
         itemSettings.GroupBoxStyle.Caption.Font.Size = 14;
-       itemSettings.GroupBoxStyle.Caption.ForeColor = System.Drawing.Color.FromName("#363640");
+        itemSettings.GroupBoxStyle.Caption.ForeColor = System.Drawing.Color.FromName("#363640");
 
         itemSettings.Width = Unit.Percentage(100);
-        
+
     });
 
     groupItem.Items.AddEmptyItem().Height = 25;
@@ -58,7 +58,7 @@
         itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
         itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
         itemSettings.ShowCaption = DefaultBoolean.False;
-        itemSettings.ColCount = 1; 
+        itemSettings.ColCount = 1;
     });
 
     groupItem_Col1.Items.Add(m => Model.FormCode, itemSettings =>
@@ -82,7 +82,7 @@
 
     });
 
- 
+
 
     groupItem_Col1.Items.Add(itemSettings =>
     {
@@ -114,7 +114,7 @@
         rb.ControlStyle.CssClass = "editor";
         rb.Properties.DataSource = Models._Utils.GeneralGetList.GetList("Boolean");
         rb.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        rb.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+        rb.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
     });
 
@@ -130,8 +130,8 @@
         //group.VerticalAlign = FormLayoutVerticalAlign.Top;
         //group.TabAlign = TabAlign.Left;
 
-       
-        
+
+
         group.Items.Add(item =>
         {
             item.Name = "TabUser";
@@ -161,10 +161,10 @@
             item.CaptionCellStyle.BackColor = System.Drawing.Color.Blue;
 
         });
-        
+
     });
-    
-    
+
+
 }).GetHtml()
    
  

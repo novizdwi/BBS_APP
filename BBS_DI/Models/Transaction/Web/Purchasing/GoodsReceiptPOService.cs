@@ -48,6 +48,8 @@ namespace Models.Transaction.Web.Purchasing
 
         public DateTime? TransDate { get; set; }
 
+        public DateTime? PostingDate { get; set; }
+
         [Required(ErrorMessage = "required")]
         public string VendorCode { get; set; }
 
@@ -763,10 +765,10 @@ namespace Models.Transaction.Web.Purchasing
                         if(GRPOResult != null)
                         {
                             //insert RFID items to pending
-                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_InsertItemTag\"(:p0,:p1, 'GoodsReceiptPO','P')", userId, id);
+                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_InsertItemTag\"(:p0,:p1, 'GoodsReceiptPO','A')", userId, id);
                         }
                         List<GoodsReceiptResultModel> GRResult = new List<GoodsReceiptResultModel>();
-                        if (syncGRPO.ListDetails_.Any(q => q.IdPDO.GetValueOrDefault() != 0))
+                        if (syncGRPO.ListDetails_.Any(q => q.IdPDO.GetValueOrDefault() != 0 && (q.QuantityValid > 0 && q.QuantityValid.HasValue )))
                         {
                             GRResult = AddReceiveFromProduction(oCompany, userId, id, syncGRPO);
                         }
@@ -905,7 +907,7 @@ namespace Models.Transaction.Web.Purchasing
 
                     //oDocument.Lines.ItemCode = item.ItemCode;
                     //oDocument.Lines.WarehouseCode = item.WhsCode;
-                    oDocument.Lines.Quantity = (double)item.QuantityScan;
+                    oDocument.Lines.Quantity = (double)item.QuantityValid;
 
                     if (item.UomEntry != null)
                     {
@@ -967,7 +969,7 @@ namespace Models.Transaction.Web.Purchasing
 
                         oDocument.Lines.BaseType = 202;
                         oDocument.Lines.BaseEntry = item.IdPDO ?? 0;
-                        oDocument.Lines.Quantity = double.Parse(item.QuantityScan.ToString());
+                        oDocument.Lines.Quantity = double.Parse(item.QuantityValid.ToString());
 
                         oDocument.Lines.UserFields.Fields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
                         oDocument.Lines.UserFields.Fields.Item("U_IDU_DetId").Value = Convert.ToInt32(item.DetId);

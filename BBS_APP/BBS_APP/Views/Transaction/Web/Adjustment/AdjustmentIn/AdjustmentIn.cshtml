@@ -18,14 +18,11 @@
 
 
 <script type="text/javascript">
-
-
-    $(document).ready(function () {
+$(document).ready(function () {
 
         SetBtnStatus();
     }
-    );
-
+);
 
 </script>
 
@@ -172,278 +169,279 @@
 
     }
 
-    function OnComplete() {
-        loadingPanel.Hide();
-    }
+function OnComplete() {
+    loadingPanel.Hide();
+}
 
 
-    function BeforeSave() {
+function BeforeSave() {
 
-        var tab = ASPxClientTabControl.Cast("TabDetail");
-        var tabPageCount = tab.GetTabCount();
-        for (var i = 0; i < tabPageCount; i++) {
-            tab.SetActiveTabIndex(i);
-            if (!($("#formDetail").valid())) {
-                var validator = $("#formDetail").validate();
-                var errors = validator.numberOfInvalids();
-                if (errors) {
-                    // alert( validator.errorList[0].message);
-                    validator.errorList[0].element.focus();
-
-                }
-                return false;
-            }
-        }
-
-        return true;
-
-    }
-
-
-    function RefreshAfterSuccess(response) {
-        //var tab = ASPxClientTabControl.Cast("TabDetail");
-
-        //if (tab.GetActiveTabIndex != 0) {
-        //    tab.SetActiveTabIndex(0);
-        //}
-
-        $("#contentForm").html(response);
-
-        $.validator.unobtrusive.parse("#formDetail");
-
-        MVCxClientUtils.FinalizeCallback();
-        SetBtnStatus();
-        //ExpiredTypeOnValueChange();
-    }
-
-
-
-    function OnClickBtnNew(s, e) {
-
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("DetailPartial", "AdjustmentIn")",
-            beforeSend: function () {
-                OnBegin();
-            },
-
-            success: function (response) {
-                RefreshAfterSuccess(response);
-                OnSuccess();
-            },
-
-            error: function (jqXhr, textStatus, errorThrown) {
-                OnFailure(jqXhr, textStatus, errorThrown)
-            },
-
-            complete: function () {
-                OnComplete()
-            }
-        });
-
-    }
-
-
-    function GetFormData() {
-        var formData = $('#formDetail').serializeObject();
-
-        var Details_ = GetGvDetails('gvDetail');
-        $.extend(formData, { Details_: Details_ });
-        return formData;
-    }
-
-
-    function OnClickBtnAdd(s, e) {
-        if (BeforeSave() == false) {
-            return;
-        }
-
-        var formData = GetFormData();/*$('#formDetail').serializeObject();*/
-
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("Add", "AdjustmentIn")',
-            data: formData,
-            beforeSend: function () {
-                OnBegin();
-            },
-            success: function (response) {
-                RefreshAfterSuccess(response);
-                OnSuccessMsgBox();
-            },
-            error: function (jqXhr, textStatus, errorThrown) {
-                OnFailure(jqXhr, textStatus, errorThrown)
-            },
-            complete: function () {
-                OnComplete();
-            }
-        });
-
-
-    }
-
-    function OnClickBtnUpdate(s, e) {
-        if (BeforeSave() == false) {
-            return;
-        }
-
-        var formData = GetFormData();
-
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("Update", "AdjustmentIn")',
-            data: formData,
-            beforeSend: function () {
-                OnBegin();
-            },
-            success: function (response) {
-                RefreshAfterSuccess(response);
-                OnSuccessMsgBox();
-
-            },
-            error: function (jqXhr, textStatus, errorThrown) {
-                OnFailure(jqXhr, textStatus, errorThrown)
-            },
-            complete: function () {
-                OnComplete()
+    var tab = ASPxClientTabControl.Cast("TabDetail");
+    var tabPageCount = tab.GetTabCount();
+    for (var i = 0; i < tabPageCount; i++) {
+        tab.SetActiveTabIndex(i);
+        if (!($("#formDetail").valid())) {
+            var validator = $("#formDetail").validate();
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+                // alert( validator.errorList[0].message);
+                validator.errorList[0].element.focus();
 
             }
-        });
-
-
-
-    }
-
-
-
-
-    function OnClickBtnNavFirst(s, e) {
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("NavFirst", "AdjustmentIn")",
-            beforeSend: function () {
-                OnBegin();
-            },
-            success: function (response) {
-                RefreshAfterSuccess(response);
-                OnSuccess();
-            },
-            error: function (jqXhr, textStatus, errorThrown) {
-                OnFailure(jqXhr, textStatus, errorThrown)
-            },
-            complete: function () {
-                OnComplete()
-            }
-        });
-    }
-
-    function OnClickBtnNavPrevious(s, e) {
-        key = Id.GetValue();
-
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("NavPrevious", "AdjustmentIn")',
-            data: { Id: key },
-            beforeSend: function () {
-                OnBegin();
-            },
-            success: function (response) {
-                RefreshAfterSuccess(response);
-                OnSuccess();
-            },
-            error: function (jqXhr, textStatus, errorThrown) {
-                OnFailure(jqXhr, textStatus, errorThrown)
-            },
-            complete: function () {
-                OnComplete()
-            }
-        });
-    }
-
-    function OnClickBtnNavNext(s, e) {
-        key = Id.GetValue();
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("NavNext", "AdjustmentIn")',
-            data: { Id: key },
-            beforeSend: function () {
-                OnBegin();
-            },
-            success: function (response) {
-                RefreshAfterSuccess(response);
-                OnSuccess();
-            },
-            error: function (jqXhr, textStatus, errorThrown) {
-                OnFailure(jqXhr, textStatus, errorThrown)
-            },
-            complete: function () {
-                OnComplete()
-            }
-        });
-    }
-
-
-
-    function OnClickBtnNavLast(s, e) {
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("NavLast", "AdjustmentIn")",
-            beforeSend: function () {
-                OnBegin();
-            },
-            success: function (response) {
-                RefreshAfterSuccess(response);
-                OnSuccess();
-
-            },
-            error: function (jqXhr, textStatus, errorThrown) {
-                OnFailure(jqXhr, textStatus, errorThrown)
-            },
-            complete: function () {
-                OnComplete()
-            }
-        });
-    }
-
-
-    function OnClickBtnRefresh(s, e) {
-        key = Id.GetValue();
-
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("DetailPartial", "AdjustmentIn")',
-            data: { Id: key },
-            beforeSend: function () {
-                OnBegin();
-            },
-            success: function (response) {
-                RefreshAfterSuccess(response);
-                OnSuccess();
-
-            },
-            error: function (jqXhr, textStatus, errorThrown) {
-                OnFailure(jqXhr, textStatus, errorThrown)
-            },
-            complete: function () {
-                OnComplete()
-            }
-        });
-    }
-
-
-
-    function OnClickBtnListFind(s, e) {
-        var popup = ASPxClientPopupControl.Cast("popupList");
-
-        var gv = ASPxClientGridView.Cast('gvAdjustmentInList');
-        if (gv == null) {
-            popup.Show();
-        } else {
-            popup.SetContentHtml("");
-            popup.PerformCallback();
-            popup.Show();
+            return false;
         }
     }
+
+    return true;
+
+}
+
+
+function RefreshAfterSuccess(response) {
+    //var tab = ASPxClientTabControl.Cast("TabDetail");
+
+    //if (tab.GetActiveTabIndex != 0) {
+    //    tab.SetActiveTabIndex(0);
+    //}
+
+    $("#contentForm").html(response);
+
+    $.validator.unobtrusive.parse("#formDetail");
+
+    MVCxClientUtils.FinalizeCallback();
+    SetBtnStatus();
+    //ExpiredTypeOnValueChange();
+}
+
+
+
+function OnClickBtnNew(s, e) {
+
+    $.ajax({
+        type: "POST",
+        url: "@Url.Action("DetailPartial", "AdjustmentIn")",
+        beforeSend: function () {
+            OnBegin();
+        },
+
+        success: function (response) {
+            RefreshAfterSuccess(response);
+            OnSuccess();
+        },
+
+        error: function (jqXhr, textStatus, errorThrown) {
+            OnFailure(jqXhr, textStatus, errorThrown)
+        },
+
+        complete: function () {
+            OnComplete()
+        }
+    });
+
+}
+
+
+function GetFormData() {
+    var formData = $('#formDetail').serializeObject();
+
+    var Details_ = GetGvDetails('gvDetail');
+    $.extend(formData, { Details_: Details_ });
+    return formData;
+}
+
+
+function OnClickBtnAdd(s, e) {
+    if (BeforeSave() == false) {
+        return;
+    }
+
+    var formData = GetFormData();/*$('#formDetail').serializeObject();*/
+
+    $.ajax({
+        type: "POST",
+        url: '@Url.Action("Add", "AdjustmentIn")',
+        data: formData,
+        beforeSend: function () {
+            OnBegin();
+        },
+        success: function (response) {
+            RefreshAfterSuccess(response);
+            OnSuccessMsgBox();
+        },
+        error: function (jqXhr, textStatus, errorThrown) {
+            OnFailure(jqXhr, textStatus, errorThrown)
+        },
+        complete: function () {
+            OnComplete();
+        }
+    });
+
+
+}
+
+function OnClickBtnUpdate(s, e) {
+    if (BeforeSave() == false) {
+        return;
+    }
+
+    console.log(GetFormData());
+    var formData = GetFormData();
+
+    $.ajax({
+        type: "POST",
+        url: '@Url.Action("Update", "AdjustmentIn")',
+        data: formData,
+        beforeSend: function () {
+            OnBegin();
+        },
+        success: function (response) {
+            RefreshAfterSuccess(response);
+            OnSuccessMsgBox();
+
+        },
+        error: function (jqXhr, textStatus, errorThrown) {
+            OnFailure(jqXhr, textStatus, errorThrown)
+        },
+        complete: function () {
+            OnComplete()
+
+        }
+    });
+
+
+
+}
+
+
+
+
+function OnClickBtnNavFirst(s, e) {
+    $.ajax({
+        type: "POST",
+        url: "@Url.Action("NavFirst", "AdjustmentIn")",
+        beforeSend: function () {
+            OnBegin();
+        },
+        success: function (response) {
+            RefreshAfterSuccess(response);
+            OnSuccess();
+        },
+        error: function (jqXhr, textStatus, errorThrown) {
+            OnFailure(jqXhr, textStatus, errorThrown)
+        },
+        complete: function () {
+            OnComplete()
+        }
+    });
+}
+
+function OnClickBtnNavPrevious(s, e) {
+    key = Id.GetValue();
+
+    $.ajax({
+        type: "POST",
+        url: '@Url.Action("NavPrevious", "AdjustmentIn")',
+        data: { Id: key },
+        beforeSend: function () {
+            OnBegin();
+        },
+        success: function (response) {
+            RefreshAfterSuccess(response);
+            OnSuccess();
+        },
+        error: function (jqXhr, textStatus, errorThrown) {
+            OnFailure(jqXhr, textStatus, errorThrown)
+        },
+        complete: function () {
+            OnComplete()
+        }
+    });
+}
+
+function OnClickBtnNavNext(s, e) {
+    key = Id.GetValue();
+    $.ajax({
+        type: "POST",
+        url: '@Url.Action("NavNext", "AdjustmentIn")',
+        data: { Id: key },
+        beforeSend: function () {
+            OnBegin();
+        },
+        success: function (response) {
+            RefreshAfterSuccess(response);
+            OnSuccess();
+        },
+        error: function (jqXhr, textStatus, errorThrown) {
+            OnFailure(jqXhr, textStatus, errorThrown)
+        },
+        complete: function () {
+            OnComplete()
+        }
+    });
+}
+
+
+
+function OnClickBtnNavLast(s, e) {
+    $.ajax({
+        type: "POST",
+        url: "@Url.Action("NavLast", "AdjustmentIn")",
+        beforeSend: function () {
+            OnBegin();
+        },
+        success: function (response) {
+            RefreshAfterSuccess(response);
+            OnSuccess();
+
+        },
+        error: function (jqXhr, textStatus, errorThrown) {
+            OnFailure(jqXhr, textStatus, errorThrown)
+        },
+        complete: function () {
+            OnComplete()
+        }
+    });
+}
+
+
+function OnClickBtnRefresh(s, e) {
+    key = Id.GetValue();
+
+    $.ajax({
+        type: "POST",
+        url: '@Url.Action("DetailPartial", "AdjustmentIn")',
+        data: { Id: key },
+        beforeSend: function () {
+            OnBegin();
+        },
+        success: function (response) {
+            RefreshAfterSuccess(response);
+            OnSuccess();
+
+        },
+        error: function (jqXhr, textStatus, errorThrown) {
+            OnFailure(jqXhr, textStatus, errorThrown)
+        },
+        complete: function () {
+            OnComplete()
+        }
+    });
+}
+
+
+
+function OnClickBtnListFind(s, e) {
+    var popup = ASPxClientPopupControl.Cast("popupList");
+
+    var gv = ASPxClientGridView.Cast('gvAdjustmentInList');
+    if (gv == null) {
+        popup.Show();
+    } else {
+        popup.SetContentHtml("");
+        popup.PerformCallback();
+        popup.Show();
+    }
+}
 
     function OnClickBtnMenuOther(s, e) {
 
@@ -458,7 +456,7 @@
                 if (BeforeSave() == false) {
                     return;
                 }
-                var formData = GetFormData();
+
                 if (confirm('Post transaction?')) {
                     key = Id.GetValue();
 
@@ -487,97 +485,156 @@
                 break;
             default:
 
-                break;
+            break;
         }
     }
 
-    function popupCancelReason_EndCallback(s, e) {
-        $.validator.unobtrusive.parse("#CancelReason_formDetail");
-
-        var popup = ASPxClientPopupControl.Cast("popupCancelReason");
-        if (!popup.IsVisible()) {
-            loadingPanel.Hide();
-            popup.ShowAtPos(400, 100);
+    //pillars to project
+    function onPillarsChanged(s, e) {
+        var item = s.GetSelectedItem();
+        if (item) {
+            var name = item.GetColumnText("Name");   // ambil kolom Name
+            PillarsName.SetText(name);            // isi TextBox
+        } else {
+            PillarsName.SetText("");
         }
     }
 
-    function btnShowCancelReasonOnClick(s, e, Id) {
-        var popup = ASPxClientPopupControl.Cast("popupCancelReason");
-
-        popup.callbackUrl = '@Url.Action("CancelReason_PopupListOnDemandPartial", "AdjustmentIn")' + '?Id=' + Id;
-        popup.PerformCallback();
-
-        if (!popup.IsVisible()) {
-            loadingPanel.Show();
+    function onClassChanged(s, e) {
+        var item = s.GetSelectedItem();
+        if (item) {
+            var name = item.GetColumnText("Name");   // ambil kolom Name
+            ClassName.SetText(name);            // isi TextBox
+        } else {
+            ClassName.SetText("");
         }
     }
+
+    function onSubClass1Changed(s, e) {
+        var item = s.GetSelectedItem();
+        if (item) {
+            var name = item.GetColumnText("Name");   // ambil kolom Name
+            SubClass1Name.SetText(name);            // isi TextBox
+        } else {
+            SubClass1Name.SetText("");
+        }
+    }
+
+    function onSubClass2Changed(s, e) {
+        var item = s.GetSelectedItem();
+        if (item) {
+            var name = item.GetColumnText("Name");   // ambil kolom Name
+            SubClass2Name.SetText(name);            // isi TextBox
+        } else {
+            SubClass2Name.SetText("");
+        }
+    }
+
+    function onProjectChanged(s, e) {
+        var item = s.GetSelectedItem();
+        if (item) {
+            var name = item.GetColumnText("Name");   // ambil kolom Name
+            ProjectName.SetText(name);            // isi TextBox
+        } else {
+            ProjectName.SetText("");
+        }
+    }
+
+function popupCancelReason_EndCallback(s, e) {
+    $.validator.unobtrusive.parse("#CancelReason_formDetail");
+
+    var popup = ASPxClientPopupControl.Cast("popupCancelReason");
+    if (!popup.IsVisible()) {
+        loadingPanel.Hide();
+        popup.ShowAtPos(400, 100);
+    }
+}
+
+function btnShowCancelReasonOnClick(s, e, Id) {
+    var popup = ASPxClientPopupControl.Cast("popupCancelReason");
+
+    popup.callbackUrl = '@Url.Action("CancelReason_PopupListOnDemandPartial", "AdjustmentIn")' + '?Id=' + Id;
+    popup.PerformCallback();
+
+    if (!popup.IsVisible()) {
+        loadingPanel.Show();
+    }
+}
+
 
     function OnClickChooseItem(s, e, detId) {
-        key = Id.GetValue();
+    key = Id.GetValue();
 
-        var popup = ASPxClientPopupControl.Cast("popupItemTag");
+    var popup = ASPxClientPopupControl.Cast("popupItemTag");
 
-        popup.callbackUrl = '@Url.Action("ViewItemTag_PopupListOnDemandPartial", "AdjustmentIn")' + '?Id=' + key + '&DetId=' + detId;
-        popup.PerformCallback();
+    popup.callbackUrl = '@Url.Action("ViewItemTag_PopupListOnDemandPartial", "AdjustmentIn")' + '?Id=' + key + '&DetId=' + detId;
+    popup.PerformCallback();
 
-        if (!popup.IsVisible()) {
-            loadingPanel.Show();
+    if (!popup.IsVisible()) {
+        loadingPanel.Show();
+    }
+}
+
+function btnUpdateReasonOnClick(s, e) {
+    key = Id.GetValue();
+    var reason = CancelReason2.GetValue();
+    if (reason == "" || reason == null) {
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: '@Url.Action("Cancel", "AdjustmentIn")',
+        data: { Id: key, CancelReason: reason },
+        beforeSend: function () {
+            OnBegin();
+        },
+        success: function (response) {
+            popupCancelReason.Hide();
+            RefreshAfterSuccess(response);
+            OnSuccessMsgBox();
+        },
+        error: function (jqXhr, textStatus, errorThrown) {
+            OnFailure(jqXhr, textStatus, errorThrown)
+        },
+        complete: function () {
+            OnComplete()
         }
+    });
+}
+
+
+function OnClickChoose(s, e, key) {
+    $.ajax({
+        type: "POST",
+        url: '@Url.Action("DetailPartial", "AdjustmentIn")',
+        data: { Id: key },
+        beforeSend: function () {
+        OnBegin();
+    },
+    success: function (response) {
+        RefreshAfterSuccess(response);
+        OnSuccess();
+        popupList.Hide();
+    },
+    error: function (jqXhr, textStatus, errorThrown) {
+    OnFailure(jqXhr, textStatus, errorThrown)
+    },
+    complete: function () {
+    OnComplete()
+    }
+    });
     }
 
-    function btnUpdateReasonOnClick(s, e) {
-        key = Id.GetValue();
-        var reason = CancelReason2.GetValue();
-        if (reason == "" || reason == null) {
-            return;
-        }
+function BtnCflPIllarsCodeOnClick(s, e) {
+    var popupCostCenter = ASPxClientPopupControl.Cast("cflCostCenterPopupListPillars");
 
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("Cancel", "AdjustmentIn")',
-            data: { Id: key, CancelReason: reason },
-            beforeSend: function () {
-                OnBegin();
-            },
-            success: function (response) {
-                popupCancelReason.Hide();
-                RefreshAfterSuccess(response);
-                OnSuccessMsgBox();
-            },
-            error: function (jqXhr, textStatus, errorThrown) {
-                OnFailure(jqXhr, textStatus, errorThrown)
-            },
-            complete: function () {
-                OnComplete()
+    popupCostCenter.SetContentHtml("");
+    popupCostCenter.PerformCallback();
+    popupCostCenter.Show();
 
-            }
-        });
-
-    }
-
-    function OnClickChoose(s, e, key) {
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("DetailPartial", "AdjustmentIn")',
-            data: { Id: key },
-            beforeSend: function () {
-                OnBegin();
-            },
-            success: function (response) {
-                RefreshAfterSuccess(response);
-                OnSuccess();
-                popupList.Hide();
-            },
-            error: function (jqXhr, textStatus, errorThrown) {
-                OnFailure(jqXhr, textStatus, errorThrown)
-            },
-            complete: function () {
-                OnComplete()
-            }
-        });
-    }
-
-
+    //cflPurchaseOrderPopupListGoodsReceiptPO.Show();
+}
 </script>
 
 
@@ -623,6 +680,31 @@
     }
 
     function gvDetailCalculateSummary(grid, rowValues, visibleIndex, isDeleting) {
+    }
+
+    function gvDetail_PillarsCodeOnChange(s, e, name) { 
+        var PillarsName = ASPxClientTextBox.Cast("gvAdjustmentInDetail_PillarsName");
+        PillarsName.SetValue(name);
+    }
+
+    function gvDetail_ClassCodeOnChange(s, e, name) { 
+        var ClassName = ASPxClientTextBox.Cast("gvAdjustmentInDetail_ClassName");
+        ClassName.SetValue(name);
+    }
+
+    function gvDetail_SubClass1CodeOnChange(s, e, name) { 
+        var SubClass1Name = ASPxClientTextBox.Cast("gvAdjustmentInDetail_SubClass1Name");
+        SubClass1Name.SetValue(name);
+    }
+
+    function gvDetail_SubClass2CodeOnChange(s, e, name) { 
+        var SubClass2Name = ASPxClientTextBox.Cast("gvAdjustmentInDetail_SubClass2Name");
+        SubClass2Name.SetValue(name);
+    }
+
+    function gvDetail_ProjectCodeOnChange(s, e, name) { 
+        var ProjectName = ASPxClientTextBox.Cast("gvAdjustmentInDetail_ProjectName");
+        ProjectName.SetValue(name);
     }
 
 </script>
@@ -706,6 +788,31 @@ new
 
 </script>
 
+@{
+    var cflCostCenterPillars_ParamModel = new CflCostCenter_ParamModel();
+    cflCostCenterPillars_ParamModel.Name = "Pillars";
+    cflCostCenterPillars_ParamModel.Type = "Pillars";
+    cflCostCenterPillars_ParamModel.Header = " Pillars";
+    cflCostCenterPillars_ParamModel.SqlWhere = " ";
+    cflCostCenterPillars_ParamModel.IsMulti = "N";
+}
+
+
+
+<script type="text/javascript">
+
+    function OnClickChoose_CflPurchaseOrderGoodsReceiptPO(s, e, data) {
+        PillarsCode.SetValue(data.PillarsCode);
+        PillarsName.SetValue(data.PillarsName);
+        cflPurchaseOrderPopupListGoodsReceiptPO.Hide();
+
+    }
+
+
+</script>
+@Html.Partial("~/Views/_Cfl/_CflCostCenter/Partial/_CflCostCenter_Panel_List_Partial.cshtml", cflCostCenterPillars_ParamModel)
+
+
 @Html.Partial("Partial/ItemTag/ItemTag_Partial")
 
 @*
@@ -722,53 +829,53 @@ new
     -----------------------------------------------------------------------------
 *@
 <script>
-    function gvAdjustmentInAttachmentDetailBeginCallback(s, e) {
-        e.customArgs['cbId'] = Id.GetValue();
+function gvAdjustmentInAttachmentDetailBeginCallback(s, e) {
+    e.customArgs['cbId'] = Id.GetValue();
+}
+
+
+function gvAdjustmentInAttachmentDetail_OnClickBtnNew() {
+    var popup = ASPxClientPopupControl.Cast("popupAttachment");
+    popup.callbackUrl = '@Url.Action("Attachment_PopupListLoadOnDemandPartial", "AdjustmentIn")' + '?Id=' + Id.GetValue(); // "/BB_TMS/AdjustmentIn/Attachment_PopupListLoadOnDemandPartial?Id=" + Id.GetValue();
+
+    popup.PerformCallback();
+
+
+    popup.Show();
+}
+
+function Attachment_OnClickBtnUpload(s, e) {
+    // Attachment_formDetail.action = '@Url.Action("Attachment_Upload", "AdjustmentIn")';
+    // $("#Attachment_formDetail").submit();
+
+    UploadMultiFile.Upload();
+
+}
+
+function Attachment_OnClickBtnCancel(s, e) {
+    var popup = ASPxClientPopupControl.Cast("popupAttachment");
+    popup.Hide();
+
+}
+
+function Attachment_FileUploadComplete(s, e) {
+    var popup = ASPxClientPopupControl.Cast("popupAttachment");
+    popup.Hide();
+    gvAdjustmentInAttachmentDetail.PerformCallback();;
+}
+
+function gvAdjustmentInAttachmentDetail_OnClickBtnDelete(DetId) {
+    //if (Status.GetValue() == "Posted" )
+    //{
+    //    alert("Tidak dapat di delete jika sudah posted!");
+    //    return;
+    //}
+
+    if (confirm('Delete data?')) {
+        var gv = ASPxClientGridView.Cast("gvAdjustmentInAttachmentDetail");
+        gv.DeleteRowByKey(DetId);
     }
-
-
-    function gvAdjustmentInAttachmentDetail_OnClickBtnNew() {
-        var popup = ASPxClientPopupControl.Cast("popupAttachment");
-        popup.callbackUrl = '@Url.Action("Attachment_PopupListLoadOnDemandPartial", "AdjustmentIn")' + '?Id=' + Id.GetValue(); // "/BB_TMS/AdjustmentIn/Attachment_PopupListLoadOnDemandPartial?Id=" + Id.GetValue();
-
-        popup.PerformCallback();
-
-
-        popup.Show();
-    }
-
-    function Attachment_OnClickBtnUpload(s, e) {
-        // Attachment_formDetail.action = '@Url.Action("Attachment_Upload", "AdjustmentIn")';
-        // $("#Attachment_formDetail").submit();
-
-        UploadMultiFile.Upload();
-
-    }
-
-    function Attachment_OnClickBtnCancel(s, e) {
-        var popup = ASPxClientPopupControl.Cast("popupAttachment");
-        popup.Hide();
-
-    }
-
-    function Attachment_FileUploadComplete(s, e) {
-        var popup = ASPxClientPopupControl.Cast("popupAttachment");
-        popup.Hide();
-        gvAdjustmentInAttachmentDetail.PerformCallback();;
-    }
-
-    function gvAdjustmentInAttachmentDetail_OnClickBtnDelete(DetId) {
-        //if (Status.GetValue() == "Posted" )
-        //{
-        //    alert("Tidak dapat di delete jika sudah posted!");
-        //    return;
-        //}
-
-        if (confirm('Delete data?')) {
-            var gv = ASPxClientGridView.Cast("gvAdjustmentInAttachmentDetail");
-            gv.DeleteRowByKey(DetId);
-        }
-    }
+}
 </script>
 @Html.Partial("Partial/Attachment/Attachment_Panel_Partial")
 

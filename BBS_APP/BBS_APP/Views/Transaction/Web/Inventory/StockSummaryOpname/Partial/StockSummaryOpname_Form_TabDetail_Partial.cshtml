@@ -20,8 +20,7 @@
 
     settings.Width = Unit.Percentage(100);
     settings.Height = Unit.Percentage(100);
-
-    settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+    
     settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
     settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
     settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
@@ -90,7 +89,7 @@
         column.Name = "UnitPriceTc";
         column.Caption = "Unit Price";
         column.HeaderStyle.HorizontalAlign = HorizontalAlign.Right;
-        column.Width = 100;
+        column.Width = 0;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
         
@@ -194,7 +193,7 @@
     {
         column.FieldName = "QuantityScan";
         column.Name = "QuantityScan";
-        column.Caption = "Quantity";
+        column.Caption = "Qty Scan";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 80;

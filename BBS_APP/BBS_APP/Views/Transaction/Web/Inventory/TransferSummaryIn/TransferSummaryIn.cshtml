@@ -722,7 +722,7 @@ new
 <script type="text/javascript">
 
 
-    function OnClickChoose_cflTransferSummaryOutTransferSummaryIn(s, e, data) {
+    function OnClickChoose_CflTransferSummaryOutTransferSummaryIn(s, e, data) {
         FromWhsCode.SetValue(data.FromWhsCode);
         FromWhsName.SetValue(data.FromWhsName);
 
@@ -732,8 +732,9 @@ new
         TransitWhsCode.SetValue(data.TransitWhsCode);
         TransitWhsName.SetValue(data.TransitWhsName);
 
-        BaseEntry.SetValue(data.Id);
-        BaseDocNum.SetValue(data.TransNo);
+        BaseId.SetValue(data.Id);
+        BaseType.SetValue(data.BaseType);
+        BaseTransNo.SetValue(data.TransNo);
 
         var comment = "Based on Transfer Out Web: " + data.TransNo + (data.Comments ? " - " + data.Comments : "");
         Comments.SetValue(comment);

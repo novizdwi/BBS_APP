@@ -59,7 +59,7 @@
         column.FieldName = "TransNo";
         column.Caption = "Trans No";
         column.Name = "TransNo";
-        column.Width = Unit.Percentage(50);
+        column.Width = Unit.Percentage(40);
     });
 
     settings.Columns.Add(column =>
@@ -78,26 +78,42 @@
 
     settings.Columns.Add(column =>
     {
-        column.FieldName = "VendorCode";
-        column.Caption = "VendorCode.";
-        column.Name = "Vendor Code";
+        column.FieldName = "DocNum";
+        column.Caption = "SAP Doc Num";
+        column.Name = "DocNum";
+        column.Width = Unit.Percentage(40);
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "AdjustmentTypeName_";
+        column.Caption = "Adjustment Type";
+        column.Name = "AdjustmentTypeName_";
+        column.Width = Unit.Percentage(80);
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "WhsCode";
+        column.Caption = "Whs Code";
+        column.Name = "WhsCode";
         column.Width = Unit.Percentage(50);
     });
 
     settings.Columns.Add(column =>
     {
-        column.FieldName = "VendorName";
-        column.Caption = "VendorName";
-        column.Name = "Vendor Name";
-        column.Width = Unit.Percentage(100);
+        column.FieldName = "ScanDeviceId";
+        column.Caption = "Scan Device Id";
+        column.Name = "ScanDeviceId";
+        column.Width = Unit.Percentage(80);
     });
 
     settings.Columns.Add(column =>
     {
-        column.FieldName = "DocNum";
-        column.Caption = "DocNum";
-        column.Name = "SAP Doc Num";
-        column.Width = Unit.Percentage(80);
+        column.FieldName = "IsOpeningBalance_";
+        column.Caption = "Is Obal";
+        column.Name = "IsOpeningBalance_";
+        column.Width = Unit.Percentage(30);
     });
 
     settings.Columns.Add(column =>
@@ -105,7 +121,7 @@
         column.FieldName = "Status";
         column.Caption = "Status";
         column.Name = "Status";
-        column.Width = Unit.Percentage(50);
+        column.Width = Unit.Percentage(30);
     });
 
     settings.SettingsPager.Position = PagerPosition.Bottom;

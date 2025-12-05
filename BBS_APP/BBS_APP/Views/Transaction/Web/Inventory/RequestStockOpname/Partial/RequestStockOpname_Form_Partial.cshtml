@@ -219,7 +219,7 @@
 
         txt.ControlStyle.CssClass = "editornoimage";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        //txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Properties.ValidationSettings.Display = Display.Dynamic;
         //txt.Width = 100;
 
@@ -264,6 +264,7 @@
         itemSettings.Caption = "Description";
         itemSettings.FieldName = "Description";
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Name = "Description";
         txt.ShowModelErrors = true;
         txt.ReadOnly = ViewBag.ReadOnly;

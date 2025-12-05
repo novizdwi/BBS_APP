@@ -190,7 +190,7 @@
 
         txt.ControlStyle.CssClass = "editornoimage";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        //txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Properties.ValidationSettings.Display = Display.Dynamic;
         //txt.Width = 100;
 
@@ -207,6 +207,7 @@
         itemSettings.Caption = "Vendor Name";
         itemSettings.FieldName = "VendorName";
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Name = "VendorName";
         txt.ShowModelErrors = true;
         txt.ReadOnly = true;
@@ -222,6 +223,7 @@
         itemSettings.Caption = "Device Id";
         itemSettings.FieldName = "ScanDeviceId";
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Name = "ScanDeviceId";
         txt.ShowModelErrors = true;
         txt.ReadOnly = true;
@@ -237,6 +239,7 @@
         itemSettings.Caption = "SAP Doc Num";
         itemSettings.FieldName = "DocNum";
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Name = "DocNum";
         txt.ShowModelErrors = true;
         txt.ReadOnly = true;
