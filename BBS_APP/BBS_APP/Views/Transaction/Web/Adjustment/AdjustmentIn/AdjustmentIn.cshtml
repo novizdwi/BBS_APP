@@ -67,6 +67,9 @@
             formMode = 'edit';
         }
 
+        var btnMenuOther = ASPxClientMenu.Cast('btnMenuOther');
+        btnMenuOther.GetItemByName("btnMenuAuthorize").SetEnabled(false);
+
         btnPost.SetEnabled(false);
         btnCancel.SetEnabled(false);
         switch (formMode) {

@@ -59,6 +59,9 @@
 
         var btnCancel = ASPxClientButton.Cast('btnCancel');
 
+        var btnMenuOther = ASPxClientMenu.Cast('btnMenuOther');
+        btnMenuOther.GetItemByName("btnMenuAuthorize").SetEnabled(false);
+
         var formMode = '';
         if ((Id.GetValue() == '') || Id.GetValue() == '0') {
             formMode = 'new';

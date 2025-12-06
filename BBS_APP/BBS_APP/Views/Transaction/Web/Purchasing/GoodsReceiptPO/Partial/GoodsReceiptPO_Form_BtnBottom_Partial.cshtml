@@ -36,7 +36,7 @@
             panelBtnsettings.EncodeHtml = false;
             //panelBtnsettings.ControlStyle.CssClass = "under-toolbar";
             panelBtnsettings.Height = Unit.Pixel(16);
-            panelBtnsettings.Width = Unit.Percentage(19);
+            panelBtnsettings.Width = Unit.Percentage(19.5);
             panelBtnsettings.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
             var groupBtn = panelBtnsettings.Items.AddGroupItem(groupBtnSettings =>
             {
@@ -73,7 +73,7 @@
                     var btnSettings = (ButtonSettings)itemSettings.NestedExtensionSettings;
                     btnSettings.Name = "btnCancel";
                     btnSettings.Text = "Cancel";
-                    btnSettings.Width = Unit.Percentage(78);
+                    btnSettings.Width = Unit.Percentage(75);
                     btnSettings.ClientSideEvents.Click = "OnClickBtnCancel";
                     btnSettings.ToolTip = "Cancel";
                     btnSettings.ImagePosition = ImagePosition.Left;
