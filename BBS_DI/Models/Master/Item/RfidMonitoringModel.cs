@@ -210,7 +210,7 @@ namespace Models.Master.Item
                         FROM ""Tm_Item_Warehouse_Tag_Log"" T0
                     INNER JOIN ""Tm_User"" T1 ON T0.""CreatedUser"" = T1.""Id""
                     WHERE T0.""OldTagId"" = :p0
-                    ORDER BY T0.""CreatedDate"" DESC 
+                    ORDER BY T0.""ModifiedDate"" DESC 
                     ";
 
                 model.RfidMonitoringItemTagModel___ = CONTEXT.Database.SqlQuery<RfidMonitoringItemTagModel>(sql, tagId).ToList();
