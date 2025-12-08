@@ -28,6 +28,7 @@
     settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
     settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
     settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
+    settings.Styles.Header.Wrap = DevExpress.Utils.DefaultBoolean.True;
 
     settings.CommandColumn.Width = 70;
     settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
@@ -98,6 +99,34 @@
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+
+        column.FieldName = "OnHand_";
+        column.Name = "OnHand_";
+        column.Caption = "Qty In Warehouse";
+        column.HeaderStyle.HorizontalAlign = HorizontalAlign.Right;
+        column.Width = 100;
+        column.Settings.AllowSort = DefaultBoolean.True;
+        column.Settings.SortMode = DevExpress.XtraGrid.ColumnSortMode.Value;
+
+        column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+        column.ReadOnly = true;
+
+        column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0"); ;
+        column.CellStyle.ForeColor = System.Drawing.Color.Black;
+        column.EditFormSettings.Visible = DefaultBoolean.False;
+        column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+
+        var txt = column.PropertiesEdit as SpinEditProperties;
+        txt.NumberType = SpinEditNumberType.Float;
+        txt.DisplayFormatString = "#,###.##";
+        txt.DisplayFormatInEditMode = true;
+        txt.AllowMouseWheel = false;
+        txt.SpinButtons.ShowIncrementButtons = false;
 
     });
 
@@ -360,7 +389,7 @@
         cbo.Width = 92;
         cbo.TextFormatString = "{0}";
         cbo.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-        
+
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = ViewBag.ReadOnly;
 
@@ -411,7 +440,7 @@
         cbo.Width = 92;
         cbo.TextFormatString = "{0}";
         cbo.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
-        
+
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = ViewBag.ReadOnly;
 
