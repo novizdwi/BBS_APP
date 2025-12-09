@@ -179,6 +179,24 @@ namespace Models._Utils
             }
         }
 
+        public static DataTable GetObjectApprovals()
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                var ssql = @"SELECT T0.""ObjectCode"", T0.""ObjectName""  FROM ""Ts_ObjectApproval"" T0 ORDER BY T0.""Sort"" ASC ";
+                return GetDataTable(CONTEXT, ssql);
+            }
+        }
+
+        public static DataTable GetApprovalStages()
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                var ssql = @"SELECT T0.""Id"", T0.""StageName""  FROM ""Tm_ApprovalStage"" T0 ORDER BY T0.""StageName"" ASC ";
+                return GetDataTable(CONTEXT, ssql);
+            }
+        }
+
         public static DataTable GetDocumentTypePlusAll(string strType)
         {
             using (var CONTEXT = new HANA_APP())

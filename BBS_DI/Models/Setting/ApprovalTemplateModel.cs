@@ -277,17 +277,18 @@ namespace Models.Setting.ApprovalTemplate
                             String keyValue;
                             keyValue = tm_ApprovalTemplate.Id.ToString();
 
-                            string ssql = $@"UPDATE ""Tm_ApprovalTemplate_Stage"" SET 
+                            string ssql = $@"UPDATE T0 SET 
                                 ""Step"" = (
                                     SELECT ""Step""
                                     FROM(
-                                        SELECT ROW_NUMBER() OVER(ORDER BY T1.""SortCode"", T1.""DetId"") AS ""Step"", T1.""DetId""
+                                        SELECT ROW_NUMBER() OVER(ORDER BY Ty.""SortCode"", Ty.""DetId"") AS ""Step"", Ty.""DetId""
                                         FROM ""Tm_ApprovalTemplate"" AS Tx
                                         INNER JOIN ""Tm_ApprovalTemplate_Stage"" AS Ty ON Tx.""Id"" = Tx.""Id""
                                         WHERE Tx.""Id"" = {Id}
                                     ) AS ""Sub""
                                     WHERE ""Sub"".""DetId"" = T0.""DetId""
                                 )
+                                FROM ""Tm_ApprovalTemplate_Stage"" T0
                                 WHERE T0.""Id"" = {Id} ";
                             CONTEXT.Database.ExecuteSqlCommand(ssql);
 

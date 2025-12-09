@@ -21,10 +21,12 @@ namespace Controllers.Setting
         [HttpPost, ValidateInput(false)]
         public ActionResult NavFirst()
         {
+            int userId = (int)Session["userId"];
+
             ApprovalStageModel approvalStageModel;
             approvalStageService = new ApprovalStageService();
 
-            approvalStageModel = approvalStageService.NavFirst();
+            approvalStageModel = approvalStageService.NavFirst(userId);
             if (approvalStageModel != null)
             {
                 approvalStageModel._FormMode = FormModeEnum.Edit;
@@ -41,13 +43,14 @@ namespace Controllers.Setting
 
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult NavPrevious(int Id = 0)
+        public ActionResult NavPrevious(long Id = 0)
         {
+            int userId = (int)Session["userId"];
 
             ApprovalStageModel approvalStageModel;
             approvalStageService = new ApprovalStageService();
 
-            approvalStageModel = approvalStageService.NavPrevious(Id);
+            approvalStageModel = approvalStageService.NavPrevious(userId, Id);
             if (approvalStageModel != null)
             {
                 approvalStageModel._FormMode = FormModeEnum.Edit;
@@ -64,14 +67,14 @@ namespace Controllers.Setting
 
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult NavNext(int Id = 0)
+        public ActionResult NavNext(long Id = 0)
         {
-
+            int userId = (int)Session["userId"];
 
             ApprovalStageModel approvalStageModel;
             approvalStageService = new ApprovalStageService();
 
-            approvalStageModel = approvalStageService.NavNext(Id);
+            approvalStageModel = approvalStageService.NavNext(userId, Id);
             if (approvalStageModel != null)
             {
 
@@ -91,10 +94,12 @@ namespace Controllers.Setting
         [HttpPost, ValidateInput(false)]
         public ActionResult NavLast()
         {
+            int userId = (int)Session["userId"];
+
             ApprovalStageModel approvalStageModel;
             approvalStageService = new ApprovalStageService();
 
-            approvalStageModel = approvalStageService.NavLast();
+            approvalStageModel = approvalStageService.NavLast(userId);
             if (approvalStageModel != null)
             {
                 approvalStageModel._FormMode = FormModeEnum.Edit;

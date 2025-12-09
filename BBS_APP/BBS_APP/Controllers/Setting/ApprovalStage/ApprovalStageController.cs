@@ -34,7 +34,7 @@ namespace Controllers.Setting
 
         public ActionResult Detail(int Id = 0)
         {
-
+            int UserId = (int)Session["userId"];
             approvalStageService = new ApprovalStageService();
             ApprovalStageModel approvalStageModel;
             if (Id == 0)
@@ -46,7 +46,7 @@ namespace Controllers.Setting
             else
             {
                 approvalStageService = new ApprovalStageService();
-                approvalStageModel = approvalStageService.GetById(Id);
+                approvalStageModel = approvalStageService.GetById(UserId, Id);
                 if (approvalStageModel != null)
                 {
                     approvalStageModel._FormMode = FormModeEnum.Edit;
@@ -63,6 +63,7 @@ namespace Controllers.Setting
 
         public ActionResult DetailPartial(int Id = 0)
         {
+            int userId = (int)Session["userId"];
 
             ApprovalStageModel approvalStageModel;
 
@@ -75,7 +76,7 @@ namespace Controllers.Setting
             }
             else
             {
-                approvalStageModel = approvalStageService.GetById(Id);
+                approvalStageModel = approvalStageService.GetById(userId, Id);
                 if (approvalStageModel != null)
                 {
                     approvalStageModel._FormMode = FormModeEnum.Edit;
@@ -107,7 +108,7 @@ namespace Controllers.Setting
                 Id = approvalStageService.Add(approvalStageModel);
                 if (Id != 0)
                 {
-                    approvalStageModel = approvalStageService.GetById(Id);
+                    approvalStageModel = approvalStageService.GetById(approvalStageModel._UserId, Id);
                     approvalStageModel._FormMode = FormModeEnum.Edit;
                 }
                 else 
@@ -144,7 +145,7 @@ namespace Controllers.Setting
             if (ModelState.IsValid)
             {
                 approvalStageService.Update(approvalStageModel);
-                approvalStageModel = approvalStageService.GetById(approvalStageModel.Id);
+                approvalStageModel = approvalStageService.GetById(approvalStageModel._UserId, approvalStageModel.Id);
             }
             else
             {

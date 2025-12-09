@@ -197,7 +197,9 @@
     <Compile Include="Models\Setting\ReportModel.cs" />
     <Compile Include="Models\Setting\Report__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Adjustment\AdjustmentIn.cs" />
+    <Compile Include="Models\Transaction\Web\Adjustment\AdjustmentIn__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Adjustment\AdjustmentOut.cs" />
+    <Compile Include="Models\Transaction\Web\Adjustment\AdjustmentOut__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\StockSummaryOpname__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\StockSummaryOpnameService.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\StockOpnameScanService.cs" />
@@ -214,6 +216,8 @@
     <Compile Include="Models\Transaction\Web\Inventory\TransferRequestService.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\TransferOut__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Inventory\TransferRequest__List_Model.cs" />
+    <Compile Include="Models\Transaction\Web\Item\DeactiveTag.cs" />
+    <Compile Include="Models\Transaction\Web\Item\DeactiveTag__List_Model.cs" />
     <Compile Include="Models\Transaction\Web\Purchasing\GoodsReceiptPOService.cs" />
     <Compile Include="Models\Transaction\Web\Purchasing\PurchaseOrderScanService.cs" />
     <Compile Include="Models\Transaction\Web\Purchasing\GoodsReceiptPO__List_Model.cs" />
@@ -228,6 +232,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\_Cfl\CflBp_Model.cs" />
+    <Compile Include="Models\_Cfl\CflCostCenter.cs" />
     <Compile Include="Models\_Cfl\CflDynamic_Model.cs" />
     <Compile Include="Models\_Cfl\CflItemByWarehouse_Model.cs" />
     <Compile Include="Models\_Cfl\CflItem_Model.cs" />
@@ -275,6 +280,9 @@
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\_EF\Tm_ApprovalStage_Role.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tm_ApprovalStage_User.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\_EF\Tm_ApprovalTemplate.cs">
@@ -385,6 +393,12 @@
     <Compile Include="Models\_EF\Tm_User_Warehouse.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\_EF\Tp_Approval.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tp_Approval_User.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\_EF\Ts_FormatNumbering.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
@@ -428,6 +442,12 @@
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\_EF\Tx_AdjustmentOut_Location.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_DeactiveTag.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_DeactiveTag_Item.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\_EF\Tx_GoodIssue.cs">
@@ -508,6 +528,9 @@
     <Compile Include="Models\_EF\Tx_TransferSummaryIn_Item.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\_EF\Tx_TransferSummaryIn_Item_tag.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\_EF\Tx_TransferSummaryIn_Item_Tag1.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
@@ -530,6 +553,7 @@
     <Compile Include="Models\_Sap\SAPCachedCompanyII.cs" />
     <Compile Include="Models\_Sap\SAPConnection.cs" />
     <Compile Include="Models\_Sl\Sl_PurchaseRequestModel.cs" />
+    <Compile Include="Models\_Utils\ApprovalService.cs" />
     <Compile Include="Models\_Utils\SpNotif.cs" />
     <Compile Include="Models\_Utils\GeneralGetList.cs" />
     <Compile Include="Models\_Utils\General.cs" />
