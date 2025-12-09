@@ -267,15 +267,16 @@ namespace Models._Utils
             using (var CONTEXT = new HANA_APP())
             {
                 var ssql = @"
-                    SELECT NULL AS ""Code"", NULL AS ""Name"" FROM DUMMY
+                    SELECT * FROM (
+                        SELECT NULL AS ""Code"", NULL AS ""Name"" FROM DUMMY
 
-                    UNION ALL
+                        UNION ALL
 
-                    SELECT T0.""WhsCode"" AS ""Code"", 
-                    T1.""WhsName""  AS ""Name""
-                    FROM ""Tm_User_Warehouse"" T0  
-                    INNER JOIN ""{0}"".""OWHS"" T1 ON T0.""WhsCode"" = T1.""WhsCode""
-                    WHERE T0.""Id"" = {1} 
+                        SELECT T0.""WhsCode"" AS ""Code"", 
+                        T0.""WhsName""  AS ""Name""
+                        FROM ""{0}"".""OWHS"" T0  
+                        LEFT JOIN ""Tm_User_Warehouse"" T1 ON T0.""WhsCode"" = T1.""WhsCode"" AND  T1.""Id"" = {1} 
+                    ) TX ORDER BY TX.""Code"" ASC
                 ";
                 ssql = string.Format(ssql, DbProvider.dbSap_Name, id);
                 return GetDataTable(CONTEXT, ssql);

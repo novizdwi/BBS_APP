@@ -280,6 +280,18 @@
             }
         }
 
+        function OnClickBtnListFind(s, e) {
+            var popup = ASPxClientPopupControl.Cast("popupList");
+
+            var gv = ASPxClientGridView.Cast('gvApprovalTemplateList');
+            if (gv == null) {
+                popup.Show();
+            } else {
+                popup.SetContentHtml("");
+                popup.PerformCallback();
+                popup.Show();
+            }
+        }
 
         function OnClickBtnNavFirst(s, e) {
             $.ajax({

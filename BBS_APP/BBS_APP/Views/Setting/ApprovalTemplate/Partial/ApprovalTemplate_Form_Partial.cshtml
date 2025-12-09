@@ -28,7 +28,7 @@
     settings.AlignItemCaptionsInAllGroups = true;
     settings.ShowItemCaptionColon = false;
     settings.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
-    settings.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600; 
+    settings.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
 
 
     var groupItem = settings.Items.AddGroupItem(itemSettings =>
@@ -132,7 +132,7 @@
         cbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
 
     });
-    
+
     groupItem_Col1.Items.Add(m => Model.IsActive, itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.CheckBox;
@@ -160,20 +160,7 @@
         group.PageControl.ContentStyle.Paddings.Padding = 3;
         group.PageControl.ContentStyle.Paddings.PaddingTop = 0;
 
-        group.Items.Add(item =>
-        {
-            item.Name = "TabSql";
-            item.Caption = "    SQL    ";
-            item.SetNestedContent(() =>
-            {
-                ViewContext.Writer.Write(
-             @Html.Partial("Partial/ApprovalTemplate_Form_TabSql_Partial")
-          );
-            });
-            item.CaptionStyle.BackColor = System.Drawing.Color.Blue;
-            item.CaptionCellStyle.BackColor = System.Drawing.Color.Blue;
 
-        });
 
 
 
@@ -196,6 +183,7 @@
         {
             item.Name = "TabDepartment";
             item.Caption = "   Department    ";
+            item.ClientVisible = false;
             item.SetNestedContent(() =>
             {
                 ViewContext.Writer.Write(
@@ -230,6 +218,21 @@
             {
                 ViewContext.Writer.Write(
              @Html.Partial("Partial/ApprovalTemplate_Form_TabStage_List_Partial", Model.ListStages_)
+          );
+            });
+            item.CaptionStyle.BackColor = System.Drawing.Color.Blue;
+            item.CaptionCellStyle.BackColor = System.Drawing.Color.Blue;
+
+        });
+
+        group.Items.Add(item =>
+        {
+            item.Name = "TabSql";
+            item.Caption = "    SQL    ";
+            item.SetNestedContent(() =>
+            {
+                ViewContext.Writer.Write(
+             @Html.Partial("Partial/ApprovalTemplate_Form_TabSql_Partial")
           );
             });
             item.CaptionStyle.BackColor = System.Drawing.Color.Blue;
