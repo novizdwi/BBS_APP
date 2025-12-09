@@ -20,11 +20,15 @@ namespace Controllers.Master.Item
         public ActionResult TabTransListPartial()
         {
             int userId = (int)Session["userId"];
-            DateTime filterDate = DateTime.Now.AddMonths(-1);
-            if (!string.IsNullOrEmpty(Request["cbFilterDate"]))
+            DateTime toDate = DateTime.Now;
+            DateTime fromDate = toDate.AddMonths(-1);
+            if (!string.IsNullOrEmpty(Request["cbFromDate"]))
             {
-                filterDate = Convert.ToDateTime((Request["cbFilterDate"]).ToString() ); 
-
+                fromDate = Convert.ToDateTime((Request["cbFromDate"]).ToString() ); 
+            }
+            if (!string.IsNullOrEmpty(Request["cbToDate"]))
+            {
+                toDate = Convert.ToDateTime((Request["cbToDate"]).ToString() ); 
             }
             rfidMonitoringService = new RfidMonitoringService();
             string itemCode = (Request["cbItemCode"]).ToString();
@@ -32,7 +36,7 @@ namespace Controllers.Master.Item
             string tagId = (Request["cbTagId"]).ToString();
             string status = (Request["cbStatus"]).ToString();
 
-            var modelList = rfidMonitoringService.RfidMonitoring_GetReferences(userId, filterDate, itemCode, whsCode, tagId, status);
+            var modelList = rfidMonitoringService.RfidMonitoring_GetReferences(userId, fromDate, toDate, itemCode, whsCode, tagId, status);
 
             return PartialView(VIEW_FORM_TABREFERENCE_PARTIAL, modelList);
         }

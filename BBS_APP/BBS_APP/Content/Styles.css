@@ -1053,6 +1053,16 @@ div#formLayouBtn {
     height: 20px;
 }
 
+#btnPost img.dx-vam {
+    content: url(Images/buttonnew/post.png);
+    height: 20px;
+}
+
+#btnCancel img.dx-vam {
+    content: url(Images/buttonnew/cancel.png);
+    height: 20px;
+}
+
 .dxeButtonEditSys.dxeButtonEdit_Metropolis.editor.dxeReadOnly_Metropolis:not(#EntryDate) img {
     content: url(Images/buttonnew/find-hitam.png);
     padding: 3px;

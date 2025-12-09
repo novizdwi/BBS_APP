@@ -8,6 +8,7 @@
         Id = ViewBag.Id;
     }
     string status = Models._Ef.DbProvider.dbApp.Database.SqlQuery<string>("SELECT TOP 1 T0.\"Status\" FROM \"Tx_AdjustmentIn\" T0 WHERE T0.\"Id\"=:p0", Id).FirstOrDefault();
+    ViewBag.ReadOnly = Model.Status == "Draft" ? false : true;
 
 }
 
@@ -27,6 +28,7 @@
     settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
     settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
     settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
+    settings.Styles.Header.Wrap = DevExpress.Utils.DefaultBoolean.True;
 
     settings.CommandColumn.Width = 70;
     settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
@@ -97,6 +99,34 @@
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+
+        column.FieldName = "OnHand_";
+        column.Name = "OnHand_";
+        column.Caption = "Qty In Warehouse";
+        column.HeaderStyle.HorizontalAlign = HorizontalAlign.Right;
+        column.Width = 100;
+        column.Settings.AllowSort = DefaultBoolean.True;
+        column.Settings.SortMode = DevExpress.XtraGrid.ColumnSortMode.Value;
+
+        column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+        column.ReadOnly = true;
+
+        column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0"); ;
+        column.CellStyle.ForeColor = System.Drawing.Color.Black;
+        column.EditFormSettings.Visible = DefaultBoolean.False;
+        column.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Left;
+
+        var txt = column.PropertiesEdit as SpinEditProperties;
+        txt.NumberType = SpinEditNumberType.Float;
+        txt.DisplayFormatString = "#,###.##";
+        txt.DisplayFormatInEditMode = true;
+        txt.AllowMouseWheel = false;
+        txt.SpinButtons.ShowIncrementButtons = false;
 
     });
 
@@ -205,8 +235,8 @@
         cbo.Columns.Add("Name", "Name", 200);
         cbo.Width = 92;
         cbo.TextFormatString = "{0}";
+        cbo.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
-        column.ReadOnly = false;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = ViewBag.ReadOnly;
 
@@ -240,7 +270,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.ComboBox;
         var cbo = column.PropertiesEdit as ComboBoxProperties;
-        cbo.DataSource = Models._Utils.GeneralGetList.GetCostCenters("1");
+        cbo.DataSource = Models._Utils.GeneralGetList.GetCostCenters("2");
         cbo.ClientSideEvents.ValueChanged =
             "function(s, e) { " +
                 "var item = s.GetSelectedItem(); " +
@@ -256,8 +286,8 @@
         cbo.Columns.Add("Name", "Name", 200);
         cbo.Width = 92;
         cbo.TextFormatString = "{0}";
+        cbo.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
-        column.ReadOnly = false;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = ViewBag.ReadOnly;
 
@@ -291,7 +321,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.ComboBox;
         var cbo = column.PropertiesEdit as ComboBoxProperties;
-        cbo.DataSource = Models._Utils.GeneralGetList.GetCostCenters("1");
+        cbo.DataSource = Models._Utils.GeneralGetList.GetCostCenters("3");
         cbo.ClientSideEvents.ValueChanged =
             "function(s, e) { " +
                 "var item = s.GetSelectedItem(); " +
@@ -307,8 +337,8 @@
         cbo.Columns.Add("Name", "Name", 200);
         cbo.Width = 92;
         cbo.TextFormatString = "{0}";
+        cbo.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
-        column.ReadOnly = false;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = ViewBag.ReadOnly;
 
@@ -342,7 +372,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.ComboBox;
         var cbo = column.PropertiesEdit as ComboBoxProperties;
-        cbo.DataSource = Models._Utils.GeneralGetList.GetCostCenters("1");
+        cbo.DataSource = Models._Utils.GeneralGetList.GetCostCenters("4");
         cbo.ClientSideEvents.ValueChanged =
             "function(s, e) { " +
                 "var item = s.GetSelectedItem(); " +
@@ -358,8 +388,8 @@
         cbo.Columns.Add("Name", "Name", 200);
         cbo.Width = 92;
         cbo.TextFormatString = "{0}";
+        cbo.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
-        column.ReadOnly = false;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = ViewBag.ReadOnly;
 
@@ -393,7 +423,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.ComboBox;
         var cbo = column.PropertiesEdit as ComboBoxProperties;
-        cbo.DataSource = Models._Utils.GeneralGetList.GetCostCenters("1");
+        cbo.DataSource = Models._Utils.GeneralGetList.GetProjects();
         cbo.ClientSideEvents.ValueChanged =
             "function(s, e) { " +
                 "var item = s.GetSelectedItem(); " +
@@ -409,8 +439,8 @@
         cbo.Columns.Add("Name", "Name", 200);
         cbo.Width = 92;
         cbo.TextFormatString = "{0}";
+        cbo.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
-        column.ReadOnly = false;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = ViewBag.ReadOnly;
 
@@ -443,7 +473,7 @@
         column.Width = 100;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
-
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
     });

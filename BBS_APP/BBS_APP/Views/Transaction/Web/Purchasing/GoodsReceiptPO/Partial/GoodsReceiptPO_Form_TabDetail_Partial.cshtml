@@ -20,7 +20,8 @@
 
     settings.Width = Unit.Percentage(100);
     settings.Height = Unit.Percentage(100);
-    
+
+    settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
     settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
     settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
     settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
@@ -45,7 +46,7 @@
         column.Width = 200;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
-
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
 
@@ -56,7 +57,6 @@
         column.FieldName = "ItemCode";
         column.Name = "ItemCode";
         column.Caption = "Item Code";
-
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 150;
@@ -75,12 +75,14 @@
                     settingsHL.NavigateUrl = "javascript:void(0)";
                     settingsHL.Properties.Text = itemCode;
                     settings.ClientVisible = true;
+
                     settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ OnClickChooseItem(s, e, '{0}'); }}", DataBinder.Eval(c.DataItem, "DetId"));
                     settingsHL.ControlStyle.ForeColor = System.Drawing.Color.DarkBlue;
 
                 }).Render();
             }
         });
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
     });
 
     settings.Columns.Add(column =>
@@ -88,12 +90,13 @@
         column.FieldName = "ItemName";
         column.Name = "ItemName";
         column.Caption = "Item Name";
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 220;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
-
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
 
@@ -109,6 +112,7 @@
         column.Width = 100;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
@@ -125,6 +129,7 @@
         column.Width = 80;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
@@ -140,6 +145,7 @@
         column.Width = 80;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
@@ -155,6 +161,7 @@
         column.Width = 80;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
@@ -170,9 +177,11 @@
         column.Width = 80;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.DisplayFormatString = "#,###.##";
     });
 
     settings.Columns.Add(column =>
@@ -185,6 +194,7 @@
         column.Width = 0;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
@@ -197,7 +207,7 @@
         column.Caption = "Free Text";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 220;
+        column.Width = 0;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
 
@@ -232,6 +242,7 @@
         column.Width = 120;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;

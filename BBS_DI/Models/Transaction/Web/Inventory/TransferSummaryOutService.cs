@@ -552,13 +552,13 @@ namespace Models.Transaction.Web.Inventory
                                     //        }
                                     //    }
 
-                                    //    if (model.Details_.modifiedRowValues != null)
-                                    //    {
-                                    //        foreach (var detail in model.Details_.modifiedRowValues)
-                                    //        {
-                                    //            Detail_Update(CONTEXT, detail, model._UserId);
-                                    //        }
-                                    //    }
+                                    if (model.Details_.modifiedRowValues != null)
+                                    {
+                                        foreach (var detail in model.Details_.modifiedRowValues)
+                                        {
+                                            Detail_Update(CONTEXT, detail, model._UserId);
+                                        }
+                                    }
 
                                     //    if (model.Details_.deletedRowKeys != null)
                                     //    {
@@ -642,43 +642,31 @@ namespace Models.Transaction.Web.Inventory
 
         //}
 
-        //public void Detail_Update(HANA_APP CONTEXT, TransferSummaryOut_DetailModel model, int UserId)
-        //{
-        //    if (model != null)
-        //    {
+        public void Detail_Update(HANA_APP CONTEXT, TransferSummaryOut_DetailModel model, int UserId)
+        {
+            if (model != null)
+            {
 
-        //        Tx_TransferSummaryOut_Item Tx_TransferSummaryOut_Item = CONTEXT.Tx_TransferSummaryOut_Item.Find(model.DetId);
+                Tx_TransferSummaryOut_Item Tx_TransferSummaryOut_Item = CONTEXT.Tx_TransferSummaryOut_Item.Find(model.DetId);
 
-        //        if (Tx_TransferSummaryOut_Item != null)
-        //        {
-        //            var exceptColumns = new string[] { "DetId", "Id" };
-        //            CopyProperty.CopyProperties(model, Tx_TransferSummaryOut_Item, false, exceptColumns);
-
-
-        //            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-
-        //            Tx_TransferSummaryOut_Item.ModifiedDate = dtModified;
-        //            Tx_TransferSummaryOut_Item.ModifiedUser = UserId;
-        //            if (model.StartDate != null && model.EndDate == null)
-        //            {
-        //                Tx_TransferSummaryOut_Item.Status = "On Progress";
-        //            }
-        //            else if (model.StartDate != null && model.EndDate != null)
-        //            {
-        //                Tx_TransferSummaryOut_Item.Status = "Close";
-        //            }
-        //            else
-        //            {
-        //                Tx_TransferSummaryOut_Item.Status = "Open";
-        //            }
-        //            CONTEXT.SaveChanges();
-
-        //        }
+                if (Tx_TransferSummaryOut_Item != null)
+                {
+                    var exceptColumns = new string[] { "DetId", "Id", "QuantityOpen" };
+                    CopyProperty.CopyProperties(model, Tx_TransferSummaryOut_Item, false, exceptColumns);
 
 
-        //    }
+                    DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
 
-        //}
+                    Tx_TransferSummaryOut_Item.ModifiedDate = dtModified;
+                    Tx_TransferSummaryOut_Item.ModifiedUser = UserId;
+                    CONTEXT.SaveChanges();
+
+                }
+
+
+            }
+
+        }
 
         //public void Detail_Delete(HANA_APP CONTEXT, TransferSummaryOut_DetailModel model)
         //{

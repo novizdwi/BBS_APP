@@ -67,7 +67,7 @@
         column.FieldName = "ItemCode";
         column.Name = "ItemCode";
         column.Caption = "Item Code";
-
+        column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 150;
@@ -86,18 +86,19 @@
         column.Width = 400;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
+        column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
 
     });
-
+    /*
     settings.Columns.Add(column =>
     {
         column.FieldName = "FromWhsCode";
         column.Name = "FromWhsCode";
         column.Caption = "From Whse Code";
-
+        
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 0;
         column.Settings.AllowSort = DefaultBoolean.False;
@@ -123,7 +124,7 @@
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
 
     });
-
+    */
     settings.Columns.Add(column =>
     {
         column.FieldName = "ToWhsCode";
@@ -134,6 +135,7 @@
         column.Width = 0;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
+        column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
@@ -152,6 +154,7 @@
         column.ReadOnly = true;
 
         var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
 
     });
@@ -218,9 +221,10 @@
 
     settings.Columns.Add(column =>
     {
+
         column.FieldName = "QuantityOpen";
         column.Name = "QuantityOpen";
-        column.Caption = "On Hand";
+        column.Caption = "Qty In Warehouse";
         column.HeaderStyle.HorizontalAlign = HorizontalAlign.Right;
         column.Width = 100;
         column.Settings.AllowSort = DefaultBoolean.True;
@@ -228,7 +232,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.SpinEdit;
         column.ReadOnly = true;
-        
+
         column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0"); ;
         column.CellStyle.ForeColor = System.Drawing.Color.Black;
         column.EditFormSettings.Visible = DefaultBoolean.False;
@@ -239,7 +243,6 @@
         txt.DisplayFormatInEditMode = true;
         txt.AllowMouseWheel = false;
         txt.SpinButtons.ShowIncrementButtons = false;
-
 
     });
 
@@ -273,21 +276,30 @@
     //    txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
     //});
 
-    //settings.Columns.Add(column =>
-    //{
-    //    column.FieldName = "Comments";
-    //    column.Name = "Comments";
-    //    column.Caption = "Free Text";
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Comments";
+        column.Name = "Comments";
+        column.Caption = "Free Text";
 
-    //    column.ColumnType = MVCxGridViewColumnType.TextBox;
-    //    column.Width = 200;
-    //    column.Settings.AllowSort = DefaultBoolean.False;
-    //    column.ReadOnly = true;
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 200;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = ViewBag.ReadOnly;
 
-    //    var txt = column.PropertiesEdit as TextBoxProperties;
-    //    txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        if (ViewBag.ReadOnly)
+        {
 
-    //});
+            column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+            column.CellStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+            column.CellStyle.ForeColor = System.Drawing.Color.Black;
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        }
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+    });
 
 
     settings.Settings.ShowFooter = true;

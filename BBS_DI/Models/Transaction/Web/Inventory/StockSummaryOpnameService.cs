@@ -153,6 +153,8 @@ namespace Models.Transaction.Web.Inventory
 
         public decimal? QtyVariance { get; set; }
 
+        public decimal? QtyVariance_ { get; set; }
+
         public int? UomEntry { get; set; }
 
         public string Uom { get; set; }
@@ -329,7 +331,7 @@ namespace Models.Transaction.Web.Inventory
 
         public List<StockSummaryOpname_DetailModel> StockSummaryOpname_Details(HANA_APP CONTEXT, long id = 0)
         {
-            string ssql = @"SELECT T0.*, COALESCE(T1.""OnHand"",0) AS ""OnHand"", (COALESCE(T0.""QuantityValid"",0) - COALESCE(T1.""OnHand"",0)) AS ""QtyVariance""
+            string ssql = @"SELECT T0.*, COALESCE(T1.""OnHand"",0) AS ""OnHand"", (COALESCE(T0.""QuantityValid"",0) - COALESCE(T1.""OnHand"",0)) AS ""QtyVariance_""
                 FROM ""Tx_StockSummaryOpname_Item"" T0
                 LEFT JOIN ""Tm_Item_Warehouse"" T1 ON T0.""ItemCode"" = T1.""ItemCode"" AND T0.""WhsCode"" = T1.""WhsCode""
                 WHERE T0.""Id"" =:p0
@@ -538,7 +540,7 @@ namespace Models.Transaction.Web.Inventory
 
         }
 
-        public void Update(StockSummaryOpnameModel model)
+        public void Update(StockSummaryOpnameModel model, string method = "")
         {
             if (model != null)
             {
@@ -593,13 +595,13 @@ namespace Models.Transaction.Web.Inventory
                                     //        }
                                     //    }
 
-                                    //    if (model.Details_.modifiedRowValues != null)
-                                    //    {
-                                    //        foreach (var detail in model.Details_.modifiedRowValues)
-                                    //        {
-                                    //            Detail_Update(CONTEXT, detail, model._UserId);
-                                    //        }
-                                    //    }
+                                    if (model.Details_.modifiedRowValues != null)
+                                    {
+                                        foreach (var detail in model.Details_.modifiedRowValues)
+                                        {
+                                            Detail_Update(CONTEXT, detail, model._UserId, method);
+                                        }
+                                    }
 
                                     //    if (model.Details_.deletedRowKeys != null)
                                     //    {
@@ -683,43 +685,35 @@ namespace Models.Transaction.Web.Inventory
 
         //}
 
-        //public void Detail_Update(HANA_APP CONTEXT, StockSummaryOpname_DetailModel model, int UserId)
-        //{
-        //    if (model != null)
-        //    {
+        public void Detail_Update(HANA_APP CONTEXT, StockSummaryOpname_DetailModel model, int UserId, string method)
+        {
+            if (model != null)
+            {
 
-        //        Tx_StockSummaryOpname_Item Tx_StockSummaryOpname_Item = CONTEXT.Tx_StockSummaryOpname_Item.Find(model.DetId);
+                Tx_StockSummaryOpname_Item Tx_StockSummaryOpname_Item = CONTEXT.Tx_StockSummaryOpname_Item.Find(model.DetId);
 
-        //        if (Tx_StockSummaryOpname_Item != null)
-        //        {
-        //            var exceptColumns = new string[] { "DetId", "Id" };
-        //            CopyProperty.CopyProperties(model, Tx_StockSummaryOpname_Item, false, exceptColumns);
+                if (Tx_StockSummaryOpname_Item != null)
+                {
+                    var exceptColumns = new string[] { "DetId", "Id", "QtyVariance" };
+                    CopyProperty.CopyProperties(model, Tx_StockSummaryOpname_Item, false, exceptColumns);
+                    if(method == "Post")
+                    {
+                        Tx_StockSummaryOpname_Item.QtyVariance = model.QtyVariance;
+                    }
 
+                    DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
 
-        //            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                    Tx_StockSummaryOpname_Item.ModifiedDate = dtModified;
+                    Tx_StockSummaryOpname_Item.ModifiedUser = UserId;
 
-        //            Tx_StockSummaryOpname_Item.ModifiedDate = dtModified;
-        //            Tx_StockSummaryOpname_Item.ModifiedUser = UserId;
-        //            if (model.StartDate != null && model.EndDate == null)
-        //            {
-        //                Tx_StockSummaryOpname_Item.Status = "On Progress";
-        //            }
-        //            else if (model.StartDate != null && model.EndDate != null)
-        //            {
-        //                Tx_StockSummaryOpname_Item.Status = "Close";
-        //            }
-        //            else
-        //            {
-        //                Tx_StockSummaryOpname_Item.Status = "Open";
-        //            }
-        //            CONTEXT.SaveChanges();
+                    CONTEXT.SaveChanges();
 
-        //        }
+                }
 
 
-        //    }
+            }
 
-        //}
+        }
 
         //public void Detail_Delete(HANA_APP CONTEXT, StockSummaryOpname_DetailModel model)
         //{

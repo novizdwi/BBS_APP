@@ -146,6 +146,8 @@ namespace Models.Transaction.Web.Adjustment
 
         public decimal? EstQuantityPosted_ { get; set; }
 
+        public decimal? OnHand_ { get; set; }
+
         public string LineStatus { get; set; }
 
         public int? UomEntry { get; set; }
@@ -337,9 +339,11 @@ namespace Models.Transaction.Web.Adjustment
                         FROM ""Tx_AdjustmentOut_Item_Tag"" Tx
                         INNER JOIN ""Tm_Item_Warehouse_Tag"" Ty ON Tx.""TagId"" = Ty.""TagId"" AND T2.""WhsCode"" = Ty.""WhsCode""  AND Ty.""Status"" = 'A'
                         WHERE Tx.""DetId"" = T0.""DetId""
-                    ) , 0) AS ""EstQuantityPosted_""
+                    ) , 0) AS ""EstQuantityPosted_"",
+                    T3.""OnHand"" AS ""OnHand_""
                 FROM ""Tx_AdjustmentOut_Item"" T0
                 INNER JOIN ""Tx_AdjustmentOut"" T2 ON T0.""Id"" = T2.""Id""
+                LEFT JOIN ""Tm_Item_Warehouse"" T3 ON T0.""ItemCode"" = T3.""ItemCode"" AND T0.""WhsCode"" = T3.""WhsCode""
                 WHERE T0.""Id"" =:p0
                 ORDER BY T0.""DetId"" ASC
             ";

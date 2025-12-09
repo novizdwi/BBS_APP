@@ -433,12 +433,13 @@ CREATE COLUMN TABLE "Tx_StockSummaryOpname_Item" (
 
     "QuantityScan" DECIMAL(21,2),
     "QuantityValid" DECIMAL(21,2),	
+    "QtyVariance" DECIMAL(21,2),
     "UnitPriceTc" DECIMAL(21,2),
     "UomEntry" INTEGER,
     "Uom" NVARCHAR(50),
     "AcctCode" NVARCHAR(100),
     "AcctName" NVARCHAR(100),
-
+    "FreeText" NVARCHAR(254),
     "CreatedDate" TIMESTAMP,
     "CreatedUser" INTEGER,
     "ModifiedDate" TIMESTAMP,

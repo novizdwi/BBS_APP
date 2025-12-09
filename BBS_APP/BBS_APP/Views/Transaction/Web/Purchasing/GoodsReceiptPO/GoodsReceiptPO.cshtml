@@ -55,6 +55,13 @@
 
         var btnRefresh = ASPxClientButton.Cast('btnRefresh');
 
+        var btnPost = ASPxClientButton.Cast('btnPost');
+
+        var btnCancel = ASPxClientButton.Cast('btnCancel');
+
+        var btnMenuOther = ASPxClientMenu.Cast('btnMenuOther');
+        btnMenuOther.GetItemByName("btnMenuAuthorize").SetEnabled(false);
+
         var formMode = '';
         if ((Id.GetValue() == '') || Id.GetValue() == '0') {
             formMode = 'new';
@@ -62,18 +69,15 @@
             formMode = 'edit';
         }
 
+        btnPost.SetEnabled(false);
+        btnCancel.SetEnabled(false);
         switch (formMode) {
             case 'new':
 
                 grpBtnAdd.SetVisible(true);
                 grpBtnUpdate.SetVisible(false);
-
-                //btnAdd.SetEnabled(false);
                 btnUpdate.SetEnabled(false);
                 btnRefresh.SetEnabled(false);
-
-                btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(false);
-                btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(false);
                 break;
             case 'edit':
 
@@ -87,23 +91,19 @@
                 switch (Status.GetValue()) {
                     case 'Draft':
                         btnUpdate.SetEnabled(true);
-                        btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(true);
-                        btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(true);
+
+                        btnPost.SetEnabled(true);
+                        btnCancel.SetEnabled(true);
 
                         break;
                     case 'Posted':
 
                         btnUpdate.SetEnabled(true);
-                        btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(false);
-                        btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(true);
+                        btnCancel.SetEnabled(true);
 
                         break;
                     case 'Cancel':
                         btnUpdate.SetEnabled(false);
-
-                        btnMenuOther.GetItemByName("btnMenuSetStatusPost").SetEnabled(false);
-                        btnMenuOther.GetItemByName("btnMenuSetStatusCancel").SetEnabled(false);
-
                         break;
                     default:
                         break;
@@ -259,6 +259,43 @@
             }
         });
 
+    }
+
+    function OnClickBtnPost(s, e) {
+        if (BeforeSave() == false) {
+            return;
+        }
+
+        var formData = GetFormData();
+        if (confirm('Post transaction?')) {
+            key = Id.GetValue();
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Post", "GoodsReceiptPO")',
+                data: formData,
+                beforeSend: function () {
+                    OnBegin();
+                },
+                success: function (response) {
+                    RefreshAfterSuccess(response);
+                    OnSuccessMsgBox();
+
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    OnFailure(jqXhr, textStatus, errorThrown)
+                },
+                complete: function () {
+                    OnComplete()
+                }
+            });
+        }
+
+    }
+
+    function OnClickBtnCancel(s, e) {
+        key = Id.GetValue();
+        btnShowCancelReasonOnClick(s, e, key);
     }
 
 
@@ -732,7 +769,7 @@ new
         VendorCode.SetValue(data.VendorCode);
         VendorName.SetValue(data.VendorName);
         BaseEntry.SetValue(data.DocEntry);
-        BaseDocNum.SetValue(data.DocNum); 
+        BaseDocNum.SetValue(data.DocNum);
 
         var comment = "Based on PO: " + data.DocNum + (data.Comments ? " - " + data.Comments : "");
         Comments.SetValue(comment);
@@ -801,6 +838,9 @@ new
     gvShipList
     -----------------------------------------------------------------------------
 *@
+
+
+@Html.Partial("Partial/GoodsReceiptPO_Form_BtnBottom_Partial")
 
 
 @Html.Partial("Partial/GoodsReceiptPO_Panel_List_Partial")

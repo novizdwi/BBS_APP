@@ -219,7 +219,6 @@
 
                 });
 
-
                 groupBtnSettings.Items.Add(
                    itemSettings =>
                    {
@@ -250,21 +249,14 @@
 
                                    item.Items.Add(itemOther =>
                                    {
-                                       itemOther.Text = "Set Status";
-                                       itemOther.Items.Add("Post", "btnMenuSetStatusPost");
-                                       itemOther.Items.Add("Cancel", "btnMenuSetStatusCancel");
+                                       itemOther.Text = "Approval";
+                                       itemOther.Items.Add("Authorize", "btnMenuAuthorize");
                                    });
-
-
                                });
-
                            }).Render();
-
 
                        ViewContext.Writer.Write("</div>");
                    });
-
-                 
 
         });
 

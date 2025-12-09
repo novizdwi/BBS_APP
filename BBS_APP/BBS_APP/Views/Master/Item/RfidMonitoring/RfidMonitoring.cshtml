@@ -165,14 +165,21 @@
             }).join(',');
 
         }
-        var filterDate = null;
-        if (FilterDate.GetValue() != null) {
-            filterDate = FilterDate.GetDate().ToIduyyyymmdd();
+
+        var fromDate = null;
+        if (FromDate.GetValue() != null) {
+            fromDate = FromDate.GetDate().ToIduyyyymmdd();
         }
+
+        var toDate = null;
+        if (ToDate.GetValue() != null) {
+            toDate = ToDate.GetDate().ToIduyyyymmdd();
+        }
+
         $.ajax({
             type: "POST",
             url: '@Url.Action("Find", "RfidMonitoring")',
-            data: { filterDate: filterDate, itemCode: itemCodes, whsCode: WhsCode.GetValue(), tagId: TagId.GetValue(), status: Status.GetValue() },
+            data: { fromDate: fromDate, toDate: toDate, itemCode: itemCodes, whsCode: WhsCode.GetValue(), tagId: TagId.GetValue(), status: Status.GetValue() },
             beforeSend: function () {
                 OnBegin();
             },
@@ -199,8 +206,9 @@
             }).join(',');
 
         }
-
-        e.customArgs['cbcbFilterDate'] = FilterDate.GetValue();
+            console.log(ToDate.GetValue());
+        e.customArgs['cbFromDate'] = FromDate.GetValue().ToIduyyyymmdd();
+        e.customArgs['cbToDate'] = ToDate.GetValue().ToIduyyyymmdd();
         e.customArgs['cbItemCode'] = resultItemCodes;
         e.customArgs['cbWhsCode'] = WhsCode.GetValue();
 
