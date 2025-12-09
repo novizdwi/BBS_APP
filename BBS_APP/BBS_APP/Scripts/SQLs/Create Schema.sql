@@ -662,6 +662,7 @@ CREATE COLUMN TABLE "Tx_TransferSummaryOut" (
     "PriceListName" NVARCHAR(50),
     "ScanDeviceId" NVARCHAR(1000),
     "Status" NVARCHAR(50),
+    "ApprovalStatus" NVARCHAR(50),
     "IsAfterPosted" CHAR(1),
     "Comments" NVARCHAR(254),
     "JournalRemarks" NVARCHAR(254),
