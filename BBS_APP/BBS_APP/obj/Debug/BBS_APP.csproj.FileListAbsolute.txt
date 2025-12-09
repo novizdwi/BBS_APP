@@ -269,6 +269,10 @@ C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\bin\System.Web.WebPages.dll
 C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\bin\System.Web.WebPages.Razor.dll
 C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\bin\WebMatrix.Data.dll
 C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\bin\LumenWorks.Framework.IO.dll
+C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\obj\Debug\BBS_APP.csprojAssemblyReference.cache
+C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\obj\Debug\Interop.SAPbobsCOM.dll
+C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\obj\Debug\BBS_APP.csproj.ResolveComReference.cache
+C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\obj\Debug\BBS_APP.csproj.CoreCompileInputs.cache
 C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\bin\BBS_APP.dll.config
 C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\bin\BBS_APP.pdb
 C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\bin\CrystalDecisions.CrystalReports.Engine.dll
@@ -384,10 +388,6 @@ C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\bin\de\DevExpress.Diagram.v20.1.
 C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\bin\es\DevExpress.Diagram.v20.1.Core.resources.dll
 C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\bin\ja\DevExpress.Diagram.v20.1.Core.resources.dll
 C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\bin\ru\DevExpress.Diagram.v20.1.Core.resources.dll
-C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\obj\Debug\BBS_APP.csprojAssemblyReference.cache
-C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\obj\Debug\Interop.SAPbobsCOM.dll
-C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\obj\Debug\BBS_APP.csproj.ResolveComReference.cache
-C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\obj\Debug\BBS_APP.csproj.CoreCompileInputs.cache
 C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\obj\Debug\BBS_APP.csproj.CopyComplete
 C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\obj\Debug\BBS_APP.dll
 C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\obj\Debug\BBS_APP.pdb
