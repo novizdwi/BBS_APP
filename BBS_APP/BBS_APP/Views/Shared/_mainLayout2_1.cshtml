@@ -162,64 +162,35 @@
                 {
                     node1.Text = "Transaction";
 
-                    node1.Nodes.Add(node2 =>
+                    node1.Nodes.Add(node3 =>
                     {
-                        node2.Text = "Web";
-                        node2.Nodes.Add(node3 =>
-                        {
-                            node3.Text = "Adjustment";
-                            AddNode(dataTable, node3, "Adjustment In", "AdjustmentIn");
-                            AddNode(dataTable, node3, "Adjustment Out", "AdjustmentOut");
-                        });
-
-                        node2.Nodes.Add(node3 =>
-                        {
-                            node3.Text = "Inventory";
-                            AddNode(dataTable, node3, "Transfer Request", "TransferRequest");
-                            AddNode(dataTable, node3, "Transfer In", "TransferIn");
-                            AddNode(dataTable, node3, "Transfer Out", "TransferOut");
-                            AddNode(dataTable, node3, "Stock Opname Request ", "RequestStockOpname"); 
-                            AddNode(dataTable, node3, "Stock Opname Scan List", "StockOpnameScan");
-                            AddNode(dataTable, node3, "Stock Opname Summary", "StockSummaryOpname");
-                        });
-
-                        node2.Nodes.Add(node3 =>
-                        {
-                            node3.Text = "Purchasing";
-                            AddNode(dataTable, node3, "PO Scan List", "PurchaseOrderScan");
-                            AddNode(dataTable, node3, "GRPO Summary", "GoodsReceiptPO");
-                        });
-
+                        node3.Text = "Adjustment";
+                        AddNode(dataTable, node3, "Adjustment In", "AdjustmentIn");
+                        AddNode(dataTable, node3, "Adjustment Out", "AdjustmentOut");
                     });
-                    node1.Nodes.Add(node2 =>
+                    node1.Nodes.Add(node3 =>
                     {
+                        node3.Text = "Inventory";
+                        AddNode(dataTable, node3, "Transfer Request", "TransferRequest");
+                        AddNode(dataTable, node3, "Transfer In Scan", "TransferIn");
+                        AddNode(dataTable, node3, "Transfer Out Scan", "TransferOut");
+                        AddNode(dataTable, node3, "Transfer In Summary ", "TransferSummaryIn");
+                        AddNode(dataTable, node3, "Transfer Out Summary ", "TransferSummaryOut");
+                    });
 
-                        node2.Text = "Mobile";
-                        node2.Nodes.Add(node3 =>
-                        {
-                            node3.Text = "RFID";
-                            AddNode(dataTable, node3, "Deactive RFID", "DeactiveRfid");
-                            AddNode(dataTable, node3, "Check & Replace RFID", "CheckReplaceRfid");
+                    node1.Nodes.Add(node3 =>
+                    {
+                        node3.Text = "StockOpname";
+                        AddNode(dataTable, node3, "Stock Opname Request ", "RequestStockOpname");
+                        AddNode(dataTable, node3, "Stock Opname Scan List", "StockOpnameScan");
+                        AddNode(dataTable, node3, "Stock Opname Summary", "StockSummaryOpname");
+                    });
 
-                        });
-                        node2.Nodes.Add(node3 =>
-                        {
-                            node3.Text = "Adjustment";
-                            AddNode(dataTable, node3, "Adjustment In", "AdjustmentIn");
-                            AddNode(dataTable, node3, "Adjustment Out", "AdjustmentOut");
-                        });
-                        node2.Nodes.Add(node3 =>
-                        {
-                            node3.Text = "Inventory";
-                            AddNode(dataTable, node3, "Transfer In", "TransferIn");
-                            AddNode(dataTable, node3, "Transfer Out", "TransferOut");
-                            AddNode(dataTable, node3, "Stock Opname", "StockOpname");
-                        });
-                        node2.Nodes.Add(node3 =>
-                        {
-                            node3.Text = "Purchasing";
-                            AddNode(dataTable, node3, "Purchase Order", "PurchaseOrder");
-                        });
+                    node1.Nodes.Add(node3 =>
+                    {
+                        node3.Text = "Purchasing";
+                        AddNode(dataTable, node3, "PO Scan List", "PurchaseOrderScan");
+                        AddNode(dataTable, node3, "GRPO Summary", "GoodsReceiptPO");
                     });
                 });
 
