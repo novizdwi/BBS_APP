@@ -168,7 +168,26 @@
         column.Name = "CreatedDate";
         column.Caption = "Date Entry";
         column.ReadOnly = true;
-        column.Width = 180;
+        column.Width = 100;
+        column.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        //column.Settings.AllowSort = DefaultBoolean.False;
+        var txt = column.PropertiesEdit as DateEditProperties;
+        txt.DisplayFormatString = "dd/MM/yyyy";
+        txt.EditFormatString = "dd/MM/yyyy";
+
+        column.CellStyle.ForeColor = System.Drawing.Color.Black;
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LastModifiedDate";
+        column.Name = "LastModifiedDate";
+        column.Caption = "Last Modified";
+        column.ReadOnly = true;
+        column.Width = 100;
         column.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
 
         column.ColumnType = MVCxGridViewColumnType.DateEdit;

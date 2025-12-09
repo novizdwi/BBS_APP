@@ -48,13 +48,13 @@ INSERT INTO "Ts_Menu" VALUES ('StockOpnameScan/Update', 'Update', 'StockOpnameSc
 INSERT INTO "Ts_Menu" VALUES ('StockOpnameScan/Post', 'Post', 'StockOpnameScan/Post', 'StockOpnameScan', 2001010505);
 INSERT INTO "Ts_Menu" VALUES ('StockOpnameScan/Cancel', 'Cancel', 'StockOpnameScan/Cancel', 'StockOpnameScan', 2001010506);
 
-INSERT INTO "Ts_Menu" VALUES ('StockOpnameSummary', 'Stock Opname Summary', 'StockOpnameSummary', 'Inventory', 20010106);
-INSERT INTO "Ts_Menu" VALUES ('StockOpnameSummary/Detail#User', 'Detail - User', 'StockOpnameSummary/Detail', 'StockOpnameSummary', 2001010601);
-INSERT INTO "Ts_Menu" VALUES ('StockOpnameSummary/Detail#All', 'Detail - All', 'StockOpnameSummary/Detail', 'StockOpnameSummary', 2001010602);
-INSERT INTO "Ts_Menu" VALUES ('StockOpnameSummary/Add', 'Add', 'StockOpnameSummary/Add', 'StockOpnameSummary', 2001010603);
-INSERT INTO "Ts_Menu" VALUES ('StockOpnameSummary/Update', 'Update', 'StockOpnameSummary/Update', 'StockOpnameSummary', 2001010604);
-INSERT INTO "Ts_Menu" VALUES ('StockOpnameSummary/Post', 'Post', 'StockOpnameSummary/Post', 'StockOpnameSummary', 2001010605);
-INSERT INTO "Ts_Menu" VALUES ('StockOpnameSummary/Cancel', 'Cancel', 'StockOpnameSummary/Cancel', 'StockOpnameSummary', 2001010606);
+INSERT INTO "Ts_Menu" VALUES ('StockSummaryOpname', 'Stock Opname Summary', 'StockSummaryOpname', 'Inventory', 20010106);
+INSERT INTO "Ts_Menu" VALUES ('StockSummaryOpname/Detail#User', 'Detail - User', 'StockSummaryOpname/Detail', 'StockSummaryOpname', 2001010601);
+INSERT INTO "Ts_Menu" VALUES ('StockSummaryOpname/Detail#All', 'Detail - All', 'StockSummaryOpname/Detail', 'StockSummaryOpname', 2001010602);
+INSERT INTO "Ts_Menu" VALUES ('StockSummaryOpname/Add', 'Add', 'StockSummaryOpname/Add', 'StockSummaryOpname', 2001010603);
+INSERT INTO "Ts_Menu" VALUES ('StockSummaryOpname/Update', 'Update', 'StockSummaryOpname/Update', 'StockSummaryOpname', 2001010604);
+INSERT INTO "Ts_Menu" VALUES ('StockSummaryOpname/Post', 'Post', 'StockSummaryOpname/Post', 'StockSummaryOpname', 2001010605);
+INSERT INTO "Ts_Menu" VALUES ('StockSummaryOpname/Cancel', 'Cancel', 'StockSummaryOpname/Cancel', 'StockSummaryOpname', 2001010606);
 
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryIn', 'Transfer Summary In', 'TransferSummaryIn', 'Inventory', 20010105);
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryIn/Detail#User', 'Detail - User', 'TransferSummaryIn/Detail', 'TransferSummaryIn', 2001010501);
