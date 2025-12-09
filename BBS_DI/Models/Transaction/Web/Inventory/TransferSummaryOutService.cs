@@ -86,6 +86,10 @@ namespace Models.Transaction.Web.Inventory
 
         public string Comments { get; set; }
 
+        public string ApprovalStatus { get; set; }
+
+        public string IsApproval { get; set; }
+
         public string CancelReason { get; set; }
 
         public List<TransferSummaryOut_DetailModel> ListDetails_ = new List<TransferSummaryOut_DetailModel>();
@@ -449,6 +453,8 @@ namespace Models.Transaction.Web.Inventory
                             CopyProperty.CopyProperties(model, Tx_TransferSummaryOut, false);
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+
+                            
                             Tx_TransferSummaryOut.TransType = "TransferSummaryOut";
                             Tx_TransferSummaryOut.CreatedDate = dtModified;
                             Tx_TransferSummaryOut.CreatedUser = model._UserId;

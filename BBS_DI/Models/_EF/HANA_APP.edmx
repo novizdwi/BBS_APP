@@ -129,6 +129,19 @@
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
         </EntityType>
+        <EntityType Name="Tm_ApprovalStage_User">
+          <Key>
+            <PropertyRef Name="DetId" />
+          </Key>
+          <Property Name="Id" Type="int" />
+          <Property Name="DetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="IsTick" Type="varchar" MaxLength="1" />
+          <Property Name="CreatedDate" Type="seconddate" />
+          <Property Name="CreatedUser" Type="int" />
+          <Property Name="ModifiedDate" Type="seconddate" />
+          <Property Name="ModifiedUser" Type="int" />
+        </EntityType>
         <EntityType Name="Tm_ApprovalTemplate">
           <Key>
             <PropertyRef Name="Id" />
@@ -633,6 +646,39 @@
           <Property Name="CreatedDate" Type="timestamp" />
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
+          <Property Name="ModifiedUser" Type="int" />
+        </EntityType>
+        <EntityType Name="Tp_Approval">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransType" Type="nvarchar" MaxLength="50" />
+          <Property Name="TemplateId" Type="int" />
+          <Property Name="CurrentStep" Type="int" />
+          <Property Name="ObjectId" Type="nvarchar" MaxLength="255" />
+          <Property Name="ObjectCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="FlagNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="seconddate" />
+          <Property Name="CreatedUser" Type="int" />
+          <Property Name="ModifiedDate" Type="seconddate" />
+          <Property Name="ModifiedUser" Type="int" />
+        </EntityType>
+        <EntityType Name="Tp_Approval_User">
+          <Key>
+            <PropertyRef Name="DetId" />
+          </Key>
+          <Property Name="Id" Type="int" />
+          <Property Name="DetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Step" Type="int" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ActionDate" Type="seconddate" />
+          <Property Name="CreatedDate" Type="seconddate" />
+          <Property Name="CreatedUser" Type="int" />
+          <Property Name="ModifiedDate" Type="seconddate" />
           <Property Name="ModifiedUser" Type="int" />
         </EntityType>
         <EntityType Name="Ts_FormatNumbering">
@@ -1653,6 +1699,8 @@
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
+          <Property Name="ApprovalStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsApproval" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="Tx_TransferSummaryOut_Item">
           <Key>
@@ -1734,6 +1782,7 @@
           <EntitySet Name="Tm_Approval_User" EntityType="Self.Tm_Approval_User" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tm_ApprovalStage" EntityType="Self.Tm_ApprovalStage" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tm_ApprovalStage_Role" EntityType="Self.Tm_ApprovalStage_Role" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
+          <EntitySet Name="Tm_ApprovalStage_User" EntityType="Self.Tm_ApprovalStage_User" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tm_ApprovalTemplate" EntityType="Self.Tm_ApprovalTemplate" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tm_ApprovalTemplate_Position" EntityType="Self.Tm_ApprovalTemplate_Position" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tm_ApprovalTemplate_Role" EntityType="Self.Tm_ApprovalTemplate_Role" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
@@ -1768,6 +1817,8 @@
           <EntitySet Name="Tm_Role_Auth" EntityType="Self.Tm_Role_Auth" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tm_User" EntityType="Self.Tm_User" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tm_User_Warehouse" EntityType="Self.Tm_User_Warehouse" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
+          <EntitySet Name="Tp_Approval" EntityType="Self.Tp_Approval" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
+          <EntitySet Name="Tp_Approval_User" EntityType="Self.Tp_Approval_User" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Ts_FormatNumbering" EntityType="Self.Ts_FormatNumbering" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Ts_LayoutForm" EntityType="Self.Ts_LayoutForm" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Ts_List" EntityType="Self.Ts_List" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
@@ -1833,6 +1884,7 @@
           <EntitySet Name="Tm_Approval_User" EntityType="Model1.Tm_Approval_User" />
           <EntitySet Name="Tm_ApprovalStage" EntityType="Model1.Tm_ApprovalStage" />
           <EntitySet Name="Tm_ApprovalStage_Role" EntityType="Model1.Tm_ApprovalStage_Role" />
+          <EntitySet Name="Tm_ApprovalStage_User" EntityType="Model1.Tm_ApprovalStage_User" />
           <EntitySet Name="Tm_ApprovalTemplate" EntityType="Model1.Tm_ApprovalTemplate" />
           <EntitySet Name="Tm_ApprovalTemplate_Position" EntityType="Model1.Tm_ApprovalTemplate_Position" />
           <EntitySet Name="Tm_ApprovalTemplate_Role" EntityType="Model1.Tm_ApprovalTemplate_Role" />
@@ -1867,6 +1919,8 @@
           <EntitySet Name="Tm_Role_Auth" EntityType="Model1.Tm_Role_Auth" />
           <EntitySet Name="Tm_User" EntityType="Model1.Tm_User" />
           <EntitySet Name="Tm_User_Warehouse" EntityType="Model1.Tm_User_Warehouse" />
+          <EntitySet Name="Tp_Approval" EntityType="Model1.Tp_Approval" />
+          <EntitySet Name="Tp_Approval_User" EntityType="Model1.Tp_Approval_User" />
           <EntitySet Name="Ts_FormatNumbering" EntityType="Model1.Ts_FormatNumbering" />
           <EntitySet Name="Ts_LayoutForm" EntityType="Model1.Ts_LayoutForm" />
           <EntitySet Name="Ts_List" EntityType="Model1.Ts_List" />
@@ -1897,6 +1951,7 @@
           <EntitySet Name="Tx_StockOpname_Item" EntityType="Model1.Tx_StockOpname_Item" />
           <EntitySet Name="Tx_StockOpname_Item_Tag" EntityType="Model1.Tx_StockOpname_Item_Tag" />
           <EntitySet Name="Tx_StockSummaryOpname" EntityType="Model1.Tx_StockSummaryOpname" />
+          <EntitySet Name="Tx_StockSummaryOpname_Item" EntityType="Model1.Tx_StockSummaryOpname_Item" />
           <EntitySet Name="Tx_StockSummaryOpname_Item_Tag" EntityType="Model1.Tx_StockSummaryOpname_Item_Tag" />
           <EntitySet Name="Tx_StockSummaryOpname_Ref" EntityType="Model1.Tx_StockSummaryOpname_Ref" />
           <EntitySet Name="Tx_TransferIn" EntityType="Model1.Tx_TransferIn" />
@@ -1916,7 +1971,6 @@
           <EntitySet Name="Tx_TransferSummaryOut_Item" EntityType="Model1.Tx_TransferSummaryOut_Item" />
           <EntitySet Name="Tx_TransferSummaryOut_Item_Tag" EntityType="Model1.Tx_TransferSummaryOut_Item_Tag" />
           <EntitySet Name="Tx_TransferSummaryOut_Ref" EntityType="Model1.Tx_TransferSummaryOut_Ref" />
-          <EntitySet Name="Tx_StockSummaryOpname_Item" EntityType="Model1.Tx_StockSummaryOpname_Item" />
         </EntityContainer>
         <EntityType Name="Tm_Alert">
           <Key>
@@ -2036,6 +2090,19 @@
           <Property Name="Id" Type="Int32" />
           <Property Name="DetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleId" Type="Int32" />
+          <Property Name="IsTick" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Tm_ApprovalStage_User">
+          <Key>
+            <PropertyRef Name="DetId" />
+          </Key>
+          <Property Name="Id" Type="Int32" />
+          <Property Name="DetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
           <Property Name="IsTick" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedUser" Type="Int32" />
@@ -2543,6 +2610,39 @@
           <Property Name="DetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsTick" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Tp_Approval">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TemplateId" Type="Int32" />
+          <Property Name="CurrentStep" Type="Int32" />
+          <Property Name="ObjectId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ObjectCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FlagNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Tp_Approval_User">
+          <Key>
+            <PropertyRef Name="DetId" />
+          </Key>
+          <Property Name="Id" Type="Int32" />
+          <Property Name="DetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Step" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Remarks" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ActionDate" Type="DateTime" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
@@ -3126,6 +3226,29 @@
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
+        <EntityType Name="Tx_StockSummaryOpname_Item">
+          <Key>
+            <PropertyRef Name="DetId" />
+          </Key>
+          <Property Name="Id" Type="Int64" />
+          <Property Name="DetId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="QuantityScan" Type="Decimal" Precision="21" Scale="2" />
+          <Property Name="QuantityValid" Type="Decimal" Precision="21" Scale="2" />
+          <Property Name="UnitPriceTc" Type="Decimal" Precision="21" Scale="2" />
+          <Property Name="UomEntry" Type="Int32" />
+          <Property Name="Uom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AcctCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AcctName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
+          <Property Name="QtyVariance" Type="Decimal" Precision="21" Scale="2" />
+          <Property Name="FreeText" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="Tx_StockSummaryOpname_Item_Tag">
           <Key>
             <PropertyRef Name="DetDetId" />
@@ -3543,6 +3666,8 @@
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
+          <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Tx_TransferSummaryOut_Item">
           <Key>
@@ -3613,29 +3738,6 @@
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
-        </EntityType>
-        <EntityType Name="Tx_StockSummaryOpname_Item">
-          <Key>
-            <PropertyRef Name="DetId" />
-          </Key>
-          <Property Name="Id" Type="Int64" />
-          <Property Name="DetId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="QuantityScan" Type="Decimal" Precision="21" Scale="2" />
-          <Property Name="QuantityValid" Type="Decimal" Precision="21" Scale="2" />
-          <Property Name="UnitPriceTc" Type="Decimal" Precision="21" Scale="2" />
-          <Property Name="UomEntry" Type="Int32" />
-          <Property Name="Uom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AcctCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AcctName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" />
-          <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
-          <Property Name="QtyVariance" Type="Decimal" Precision="21" Scale="2" />
-          <Property Name="FreeText" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -3771,6 +3873,20 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="IsTick" ColumnName="IsTick" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="DetId" ColumnName="DetId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tm_ApprovalStage_User">
+            <EntityTypeMapping TypeName="Model1.Tm_ApprovalStage_User">
+              <MappingFragment StoreEntitySet="Tm_ApprovalStage_User">
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsTick" ColumnName="IsTick" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="DetId" ColumnName="DetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -4309,6 +4425,41 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="IsTick" ColumnName="IsTick" />
                 <ScalarProperty Name="WhsCode" ColumnName="WhsCode" />
+                <ScalarProperty Name="DetId" ColumnName="DetId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tp_Approval">
+            <EntityTypeMapping TypeName="Model1.Tp_Approval">
+              <MappingFragment StoreEntitySet="Tp_Approval">
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="FlagNo" ColumnName="FlagNo" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ObjectCode" ColumnName="ObjectCode" />
+                <ScalarProperty Name="ObjectId" ColumnName="ObjectId" />
+                <ScalarProperty Name="CurrentStep" ColumnName="CurrentStep" />
+                <ScalarProperty Name="TemplateId" ColumnName="TemplateId" />
+                <ScalarProperty Name="TransType" ColumnName="TransType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tp_Approval_User">
+            <EntityTypeMapping TypeName="Model1.Tp_Approval_User">
+              <MappingFragment StoreEntitySet="Tp_Approval_User">
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Step" ColumnName="Step" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="DetId" ColumnName="DetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -4921,6 +5072,30 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Tx_StockSummaryOpname_Item">
+            <EntityTypeMapping TypeName="Model1.Tx_StockSummaryOpname_Item">
+              <MappingFragment StoreEntitySet="Tx_StockSummaryOpname_Item">
+                <ScalarProperty Name="FreeText" ColumnName="FreeText" />
+                <ScalarProperty Name="QtyVariance" ColumnName="QtyVariance" />
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="AcctName" ColumnName="AcctName" />
+                <ScalarProperty Name="AcctCode" ColumnName="AcctCode" />
+                <ScalarProperty Name="Uom" ColumnName="Uom" />
+                <ScalarProperty Name="UomEntry" ColumnName="UomEntry" />
+                <ScalarProperty Name="UnitPriceTc" ColumnName="UnitPriceTc" />
+                <ScalarProperty Name="QuantityValid" ColumnName="QuantityValid" />
+                <ScalarProperty Name="QuantityScan" ColumnName="QuantityScan" />
+                <ScalarProperty Name="WhsCode" ColumnName="WhsCode" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="DetId" ColumnName="DetId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tx_StockSummaryOpname_Item_Tag">
             <EntityTypeMapping TypeName="Model1.Tx_StockSummaryOpname_Item_Tag">
               <MappingFragment StoreEntitySet="Tx_StockSummaryOpname_Item_Tag">
@@ -5320,6 +5495,8 @@
           <EntitySetMapping Name="Tx_TransferSummaryOut">
             <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryOut">
               <MappingFragment StoreEntitySet="Tx_TransferSummaryOut">
+                <ScalarProperty Name="IsApproval" ColumnName="IsApproval" />
+                <ScalarProperty Name="ApprovalStatus" ColumnName="ApprovalStatus" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -5423,30 +5600,6 @@
                 <ScalarProperty Name="ScanDeviceId" ColumnName="ScanDeviceId" />
                 <ScalarProperty Name="BaseNo" ColumnName="BaseNo" />
                 <ScalarProperty Name="BaseId" ColumnName="BaseId" />
-                <ScalarProperty Name="DetId" ColumnName="DetId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tx_StockSummaryOpname_Item">
-            <EntityTypeMapping TypeName="Model1.Tx_StockSummaryOpname_Item">
-              <MappingFragment StoreEntitySet="Tx_StockSummaryOpname_Item">
-                <ScalarProperty Name="FreeText" ColumnName="FreeText" />
-                <ScalarProperty Name="QtyVariance" ColumnName="QtyVariance" />
-                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="AcctName" ColumnName="AcctName" />
-                <ScalarProperty Name="AcctCode" ColumnName="AcctCode" />
-                <ScalarProperty Name="Uom" ColumnName="Uom" />
-                <ScalarProperty Name="UomEntry" ColumnName="UomEntry" />
-                <ScalarProperty Name="UnitPriceTc" ColumnName="UnitPriceTc" />
-                <ScalarProperty Name="QuantityValid" ColumnName="QuantityValid" />
-                <ScalarProperty Name="QuantityScan" ColumnName="QuantityScan" />
-                <ScalarProperty Name="WhsCode" ColumnName="WhsCode" />
-                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
                 <ScalarProperty Name="DetId" ColumnName="DetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

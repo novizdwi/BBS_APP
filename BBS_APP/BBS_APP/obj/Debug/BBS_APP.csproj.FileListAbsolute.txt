@@ -78,8 +78,6 @@ C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\System.Web.WebPages.dll
 C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\System.Web.WebPages.Razor.dll
 C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\WebMatrix.Data.dll
 C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\LumenWorks.Framework.IO.dll
-C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\DevExpress.DataAccess.v20.1.UI.dll
-C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\DevExpress.Diagram.v20.1.Core.dll
 C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\stdole.dll
 C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\BBS_DI.pdb
 C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\BBS_DI.dll.config
