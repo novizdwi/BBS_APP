@@ -7,12 +7,8 @@ using System.Web.Mvc;
 using DevExpress.Web.Mvc;
 using System.IO;
 using System.Threading;
-
 using System.Net;
 
-using Models;
-using Models.Setting.ApprovalStage;
-using Models.Setting.ApprovalTemplate;
 
 namespace Controllers.Setting
 {

@@ -188,6 +188,22 @@ namespace Models._Utils
             }
         }
 
+        public static string GetApprovalActive(string objectCode)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                return GetApprovalActive(CONTEXT, objectCode);
+            }
+        }
+
+        public static string GetApprovalActive(HANA_APP CONTEXT, string objectCode)
+        {
+            var ssql = @"SELECT TOP 1 IFNULL(T0.""IsActive"",'N') AS ""IsActive"" FROM ""Tm_ApprovalTemplate"" T0 WHERE T0.""ObjectCode""=:p0   ORDER BY T0.""CreatedDate"" ASC ";
+
+            return GetValue<string>(CONTEXT, ssql, objectCode);
+
+        }
+
         public static DataTable GetApprovalStages()
         {
             using (var CONTEXT = new HANA_APP())

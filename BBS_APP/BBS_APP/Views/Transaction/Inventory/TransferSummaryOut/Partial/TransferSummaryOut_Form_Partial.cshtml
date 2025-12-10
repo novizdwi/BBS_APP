@@ -395,7 +395,7 @@
         cbo.Width = 230;
     });
 
-    groupItem_Col3.Items.Add(m => Model.Status, itemSettings =>
+    groupItem_Col3.Items.Add(m => Model.ApprovalStatus, itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
         itemSettings.Caption = "Approval Status";
@@ -420,7 +420,7 @@
         cbo.Width = 230;
     });
 
-    groupItem_Col2.Items.Add(itemSettings =>
+    groupItem_Col3.Items.Add(itemSettings =>
     {
         itemSettings.Name = "grpIsApproval";
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
