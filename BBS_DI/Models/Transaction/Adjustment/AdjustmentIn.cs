@@ -550,6 +550,20 @@ namespace Models.Transaction.Adjustment
 
         public void Post(int userId, long id)
         {
+            try
+            {
+
+                PostSAP(userId, id);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void PostSAP(int userId, long id)
+        {
             SAPbobsCOM.Company oCompany = null;
 
             using (var CONTEXT = new HANA_APP())

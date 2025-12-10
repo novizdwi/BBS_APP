@@ -11,7 +11,7 @@
             settings.ClientVisible = false;
             settings.ShowModelErrors = true;
             settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-            settings.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+            settings.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
         }
 
     ).Bind(Model.Id).GetHtml()
@@ -26,7 +26,7 @@
             settings.ClientVisible = false;
             settings.ShowModelErrors = true; 
             settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-            settings.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+            settings.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
         }
 
     ).Bind(Model._HiddenUid).GetHtml()
@@ -155,7 +155,7 @@
         txt.ShowModelErrors = true;
         txt.ControlStyle.CssClass = "editor";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
         txt.Height = 40;
     });
 
@@ -214,7 +214,7 @@
         rb.ControlStyle.CssClass = "editor";
         rb.Properties.DataSource = Models._Utils.GeneralGetList.GetList("ReportDatabaseType");
         rb.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        rb.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        rb.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
     });
 
@@ -233,7 +233,7 @@
         rb.ControlStyle.CssClass = "editor";
         rb.Properties.DataSource = Models._Utils.GeneralGetList.GetList("CrystalReportOutputType");
         rb.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        rb.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        rb.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
     });
 
@@ -253,7 +253,7 @@
         rb.ControlStyle.CssClass = "editor";
         rb.Properties.DataSource = Models._Utils.GeneralGetList.GetList("Boolean");
         rb.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        rb.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        rb.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
     });
 

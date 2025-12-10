@@ -94,10 +94,13 @@
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryIn_Item_Tag1" Width="1.5" PointX="6.75" PointY="29.75" />
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryIn_Ref" Width="1.5" PointX="29.75" PointY="8.75" />
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut" Width="1.5" PointX="29.75" PointY="13.75" />
-        <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Item" Width="1.5" PointX="15.75" PointY="29.75" />
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Item_Tag" Width="1.5" PointX="29.75" PointY="21.75" />
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Ref" Width="1.5" PointX="21.75" PointY="29.75" />
         <EntityTypeShape EntityType="Model1.Tx_StockSummaryOpname_Item" Width="1.5" PointX="18.375" PointY="29.75" />
+        <EntityTypeShape EntityType="Model1.Tm_ApprovalStage_User" Width="1.5" PointX="20.375" PointY="25.75" />
+        <EntityTypeShape EntityType="Model1.Tp_Approval" Width="1.5" PointX="30.375" PointY="26.75" />
+        <EntityTypeShape EntityType="Model1.Tp_Approval_User" Width="1.5" PointX="13.375" PointY="31.75" />
+        <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Item" Width="1.5" PointX="15.375" PointY="31.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

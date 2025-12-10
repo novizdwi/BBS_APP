@@ -114,9 +114,12 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_TransferSummaryIn_Item_Tag1> Tx_TransferSummaryIn_Item_Tag1 { get; set; }
         public virtual DbSet<Tx_TransferSummaryIn_Ref> Tx_TransferSummaryIn_Ref { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut> Tx_TransferSummaryOut { get; set; }
-        public virtual DbSet<Tx_TransferSummaryOut_Item> Tx_TransferSummaryOut_Item { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut_Item_Tag> Tx_TransferSummaryOut_Item_Tag { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut_Ref> Tx_TransferSummaryOut_Ref { get; set; }
         public virtual DbSet<Tx_StockSummaryOpname_Item> Tx_StockSummaryOpname_Item { get; set; }
+        public virtual DbSet<Tm_ApprovalStage_User> Tm_ApprovalStage_User { get; set; }
+        public virtual DbSet<Tp_Approval> Tp_Approval { get; set; }
+        public virtual DbSet<Tp_Approval_User> Tp_Approval_User { get; set; }
+        public virtual DbSet<Tx_TransferSummaryOut_Item> Tx_TransferSummaryOut_Item { get; set; }
     }
 }

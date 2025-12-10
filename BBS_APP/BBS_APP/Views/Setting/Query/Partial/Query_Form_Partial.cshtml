@@ -11,7 +11,7 @@
             settings.ClientVisible = false;
             settings.ShowModelErrors = true;
             settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-            settings.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+            settings.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
         }
 
     ).Bind(Model.Id).GetHtml()
@@ -141,7 +141,7 @@
         rb.ControlStyle.CssClass = "editor";
         rb.Properties.DataSource = Models._Utils.GeneralGetList.GetList("Boolean");
         rb.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        rb.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        rb.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
     });
 
