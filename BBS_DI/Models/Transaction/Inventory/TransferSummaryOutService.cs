@@ -88,6 +88,8 @@ namespace Models.Transaction.Inventory
 
         public string ApprovalStatus { get; set; }
 
+        public string ApprovalMessages { get; set; }
+
         public string IsApproval { get; set; }
 
         public string CancelReason { get; set; }
@@ -537,7 +539,7 @@ namespace Models.Transaction.Inventory
                                     var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("TransferSummaryOut");
 
                                     Tx_TransferSummaryOut.IsApproval = isApprovalActive;
-                                    Tx_TransferSummaryOut.ApprovalStatus = isApprovalActive == "Y" ? "Waiting" : "";
+                                    //Tx_TransferSummaryOut.ApprovalStatus = isApprovalActive == "Y" && Tx_TransferSummaryOut.ApprovalStatus == "" ? "Waiting" : "Approved";
                                     Tx_TransferSummaryOut.ModifiedDate = dtModified;
                                     Tx_TransferSummaryOut.ModifiedUser = model._UserId;
 
@@ -566,13 +568,13 @@ namespace Models.Transaction.Inventory
                                     //        }
                                     //    }
 
-                                    if (model.Details_.modifiedRowValues != null)
-                                    {
-                                        foreach (var detail in model.Details_.modifiedRowValues)
-                                        {
-                                            Detail_Update(CONTEXT, detail, model._UserId);
-                                        }
-                                    }
+                                    //if (model.Details_.modifiedRowValues != null)
+                                    //{
+                                    //    foreach (var detail in model.Details_.modifiedRowValues)
+                                    //    {
+                                    //        Detail_Update(CONTEXT, detail, model._UserId);
+                                    //    }
+                                    //}
 
                                     //    if (model.Details_.deletedRowKeys != null)
                                     //    {

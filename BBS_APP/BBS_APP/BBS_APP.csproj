@@ -841,6 +841,9 @@
     <Content Include="Views\Transaction\StockOpname\RequestStockOpname\Partial\RequestStockOpname_Form_BtnBottom_Partial.cshtml" />
     <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\AdjustmentOut_Form_BtnBottom_Partial.cshtml" />
     <Content Include="Views\Transaction\Adjustment\AdjustmentIn\Partial\AdjustmentIn_Form_BtnBottom_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferSummaryOut\Partial\Approval\Approval_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferSummaryOut\Partial\Approval\Approval_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferSummaryOut\Partial\Approval\Approval_Form_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -964,6 +967,7 @@
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.Nav.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.Tab.Ref.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.ViewItemTag.cs" />
+    <Compile Include="Controllers\Transaction\Inventory\TransferSummaryOut\TransferSummaryOutController.Approval.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryOut\TransferSummaryOutController.CancelReason.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryOut\TransferSummaryOutController.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryOut\TransferSummaryOutController.List.cs" />

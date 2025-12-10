@@ -266,8 +266,20 @@
         if (BeforeSave() == false) {
             return;
         }
+        key = Id.GetValue();
+        var isApproval = IsApproval.GetValue();
+        var approvalStatus = ApprovalStatus.GetValue();
 
-        var formData = GetFormData();
+        if (isApproval == "Y") {
+            btnShowApprovalOnClick(s, e, key);
+        } else {
+            Post(s, e);
+        }    
+
+    }
+
+    function Post(s, e) {
+         var formData = GetFormData();
         if (confirm('Post transaction?')) {
             key = Id.GetValue();
 
@@ -291,6 +303,67 @@
                 }
             });
         }
+    }
+
+     function btnUpdateApprovalOnClick(s, e) {
+         key = Id.GetValue();
+         var reason = ApprovalMessages.GetValue();
+        if (reason == "" || reason == null) {
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Approve", "TransferSummaryOut")',
+            data: { Id: key, CancelReason: reason },
+            beforeSend: function () {
+                OnBegin();
+            },
+            success: function (response) {
+                popupCancelReason.Hide();
+                RefreshAfterSuccess(response);
+                OnSuccessMsgBox();
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                OnFailure(jqXhr, textStatus, errorThrown)
+            },
+            complete: function () {
+                OnComplete()
+
+            }
+        });
+
+    }
+
+    function btnRejectApprovalOnClick(s, e) {
+        if (confirm('Are you sure to Reject this transaction?')) {
+             key = Id.GetValue();
+         var reason = ApprovalMessages.GetValue();
+            if (reason == "" || reason == null) {
+                return;
+            }
+      
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Reject", "TransferSummaryOut")',
+                data: { Id: key, CancelReason: reason },
+                beforeSend: function () {
+                    OnBegin();
+                },
+                success: function (response) {
+                    popupCancelReason.Hide();
+                    RefreshAfterSuccess(response);
+                    OnSuccessMsgBox();
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    OnFailure(jqXhr, textStatus, errorThrown)
+                },
+                complete: function () {
+                    OnComplete()
+
+                }
+            });
+        }      
 
     }
 
@@ -567,6 +640,27 @@
         }
     }
 
+    function popupApproval_EndCallback(s, e) {
+        $.validator.unobtrusive.parse("#Approval_formDetail");
+
+        var popup = ASPxClientPopupControl.Cast("popupApproval");
+        if (!popup.IsVisible()) {
+            loadingPanel.Hide();
+            popup.ShowAtPos(400, 100);
+        }
+    }
+
+    function btnShowApprovalOnClick(s, e, Id) {
+        var popup = ASPxClientPopupControl.Cast("popupApproval");
+
+        popup.callbackUrl = '@Url.Action("Approval_PopupListOnDemandPartial", "TransferSummaryOut")' + '?Id=' + Id;
+        popup.PerformCallback();
+
+        if (!popup.IsVisible()) {
+            loadingPanel.Show();
+        }
+    }
+
     function OnClickChooseItem(s, e, detId) {
         key = Id.GetValue();
 
@@ -801,6 +895,13 @@ new
         settings.Styles.LoadingDiv.Opacity = 0;
     }).GetHtml()
 
+
+
+@*-------------------------------------------------
+    Approval
+    -------------------------------------------------*@
+
+@Html.Partial("Partial/Approval/Approval_Partial")
 
 
 @*-------------------------------------------------
