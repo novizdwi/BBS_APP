@@ -541,8 +541,8 @@ namespace Models.Transaction.Inventory
                                     //}
                                     CONTEXT.SaveChanges();
 
-                                    //if (model.Details_ != null)
-                                    //{
+                                    if (model.Details_ != null)
+                                    {
                                     //    if (model.Details_.insertedRowValues != null)
                                     //    {
                                     //        foreach (var detail in model.Details_.insertedRowValues)
@@ -568,7 +568,7 @@ namespace Models.Transaction.Inventory
                                     //            Detail_Delete(CONTEXT, detailModel);
                                     //        }
                                     //    }
-                                    //}
+                                    }
                                     SpNotif.SpSysControllerTransNotif(model._UserId, "TransferSummaryIn", CONTEXT, "after", "TransferSummaryIn", "update", "Id", keyValue);
                                     
                                 }

@@ -93,7 +93,7 @@
             rb.ControlStyle.CssClass = "editor";
             rb.Properties.DataSource = Models._Utils.GeneralGetList.GetList("CrystalReportOutputType");
             rb.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-            rb.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+            rb.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
             rb.Properties.ClientSideEvents.Init = "function (s,e){ { s.SetValue('" + reportModel.OutputType + "'); } }"; ;
 
@@ -842,7 +842,7 @@
                                            settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ CflDynamicPopupList{0}.ShowAtPos(250, 100);  }}", paramModel.DetId.ToString());
                                            settingsHL.Properties.ImageUrl = "~/Content/Images/buttonnew/find-hitam.png";
                                            settingsHL.Properties.ImageWidth = 15;
-                                           settingsHL.ControlStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+                                           settingsHL.ControlStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
                                            settingsHL.Height = 22;
                                            settingsHL.Width = 22;
                                            settingsHL.ControlStyle.VerticalAlign = VerticalAlign.Middle;
@@ -977,7 +977,7 @@
                                    txt.ControlStyle.CssClass = "editor";
                                    txt.Width = 400;
                                    txt.ReadOnly = true;
-                                   txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+                                   txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
 
                                    txt.Properties.ValidationSettings.Display = Display.Dynamic;

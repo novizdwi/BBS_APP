@@ -160,7 +160,7 @@ namespace Models.Transaction.Inventory
 
         public string ItemName { get; set; }
 
-        public string FreeText { get; set; }
+        public string Comments { get; set; }
 
         public string FromWhsCode { get; set; }
 
@@ -558,8 +558,8 @@ namespace Models.Transaction.Inventory
                                     //}
                                     CONTEXT.SaveChanges();
 
-                                    //if (model.Details_ != null)
-                                    //{
+                                    if (model.Details_ != null)
+                                    {
                                     //    if (model.Details_.insertedRowValues != null)
                                     //    {
                                     //        foreach (var detail in model.Details_.insertedRowValues)
@@ -585,7 +585,7 @@ namespace Models.Transaction.Inventory
                                     //            Detail_Delete(CONTEXT, detailModel);
                                     //        }
                                     //    }
-                                    //}
+                                    }
                                     SpNotif.SpSysControllerTransNotif(model._UserId, "TransferSummaryOut", CONTEXT, "after", "TransferSummaryOut", "update", "Id", keyValue);
                                     
                                 }

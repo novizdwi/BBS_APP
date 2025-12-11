@@ -585,8 +585,8 @@ namespace Models.Transaction.StockOpname
                                     //}
                                     CONTEXT.SaveChanges();
 
-                                    //if (model.Details_ != null)
-                                    //{
+                                    if (model.Details_ != null)
+                                    {
                                     //    if (model.Details_.insertedRowValues != null)
                                     //    {
                                     //        foreach (var detail in model.Details_.insertedRowValues)
@@ -612,7 +612,7 @@ namespace Models.Transaction.StockOpname
                                     //            Detail_Delete(CONTEXT, detailModel);
                                     //        }
                                     //    }
-                                    //}
+                                    }
                                     SpNotif.SpSysControllerTransNotif(model._UserId, "StockSummaryOpname", CONTEXT, "after", "StockSummaryOpname", "update", "Id", keyValue);
                                     
                                 }
