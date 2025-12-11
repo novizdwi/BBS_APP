@@ -136,9 +136,9 @@ namespace Controllers.Transaction.StockOpname
             StockSummaryOpnameService = new StockSummaryOpnameService();
             StockSummaryOpnameModel._FormMode = FormModeEnum.Edit;
 
-            StockSummaryOpnameService.Update(StockSummaryOpnameModel, "Post");
+            //StockSummaryOpnameService.Update(StockSummaryOpnameModel, "Post");
             //StockSummaryOpnameService.PostAPI(userId, StockSummaryOpnameModel.Id);
-            StockSummaryOpnameService.Post(userId, StockSummaryOpnameModel.Id);
+            StockSummaryOpnameService.Post(userId, StockSummaryOpnameModel);
             StockSummaryOpnameModel = StockSummaryOpnameService.GetById(userId, StockSummaryOpnameModel.Id);
 
             if (StockSummaryOpnameModel != null)

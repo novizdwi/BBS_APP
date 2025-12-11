@@ -136,9 +136,9 @@ namespace Controllers.Transaction.Inventory
             transferSummaryOutService = new TransferSummaryOutService();
             transferSummaryOutModel._FormMode = FormModeEnum.Edit;
 
-            transferSummaryOutService.Update(transferSummaryOutModel);
+            //transferSummaryOutService.Update(transferSummaryOutModel);
             //transferSummaryOutService.PostAPI(userId, transferSummaryOutModel.Id);
-            transferSummaryOutService.Post(userId, transferSummaryOutModel.Id);
+            transferSummaryOutService.Post(userId, transferSummaryOutModel);
             transferSummaryOutModel = transferSummaryOutService.GetById(userId, transferSummaryOutModel.Id);
 
             if (transferSummaryOutModel != null)

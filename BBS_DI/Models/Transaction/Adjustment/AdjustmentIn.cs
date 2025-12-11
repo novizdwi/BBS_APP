@@ -573,12 +573,12 @@ namespace Models.Transaction.Adjustment
 
         }
 
-        public void Post(int userId, long id)
+        public void Post(int userId, AdjustmentInModel adjustmentInModel)
         {
             try
             {
-
-                PostSAP(userId, id);
+                Update(adjustmentInModel);
+                PostSAP(userId, adjustmentInModel.Id);
 
             }
             catch (Exception ex)

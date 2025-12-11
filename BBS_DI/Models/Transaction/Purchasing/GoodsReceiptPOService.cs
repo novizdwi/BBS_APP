@@ -721,11 +721,12 @@ namespace Models.Transaction.Purchasing
 
         //}
 
-        public void Post(int userId, long id)
+        public void Post(int userId, GoodsReceiptPOModel goodsReceiptPOModel)
         {
             try
             {
-                PostSAP(userId, id);
+                Update(goodsReceiptPOModel);
+                PostSAP(userId, goodsReceiptPOModel.Id);
 
             }
             catch (Exception ex)

@@ -684,11 +684,12 @@ namespace Models.Transaction.Inventory
         //    }
 
         //}
-        public void Post(int userId, long id)
+        public void Post(int userId, TransferSummaryOutModel transferSummaryOutModel)
         {
             try
             {
-                PostSAP(userId, id);
+                Update(transferSummaryOutModel);
+                PostSAP(userId, transferSummaryOutModel.Id);
 
             }
             catch (Exception ex)

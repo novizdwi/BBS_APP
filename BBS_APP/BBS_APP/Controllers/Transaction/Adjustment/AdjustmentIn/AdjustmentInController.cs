@@ -114,7 +114,7 @@ namespace Controllers.Transaction.Adjustment
 
             //adjustmentInService.Update(adjustmentInModel);
             //adjustmentInService.PostAPI(userId, adjustmentInModel.Id);
-            adjustmentInService.Post(userId, adjustmentInModel.Id);
+            adjustmentInService.Post(userId, adjustmentInModel);
             adjustmentInModel = adjustmentInService.GetById(userId, adjustmentInModel.Id);
 
             if (adjustmentInModel != null)

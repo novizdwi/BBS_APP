@@ -136,9 +136,9 @@ namespace Controllers.Transaction.Purchasing
             goodsReceiptPOService = new GoodsReceiptPOService();
             goodsReceiptPOModel._FormMode = FormModeEnum.Edit;
 
-            goodsReceiptPOService.Update(goodsReceiptPOModel);
+            //goodsReceiptPOService.Update(goodsReceiptPOModel);
             //goodsReceiptPOService.PostAPI(userId, goodsReceiptPOModel.Id);
-            goodsReceiptPOService.Post(userId, goodsReceiptPOModel.Id);
+            goodsReceiptPOService.Post(userId, goodsReceiptPOModel);
             goodsReceiptPOModel = goodsReceiptPOService.GetById(userId, goodsReceiptPOModel.Id);
 
             if (goodsReceiptPOModel != null)

@@ -796,11 +796,12 @@ namespace Models.Transaction.StockOpname
 
         //}
 
-        public void Post(int userId, long id)
+        public void Post(int userId, StockSummaryOpnameModel stockSummaryOpnameModel)
         {
             try
             {
-                PostSAP(userId, id);
+                Update(stockSummaryOpnameModel, "Post");
+                PostSAP(userId, stockSummaryOpnameModel.Id);
 
             }
             catch (Exception ex)
