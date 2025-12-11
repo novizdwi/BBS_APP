@@ -315,7 +315,7 @@
         $.ajax({
             type: "POST",
             url: '@Url.Action("Approve", "TransferSummaryOut")',
-            data: { Id: key, CancelReason: reason },
+            data: { Id: key, ApprovalMessage: reason },
             beforeSend: function () {
                 OnBegin();
             },
@@ -346,7 +346,7 @@
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("Reject", "TransferSummaryOut")',
-                data: { Id: key, CancelReason: reason },
+                data: { Id: key, ApprovalMessage: reason },
                 beforeSend: function () {
                     OnBegin();
                 },

@@ -47,6 +47,7 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tm_Item_Warehouse> Tm_Item_Warehouse { get; set; }
         public virtual DbSet<Tm_Item_Warehouse_Tag> Tm_Item_Warehouse_Tag { get; set; }
         public virtual DbSet<Tm_Item_Warehouse_Tag_Log> Tm_Item_Warehouse_Tag_Log { get; set; }
+        public virtual DbSet<Tm_Item_Warehouse_Tag_Replace> Tm_Item_Warehouse_Tag_Replace { get; set; }
         public virtual DbSet<Tm_Layout> Tm_Layout { get; set; }
         public virtual DbSet<Tm_Layout_Role> Tm_Layout_Role { get; set; }
         public virtual DbSet<Tm_Layout_User> Tm_Layout_User { get; set; }
@@ -118,6 +119,7 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_TransferSummaryIn_Item_Tag1> Tx_TransferSummaryIn_Item_Tag1 { get; set; }
         public virtual DbSet<Tx_TransferSummaryIn_Ref> Tx_TransferSummaryIn_Ref { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut> Tx_TransferSummaryOut { get; set; }
+        public virtual DbSet<Tx_TransferSummaryOut_Approval> Tx_TransferSummaryOut_Approval { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut_Item> Tx_TransferSummaryOut_Item { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut_Item_Tag> Tx_TransferSummaryOut_Item_Tag { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut_Ref> Tx_TransferSummaryOut_Ref { get; set; }

@@ -198,7 +198,10 @@ namespace Models._Utils
 
         public static string GetApprovalActive(HANA_APP CONTEXT, string objectCode)
         {
-            var ssql = @"SELECT TOP 1 IFNULL(T0.""IsActive"",'N') AS ""IsActive"" FROM ""Tm_ApprovalTemplate"" T0 WHERE T0.""ObjectCode""=:p0   ORDER BY T0.""CreatedDate"" ASC ";
+            var ssql = @"SELECT TOP 1 IFNULL(T0.""IsActive"",'N') AS ""IsActive"" 
+                         FROM ""Tm_ApprovalTemplate"" T0 
+                         INNER JOIN ""Tm_ApprovalTemplate_User"" T1 ON T1.""Id"" = T0.""Id""
+                         WHERE T0.""ObjectCode""=:p0 AND IFNULL(T1.""IsTick"",'') = 'Y' ORDER BY T0.""CreatedDate"" ASC "; //AND T1.""UserId"" =:p1
 
             return GetValue<string>(CONTEXT, ssql, objectCode);
 

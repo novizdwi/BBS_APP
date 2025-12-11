@@ -329,6 +329,21 @@
           <Property Name="CreatedDate" Type="timestamp" />
           <Property Name="CreatedUser" Type="int" />
         </EntityType>
+        <EntityType Name="Tm_Item_Warehouse_Tag_Replace">
+          <Key>
+            <PropertyRef Name="TagId" />
+            <PropertyRef Name="ItemCode" />
+          </Key>
+          <Property Name="TagId" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ItemCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
+          <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="WhsName" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedDate" Type="timestamp" />
+          <Property Name="CreatedUser" Type="int" />
+          <Property Name="ModifiedDate" Type="timestamp" />
+          <Property Name="ModifiedUser" Type="int" />
+        </EntityType>
         <EntityType Name="Tm_Layout">
           <Key>
             <PropertyRef Name="Id" />
@@ -751,6 +766,16 @@
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
+          <Property Name="PillarsCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="PillarsName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClassCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="ClassName" Type="nvarchar" MaxLength="50" />
+          <Property Name="SubClass1Code" Type="nvarchar" MaxLength="10" />
+          <Property Name="SubClass1Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="SubClass2Code" Type="nvarchar" MaxLength="10" />
+          <Property Name="SubClass2Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProjectCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProjectName" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Tx_AdjustmentIn_Attachment">
           <Key>
@@ -852,6 +877,16 @@
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
+          <Property Name="PillarsCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="PillarsName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClassCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="ClassName" Type="nvarchar" MaxLength="50" />
+          <Property Name="SubClass1Code" Type="nvarchar" MaxLength="10" />
+          <Property Name="SubClass1Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="SubClass2Code" Type="nvarchar" MaxLength="10" />
+          <Property Name="SubClass2Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProjectCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProjectName" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Tx_AdjustmentOut_Attachment">
           <Key>
@@ -1258,6 +1293,16 @@
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
+          <Property Name="PillarsCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="PillarsName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClassCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="ClassName" Type="nvarchar" MaxLength="50" />
+          <Property Name="SubClass1Code" Type="nvarchar" MaxLength="10" />
+          <Property Name="SubClass1Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="SubClass2Code" Type="nvarchar" MaxLength="10" />
+          <Property Name="SubClass2Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProjectCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProjectName" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Tx_StockSummaryOpname_Item">
           <Key>
@@ -1281,6 +1326,16 @@
           <Property Name="ModifiedUser" Type="int" />
           <Property Name="QtyVariance" Type="decimal" Precision="21" Scale="2" />
           <Property Name="FreeText" Type="nvarchar" MaxLength="254" />
+          <Property Name="PillarsCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="PillarsName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClassCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="ClassName" Type="nvarchar" MaxLength="50" />
+          <Property Name="SubClass1Code" Type="nvarchar" MaxLength="10" />
+          <Property Name="SubClass1Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="SubClass2Code" Type="nvarchar" MaxLength="10" />
+          <Property Name="SubClass2Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProjectCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProjectName" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Tx_StockSummaryOpname_Item_Tag">
           <Key>
@@ -1701,6 +1756,24 @@
           <Property Name="ModifiedUser" Type="int" />
           <Property Name="ApprovalStatus" Type="nvarchar" MaxLength="50" />
           <Property Name="IsApproval" Type="varchar" MaxLength="1" />
+          <Property Name="ApprovalMessages" Type="nvarchar" MaxLength="254" />
+        </EntityType>
+        <EntityType Name="Tx_TransferSummaryOut_Approval">
+          <Key>
+            <PropertyRef Name="DetId" />
+          </Key>
+          <Property Name="Id" Type="int" />
+          <Property Name="DetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StageId" Type="int" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Step" Type="int" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ActionDate" Type="seconddate" />
+          <Property Name="CreatedDate" Type="seconddate" />
+          <Property Name="CreatedUser" Type="int" />
+          <Property Name="ModifiedDate" Type="seconddate" />
+          <Property Name="ModifiedUser" Type="int" />
         </EntityType>
         <EntityType Name="Tx_TransferSummaryOut_Item">
           <Key>
@@ -1795,6 +1868,7 @@
           <EntitySet Name="Tm_Item_Warehouse" EntityType="Self.Tm_Item_Warehouse" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tm_Item_Warehouse_Tag" EntityType="Self.Tm_Item_Warehouse_Tag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tm_Item_Warehouse_Tag_Log" EntityType="Self.Tm_Item_Warehouse_Tag_Log" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
+          <EntitySet Name="Tm_Item_Warehouse_Tag_Replace" EntityType="Self.Tm_Item_Warehouse_Tag_Replace" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tm_Layout" EntityType="Self.Tm_Layout" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tm_Layout_Role" EntityType="Self.Tm_Layout_Role" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tm_Layout_User" EntityType="Self.Tm_Layout_User" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
@@ -1866,6 +1940,7 @@
           <EntitySet Name="Tx_TransferSummaryIn_Item_Tag1" EntityType="Self.Tx_TransferSummaryIn_Item_Tag1" Schema="BBS_RFID_TEST_APP" Table="Tx_TransferSummaryIn_Item_Tag" store:Type="Tables" />
           <EntitySet Name="Tx_TransferSummaryIn_Ref" EntityType="Self.Tx_TransferSummaryIn_Ref" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tx_TransferSummaryOut" EntityType="Self.Tx_TransferSummaryOut" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
+          <EntitySet Name="Tx_TransferSummaryOut_Approval" EntityType="Self.Tx_TransferSummaryOut_Approval" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tx_TransferSummaryOut_Item" EntityType="Self.Tx_TransferSummaryOut_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tx_TransferSummaryOut_Item_Tag" EntityType="Self.Tx_TransferSummaryOut_Item_Tag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tx_TransferSummaryOut_Ref" EntityType="Self.Tx_TransferSummaryOut_Ref" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
@@ -1897,6 +1972,7 @@
           <EntitySet Name="Tm_Item_Warehouse" EntityType="Model1.Tm_Item_Warehouse" />
           <EntitySet Name="Tm_Item_Warehouse_Tag" EntityType="Model1.Tm_Item_Warehouse_Tag" />
           <EntitySet Name="Tm_Item_Warehouse_Tag_Log" EntityType="Model1.Tm_Item_Warehouse_Tag_Log" />
+          <EntitySet Name="Tm_Item_Warehouse_Tag_Replace" EntityType="Model1.Tm_Item_Warehouse_Tag_Replace" />
           <EntitySet Name="Tm_Layout" EntityType="Model1.Tm_Layout" />
           <EntitySet Name="Tm_Layout_Role" EntityType="Model1.Tm_Layout_Role" />
           <EntitySet Name="Tm_Layout_User" EntityType="Model1.Tm_Layout_User" />
@@ -1968,6 +2044,7 @@
           <EntitySet Name="Tx_TransferSummaryIn_Item_Tag1" EntityType="Model1.Tx_TransferSummaryIn_Item_Tag1" />
           <EntitySet Name="Tx_TransferSummaryIn_Ref" EntityType="Model1.Tx_TransferSummaryIn_Ref" />
           <EntitySet Name="Tx_TransferSummaryOut" EntityType="Model1.Tx_TransferSummaryOut" />
+          <EntitySet Name="Tx_TransferSummaryOut_Approval" EntityType="Model1.Tx_TransferSummaryOut_Approval" />
           <EntitySet Name="Tx_TransferSummaryOut_Item" EntityType="Model1.Tx_TransferSummaryOut_Item" />
           <EntitySet Name="Tx_TransferSummaryOut_Item_Tag" EntityType="Model1.Tx_TransferSummaryOut_Item_Tag" />
           <EntitySet Name="Tx_TransferSummaryOut_Ref" EntityType="Model1.Tx_TransferSummaryOut_Ref" />
@@ -2295,6 +2372,21 @@
           <Property Name="ActionNote" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedUser" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Tm_Item_Warehouse_Tag_Replace">
+          <Key>
+            <PropertyRef Name="TagId" />
+            <PropertyRef Name="ItemCode" />
+          </Key>
+          <Property Name="TagId" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ItemCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WhsName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
         <EntityType Name="Tm_Layout">
           <Key>
@@ -2718,6 +2810,16 @@
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
+          <Property Name="PillarsCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PillarsName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClassCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ClassName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass1Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass1Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass2Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass2Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tx_AdjustmentIn_Attachment">
           <Key>
@@ -2819,6 +2921,16 @@
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
+          <Property Name="PillarsCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PillarsName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClassCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ClassName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass1Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass1Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass2Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass2Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tx_AdjustmentOut_Attachment">
           <Key>
@@ -3225,6 +3337,16 @@
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
+          <Property Name="PillarsCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PillarsName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClassCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ClassName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass1Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass1Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass2Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass2Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tx_StockSummaryOpname_Item">
           <Key>
@@ -3248,6 +3370,16 @@
           <Property Name="ModifiedUser" Type="Int32" />
           <Property Name="QtyVariance" Type="Decimal" Precision="21" Scale="2" />
           <Property Name="FreeText" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="PillarsCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PillarsName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClassCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ClassName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass1Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass1Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass2Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass2Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tx_StockSummaryOpname_Item_Tag">
           <Key>
@@ -3668,6 +3800,24 @@
           <Property Name="ModifiedUser" Type="Int32" />
           <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Tx_TransferSummaryOut_Approval">
+          <Key>
+            <PropertyRef Name="DetId" />
+          </Key>
+          <Property Name="Id" Type="Int32" />
+          <Property Name="DetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StageId" Type="Int32" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Step" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ActionDate" Type="DateTime" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
         <EntityType Name="Tx_TransferSummaryOut_Item">
           <Key>
@@ -4086,6 +4236,21 @@
                 <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
                 <ScalarProperty Name="BaseType" ColumnName="BaseType" />
                 <ScalarProperty Name="LogId" ColumnName="LogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tm_Item_Warehouse_Tag_Replace">
+            <EntityTypeMapping TypeName="Model1.Tm_Item_Warehouse_Tag_Replace">
+              <MappingFragment StoreEntitySet="Tm_Item_Warehouse_Tag_Replace">
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="WhsName" ColumnName="WhsName" />
+                <ScalarProperty Name="WhsCode" ColumnName="WhsCode" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4519,6 +4684,16 @@
           <EntitySetMapping Name="Tx_AdjustmentIn">
             <EntityTypeMapping TypeName="Model1.Tx_AdjustmentIn">
               <MappingFragment StoreEntitySet="Tx_AdjustmentIn">
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
+                <ScalarProperty Name="SubClass2Name" ColumnName="SubClass2Name" />
+                <ScalarProperty Name="SubClass2Code" ColumnName="SubClass2Code" />
+                <ScalarProperty Name="SubClass1Name" ColumnName="SubClass1Name" />
+                <ScalarProperty Name="SubClass1Code" ColumnName="SubClass1Code" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="ClassCode" ColumnName="ClassCode" />
+                <ScalarProperty Name="PillarsName" ColumnName="PillarsName" />
+                <ScalarProperty Name="PillarsCode" ColumnName="PillarsCode" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -4625,6 +4800,16 @@
           <EntitySetMapping Name="Tx_AdjustmentOut">
             <EntityTypeMapping TypeName="Model1.Tx_AdjustmentOut">
               <MappingFragment StoreEntitySet="Tx_AdjustmentOut">
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
+                <ScalarProperty Name="SubClass2Name" ColumnName="SubClass2Name" />
+                <ScalarProperty Name="SubClass2Code" ColumnName="SubClass2Code" />
+                <ScalarProperty Name="SubClass1Name" ColumnName="SubClass1Name" />
+                <ScalarProperty Name="SubClass1Code" ColumnName="SubClass1Code" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="ClassCode" ColumnName="ClassCode" />
+                <ScalarProperty Name="PillarsName" ColumnName="PillarsName" />
+                <ScalarProperty Name="PillarsCode" ColumnName="PillarsCode" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -5049,6 +5234,16 @@
           <EntitySetMapping Name="Tx_StockSummaryOpname">
             <EntityTypeMapping TypeName="Model1.Tx_StockSummaryOpname">
               <MappingFragment StoreEntitySet="Tx_StockSummaryOpname">
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
+                <ScalarProperty Name="SubClass2Name" ColumnName="SubClass2Name" />
+                <ScalarProperty Name="SubClass2Code" ColumnName="SubClass2Code" />
+                <ScalarProperty Name="SubClass1Name" ColumnName="SubClass1Name" />
+                <ScalarProperty Name="SubClass1Code" ColumnName="SubClass1Code" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="ClassCode" ColumnName="ClassCode" />
+                <ScalarProperty Name="PillarsName" ColumnName="PillarsName" />
+                <ScalarProperty Name="PillarsCode" ColumnName="PillarsCode" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -5075,6 +5270,16 @@
           <EntitySetMapping Name="Tx_StockSummaryOpname_Item">
             <EntityTypeMapping TypeName="Model1.Tx_StockSummaryOpname_Item">
               <MappingFragment StoreEntitySet="Tx_StockSummaryOpname_Item">
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
+                <ScalarProperty Name="SubClass2Name" ColumnName="SubClass2Name" />
+                <ScalarProperty Name="SubClass2Code" ColumnName="SubClass2Code" />
+                <ScalarProperty Name="SubClass1Name" ColumnName="SubClass1Name" />
+                <ScalarProperty Name="SubClass1Code" ColumnName="SubClass1Code" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="ClassCode" ColumnName="ClassCode" />
+                <ScalarProperty Name="PillarsName" ColumnName="PillarsName" />
+                <ScalarProperty Name="PillarsCode" ColumnName="PillarsCode" />
                 <ScalarProperty Name="FreeText" ColumnName="FreeText" />
                 <ScalarProperty Name="QtyVariance" ColumnName="QtyVariance" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
@@ -5495,6 +5700,7 @@
           <EntitySetMapping Name="Tx_TransferSummaryOut">
             <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryOut">
               <MappingFragment StoreEntitySet="Tx_TransferSummaryOut">
+                <ScalarProperty Name="ApprovalMessages" ColumnName="ApprovalMessages" />
                 <ScalarProperty Name="IsApproval" ColumnName="IsApproval" />
                 <ScalarProperty Name="ApprovalStatus" ColumnName="ApprovalStatus" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
@@ -5528,6 +5734,24 @@
                 <ScalarProperty Name="TransDate" ColumnName="TransDate" />
                 <ScalarProperty Name="TransNo" ColumnName="TransNo" />
                 <ScalarProperty Name="TransType" ColumnName="TransType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tx_TransferSummaryOut_Approval">
+            <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryOut_Approval">
+              <MappingFragment StoreEntitySet="Tx_TransferSummaryOut_Approval">
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Step" ColumnName="Step" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="StageId" ColumnName="StageId" />
+                <ScalarProperty Name="DetId" ColumnName="DetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

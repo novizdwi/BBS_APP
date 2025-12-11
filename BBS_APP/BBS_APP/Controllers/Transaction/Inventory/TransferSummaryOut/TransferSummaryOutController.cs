@@ -116,6 +116,7 @@ namespace Controllers.Transaction.Inventory
             //{
             transferSummaryOutService.Update(transferSummaryOutModel);
             transferSummaryOutModel = transferSummaryOutService.GetById(userId, transferSummaryOutModel.Id);
+            transferSummaryOutModel._FormMode = Models.FormModeEnum.Edit;
             //}
             //else
             //{
@@ -178,6 +179,54 @@ namespace Controllers.Transaction.Inventory
             return PartialView(VIEW_FORM_PARTIAL, transferSummaryOutModel);
         }
 
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Approve(long Id, string ApprovalMessage = "")
+        {
+            int userId = (int)Session["userId"];
+
+            TransferSummaryOutModel transferSummaryOutModel;
+
+            transferSummaryOutService = new TransferSummaryOutService();
+            transferSummaryOutService.Approve(userId, Id, ApprovalMessage);
+
+            transferSummaryOutModel = transferSummaryOutService.GetById(userId, Id);
+            if (transferSummaryOutModel != null)
+            {
+                transferSummaryOutModel._FormMode = FormModeEnum.Edit;
+            }
+            else
+            {
+                transferSummaryOutModel = transferSummaryOutService.GetNewModel(userId);
+                transferSummaryOutModel._FormMode = FormModeEnum.New;
+            }
+
+            return PartialView(VIEW_FORM_PARTIAL, transferSummaryOutModel);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Reject(long Id, string ApprovalMessage = "")
+        {
+            int userId = (int)Session["userId"];
+
+            TransferSummaryOutModel transferSummaryOutModel;
+
+            transferSummaryOutService = new TransferSummaryOutService();
+            transferSummaryOutService.Reject(userId, Id, ApprovalMessage);
+
+            transferSummaryOutModel = transferSummaryOutService.GetById(userId, Id);
+            if (transferSummaryOutModel != null)
+            {
+                transferSummaryOutModel._FormMode = FormModeEnum.Edit;
+            }
+            else
+            {
+                transferSummaryOutModel = transferSummaryOutService.GetNewModel(userId);
+                transferSummaryOutModel._FormMode = FormModeEnum.New;
+            }
+
+            return PartialView(VIEW_FORM_PARTIAL, transferSummaryOutModel);
+        }
 
         public ActionResult RefreshItem(TransferSummaryOutModel transferSummaryOutModel)
         {

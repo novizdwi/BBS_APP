@@ -67,7 +67,7 @@
         itemSettings.Name = "grpApprovalMessages";
 
         var txt = (MemoSettings)itemSettings.NestedExtensionSettings;
-        txt.Name = "Approval";
+        txt.Name = "ApprovalMessages";
         txt.ShowModelErrors = true;
         txt.ControlStyle.CssClass = "editor";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
@@ -85,9 +85,8 @@
         btnSettings.Text = "Update";
         btnSettings.Width = 100;
         btnSettings.ClientSideEvents.Click = "btnUpdateApprovalOnClick";
-
-
         btnSettings.Styles.Style.Paddings.Padding = 2;
+        //btnSettings.Styles.Style.BackColor = System.Drawing.Color.ForestGreen;
 
     });
 
@@ -105,9 +104,8 @@
         btnSettings.Text = "Reject";
         btnSettings.Width = 100;
         btnSettings.ClientSideEvents.Click = "btnRejectApprovalOnClick";
-
-
         btnSettings.Styles.Style.Paddings.Padding = 2;
+        btnSettings.Styles.Style.BackColor = System.Drawing.Color.IndianRed;
 
     });
 

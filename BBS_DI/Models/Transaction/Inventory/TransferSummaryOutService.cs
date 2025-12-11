@@ -458,8 +458,8 @@ namespace Models.Transaction.Inventory
 
                             var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("TransferSummaryOut");
 
-                            Tx_TransferSummaryOut.IsApproval = isApprovalActive;
-                            Tx_TransferSummaryOut.ApprovalStatus = isApprovalActive == "Y" ? "Waiting" : "";
+                            Tx_TransferSummaryOut.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
+                            //Tx_TransferSummaryOut.ApprovalStatus = isApprovalActive == "Y" ? "Waiting" : "";
                             Tx_TransferSummaryOut.TransType = "TransferSummaryOut";
                             Tx_TransferSummaryOut.CreatedDate = dtModified;
                             Tx_TransferSummaryOut.CreatedUser = model._UserId;
@@ -538,7 +538,7 @@ namespace Models.Transaction.Inventory
 
                                     var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("TransferSummaryOut");
 
-                                    Tx_TransferSummaryOut.IsApproval = isApprovalActive;
+                                    Tx_TransferSummaryOut.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
                                     //Tx_TransferSummaryOut.ApprovalStatus = isApprovalActive == "Y" && Tx_TransferSummaryOut.ApprovalStatus == "" ? "Waiting" : "Approved";
                                     Tx_TransferSummaryOut.ModifiedDate = dtModified;
                                     Tx_TransferSummaryOut.ModifiedUser = model._UserId;
@@ -945,6 +945,111 @@ namespace Models.Transaction.Inventory
 
         }
 
+        public void Approve(int userId, long Id, string approvalMessages)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+
+                using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        String keyValue;
+                        keyValue = Id.ToString();
+
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "before", "Tx_TransferSummaryOut", "approve", "Id", keyValue);
+
+                        Tx_TransferSummaryOut tx_TransferSummaryOut = CONTEXT.Tx_TransferSummaryOut.Find(Id);
+                        if (tx_TransferSummaryOut != null)
+                        {
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                            //tx_TransferSummaryOut.Status = "";
+                            tx_TransferSummaryOut.ApprovalMessages = approvalMessages;
+                            tx_TransferSummaryOut.ModifiedDate = dtModified;
+                            tx_TransferSummaryOut.ModifiedUser = userId;
+
+                            CONTEXT.SaveChanges();
+                        }
+
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "approve", "Id", keyValue);
+
+
+                        CONTEXT_TRANS.Commit();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        CONTEXT_TRANS.Rollback();
+
+                        string errorMassage;
+                        if (ex.Message.Substring(12) == "[VALIDATION]")
+                        {
+                            errorMassage = ex.Message;
+                        }
+                        else
+                        {
+                            errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                        }
+
+                        throw new Exception(errorMassage);
+                    }
+                }
+            }
+
+        }
+
+        public void Reject(int userId, long Id, string approvalMessages)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+
+                using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        String keyValue;
+                        keyValue = Id.ToString();
+
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "before", "Tx_TransferSummaryOut", "reject", "Id", keyValue);
+
+                        Tx_TransferSummaryOut tx_TransferSummaryOut = CONTEXT.Tx_TransferSummaryOut.Find(Id);
+                        if (tx_TransferSummaryOut != null)
+                        {
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                            //tx_TransferSummaryOut.Status = "";
+                            tx_TransferSummaryOut.ApprovalMessages = approvalMessages;
+                            tx_TransferSummaryOut.ModifiedDate = dtModified;
+                            tx_TransferSummaryOut.ModifiedUser = userId;
+
+                            CONTEXT.SaveChanges();
+                        }
+
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "reject", "Id", keyValue);
+
+
+                        CONTEXT_TRANS.Commit();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        CONTEXT_TRANS.Rollback();
+
+                        string errorMassage;
+                        if (ex.Message.Substring(12) == "[VALIDATION]")
+                        {
+                            errorMassage = ex.Message;
+                        }
+                        else
+                        {
+                            errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                        }
+
+                        throw new Exception(errorMassage);
+                    }
+                }
+            }
+
+        }
 
         public TransferSummaryOutItemTagView___ GetItemTags(long id, long detId)
         {
