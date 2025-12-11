@@ -473,6 +473,18 @@ CREATE COLUMN TABLE "Tx_StockSummaryOpname_Item" (
     "Uom" NVARCHAR(50),
     "AcctCode" NVARCHAR(100),
     "AcctName" NVARCHAR(100),
+
+    "PillarsCode" NVARCHAR(10),
+    "PillarsName" NVARCHAR(50),
+    "ClassCode" NVARCHAR(10),
+    "ClassName" NVARCHAR(50),
+    "SubClass1Code" NVARCHAR(10),
+    "SubClass1Name" NVARCHAR(50),
+    "SubClass2Code" NVARCHAR(10),
+    "SubClass2Name" NVARCHAR(50),
+    "ProjectCode" NVARCHAR(50),
+    "ProjectName" NVARCHAR(100),
+
     "FreeText" NVARCHAR(254),
     "CreatedDate" TIMESTAMP,
     "CreatedUser" INTEGER,

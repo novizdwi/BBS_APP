@@ -58,22 +58,27 @@ namespace Models.Transaction.Adjustment
 
         public string WhsCode { get; set; }
 
+        [Required(ErrorMessage = "required")]
         public string PillarsCode { get; set; }
 
         public string PillarsName { get; set; }
 
+        [Required(ErrorMessage = "required")]
         public string ClassCode { get; set; }
 
         public string ClassName { get; set; }
 
+        [Required(ErrorMessage = "required")]
         public string SubClass1Code { get; set; }
 
         public string SubClass1Name { get; set; }
 
+        [Required(ErrorMessage = "required")]
         public string SubClass2Code { get; set; }
 
         public string SubClass2Name { get; set; }
 
+        [Required(ErrorMessage = "required")]
         public string ProjectCode { get; set; }
 
         public string ProjectName { get; set; }
