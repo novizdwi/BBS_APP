@@ -51,7 +51,7 @@
         itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
         itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
         itemSettings.ShowCaption = DefaultBoolean.False;
-        itemSettings.ColCount = 3;
+        itemSettings.ColCount = 4;
     });
 
     var groupItem_3 = groupItem.Items.AddGroupItem(itemSettings =>
@@ -59,7 +59,7 @@
         itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
         itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
         itemSettings.ShowCaption = DefaultBoolean.False;
-        itemSettings.ColCount = 3;
+        itemSettings.ColCount = 4;
     });
 
     var groupItem_Col1 = groupItem_2.Items.AddGroupItem(itemSettings =>
@@ -81,6 +81,15 @@
     });
 
     var groupItem_Col3 = groupItem_2.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        itemSettings.ColCount = 1;
+        itemSettings.CssClass = "groupCol";
+    });
+
+    var groupItem_Col4 = groupItem_2.Items.AddGroupItem(itemSettings =>
     {
         itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
         itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
@@ -237,9 +246,300 @@
         txt.Width = 230;
     });
 
+
+    groupItem_Col2.Items.Add(itemSettings =>
+    {
+        itemSettings.Caption = "Pillars";
+
+    }).SetNestedContent(() =>
+    {
+        ViewContext.Writer.Write("<table cellspacing='2' cellpadding='0'><tr>");
+
+        ViewContext.Writer.Write("<td>");
+
+        @Html.DevExpress().ComboBoxFor(i => i.PillarsCode, cbo =>
+        {
+            cbo.Name = "PillarsCode";
+            cbo.ShowModelErrors = true;
+            cbo.Width = 80;
+
+            cbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+            cbo.Properties.ValueField = "Code";
+            cbo.Properties.TextField = "Code";
+            cbo.Properties.ValueType = typeof(string);
+
+            cbo.Properties.Columns.Add("Code", "Code", 80);
+            cbo.Properties.Columns.Add("Name", "Name", 200);
+
+            cbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+
+            cbo.Properties.TextFormatString = "{0}";
+            cbo.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
+            cbo.ControlStyle.CssClass = "editornoimage";
+
+            cbo.Properties.ClientSideEvents.SelectedIndexChanged = "onPillarsChanged";
+
+        }).BindList(Model.PillarsList).Render()
+        ;
+
+        ViewContext.Writer.Write("</td>");
+        ViewContext.Writer.Write("<td>&nbsp;&nbsp;</td>");
+        ViewContext.Writer.Write("<td>");
+
+        Html.DevExpress().TextBoxFor(i => i.PillarsName, txt =>
+        {
+            txt.Name = "PillarsName";
+            txt.ShowModelErrors = true;
+            txt.Width = 180;
+            txt.ReadOnly = true;
+
+            txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
+            txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            txt.Properties.ValidationSettings.Display = Display.Dynamic;
+
+        }).Render();
+
+        ViewContext.Writer.Write("</td>");
+
+        ViewContext.Writer.Write("</tr></table>");
+    });
+
+    groupItem_Col2.Items.Add(itemSettings =>
+    {
+        itemSettings.Caption = "Class";
+
+    }).SetNestedContent(() =>
+    {
+        ViewContext.Writer.Write("<table cellspacing='2' cellpadding='0'><tr>");
+
+        ViewContext.Writer.Write("<td>");
+
+        @Html.DevExpress().ComboBoxFor(i => i.ClassCode, cbo =>
+        {
+            cbo.Name = "ClassCode";
+            cbo.ShowModelErrors = true;
+            cbo.Width = 80;
+
+            cbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+            cbo.Properties.ValueField = "Code";
+            cbo.Properties.TextField = "Code";
+            cbo.Properties.ValueType = typeof(string);
+
+            cbo.Properties.Columns.Add("Code", "Code", 80);
+            cbo.Properties.Columns.Add("Name", "Name", 200);
+
+            cbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+
+            cbo.Properties.TextFormatString = "{0}";
+            cbo.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
+            cbo.ControlStyle.CssClass = "editornoimage";
+
+            cbo.Properties.ClientSideEvents.SelectedIndexChanged = "onClassChanged";
+
+        }).BindList(Model.ClassList).Render()
+        ;
+
+        ViewContext.Writer.Write("</td>");
+        ViewContext.Writer.Write("<td>&nbsp;&nbsp;</td>");
+        ViewContext.Writer.Write("<td>");
+
+        Html.DevExpress().TextBoxFor(i => i.ClassName, txt =>
+        {
+            txt.Name = "ClassName";
+            txt.ShowModelErrors = true;
+            txt.Width = 180;
+            txt.ReadOnly = true;
+
+            txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
+            txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            txt.Properties.ValidationSettings.Display = Display.Dynamic;
+
+        }).Render();
+
+        ViewContext.Writer.Write("</td>");
+
+        ViewContext.Writer.Write("</tr></table>");
+    });
+
+    groupItem_Col2.Items.Add(itemSettings =>
+    {
+        itemSettings.Caption = "Subclass 1";
+
+    }).SetNestedContent(() =>
+    {
+        ViewContext.Writer.Write("<table cellspacing='2' cellpadding='0'><tr>");
+
+        ViewContext.Writer.Write("<td>");
+
+        @Html.DevExpress().ComboBoxFor(i => i.SubClass1Code, cbo =>
+        {
+            cbo.Name = "SubClass1Code";
+            cbo.ShowModelErrors = true;
+            cbo.Width = 80;
+
+            cbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+            cbo.Properties.ValueField = "Code";
+            cbo.Properties.TextField = "Code";
+            cbo.Properties.ValueType = typeof(string);
+
+            cbo.Properties.Columns.Add("Code", "Code", 80);
+            cbo.Properties.Columns.Add("Name", "Name", 200);
+
+            cbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+
+            cbo.Properties.TextFormatString = "{0}";
+            cbo.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
+            cbo.ControlStyle.CssClass = "editornoimage";
+
+            cbo.Properties.ClientSideEvents.SelectedIndexChanged = "onSubClass1Changed";
+
+        }).BindList(Model.SubClass1List).Render()
+        ;
+
+        ViewContext.Writer.Write("</td>");
+        ViewContext.Writer.Write("<td>&nbsp;&nbsp;</td>");
+        ViewContext.Writer.Write("<td>");
+
+        Html.DevExpress().TextBoxFor(i => i.SubClass1Name, txt =>
+        {
+            txt.Name = "SubClass1Name";
+            txt.ShowModelErrors = true;
+            txt.Width = 180;
+            txt.ReadOnly = true;
+
+            txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
+            txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            txt.Properties.ValidationSettings.Display = Display.Dynamic;
+
+        }).Render();
+
+        ViewContext.Writer.Write("</td>");
+
+        ViewContext.Writer.Write("</tr></table>");
+    });
+
+    groupItem_Col2.Items.Add(itemSettings =>
+    {
+        itemSettings.Caption = "Subclass 2";
+
+    }).SetNestedContent(() =>
+    {
+        ViewContext.Writer.Write("<table cellspacing='2' cellpadding='0'><tr>");
+
+        ViewContext.Writer.Write("<td>");
+
+        @Html.DevExpress().ComboBoxFor(i => i.SubClass2Code, cbo =>
+        {
+            cbo.Name = "SubClass2Code";
+            cbo.ShowModelErrors = true;
+            cbo.Width = 80;
+
+            cbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+            cbo.Properties.ValueField = "Code";
+            cbo.Properties.TextField = "Code";
+            cbo.Properties.ValueType = typeof(string);
+
+            cbo.Properties.Columns.Add("Code", "Code", 80);
+            cbo.Properties.Columns.Add("Name", "Name", 200);
+
+            cbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+
+            cbo.Properties.TextFormatString = "{0}";
+            cbo.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
+            cbo.ControlStyle.CssClass = "editornoimage";
+
+            cbo.Properties.ClientSideEvents.SelectedIndexChanged = "onSubClass2Changed";
+
+        }).BindList(Model.SubClass2List).Render()
+        ;
+
+        ViewContext.Writer.Write("</td>");
+        ViewContext.Writer.Write("<td>&nbsp;&nbsp;</td>");
+        ViewContext.Writer.Write("<td>");
+
+        Html.DevExpress().TextBoxFor(i => i.SubClass2Name, txt =>
+        {
+            txt.Name = "SubClass2Name";
+            txt.ShowModelErrors = true;
+            txt.Width = 180;
+            txt.ReadOnly = true;
+
+            txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
+            txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            txt.Properties.ValidationSettings.Display = Display.Dynamic;
+
+        }).Render();
+
+        ViewContext.Writer.Write("</td>");
+
+        ViewContext.Writer.Write("</tr></table>");
+    });
+
+    groupItem_Col2.Items.Add(itemSettings =>
+    {
+        itemSettings.Caption = "Project";
+
+    }).SetNestedContent(() =>
+    {
+        ViewContext.Writer.Write("<table cellspacing='2' cellpadding='0'><tr>");
+
+        ViewContext.Writer.Write("<td>");
+
+        @Html.DevExpress().ComboBoxFor(i => i.ProjectCode, cbo =>
+        {
+            cbo.Name = "ProjectCode";
+            cbo.ShowModelErrors = true;
+            cbo.Width = 80;
+
+            cbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+            cbo.Properties.ValueField = "Code";
+            cbo.Properties.TextField = "Code";
+            cbo.Properties.ValueType = typeof(string);
+
+            cbo.Properties.Columns.Add("Code", "Code", 80);
+            cbo.Properties.Columns.Add("Name", "Name", 200);
+
+            cbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+
+            cbo.Properties.TextFormatString = "{0}";
+            cbo.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
+            cbo.ControlStyle.CssClass = "editornoimage";
+
+            cbo.Properties.ClientSideEvents.SelectedIndexChanged = "onProjectChanged";
+
+        }).BindList(Model.ProjectList).Render()
+        ;
+
+        ViewContext.Writer.Write("</td>");
+        ViewContext.Writer.Write("<td>&nbsp;&nbsp;</td>");
+        ViewContext.Writer.Write("<td>");
+
+        Html.DevExpress().TextBoxFor(i => i.ProjectName, txt =>
+        {
+            txt.Name = "ProjectName";
+            txt.ShowModelErrors = true;
+            txt.Width = 180;
+            txt.ReadOnly = true;
+
+            txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
+            txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            txt.Properties.ValidationSettings.Display = Display.Dynamic;
+
+        }).Render();
+
+        ViewContext.Writer.Write("</td>");
+
+        ViewContext.Writer.Write("</tr></table>");
+    });
+
     if (!string.IsNullOrEmpty(Model.DocNum_))
     {
-        groupItem_Col2.Items.Add(itemSettings =>
+        groupItem_Col3.Items.Add(itemSettings =>
         {
             itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
             itemSettings.Caption = "Inventory No";
@@ -256,7 +556,7 @@
         });
     }
 
-    groupItem_Col2.Items.Add(itemSettings =>
+    groupItem_Col3.Items.Add(itemSettings =>
     {
         itemSettings.Name = "grpWhsCode";
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
@@ -276,7 +576,7 @@
         txt.Width = 230;
     });
 
-    groupItem_Col2.Items.Add(itemSettings =>
+    groupItem_Col3.Items.Add(itemSettings =>
     {
         itemSettings.Name = "grpWhsName";
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
@@ -292,7 +592,7 @@
         txt.Width = 230;
     });
 
-    groupItem_Col2.Items.Add(itemSettings =>
+    groupItem_Col3.Items.Add(itemSettings =>
     {
         itemSettings.Name = "grpAddress";
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
@@ -308,7 +608,7 @@
         txt.Width = 230;
     });
 
-    groupItem_Col3.Items.Add(m => Model.Status, itemSettings =>
+    groupItem_Col4.Items.Add(m => Model.Status, itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
         itemSettings.Caption = "Status";
@@ -335,7 +635,7 @@
 
     if (Model._FormMode != Models.FormModeEnum.New)
     {
-        groupItem_Col3.Items.Add(itemSettings =>
+        groupItem_Col4.Items.Add(itemSettings =>
         {
             itemSettings.Caption = "Author";
         })
@@ -374,7 +674,7 @@
 
     if (!string.IsNullOrWhiteSpace(Model.CancelReason))
     {
-        groupItem_Col3.Items.Add(itemSettings =>
+        groupItem_Col4.Items.Add(itemSettings =>
         {
             itemSettings.Caption = "Cancel Reason";
         })
@@ -396,7 +696,7 @@
          });
     }
 
-    groupItem_Col3.Items.Add(m => Model.Comments, itemSettings =>
+    groupItem_Col4.Items.Add(m => Model.Comments, itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Memo;
         itemSettings.Caption = "Remarks";

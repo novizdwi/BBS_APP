@@ -201,24 +201,6 @@
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
     });
-
-    settings.Columns.Add(column =>
-    {
-        column.FieldName = "FreeText";
-        column.Name = "FreeText";
-        column.Caption = "Free Text";
-
-        column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 0;
-        column.Settings.AllowSort = DefaultBoolean.False;
-        column.ReadOnly = true;
-        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
-
-        var txt = column.PropertiesEdit as TextBoxProperties;
-        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-
-    });
-
     //PillarsCode
     settings.Columns.Add(column =>
     {
@@ -266,7 +248,6 @@
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
         txt.ClientInstanceName = "gvAdjustmentInDetail_PillarsName";
-        txt.Style.Width = Unit.Percentage(100);
     });
 
     //class
@@ -318,7 +299,6 @@
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
         txt.ClientInstanceName = "gvAdjustmentInDetail_ClassName";
-        txt.Style.Width = Unit.Percentage(100);
     });
 
     //SubClass1
@@ -370,7 +350,6 @@
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
         txt.ClientInstanceName = "gvAdjustmentInDetail_SubClass1Name";
-        txt.Style.Width = Unit.Percentage(100);
     });
 
     //SubClass2
@@ -422,7 +401,6 @@
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
         txt.ClientInstanceName = "gvAdjustmentInDetail_SubClass2Name";
-        txt.Style.Width = Unit.Percentage(100);
     });
 
     //Project
@@ -474,9 +452,25 @@
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
         txt.ClientInstanceName = "gvAdjustmentInDetail_ProjectName";
-        txt.Style.Width = Unit.Percentage(100);
     });
 
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "FreeText";
+        column.Name = "FreeText";
+        column.Caption = "Free Text";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 0;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+    });
+    
     settings.Columns.Add(column =>
     {
         column.FieldName = "LineStatus";

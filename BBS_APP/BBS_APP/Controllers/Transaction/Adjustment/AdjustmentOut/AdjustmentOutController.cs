@@ -111,10 +111,9 @@ namespace Controllers.Transaction.Adjustment
             adjustmentOutModel._UserId = (int)Session["userId"];
             adjustmentOutService = new AdjustmentOutService();
             adjustmentOutModel._FormMode = FormModeEnum.Edit;
-
-            //adjustmentOutService.Update(adjustmentOutModel);
+            
             //adjustmentOutService.PostAPI(userId, adjustmentOutModel.Id);
-            adjustmentOutService.Post(userId, adjustmentOutModel.Id);
+            adjustmentOutService.Post(userId, adjustmentOutModel);
             adjustmentOutModel = adjustmentOutService.GetById(userId, adjustmentOutModel.Id);
 
             if (adjustmentOutModel != null)

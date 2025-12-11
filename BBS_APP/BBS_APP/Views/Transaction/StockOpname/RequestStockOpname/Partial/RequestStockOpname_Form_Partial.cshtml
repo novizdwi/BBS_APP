@@ -191,14 +191,14 @@
         txt.Properties.EditFormatString = "dd/MM/yyyy";
         txt.Properties.EditFormat = EditFormat.Date;
 
-        if (Model.Status == "Draft")
-        {
-            txt.ReadOnly = false;
-        }
-        else
+        if (Model.Status != "Closed")
         {
             txt.Properties.DropDownButton.Visible = false;
             txt.ReadOnly = true;
+        }
+        else
+        {
+            txt.ReadOnly = false;
         }
 
         txt.Properties.ClientSideEvents.ParseDate = "function (s,e){ { ParseDateEdit(s,e);  } }";

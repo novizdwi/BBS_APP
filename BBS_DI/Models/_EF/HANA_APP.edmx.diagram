@@ -53,12 +53,10 @@
         <EntityTypeShape EntityType="Model1.Ts_List" Width="1.5" PointX="14.75" PointY="18.75" />
         <EntityTypeShape EntityType="Model1.Ts_Menu" Width="1.5" PointX="18.75" PointY="15.75" />
         <EntityTypeShape EntityType="Model1.Ts_ObjectApproval" Width="1.5" PointX="17.75" PointY="18.75" />
-        <EntityTypeShape EntityType="Model1.Tx_AdjustmentIn" Width="1.5" PointX="19.75" PointY="18.75" />
         <EntityTypeShape EntityType="Model1.Tx_AdjustmentIn_Attachment" Width="1.5" PointX="9.75" PointY="20.75" />
         <EntityTypeShape EntityType="Model1.Tx_AdjustmentIn_Item" Width="1.5" PointX="11.75" PointY="20.75" />
         <EntityTypeShape EntityType="Model1.Tx_AdjustmentIn_Item_Tag" Width="1.5" PointX="21.75" PointY="0.75" />
         <EntityTypeShape EntityType="Model1.Tx_AdjustmentIn_Location" Width="1.5" PointX="0.75" PointY="21.75" />
-        <EntityTypeShape EntityType="Model1.Tx_AdjustmentOut" Width="1.5" PointX="2.75" PointY="21.75" />
         <EntityTypeShape EntityType="Model1.Tx_AdjustmentOut_Attachment" Width="1.5" PointX="21.75" PointY="5.75" />
         <EntityTypeShape EntityType="Model1.Tx_AdjustmentOut_Item" Width="1.5" PointX="21.75" PointY="9.75" />
         <EntityTypeShape EntityType="Model1.Tx_AdjustmentOut_Item_Tag" Width="1.5" PointX="13.75" PointY="21.75" />
@@ -93,7 +91,6 @@
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryIn_Item_tag" Width="1.5" PointX="4.75" PointY="29.75" />
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryIn_Item_Tag1" Width="1.5" PointX="6.75" PointY="29.75" />
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryIn_Ref" Width="1.5" PointX="29.75" PointY="8.75" />
-        <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut" Width="1.5" PointX="29.75" PointY="13.75" />
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Item_Tag" Width="1.5" PointX="29.75" PointY="21.75" />
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Ref" Width="1.5" PointX="21.75" PointY="29.75" />
         <EntityTypeShape EntityType="Model1.Tx_StockSummaryOpname_Item" Width="1.5" PointX="18.375" PointY="29.75" />
@@ -101,6 +98,10 @@
         <EntityTypeShape EntityType="Model1.Tp_Approval" Width="1.5" PointX="30.375" PointY="26.75" />
         <EntityTypeShape EntityType="Model1.Tp_Approval_User" Width="1.5" PointX="13.375" PointY="31.75" />
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Item" Width="1.5" PointX="15.375" PointY="31.75" />
+        <EntityTypeShape EntityType="Model1.Tm_Item_Warehouse_Tag_Replace" Width="1.5" PointX="30.375" PointY="31.75" />
+        <EntityTypeShape EntityType="Model1.Tx_AdjustmentIn" Width="1.5" PointX="30.375" PointY="13.75" />
+        <EntityTypeShape EntityType="Model1.Tx_AdjustmentOut" Width="1.5" PointX="32.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut" Width="1.5" PointX="32.375" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

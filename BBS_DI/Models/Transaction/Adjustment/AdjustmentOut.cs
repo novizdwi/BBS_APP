@@ -48,6 +48,7 @@ namespace Models.Transaction.Adjustment
 
         public string DocNum_ { get; set; }
 
+        [Required(ErrorMessage = "required")]
         public string Comments { get; set; }
 
         public string ScanDeviceId { get; set; }
@@ -58,11 +59,25 @@ namespace Models.Transaction.Adjustment
 
         public string WhsCode { get; set; }
 
-        public DateTime? CreatedDate { get; set; }
+        public string PillarsCode { get; set; }
 
-        public int? CreatedUser { get; set; }
+        public string PillarsName { get; set; }
 
-        public DateTime? ModifiedDate { get; set; }
+        public string ClassCode { get; set; }
+
+        public string ClassName { get; set; }
+
+        public string SubClass1Code { get; set; }
+
+        public string SubClass1Name { get; set; }
+
+        public string SubClass2Code { get; set; }
+
+        public string SubClass2Name { get; set; }
+
+        public string ProjectCode { get; set; }
+
+        public string ProjectName { get; set; }
 
         public string CancelReason { get; set; }
 
@@ -72,6 +87,12 @@ namespace Models.Transaction.Adjustment
 
         public string IsOpeningBalance { get; set; }
 
+        public DateTime? CreatedDate { get; set; }
+
+        public int? CreatedUser { get; set; }
+
+        public DateTime? ModifiedDate { get; set; }
+
         public int? ModifiedUser { get; set; }
 
         public List<AdjustmentOut_ItemModel> ListDetails_ = new List<AdjustmentOut_ItemModel>();
@@ -80,15 +101,15 @@ namespace Models.Transaction.Adjustment
 
         public List<AdjustmentOut_AttachmentModel> ListAttachments_ = new List<AdjustmentOut_AttachmentModel>();
 
-        //public List<GetCodeNameModel> PillarsList { get; set; }
+        public List<GetCodeNameModel> PillarsList { get; set; }
 
-        //public List<GetCodeNameModel> ClassList { get; set; }
+        public List<GetCodeNameModel> ClassList { get; set; }
 
-        //public List<GetCodeNameModel> SubClass1List { get; set; }
+        public List<GetCodeNameModel> SubClass1List { get; set; }
 
-        //public List<GetCodeNameModel> SubClass2List { get; set; }
+        public List<GetCodeNameModel> SubClass2List { get; set; }
 
-        //public List<GetCodeNameModel> ProjectList { get; set; }
+        public List<GetCodeNameModel> ProjectList { get; set; }
     }
 
     public class AdjustmentOut_Detail
@@ -290,14 +311,14 @@ namespace Models.Transaction.Adjustment
                 model.ListDetails_ = this.AdjustmentOut_Details(CONTEXT, id);
                 model.ListAttachments_ = this.GetAdjustmentOut_Attachments(id);
 
-                //if (method != "post")
-                //{
-                //    model.PillarsList = GeneralGetList.GetCostCenterList("1");
-                //    model.ClassList = GeneralGetList.GetCostCenterList("2");
-                //    model.SubClass1List = GeneralGetList.GetCostCenterList("3");
-                //    model.SubClass2List = GeneralGetList.GetCostCenterList("4");
-                //    model.ProjectList = GeneralGetList.GetProjectList();
-                //}
+                if (method != "post")
+                {
+                    model.PillarsList = GeneralGetList.GetCostCenterList("1");
+                    model.ClassList = GeneralGetList.GetCostCenterList("2");
+                    model.SubClass1List = GeneralGetList.GetCostCenterList("3");
+                    model.SubClass2List = GeneralGetList.GetCostCenterList("4");
+                    model.ProjectList = GeneralGetList.GetProjectList();
+                }
             }
 
             return model;
@@ -544,8 +565,22 @@ namespace Models.Transaction.Adjustment
 
         }
 
+        public void Post(int userId, AdjustmentOutModel adjustmentOutModel)
+        {
+            try
+            {
+                Update(adjustmentOutModel);
+                PostSAP(userId, adjustmentOutModel.Id);
 
-        public void Post(int userId, long id)
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public void PostSAP(int userId, long id)
         {
             SAPbobsCOM.Company oCompany = null;
 
@@ -644,6 +679,11 @@ namespace Models.Transaction.Adjustment
             if (!string.IsNullOrWhiteSpace(model.Comments))
             {
                 oDocument.Comments = model.Comments;
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.Comments))
+            {
+                oDocument.JournalMemo = model.Comments;
             }
 
             oDocument.UserFields.Fields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);

@@ -170,7 +170,7 @@ namespace Models.Transaction.StockOpname
 
             if (sqlSort == "")
             {
-                sqlSort = " ORDER BY \"TransDate\" DESC ";
+                sqlSort = " ORDER BY \"StartDate\" DESC ";
             }
 
             var views = new List<RequestStockOpnameView___>();

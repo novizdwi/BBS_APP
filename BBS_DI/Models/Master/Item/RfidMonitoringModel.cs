@@ -57,6 +57,8 @@ namespace Models.Master.Item
 
         public DateTime? CreatedDate { get; set; }
 
+        public string LastTransactionType { get; set; }
+
         public DateTime? LastModifiedDate { get; set; }
 
     }
@@ -209,14 +211,15 @@ namespace Models.Master.Item
                         ELSE T0.""OldStatus""
                         END AS ""Status"",
                         T0.""CreatedDate"",
-                        T1.""FirstName"" AS ""CreatedUser""
-                        FROM ""Tm_Item_Warehouse_Tag_Log"" T0
+                        T1.""FirstName"" AS ""CreatedUser""                   
+                    FROM ""Tm_Item_Warehouse_Tag_Log"" T0 
                     INNER JOIN ""Tm_User"" T1 ON T0.""CreatedUser"" = T1.""Id""
-                    WHERE T0.""OldTagId"" = :p0
+                    WHERE T0.""OldTagId"" = '"+ tagId + @"'
+                        OR(T0.""NewTagId"" = '" + tagId + @"' AND T0.""BaseType"" = 'ReplaceTags')
                     ORDER BY T0.""CreatedDate"" DESC 
                     ";
 
-                model.RfidMonitoringItemTagModel___ = CONTEXT.Database.SqlQuery<RfidMonitoringItemTagModel>(sql, tagId).ToList();
+                model.RfidMonitoringItemTagModel___ = CONTEXT.Database.SqlQuery<RfidMonitoringItemTagModel>(sql).ToList();
             }
 
             return model;

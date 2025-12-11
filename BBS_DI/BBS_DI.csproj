@@ -325,6 +325,9 @@
     <Compile Include="Models\_EF\Tm_Item_Warehouse_Tag_Log.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\_EF\Tm_Item_Warehouse_Tag_Replace.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\_EF\Tm_Layout.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>

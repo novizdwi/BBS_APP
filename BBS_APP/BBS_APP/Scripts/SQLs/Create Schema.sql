@@ -7,6 +7,18 @@ CREATE COLUMN TABLE "Tx_AdjustmentIn" (
     "PostingDate" TIMESTAMP,
     "AdjustmentTypeCode" NVARCHAR(100),
     "AdjustmentTypeName" NVARCHAR(100),    
+
+    "PillarsCode" NVARCHAR(10),
+    "PillarsName" NVARCHAR(50),
+    "ClassCode" NVARCHAR(10),
+    "ClassName" NVARCHAR(50),
+    "SubClass1Code" NVARCHAR(10),
+    "SubClass1Name" NVARCHAR(50),
+    "SubClass2Code" NVARCHAR(10),
+    "SubClass2Name" NVARCHAR(50),
+    "ProjectCode" NVARCHAR(50),
+    "ProjectName" NVARCHAR(100),
+
     "Status" NVARCHAR(50),
     "IsAfterPosted" CHAR(1),
     "IsOpeningBalance" CHAR(1),
@@ -81,8 +93,19 @@ CREATE COLUMN TABLE "Tx_AdjustmentOut" (
     "PostingDate" TIMESTAMP,
     "AdjustmentTypeCode" NVARCHAR(100),
     "AdjustmentTypeName" NVARCHAR(100),
-    "Status" NVARCHAR(50),    
 
+    "PillarsCode" NVARCHAR(10),
+    "PillarsName" NVARCHAR(50),
+    "ClassCode" NVARCHAR(10),
+    "ClassName" NVARCHAR(50),
+    "SubClass1Code" NVARCHAR(10),
+    "SubClass1Name" NVARCHAR(50),
+    "SubClass2Code" NVARCHAR(10),
+    "SubClass2Name" NVARCHAR(50),
+    "ProjectCode" NVARCHAR(50),
+    "ProjectName" NVARCHAR(100),
+
+    "Status" NVARCHAR(50),    
     "IsAfterPosted" CHAR(1),
     "IsOpeningBalance" CHAR(1),
     "DocEntry" INTEGER,
@@ -393,6 +416,17 @@ CREATE COLUMN TABLE "Tx_StockSummaryOpname"(
 
     "WhsCode" NVARCHAR(50),
     "WhsName" VARCHAR(100),
+
+    "PillarsCode" NVARCHAR(10),
+    "PillarsName" NVARCHAR(50),
+    "ClassCode" NVARCHAR(10),
+    "ClassName" NVARCHAR(50),
+    "SubClass1Code" NVARCHAR(10),
+    "SubClass1Name" NVARCHAR(50),
+    "SubClass2Code" NVARCHAR(10),
+    "SubClass2Name" NVARCHAR(50),
+    "ProjectCode" NVARCHAR(50),
+    "ProjectName" NVARCHAR(100),
 
     "Status" NVARCHAR(50),
     "ApprovalStatus" NVARCHAR(50),
@@ -742,6 +776,20 @@ CREATE COLUMN TABLE "Tx_TransferSummaryOut_Ref" (
     "CreatedUser" INTEGER,
     "ModifiedDate" TIMESTAMP,
     "ModifiedUser" INTEGER
+);
+
+DROP TABLE "Tm_Item_Warehouse_Tag_Replace";
+CREATE COLUMN TABLE "Tm_Item_Warehouse_Tag_Replace" (
+    "TagId" NVARCHAR(200) NOT NULL,
+    "ItemCode" NVARCHAR(50) NOT NULL,
+    "ItemName" NVARCHAR(200),
+    "WhsCode" NVARCHAR(50),
+    "WhsName" NVARCHAR(200),
+    "CreatedDate" TIMESTAMP,
+    "CreatedUser" INTEGER,
+    "ModifiedDate" TIMESTAMP,
+    "ModifiedUser" INTEGER,
+    PRIMARY KEY ("TagId", "ItemCode")
 );
 
 DROP TABLE "Tm_Item_Warehouse_Tag_Log";

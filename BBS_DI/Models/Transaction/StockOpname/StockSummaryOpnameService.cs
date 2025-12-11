@@ -68,6 +68,26 @@ namespace Models.Transaction.StockOpname
 
         public string ScanDeviceId { get; set; }
 
+        public string PillarsCode { get; set; }
+
+        public string PillarsName { get; set; }
+
+        public string ClassCode { get; set; }
+
+        public string ClassName { get; set; }
+
+        public string SubClass1Code { get; set; }
+
+        public string SubClass1Name { get; set; }
+
+        public string SubClass2Code { get; set; }
+
+        public string SubClass2Name { get; set; }
+
+        public string ProjectCode { get; set; }
+
+        public string ProjectName { get; set; }
+
         public string Status { get; set; }
 
         public string CheckNeedApproval_ { get; set; }
@@ -91,6 +111,16 @@ namespace Models.Transaction.StockOpname
         public StockSummaryOpname_Ref Refs_ { get; set; }
 
         public StockSummaryOpname_Detail Details_ { get; set; }
+
+        public List<GetCodeNameModel> PillarsList { get; set; }
+
+        public List<GetCodeNameModel> ClassList { get; set; }
+
+        public List<GetCodeNameModel> SubClass1List { get; set; }
+
+        public List<GetCodeNameModel> SubClass2List { get; set; }
+
+        public List<GetCodeNameModel> ProjectList { get; set; }
     }
 
     public class StockSummaryOpname_Detail
@@ -158,6 +188,26 @@ namespace Models.Transaction.StockOpname
         public int? UomEntry { get; set; }
 
         public string Uom { get; set; }
+
+        public string PillarsCode { get; set; }
+
+        public string PillarsName { get; set; }
+
+        public string ClassCode { get; set; }
+
+        public string ClassName { get; set; }
+
+        public string SubClass1Code { get; set; }
+
+        public string SubClass1Name { get; set; }
+
+        public string SubClass2Code { get; set; }
+
+        public string SubClass2Name { get; set; }
+
+        public string ProjectCode { get; set; }
+
+        public string ProjectName { get; set; }
 
         public long? DocEntry { get; set; }
 
@@ -274,15 +324,15 @@ namespace Models.Transaction.StockOpname
             return model;
         }
 
-        public StockSummaryOpnameModel GetById(int userId, long id = 0)
+        public StockSummaryOpnameModel GetById(int userId, long id = 0, string method = "")
         {
             using (var CONTEXT = new HANA_APP())
             {
-                return GetById(CONTEXT, userId, id);
+                return GetById(CONTEXT, userId, id, method);
             }
         }
 
-        public StockSummaryOpnameModel GetById(HANA_APP CONTEXT, int userId, long id = 0)
+        public StockSummaryOpnameModel GetById(HANA_APP CONTEXT, int userId, long id = 0, string method ="")
         {
             StockSummaryOpnameModel model = null;
             if (id != 0)
@@ -316,6 +366,15 @@ namespace Models.Transaction.StockOpname
 
                 model.ListDetail_ = this.StockSummaryOpname_Details(CONTEXT, id);
                 model.ListRef_ = this.StockSummaryOpname_Refs(CONTEXT, id);
+
+                if (method != "post")
+                {
+                    model.PillarsList = GeneralGetList.GetCostCenterList("1");
+                    model.ClassList = GeneralGetList.GetCostCenterList("2");
+                    model.SubClass1List = GeneralGetList.GetCostCenterList("3");
+                    model.SubClass2List = GeneralGetList.GetCostCenterList("4");
+                    model.ProjectList = GeneralGetList.GetProjectList();
+                }
             }
 
             return model;
@@ -748,7 +807,7 @@ namespace Models.Transaction.StockOpname
         public void PostSAP(int userId, long id)
         {
             SAPbobsCOM.Company oCompany = null;
-            StockSummaryOpnameModel StockSummaryOpname = GetById(userId, id);
+            StockSummaryOpnameModel StockSummaryOpname = GetById(userId, id, "post");
 
             using (var CONTEXT = new HANA_APP())
             {

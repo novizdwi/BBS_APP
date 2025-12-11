@@ -52,7 +52,7 @@
         itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
         itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
         itemSettings.ShowCaption = DefaultBoolean.False;
-        itemSettings.ColCount = 3;
+        itemSettings.ColCount = 4;
     });
 
     var groupItem_3 = groupItem.Items.AddGroupItem(itemSettings =>
@@ -60,7 +60,7 @@
         itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
         itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
         itemSettings.ShowCaption = DefaultBoolean.False;
-        itemSettings.ColCount = 3;
+        itemSettings.ColCount = 4;
         itemSettings.Width = Unit.Pixel(150);  // misalnya max 150px
 
 
@@ -85,6 +85,17 @@
     });
 
     var groupItem_Col3 = groupItem_2.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        itemSettings.ColCount = 1;
+        itemSettings.CssClass = "groupCol";
+
+        itemSettings.Width = Unit.Pixel(150);
+    });
+
+    var groupItem_Col4 = groupItem_2.Items.AddGroupItem(itemSettings =>
     {
         itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
         itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
@@ -260,7 +271,6 @@
         txt.Width = 230;
     });
 
-    /*
     groupItem_Col2.Items.Add(itemSettings =>
     {
         itemSettings.Caption = "Pillars";
@@ -379,7 +389,7 @@
 
     groupItem_Col2.Items.Add(itemSettings =>
     {
-        itemSettings.Caption = "Sub Class 1";
+        itemSettings.Caption = "Subclass 1";
 
     }).SetNestedContent(() =>
     {
@@ -437,7 +447,7 @@
 
     groupItem_Col2.Items.Add(itemSettings =>
     {
-        itemSettings.Caption = "Sub Class 2";
+        itemSettings.Caption = "Subclass 2";
 
     }).SetNestedContent(() =>
     {
@@ -550,8 +560,8 @@
 
         ViewContext.Writer.Write("</tr></table>");
     });
-    */
-    groupItem_Col2.Items.Add(itemSettings =>
+    
+    groupItem_Col3.Items.Add(itemSettings =>
     {
         itemSettings.Name = "grpScanDeviceId";
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
@@ -567,7 +577,7 @@
         txt.Width = 230;
     });
 
-    groupItem_Col2.Items.Add(itemSettings =>
+    groupItem_Col3.Items.Add(itemSettings =>
     {
         itemSettings.Name = "grpDocNum_";
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
@@ -583,7 +593,7 @@
         txt.Width = 230;
     });
 
-    groupItem_Col2.Items.Add(m => Model.IsOpeningBalance, itemSettings =>
+    groupItem_Col3.Items.Add(m => Model.IsOpeningBalance, itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.CheckBox;
         itemSettings.Caption = "Opening Balance";
@@ -601,7 +611,7 @@
 
     });
 
-    groupItem_Col3.Items.Add(m => Model.Status, itemSettings =>
+    groupItem_Col4.Items.Add(m => Model.Status, itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
         itemSettings.Caption = "Status";
@@ -626,7 +636,7 @@
         cbo.Width = 200;
     });
 
-    groupItem_Col3.Items.Add(itemSettings =>
+    groupItem_Col4.Items.Add(itemSettings =>
     {
 
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.DateEdit;
@@ -652,7 +662,7 @@
 
     if (Model._FormMode != Models.FormModeEnum.New)
     {
-        groupItem_Col3.Items.Add(itemSettings =>
+        groupItem_Col4.Items.Add(itemSettings =>
         {
             itemSettings.Caption = "Author";
         })
@@ -691,7 +701,7 @@
 
     if (!string.IsNullOrWhiteSpace(Model.CancelReason))
     {
-        groupItem_Col3.Items.Add(itemSettings =>
+        groupItem_Col4.Items.Add(itemSettings =>
         {
             itemSettings.Caption = "Cancel Reason";
         })
@@ -713,7 +723,7 @@
          });
     }
 
-    groupItem_Col3.Items.Add(m => Model.Comments, itemSettings =>
+    groupItem_Col4.Items.Add(m => Model.Comments, itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Memo;
         itemSettings.Caption = "Remarks";
