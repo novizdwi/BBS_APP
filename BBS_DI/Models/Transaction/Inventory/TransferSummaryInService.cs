@@ -496,7 +496,7 @@ namespace Models.Transaction.Inventory
 
         }
 
-        public void Update(TransferSummaryInModel model)
+        public void Update(TransferSummaryInModel model, string method = "")
         {
             if (model != null)
             {
@@ -539,7 +539,6 @@ namespace Models.Transaction.Inventory
                                     //{
                                     //    Tx_TransferSummaryIn.Status2 = "Close";
                                     //}
-                                    CONTEXT.SaveChanges();
 
                                     if (model.Details_ != null)
                                     {
@@ -569,8 +568,14 @@ namespace Models.Transaction.Inventory
                                     //        }
                                     //    }
                                     }
+
+                                    if (method == "Post")
+                                    {
+                                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryIn_UpdateItem\"(:p0,:p1, 'before')", model._UserId, model.Id);
+                                    }
+
+                                    CONTEXT.SaveChanges();
                                     SpNotif.SpSysControllerTransNotif(model._UserId, "TransferSummaryIn", CONTEXT, "after", "TransferSummaryIn", "update", "Id", keyValue);
-                                    
                                 }
 
                                 CONTEXT_TRANS.Commit();
@@ -658,8 +663,7 @@ namespace Models.Transaction.Inventory
 
                     Tx_TransferSummaryIn_Item.ModifiedDate = dtModified;
                     Tx_TransferSummaryIn_Item.ModifiedUser = UserId;
-                    CONTEXT.SaveChanges();
-
+                    //CONTEXT.SaveChanges();
                 }
 
 
@@ -688,7 +692,7 @@ namespace Models.Transaction.Inventory
         {
             try
             {
-                Update(transferSummaryInModel);
+                Update(transferSummaryInModel, "Post");
                 PostSAP(userId, transferSummaryInModel.Id);
 
             }
@@ -710,9 +714,6 @@ namespace Models.Transaction.Inventory
                 {
                     try
                     {
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryIn_UpdateItem\"(:p0,:p1, 'before')", userId, id);
-                        CONTEXT.SaveChanges();
-
                         //oCompany.StartTransaction();
                         oCompany = SAPCachedCompany.GetCompany();
 

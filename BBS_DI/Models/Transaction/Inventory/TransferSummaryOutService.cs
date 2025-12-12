@@ -497,7 +497,7 @@ namespace Models.Transaction.Inventory
 
         }
 
-        public void Update(TransferSummaryOutModel model)
+        public void Update(TransferSummaryOutModel model, string method ="")
         {
             if (model != null)
             {
@@ -540,7 +540,6 @@ namespace Models.Transaction.Inventory
                                     //{
                                     //    Tx_TransferSummaryOut.Status2 = "Close";
                                     //}
-                                    CONTEXT.SaveChanges();
 
                                     if (model.Details_ != null)
                                     {
@@ -570,6 +569,13 @@ namespace Models.Transaction.Inventory
                                     //        }
                                     //    }
                                     }
+
+                                    if(method == "Post")
+                                    {
+                                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateItem\"(:p0,:p1, 'before')", model._UserId, model.Id);
+                                    }
+                                    CONTEXT.SaveChanges();
+
                                     SpNotif.SpSysControllerTransNotif(model._UserId, "TransferSummaryOut", CONTEXT, "after", "TransferSummaryOut", "update", "Id", keyValue);
                                     
                                 }
@@ -659,8 +665,7 @@ namespace Models.Transaction.Inventory
 
                     Tx_TransferSummaryOut_Item.ModifiedDate = dtModified;
                     Tx_TransferSummaryOut_Item.ModifiedUser = UserId;
-                    CONTEXT.SaveChanges();
-
+                    //CONTEXT.SaveChanges();
                 }
 
 
@@ -688,7 +693,7 @@ namespace Models.Transaction.Inventory
         {
             try
             {
-                Update(transferSummaryOutModel);
+                Update(transferSummaryOutModel, "Post");
                 PostSAP(userId, transferSummaryOutModel.Id);
 
             }
@@ -713,13 +718,9 @@ namespace Models.Transaction.Inventory
                         String keyValue;
                         keyValue = id.ToString();
 
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateItem\"(:p0,:p1, 'before')", userId, id);
-                        CONTEXT.SaveChanges();
-
                         TransferSummaryOutModel syncTransferSummaryOut = GetById(userId, id);
 
                         SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "before", "Tx_TransferSummaryOut", "post", "Id", keyValue);
-
                         if (syncTransferSummaryOut.ListDetails_.All(q => !q.QuantityPosted.HasValue || q.QuantityPosted == 0 ) )
                         {
                             throw new Exception("No record posted");

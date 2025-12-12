@@ -475,7 +475,7 @@ namespace Models.Transaction.Adjustment
             return model;
         }
 
-        public void Update(AdjustmentInModel model)
+        public void Update(AdjustmentInModel model, string method = "")
         {
             if (model != null)
             {
@@ -505,7 +505,7 @@ namespace Models.Transaction.Adjustment
                                     Tx_AdjustmentIn.ModifiedDate = dtModified;
                                     Tx_AdjustmentIn.ModifiedUser = model._UserId;
                                     
-                                    CONTEXT.SaveChanges();
+                                    //CONTEXT.SaveChanges();
                                     if (model.Details_ != null)
                                     {
                                         if (model.Details_.modifiedRowValues != null)
@@ -517,6 +517,12 @@ namespace Models.Transaction.Adjustment
                                         }
                                     }
 
+                                    if(method == "Post")
+                                    {
+                                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn_UpdateItem\"(:p0,:p1)", model._UserId, model.Id);
+                                    }
+
+                                    CONTEXT.SaveChanges();
                                     SpNotif.SpSysControllerTransNotif(model._UserId, "AdjustmentIn", CONTEXT, "after", "AdjustmentIn", "update", "Id", keyValue);
 
                                 }
@@ -565,8 +571,7 @@ namespace Models.Transaction.Adjustment
                     tx_AdjustmentIn_Item.ModifiedDate = dtModified;
                     tx_AdjustmentIn_Item.ModifiedUser = UserId;
 
-                    CONTEXT.SaveChanges();
-
+                    //CONTEXT.SaveChanges();
                 }
 
             }
@@ -577,7 +582,7 @@ namespace Models.Transaction.Adjustment
         {
             try
             {
-                Update(adjustmentInModel);
+                Update(adjustmentInModel, "Post");
                 PostSAP(userId, adjustmentInModel.Id);
 
             }
@@ -597,9 +602,6 @@ namespace Models.Transaction.Adjustment
                 {
                     try
                     {
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn_UpdateItem\"(:p0,:p1)", userId, id);
-                        CONTEXT.SaveChanges();
-
                         oCompany = SAPCachedCompany.GetCompany();
                         oCompany.StartTransaction();
 
