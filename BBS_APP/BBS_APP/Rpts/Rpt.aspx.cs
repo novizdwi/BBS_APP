@@ -15,7 +15,7 @@ using DevExpress.Web.Mvc;
 using Models._CrystalReport;
 using Models._Utils;
 
-namespace BB_TMS.Reports
+namespace BBS_APP.Reports
 {
     public partial class Rpt : System.Web.UI.Page
     {

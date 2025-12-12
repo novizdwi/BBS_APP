@@ -57,7 +57,7 @@ namespace Models.Authentication.Login
         {
             string ssql = "SELECT COUNT(*) AS IDU "
                               + " FROM \"Tm_User\" T0 "
-                              + " WHERE LOWER(T0.\"UserName\")=:p0 AND T0.\"Pwd\"=:p1 ";
+                              + " WHERE T0.\"UserName\"=:p0 AND T0.\"Pwd\"=:p1 ";
             long flag;
 
             using (var CONTEXT = new HANA_APP())
@@ -87,7 +87,7 @@ namespace Models.Authentication.Login
                             + "  LEFT JOIN \"" + DbProvider.dbSap_Name.ToString() + "\".\"OHEM\" T3 ON T0.\"EmpId\"=T3.\"empID\" "
                             + "  LEFT JOIN \"" + DbProvider.dbSap_Name.ToString() + "\".\"OUDP\" T4 ON T3.\"dept\"=T4.\"Code\" "
                             + "  LEFT JOIN \"" + DbProvider.dbSap_Name.ToString() + "\".\"OWHS\" T5 ON ''=T5.\"WhsCode\" "
-                            + "  WHERE LOWER(T0.\"UserName\")=:p0 ";
+                            + "  WHERE T0.\"UserName\"=:p0 ";
 
             var model = new LoginInfoModel();
 

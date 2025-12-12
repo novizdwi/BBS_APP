@@ -100,10 +100,6 @@ namespace Models.Setting.ApprovalStage
                 sqlCriteria = " AND (" + sqlCriteria + ")";
             }
 
-            if (sqlSort == "")
-            {
-                sqlSort = " ORDER BY (SELECT NULL) ";
-            }
 
             List<ApprovalStageView__> views;
             string ssql = "";
@@ -131,9 +127,9 @@ namespace Models.Setting.ApprovalStage
         {
             GridViewSettings settings = new GridViewSettings();
             settings.Name = "List ApprovalStage";
-            settings.KeyFieldName = "Tm_ApprovalStage___.Id";
-            settings.Columns.Add("Tm_ApprovalStage___.Id", "Id");
-            settings.Columns.Add("Tm_ApprovalStage___.GroupName", "Group Name");
+            settings.KeyFieldName = "Id";
+            settings.Columns.Add("Id", "Id");
+            settings.Columns.Add("StageName", "Stage Name");
 
             return settings;
         }

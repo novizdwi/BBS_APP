@@ -32,5 +32,15 @@ namespace BBS_DI.Models._EF
         public Nullable<int> ModifiedUser { get; set; }
         public Nullable<decimal> QtyVariance { get; set; }
         public string FreeText { get; set; }
+        public string PillarsCode { get; set; }
+        public string PillarsName { get; set; }
+        public string ClassCode { get; set; }
+        public string ClassName { get; set; }
+        public string SubClass1Code { get; set; }
+        public string SubClass1Name { get; set; }
+        public string SubClass2Code { get; set; }
+        public string SubClass2Name { get; set; }
+        public string ProjectCode { get; set; }
+        public string ProjectName { get; set; }
     }
 }

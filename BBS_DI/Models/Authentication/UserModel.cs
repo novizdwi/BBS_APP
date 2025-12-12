@@ -161,6 +161,18 @@ namespace Models.Authentication.User
 
                             String keyValue;
                             keyValue = tm_User.Id.ToString();
+
+                            if (model.DetailContents_ != null)
+                            {
+                                if (model.DetailContents_.insertedRowValues != null)
+                                {
+                                    foreach (var modifiedRow in model.DetailContents_.modifiedRowValues)
+                                    {
+                                        Content_Update(CONTEXT, modifiedRow, model.Id, model._UserId, dtModified);
+                                    }
+                                }
+                            }
+
                             SpNotif.SpSysTransNotif(model._UserId, CONTEXT, "after", "Tm_User", "add", "Id", keyValue);
 
                             CONTEXT_TRANS.Commit();
@@ -190,7 +202,7 @@ namespace Models.Authentication.User
 
         public void Update(UserModel model)
         {
-            if (model != null)
+            if (model != null) 
             {
                 using (var CONTEXT = new HANA_APP())
                 {
@@ -362,6 +374,7 @@ namespace Models.Authentication.User
             UserModel model = new UserModel();
             model.isSetPassword = true;
             model.IsActive = "Y";
+            model.ListWarehouses_ = GetWarehouseById(0);
             return model;
         }
 
@@ -484,7 +497,9 @@ namespace Models.Authentication.User
 	                T0.""WhsCode"" AS ""WhsCode_"",
 	                T0.""WhsName"" AS ""WhsName_""
                 FROM ""{0}"".""OWHS"" T0
-                LEFT JOIN  ""Tm_User_Warehouse"" T1 ON T0.""WhsCode"" = T1.""WhsCode"" AND T1.""Id"" = :p0 ";
+                LEFT JOIN  ""Tm_User_Warehouse"" T1 ON T0.""WhsCode"" = T1.""WhsCode"" AND T1.""Id"" = :p0 
+                ORDER BY T0.""WhsCode"" ASC
+                ";
 
                 ssql = string.Format(ssql, DbProvider.dbSap_Name);
                 return CONTEXT.Database.SqlQuery<User_WarehouseModel>(ssql, id).ToList();

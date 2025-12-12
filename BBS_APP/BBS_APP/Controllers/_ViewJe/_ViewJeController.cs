@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace ADVANCE_ONLINE.Controllers._ViewJe
+namespace BBS_APP.Controllers._ViewJe
 {
     public class _ViewJeController : Controller
     {

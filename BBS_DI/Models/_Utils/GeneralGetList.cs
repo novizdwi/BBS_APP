@@ -179,6 +179,43 @@ namespace Models._Utils
             }
         }
 
+        public static DataTable GetObjectApprovals()
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                var ssql = @"SELECT T0.""ObjectCode"", T0.""ObjectName""  FROM ""Ts_ObjectApproval"" T0 ORDER BY T0.""Sort"" ASC ";
+                return GetDataTable(CONTEXT, ssql);
+            }
+        }
+
+        public static string GetApprovalActive(string objectCode)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                return GetApprovalActive(CONTEXT, objectCode);
+            }
+        }
+
+        public static string GetApprovalActive(HANA_APP CONTEXT, string objectCode)
+        {
+            var ssql = @"SELECT TOP 1 IFNULL(T0.""IsActive"",'N') AS ""IsActive"" 
+                         FROM ""Tm_ApprovalTemplate"" T0 
+                         INNER JOIN ""Tm_ApprovalTemplate_User"" T1 ON T1.""Id"" = T0.""Id""
+                         WHERE T0.""ObjectCode""=:p0 AND IFNULL(T1.""IsTick"",'') = 'Y' ORDER BY T0.""CreatedDate"" ASC "; //AND T1.""UserId"" =:p1
+
+            return GetValue<string>(CONTEXT, ssql, objectCode);
+
+        }
+
+        public static DataTable GetApprovalStages()
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                var ssql = @"SELECT T0.""Id"", T0.""StageName""  FROM ""Tm_ApprovalStage"" T0 ORDER BY T0.""StageName"" ASC ";
+                return GetDataTable(CONTEXT, ssql);
+            }
+        }
+
         public static DataTable GetDocumentTypePlusAll(string strType)
         {
             using (var CONTEXT = new HANA_APP())
@@ -249,15 +286,16 @@ namespace Models._Utils
             using (var CONTEXT = new HANA_APP())
             {
                 var ssql = @"
-                    SELECT NULL AS ""Code"", NULL AS ""Name"" FROM DUMMY
+                    SELECT * FROM (
+                        SELECT NULL AS ""Code"", NULL AS ""Name"" FROM DUMMY
 
-                    UNION ALL
+                        UNION ALL
 
-                    SELECT T0.""WhsCode"" AS ""Code"", 
-                    T1.""WhsName""  AS ""Name""
-                    FROM ""Tm_User_Warehouse"" T0  
-                    INNER JOIN ""{0}"".""OWHS"" T1 ON T0.""WhsCode"" = T1.""WhsCode""
-                    WHERE T0.""Id"" = {1} 
+                        SELECT T0.""WhsCode"" AS ""Code"", 
+                        T0.""WhsName""  AS ""Name""
+                        FROM ""{0}"".""OWHS"" T0  
+                        LEFT JOIN ""Tm_User_Warehouse"" T1 ON T0.""WhsCode"" = T1.""WhsCode"" AND  T1.""Id"" = {1} 
+                    ) TX ORDER BY TX.""Code"" ASC
                 ";
                 ssql = string.Format(ssql, DbProvider.dbSap_Name, id);
                 return GetDataTable(CONTEXT, ssql);
