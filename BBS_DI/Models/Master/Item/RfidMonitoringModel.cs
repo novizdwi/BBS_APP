@@ -57,7 +57,9 @@ namespace Models.Master.Item
 
         public DateTime? CreatedDate { get; set; }
 
-        public string LastTransactionType { get; set; }
+        public string TransactionCode { get; set; }
+
+        public string TransactionName { get; set; }
 
         public DateTime? LastModifiedDate { get; set; }
 
@@ -83,6 +85,10 @@ namespace Models.Master.Item
         public string WhsCode { get; set; }
 
         public string WhsName { get; set; }
+
+        public string OldTagId { get; set; }
+
+        public string NewTagId { get; set; }
 
         public string Status { get; set; }
 
@@ -210,11 +216,13 @@ namespace Models.Master.Item
                              WHEN T0.""OldStatus"" = 'P' THEN 'Pending'
                         ELSE T0.""OldStatus""
                         END AS ""Status"",
+                        T0.""OldTagId"",
+                        T0.""NewTagId"",
                         T0.""CreatedDate"",
                         T1.""FirstName"" AS ""CreatedUser""                   
                     FROM ""Tm_Item_Warehouse_Tag_Log"" T0 
                     INNER JOIN ""Tm_User"" T1 ON T0.""CreatedUser"" = T1.""Id""
-                    WHERE T0.""OldTagId"" = '"+ tagId + @"'
+                    WHERE T0.""OldTagId"" = '" + tagId + @"'
                         OR(T0.""NewTagId"" = '" + tagId + @"' AND T0.""BaseType"" = 'ReplaceTags')
                     ORDER BY T0.""CreatedDate"" DESC 
                     ";

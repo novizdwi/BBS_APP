@@ -24,7 +24,7 @@
         column.FieldName = "TransType";
         column.Name = "TransType";
         column.Caption = "Trans Type";
-        column.Width = 150;
+        column.Width = 120;
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Visible = true;
 
@@ -36,7 +36,7 @@
         column.FieldName = "ItemCode";
         column.Name = "ItemCode";
         column.Caption = "Item Code";
-        column.Width = 150;
+        column.Width = 120;
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Visible = true;
 
@@ -49,7 +49,7 @@
         column.FieldName = "ItemName";
         column.Name = "ItemName";
         column.Caption = "Item Name";
-        column.Width = 380;
+        column.Width = 280;
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Visible = true;
 
@@ -75,6 +75,30 @@
         column.Name = "WhsName";
         column.Caption = "Whs Name";
         column.Width = 150;
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Visible = true;
+
+        column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "OldTagId";
+        column.Name = "OldTagId";
+        column.Caption = "Old RFID";
+        column.Width = 200;
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Visible = true;
+
+        column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "NewTagId";
+        column.Name = "NewTagId";
+        column.Caption = "New RFID";
+        column.Width = 200;
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Visible = true;
 
@@ -118,5 +142,5 @@
     });
 
     settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
-    
+
 }).Bind(Model).GetHtml()
