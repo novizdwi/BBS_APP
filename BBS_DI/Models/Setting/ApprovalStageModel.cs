@@ -108,7 +108,7 @@ namespace Models.Setting.ApprovalStage
     public class ApprovalStageService
     {
 
-        public List<ApprovalStage_UserModel> GetApprovalStage_Users(int id = 0)
+        public List<ApprovalStage_UserModel> GetApprovalStage_Users(long id = 0)
         {
             List<ApprovalStage_UserModel> models;
             string ssql = @"
@@ -119,7 +119,7 @@ namespace Models.Setting.ApprovalStage
                         COALESCE(T1.""IsTick"",'') AS ""IsTick"", 
                         T2.""RoleName"" as ""RoleName_"" 
                 FROM ""Tm_User"" T0 
-                LEFT JOIN ""Tm_ApprovalStage_Role"" T1 ON T0.""RoleId"" = T1.""RoleId""  AND T1.""Id"" = :p0 
+                LEFT JOIN ""Tm_ApprovalStage_User"" T1 ON T0.""Id"" = T1.""UserId""  AND T1.""Id"" = :p0 
                 LEFT JOIN ""Tm_Role"" T2 ON T0.""RoleId"" = T2.""Id"" 
                 ORDER BY T0.""UserName"" 
             ";
@@ -133,7 +133,7 @@ namespace Models.Setting.ApprovalStage
 
         }
 
-        public List<ApprovalStage_RoleModel> GetApprovalStage_Roles(int id = 0)
+        public List<ApprovalStage_RoleModel> GetApprovalStage_Roles(long id = 0)
         {
             List<ApprovalStage_RoleModel> models;
             string ssql = @"
@@ -184,7 +184,8 @@ namespace Models.Setting.ApprovalStage
                             String keyValue;
                             keyValue = tm_ApprovalStage.Id.ToString();
 
-                            Detail_Role(CONTEXT, model, Id);
+                            Detail_User(CONTEXT, model, Id);
+                            //Detail_Role(CONTEXT, model, Id);
 
                             SpNotif.SpSysControllerTransNotif(model._UserId, "ApprovalStage", CONTEXT, "after", "ApprovalStage", "add", "Id", keyValue);
                             CONTEXT_TRANS.Commit();
@@ -237,7 +238,9 @@ namespace Models.Setting.ApprovalStage
                             tm_ApprovalStage.ModifiedUser = model._UserId;
                             CONTEXT.SaveChanges();
 
-                            Detail_Role(CONTEXT, model, model.Id);
+                            Detail_User(CONTEXT, model, model.Id);
+                            //Detail_Role(CONTEXT, model, Id);
+
                             SpNotif.SpSysControllerTransNotif(model._UserId, "ApprovalStage", CONTEXT, "after", "ApprovalStage", "update", "Id", keyValue);
                         }
                         CONTEXT_TRANS.Commit();
@@ -298,6 +301,56 @@ namespace Models.Setting.ApprovalStage
             return model;
         }
 
+        public void Detail_User(HANA_APP CONTEXT, ApprovalStageModel pModel, int pId)
+        {
+            //------------------------------
+            //Detail
+            //------------------------------ 
+            var ssql = @"SELECT * FROM  ""Tm_User"" T0 ";
+            var Ticks_ = pModel.UserTicks_ ?? new string[] { };
+            List<Tm_User> items = CONTEXT.Database.SqlQuery<Tm_User>(ssql).ToList();
+
+            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                var ssql2 = @"SELECT TOP 1 T0.""DetId"" FROM  ""Tm_ApprovalStage_User"" T0 WHERE T0.""Id"" = :p0 AND T0.""UserId"" = :p1 "; 
+                long? DetId = CONTEXT.Database.SqlQuery<long?>(ssql2, pId, items[i].Id).FirstOrDefault();
+
+                if (DetId == null)
+                {
+                    var item = new Tm_ApprovalStage_User();
+                    item.Id = pId;
+                    item.UserId = items[i].Id;
+                    item.IsTick = Ticks_.Contains(items[i].Id.ToString()) ? "Y" : "N";
+
+                    item.CreatedUser = pModel._UserId;
+                    item.CreatedDate = dtModified;
+                    item.ModifiedUser = pModel._UserId;
+                    item.ModifiedDate = dtModified;
+
+                    CONTEXT.Tm_ApprovalStage_User.Add(item);
+                    CONTEXT.SaveChanges();
+
+                    DetId = item.DetId;
+                }
+                else
+                {
+                    Tm_ApprovalStage_User item = CONTEXT.Tm_ApprovalStage_User.Find(DetId);
+                    if (item != null)
+                    {
+                        item.IsTick = Ticks_.Contains(items[i].Id.ToString()) ? "Y" : "N";
+
+                        item.ModifiedUser = pModel._UserId;
+                        item.ModifiedDate = dtModified;
+
+                        CONTEXT.SaveChanges();
+                    }
+                }
+            }
+
+        }
+
         public void Detail_Role(HANA_APP CONTEXT, ApprovalStageModel pModel, int pId)
         {
             //------------------------------
@@ -311,7 +364,7 @@ namespace Models.Setting.ApprovalStage
 
             for (int i = 0; i < items.Count; i++)
             {
-                var ssql2 = @"SELECT TOP 1 T0.""DetId"" FROM  ""Tm_ApprovalStage_Role"" T0 WHERE T0.""Id"" = :p0 AND T0.""UserId"" = :p1 ";
+                var ssql2 = @"SELECT TOP 1 T0.""DetId"" FROM  ""Tm_ApprovalStage_Role"" T0 WHERE T0.""Id"" = :p0  "; //AND T0.""UserId"" = :p1
                 long? DetId = CONTEXT.Database.SqlQuery<long?>(ssql2, pId, items[i].Id).FirstOrDefault();
 
                 if (DetId == null)
@@ -348,7 +401,7 @@ namespace Models.Setting.ApprovalStage
 
         }
 
-        public ApprovalStageModel GetById(int id = 0)
+        public ApprovalStageModel GetById(int userId, long id = 0)
         {
             ApprovalStageModel model = null;
             if (id != 0)
@@ -373,70 +426,94 @@ namespace Models.Setting.ApprovalStage
             return model;
         }
 
-        public ApprovalStageModel NavFirst()
+        public ApprovalStageModel NavFirst(int userId)
         {
             ApprovalStageModel model = null;
             using (var CONTEXT = new HANA_APP())
             {
-                string ssql = @"SELECT TOP 1 T0.""Id"" FROM ""Tm_ApprovalStage"" T0 ORDER BY T0.""Id"" ASC ";
-                int? Id = CONTEXT.Database.SqlQuery<int?>(ssql).FirstOrDefault();
-                model = this.GetById(Id.HasValue ? Id.Value : 0);
+                string sqlCriteria = "";
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "Tm_ApprovalStage");
+                if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
+                {
+                    sqlCriteria = " AND " + formAuthorizeSqlWhere;
+                }
+
+                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tm_ApprovalStage\" T0 WHERE 1=1 " + sqlCriteria + " ORDER BY T0.\"Id\" ASC").FirstOrDefault();
+
+                model = this.GetById(userId, Id.HasValue ? Id.Value : 0);
             }
             return model;
 
         }
 
-        public ApprovalStageModel NavPrevious(int id = 0)
+        public ApprovalStageModel NavPrevious(int userId, long id = 0)
         {
             ApprovalStageModel model = null;
             using (var CONTEXT = new HANA_APP())
             {
-                string ssql = @"SELECT TOP 1 T0.""Id"" FROM ""Tm_ApprovalStage"" T0   WHERE T0.""Id""< :p0 ORDER BY T0.""Id"" DESC";
-                int? Id = CONTEXT.Database.SqlQuery<int?>(ssql, id).FirstOrDefault();
-                if (Id != null)
+                string sqlCriteria = "";
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "ApprovalStage");
+                if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
-                    model = this.GetById(Id.HasValue ? Id.Value : 0);
+                    sqlCriteria = " AND " + formAuthorizeSqlWhere;
                 }
 
+                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tm_ApprovalStage\" T0 WHERE T0.\"Id\"<:p0 " + sqlCriteria + "  ORDER BY T0.\"Id\" DESC", id).FirstOrDefault();
+                if (Id.HasValue)
+                {
+                    model = this.GetById(userId, Id.Value);
+                }
+            }
+
+            if (model == null)
+            {
+                model = this.NavFirst(userId);
+            }
+
+            return model;
+        }
+
+        public ApprovalStageModel NavNext(int userId, long id = 0)
+        {
+            ApprovalStageModel model = null;
+            using (var CONTEXT = new HANA_APP())
+            {
+                string sqlCriteria = "";
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "ApprovalStage");
+                if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
+                {
+                    sqlCriteria = " AND " + formAuthorizeSqlWhere;
+                }
+
+                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tm_ApprovalStage\" T0 WHERE T0.\"Id\">:p0 " + sqlCriteria + "  ORDER BY T0.\"Id\" ASC", id).FirstOrDefault();
+                if (Id.HasValue)
+                {
+                    model = this.GetById(userId, Id.Value);
+                }
+            }
+
+            if (model == null)
+            {
+                model = this.NavFirst(userId);
             }
             return model;
         }
 
-        public ApprovalStageModel NavNext(int id = 0)
+        public ApprovalStageModel NavLast(int userId)
         {
             ApprovalStageModel model = null;
             using (var CONTEXT = new HANA_APP())
             {
-                string ssql = @"SELECT TOP 1 T0.""Id"" FROM ""Tm_ApprovalStage"" T0  WHERE T0.""Id"" > :p0 ORDER BY T0.""Id"" ASC";
-                int? Id = CONTEXT.Database.SqlQuery<int?>(ssql, id).FirstOrDefault();
-                if (Id != null)
+                string sqlCriteria = "";
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "ApprovalStage");
+                if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
-                    model = this.GetById(Id.HasValue ? Id.Value : 0);
-                }
-                else
-                {
-                    model = model = this.NavLast();
+                    sqlCriteria = " AND " + formAuthorizeSqlWhere;
                 }
 
-            }
-            return model;
-        }
+                long? Id = CONTEXT.Database.SqlQuery<long?>("SELECT TOP 1 T0.\"Id\" FROM \"Tm_ApprovalStage\" T0 WHERE 1=1 " + sqlCriteria + "  ORDER BY T0.\"Id\" DESC").FirstOrDefault();
 
-        public ApprovalStageModel NavLast()
-        {
-            ApprovalStageModel model = null;
-            using (var CONTEXT = new HANA_APP())
-            {
-                string ssql = @"SELECT TOP 1 T0.""Id"" FROM ""Tm_ApprovalStage"" T0 ORDER BY T0.""Id"" DESC";
-                int? Id = CONTEXT.Database.SqlQuery<int?>(ssql).FirstOrDefault();
-                if (Id != null)
-                {
-                    model = this.GetById(Id.HasValue ? Id.Value : 0);
-                }
-                else
-                {
-                    model = model = this.NavLast();
-                }
+                model = this.GetById(userId, Id.HasValue ? Id.Value : 0);
 
             }
             return model;

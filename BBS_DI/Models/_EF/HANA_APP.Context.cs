@@ -34,6 +34,7 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tm_Approval_User> Tm_Approval_User { get; set; }
         public virtual DbSet<Tm_ApprovalStage> Tm_ApprovalStage { get; set; }
         public virtual DbSet<Tm_ApprovalStage_Role> Tm_ApprovalStage_Role { get; set; }
+        public virtual DbSet<Tm_ApprovalStage_User> Tm_ApprovalStage_User { get; set; }
         public virtual DbSet<Tm_ApprovalTemplate> Tm_ApprovalTemplate { get; set; }
         public virtual DbSet<Tm_ApprovalTemplate_Position> Tm_ApprovalTemplate_Position { get; set; }
         public virtual DbSet<Tm_ApprovalTemplate_Role> Tm_ApprovalTemplate_Role { get; set; }
@@ -46,6 +47,7 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tm_Item_Warehouse> Tm_Item_Warehouse { get; set; }
         public virtual DbSet<Tm_Item_Warehouse_Tag> Tm_Item_Warehouse_Tag { get; set; }
         public virtual DbSet<Tm_Item_Warehouse_Tag_Log> Tm_Item_Warehouse_Tag_Log { get; set; }
+        public virtual DbSet<Tm_Item_Warehouse_Tag_Replace> Tm_Item_Warehouse_Tag_Replace { get; set; }
         public virtual DbSet<Tm_Layout> Tm_Layout { get; set; }
         public virtual DbSet<Tm_Layout_Role> Tm_Layout_Role { get; set; }
         public virtual DbSet<Tm_Layout_User> Tm_Layout_User { get; set; }
@@ -68,15 +70,19 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tm_Role_Auth> Tm_Role_Auth { get; set; }
         public virtual DbSet<Tm_User> Tm_User { get; set; }
         public virtual DbSet<Tm_User_Warehouse> Tm_User_Warehouse { get; set; }
+        public virtual DbSet<Tp_Approval> Tp_Approval { get; set; }
+        public virtual DbSet<Tp_Approval_User> Tp_Approval_User { get; set; }
         public virtual DbSet<Ts_FormatNumbering> Ts_FormatNumbering { get; set; }
         public virtual DbSet<Ts_LayoutForm> Ts_LayoutForm { get; set; }
         public virtual DbSet<Ts_List> Ts_List { get; set; }
         public virtual DbSet<Ts_Menu> Ts_Menu { get; set; }
         public virtual DbSet<Ts_ObjectApproval> Ts_ObjectApproval { get; set; }
+        public virtual DbSet<Tx_AdjustmentIn> Tx_AdjustmentIn { get; set; }
         public virtual DbSet<Tx_AdjustmentIn_Attachment> Tx_AdjustmentIn_Attachment { get; set; }
         public virtual DbSet<Tx_AdjustmentIn_Item> Tx_AdjustmentIn_Item { get; set; }
         public virtual DbSet<Tx_AdjustmentIn_Item_Tag> Tx_AdjustmentIn_Item_Tag { get; set; }
         public virtual DbSet<Tx_AdjustmentIn_Location> Tx_AdjustmentIn_Location { get; set; }
+        public virtual DbSet<Tx_AdjustmentOut> Tx_AdjustmentOut { get; set; }
         public virtual DbSet<Tx_AdjustmentOut_Attachment> Tx_AdjustmentOut_Attachment { get; set; }
         public virtual DbSet<Tx_AdjustmentOut_Item> Tx_AdjustmentOut_Item { get; set; }
         public virtual DbSet<Tx_AdjustmentOut_Item_Tag> Tx_AdjustmentOut_Item_Tag { get; set; }
@@ -96,6 +102,7 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_StockOpname_Item> Tx_StockOpname_Item { get; set; }
         public virtual DbSet<Tx_StockOpname_Item_Tag> Tx_StockOpname_Item_Tag { get; set; }
         public virtual DbSet<Tx_StockSummaryOpname> Tx_StockSummaryOpname { get; set; }
+        public virtual DbSet<Tx_StockSummaryOpname_Item> Tx_StockSummaryOpname_Item { get; set; }
         public virtual DbSet<Tx_StockSummaryOpname_Item_Tag> Tx_StockSummaryOpname_Item_Tag { get; set; }
         public virtual DbSet<Tx_StockSummaryOpname_Ref> Tx_StockSummaryOpname_Ref { get; set; }
         public virtual DbSet<Tx_TransferIn> Tx_TransferIn { get; set; }
@@ -111,16 +118,10 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_TransferSummaryIn_Item_tag> Tx_TransferSummaryIn_Item_tag { get; set; }
         public virtual DbSet<Tx_TransferSummaryIn_Item_Tag1> Tx_TransferSummaryIn_Item_Tag1 { get; set; }
         public virtual DbSet<Tx_TransferSummaryIn_Ref> Tx_TransferSummaryIn_Ref { get; set; }
+        public virtual DbSet<Tx_TransferSummaryOut> Tx_TransferSummaryOut { get; set; }
+        public virtual DbSet<Tx_TransferSummaryOut_Approval> Tx_TransferSummaryOut_Approval { get; set; }
+        public virtual DbSet<Tx_TransferSummaryOut_Item> Tx_TransferSummaryOut_Item { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut_Item_Tag> Tx_TransferSummaryOut_Item_Tag { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut_Ref> Tx_TransferSummaryOut_Ref { get; set; }
-        public virtual DbSet<Tx_StockSummaryOpname_Item> Tx_StockSummaryOpname_Item { get; set; }
-        public virtual DbSet<Tm_ApprovalStage_User> Tm_ApprovalStage_User { get; set; }
-        public virtual DbSet<Tp_Approval> Tp_Approval { get; set; }
-        public virtual DbSet<Tp_Approval_User> Tp_Approval_User { get; set; }
-        public virtual DbSet<Tx_TransferSummaryOut_Item> Tx_TransferSummaryOut_Item { get; set; }
-        public virtual DbSet<Tm_Item_Warehouse_Tag_Replace> Tm_Item_Warehouse_Tag_Replace { get; set; }
-        public virtual DbSet<Tx_AdjustmentIn> Tx_AdjustmentIn { get; set; }
-        public virtual DbSet<Tx_AdjustmentOut> Tx_AdjustmentOut { get; set; }
-        public virtual DbSet<Tx_TransferSummaryOut> Tx_TransferSummaryOut { get; set; }
     }
 }

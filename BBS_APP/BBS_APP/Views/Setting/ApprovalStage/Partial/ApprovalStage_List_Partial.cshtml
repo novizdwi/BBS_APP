@@ -13,7 +13,7 @@
 @Html.DevExpress().GridView(settings=>
    {
        settings.Name ="gvApprovalStageList";
-       settings.KeyFieldName = "Tm_ApprovalStage___.Id";
+       settings.KeyFieldName = "Id";
        settings.CallbackRouteValues = new { Controller = "ApprovalStage", Action = "ListPartial" };
   
        settings.Columns.Add(column =>
@@ -26,10 +26,10 @@
                ViewContext.Writer.Write( 
                 
                 Html.DevExpress().HyperLink(settingsHL => {
-                    settingsHL.Name = "Choose_" + DataBinder.Eval(c.DataItem, "Tm_ApprovalStage___.Id") + "_" + Guid.NewGuid().ToString();
+                    settingsHL.Name = "Choose_" + DataBinder.Eval(c.DataItem, "Id") + "_" + Guid.NewGuid().ToString();
                     settingsHL.NavigateUrl = "javascript:void(0)";
                     settingsHL.Properties.Text = "Choose";
-                    settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ OnClickChoose(s, e, '{0}'); }}", DataBinder.Eval(c.DataItem, "Tm_ApprovalStage___.Id"));
+                    settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ OnClickChoose(s, e, '{0}'); }}", DataBinder.Eval(c.DataItem, "Id"));
                 }).GetHtml()
                
                
@@ -50,9 +50,9 @@
        settings.Settings.ShowFilterRow = true;
        settings.Settings.ShowFilterRowMenu = true;
 
-       settings.Columns.Add("Tm_ApprovalStage___.Id", "Id").Visible=false;
-       settings.Columns.Add("Tm_ApprovalStage___.StageName", "Stage Name"); 
-       settings.Columns.Add("Tm_ApprovalStage___.Description", "Description"); 
+       settings.Columns.Add("Id", "Id").Visible=false;
+       settings.Columns.Add("StageName", "Stage Name"); 
+       settings.Columns.Add("Description", "Description"); 
        settings.SettingsPager.Position = PagerPosition.Bottom;
        settings.SettingsPager.FirstPageButton.Visible = true;
        settings.SettingsPager.LastPageButton.Visible = true;

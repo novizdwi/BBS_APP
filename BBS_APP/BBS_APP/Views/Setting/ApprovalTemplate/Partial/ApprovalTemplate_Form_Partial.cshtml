@@ -14,7 +14,7 @@
             settings.ClientVisible = false;
             settings.ShowModelErrors = true;
             settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-            settings.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
+            settings.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         }
 
     ).Bind(Model.Id).GetHtml()
@@ -27,11 +27,13 @@
     settings.Width = Unit.Percentage(100);
     settings.AlignItemCaptionsInAllGroups = true;
     settings.ShowItemCaptionColon = false;
+    settings.SettingsAdaptivity.AdaptivityMode = FormLayoutAdaptivityMode.SingleColumnWindowLimit;
+    settings.SettingsAdaptivity.SwitchToSingleColumnAtWindowInnerWidth = 600;
 
 
     var groupItem = settings.Items.AddGroupItem(itemSettings =>
     {
-        itemSettings.Caption = "Approval Templates";
+        itemSettings.Caption = "";
         itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
         itemSettings.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
 
@@ -40,6 +42,7 @@
         itemSettings.GroupBoxStyle.Caption.ForeColor = System.Drawing.Color.Orange;
 
         itemSettings.Width = Unit.Percentage(100);
+
 
     });
 
@@ -123,108 +126,11 @@
         cbo.ReadOnly = !ViewBag.ReadOnly;
         cbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
 
-        cbo.Properties.DataSource = Models._Utils.GeneralGetList.GetApprovalTypes("AND ObjectCode !='CL-TOP' ");
+        cbo.Properties.DataSource = Models._Utils.GeneralGetList.GetObjectApprovals();
 
         cbo.ControlStyle.CssClass = "editor";
         cbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
 
-    });
-
-
-
-    //groupItem_Col1.Items.Add(itemSettings =>
-    //{
-    //    itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.RadioButtonList;
-    //    itemSettings.Caption = "Always";
-    //    itemSettings.FieldName = "IsAlways";
-    //    var rb = (RadioButtonListSettings)itemSettings.NestedExtensionSettings;
-    //    rb.Properties.RepeatDirection = RepeatDirection.Horizontal;
-    //    rb.Name = "IsAlways";
-    //    rb.ShowModelErrors = true;
-    //    rb.Properties.TextField = "Name";
-    //    rb.Properties.ValueField = "Code";
-    //    rb.Properties.ValueType = typeof(string);
-    //    rb.ControlStyle.CssClass = "editor";
-    //    rb.Properties.DataSource = Models._Utils.GeneralGetList.GetList("Boolean");
-    //    rb.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-    //    rb.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
-
-    //});
-
-    //groupItem_Col1.Items.Add(itemSettings =>
-    //{
-    //    itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.RadioButtonList;
-    //    itemSettings.Caption = "Originator";
-    //    itemSettings.FieldName = "OriginatorType";
-    //    var rb = (RadioButtonListSettings)itemSettings.NestedExtensionSettings;
-    //    rb.Properties.RepeatDirection = RepeatDirection.Horizontal;
-    //    rb.Name = "OriginatorType";
-    //    rb.ShowModelErrors = true;
-    //    rb.Properties.TextField = "Name";
-    //    rb.Properties.ValueField = "Code";
-    //    rb.Properties.ValueType = typeof(string);
-    //    rb.ControlStyle.CssClass = "editor";
-    //    rb.Properties.DataSource = Models._Utils.GeneralGetList.GetList("ApprovalTemplate_OriginatorType");
-    //    rb.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-    //    rb.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
-
-    //});
-
-
-    //groupItem_Col2.Items.Add(m => Model.EmailTemplateId, itemSettings =>
-    //{
-    //    itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
-    //    itemSettings.Caption = "Email Template";
-
-    //    ComboBoxSettings cbo = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
-    //    cbo.Properties.DropDownStyle = DropDownStyle.DropDownList;
-    //    cbo.Name = "EmailTemplateId";
-    //    cbo.ShowModelErrors = true;
-    //    cbo.Properties.TextField = "TemplateName";
-    //    cbo.Properties.ValueField = "Id";
-    //    cbo.Properties.ValueType = typeof(int);
-    //    cbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
-
-    //    cbo.Properties.DataSource = Models._Utils.GeneralGetList.GetEmailTemplates();
-
-    //    cbo.ControlStyle.CssClass = "editor";
-    //    cbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-
-    //});
-
-
-    groupItem_Col1.Items.Add(m => Model.IgnoreDept, itemSettings =>
-    {
-        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.CheckBox;
-        itemSettings.Caption = "All Dept";
-        itemSettings.ClientVisible = false;
-
-        var chk = (CheckBoxSettings)itemSettings.NestedExtensionSettings;
-        chk.Name = "IgnoreDept";
-        chk.Properties.ValueType = typeof(string);
-        chk.Properties.ValueChecked = "Y";
-        chk.Properties.ValueUnchecked = "N";
-        chk.ShowModelErrors = true;
-        chk.ReadOnly = !ViewBag.ReadOnly;
-        chk.ControlStyle.CssClass = "editor";
-        chk.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        chk.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
-    });
-
-    groupItem_Col1.Items.Add(m => Model.CanOverrideLastApproval, itemSettings =>
-    {
-        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.CheckBox;
-        itemSettings.Caption = "Can Override";
-
-        var chk = (CheckBoxSettings)itemSettings.NestedExtensionSettings;
-        chk.Name = "CanOverrideLastApproval";
-        chk.Properties.ValueType = typeof(string);
-        chk.Properties.ValueChecked = "Y";
-        chk.Properties.ValueUnchecked = "N";
-        chk.ShowModelErrors = true;
-        chk.ControlStyle.CssClass = "editor";
-        chk.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        chk.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
     });
 
     groupItem_Col1.Items.Add(m => Model.IsActive, itemSettings =>
@@ -240,27 +146,9 @@
         chk.ShowModelErrors = true;
         chk.ControlStyle.CssClass = "editor";
         chk.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        chk.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
+        chk.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
     });
 
-    //groupItem_Col2.Items.Add(itemSettings =>
-    //{
-    //    itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.RadioButtonList;
-    //    itemSettings.Caption = "Active";
-    //    itemSettings.FieldName = "IsActive";
-    //    var rb = (RadioButtonListSettings)itemSettings.NestedExtensionSettings;
-    //    rb.Properties.RepeatDirection = RepeatDirection.Horizontal;
-    //    rb.Name = "IsActive";
-    //    rb.ShowModelErrors = true;
-    //    rb.Properties.TextField = "Name";
-    //    rb.Properties.ValueField = "Code";
-    //    rb.Properties.ValueType = typeof(string);
-    //    rb.ControlStyle.CssClass = "editor";
-    //    rb.Properties.DataSource = Models._Utils.GeneralGetList.GetList("Boolean");
-    //    rb.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-    //    rb.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
-
-    //});
 
     groupItem_2.Items.AddTabbedGroupItem(group =>
     {
@@ -272,20 +160,7 @@
         group.PageControl.ContentStyle.Paddings.Padding = 3;
         group.PageControl.ContentStyle.Paddings.PaddingTop = 0;
 
-        group.Items.Add(item =>
-        {
-            item.Name = "TabSql";
-            item.Caption = "    SQL    ";
-            item.SetNestedContent(() =>
-            {
-                ViewContext.Writer.Write(
-             @Html.Partial("Partial/ApprovalTemplate_Form_TabSql_Partial")
-          );
-            });
-            item.CaptionStyle.BackColor = System.Drawing.Color.Blue;
-            item.CaptionCellStyle.BackColor = System.Drawing.Color.Blue;
 
-        });
 
 
 
@@ -308,6 +183,7 @@
         {
             item.Name = "TabDepartment";
             item.Caption = "   Department    ";
+            item.ClientVisible = false;
             item.SetNestedContent(() =>
             {
                 ViewContext.Writer.Write(
@@ -342,6 +218,22 @@
             {
                 ViewContext.Writer.Write(
              @Html.Partial("Partial/ApprovalTemplate_Form_TabStage_List_Partial", Model.ListStages_)
+          );
+            });
+            item.CaptionStyle.BackColor = System.Drawing.Color.Blue;
+            item.CaptionCellStyle.BackColor = System.Drawing.Color.Blue;
+
+        });
+
+        group.Items.Add(item =>
+        {
+            item.Name = "TabSql";
+            item.Caption = "    SQL    ";
+            item.ClientVisible = false;
+            item.SetNestedContent(() =>
+            {
+                ViewContext.Writer.Write(
+             @Html.Partial("Partial/ApprovalTemplate_Form_TabSql_Partial")
           );
             });
             item.CaptionStyle.BackColor = System.Drawing.Color.Blue;

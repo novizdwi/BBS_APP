@@ -86,6 +86,12 @@ namespace Models.Transaction.Inventory
 
         public string Comments { get; set; }
 
+        public string ApprovalStatus { get; set; }
+
+        public string ApprovalMessages { get; set; }
+
+        public string IsApproval { get; set; }
+
         public string CancelReason { get; set; }
 
         public List<TransferSummaryOut_DetailModel> ListDetails_ = new List<TransferSummaryOut_DetailModel>();
@@ -449,6 +455,11 @@ namespace Models.Transaction.Inventory
                             CopyProperty.CopyProperties(model, Tx_TransferSummaryOut, false);
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+
+                            var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("TransferSummaryOut");
+
+                            Tx_TransferSummaryOut.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
+                            //Tx_TransferSummaryOut.ApprovalStatus = isApprovalActive == "Y" ? "Waiting" : "";
                             Tx_TransferSummaryOut.TransType = "TransferSummaryOut";
                             Tx_TransferSummaryOut.CreatedDate = dtModified;
                             Tx_TransferSummaryOut.CreatedUser = model._UserId;
@@ -524,6 +535,11 @@ namespace Models.Transaction.Inventory
                                 {
                                     var exceptColumns = new string[] { "Id", "TransNo", "CreatedUser" };
                                     CopyProperty.CopyProperties(model, Tx_TransferSummaryOut, false, exceptColumns);
+
+                                    var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("TransferSummaryOut");
+
+                                    Tx_TransferSummaryOut.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
+                                    //Tx_TransferSummaryOut.ApprovalStatus = isApprovalActive == "Y" && Tx_TransferSummaryOut.ApprovalStatus == "" ? "Waiting" : "Approved";
                                     Tx_TransferSummaryOut.ModifiedDate = dtModified;
                                     Tx_TransferSummaryOut.ModifiedUser = model._UserId;
 
@@ -551,13 +567,13 @@ namespace Models.Transaction.Inventory
                                     //        }
                                     //    }
 
-                                    if (model.Details_.modifiedRowValues != null)
-                                    {
-                                        foreach (var detail in model.Details_.modifiedRowValues)
-                                        {
-                                            Detail_Update(CONTEXT, detail, model._UserId);
-                                        }
-                                    }
+                                    //if (model.Details_.modifiedRowValues != null)
+                                    //{
+                                    //    foreach (var detail in model.Details_.modifiedRowValues)
+                                    //    {
+                                    //        Detail_Update(CONTEXT, detail, model._UserId);
+                                    //    }
+                                    //}
 
                                     //    if (model.Details_.deletedRowKeys != null)
                                     //    {
@@ -931,6 +947,111 @@ namespace Models.Transaction.Inventory
 
         }
 
+        public void Approve(int userId, long Id, string approvalMessages)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+
+                using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        String keyValue;
+                        keyValue = Id.ToString();
+
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "before", "Tx_TransferSummaryOut", "approve", "Id", keyValue);
+
+                        Tx_TransferSummaryOut tx_TransferSummaryOut = CONTEXT.Tx_TransferSummaryOut.Find(Id);
+                        if (tx_TransferSummaryOut != null)
+                        {
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                            //tx_TransferSummaryOut.Status = "";
+                            tx_TransferSummaryOut.ApprovalMessages = approvalMessages;
+                            tx_TransferSummaryOut.ModifiedDate = dtModified;
+                            tx_TransferSummaryOut.ModifiedUser = userId;
+
+                            CONTEXT.SaveChanges();
+                        }
+
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "approve", "Id", keyValue);
+
+
+                        CONTEXT_TRANS.Commit();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        CONTEXT_TRANS.Rollback();
+
+                        string errorMassage;
+                        if (ex.Message.Substring(12) == "[VALIDATION]")
+                        {
+                            errorMassage = ex.Message;
+                        }
+                        else
+                        {
+                            errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                        }
+
+                        throw new Exception(errorMassage);
+                    }
+                }
+            }
+
+        }
+
+        public void Reject(int userId, long Id, string approvalMessages)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+
+                using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        String keyValue;
+                        keyValue = Id.ToString();
+
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "before", "Tx_TransferSummaryOut", "reject", "Id", keyValue);
+
+                        Tx_TransferSummaryOut tx_TransferSummaryOut = CONTEXT.Tx_TransferSummaryOut.Find(Id);
+                        if (tx_TransferSummaryOut != null)
+                        {
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                            //tx_TransferSummaryOut.Status = "";
+                            tx_TransferSummaryOut.ApprovalMessages = approvalMessages;
+                            tx_TransferSummaryOut.ModifiedDate = dtModified;
+                            tx_TransferSummaryOut.ModifiedUser = userId;
+
+                            CONTEXT.SaveChanges();
+                        }
+
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "reject", "Id", keyValue);
+
+
+                        CONTEXT_TRANS.Commit();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        CONTEXT_TRANS.Rollback();
+
+                        string errorMassage;
+                        if (ex.Message.Substring(12) == "[VALIDATION]")
+                        {
+                            errorMassage = ex.Message;
+                        }
+                        else
+                        {
+                            errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                        }
+
+                        throw new Exception(errorMassage);
+                    }
+                }
+            }
+
+        }
 
         public TransferSummaryOutItemTagView___ GetItemTags(long id, long detId)
         {

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BB_TMS.Reports {
+namespace BBS_APP.Reports {
     
     
     public partial class Rpt {

@@ -108,10 +108,6 @@ namespace Models.Setting.ApprovalTemplate
                 sqlCriteria = " AND (" + sqlCriteria + ")";
             }
 
-            if (sqlSort == "")
-            {
-                sqlSort = " ORDER BY (SELECT NULL) ";
-            }
 
             List<ApprovalTemplateView__> views;
             string ssql = "";

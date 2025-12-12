@@ -869,7 +869,7 @@ function gvAdjustmentInAttachmentDetailBeginCallback(s, e) {
 
 function gvAdjustmentInAttachmentDetail_OnClickBtnNew() {
     var popup = ASPxClientPopupControl.Cast("popupAttachment");
-    popup.callbackUrl = '@Url.Action("Attachment_PopupListLoadOnDemandPartial", "AdjustmentIn")' + '?Id=' + Id.GetValue(); // "/BB_TMS/AdjustmentIn/Attachment_PopupListLoadOnDemandPartial?Id=" + Id.GetValue();
+    popup.callbackUrl = '@Url.Action("Attachment_PopupListLoadOnDemandPartial", "AdjustmentIn")' + '?Id=' + Id.GetValue(); // "/BBS_APP/AdjustmentIn/Attachment_PopupListLoadOnDemandPartial?Id=" + Id.GetValue();
 
     popup.PerformCallback();
 
