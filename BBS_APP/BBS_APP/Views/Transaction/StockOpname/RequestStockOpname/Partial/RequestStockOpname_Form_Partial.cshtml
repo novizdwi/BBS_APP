@@ -191,7 +191,7 @@
         txt.Properties.EditFormatString = "dd/MM/yyyy";
         txt.Properties.EditFormat = EditFormat.Date;
 
-        if (Model.Status != "Closed")
+        if (Model.Status == "Closed")
         {
             txt.Properties.DropDownButton.Visible = false;
             txt.ReadOnly = true;
