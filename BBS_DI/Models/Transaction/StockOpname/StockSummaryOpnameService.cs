@@ -326,6 +326,12 @@ namespace Models.Transaction.StockOpname
             StockSummaryOpnameModel model = new StockSummaryOpnameModel();
             model.Status = "Draft";
             model.TransDate = DateTime.Now;
+
+            model.PillarsList = GeneralGetList.GetCostCenterList("1");
+            model.ClassList = GeneralGetList.GetCostCenterList("2");
+            model.SubClass1List = GeneralGetList.GetCostCenterList("3");
+            model.SubClass2List = GeneralGetList.GetCostCenterList("4");
+            model.ProjectList = GeneralGetList.GetProjectList();
             return model;
         }
 
