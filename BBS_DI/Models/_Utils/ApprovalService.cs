@@ -7,8 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BBS_DI.Models._Utils
+namespace Models._Utils
 {
+
+    public class NotifApprovalDto
+    {
+        public string TransNo { get; set; }
+        public string TransType { get; set; }
+        public DateTime RequestDate { get; set; }
+        public string Message { get; set; }
+    }
+
     public class ApprovalService
     {
         public static Boolean ApprovalProcedure(SAPbobsCOM.Company oCompany, int userId, string objectCode, string tableName, string id, string divCode)

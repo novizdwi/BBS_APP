@@ -284,13 +284,8 @@ C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\obj\Debug\BBS_APP.csproj.CoreCom
 C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\obj\Debug\BBS_APP.csproj.CopyComplete
 C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\obj\Debug\BBS_APP.dll
 C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\obj\Debug\BBS_APP.pdb
-C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\BBS_APP.dll.config
 C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\BBS_APP.dll
-C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\BBS_APP.pdb
 C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\BBS_DI.dll
-C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\CrystalDecisions.CrystalReports.Engine.dll
-C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\CrystalDecisions.Shared.dll
-C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\CrystalDecisions.Web.dll
 C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\DevExpress.BonusSkins.v20.1.dll
 C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\DevExpress.Charts.v20.1.Core.dll
 C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\DevExpress.CodeParser.v20.1.dll
@@ -364,6 +359,11 @@ C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\System.Web.WebPages.dll
 C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\System.Web.WebPages.Razor.dll
 C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\WebMatrix.Data.dll
 C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\LumenWorks.Framework.IO.dll
+C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\BBS_APP.dll.config
+C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\BBS_APP.pdb
+C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\CrystalDecisions.CrystalReports.Engine.dll
+C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\CrystalDecisions.Shared.dll
+C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\CrystalDecisions.Web.dll
 C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\stdole.dll
 C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\BBS_DI.pdb
 C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\BBS_DI.dll.config
