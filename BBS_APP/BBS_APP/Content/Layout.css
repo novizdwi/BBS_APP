@@ -482,3 +482,29 @@ a.tree-view-node.hovered
         max-width: 250px;
     }
 }
+
+.notif-wrap {
+    position: relative;
+    display: inline-block;
+}
+
+.notif-icon {
+    width: 22px;
+    height: 22px;
+    vertical-align: middle;
+}
+
+.notif-badge {
+    position: absolute;
+    top: 8px;
+    right: -10px;
+    font-size: 10px;
+    line-height: 14px;
+    min-width: 14px;
+    height: 14px;
+    padding: 0 4px;
+    border-radius: 10px;
+    background: #e53935;
+    color: #fff;
+    text-align: center;
+}

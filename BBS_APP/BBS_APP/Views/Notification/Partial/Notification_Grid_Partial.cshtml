@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Models._Utils.NotifApprovalDto>
+
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvNotif";
+
+    // KEY FIELD HARUS ADA DI MODEL
+    settings.KeyFieldName = "TransNo";
+
+    settings.CallbackRouteValues = new
+    {
+        Controller = "Notification",
+        Action = "GridCallback"
+    };
+
+    settings.SettingsPager.PageSize = 10;
+    settings.SettingsPager.AlwaysShowPager = true;
+
+    // ===== Columns =====
+
+    settings.Columns.Add(c =>
+    {
+        c.FieldName = "TransNo";
+        c.Caption = "No.";
+        c.Width = Unit.Pixel(150);
+    });
+
+    settings.Columns.Add(c =>
+    {
+        c.FieldName = "TransType";
+        c.Caption = "Document";
+        c.Width = Unit.Pixel(150);
+    });
+
+    settings.Columns.Add(c =>
+    {
+        c.FieldName = "RequestDate";
+        c.Caption = "Request Date";
+        c.PropertiesEdit.DisplayFormatString = "dd/MM/yyyy HH:mm";
+        c.Width = Unit.Pixel(170);
+    });
+
+    settings.Columns.Add(c =>
+    {
+        c.FieldName = "Message";
+        c.Caption = "Message Approval";
+    });
+
+}).Bind(Model).GetHtml()

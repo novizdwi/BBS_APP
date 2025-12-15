@@ -78,111 +78,132 @@
 <body>
     <div class="content-wrapper">
         @Html.DevExpress().Panel(settings => {
-        settings.Name = "headerPanel";
-        settings.FixedPosition = PanelFixedPosition.WindowTop;
-        settings.FixedPositionOverlap = true;
-        settings.ControlStyle.CssClass = "app-header";
-        settings.SetContent(() => {
-            ViewContext.Writer.Write("<div class='left-block'>");
+       settings.Name = "headerPanel";
+       settings.FixedPosition = PanelFixedPosition.WindowTop;
+       settings.FixedPositionOverlap = true;
+       settings.ControlStyle.CssClass = "app-header";
+       settings.SetContent(() => {
+           ViewContext.Writer.Write("<div class='left-block'>");
 
-            @Html.DevExpress().Menu(menuSettings => {
-                menuSettings.Name = "leftAreaMenu";
-                menuSettings.ItemAutoWidth = false;
-                menuSettings.EnableHotTrack = false;
-                menuSettings.SettingsAdaptivity.Enabled = true;
-                menuSettings.Width = Unit.Percentage(100);
-                menuSettings.SyncSelectionMode = SyncSelectionMode.None;
-                menuSettings.ControlStyle.CssClass = "header-menu";
-                menuSettings.ControlStyle.SeparatorWidth = 0;
-                menuSettings.Styles.Item.VerticalAlign = VerticalAlign.Middle;
-                menuSettings.Styles.Item.CssClass = "item";
-                menuSettings.ClientSideEvents.ItemClick = "onLeftMenuItemClick";
-                menuSettings.Items.Add(item => {
-                    item.Text = "";
-                    item.Name = "ToggleLeftPanel";
-                    item.GroupName = "LeftPanel";
-                    item.Image.Url = "~/Content/Images/menu.svg";
-                    item.Image.Height = Unit.Pixel(18);
-                    item.Image.Width = Unit.Pixel(18);
-                    item.ItemStyle.CssClass = "toggle-item vertically-aligned";
-                    item.ItemStyle.CheckedStyle.CssClass = "checked selected";
-                });
+           @Html.DevExpress().Menu(menuSettings => {
+               menuSettings.Name = "leftAreaMenu";
+               menuSettings.ItemAutoWidth = false;
+               menuSettings.EnableHotTrack = false;
+               menuSettings.SettingsAdaptivity.Enabled = true;
+               menuSettings.Width = Unit.Percentage(100);
+               menuSettings.SyncSelectionMode = SyncSelectionMode.None;
+               menuSettings.ControlStyle.CssClass = "header-menu";
+               menuSettings.ControlStyle.SeparatorWidth = 0;
+               menuSettings.Styles.Item.VerticalAlign = VerticalAlign.Middle;
+               menuSettings.Styles.Item.CssClass = "item";
+               menuSettings.ClientSideEvents.ItemClick = "onLeftMenuItemClick";
+               menuSettings.Items.Add(item => {
+                   item.Text = "";
+                   item.Name = "ToggleLeftPanel";
+                   item.GroupName = "LeftPanel";
+                   item.Image.Url = "~/Content/Images/menu.svg";
+                   item.Image.Height = Unit.Pixel(18);
+                   item.Image.Width = Unit.Pixel(18);
+                   item.ItemStyle.CssClass = "toggle-item vertically-aligned";
+                   item.ItemStyle.CheckedStyle.CssClass = "checked selected";
+               });
 
-                menuSettings.Items.Add(item => {
-                    item.Text = "";
-                    item.NavigateUrl = "~/";
-                    item.ItemStyle.CssClass = "image-item vertically-aligned";
-                    item.Image.SpriteProperties.CssClass = "header-logo";
-                });
-            }).GetHtml();
-            ViewContext.Writer.Write("</div><div class='right-block'>");
-            @Html.DevExpress().Menu(menuSettings => {
-                menuSettings.Name = "rightAreaMenu";
-                menuSettings.ItemAutoWidth = false;
-                menuSettings.SettingsAdaptivity.Enabled = true;
-                menuSettings.Width = Unit.Percentage(100);
-                menuSettings.ShowPopOutImages = DefaultBoolean.False;
-                menuSettings.ControlStyle.SeparatorWidth = 0;
-                menuSettings.ApplyItemStyleToTemplates = true;
-                menuSettings.ControlStyle.CssClass = "header-menu";
-                menuSettings.Styles.Item.VerticalAlign = VerticalAlign.Middle;
-                menuSettings.Styles.Item.CssClass = "item";
-                menuSettings.Styles.SubMenu.CssClass = "header-sub-menu";
-                menuSettings.Styles.SubMenuItem.CssClass = "item";
-                menuSettings.ClientSideEvents.ItemClick = "onRightMenuItemClick";
+               menuSettings.Items.Add(item => {
+                   item.Text = "";
+                   item.NavigateUrl = "~/";
+                   item.ItemStyle.CssClass = "image-item vertically-aligned";
+                   item.Image.SpriteProperties.CssClass = "header-logo";
+               });
+           }).GetHtml();
+           ViewContext.Writer.Write("</div><div class='right-block'>");
+           @Html.DevExpress().Menu(menuSettings => {
+               menuSettings.Name = "rightAreaMenu";
+               menuSettings.ItemAutoWidth = false;
+               menuSettings.SettingsAdaptivity.Enabled = true;
+               menuSettings.Width = Unit.Percentage(100);
+               menuSettings.ShowPopOutImages = DefaultBoolean.False;
+               menuSettings.ControlStyle.SeparatorWidth = 0;
+               menuSettings.ApplyItemStyleToTemplates = true;
+               menuSettings.ControlStyle.CssClass = "header-menu";
+               menuSettings.Styles.Item.VerticalAlign = VerticalAlign.Middle;
+               menuSettings.Styles.Item.CssClass = "item";
+               menuSettings.Styles.SubMenu.CssClass = "header-sub-menu";
+               menuSettings.Styles.SubMenuItem.CssClass = "item";
+               menuSettings.ClientSideEvents.ItemClick = "onRightMenuItemClick";
 
-                menuSettings.Items.Add(item => {
-                    item.Name = "AccountItem";
-                    item.ItemStyle.CssClass = "image-item";
-                    item.SetTextTemplateContent(template => {
-                        string className = AuthHelper.IsAuthenticated() ? "account-image" : "empty-image";
-                        string accountItemContent = "", accountItemBackgroundStyle = "";
-                        if(AuthHelper.IsAuthenticated()) {
-                            var user = AuthHelper.GetLoggedInUserInfo();
-                            if(string.IsNullOrEmpty(user.AvatarUrl))
-                                accountItemContent = string.Format("{0}{1}", user.FirstName[0], user.LastName[0]).ToUpper();
-                            else
-                                accountItemBackgroundStyle = string.Format("style=\"background-image: url('{0}')\"", Url.Content("~/Content/Images/user.svg"));
-                        }
-                        ViewContext.Writer.Write("<div class='account-background'>");
-                        ViewContext.Writer.Write("<div " + accountItemBackgroundStyle + " class='" + className + "'>" + accountItemContent + "</div>");
-                        ViewContext.Writer.Write("</div>");
-                    });
-                    item.Items.Add(subItem => {
-                        subItem.Name = "MyAccountItem";
-                        subItem.Text = "My account";
-                        subItem.ItemStyle.CssClass = "myaccount-item";
-                        subItem.SetTextTemplateContent(template => {
-                            Html.RenderPartial("LogonPartial");
-                        });
-                    });
-                    item.Items.Add(subItem => {
-                        subItem.Name = "SignOutItem";
-                        subItem.Text = "Sign out";
-                        subItem.Image.Url = "~/Content/Images/sign-out.svg";
-                        subItem.Image.Width = Unit.Pixel(16);
-                        subItem.Image.Height = Unit.Pixel(16);
-                        subItem.NavigateUrl = Url.Action("Logout", "Logout");
-                    });
+               menuSettings.Items.Add(item =>
+               {
+                   item.Name = "NotificationItem";
+                   item.Text = "";
+                   item.ItemStyle.CssClass = "image-item"; // biar style nya sama dgn AccountItem
+                   item.SetTextTemplateContent(template =>
+                   {
+                       // icon + badge sederhana
+                       ViewContext.Writer.Write(@"
+                        <div class='notif-wrap'>
+                            <img src='" + Url.Content("~/Content/Images/bell.svg") + @"' class='notif-icon' />
+                            <span id='notifBadge' class='notif-badge'>3333</span>
+                        </div>
+                    ");
+                   });
 
-                });
-                if(IsSectionDefined("RightPanelContent")) {
-                    menuSettings.Items.Add(item => {
-                        item.Name = "ToggleRightPanel";
-                        item.Text = "";
-                        item.GroupName = "RightPanel";
-                        item.ItemStyle.CssClass = "toggle-item vertically-aligned";
-                        item.ItemStyle.CheckedStyle.CssClass = "checked selected";
-                        item.Image.Height = Unit.Pixel(18);
-                        item.Image.SpriteProperties.CssClass = "image";
-                    });
-                }
-            }).GetHtml();
-            ViewContext.Writer.Write("</div>");
+               });
 
-            ViewContext.Writer.Write("<div class='dx-clear'></div>");
-        });
-    }).GetHtml()
+               menuSettings.ClientSideEvents.ItemClick = "function(s,e){ popupNotif.Show(); }";
+
+
+               menuSettings.Items.Add(item => {
+                   item.Name = "AccountItem";
+                   item.ItemStyle.CssClass = "image-item";
+                   item.SetTextTemplateContent(template => {
+                       string className = AuthHelper.IsAuthenticated() ? "account-image" : "empty-image";
+                       string accountItemContent = "", accountItemBackgroundStyle = "";
+                       if(AuthHelper.IsAuthenticated()) {
+                           var user = AuthHelper.GetLoggedInUserInfo();
+                           if(string.IsNullOrEmpty(user.AvatarUrl))
+                               accountItemContent = string.Format("{0}{1}", user.FirstName[0], user.LastName[0]).ToUpper();
+                           else
+                               accountItemBackgroundStyle = string.Format("style=\"background-image: url('{0}')\"", Url.Content("~/Content/Images/user.svg"));
+                       }
+                       ViewContext.Writer.Write("<div class='account-background'>");
+                       ViewContext.Writer.Write("<div " + accountItemBackgroundStyle + " class='" + className + "'>" + accountItemContent + "</div>");
+                       ViewContext.Writer.Write("</div>");
+                   });
+                   item.Items.Add(subItem => {
+                       subItem.Name = "MyAccountItem";
+                       subItem.Text = "My account";
+                       subItem.ItemStyle.CssClass = "myaccount-item";
+                       subItem.SetTextTemplateContent(template => {
+                           Html.RenderPartial("LogonPartial");
+                       });
+                   });
+                   item.Items.Add(subItem => {
+                       subItem.Name = "SignOutItem";
+                       subItem.Text = "Sign out";
+                       subItem.Image.Url = "~/Content/Images/sign-out.svg";
+                       subItem.Image.Width = Unit.Pixel(16);
+                       subItem.Image.Height = Unit.Pixel(16);
+                       subItem.NavigateUrl = Url.Action("Logout", "Logout");
+                   });
+
+               });
+               if(IsSectionDefined("RightPanelContent")) {
+                   menuSettings.Items.Add(item => {
+                       item.Name = "ToggleRightPanel";
+                       item.Text = "";
+                       item.GroupName = "RightPanel";
+                       item.ItemStyle.CssClass = "toggle-item vertically-aligned";
+                       item.ItemStyle.CheckedStyle.CssClass = "checked selected";
+                       item.Image.Height = Unit.Pixel(18);
+                       item.Image.SpriteProperties.CssClass = "image";
+                   });
+               }
+           }).GetHtml();
+           ViewContext.Writer.Write("</div>");
+
+           ViewContext.Writer.Write("<div class='dx-clear'></div>");
+       });
+   }).GetHtml()
 
         @Html.DevExpress().Panel(settings => {
        settings.Name = "leftPanel";
@@ -227,7 +248,7 @@
             }).GetHtml()
         }
 
-       
+
         <div class="content" id="pageContent">
             @RenderBody()
 
@@ -283,11 +304,56 @@
         };
 
     }).GetHtml()
+
+        @Html.DevExpress().PopupControl(settings =>
+    {
+        settings.Name = "popupNotif";
+
+        // controller + action untuk load ulang isi popup
+        settings.CallbackRouteValues = new { Controller = "Notification", Action = "Popup_OnDemand" };
+
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.Modal = false;
+
+        settings.ShowFooter = true;
+        settings.ShowRefreshButton = true;     // tombol refresh otomatis
+        settings.LoadContentViaCallback = LoadContentViaCallback.OnFirstShow;
+
+        settings.HeaderText = "Notification Approval";
+
+        settings.SetContent(() =>
+        {
+            Html.RenderPartial("~/Views/Notification/Partial/Notification_PopupContent_Partial.cshtml");
+        });
+
+        settings.PreRender = (sender, e) =>
+        {
+            var popup = (ASPxPopupControl)sender;
+            popup.Width = 600;
+            popup.Height = 450;
+        };
+    }).GetHtml()
+
+
+
+
     </div>
     @*<script type="text/javascript">
-        MVCxClientGlobalEvents.AddControlsInitializedEventHandler(onControlsInitialized);
-        ASPxClientControl.GetControlCollection().BrowserWindowResized.AddHandler(onBrowserWindowResized);
-    </script>*@
-    
+            MVCxClientGlobalEvents.AddControlsInitializedEventHandler(onControlsInitialized);
+            ASPxClientControl.GetControlCollection().BrowserWindowResized.AddHandler(onBrowserWindowResized);
+        </script>*@
+
+    <script>      
+
+        setInterval(function () {
+            if (typeof popupNotif !== "undefined" && popupNotif.IsVisible()) {
+                gvNotif.Refresh();
+            }
+        }, 5000); // 5 detik
+
+    </script>
+
 </body>
 </html>
