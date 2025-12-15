@@ -216,7 +216,7 @@ namespace Models.Transaction.StockOpname
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "StockOpname");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "StockOpnameScan");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;
@@ -236,7 +236,7 @@ namespace Models.Transaction.StockOpname
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "StockOpname");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "StockOpnameScan");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;
@@ -264,7 +264,7 @@ namespace Models.Transaction.StockOpname
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "StockOpname");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "StockOpnameScan");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;
@@ -291,7 +291,7 @@ namespace Models.Transaction.StockOpname
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "StockOpname");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "StockOpnameScan");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;

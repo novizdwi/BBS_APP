@@ -918,7 +918,13 @@ namespace Models.Transaction.StockOpname
             SAPbobsCOM.InventoryPosting oDocument = oInventoryPostingsService.GetDataInterface(SAPbobsCOM.InventoryPostingsServiceDataInterfaces.ipsInventoryPosting);
 
             oDocument.PostingDate = DateTime.Now;
-            
+
+            if(!string.IsNullOrWhiteSpace(model.Comments))
+            {
+                oDocument.Remarks = model.Comments;
+                oDocument.JournalRemark = model.Comments;
+            }
+
             oDocument.UserFields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
             oDocument.UserFields.Item("U_IDU_WebTransNo").Value = model.TransNo;
             if(model.ListDetail_.Count > 0)
@@ -937,6 +943,12 @@ namespace Models.Transaction.StockOpname
                         
                         line.InventoryOffsetIncreaseAccount = item.AcctCode;
                         line.InventoryOffsetDecreaseAccount = item.AcctCode;
+
+                        line.CostingCode = item.PillarsCode;
+                        line.CostingCode2 = item.ClassCode;
+                        line.CostingCode3 = item.SubClass1Code;
+                        line.CostingCode4 = item.SubClass2Code;
+                        line.ProjectCode = item.ProjectCode;
 
                         line.UserFields.Item("U_IDU_WebId").Value = Convert.ToInt32(item.Id);
                         line.UserFields.Item("U_IDU_DetId").Value = Convert.ToInt32(item.DetId);

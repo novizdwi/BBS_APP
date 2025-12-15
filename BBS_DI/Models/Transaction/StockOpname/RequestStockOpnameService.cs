@@ -82,13 +82,13 @@ namespace Models.Transaction.StockOpname
                                 FROM ""Tm_User"" T0
                                 WHERE T0.""Id"" = :p0 
                 ";
-                model.WhsCode = CONTEXT.Database.SqlQuery<string>(ssql, userId).Single();
+                model.WhsCode = CONTEXT.Database.SqlQuery<string>(ssql, userId).FirstOrDefault();
 
                 ssql = @"SELECT T0.""WhsName""
                                 FROM """+ DbProvider.dbSap_Name + @""".""OWHS"" T0
                                 WHERE T0.""WhsCode"" = :p0 
                 ";
-                model.WhsName = CONTEXT.Database.SqlQuery<string>(ssql, model.WhsCode).Single();
+                model.WhsName = CONTEXT.Database.SqlQuery<string>(ssql, model.WhsCode).FirstOrDefault();
 
             }
 

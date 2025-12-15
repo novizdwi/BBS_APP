@@ -234,7 +234,7 @@ namespace Models.Transaction.Purchasing
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "PurchaseOrder");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "PurchaseOrderScan");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;
@@ -254,7 +254,7 @@ namespace Models.Transaction.Purchasing
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "PurchaseOrder");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "PurchaseOrderScan");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;
@@ -282,7 +282,7 @@ namespace Models.Transaction.Purchasing
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "PurchaseOrder");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "PurchaseOrderScan");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;
@@ -309,7 +309,7 @@ namespace Models.Transaction.Purchasing
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "PurchaseOrder");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "PurchaseOrderScan");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;

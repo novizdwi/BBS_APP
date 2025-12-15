@@ -73,6 +73,9 @@ namespace Models.Setting.ApprovalStage
         public int UserId { get; set; }
 
         public string UserName_ { get; set; }
+
+        public string FirstName_ { get; set; }
+
         public string RoleName_ { get; set; }
 
 
@@ -116,6 +119,7 @@ namespace Models.Setting.ApprovalStage
                         COALESCE(T1.""DetId"",0) AS ""DetId"", 
                         T0.""Id"" AS ""UserId"", 
                         T0.""UserName"" AS ""UserName_"", 
+                        T0.""FirstName"" AS ""FirstName_"",
                         COALESCE(T1.""IsTick"",'') AS ""IsTick"", 
                         T2.""RoleName"" as ""RoleName_"" 
                 FROM ""Tm_User"" T0 

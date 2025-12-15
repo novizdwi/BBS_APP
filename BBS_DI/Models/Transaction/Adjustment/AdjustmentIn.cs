@@ -48,8 +48,6 @@ namespace Models.Transaction.Adjustment
 
         public string DocNum_ { get; set; }
 
-        public string Comments { get; set; }
-
         public string ScanDeviceId { get; set; }
 
         public string AdjustmentTypeCode { get; set; }
@@ -90,6 +88,9 @@ namespace Models.Transaction.Adjustment
         public string ApprovalStatus { get; set; }
 
         public string IsOpeningBalance { get; set; }
+
+        [Required(ErrorMessage = "required")]
+        public string Comments { get; set; }
 
         public DateTime? CreatedDate { get; set; }
 
@@ -634,10 +635,10 @@ namespace Models.Transaction.Adjustment
                             tx_AdjustmentIn.ModifiedDate = dtModified;
                             tx_AdjustmentIn.ModifiedUser = userId;
 
+                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn_InsertItemTag\"(:p0,:p1)", userId, id);
                             CONTEXT.SaveChanges();
                         }
 
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn_InsertItemTag\"(:p0,:p1)", userId, id);
                         SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "after", "Tx_AdjustmentIn", "post", "Id", keyValue);
 
                         if (oCompany.InTransaction)

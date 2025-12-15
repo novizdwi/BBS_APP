@@ -192,6 +192,8 @@ namespace Models.Transaction.Inventory
         public int? BaseDetId { get; set; }
 
         public string LineStatus { get; set; }
+
+        public string Comments { get; set; }
     }
 
     public class TransferSummaryInItemTagView___

@@ -468,6 +468,7 @@ CREATE COLUMN TABLE "Tx_StockSummaryOpname_Item" (
     "QuantityScan" DECIMAL(21,2),
     "QuantityValid" DECIMAL(21,2),	
     "QtyVariance" DECIMAL(21,2),
+    "QtyOnhandSAP" DECIMAL(21,2),	
     "UnitPriceTc" DECIMAL(21,2),
     "UomEntry" INTEGER,
     "Uom" NVARCHAR(50),
