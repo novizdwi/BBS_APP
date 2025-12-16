@@ -60,6 +60,9 @@ namespace Models.Transaction.StockOpname
 
         public DateTime? ModifiedDate { get; set; }
 
+        public string CreatedDate_ { get; set; }
+
+        public string ModifiedDate_ { get; set; }
     }
     
     #endregion
@@ -109,7 +112,9 @@ namespace Models.Transaction.StockOpname
             RequestStockOpnameModel model = null;
             if (id != 0)
             {
-                string ssql = @"SELECT *, T1.""FirstName"" AS ""UserName"" 
+                string ssql = @"SELECT *, T1.""FirstName"" AS ""UserName"",
+                            TO_VARCHAR(T0.""CreatedDate"", 'DD/MM/YYYY') AS ""CreatedDate_"",
+                            TO_VARCHAR(T0.""ModifiedDate"", 'DD/MM/YYYY') AS ""ModifiedDate_""
                             FROM ""Tx_Request_StockOpname"" T0
                             LEFT JOIN ""Tm_User"" T1 ON T0.""ModifiedUser"" = T1.""Id""
                             WHERE T0.""Id"" = :p0 

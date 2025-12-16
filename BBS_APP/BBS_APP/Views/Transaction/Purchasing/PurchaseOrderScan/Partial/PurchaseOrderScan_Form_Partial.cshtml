@@ -172,7 +172,7 @@
         txt.Properties.NullText = "dd/MM/yyyy";
         txt.Properties.EditFormat = EditFormat.Custom;
         txt.Properties.EditFormatString = "dd/MM/yyyy";
-        txt.Properties.EditFormat = EditFormat.Date; 
+        txt.Properties.EditFormat = EditFormat.Date;
         txt.Properties.ClientSideEvents.ParseDate = "function (s,e){ { ParseDateEdit(s,e);  } }";
         txt.Width = 230;
     });
@@ -287,7 +287,7 @@
                 x =>
                 {
                     x.Name = "label1";
-                    x.Text = "Created By(" + Models._Utils.GeneralGetList.GetUserNameByUserId(Model.CreatedUser) + ")";
+                    x.Text = "Created By(" + Models._Utils.GeneralGetList.GetUserNameByUserId(Model.CreatedUser) + ", " + Models._Utils.GeneralGetList.GeFirstNameByUserId(Model.CreatedUser) + " : " + Model.CreatedDate_ + ")";
                     x.Properties.EnableClientSideAPI = true;
                 }
             )
@@ -301,7 +301,7 @@
                 x =>
                 {
                     x.Name = "label3";
-                    x.Text = "  Modified By(" + Models._Utils.GeneralGetList.GetUserNameByUserId(Model.ModifiedUser) + ")";
+                    x.Text = "  Modified By(" + Models._Utils.GeneralGetList.GetUserNameByUserId(Model.CreatedUser) + ", " + Models._Utils.GeneralGetList.GeFirstNameByUserId(Model.CreatedUser) + " : " + Model.ModifiedDate_ + ")";
                     x.Properties.EnableClientSideAPI = true;
                 }
             )

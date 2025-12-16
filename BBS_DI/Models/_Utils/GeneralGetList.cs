@@ -411,6 +411,28 @@ namespace Models._Utils
             return GetValue<string>(CONTEXT, ssql, userId);
         }
 
+        public static string GeFirstNameByUserId(int? userId)
+        {
+            if (userId.HasValue)
+            {
+                using (var CONTEXT = new HANA_APP())
+                {
+                    return GeFirstNameByUserId(CONTEXT, userId);
+                }
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        public static string GeFirstNameByUserId(HANA_APP CONTEXT, int? userId)
+        {
+            var ssql = @"SELECT TOP 1 IFNULL(T0.""FirstName"",'') AS ""FirstName"" FROM ""Tm_User"" T0   WHERE T0.""Id""=:p0  ";
+
+            return GetValue<string>(CONTEXT, ssql, userId);
+        }
+
         public static DataTable GetPaymentTypes()
         {
             using (var CONTEXT = new HANA_APP())
