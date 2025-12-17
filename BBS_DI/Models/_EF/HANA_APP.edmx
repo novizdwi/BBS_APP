@@ -696,6 +696,23 @@
           <Property Name="ModifiedDate" Type="seconddate" />
           <Property Name="ModifiedUser" Type="int" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Tp_UserAlert">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="BaseType" Type="nvarchar" MaxLength="50" />
+          <Property Name="BaseId" Type="bigint" />
+          <Property Name="BaseTransNo" Type="nvarchar" MaxLength="100" />
+          <Property Name="Action" Type="nvarchar" MaxLength="100" />
+          <Property Name="NotificationMessage" Type="nvarchar" MaxLength="500" />
+          <Property Name="SenderId" Type="int" />
+          <Property Name="IsRead" Type="varchar" MaxLength="1" />
+          <Property Name="LastShowTime" Type="timestamp" />
+        </EntityType>
         <EntityType Name="Ts_FormatNumbering">
           <Key>
             <PropertyRef Name="Code" />
@@ -1336,6 +1353,7 @@
           <Property Name="SubClass2Name" Type="nvarchar" MaxLength="50" />
           <Property Name="ProjectCode" Type="nvarchar" MaxLength="50" />
           <Property Name="ProjectName" Type="nvarchar" MaxLength="100" />
+          <Property Name="QuantityOnHandSAP" Type="decimal" Precision="21" Scale="2" />
         </EntityType>
         <EntityType Name="Tx_StockSummaryOpname_Item_Tag">
           <Key>
@@ -1944,6 +1962,20 @@
           <EntitySet Name="Tx_TransferSummaryOut_Item" EntityType="Self.Tx_TransferSummaryOut_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tx_TransferSummaryOut_Item_Tag" EntityType="Self.Tx_TransferSummaryOut_Item_Tag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
           <EntitySet Name="Tx_TransferSummaryOut_Ref" EntityType="Self.Tx_TransferSummaryOut_Ref" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
+          <EntitySet Name="Tp_UserAlert" EntityType="Self.Tp_UserAlert" store:Type="Tables" store:Schema="BBS_RFID_TEST_APP">
+            <DefiningQuery>SELECT 
+"Tp_UserAlert"."Id" AS "Id", 
+"Tp_UserAlert"."UserId" AS "UserId", 
+"Tp_UserAlert"."BaseType" AS "BaseType", 
+"Tp_UserAlert"."BaseId" AS "BaseId", 
+"Tp_UserAlert"."BaseTransNo" AS "BaseTransNo", 
+"Tp_UserAlert"."Action" AS "Action", 
+"Tp_UserAlert"."NotificationMessage" AS "NotificationMessage", 
+"Tp_UserAlert"."SenderId" AS "SenderId", 
+"Tp_UserAlert"."IsRead" AS "IsRead", 
+"Tp_UserAlert"."LastShowTime" AS "LastShowTime"
+FROM "BBS_RFID_TEST_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -2048,6 +2080,7 @@
           <EntitySet Name="Tx_TransferSummaryOut_Item" EntityType="Model1.Tx_TransferSummaryOut_Item" />
           <EntitySet Name="Tx_TransferSummaryOut_Item_Tag" EntityType="Model1.Tx_TransferSummaryOut_Item_Tag" />
           <EntitySet Name="Tx_TransferSummaryOut_Ref" EntityType="Model1.Tx_TransferSummaryOut_Ref" />
+          <EntitySet Name="Tp_UserAlert" EntityType="Model1.Tp_UserAlert" />
         </EntityContainer>
         <EntityType Name="Tm_Alert">
           <Key>
@@ -3380,6 +3413,7 @@
           <Property Name="SubClass2Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ProjectCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ProjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="QuantityOnHandSAP" Type="Decimal" Precision="21" Scale="2" />
         </EntityType>
         <EntityType Name="Tx_StockSummaryOpname_Item_Tag">
           <Key>
@@ -3888,6 +3922,21 @@
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Tp_UserAlert">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="BaseType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BaseId" Type="Int64" />
+          <Property Name="BaseTransNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Action" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NotificationMessage" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SenderId" Type="Int32" />
+          <Property Name="IsRead" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="LastShowTime" Type="DateTime" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -5270,6 +5319,7 @@
           <EntitySetMapping Name="Tx_StockSummaryOpname_Item">
             <EntityTypeMapping TypeName="Model1.Tx_StockSummaryOpname_Item">
               <MappingFragment StoreEntitySet="Tx_StockSummaryOpname_Item">
+                <ScalarProperty Name="QuantityOnHandSAP" ColumnName="QuantityOnHandSAP" />
                 <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
                 <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
                 <ScalarProperty Name="SubClass2Name" ColumnName="SubClass2Name" />
@@ -5825,6 +5875,22 @@
                 <ScalarProperty Name="BaseNo" ColumnName="BaseNo" />
                 <ScalarProperty Name="BaseId" ColumnName="BaseId" />
                 <ScalarProperty Name="DetId" ColumnName="DetId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tp_UserAlert">
+            <EntityTypeMapping TypeName="Model1.Tp_UserAlert">
+              <MappingFragment StoreEntitySet="Tp_UserAlert">
+                <ScalarProperty Name="LastShowTime" ColumnName="LastShowTime" />
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="SenderId" ColumnName="SenderId" />
+                <ScalarProperty Name="NotificationMessage" ColumnName="NotificationMessage" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="BaseTransNo" ColumnName="BaseTransNo" />
+                <ScalarProperty Name="BaseId" ColumnName="BaseId" />
+                <ScalarProperty Name="BaseType" ColumnName="BaseType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

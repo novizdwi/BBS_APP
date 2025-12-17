@@ -103,6 +103,7 @@
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Item" Width="1.5" PointX="14.75" PointY="30.75" />
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Item_Tag" Width="1.5" PointX="16.75" PointY="30.75" />
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Ref" Width="1.5" PointX="30.75" PointY="19.75" />
+        <EntityTypeShape EntityType="Model1.Tp_UserAlert" Width="1.5" PointX="30.75" PointY="24.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

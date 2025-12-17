@@ -123,5 +123,6 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_TransferSummaryOut_Item> Tx_TransferSummaryOut_Item { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut_Item_Tag> Tx_TransferSummaryOut_Item_Tag { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut_Ref> Tx_TransferSummaryOut_Ref { get; set; }
+        public virtual DbSet<Tp_UserAlert> Tp_UserAlert { get; set; }
     }
 }
