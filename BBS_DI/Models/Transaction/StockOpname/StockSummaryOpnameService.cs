@@ -178,6 +178,10 @@ namespace Models.Transaction.StockOpname
 
         public string WhsName { get; set; }
 
+        public decimal? QuantityOnHandSAP { get; set; }
+
+        public decimal? QuantityOnHandSAP_ { get; set; }
+
         public decimal? Quantity { get; set; }
 
         public decimal? QuantityValid  { get; set; }
@@ -400,9 +404,11 @@ namespace Models.Transaction.StockOpname
 
         public List<StockSummaryOpname_DetailModel> StockSummaryOpname_Details(HANA_APP CONTEXT, long id = 0)
         {
-            string ssql = @"SELECT T0.*, COALESCE(T1.""OnHand"",0) AS ""OnHand"", (COALESCE(T0.""QuantityValid"",0) - COALESCE(T1.""OnHand"",0)) AS ""QtyVariance_""
+            string ssql = @"SELECT T0.*, COALESCE(T1.""OnHand"",0) AS ""OnHand"", (COALESCE(T0.""QuantityValid"",0) - COALESCE(T1.""OnHand"",0)) AS ""QtyVariance_"",
+                T3.""OnHand"" AS ""QuantityOnHandSAP_""
                 FROM ""Tx_StockSummaryOpname_Item"" T0
                 LEFT JOIN ""Tm_Item_Warehouse"" T1 ON T0.""ItemCode"" = T1.""ItemCode"" AND T0.""WhsCode"" = T1.""WhsCode""
+                LEFT JOIN """ + DbProvider.dbSap_Name + @""".""OITW"" T3 ON T0.""ItemCode"" = T3.""ItemCode"" AND T0.""WhsCode"" = T3.""WhsCode""
                 WHERE T0.""Id"" =:p0
                 ORDER BY T0.""DetId"" ASC
             ";
@@ -652,6 +658,12 @@ namespace Models.Transaction.StockOpname
                                     //{
                                     //    Tx_StockSummaryOpname.Status2 = "Close";
                                     //}
+
+                                    if (method == "Post")
+                                    {
+                                        CONTEXT.Database.ExecuteSqlCommand("CALL \"StockSummaryOpname_UpdateItem\"(:p0,:p1)", model._UserId, model.Id);
+                                    }
+
                                     CONTEXT.SaveChanges();
 
                                     if (model.Details_ != null)
@@ -668,7 +680,7 @@ namespace Models.Transaction.StockOpname
                                     {
                                         foreach (var detail in model.Details_.modifiedRowValues)
                                         {
-                                            Detail_Update(CONTEXT, detail, model._UserId, method);
+                                            Detail_Update(CONTEXT, detail, model._UserId);
                                         }
                                     }
 
@@ -754,7 +766,7 @@ namespace Models.Transaction.StockOpname
 
         //}
 
-        public void Detail_Update(HANA_APP CONTEXT, StockSummaryOpname_DetailModel model, int UserId, string method)
+        public void Detail_Update(HANA_APP CONTEXT, StockSummaryOpname_DetailModel model, int UserId)
         {
             if (model != null)
             {
@@ -763,12 +775,8 @@ namespace Models.Transaction.StockOpname
 
                 if (Tx_StockSummaryOpname_Item != null)
                 {
-                    var exceptColumns = new string[] { "DetId", "Id", "QtyVariance" };
+                    var exceptColumns = new string[] { "DetId", "Id", "QtyVariance", "QuantityOnHandSAP" };
                     CopyProperty.CopyProperties(model, Tx_StockSummaryOpname_Item, false, exceptColumns);
-                    if(method == "Post")
-                    {
-                        Tx_StockSummaryOpname_Item.QtyVariance = model.QtyVariance;
-                    }
 
                     DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
 

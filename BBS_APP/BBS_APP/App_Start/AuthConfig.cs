@@ -33,7 +33,7 @@
 
 
 
-namespace MJL_DX20
+namespace BBS_APP
 {
     public static class AuthConfig
     {

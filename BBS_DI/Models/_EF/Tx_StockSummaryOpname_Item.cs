@@ -42,6 +42,6 @@ namespace BBS_DI.Models._EF
         public string SubClass2Name { get; set; }
         public string ProjectCode { get; set; }
         public string ProjectName { get; set; }
-        public Nullable<decimal> QtyOnhandSAP { get; set; }
+        public Nullable<decimal> QuantityOnHandSAP { get; set; }
     }
 }
