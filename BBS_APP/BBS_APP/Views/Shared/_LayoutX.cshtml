@@ -142,14 +142,15 @@
                        ViewContext.Writer.Write(@"
                         <div class='notif-wrap'>
                             <img src='" + Url.Content("~/Content/Images/bell.svg") + @"' class='notif-icon' />
-                            <span id='notifBadge' class='notif-badge'>3333</span>
+                            <span id='notifBadge' class='notif-badge'>3335</span>
                         </div>
                     ");
                    });
 
                });
 
-               menuSettings.ClientSideEvents.ItemClick = "function(s,e){ popupNotif.Show(); }";
+               menuSettings.ClientSideEvents.ItemClick = "function(s,e){ notificationPopupListNotification.Show(); }";
+               //menuSettings.ClientSideEvents.ItemClick = "function(s,e){ popupNotif.Show(); }";
 
 
                menuSettings.Items.Add(item => {
@@ -305,36 +306,39 @@
 
     }).GetHtml()
 
-        @Html.DevExpress().PopupControl(settings =>
-    {
-        settings.Name = "popupNotif";
 
-        // controller + action untuk load ulang isi popup
-        settings.CallbackRouteValues = new { Controller = "Notification", Action = "Popup_OnDemand" };
+        @Html.Partial("~/Views/Notification/Notification.cshtml")
 
-        settings.CloseAction = CloseAction.CloseButton;
-        settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
-        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
-        settings.Modal = false;
-
-        settings.ShowFooter = true;
-        settings.ShowRefreshButton = true;     // tombol refresh otomatis
-        settings.LoadContentViaCallback = LoadContentViaCallback.OnFirstShow;
-
-        settings.HeaderText = "Notification Approval";
-
-        settings.SetContent(() =>
+        @*@Html.DevExpress().PopupControl(settings =>
         {
-            Html.RenderPartial("~/Views/Notification/Partial/Notification_PopupContent_Partial.cshtml");
-        });
+            settings.Name = "popupNotif";
 
-        settings.PreRender = (sender, e) =>
-        {
-            var popup = (ASPxPopupControl)sender;
-            popup.Width = 600;
-            popup.Height = 450;
-        };
-    }).GetHtml()
+            // controller + action untuk load ulang isi popup
+            settings.CallbackRouteValues = new { Controller = "Notification", Action = "Popup_OnDemand" };
+
+            settings.CloseAction = CloseAction.CloseButton;
+            settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+            settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+            settings.Modal = false;
+
+            settings.ShowFooter = true;
+            settings.ShowRefreshButton = true;     // tombol refresh otomatis
+            settings.LoadContentViaCallback = LoadContentViaCallback.OnFirstShow;
+
+            settings.HeaderText = "Notification List";
+
+            settings.SetContent(() =>
+            {
+                Html.RenderPartial("~/Views/Notification/Notification.cshtml");
+            });
+
+            settings.PreRender = (sender, e) =>
+            {
+                var popup = (ASPxPopupControl)sender;
+                popup.Width = 600;
+                popup.Height = 450;
+            };
+        }).GetHtml()*@
 
 
 
