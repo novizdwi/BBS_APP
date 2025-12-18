@@ -109,9 +109,34 @@
         column.ColumnType = MVCxGridViewColumnType.TextBox;
 
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+
+        column.SetDataItemTemplateContent(c =>
+        {
+
+            string valText = (string)DataBinder.Eval(c.DataItem, "TransNo");
+
+            string valLinkControlerName = (string)DataBinder.Eval(c.DataItem, "TransType");
+
+
+            string valId = DataBinder.Eval(c.DataItem, "Id").ToString();
+
+            ViewContext.Writer.Write(
+
+                Html.DevExpress().HyperLink(settingsHL =>
+                {
+                    settingsHL.Name = "BtnColumnLink_" + Guid.NewGuid();
+                    settingsHL.NavigateUrl = "javascript:void(0)";
+                    settingsHL.Properties.Text = valText;
+                    settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ OnClickColumnLink(s, e, '{0}','{1}'); }}", Url.Action("Detail", valLinkControlerName), valId);
+                }).GetHtml()
+
+            );
+
+        });
+
     });
 
-    settings.Columns.Add("TransType", "Document").Width = 100;
+    settings.Columns.Add("TransType", "Document").Width = 150;
 
     settings.Columns.Add(column =>
     {
@@ -193,7 +218,7 @@
 
     string additionParam = "";
 
-  
+
     settings.ClientSideEvents.BeginCallback = string.Format("function(s, e) {{ {0}  e.customArgs['hidden_CflType']=s.cpGvFind_CflType; e.customArgs['hidden_CflName']=s.cpGvFind_CflName; e.customArgs['hidden_CflHeader']=s.cpGvFind_CflHeader; e.customArgs['hidden_CflSqlWhere']=s.cpGvFind_CflSqlWhere;e.customArgs['hidden_CflIsMulti']=s.cpGvFind_CflIsMulti; }}", additionParam);
     settings.ClientSideEvents.SelectionChanged = string.Format("function(s, e) {{ OnSelectionChanged_Notification{0}(s, e); }}", cpGvFind_CflName);
 

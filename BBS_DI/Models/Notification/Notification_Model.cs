@@ -47,6 +47,17 @@ namespace Models.Notification
             FROM ""Tx_TransferSummaryOut"" T0
             INNER JOIN ""Tx_TransferSummaryOut_Approval"" T1 ON T1.""Id"" = T0.""Id""
             WHERE T0.""ApprovalStatus"" = 'Waiting' AND T1.""UserId"" = {UserId}
+            
+            UNION
+            
+            SELECT 
+                T0.""Id"",
+                T0.""TransNo"", T0.""TransType"" ,
+                T0.""CreatedDate"" AS ""RequestDate"", 
+                T0.""ApprovalMessages"" AS ""Message""
+            FROM ""Tx_TransferSummaryIn"" T0
+            INNER JOIN ""Tx_TransferSummaryIn_Approval"" T1 ON T1.""Id"" = T0.""Id""
+            WHERE T0.""ApprovalStatus"" = 'Waiting' AND T1.""UserId"" = {UserId}
 
         ";
 

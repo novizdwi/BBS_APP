@@ -140,5 +140,13 @@ namespace BBS_APP.Controllers.Notification
 
             return PartialView(VIEW_PANEL_LIST_PARTIAL, notificationParam);
         }
+
+        public ActionResult GetUnreadCount()
+        {
+            // TODO: ganti dengan query approval real
+            int count = 5; // contoh dummy
+
+            return Json(count, JsonRequestBehavior.AllowGet);
+        }
     }
 }
