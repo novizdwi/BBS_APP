@@ -7,7 +7,19 @@
     ViewBag.Id = Model.Id;
     ViewBag.ReadOnly = Model.Status == "Draft" ? false: true;
     var costCenters = Models._Utils.GeneralGetList.GetCostCenterList("1");
-    var boolAccessOpeningBalance = "Y";
+
+    string IsCanAccessOpeningBalance_ = "Y";
+    if(ViewBag.UserId != 1)
+    {
+        IsCanAccessOpeningBalance_ = Models._Ef.DbProvider.dbApp.Database.SqlQuery<string>(@"
+            SELECT TOP 1 COALESCE(T1.""IsAccess"",'N') 
+            FROM ""Tm_User"" T0X 
+            INNER JOIN  ""Tm_Role"" T0 ON T0.""Id"" = T0X.""RoleId""
+            INNER JOIN ""Tm_Role_Auth"" T1 ON T1.""Id"" = T0.""Id"" 
+            WHERE T0X.""Id"" = :p0 AND T1.""MenuCode"" = 'AdjustmentIn/IsOpeningBalance' 
+        ", ViewBag.UserId).FirstOrDefault();
+    }
+
 }
 
 @model Models.Transaction.Adjustment.AdjustmentInModel
@@ -597,7 +609,7 @@
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.CheckBox;
         itemSettings.Caption = "Opening Balance";
-        itemSettings.ClientVisible = Model.IsCanAccessOpeningBalance_ == "Y" ? true : false;
+        itemSettings.ClientVisible = IsCanAccessOpeningBalance_ == "Y" ? true : false;
 
         var chk = (CheckBoxSettings)itemSettings.NestedExtensionSettings;
         chk.Name = "IsOpeningBalance";
