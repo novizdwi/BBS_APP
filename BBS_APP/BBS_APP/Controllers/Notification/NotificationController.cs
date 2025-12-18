@@ -78,7 +78,7 @@ namespace BBS_APP.Controllers.Notification
 
         public string CheckUnread(int userId)
         {
-            string str = Alert_Model.CheckUnread(userId);
+            string str = "";//Alert_Model.CheckUnread(userId);
             return str;
         }
     }

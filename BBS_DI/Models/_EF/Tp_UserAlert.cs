@@ -16,7 +16,7 @@ namespace BBS_DI.Models._EF
     {
         public long Id { get; set; }
         public Nullable<int> UserId { get; set; }
-        public string BaseObject { get; set; }
+        public string BaseType { get; set; }
         public Nullable<long> BaseId { get; set; }
         public string BaseTransNo { get; set; }
         public string Action { get; set; }

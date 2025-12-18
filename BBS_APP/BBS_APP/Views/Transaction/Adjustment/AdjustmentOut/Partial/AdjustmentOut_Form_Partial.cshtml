@@ -588,7 +588,7 @@
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.CheckBox;
         itemSettings.Caption = "Opening Balance";
-        itemSettings.ClientVisible = ViewBag.UserId == 1 ? true : false;
+        itemSettings.ClientVisible = Model.IsCanAccessOpeningBalance_ == "Y" ? true : false;
 
         var chk = (CheckBoxSettings)itemSettings.NestedExtensionSettings;
         chk.Name = "IsOpeningBalance";

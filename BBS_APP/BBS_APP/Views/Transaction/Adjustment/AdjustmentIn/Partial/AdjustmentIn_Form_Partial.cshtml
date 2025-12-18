@@ -7,7 +7,7 @@
     ViewBag.Id = Model.Id;
     ViewBag.ReadOnly = Model.Status == "Draft" ? false: true;
     var costCenters = Models._Utils.GeneralGetList.GetCostCenterList("1");
-
+    var boolAccessOpeningBalance = "Y";
 }
 
 @model Models.Transaction.Adjustment.AdjustmentInModel
@@ -597,7 +597,7 @@
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.CheckBox;
         itemSettings.Caption = "Opening Balance";
-        itemSettings.ClientVisible = ViewBag.UserId == 1 ? true : false;
+        itemSettings.ClientVisible = Model.IsCanAccessOpeningBalance_ == "Y" ? true : false;
 
         var chk = (CheckBoxSettings)itemSettings.NestedExtensionSettings;
         chk.Name = "IsOpeningBalance";

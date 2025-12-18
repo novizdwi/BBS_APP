@@ -55,28 +55,23 @@ namespace Models.Transaction.Adjustment
         public string AdjustmentTypeName { get; set; }
 
         public string WhsCode { get; set; }
-
-        [Required(ErrorMessage = "required")]
+        
         public string PillarsCode { get; set; }
 
         public string PillarsName { get; set; }
-
-        [Required(ErrorMessage = "required")]
+        
         public string ClassCode { get; set; }
 
         public string ClassName { get; set; }
-
-        [Required(ErrorMessage = "required")]
+        
         public string SubClass1Code { get; set; }
 
         public string SubClass1Name { get; set; }
-
-        [Required(ErrorMessage = "required")]
+        
         public string SubClass2Code { get; set; }
 
         public string SubClass2Name { get; set; }
-
-        [Required(ErrorMessage = "required")]
+        
         public string ProjectCode { get; set; }
 
         public string ProjectName { get; set; }
@@ -103,6 +98,8 @@ namespace Models.Transaction.Adjustment
         public string CreatedDate_ { get; set; }
 
         public string ModifiedDate_ { get; set; }
+
+        public string IsCanAccessOpeningBalance_ { get; set; }
 
         public List<AdjustmentOut_ItemModel> ListDetails_ = new List<AdjustmentOut_ItemModel>();
 
@@ -323,6 +320,19 @@ namespace Models.Transaction.Adjustment
 
                 if (method != "post")
                 {
+                    model.IsCanAccessOpeningBalance_ = "Y";
+                    if (userId != 1)
+                    {
+                        model.IsCanAccessOpeningBalance_ = CONTEXT.Database.SqlQuery<string>(@"
+                            SELECT TOP 1 COALESCE(T1.""IsAccess"",'N') 
+                            FROM ""Tm_User"" T0X 
+                            INNER JOIN  ""Tm_Role"" T0 ON T0.""Id"" = T0X.""RoleId""
+                            INNER JOIN ""Tm_Role_Auth"" T1 ON T1.""Id"" = T0.""Id"" 
+                            WHERE T0X.""Id"" = :p0 AND T1.""MenuCode"" = 'AdjustmentIn/IsOpeningBalance' 
+                            ", userId).FirstOrDefault();
+                        model.IsCanAccessOpeningBalance_ = string.IsNullOrWhiteSpace(model.IsCanAccessOpeningBalance_) ? "N" : model.IsCanAccessOpeningBalance_;
+                    }
+
                     model.PillarsList = GeneralGetList.GetCostCenterList("1");
                     model.ClassList = GeneralGetList.GetCostCenterList("2");
                     model.SubClass1List = GeneralGetList.GetCostCenterList("3");

@@ -704,7 +704,7 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" />
-          <Property Name="BaseObject" Type="nvarchar" MaxLength="50" />
+          <Property Name="BaseType" Type="nvarchar" MaxLength="50" />
           <Property Name="BaseId" Type="bigint" />
           <Property Name="BaseTransNo" Type="nvarchar" MaxLength="100" />
           <Property Name="Action" Type="nvarchar" MaxLength="100" />
@@ -1966,7 +1966,7 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
             <DefiningQuery>SELECT 
 "Tp_UserAlert"."Id" AS "Id", 
 "Tp_UserAlert"."UserId" AS "UserId", 
-"Tp_UserAlert"."BaseObject" AS "BaseObject", 
+"Tp_UserAlert"."BaseType" AS "BaseType", 
 "Tp_UserAlert"."BaseId" AS "BaseId", 
 "Tp_UserAlert"."BaseTransNo" AS "BaseTransNo", 
 "Tp_UserAlert"."Action" AS "Action", 
@@ -2056,8 +2056,10 @@ FROM "BBS_RFID_TEST_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySet Name="Tx_PurchaseOrder_Item_Tag" EntityType="Model1.Tx_PurchaseOrder_Item_Tag" />
           <EntitySet Name="Tx_Request_StockOpname" EntityType="Model1.Tx_Request_StockOpname" />
           <EntitySet Name="Tx_StockOpname" EntityType="Model1.Tx_StockOpname" />
+          <EntitySet Name="Tx_StockOpname_Item" EntityType="Model1.Tx_StockOpname_Item" />
           <EntitySet Name="Tx_StockOpname_Item_Tag" EntityType="Model1.Tx_StockOpname_Item_Tag" />
           <EntitySet Name="Tx_StockSummaryOpname" EntityType="Model1.Tx_StockSummaryOpname" />
+          <EntitySet Name="Tx_StockSummaryOpname_Item" EntityType="Model1.Tx_StockSummaryOpname_Item" />
           <EntitySet Name="Tx_StockSummaryOpname_Item_Tag" EntityType="Model1.Tx_StockSummaryOpname_Item_Tag" />
           <EntitySet Name="Tx_StockSummaryOpname_Ref" EntityType="Model1.Tx_StockSummaryOpname_Ref" />
           <EntitySet Name="Tx_TransferIn" EntityType="Model1.Tx_TransferIn" />
@@ -2078,8 +2080,6 @@ FROM "BBS_RFID_TEST_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySet Name="Tx_TransferSummaryOut_Item" EntityType="Model1.Tx_TransferSummaryOut_Item" />
           <EntitySet Name="Tx_TransferSummaryOut_Item_Tag" EntityType="Model1.Tx_TransferSummaryOut_Item_Tag" />
           <EntitySet Name="Tx_TransferSummaryOut_Ref" EntityType="Model1.Tx_TransferSummaryOut_Ref" />
-          <EntitySet Name="Tx_StockOpname_Item" EntityType="Model1.Tx_StockOpname_Item" />
-          <EntitySet Name="Tx_StockSummaryOpname_Item" EntityType="Model1.Tx_StockSummaryOpname_Item" />
           <EntitySet Name="Tp_UserAlert" EntityType="Model1.Tp_UserAlert" />
         </EntityContainer>
         <EntityType Name="Tm_Alert">
@@ -3309,6 +3309,24 @@ FROM "BBS_RFID_TEST_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
+        <EntityType Name="Tx_StockOpname_Item">
+          <Key>
+            <PropertyRef Name="DetId" />
+          </Key>
+          <Property Name="Id" Type="Int64" />
+          <Property Name="DetId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Decimal" Precision="21" Scale="2" />
+          <Property Name="QuantityScan" Type="Decimal" Precision="21" Scale="2" />
+          <Property Name="UomEntry" Type="Int32" />
+          <Property Name="Uom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
+        </EntityType>
         <EntityType Name="Tx_StockOpname_Item_Tag">
           <Key>
             <PropertyRef Name="DetDetId" />
@@ -3362,6 +3380,40 @@ FROM "BBS_RFID_TEST_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <Property Name="SubClass2Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ProjectCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ProjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Tx_StockSummaryOpname_Item">
+          <Key>
+            <PropertyRef Name="DetId" />
+          </Key>
+          <Property Name="Id" Type="Int64" />
+          <Property Name="DetId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="QuantityScan" Type="Decimal" Precision="21" Scale="2" />
+          <Property Name="QuantityValid" Type="Decimal" Precision="21" Scale="2" />
+          <Property Name="UnitPriceTc" Type="Decimal" Precision="21" Scale="2" />
+          <Property Name="UomEntry" Type="Int32" />
+          <Property Name="Uom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AcctCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AcctName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
+          <Property Name="QtyVariance" Type="Decimal" Precision="21" Scale="2" />
+          <Property Name="FreeText" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="PillarsCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PillarsName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ClassCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ClassName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass1Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass1Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass2Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SubClass2Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="QuantityOnHandSAP" Type="Decimal" Precision="21" Scale="2" />
         </EntityType>
         <EntityType Name="Tx_StockSummaryOpname_Item_Tag">
           <Key>
@@ -3871,65 +3923,13 @@ FROM "BBS_RFID_TEST_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
-        <EntityType Name="Tx_StockOpname_Item">
-          <Key>
-            <PropertyRef Name="DetId" />
-          </Key>
-          <Property Name="Id" Type="Int64" />
-          <Property Name="DetId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Quantity" Type="Decimal" Precision="21" Scale="2" />
-          <Property Name="QuantityScan" Type="Decimal" Precision="21" Scale="2" />
-          <Property Name="UomEntry" Type="Int32" />
-          <Property Name="Uom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" />
-          <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
-        </EntityType>
-        <EntityType Name="Tx_StockSummaryOpname_Item">
-          <Key>
-            <PropertyRef Name="DetId" />
-          </Key>
-          <Property Name="Id" Type="Int64" />
-          <Property Name="DetId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="QuantityScan" Type="Decimal" Precision="21" Scale="2" />
-          <Property Name="QuantityValid" Type="Decimal" Precision="21" Scale="2" />
-          <Property Name="UnitPriceTc" Type="Decimal" Precision="21" Scale="2" />
-          <Property Name="UomEntry" Type="Int32" />
-          <Property Name="Uom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AcctCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AcctName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" />
-          <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
-          <Property Name="QtyVariance" Type="Decimal" Precision="21" Scale="2" />
-          <Property Name="FreeText" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-          <Property Name="PillarsCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="PillarsName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ClassCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="ClassName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SubClass1Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="SubClass1Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SubClass2Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="SubClass2Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ProjectCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ProjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="QuantityOnHandSAP" Type="Decimal" Precision="21" Scale="2" />
-        </EntityType>
         <EntityType Name="Tp_UserAlert">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Int32" />
-          <Property Name="BaseObject" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BaseType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="BaseId" Type="Int64" />
           <Property Name="BaseTransNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Action" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -5241,6 +5241,25 @@ FROM "BBS_RFID_TEST_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Tx_StockOpname_Item">
+            <EntityTypeMapping TypeName="Model1.Tx_StockOpname_Item">
+              <MappingFragment StoreEntitySet="Tx_StockOpname_Item">
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Uom" ColumnName="Uom" />
+                <ScalarProperty Name="UomEntry" ColumnName="UomEntry" />
+                <ScalarProperty Name="QuantityScan" ColumnName="QuantityScan" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="WhsCode" ColumnName="WhsCode" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="DetId" ColumnName="DetId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tx_StockOpname_Item_Tag">
             <EntityTypeMapping TypeName="Model1.Tx_StockOpname_Item_Tag">
               <MappingFragment StoreEntitySet="Tx_StockOpname_Item_Tag">
@@ -5293,6 +5312,41 @@ FROM "BBS_RFID_TEST_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
                 <ScalarProperty Name="DocEntry" ColumnName="DocEntry" />
                 <ScalarProperty Name="TransNo" ColumnName="TransNo" />
                 <ScalarProperty Name="TransType" ColumnName="TransType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tx_StockSummaryOpname_Item">
+            <EntityTypeMapping TypeName="Model1.Tx_StockSummaryOpname_Item">
+              <MappingFragment StoreEntitySet="Tx_StockSummaryOpname_Item">
+                <ScalarProperty Name="QuantityOnHandSAP" ColumnName="QuantityOnHandSAP" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
+                <ScalarProperty Name="SubClass2Name" ColumnName="SubClass2Name" />
+                <ScalarProperty Name="SubClass2Code" ColumnName="SubClass2Code" />
+                <ScalarProperty Name="SubClass1Name" ColumnName="SubClass1Name" />
+                <ScalarProperty Name="SubClass1Code" ColumnName="SubClass1Code" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="ClassCode" ColumnName="ClassCode" />
+                <ScalarProperty Name="PillarsName" ColumnName="PillarsName" />
+                <ScalarProperty Name="PillarsCode" ColumnName="PillarsCode" />
+                <ScalarProperty Name="FreeText" ColumnName="FreeText" />
+                <ScalarProperty Name="QtyVariance" ColumnName="QtyVariance" />
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="AcctName" ColumnName="AcctName" />
+                <ScalarProperty Name="AcctCode" ColumnName="AcctCode" />
+                <ScalarProperty Name="Uom" ColumnName="Uom" />
+                <ScalarProperty Name="UomEntry" ColumnName="UomEntry" />
+                <ScalarProperty Name="UnitPriceTc" ColumnName="UnitPriceTc" />
+                <ScalarProperty Name="QuantityValid" ColumnName="QuantityValid" />
+                <ScalarProperty Name="QuantityScan" ColumnName="QuantityScan" />
+                <ScalarProperty Name="WhsCode" ColumnName="WhsCode" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="DetId" ColumnName="DetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -5825,60 +5879,6 @@ FROM "BBS_RFID_TEST_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tx_StockOpname_Item">
-            <EntityTypeMapping TypeName="Model1.Tx_StockOpname_Item">
-              <MappingFragment StoreEntitySet="Tx_StockOpname_Item">
-                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="Uom" ColumnName="Uom" />
-                <ScalarProperty Name="UomEntry" ColumnName="UomEntry" />
-                <ScalarProperty Name="QuantityScan" ColumnName="QuantityScan" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="WhsCode" ColumnName="WhsCode" />
-                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
-                <ScalarProperty Name="DetId" ColumnName="DetId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tx_StockSummaryOpname_Item">
-            <EntityTypeMapping TypeName="Model1.Tx_StockSummaryOpname_Item">
-              <MappingFragment StoreEntitySet="Tx_StockSummaryOpname_Item">
-                <ScalarProperty Name="QuantityOnHandSAP" ColumnName="QuantityOnHandSAP" />
-                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
-                <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
-                <ScalarProperty Name="SubClass2Name" ColumnName="SubClass2Name" />
-                <ScalarProperty Name="SubClass2Code" ColumnName="SubClass2Code" />
-                <ScalarProperty Name="SubClass1Name" ColumnName="SubClass1Name" />
-                <ScalarProperty Name="SubClass1Code" ColumnName="SubClass1Code" />
-                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
-                <ScalarProperty Name="ClassCode" ColumnName="ClassCode" />
-                <ScalarProperty Name="PillarsName" ColumnName="PillarsName" />
-                <ScalarProperty Name="PillarsCode" ColumnName="PillarsCode" />
-                <ScalarProperty Name="FreeText" ColumnName="FreeText" />
-                <ScalarProperty Name="QtyVariance" ColumnName="QtyVariance" />
-                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="AcctName" ColumnName="AcctName" />
-                <ScalarProperty Name="AcctCode" ColumnName="AcctCode" />
-                <ScalarProperty Name="Uom" ColumnName="Uom" />
-                <ScalarProperty Name="UomEntry" ColumnName="UomEntry" />
-                <ScalarProperty Name="UnitPriceTc" ColumnName="UnitPriceTc" />
-                <ScalarProperty Name="QuantityValid" ColumnName="QuantityValid" />
-                <ScalarProperty Name="QuantityScan" ColumnName="QuantityScan" />
-                <ScalarProperty Name="WhsCode" ColumnName="WhsCode" />
-                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
-                <ScalarProperty Name="DetId" ColumnName="DetId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Tp_UserAlert">
             <EntityTypeMapping TypeName="Model1.Tp_UserAlert">
               <MappingFragment StoreEntitySet="Tp_UserAlert">
@@ -5889,7 +5889,7 @@ FROM "BBS_RFID_TEST_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
                 <ScalarProperty Name="Action" ColumnName="Action" />
                 <ScalarProperty Name="BaseTransNo" ColumnName="BaseTransNo" />
                 <ScalarProperty Name="BaseId" ColumnName="BaseId" />
-                <ScalarProperty Name="BaseObject" ColumnName="BaseObject" />
+                <ScalarProperty Name="BaseType" ColumnName="BaseType" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

@@ -17,6 +17,7 @@ INSERT INTO "Ts_Menu" VALUES ('AdjustmentIn/Add', 'Add', 'AdjustmentIn/Add', 'Ad
 INSERT INTO "Ts_Menu" VALUES ('AdjustmentIn/Update', 'Update', 'AdjustmentIn/Update', 'AdjustmentIn', 200104);
 INSERT INTO "Ts_Menu" VALUES ('AdjustmentIn/Post', 'Post', 'AdjustmentIn/Post', 'AdjustmentIn', 200105);
 INSERT INTO "Ts_Menu" VALUES ('AdjustmentIn/Cancel', 'Cancel', 'AdjustmentIn/Cancel', 'AdjustmentIn', 200106);
+INSERT INTO "Ts_Menu" VALUES ('AdjustmentIn/IsOpeningBalance', 'Opening Balance', 'AdjustmentIn/IsOpeningBalance', 'AdjustmentIn', 200107);
 INSERT INTO "Ts_Menu" VALUES ('AdjustmentIn/Print', 'Print', 'AdjustmentIn/Print', 'AdjustmentIn', 200110);
 
 INSERT INTO "Ts_Menu" VALUES ('AdjustmentOut', 'Adjustment Out', 'AdjustmentOut', 'Adjustment', 200102);
@@ -26,6 +27,7 @@ INSERT INTO "Ts_Menu" VALUES ('AdjustmentOut/Add', 'Add', 'AdjustmentOut/Add', '
 INSERT INTO "Ts_Menu" VALUES ('AdjustmentOut/Update', 'Update', 'AdjustmentOut/Update', 'AdjustmentOut', 20010204);
 INSERT INTO "Ts_Menu" VALUES ('AdjustmentOut/Post', 'Post', 'AdjustmentOut/Post', 'AdjustmentOut', 20010205);
 INSERT INTO "Ts_Menu" VALUES ('AdjustmentOut/Cancel', 'Cancel', 'AdjustmentOut/Cancel', 'AdjustmentOut', 20010206);
+INSERT INTO "Ts_Menu" VALUES ('AdjustmentOut/IsOpeningBalance', 'Opening Balance', 'AdjustmentOut/IsOpeningBalance', 'AdjustmentOut', 20010207);
 INSERT INTO "Ts_Menu" VALUES ('AdjustmentOut/Print', 'Print', 'AdjustmentOut/Print', 'AdjustmentOut', 20010210);
 
 INSERT INTO "Ts_Menu" VALUES ('Inventory', 'Inventory', NULL, 'Transaction', 2002);
