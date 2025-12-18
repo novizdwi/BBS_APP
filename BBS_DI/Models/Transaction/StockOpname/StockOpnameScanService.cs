@@ -172,11 +172,10 @@ namespace Models.Transaction.StockOpname
             StockOpnameScanModel model = null;
             if (id != 0)
             {
-                string ssql = @"SELECT *, T1.""FirstName"" AS ""UserName"", T2.""WhsName"",
+                string ssql = @"SELECT *, T2.""WhsName"",
                             TO_VARCHAR(T0.""CreatedDate"", 'DD/MM/YYYY') AS ""CreatedDate_"",
                             TO_VARCHAR(T0.""ModifiedDate"", 'DD/MM/YYYY') AS ""ModifiedDate_""
                             FROM ""Tx_StockOpname"" T0
-                            LEFT JOIN ""Tm_User"" T1 ON T0.""ModifiedUser"" = T1.""Id""
                             LEFT JOIN """ + DbProvider.dbSap_Name + @""".""OWHS"" T2 ON T0.""WhsCode"" = T2.""WhsCode""
                             WHERE T0.""Id"" = :p0 
                             ORDER BY T0.""Id"" ASC
@@ -216,7 +215,7 @@ namespace Models.Transaction.StockOpname
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "StockOpname");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "StockOpnameScan");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;
@@ -236,7 +235,7 @@ namespace Models.Transaction.StockOpname
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "StockOpname");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "StockOpnameScan");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;
@@ -264,7 +263,7 @@ namespace Models.Transaction.StockOpname
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "StockOpname");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "StockOpnameScan");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;
@@ -291,7 +290,7 @@ namespace Models.Transaction.StockOpname
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "StockOpname");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "StockOpnameScan");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;

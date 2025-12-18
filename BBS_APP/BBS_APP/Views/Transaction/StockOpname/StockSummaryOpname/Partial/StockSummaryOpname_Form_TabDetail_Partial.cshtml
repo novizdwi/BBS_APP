@@ -236,6 +236,43 @@
 
     settings.Columns.Add(column =>
     {
+        column.FieldName = "QuantityOnHandSAP_";
+        column.Name = "QuantityOnHandSAP_";
+        column.Caption = "Qty On Hand";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = status =="Draft"? 80:0;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
+        
+        column.PropertiesEdit.DisplayFormatString = "N2";
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "QuantityOnHandSAP";
+        column.Name = "QuantityOnHandSAP";
+        column.Caption = "Qty On Hand";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = status != "Draft" ? 80 : 0; ;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
+
+        // FORMAT 2 DIGIT DESIMAL
+        column.PropertiesEdit.DisplayFormatString = "N2";
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+    });
+
+    settings.Columns.Add(column =>
+    {
         column.FieldName = "OnHand";
         column.Name = "OnHand";
         column.Caption = "On Hand";

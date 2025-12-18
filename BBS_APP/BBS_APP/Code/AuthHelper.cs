@@ -1,6 +1,6 @@
 using System.Web;
 
-namespace MJL_DX20.Model {
+namespace BBS_APP.Model {
     public class ApplicationUser {
         public string UserName { get; set; }
         public string FirstName{ get; set; }

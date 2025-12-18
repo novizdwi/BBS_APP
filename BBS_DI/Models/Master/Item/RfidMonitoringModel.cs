@@ -78,6 +78,8 @@ namespace Models.Master.Item
 
         public string TransType { get; set; }
 
+        public string TransactionName_ { get; set; }
+
         public string ItemCode { get; set; }
 
         public string ItemName { get; set; }
@@ -211,7 +213,7 @@ namespace Models.Master.Item
                         T0.""ItemName"",
                         T0.""WhsCode"",
                         T0.""WhsName"",
-                        CASE WHEN T0.""OldStatus"" = 'I' THEN 'Invalid'
+                        CASE WHEN T0.""OldStatus"" = 'I' THEN 'Inactive'
                              WHEN T0.""OldStatus"" = 'A' THEN 'Active'
                              WHEN T0.""OldStatus"" = 'P' THEN 'Pending'
                         ELSE T0.""OldStatus""
@@ -219,9 +221,11 @@ namespace Models.Master.Item
                         T0.""OldTagId"",
                         T0.""NewTagId"",
                         T0.""CreatedDate"",
-                        T1.""FirstName"" AS ""CreatedUser""                   
+                        T1.""FirstName"" AS ""CreatedUser"",
+                        T2.""Name"" AS ""TransactionName_""
                     FROM ""Tm_Item_Warehouse_Tag_Log"" T0 
                     INNER JOIN ""Tm_User"" T1 ON T0.""CreatedUser"" = T1.""Id""
+                    LEFT JOIN ""Ts_List"" T2 ON T0.""BaseType"" = T2.""Code"" AND T2.""Type"" = 'RFIDTransType' 
                     WHERE T0.""OldTagId"" = '" + tagId + @"'
                         OR(T0.""NewTagId"" = '" + tagId + @"' AND T0.""BaseType"" = 'ReplaceTags')
                     ORDER BY T0.""CreatedDate"" DESC 

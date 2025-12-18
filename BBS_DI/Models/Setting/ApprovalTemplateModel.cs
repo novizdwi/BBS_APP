@@ -92,6 +92,8 @@ namespace Models.Setting.ApprovalTemplate
 
         public string UserName_ { get; set; }
 
+        public string FirstName_ { get; set; }
+
 
     }
 
@@ -197,6 +199,7 @@ namespace Models.Setting.ApprovalTemplate
                         COALESCE(T1.""DetId"",0) AS ""DetId"", 
                         T0.""Id"" AS ""UserId"", 
                         T0.""UserName"" AS ""UserName_"", 
+                        T0.""FirstName"" AS ""FirstName_"",
                         COALESCE(T1.""IsTick"",'') AS ""IsTick""   
                 FROM ""Tm_User"" T0 
                 LEFT JOIN ""Tm_ApprovalTemplate_User"" T1 ON T0.""Id"" = T1.""UserId""  AND T1.""Id"" = :p0 

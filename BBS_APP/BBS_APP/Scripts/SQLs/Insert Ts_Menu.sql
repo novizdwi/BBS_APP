@@ -17,6 +17,8 @@ INSERT INTO "Ts_Menu" VALUES ('AdjustmentIn/Add', 'Add', 'AdjustmentIn/Add', 'Ad
 INSERT INTO "Ts_Menu" VALUES ('AdjustmentIn/Update', 'Update', 'AdjustmentIn/Update', 'AdjustmentIn', 200104);
 INSERT INTO "Ts_Menu" VALUES ('AdjustmentIn/Post', 'Post', 'AdjustmentIn/Post', 'AdjustmentIn', 200105);
 INSERT INTO "Ts_Menu" VALUES ('AdjustmentIn/Cancel', 'Cancel', 'AdjustmentIn/Cancel', 'AdjustmentIn', 200106);
+INSERT INTO "Ts_Menu" VALUES ('AdjustmentIn/IsOpeningBalance', 'Opening Balance', 'AdjustmentIn/IsOpeningBalance', 'AdjustmentIn', 200107);
+INSERT INTO "Ts_Menu" VALUES ('AdjustmentIn/Print', 'Print', 'AdjustmentIn/Print', 'AdjustmentIn', 200110);
 
 INSERT INTO "Ts_Menu" VALUES ('AdjustmentOut', 'Adjustment Out', 'AdjustmentOut', 'Adjustment', 200102);
 INSERT INTO "Ts_Menu" VALUES ('AdjustmentOut/Detail#User', 'Detail - User', 'AdjustmentOut/Detail', 'AdjustmentOut', 20010201);
@@ -25,6 +27,8 @@ INSERT INTO "Ts_Menu" VALUES ('AdjustmentOut/Add', 'Add', 'AdjustmentOut/Add', '
 INSERT INTO "Ts_Menu" VALUES ('AdjustmentOut/Update', 'Update', 'AdjustmentOut/Update', 'AdjustmentOut', 20010204);
 INSERT INTO "Ts_Menu" VALUES ('AdjustmentOut/Post', 'Post', 'AdjustmentOut/Post', 'AdjustmentOut', 20010205);
 INSERT INTO "Ts_Menu" VALUES ('AdjustmentOut/Cancel', 'Cancel', 'AdjustmentOut/Cancel', 'AdjustmentOut', 20010206);
+INSERT INTO "Ts_Menu" VALUES ('AdjustmentOut/IsOpeningBalance', 'Opening Balance', 'AdjustmentOut/IsOpeningBalance', 'AdjustmentOut', 20010207);
+INSERT INTO "Ts_Menu" VALUES ('AdjustmentOut/Print', 'Print', 'AdjustmentOut/Print', 'AdjustmentOut', 20010210);
 
 INSERT INTO "Ts_Menu" VALUES ('Inventory', 'Inventory', NULL, 'Transaction', 2002);
 
@@ -35,22 +39,25 @@ INSERT INTO "Ts_Menu" VALUES ('TransferRequest/Add', 'Add', 'TransferRequest/Add
 INSERT INTO "Ts_Menu" VALUES ('TransferRequest/Update', 'Update', 'TransferRequest/Update', 'TransferRequest', 20020104);
 INSERT INTO "Ts_Menu" VALUES ('TransferRequest/Post', 'Post', 'TransferRequest/Post', 'TransferRequest', 20020105);
 INSERT INTO "Ts_Menu" VALUES ('TransferRequest/Cancel', 'Cancel', 'TransferRequest/Cancel', 'TransferRequest', 20020106);
+INSERT INTO "Ts_Menu" VALUES ('TransferRequest/Print', 'Print', 'TransferRequest/Print', 'TransferRequest', 20020110);
 
-INSERT INTO "Ts_Menu" VALUES ('TransferIn', 'Transfer In', 'TransferIn', 'TransferIn', 200202);
+INSERT INTO "Ts_Menu" VALUES ('TransferIn', 'Transfer In', 'TransferIn', 'Inventory', 200202);
 INSERT INTO "Ts_Menu" VALUES ('TransferIn/Detail#User', 'Detail - User', 'TransferIn/Detail', 'TransferIn', 20020201);
 INSERT INTO "Ts_Menu" VALUES ('TransferIn/Detail#All', 'Detail - All', 'TransferIn/Detail', 'TransferIn', 20020202);
 INSERT INTO "Ts_Menu" VALUES ('TransferIn/Add', 'Add', 'TransferIn/Add', 'TransferIn', 20020203);
 INSERT INTO "Ts_Menu" VALUES ('TransferIn/Update', 'Update', 'TransferIn/Update', 'TransferIn', 20020204);
 INSERT INTO "Ts_Menu" VALUES ('TransferIn/Post', 'Post', 'TransferIn/Post', 'TransferIn', 20020205);
 INSERT INTO "Ts_Menu" VALUES ('TransferIn/Cancel', 'Cancel', 'TransferIn/Cancel', 'TransferIn', 20020206);
+INSERT INTO "Ts_Menu" VALUES ('TransferIn/Print', 'Print', 'TransferIn/Print', 'TransferIn', 20020210);
 
-INSERT INTO "Ts_Menu" VALUES ('TransferIn', 'Transfer In', 'TransferIn', 'TransferIn', 200203);
+INSERT INTO "Ts_Menu" VALUES ('TransferOut', 'Transfer Out', 'TransferOut', 'Inventory', 200203);
 INSERT INTO "Ts_Menu" VALUES ('TransferOut/Detail#User', 'Detail - User', 'TransferOut/Detail', 'TransferOut', 20020301);
 INSERT INTO "Ts_Menu" VALUES ('TransferOut/Detail#All', 'Detail - All', 'TransferOut/Detail', 'TransferOut', 20020302);
 INSERT INTO "Ts_Menu" VALUES ('TransferOut/Add', 'Add', 'TransferOut/Add', 'TransferOut', 20020303);
 INSERT INTO "Ts_Menu" VALUES ('TransferOut/Update', 'Update', 'TransferOut/Update', 'TransferOut', 20020304);
 INSERT INTO "Ts_Menu" VALUES ('TransferOut/Post', 'Post', 'TransferOut/Post', 'TransferOut', 20020305);
 INSERT INTO "Ts_Menu" VALUES ('TransferOut/Cancel', 'Cancel', 'TransferOut/Cancel', 'TransferOut', 20020306);
+INSERT INTO "Ts_Menu" VALUES ('TransferOut/Print', 'Print', 'TransferOut/Print', 'TransferOut', 20020310);
 
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryIn', 'Transfer Summary In', 'TransferSummaryIn', 'Inventory', 200204);
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryIn/Detail#User', 'Detail - User', 'TransferSummaryIn/Detail', 'TransferSummaryIn', 20020401);
@@ -59,6 +66,7 @@ INSERT INTO "Ts_Menu" VALUES ('TransferSummaryIn/Add', 'Add', 'TransferSummaryIn
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryIn/Update', 'Update', 'TransferSummaryIn/Update', 'TransferSummaryIn', 20020404);
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryIn/Post', 'Post', 'TransferSummaryIn/Post', 'TransferSummaryIn', 20020405);
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryIn/Cancel', 'Cancel', 'TransferSummaryIn/Cancel', 'TransferSummaryIn', 20020406);
+INSERT INTO "Ts_Menu" VALUES ('TransferSummaryIn/Print', 'Print', 'TransferSummaryIn/Print', 'TransferSummaryIn', 20020410);
 
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryOut', 'Transfer Summary Out', 'TransferSummaryOut', 'Inventory', 200205);
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryOut/Detail#User', 'Detail - User', 'TransferSummaryOut/Detail', 'TransferSummaryOut', 20020501);
@@ -67,6 +75,7 @@ INSERT INTO "Ts_Menu" VALUES ('TransferSummaryOut/Add', 'Add', 'TransferSummaryO
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryOut/Update', 'Update', 'TransferSummaryOut/Update', 'TransferSummaryOut', 20020504);
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryOut/Post', 'Post', 'TransferSummaryOut/Post', 'TransferSummaryOut', 20020505);
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryOut/Cancel', 'Cancel', 'TransferSummaryOut/Cancel', 'TransferSummaryOut', 20020506);
+INSERT INTO "Ts_Menu" VALUES ('TransferSummaryOut/Print', 'Print', 'TransferSummaryOut/Print', 'TransferSummaryOut', 20020510);
 
 INSERT INTO "Ts_Menu" VALUES ('StockOpname', 'Stock Opname', NULL, 'Transaction', 2003);
 
@@ -77,6 +86,7 @@ INSERT INTO "Ts_Menu" VALUES ('RequestStockOpname/Add', 'Add', 'RequestStockOpna
 INSERT INTO "Ts_Menu" VALUES ('RequestStockOpname/Update', 'Update', 'RequestStockOpname/Update', 'RequestStockOpname', 20030104);
 INSERT INTO "Ts_Menu" VALUES ('RequestStockOpname/Post', 'Post', 'RequestStockOpname/Post', 'RequestStockOpname', 20030105);
 INSERT INTO "Ts_Menu" VALUES ('RequestStockOpname/Cancel', 'Cancel', 'RequestStockOpname/Cancel', 'RequestStockOpname', 20030106);
+INSERT INTO "Ts_Menu" VALUES ('RequestStockOpname/Print', 'Print', 'RequestStockOpname/Print', 'RequestStockOpname', 20030110);
 
 INSERT INTO "Ts_Menu" VALUES ('StockOpnameScan', 'Stock Opname Scan List', 'StockOpnameScan', 'StockOpname', 200302);
 INSERT INTO "Ts_Menu" VALUES ('StockOpnameScan/Detail#User', 'Detail - User', 'StockOpnameScan/Detail', 'StockOpnameScan', 20030201);
@@ -85,6 +95,7 @@ INSERT INTO "Ts_Menu" VALUES ('StockOpnameScan/Add', 'Add', 'StockOpnameScan/Add
 INSERT INTO "Ts_Menu" VALUES ('StockOpnameScan/Update', 'Update', 'StockOpnameScan/Update', 'StockOpnameScan', 20030204);
 INSERT INTO "Ts_Menu" VALUES ('StockOpnameScan/Post', 'Post', 'StockOpnameScan/Post', 'StockOpnameScan', 20030205);
 INSERT INTO "Ts_Menu" VALUES ('StockOpnameScan/Cancel', 'Cancel', 'StockOpnameScan/Cancel', 'StockOpnameScan', 20030206);
+INSERT INTO "Ts_Menu" VALUES ('StockOpnameScan/Print', 'Print', 'StockOpnameScan/Print', 'StockOpnameScan', 20030210);
 
 INSERT INTO "Ts_Menu" VALUES ('StockSummaryOpname', 'Stock Opname Summary', 'StockSummaryOpname', 'StockOpname', 200303);
 INSERT INTO "Ts_Menu" VALUES ('StockSummaryOpname/Detail#User', 'Detail - User', 'StockSummaryOpname/Detail', 'StockSummaryOpname', 20030301);
@@ -93,7 +104,7 @@ INSERT INTO "Ts_Menu" VALUES ('StockSummaryOpname/Add', 'Add', 'StockSummaryOpna
 INSERT INTO "Ts_Menu" VALUES ('StockSummaryOpname/Update', 'Update', 'StockSummaryOpname/Update', 'StockSummaryOpname', 20030304);
 INSERT INTO "Ts_Menu" VALUES ('StockSummaryOpname/Post', 'Post', 'StockSummaryOpname/Post', 'StockSummaryOpname', 20030305);
 INSERT INTO "Ts_Menu" VALUES ('StockSummaryOpname/Cancel', 'Cancel', 'StockSummaryOpname/Cancel', 'StockSummaryOpname', 20030306);
-
+INSERT INTO "Ts_Menu" VALUES ('StockSummaryOpname/Print', 'Print', 'StockSummaryOpname/Print', 'StockSummaryOpname', 20030310);
 
 INSERT INTO "Ts_Menu" VALUES ('Purchasing', 'Purchasing', NULL, 'Transaction', 2004);
 
@@ -103,6 +114,7 @@ INSERT INTO "Ts_Menu" VALUES ('PurchaseOrderScan/Detail#All', 'Detail - All', 'P
 INSERT INTO "Ts_Menu" VALUES ('PurchaseOrderScan/Add', 'Add', 'PurchaseOrderScan/Add', 'PurchaseOrderScan', 20040103);
 INSERT INTO "Ts_Menu" VALUES ('PurchaseOrderScan/Post', 'Post', 'PurchaseOrderScan/Post', 'PurchaseOrderScan', 20040105);
 INSERT INTO "Ts_Menu" VALUES ('PurchaseOrderScan/Cancel', 'Cancel', 'PurchaseOrderScan/Cancel', 'PurchaseOrderScan', 20040106);
+INSERT INTO "Ts_Menu" VALUES ('PurchaseOrderScan/Print', 'Print', 'PurchaseOrderScan/Print', 'PurchaseOrderScan', 20040110);
 
 INSERT INTO "Ts_Menu" VALUES ('GoodsReceiptPO', 'Goods Receipt PO', 'GoodsReceiptPO', 'Purchasing', 200402);
 INSERT INTO "Ts_Menu" VALUES ('GoodsReceiptPO/Detail#User', 'Detail - User', 'GoodsReceiptPO/Detail', 'GoodsReceiptPO', 20040201);
@@ -111,8 +123,7 @@ INSERT INTO "Ts_Menu" VALUES ('GoodsReceiptPO/Add', 'Add', 'GoodsReceiptPO/Add',
 INSERT INTO "Ts_Menu" VALUES ('GoodsReceiptPO/Post', 'Post', 'GoodsReceiptPO/Post', 'GoodsReceiptPO', 20040205);
 INSERT INTO "Ts_Menu" VALUES ('GoodsReceiptPO/Cancel', 'Cancel', 'GoodsReceiptPO/Cancel', 'GoodsReceiptPO', 20040206);
 INSERT INTO "Ts_Menu" VALUES ('GoodsReceiptPO/RefreshItem', 'RefreshItem', 'GoodsReceiptPO/RefreshItem', 'GoodsReceiptPO', 20040207);
-
-
+INSERT INTO "Ts_Menu" VALUES ('GoodsReceiptPO/Print', 'Print', 'GoodsReceiptPO/Print', 'GoodsReceiptPO', 20040210);
 
 INSERT INTO "Ts_Menu" VALUES ('Reports', 'Report', NULL, NULL, 30);
 INSERT INTO "Ts_Menu" VALUES ('ReportCustom', 'Custom Report', NULL, 'Reports', 3003);

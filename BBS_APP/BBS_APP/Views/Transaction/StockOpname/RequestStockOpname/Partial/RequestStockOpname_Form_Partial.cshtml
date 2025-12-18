@@ -137,7 +137,7 @@
         txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
         txt.Width = 230;
     });
-    
+
 
     groupItem_Col1.Items.Add(itemSettings =>
     {
@@ -272,7 +272,7 @@
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
         txt.Width = 230;
     });
-    
+
 
     groupItem_Col3.Items.Add(m => Model.Status, itemSettings =>
     {
@@ -313,7 +313,7 @@
                 x =>
                 {
                     x.Name = "label1";
-                    x.Text = "Created By(" + Models._Utils.GeneralGetList.GetUserNameByUserId(Model.CreatedUser) + ")";
+                    x.Text = "Created By(" + Models._Utils.GeneralGetList.GetUserNameByUserId(Model.CreatedUser) + ", " + Models._Utils.GeneralGetList.GeFirstNameByUserId(Model.CreatedUser) + " : " + Model.CreatedDate_ + ")";
                     x.Properties.EnableClientSideAPI = true;
                 }
             )
@@ -327,7 +327,7 @@
                 x =>
                 {
                     x.Name = "label3";
-                    x.Text = "  Modified By(" + Models._Utils.GeneralGetList.GetUserNameByUserId(Model.ModifiedUser) + ")";
+                    x.Text = "  Modified By(" + Models._Utils.GeneralGetList.GetUserNameByUserId(Model.CreatedUser) + ", " + Models._Utils.GeneralGetList.GeFirstNameByUserId(Model.CreatedUser) + " : " + Model.ModifiedDate_ + ")";
                     x.Properties.EnableClientSideAPI = true;
                 }
             )
@@ -361,5 +361,5 @@
              ViewContext.Writer.Write("</td></tr></table>");
          });
     }
-    
+
 }).GetHtml()

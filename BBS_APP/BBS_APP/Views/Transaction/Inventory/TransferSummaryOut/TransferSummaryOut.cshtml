@@ -267,14 +267,16 @@
             return;
         }
         key = Id.GetValue();
-        var isApproval = IsApproval.GetValue();
-        var approvalStatus = ApprovalStatus.GetValue();
+        Post(s, e);
 
-        if (isApproval == "Y") {
-            btnShowApprovalOnClick(s, e, key);
-        } else {
-            Post(s, e);
-        }    
+        //var isApproval = IsApproval.GetValue();
+        //var approvalStatus = ApprovalStatus.GetValue();
+
+        //if (isApproval == "Y") {
+        //    btnShowApprovalOnClick(s, e, key);
+        //} else {
+        //    Post(s, e);
+        //}    
 
     }
 

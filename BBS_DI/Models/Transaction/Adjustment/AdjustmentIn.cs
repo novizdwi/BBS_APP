@@ -48,8 +48,6 @@ namespace Models.Transaction.Adjustment
 
         public string DocNum_ { get; set; }
 
-        public string Comments { get; set; }
-
         public string ScanDeviceId { get; set; }
 
         public string AdjustmentTypeCode { get; set; }
@@ -57,28 +55,23 @@ namespace Models.Transaction.Adjustment
         public string AdjustmentTypeName { get; set; }
 
         public string WhsCode { get; set; }
-
-        [Required(ErrorMessage = "required")]
+        
         public string PillarsCode { get; set; }
 
         public string PillarsName { get; set; }
 
-        [Required(ErrorMessage = "required")]
         public string ClassCode { get; set; }
 
         public string ClassName { get; set; }
 
-        [Required(ErrorMessage = "required")]
         public string SubClass1Code { get; set; }
 
         public string SubClass1Name { get; set; }
 
-        [Required(ErrorMessage = "required")]
         public string SubClass2Code { get; set; }
 
         public string SubClass2Name { get; set; }
 
-        [Required(ErrorMessage = "required")]
         public string ProjectCode { get; set; }
 
         public string ProjectName { get; set; }
@@ -91,6 +84,9 @@ namespace Models.Transaction.Adjustment
 
         public string IsOpeningBalance { get; set; }
 
+        [Required(ErrorMessage = "required")]
+        public string Comments { get; set; }
+
         public DateTime? CreatedDate { get; set; }
 
         public int? CreatedUser { get; set; }
@@ -98,6 +94,12 @@ namespace Models.Transaction.Adjustment
         public DateTime? ModifiedDate { get; set; }
 
         public int? ModifiedUser { get; set; }
+
+        public string CreatedDate_ { get; set; }
+
+        public string ModifiedDate_ { get; set; }
+
+        public string IsCanAccessOpeningBalance_ { get; set; }
 
         public List<AdjustmentIn_ItemModel> ListDetails_ = new List<AdjustmentIn_ItemModel>();
 
@@ -284,9 +286,10 @@ namespace Models.Transaction.Adjustment
             AdjustmentInModel model = null;
             if (id != 0)
             {
-                string ssql = @"SELECT *, T1.""FirstName"" AS ""UserName"" 
+                string ssql = @"SELECT *, 
+                            TO_VARCHAR(T0.""CreatedDate"", 'DD/MM/YYYY') AS ""CreatedDate_"",
+                            TO_VARCHAR(T0.""ModifiedDate"", 'DD/MM/YYYY') AS ""ModifiedDate_""
                             FROM ""Tx_AdjustmentIn"" T0
-                            LEFT JOIN ""Tm_User"" T1 ON T0.""ModifiedUser"" = T1.""Id""
                             WHERE T0.""Id"" = :p0 
                             ORDER BY T0.""Id"" ASC
                 ";
@@ -315,6 +318,19 @@ namespace Models.Transaction.Adjustment
                 model.ListAttachments_ = this.GetAdjustmentIn_Attachments(id);
                 if (method != "post")
                 {
+                    model.IsCanAccessOpeningBalance_ = "Y";
+                    if (userId != 1)
+                    {
+                        model.IsCanAccessOpeningBalance_ = CONTEXT.Database.SqlQuery<string>(@"
+                            SELECT TOP 1 COALESCE(T1.""IsAccess"",'N') 
+                            FROM ""Tm_User"" T0X 
+                            INNER JOIN  ""Tm_Role"" T0 ON T0.""Id"" = T0X.""RoleId""
+                            INNER JOIN ""Tm_Role_Auth"" T1 ON T1.""Id"" = T0.""Id"" 
+                            WHERE T0X.""Id"" = :p0 AND T1.""MenuCode"" = 'AdjustmentOut/IsOpeningBalance' 
+                            ", userId).FirstOrDefault();
+                        model.IsCanAccessOpeningBalance_ = string.IsNullOrWhiteSpace(model.IsCanAccessOpeningBalance_) ? "N": model.IsCanAccessOpeningBalance_ ;
+                    }
+
                     model.PillarsList = GeneralGetList.GetCostCenterList("1");
                     model.ClassList = GeneralGetList.GetCostCenterList("2");
                     model.SubClass1List = GeneralGetList.GetCostCenterList("3");
@@ -634,10 +650,10 @@ namespace Models.Transaction.Adjustment
                             tx_AdjustmentIn.ModifiedDate = dtModified;
                             tx_AdjustmentIn.ModifiedUser = userId;
 
+                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn_InsertItemTag\"(:p0,:p1)", userId, id);
                             CONTEXT.SaveChanges();
                         }
 
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn_InsertItemTag\"(:p0,:p1)", userId, id);
                         SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "after", "Tx_AdjustmentIn", "post", "Id", keyValue);
 
                         if (oCompany.InTransaction)

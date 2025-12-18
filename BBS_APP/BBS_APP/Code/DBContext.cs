@@ -5,7 +5,7 @@ using System.Web;
 using DevExpress.XtraScheduler;
 using System.ComponentModel.DataAnnotations;
 
-namespace MJL_DX20.Model {
+namespace BBS_APP.Model {
     // Sample Data
     public class Issue {
         public long Id { get; set; }

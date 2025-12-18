@@ -68,6 +68,10 @@ namespace Models.Transaction.Purchasing
 
         public string CancelReason { get; set; }
 
+        public string CreatedDate_ { get; set; }
+
+        public string ModifiedDate_ { get; set; }
+
         public List<PurchaseOrderScan_ItemModel> ListDetails_ = new List<PurchaseOrderScan_ItemModel>();
 
         public PurchaseOrderScan_Item Details_ { get; set; }
@@ -192,9 +196,10 @@ namespace Models.Transaction.Purchasing
             PurchaseOrderScanModel model = null;
             if (id != 0)
             {
-                string ssql = @"SELECT *, T1.""FirstName"" AS ""UserName"" 
+                string ssql = @"SELECT *,
+                            TO_VARCHAR(T0.""CreatedDate"", 'DD/MM/YYYY') AS ""CreatedDate_"",
+                            TO_VARCHAR(T0.""ModifiedDate"", 'DD/MM/YYYY') AS ""ModifiedDate_""
                             FROM ""Tx_PurchaseOrder"" T0
-                            LEFT JOIN ""Tm_User"" T1 ON T0.""ModifiedUser"" = T1.""Id""
                             WHERE T0.""Id"" = :p0 
                             ORDER BY T0.""Id"" ASC
                 ";
@@ -234,7 +239,7 @@ namespace Models.Transaction.Purchasing
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "PurchaseOrder");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "PurchaseOrderScan");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;
@@ -254,7 +259,7 @@ namespace Models.Transaction.Purchasing
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "PurchaseOrder");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "PurchaseOrderScan");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;
@@ -282,7 +287,7 @@ namespace Models.Transaction.Purchasing
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "PurchaseOrder");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "PurchaseOrderScan");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;
@@ -309,7 +314,7 @@ namespace Models.Transaction.Purchasing
             using (var CONTEXT = new HANA_APP())
             {
                 string sqlCriteria = "";
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "PurchaseOrder");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "PurchaseOrderScan");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     sqlCriteria = " AND " + formAuthorizeSqlWhere;

@@ -7,7 +7,7 @@
     ViewBag.Id = Model.Id;
     ViewBag.ReadOnly = Model.Status == "Draft" ? false: true;
     var costCenters = Models._Utils.GeneralGetList.GetCostCenterList("1");
-
+    var boolAccessOpeningBalance = "Y";
 }
 
 @model Models.Transaction.Adjustment.AdjustmentInModel
@@ -560,7 +560,7 @@
 
         ViewContext.Writer.Write("</tr></table>");
     });
-    
+
     groupItem_Col3.Items.Add(itemSettings =>
     {
         itemSettings.Name = "grpScanDeviceId";
@@ -597,7 +597,7 @@
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.CheckBox;
         itemSettings.Caption = "Opening Balance";
-        itemSettings.ClientVisible = ViewBag.UserId == 1 ? true : false;
+        itemSettings.ClientVisible = Model.IsCanAccessOpeningBalance_ == "Y" ? true : false;
 
         var chk = (CheckBoxSettings)itemSettings.NestedExtensionSettings;
         chk.Name = "IsOpeningBalance";
@@ -674,7 +674,7 @@
                 x =>
                 {
                     x.Name = "label1";
-                    x.Text = "Created By(" + Models._Utils.GeneralGetList.GetUserNameByUserId(Model.CreatedUser) + ")";
+                    x.Text = "Created By(" + Models._Utils.GeneralGetList.GetUserNameByUserId(Model.CreatedUser) + ", " + Models._Utils.GeneralGetList.GeFirstNameByUserId(Model.CreatedUser) + " : " + Model.CreatedDate_ + ")";
                     x.Properties.EnableClientSideAPI = true;
                 }
             )
@@ -688,7 +688,7 @@
                 x =>
                 {
                     x.Name = "label3";
-                    x.Text = "  Modified By(" + Models._Utils.GeneralGetList.GetUserNameByUserId(Model.ModifiedUser) + ")";
+                    x.Text = "  Modified By(" + Models._Utils.GeneralGetList.GetUserNameByUserId(Model.CreatedUser) + ", " + Models._Utils.GeneralGetList.GeFirstNameByUserId(Model.CreatedUser) + " : " + Model.ModifiedDate_ + ")";
                     x.Properties.EnableClientSideAPI = true;
                 }
             )
