@@ -12,25 +12,19 @@ namespace BBS_DI.Models._EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Tx_StockOpname
+    public partial class Tx_GoodsReceiptPO_Approval
     {
-        public long Id { get; set; }
-        public string TransType { get; set; }
-        public string TransNo { get; set; }
-        public Nullable<System.DateTime> TransDate { get; set; }
-        public Nullable<long> RequestId { get; set; }
-        public string RequestNo { get; set; }
-        public string WhsCode { get; set; }
-        public string ScanDeviceId { get; set; }
+        public Nullable<int> Id { get; set; }
+        public int DetId { get; set; }
+        public Nullable<int> StageId { get; set; }
+        public Nullable<int> UserId { get; set; }
+        public Nullable<int> Step { get; set; }
         public string Status { get; set; }
         public string Comments { get; set; }
-        public string CancelReason { get; set; }
+        public Nullable<System.DateTime> ActionDate { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedUser { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> ModifiedUser { get; set; }
-        public string IsApproval { get; set; }
-        public string ApprovalMessages { get; set; }
-        public string ApprovalStatus { get; set; }
     }
 }

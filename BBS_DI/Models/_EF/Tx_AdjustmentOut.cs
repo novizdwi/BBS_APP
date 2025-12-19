@@ -43,5 +43,8 @@ namespace BBS_DI.Models._EF
         public string SubClass2Name { get; set; }
         public string ProjectCode { get; set; }
         public string ProjectName { get; set; }
+        public string ApprovalStatus { get; set; }
+        public string IsApproval { get; set; }
+        public string ApprovalMessages { get; set; }
     }
 }
