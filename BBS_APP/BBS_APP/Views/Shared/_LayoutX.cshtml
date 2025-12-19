@@ -73,6 +73,20 @@
                     options.data += "&__RequestVerificationToken=" + tokenValue;
             });
         }
+
+        function OnClickIconNotification(s, e) {
+            var popup = ASPxClientPopupControl.Cast("notificationPopupListNotification");
+
+            var gv = ASPxClientGridView.Cast('gvNotificationListNotification');
+            if (gv == null) {
+                popup.Show();
+            } else {
+                popup.SetContentHtml("");
+                popup.PerformCallback();
+                popup.Show();
+            }
+        }
+
     </script>
 </head>
 <body>
@@ -154,7 +168,7 @@
                    {
                        ViewContext.Writer.Write(@"
                         <div class='notif-wrap'>
-                            <img src='" + Url.Content("~/Content/Images/bell.svg") + @"' class='notif-icon' />
+                            <img src='" + Url.Content("~/Content/Images/bell_amber.svg") + @"' class='notif-icon' />
                             <span id='notifBadge' class='notif-badge' style='display:none'>0</span>
                         </div>
                         ");
@@ -162,9 +176,8 @@
 
                });
 
-               menuSettings.ClientSideEvents.ItemClick = "function(s,e){ notificationPopupListNotification.Show(); }";
-               //menuSettings.ClientSideEvents.ItemClick = "function(s,e){ popupNotif.Show(); }";
-
+               menuSettings.ClientSideEvents.ItemClick = "OnClickIconNotification";
+               //menuSettings.ClientSideEvents.ItemClick = "function(s,e){ notificationPopupListNotification.Show(); }";
 
                menuSettings.Items.Add(item => {
                    item.Name = "AccountItem";

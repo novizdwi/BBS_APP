@@ -3,7 +3,7 @@
 
 @{
     /**/
-
+    ViewBag.UserId = (int)Session["userId"];
     ViewBag.Id = Model.Id;
     ViewBag.ReadOnly = Model.Status == "Draft" ? false: true;
 

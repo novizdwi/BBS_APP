@@ -359,8 +359,8 @@ C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\obj\Debug\BBS_APP.csproj.CoreCom
 C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\obj\Debug\BBS_APP.csproj.CopyComplete
 C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\obj\Debug\BBS_APP.dll
 C:\LegionShared\Project\BBS_APP\BBS_APP\BBS_APP\obj\Debug\BBS_APP.pdb
-C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\BBS_APP.dll.config
 C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\BBS_APP.pdb
+C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\BBS_APP.dll.config
 C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\CrystalDecisions.CrystalReports.Engine.dll
 C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\CrystalDecisions.Shared.dll
 C:\LegionShared\Git\BBS_APP\BBS_APP\BBS_APP\bin\CrystalDecisions.Web.dll

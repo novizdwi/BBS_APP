@@ -39,7 +39,63 @@ namespace Models.Notification
     public class Notification_Model
     {
         public static string ssql = @"
-            SELECT 
+            
+            SELECT TOP 5
+                T0.""Id"",
+                T0.""TransNo"", T0.""TransType"" ,
+                T0.""CreatedDate"" AS ""RequestDate"", 
+                T0.""ApprovalMessages"" AS ""Message""
+            FROM ""Tx_AdjustmentIn"" T0
+            INNER JOIN ""Tx_AdjustmentIn_Approval"" T1 ON T1.""Id"" = T0.""Id""
+            WHERE T0.""ApprovalStatus"" = 'Waiting' AND T1.""UserId"" = {UserId}
+            
+            UNION 
+
+            SELECT TOP 5
+                T0.""Id"",
+                T0.""TransNo"", T0.""TransType"" ,
+                T0.""CreatedDate"" AS ""RequestDate"", 
+                T0.""ApprovalMessages"" AS ""Message""
+            FROM ""Tx_AdjustmentOut"" T0
+            INNER JOIN ""Tx_AdjustmentOut_Approval"" T1 ON T1.""Id"" = T0.""Id""
+            WHERE T0.""ApprovalStatus"" = 'Waiting' AND T1.""UserId"" = {UserId}
+            
+            UNION
+
+            SELECT TOP 5
+                T0.""Id"",
+                T0.""TransNo"", T0.""TransType"" ,
+                T0.""CreatedDate"" AS ""RequestDate"", 
+                T0.""ApprovalMessages"" AS ""Message""
+            FROM ""Tx_GoodsReceiptPO"" T0
+            INNER JOIN ""Tx_GoodsReceiptPO_Approval"" T1 ON T1.""Id"" = T0.""Id""
+            WHERE T0.""ApprovalStatus"" = 'Waiting' AND T1.""UserId"" = {UserId}
+            
+            UNION
+
+             SELECT TOP 5
+                T0.""Id"",
+                T0.""TransNo"", T0.""TransType"" ,
+                T0.""CreatedDate"" AS ""RequestDate"", 
+                T0.""ApprovalMessages"" AS ""Message""
+            FROM ""Tx_StockSummaryOpname"" T0
+            INNER JOIN ""Tx_StockSummaryOpname_Approval"" T1 ON T1.""Id"" = T0.""Id""
+            WHERE T0.""ApprovalStatus"" = 'Waiting' AND T1.""UserId"" = {UserId}
+            
+            UNION
+
+            SELECT TOP 5
+                T0.""Id"",
+                T0.""TransNo"", T0.""TransType"" ,
+                T0.""CreatedDate"" AS ""RequestDate"", 
+                T0.""ApprovalMessages"" AS ""Message""
+            FROM ""Tx_TransferRequest"" T0
+            INNER JOIN ""Tx_TransferRequest_Approval"" T1 ON T1.""Id"" = T0.""Id""
+            WHERE T0.""ApprovalStatus"" = 'Waiting' AND T1.""UserId"" = {UserId}
+            
+            UNION
+            
+            SELECT TOP 5
                 T0.""Id"",
                 T0.""TransNo"", T0.""TransType"" ,
                 T0.""CreatedDate"" AS ""RequestDate"", 
@@ -50,7 +106,7 @@ namespace Models.Notification
             
             UNION
             
-            SELECT 
+            SELECT TOP 5
                 T0.""Id"",
                 T0.""TransNo"", T0.""TransType"" ,
                 T0.""CreatedDate"" AS ""RequestDate"", 
@@ -85,6 +141,21 @@ namespace Models.Notification
 
             e.DataRowCount = dataRowCount;
 
+        }
+
+        public int GetDataRowCount(int userId)
+        {
+            var Cfl_Sql = Notification_Model.ssql;
+
+            Cfl_Sql = Cfl_Sql.Replace("{UserId}", userId.ToString());
+                      
+
+            int dataRowCount;
+            string ssql = "";
+            ssql = "SELECT COUNT(*) AS IDU FROM (" + Cfl_Sql + ") T0  WHERE 1=1 " ;
+            dataRowCount = DbProvider.dbApp.Database.SqlQuery<int>(ssql).FirstOrDefault<int>();
+
+            return dataRowCount;
         }
 
         public static void GetData(GridViewCustomBindingGetDataArgs e, int userId, Notification_ParamModel notificationParam)

@@ -847,6 +847,7 @@
     <Content Include="Views\Notification\Notification.cshtml" />
     <Content Include="Views\Notification\Partial\_Notification_Panel_List_Partial.cshtml" />
     <Content Include="Views\Notification\Partial\_Notification_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferSummaryOut\Partial\Approval\Approval_Form_TabApproval_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -13,6 +13,8 @@ namespace BBS_APP.Controllers.Notification
         string VIEW_LIST_PARTIAL = "~/Views/Notification/Partial/_Notification_List_Partial.cshtml";
         string VIEW_PANEL_LIST_PARTIAL = "~/Views/Notification/Partial/_Notification_Panel_List_Partial.cshtml";
 
+       
+
         public Notification_ParamModel GetParam(HttpRequestBase Request)
         {
             var cflParam = new Notification_ParamModel();
@@ -143,8 +145,10 @@ namespace BBS_APP.Controllers.Notification
 
         public ActionResult GetUnreadCount()
         {
+            int userId = (int)Session["userId"];
+            Notification_Model notification_Model =  new Notification_Model();
             // TODO: ganti dengan query approval real
-            int count = 5; // contoh dummy
+            int count = notification_Model.GetDataRowCount(userId); // contoh dummy
 
             return Json(count, JsonRequestBehavior.AllowGet);
         }

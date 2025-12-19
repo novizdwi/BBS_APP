@@ -102,6 +102,8 @@ namespace Models.Transaction.Inventory
 
         public List<TransferSummaryOut_RefModel> ListRef_ = new List<TransferSummaryOut_RefModel>();
 
+        public List<TransferSummaryOut_ApprovalModel> ListApprovalStep_ = new List<TransferSummaryOut_ApprovalModel>();
+
         public TransferSummaryOut_Detail Details_ { get; set; }
     }
     public class TransferSummaryOut_Detail
@@ -141,6 +143,37 @@ namespace Models.Transaction.Inventory
         public string Comments { get; set; }
 
         public string BaseCreatedUser_ { get; set; }
+    }
+
+    public class TransferSummaryOut_ApprovalModel
+    {
+        private FormModeEnum _FormModeEnum = FormModeEnum.New;
+
+        public FormModeEnum _FormMode
+        {
+            get { return this._FormModeEnum; }
+            set { this._FormModeEnum = value; }
+        }
+
+        public int _UserId { get; set; }
+
+        public int? Id { get; set; }
+
+        public int? DetId { get; set; }
+
+        public int? StageId { get; set; }
+
+        public int? UserId { get; set; }
+
+        public string Username { get; set; }
+
+        public int? Step { get; set; }
+
+        public string Status { get; set; }
+
+        public string Comments { get; set; }
+
+        public DateTime? ActionDate { get; set; }
     }
 
     public class TransferSummaryOut_DetailModel
@@ -287,6 +320,7 @@ namespace Models.Transaction.Inventory
 
                 model.ListRef_ = this.TransferSummaryOut_Refs(CONTEXT, id);
                 model.ListDetails_ = this.TransferSummaryOut_Details(CONTEXT, id);
+                model.ListApprovalStep_ = this.TransferSummaryOut_ApprovalSteps(id);
             }
 
             return model;
@@ -333,6 +367,27 @@ namespace Models.Transaction.Inventory
             ";
             var goodsReceiptPO = CONTEXT.Database.SqlQuery<TransferSummaryOut_DetailModel>(ssql, id).ToList();
             return goodsReceiptPO;
+        }
+
+        public List<TransferSummaryOut_ApprovalModel> TransferSummaryOut_ApprovalSteps(long id = 0)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                return TransferSummaryOut_ApprovalSteps(CONTEXT, id);
+            }
+
+        }
+
+        public List<TransferSummaryOut_ApprovalModel> TransferSummaryOut_ApprovalSteps(HANA_APP CONTEXT, long id = 0)
+        {
+            string ssql = @"SELECT T0.*, T1.""UserName""  AS Username
+                FROM ""Tx_TransferSummaryOut_Approval"" T0
+                LEFT JOIN ""Tm_User"" T1 ON T1.""Id"" = T0.""UserId""
+                WHERE T0.""Id"" =:p0
+                ORDER BY T0.""Step"" ASC
+            ";
+            var listData = CONTEXT.Database.SqlQuery<TransferSummaryOut_ApprovalModel>(ssql, id).ToList();
+            return listData;
         }
 
         public TransferSummaryOutModel NavFirst(int userId)
@@ -918,6 +973,7 @@ namespace Models.Transaction.Inventory
                         {
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
                             tx_TransferSummaryOut.Status = "Cancel";
+                            tx_TransferSummaryOut.ApprovalStatus = "Cancel";
                             tx_TransferSummaryOut.CancelReason = cancelReason;
                             tx_TransferSummaryOut.ModifiedDate = dtModified;
                             tx_TransferSummaryOut.ModifiedUser = userId;
@@ -970,7 +1026,9 @@ namespace Models.Transaction.Inventory
                         if (tx_TransferSummaryOut != null)
                         {
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                            var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("TransferSummaryOut");
                             //tx_TransferSummaryOut.Status = "";
+                            tx_TransferSummaryOut.ApprovalStatus = isApprovalActive == "Y" && string.IsNullOrEmpty(tx_TransferSummaryOut.ApprovalStatus)  ? "Waiting" : tx_TransferSummaryOut.ApprovalStatus;
                             tx_TransferSummaryOut.ApprovalMessages = approvalMessages;
                             tx_TransferSummaryOut.ModifiedDate = dtModified;
                             tx_TransferSummaryOut.ModifiedUser = userId;

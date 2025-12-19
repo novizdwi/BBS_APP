@@ -11,6 +11,13 @@
         }
 ).Bind(Model.Id).GetHtml()
 
+@{
+    /**/
+    ViewBag.UserId = (int)Session["userId"];
+    ViewBag.Id = Model.Id;
+    ViewBag.ReadOnly = Model.Status == "Draft" ? false : true;
+
+}
 
 @Html.DevExpress().FormLayout(settings =>
 {
@@ -110,7 +117,22 @@
     });
 
 
-
+    groupItem.Items.AddTabbedGroupItem(group =>
+    {
+        group.Width = Unit.Percentage(100);
+        group.Height = Unit.Pixel(50);
+        group.Items.Add(item =>
+        {
+            item.Name = "TabApprovalList";
+            item.Caption = "Approval Step List";
+            item.SetNestedContent(() =>
+            {
+                ViewContext.Writer.Write(
+                    Html.Partial("Partial/Approval/Approval_Form_TabApproval_Partial", Model.ListApprovalStep_)
+                );
+            });
+        });
+    });
 
 }).GetHtml()
 

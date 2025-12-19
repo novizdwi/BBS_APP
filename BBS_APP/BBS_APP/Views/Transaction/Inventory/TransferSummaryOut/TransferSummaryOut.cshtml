@@ -267,16 +267,16 @@
             return;
         }
         key = Id.GetValue();
-        Post(s, e);
+        //Post(s, e);
 
-        //var isApproval = IsApproval.GetValue();
-        //var approvalStatus = ApprovalStatus.GetValue();
+        var isApproval = IsApproval.GetValue();
+        var approvalStatus = ApprovalStatus.GetValue();
 
-        //if (isApproval == "Y") {
-        //    btnShowApprovalOnClick(s, e, key);
-        //} else {
-        //    Post(s, e);
-        //}    
+        if (isApproval == "Y") {
+            btnShowApprovalOnClick(s, e, key);
+        } else {
+            Post(s, e);
+        }    
 
     }
 
@@ -322,7 +322,7 @@
                 OnBegin();
             },
             success: function (response) {
-                popupCancelReason.Hide();
+                popupApproval.Hide();
                 RefreshAfterSuccess(response);
                 OnSuccessMsgBox();
             },
@@ -353,7 +353,7 @@
                     OnBegin();
                 },
                 success: function (response) {
-                    popupCancelReason.Hide();
+                    popupApproval.Hide();
                     RefreshAfterSuccess(response);
                     OnSuccessMsgBox();
                 },
