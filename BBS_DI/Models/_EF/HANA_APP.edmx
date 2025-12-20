@@ -925,6 +925,7 @@ warning 6002: The table/view 'HDB.BBS_RFID_APP.Tp_UserAlert' does not have a pri
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
+          <Property Name="ApprovalStatus" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Tx_AdjustmentOut_Approval">
           <Key>
@@ -1124,6 +1125,8 @@ warning 6002: The table/view 'HDB.BBS_RFID_APP.Tp_UserAlert' does not have a pri
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
+          <Property Name="ApprovalMessages" Type="nvarchar" MaxLength="254" />
+          <Property Name="IsApproval" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="Tx_GoodsReceiptPO_Approval">
           <Key>
@@ -1693,6 +1696,7 @@ warning 6002: The table/view 'HDB.BBS_RFID_APP.Tp_UserAlert' does not have a pri
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
+          <Property Name="ApprovalMessages" Type="nvarchar" MaxLength="254" />
         </EntityType>
         <EntityType Name="Tx_TransferRequest_Approval">
           <Key>
@@ -1774,6 +1778,7 @@ warning 6002: The table/view 'HDB.BBS_RFID_APP.Tp_UserAlert' does not have a pri
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
+          <Property Name="ApprovalMessages" Type="nvarchar" MaxLength="254" />
         </EntityType>
         <EntityType Name="Tx_TransferSummaryIn_Approval">
           <Key>
@@ -1817,48 +1822,6 @@ warning 6002: The table/view 'HDB.BBS_RFID_APP.Tp_UserAlert' does not have a pri
           <Property Name="Comments" Type="nvarchar" MaxLength="254" />
           <Property Name="TransitWhsCode" Type="nvarchar" MaxLength="50" />
           <Property Name="TransitWhsName" Type="nvarchar" MaxLength="100" />
-          <Property Name="CreatedDate" Type="timestamp" />
-          <Property Name="CreatedUser" Type="int" />
-          <Property Name="ModifiedDate" Type="timestamp" />
-          <Property Name="ModifiedUser" Type="int" />
-        </EntityType>
-        <EntityType Name="Tx_TransferSummaryIn_Item_tag">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DetId" Type="bigint" />
-          <Property Name="DetDetId" Type="bigint" />
-          <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
-          <Property Name="TagId" Type="nvarchar" MaxLength="200" />
-          <Property Name="Quantity" Type="decimal" Precision="21" Scale="6" />
-          <Property Name="EventType" Type="nvarchar" MaxLength="100" />
-          <Property Name="Status" Type="nvarchar" MaxLength="50" />
-          <Property Name="BaseId" Type="bigint" />
-          <Property Name="BaseDetId" Type="bigint" />
-          <Property Name="BaseDetDetId" Type="bigint" />
-          <Property Name="CreatedDate" Type="timestamp" />
-          <Property Name="CreatedUser" Type="int" />
-          <Property Name="ModifiedDate" Type="timestamp" />
-          <Property Name="ModifiedUser" Type="int" />
-        </EntityType>
-        <EntityType Name="Tx_TransferSummaryIn_Item_Tag1">
-          <Key>
-            <PropertyRef Name="DetDetId" />
-          </Key>
-          <Property Name="Id" Type="bigint" />
-          <Property Name="DetId" Type="bigint" />
-          <Property Name="DetDetId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
-          <Property Name="TagId" Type="nvarchar" MaxLength="200" />
-          <Property Name="Quantity" Type="decimal" Precision="21" Scale="6" />
-          <Property Name="EventType" Type="nvarchar" MaxLength="100" />
-          <Property Name="Status" Type="nvarchar" MaxLength="50" />
-          <Property Name="BaseId" Type="bigint" />
-          <Property Name="BaseDetId" Type="bigint" />
-          <Property Name="BaseDetDetId" Type="bigint" />
           <Property Name="CreatedDate" Type="timestamp" />
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
@@ -2108,8 +2071,6 @@ warning 6002: The table/view 'HDB.BBS_RFID_APP.Tp_UserAlert' does not have a pri
           <EntitySet Name="Tx_TransferSummaryIn" EntityType="Self.Tx_TransferSummaryIn" Schema="BBS_RFID_APP" store:Type="Tables" />
           <EntitySet Name="Tx_TransferSummaryIn_Approval" EntityType="Self.Tx_TransferSummaryIn_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
           <EntitySet Name="Tx_TransferSummaryIn_Item" EntityType="Self.Tx_TransferSummaryIn_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferSummaryIn_Item_tag" EntityType="Self.Tx_TransferSummaryIn_Item_tag" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferSummaryIn_Item_Tag1" EntityType="Self.Tx_TransferSummaryIn_Item_Tag1" Schema="BBS_RFID_APP" Table="Tx_TransferSummaryIn_Item_Tag" store:Type="Tables" />
           <EntitySet Name="Tx_TransferSummaryIn_Ref" EntityType="Self.Tx_TransferSummaryIn_Ref" Schema="BBS_RFID_APP" store:Type="Tables" />
           <EntitySet Name="Tx_TransferSummaryOut" EntityType="Self.Tx_TransferSummaryOut" Schema="BBS_RFID_APP" store:Type="Tables" />
           <EntitySet Name="Tx_TransferSummaryOut_Approval" EntityType="Self.Tx_TransferSummaryOut_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
@@ -2234,8 +2195,6 @@ FROM "BBS_RFID_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySet Name="Tx_TransferSummaryIn" EntityType="Model1.Tx_TransferSummaryIn" />
           <EntitySet Name="Tx_TransferSummaryIn_Approval" EntityType="Model1.Tx_TransferSummaryIn_Approval" />
           <EntitySet Name="Tx_TransferSummaryIn_Item" EntityType="Model1.Tx_TransferSummaryIn_Item" />
-          <EntitySet Name="Tx_TransferSummaryIn_Item_tag" EntityType="Model1.Tx_TransferSummaryIn_Item_tag" />
-          <EntitySet Name="Tx_TransferSummaryIn_Item_Tag1" EntityType="Model1.Tx_TransferSummaryIn_Item_Tag1" />
           <EntitySet Name="Tx_TransferSummaryIn_Ref" EntityType="Model1.Tx_TransferSummaryIn_Ref" />
           <EntitySet Name="Tx_TransferSummaryOut" EntityType="Model1.Tx_TransferSummaryOut" />
           <EntitySet Name="Tx_TransferSummaryOut_Approval" EntityType="Model1.Tx_TransferSummaryOut_Approval" />
@@ -3147,6 +3106,7 @@ FROM "BBS_RFID_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
+          <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tx_AdjustmentOut_Approval">
           <Key>
@@ -3346,6 +3306,8 @@ FROM "BBS_RFID_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
+          <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Tx_GoodsReceiptPO_Approval">
           <Key>
@@ -3915,6 +3877,7 @@ FROM "BBS_RFID_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
+          <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tx_TransferRequest_Approval">
           <Key>
@@ -3996,6 +3959,7 @@ FROM "BBS_RFID_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
+          <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tx_TransferSummaryIn_Approval">
           <Key>
@@ -4039,48 +4003,6 @@ FROM "BBS_RFID_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
           <Property Name="TransitWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TransitWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" />
-          <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
-        </EntityType>
-        <EntityType Name="Tx_TransferSummaryIn_Item_tag">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DetId" Type="Int64" />
-          <Property Name="DetDetId" Type="Int64" />
-          <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="TagId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Quantity" Type="Decimal" Precision="21" Scale="6" />
-          <Property Name="EventType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BaseId" Type="Int64" />
-          <Property Name="BaseDetId" Type="Int64" />
-          <Property Name="BaseDetDetId" Type="Int64" />
-          <Property Name="CreatedDate" Type="DateTime" />
-          <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
-        </EntityType>
-        <EntityType Name="Tx_TransferSummaryIn_Item_Tag1">
-          <Key>
-            <PropertyRef Name="DetDetId" />
-          </Key>
-          <Property Name="Id" Type="Int64" />
-          <Property Name="DetId" Type="Int64" />
-          <Property Name="DetDetId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="TagId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Quantity" Type="Decimal" Precision="21" Scale="6" />
-          <Property Name="EventType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BaseId" Type="Int64" />
-          <Property Name="BaseDetId" Type="Int64" />
-          <Property Name="BaseDetDetId" Type="Int64" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
@@ -5177,6 +5099,7 @@ FROM "BBS_RFID_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySetMapping Name="Tx_AdjustmentOut">
             <EntityTypeMapping TypeName="Model1.Tx_AdjustmentOut">
               <MappingFragment StoreEntitySet="Tx_AdjustmentOut">
+                <ScalarProperty Name="ApprovalStatus" ColumnName="ApprovalStatus" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -5394,6 +5317,8 @@ FROM "BBS_RFID_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySetMapping Name="Tx_GoodsReceiptPO">
             <EntityTypeMapping TypeName="Model1.Tx_GoodsReceiptPO">
               <MappingFragment StoreEntitySet="Tx_GoodsReceiptPO">
+                <ScalarProperty Name="IsApproval" ColumnName="IsApproval" />
+                <ScalarProperty Name="ApprovalMessages" ColumnName="ApprovalMessages" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -5982,6 +5907,7 @@ FROM "BBS_RFID_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySetMapping Name="Tx_TransferRequest">
             <EntityTypeMapping TypeName="Model1.Tx_TransferRequest">
               <MappingFragment StoreEntitySet="Tx_TransferRequest">
+                <ScalarProperty Name="ApprovalMessages" ColumnName="ApprovalMessages" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -6060,6 +5986,7 @@ FROM "BBS_RFID_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySetMapping Name="Tx_TransferSummaryIn">
             <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryIn">
               <MappingFragment StoreEntitySet="Tx_TransferSummaryIn">
+                <ScalarProperty Name="ApprovalMessages" ColumnName="ApprovalMessages" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -6141,50 +6068,6 @@ FROM "BBS_RFID_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
                 <ScalarProperty Name="BaseType" ColumnName="BaseType" />
                 <ScalarProperty Name="BaseDetId" ColumnName="BaseDetId" />
                 <ScalarProperty Name="BaseId" ColumnName="BaseId" />
-                <ScalarProperty Name="DetId" ColumnName="DetId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tx_TransferSummaryIn_Item_tag">
-            <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryIn_Item_tag">
-              <MappingFragment StoreEntitySet="Tx_TransferSummaryIn_Item_tag">
-                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="BaseDetDetId" ColumnName="BaseDetDetId" />
-                <ScalarProperty Name="BaseDetId" ColumnName="BaseDetId" />
-                <ScalarProperty Name="BaseId" ColumnName="BaseId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="EventType" ColumnName="EventType" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="TagId" ColumnName="TagId" />
-                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
-                <ScalarProperty Name="DetDetId" ColumnName="DetDetId" />
-                <ScalarProperty Name="DetId" ColumnName="DetId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tx_TransferSummaryIn_Item_Tag1">
-            <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryIn_Item_Tag1">
-              <MappingFragment StoreEntitySet="Tx_TransferSummaryIn_Item_Tag1">
-                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="BaseDetDetId" ColumnName="BaseDetDetId" />
-                <ScalarProperty Name="BaseDetId" ColumnName="BaseDetId" />
-                <ScalarProperty Name="BaseId" ColumnName="BaseId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="EventType" ColumnName="EventType" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="TagId" ColumnName="TagId" />
-                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
-                <ScalarProperty Name="DetDetId" ColumnName="DetDetId" />
                 <ScalarProperty Name="DetId" ColumnName="DetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

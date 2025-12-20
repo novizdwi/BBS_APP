@@ -926,6 +926,7 @@
     <EntitySetMapping Name="Tx_AdjustmentOut">
       <EntityTypeMapping TypeName="Model1.Tx_AdjustmentOut">
         <MappingFragment StoreEntitySet="Tx_AdjustmentOut">
+          <ScalarProperty Name="ApprovalStatus" ColumnName="ApprovalStatus" />
           <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -1143,6 +1144,8 @@
     <EntitySetMapping Name="Tx_GoodsReceiptPO">
       <EntityTypeMapping TypeName="Model1.Tx_GoodsReceiptPO">
         <MappingFragment StoreEntitySet="Tx_GoodsReceiptPO">
+          <ScalarProperty Name="IsApproval" ColumnName="IsApproval" />
+          <ScalarProperty Name="ApprovalMessages" ColumnName="ApprovalMessages" />
           <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -1731,6 +1734,7 @@
     <EntitySetMapping Name="Tx_TransferRequest">
       <EntityTypeMapping TypeName="Model1.Tx_TransferRequest">
         <MappingFragment StoreEntitySet="Tx_TransferRequest">
+          <ScalarProperty Name="ApprovalMessages" ColumnName="ApprovalMessages" />
           <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -1809,6 +1813,7 @@
     <EntitySetMapping Name="Tx_TransferSummaryIn">
       <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryIn">
         <MappingFragment StoreEntitySet="Tx_TransferSummaryIn">
+          <ScalarProperty Name="ApprovalMessages" ColumnName="ApprovalMessages" />
           <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
           <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
           <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -1890,50 +1895,6 @@
           <ScalarProperty Name="BaseType" ColumnName="BaseType" />
           <ScalarProperty Name="BaseDetId" ColumnName="BaseDetId" />
           <ScalarProperty Name="BaseId" ColumnName="BaseId" />
-          <ScalarProperty Name="DetId" ColumnName="DetId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Tx_TransferSummaryIn_Item_tag">
-      <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryIn_Item_tag">
-        <MappingFragment StoreEntitySet="Tx_TransferSummaryIn_Item_tag">
-          <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-          <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="BaseDetDetId" ColumnName="BaseDetDetId" />
-          <ScalarProperty Name="BaseDetId" ColumnName="BaseDetId" />
-          <ScalarProperty Name="BaseId" ColumnName="BaseId" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="EventType" ColumnName="EventType" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="TagId" ColumnName="TagId" />
-          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-          <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
-          <ScalarProperty Name="DetDetId" ColumnName="DetDetId" />
-          <ScalarProperty Name="DetId" ColumnName="DetId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Tx_TransferSummaryIn_Item_Tag1">
-      <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryIn_Item_Tag1">
-        <MappingFragment StoreEntitySet="Tx_TransferSummaryIn_Item_Tag1">
-          <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-          <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="BaseDetDetId" ColumnName="BaseDetDetId" />
-          <ScalarProperty Name="BaseDetId" ColumnName="BaseDetId" />
-          <ScalarProperty Name="BaseId" ColumnName="BaseId" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="EventType" ColumnName="EventType" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="TagId" ColumnName="TagId" />
-          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-          <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
-          <ScalarProperty Name="DetDetId" ColumnName="DetDetId" />
           <ScalarProperty Name="DetId" ColumnName="DetId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>

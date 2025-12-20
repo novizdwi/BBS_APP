@@ -103,15 +103,13 @@
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryIn" Width="1.5" PointX="30.75" PointY="11.75" />
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryIn_Approval" Width="1.5" PointX="12.75" PointY="30.75" />
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryIn_Item" Width="1.5" PointX="14.75" PointY="30.75" />
-        <EntityTypeShape EntityType="Model1.Tx_TransferSummaryIn_Item_tag" Width="1.5" PointX="16.75" PointY="30.75" />
-        <EntityTypeShape EntityType="Model1.Tx_TransferSummaryIn_Item_Tag1" Width="1.5" PointX="30.75" PointY="20.75" />
-        <EntityTypeShape EntityType="Model1.Tx_TransferSummaryIn_Ref" Width="1.5" PointX="30.75" PointY="25.75" />
-        <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut" Width="1.5" PointX="30.75" PointY="30.75" />
-        <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Approval" Width="1.5" PointX="0.75" PointY="31.75" />
-        <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Item" Width="1.5" PointX="6.75" PointY="31.75" />
-        <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Item_Tag" Width="1.5" PointX="32.75" PointY="0.75" />
-        <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Ref" Width="1.5" PointX="32.75" PointY="5.75" />
-        <EntityTypeShape EntityType="Model1.Tp_UserAlert" Width="1.5" PointX="32.75" PointY="10.75" />
+        <EntityTypeShape EntityType="Model1.Tx_TransferSummaryIn_Ref" Width="1.5" PointX="16.75" PointY="30.75" />
+        <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut" Width="1.5" PointX="30.75" PointY="20.75" />
+        <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Approval" Width="1.5" PointX="30.75" PointY="29.75" />
+        <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Item" Width="1.5" PointX="0.75" PointY="31.75" />
+        <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Item_Tag" Width="1.5" PointX="6.75" PointY="31.75" />
+        <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Ref" Width="1.5" PointX="32.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model1.Tp_UserAlert" Width="1.5" PointX="32.75" PointY="5.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

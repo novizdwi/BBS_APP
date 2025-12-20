@@ -920,6 +920,7 @@ warning 6002: The table/view 'HDB.BBS_RFID_APP.Tp_UserAlert' does not have a pri
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
     <Property Name="ModifiedUser" Type="int" />
+    <Property Name="ApprovalStatus" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Tx_AdjustmentOut_Approval">
     <Key>
@@ -1119,6 +1120,8 @@ warning 6002: The table/view 'HDB.BBS_RFID_APP.Tp_UserAlert' does not have a pri
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
     <Property Name="ModifiedUser" Type="int" />
+    <Property Name="ApprovalMessages" Type="nvarchar" MaxLength="254" />
+    <Property Name="IsApproval" Type="varchar" MaxLength="1" />
   </EntityType>
   <EntityType Name="Tx_GoodsReceiptPO_Approval">
     <Key>
@@ -1688,6 +1691,7 @@ warning 6002: The table/view 'HDB.BBS_RFID_APP.Tp_UserAlert' does not have a pri
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
     <Property Name="ModifiedUser" Type="int" />
+    <Property Name="ApprovalMessages" Type="nvarchar" MaxLength="254" />
   </EntityType>
   <EntityType Name="Tx_TransferRequest_Approval">
     <Key>
@@ -1769,6 +1773,7 @@ warning 6002: The table/view 'HDB.BBS_RFID_APP.Tp_UserAlert' does not have a pri
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
     <Property Name="ModifiedUser" Type="int" />
+    <Property Name="ApprovalMessages" Type="nvarchar" MaxLength="254" />
   </EntityType>
   <EntityType Name="Tx_TransferSummaryIn_Approval">
     <Key>
@@ -1812,48 +1817,6 @@ warning 6002: The table/view 'HDB.BBS_RFID_APP.Tp_UserAlert' does not have a pri
     <Property Name="Comments" Type="nvarchar" MaxLength="254" />
     <Property Name="TransitWhsCode" Type="nvarchar" MaxLength="50" />
     <Property Name="TransitWhsName" Type="nvarchar" MaxLength="100" />
-    <Property Name="CreatedDate" Type="timestamp" />
-    <Property Name="CreatedUser" Type="int" />
-    <Property Name="ModifiedDate" Type="timestamp" />
-    <Property Name="ModifiedUser" Type="int" />
-  </EntityType>
-  <EntityType Name="Tx_TransferSummaryIn_Item_tag">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="DetId" Type="bigint" />
-    <Property Name="DetDetId" Type="bigint" />
-    <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
-    <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
-    <Property Name="TagId" Type="nvarchar" MaxLength="200" />
-    <Property Name="Quantity" Type="decimal" Precision="21" Scale="6" />
-    <Property Name="EventType" Type="nvarchar" MaxLength="100" />
-    <Property Name="Status" Type="nvarchar" MaxLength="50" />
-    <Property Name="BaseId" Type="bigint" />
-    <Property Name="BaseDetId" Type="bigint" />
-    <Property Name="BaseDetDetId" Type="bigint" />
-    <Property Name="CreatedDate" Type="timestamp" />
-    <Property Name="CreatedUser" Type="int" />
-    <Property Name="ModifiedDate" Type="timestamp" />
-    <Property Name="ModifiedUser" Type="int" />
-  </EntityType>
-  <EntityType Name="Tx_TransferSummaryIn_Item_Tag1">
-    <Key>
-      <PropertyRef Name="DetDetId" />
-    </Key>
-    <Property Name="Id" Type="bigint" />
-    <Property Name="DetId" Type="bigint" />
-    <Property Name="DetDetId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
-    <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
-    <Property Name="TagId" Type="nvarchar" MaxLength="200" />
-    <Property Name="Quantity" Type="decimal" Precision="21" Scale="6" />
-    <Property Name="EventType" Type="nvarchar" MaxLength="100" />
-    <Property Name="Status" Type="nvarchar" MaxLength="50" />
-    <Property Name="BaseId" Type="bigint" />
-    <Property Name="BaseDetId" Type="bigint" />
-    <Property Name="BaseDetDetId" Type="bigint" />
     <Property Name="CreatedDate" Type="timestamp" />
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
@@ -2103,8 +2066,6 @@ warning 6002: The table/view 'HDB.BBS_RFID_APP.Tp_UserAlert' does not have a pri
     <EntitySet Name="Tx_TransferSummaryIn" EntityType="Self.Tx_TransferSummaryIn" Schema="BBS_RFID_APP" store:Type="Tables" />
     <EntitySet Name="Tx_TransferSummaryIn_Approval" EntityType="Self.Tx_TransferSummaryIn_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
     <EntitySet Name="Tx_TransferSummaryIn_Item" EntityType="Self.Tx_TransferSummaryIn_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_TransferSummaryIn_Item_tag" EntityType="Self.Tx_TransferSummaryIn_Item_tag" Schema="BBS_RFID_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_TransferSummaryIn_Item_Tag1" EntityType="Self.Tx_TransferSummaryIn_Item_Tag1" Schema="BBS_RFID_APP" Table="Tx_TransferSummaryIn_Item_Tag" store:Type="Tables" />
     <EntitySet Name="Tx_TransferSummaryIn_Ref" EntityType="Self.Tx_TransferSummaryIn_Ref" Schema="BBS_RFID_APP" store:Type="Tables" />
     <EntitySet Name="Tx_TransferSummaryOut" EntityType="Self.Tx_TransferSummaryOut" Schema="BBS_RFID_APP" store:Type="Tables" />
     <EntitySet Name="Tx_TransferSummaryOut_Approval" EntityType="Self.Tx_TransferSummaryOut_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
