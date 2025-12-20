@@ -66,6 +66,8 @@ INSERT INTO "Ts_Menu" VALUES ('TransferSummaryIn/Add', 'Add', 'TransferSummaryIn
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryIn/Update', 'Update', 'TransferSummaryIn/Update', 'TransferSummaryIn', 20020404);
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryIn/Post', 'Post', 'TransferSummaryIn/Post', 'TransferSummaryIn', 20020405);
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryIn/Cancel', 'Cancel', 'TransferSummaryIn/Cancel', 'TransferSummaryIn', 20020406);
+INSERT INTO "Ts_Menu" VALUES ('TransferSummaryIn/Approve','Approve','TransferSummaryIn/Approve','TransferSummaryIn', 20020407);
+INSERT INTO "Ts_Menu" VALUES ('TransferSummaryIn/Reject','Reject','TransferSummaryIn/Reject','TransferSummaryIn', 20020408);
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryIn/Print', 'Print', 'TransferSummaryIn/Print', 'TransferSummaryIn', 20020410);
 
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryOut', 'Transfer Summary Out', 'TransferSummaryOut', 'Inventory', 200205);
@@ -75,6 +77,8 @@ INSERT INTO "Ts_Menu" VALUES ('TransferSummaryOut/Add', 'Add', 'TransferSummaryO
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryOut/Update', 'Update', 'TransferSummaryOut/Update', 'TransferSummaryOut', 20020504);
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryOut/Post', 'Post', 'TransferSummaryOut/Post', 'TransferSummaryOut', 20020505);
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryOut/Cancel', 'Cancel', 'TransferSummaryOut/Cancel', 'TransferSummaryOut', 20020506);
+INSERT INTO "Ts_Menu" VALUES ('TransferSummaryOut/Approve','Approve','TransferSummaryOut/Approve','TransferSummaryOut','20020507');
+INSERT INTO "Ts_Menu" VALUES ('TransferSummaryOut/Reject','Reject','TransferSummaryOut/Reject','TransferSummaryOut','20020508');
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryOut/Print', 'Print', 'TransferSummaryOut/Print', 'TransferSummaryOut', 20020510);
 
 INSERT INTO "Ts_Menu" VALUES ('StockOpname', 'Stock Opname', NULL, 'Transaction', 2003);

@@ -625,7 +625,7 @@
     <Content Include="Views\Authentication\User\Partial\User_TabWarehouse_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Purchasing\PurchaseOrderScan\Partial\PurchaseOrderScan_Form_Btn_Partial.cshtml" />
     <Content Include="Views\Transaction\Purchasing\PurchaseOrderScan\Partial\PurchaseOrderScan_Form_Partial.cshtml" />
-    <Content Include="Views\Transaction\Purchasing\PurchaseOrderScan\Partial\PurchaseOrderScan_Form_TabDetail_Partial.cshtml" />
+    <Content Include="Views\Transaction\Purchasing\PurchaseOrderScan\Partial\PurchaseOrderScan_Form_TabDetail_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Purchasing\PurchaseOrderScan\Partial\PurchaseOrderScan_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Purchasing\PurchaseOrderScan\Partial\PurchaseOrderScan_Panel_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Purchasing\PurchaseOrderScan\PurchaseOrderScan.cshtml" />
@@ -645,7 +645,7 @@
     <Content Include="Views\Transaction\Purchasing\GoodsReceiptPO\Partial\ItemTag\ItemTag_TabItemTagList_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Purchasing\GoodsReceiptPO\Partial\GoodsReceiptPO_Form_Btn_Partial.cshtml" />
     <Content Include="Views\Transaction\Purchasing\GoodsReceiptPO\Partial\GoodsReceiptPO_Form_Partial.cshtml" />
-    <Content Include="Views\Transaction\Purchasing\GoodsReceiptPO\Partial\GoodsReceiptPO_Form_TabDetail_Partial.cshtml" />
+    <Content Include="Views\Transaction\Purchasing\GoodsReceiptPO\Partial\GoodsReceiptPO_Form_TabDetail_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Purchasing\GoodsReceiptPO\Partial\GoodsReceiptPO_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Purchasing\GoodsReceiptPO\Partial\GoodsReceiptPO_Panel_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Purchasing\GoodsReceiptPO\GoodsReceiptPO.cshtml" />
@@ -675,7 +675,7 @@
     <Content Include="Views\Transaction\Inventory\TransferOut\Partial\TransferOut_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferOut\Partial\TransferOut_Form_Btn_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferOut\Partial\TransferOut_Form_Partial.cshtml" />
-    <Content Include="Views\Transaction\Inventory\TransferOut\Partial\TransferOut_Form_TabDetail_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferOut\Partial\TransferOut_Form_TabDetail_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferOut\TransferOut.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferIn\Partial\CancelReason\CancelReason_Form_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferIn\Partial\CancelReason\CancelReason_Panel_Partial.cshtml" />
@@ -686,7 +686,7 @@
     <Content Include="Views\Transaction\Inventory\TransferIn\Partial\ItemTag\ItemTag_TabItemTagList_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferIn\Partial\TransferIn_Form_Btn_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferIn\Partial\TransferIn_Form_Partial.cshtml" />
-    <Content Include="Views\Transaction\Inventory\TransferIn\Partial\TransferIn_Form_TabDetail_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferIn\Partial\TransferIn_Form_TabDetail_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferIn\Partial\TransferIn_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferIn\Partial\TransferIn_Panel_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferIn\TransferIn.cshtml" />
@@ -699,7 +699,7 @@
     <Content Include="Views\Transaction\Inventory\TransferSummaryOut\Partial\ItemTag\ItemTag_TabItemTagList_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferSummaryOut\Partial\TransferSummaryOut_Form_Btn_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferSummaryOut\Partial\TransferSummaryOut_Form_Partial.cshtml" />
-    <Content Include="Views\Transaction\Inventory\TransferSummaryOut\Partial\TransferSummaryOut_Form_TabDetail_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferSummaryOut\Partial\TransferSummaryOut_Form_TabDetail_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferSummaryOut\Partial\TransferSummaryOut_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferSummaryOut\Partial\TransferSummaryOut_Panel_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferSummaryOut\TransferSummaryOut.cshtml" />
@@ -712,7 +712,7 @@
     <Content Include="Views\Transaction\Inventory\TransferSummaryIn\Partial\ItemTag\ItemTag_TabItemTagList_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferSummaryIn\Partial\TransferSummaryIn_Form_Btn_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferSummaryIn\Partial\TransferSummaryIn_Form_Partial.cshtml" />
-    <Content Include="Views\Transaction\Inventory\TransferSummaryIn\Partial\TransferSummaryIn_Form_TabDetail_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferSummaryIn\Partial\TransferSummaryIn_Form_TabDetail_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferSummaryIn\Partial\TransferSummaryIn_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferSummaryIn\Partial\TransferSummaryIn_Panel_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferSummaryIn\TransferSummaryIn.cshtml" />
@@ -722,7 +722,7 @@
     <Content Include="Views\Transaction\Adjustment\AdjustmentIn\Partial\AdjustmentIn_Form_Btn_Partial.cshtml" />
     <Content Include="Views\Transaction\Adjustment\AdjustmentIn\Partial\AdjustmentIn_Form_Partial.cshtml" />
     <Content Include="Views\Transaction\Adjustment\AdjustmentIn\Partial\AdjustmentIn_Form_TabAttachment_List_Partial.cshtml" />
-    <Content Include="Views\Transaction\Adjustment\AdjustmentIn\Partial\AdjustmentIn_Form_TabDetail_Partial.cshtml" />
+    <Content Include="Views\Transaction\Adjustment\AdjustmentIn\Partial\AdjustmentIn_Form_TabDetail_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Adjustment\AdjustmentIn\Partial\AdjustmentIn_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Adjustment\AdjustmentIn\Partial\AdjustmentIn_Panel_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Adjustment\AdjustmentIn\Partial\Attachment\Attachment_Form_Partial.cshtml" />
@@ -739,7 +739,7 @@
     <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\AdjustmentOut_Form_Btn_Partial.cshtml" />
     <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\AdjustmentOut_Form_Partial.cshtml" />
     <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\AdjustmentOut_Form_TabAttachment_List_Partial.cshtml" />
-    <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\AdjustmentOut_Form_TabDetail_Partial.cshtml" />
+    <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\AdjustmentOut_Form_TabDetail_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\AdjustmentOut_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\AdjustmentOut_Panel_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\Attachment\Attachment_Form_Partial.cshtml" />
@@ -769,7 +769,7 @@
     <Content Include="Views\Transaction\StockOpname\StockOpnameScan\Partial\ItemTag\ItemTag_TabItemTagList_List_Partial.cshtml" />
     <Content Include="Views\Transaction\StockOpname\StockOpnameScan\Partial\StockOpnameScan_Form_Btn_Partial.cshtml" />
     <Content Include="Views\Transaction\StockOpname\StockOpnameScan\Partial\StockOpnameScan_Form_Partial.cshtml" />
-    <Content Include="Views\Transaction\StockOpname\StockOpnameScan\Partial\StockOpnameScan_Form_TabDetail_Partial.cshtml" />
+    <Content Include="Views\Transaction\StockOpname\StockOpnameScan\Partial\StockOpnameScan_Form_TabDetail_List_Partial.cshtml" />
     <Content Include="Views\Transaction\StockOpname\StockOpnameScan\Partial\StockOpnameScan_List_Partial.cshtml" />
     <Content Include="Views\Transaction\StockOpname\StockOpnameScan\Partial\StockOpnameScan_Panel_List_Partial.cshtml" />
     <Content Include="Views\Transaction\StockOpname\StockOpnameScan\StockOpnameScan.cshtml" />
@@ -804,7 +804,7 @@
     <Content Include="Views\Transaction\StockOpname\StockSummaryOpname\Partial\CancelReason\CancelReason_Partial.cshtml" />
     <Content Include="Views\Transaction\StockOpname\StockSummaryOpname\Partial\StockSummaryOpname_Form_Btn_Partial.cshtml" />
     <Content Include="Views\Transaction\StockOpname\StockSummaryOpname\Partial\StockSummaryOpname_Form_Partial.cshtml" />
-    <Content Include="Views\Transaction\StockOpname\StockSummaryOpname\Partial\StockSummaryOpname_Form_TabDetail_Partial.cshtml" />
+    <Content Include="Views\Transaction\StockOpname\StockSummaryOpname\Partial\StockSummaryOpname_Form_TabDetail_List_Partial.cshtml" />
     <Content Include="Views\Transaction\StockOpname\StockSummaryOpname\Partial\StockSummaryOpname_List_Partial.cshtml" />
     <Content Include="Views\Transaction\StockOpname\StockSummaryOpname\Partial\StockSummaryOpname_Panel_List_Partial.cshtml" />
     <Content Include="Views\Transaction\StockOpname\StockSummaryOpname\Partial\ItemTag\ItemTag_Form_Partial.cshtml" />
@@ -940,7 +940,9 @@
     <Compile Include="Controllers\Transaction\Adjustment\AdjustmentIn\AdjustmentInController.Nav.cs" />
     <Compile Include="Controllers\Transaction\Adjustment\AdjustmentIn\AdjustmentInController.Tab.Attachment.cs" />
     <Compile Include="Controllers\Transaction\Adjustment\AdjustmentIn\AdjustmentInController.Tab.Attachment.Detail.cs" />
+    <Compile Include="Controllers\Transaction\Adjustment\AdjustmentIn\AdjustmentInController.Tab.Detail.cs" />
     <Compile Include="Controllers\Transaction\Adjustment\AdjustmentIn\AdjustmentInController.ViewItemTag.cs" />
+    <Compile Include="Controllers\Transaction\Adjustment\AdjustmentOut\AdjustmentOutController.Tab.Detail.cs" />
     <Compile Include="Controllers\Transaction\Adjustment\AdjustmentOut\AdjustmentOutController.CancelReason.cs" />
     <Compile Include="Controllers\Transaction\Adjustment\AdjustmentOut\AdjustmentOutController.cs" />
     <Compile Include="Controllers\Transaction\Adjustment\AdjustmentOut\AdjustmentOutController.List.cs" />
@@ -965,12 +967,14 @@
     <Compile Include="Controllers\Transaction\Inventory\TransferRequest\TransferRequestController.List.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferRequest\TransferRequestController.Nav.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferRequest\TransferRequestController.Tab.Detail.cs" />
+    <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.Tab.Detail.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.CancelReason.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.List.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.Nav.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.Tab.Ref.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.ViewItemTag.cs" />
+    <Compile Include="Controllers\Transaction\Inventory\TransferSummaryOut\TransferSummaryOutController.Tab.Detail.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryOut\TransferSummaryOutController.Approval.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryOut\TransferSummaryOutController.CancelReason.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryOut\TransferSummaryOutController.cs" />
@@ -978,6 +982,7 @@
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryOut\TransferSummaryOutController.Nav.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryOut\TransferSummaryOutController.Tab.Ref.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryOut\TransferSummaryOutController.ViewItemTag.cs" />
+    <Compile Include="Controllers\Transaction\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.Tab.Detail.cs" />
     <Compile Include="Controllers\Transaction\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.CancelReason.cs" />
     <Compile Include="Controllers\Transaction\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.cs" />
     <Compile Include="Controllers\Transaction\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.List.cs" />

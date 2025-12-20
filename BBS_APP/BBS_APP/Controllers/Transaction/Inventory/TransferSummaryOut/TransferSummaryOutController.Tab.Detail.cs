@@ -11,25 +11,25 @@ using System.Threading;
 
 using System.Net;
 
-using Models.Transaction.StockOpname;
+using Models.Transaction.Inventory;
 
-namespace Controllers.Transaction.StockOpname
+namespace Controllers.Transaction.Inventory
 {
-    public partial class StockSummaryOpnameController : BaseController
+    public partial class TransferSummaryOutController : BaseController
     {
 
-        string VIEW_TAB_DETAIL_COMPONENT = "Partial/StockSummaryOpname_Form_TabDetail_List_Partial";
+        string VIEW_TAB_DETAIL_COMPONENT = "Partial/TransferSummaryOut_Form_TabDetail_List_Partial";
 
         public ActionResult TabDetailListPartial()
         {
             int userId = (int)Session["userId"];
 
-            StockSummaryOpnameService = new StockSummaryOpnameService();
+            transferSummaryOutService = new TransferSummaryOutService();
 
             var Id = Convert.ToInt64(Request["cbId"]);
 
 
-            var modelListDetail = StockSummaryOpnameService.StockSummaryOpname_Details(Id);
+            var modelListDetail = transferSummaryOutService.TransferSummaryOut_Details(Id);
 
             return PartialView(VIEW_TAB_DETAIL_COMPONENT, modelListDetail);
         }

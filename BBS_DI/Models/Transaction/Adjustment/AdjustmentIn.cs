@@ -973,6 +973,13 @@ namespace Models.Transaction.Adjustment
             }
         }
 
+        public List<AdjustmentIn_ItemModel> GetAdjustmentIn_Items(long id)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                return AdjustmentIn_Details(id);
+            }
+        }
 
         #endregion
     }
