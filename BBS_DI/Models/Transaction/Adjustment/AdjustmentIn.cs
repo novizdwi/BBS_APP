@@ -99,8 +99,6 @@ namespace Models.Transaction.Adjustment
 
         public string ModifiedDate_ { get; set; }
 
-        public string IsCanAccessOpeningBalance_ { get; set; }
-
         public List<AdjustmentIn_ItemModel> ListDetails_ = new List<AdjustmentIn_ItemModel>();
 
         public AdjustmentIn_Detail Details_ { get; set; }
@@ -318,18 +316,6 @@ namespace Models.Transaction.Adjustment
                 model.ListAttachments_ = this.GetAdjustmentIn_Attachments(id);
                 if (method != "post")
                 {
-                    model.IsCanAccessOpeningBalance_ = "Y";
-                    if (userId != 1)
-                    {
-                        model.IsCanAccessOpeningBalance_ = CONTEXT.Database.SqlQuery<string>(@"
-                            SELECT TOP 1 COALESCE(T1.""IsAccess"",'N') 
-                            FROM ""Tm_User"" T0X 
-                            INNER JOIN  ""Tm_Role"" T0 ON T0.""Id"" = T0X.""RoleId""
-                            INNER JOIN ""Tm_Role_Auth"" T1 ON T1.""Id"" = T0.""Id"" 
-                            WHERE T0X.""Id"" = :p0 AND T1.""MenuCode"" = 'AdjustmentOut/IsOpeningBalance' 
-                            ", userId).FirstOrDefault();
-                        model.IsCanAccessOpeningBalance_ = string.IsNullOrWhiteSpace(model.IsCanAccessOpeningBalance_) ? "N": model.IsCanAccessOpeningBalance_ ;
-                    }
 
                     model.PillarsList = GeneralGetList.GetCostCenterList("1");
                     model.ClassList = GeneralGetList.GetCostCenterList("2");
@@ -376,12 +362,21 @@ namespace Models.Transaction.Adjustment
         {
             string ssql = @"SELECT T0.*, 
                     CASE WHEN T1.""Status"" = 'Draft' THEN 
-                        T0.""QuantityScan"" - (SELECT 
+                        T0.""QuantityScan"" - ((SELECT 
                                 COALESCE( COUNT(Tx.""TagId""), 0) 
                                 FROM ""Tx_AdjustmentIn_Item_Tag"" Tx
                                 INNER JOIN ""Tm_Item_Warehouse_Tag"" Ty ON Tx.""TagId"" = Ty.""TagId"" AND Ty.""Status"" = 'A'
                                 WHERE Tx.""DetId"" = T0.""DetId""
-                            ) 
+                            ) + COALESCE((
+                        SELECT COUNT(*)
+                        FROM (
+                            SELECT Tx.""TagId""
+                            FROM ""Tx_AdjustmentIn_Item_Tag"" Tx
+                            WHERE Tx.""DetId"" = T0.""DetId""
+                            GROUP BY Tx.""TagId""
+                            HAVING COUNT(*) > 1
+                        ) DupTags
+                    ), 0))
                     ELSE NULL 
                     END AS ""EstQuantityPosted_"",
                     T2.""OnHand"" AS ""OnHand_""
@@ -835,17 +830,28 @@ namespace Models.Transaction.Adjustment
 
                 model = CONTEXT.Database.SqlQuery<AdjustmentInItemTagView___>(sql, id, detId).FirstOrDefault();
 
-                sql = @"SELECT ROW_NUMBER() OVER (ORDER BY T0.""DetDetId"") AS ""RowNo"", T0.*,
-                        CASE WHEN T1.""Status"" = 'Draft' THEN 
-                            CASE WHEN COALESCE(T3.""TagId"", '') = '' THEN 'New Entry'
-                                 WHEN T3.""Status"" = 'I' THEN 'Reactivation'
-                                 WHEN T1.""WhsCode"" != T3.""WhsCode"" THEN 'Change Warehouse'
-                            ELSE 'Invalid' END 
-                        ELSE T0.""Status"" END AS ""Information""
-                        FROM ""Tx_AdjustmentIn_Item_Tag"" T0  
-                        INNER JOIN ""Tx_AdjustmentIn"" T1 ON T0.""Id"" = T1.""Id""  
-                        LEFT JOIN ""Tm_Item_Warehouse_Tag"" T3 ON T0.""TagId"" = T3.""TagId""
-                        WHERE T0.""Id""=:p0 AND ""DetId"" = :p1 
+                sql = @" 
+                    SELECT 
+                        ROW_NUMBER() OVER (ORDER BY T0.""DetDetId"") AS ""RowNo"", 
+                        T0.*,
+                        CASE 
+                        WHEN T1.""Status"" = 'Draft' THEN 
+                            CASE 
+                            WHEN duplicate_tag > 1 THEN 'Duplicate'  -- Mark duplicates as Invalid
+                            WHEN COALESCE(T3.""TagId"", '') = '' THEN 'New Entry'
+                            ELSE 'Invalid' 
+                            END 
+                        ELSE T0.""Status"" 
+                        END AS ""Information""
+                    FROM (
+                        SELECT *,
+                        ROW_NUMBER() OVER (PARTITION BY ""TagId"" ORDER BY ""DetDetId"") AS duplicate_tag
+                        FROM ""Tx_AdjustmentIn_Item_Tag""
+                        WHERE ""Id""=:p0 AND ""DetId"" = :p1 
+                    ) T0  
+                    INNER JOIN ""Tx_AdjustmentIn"" T1 ON T0.""Id"" = T1.""Id""  
+                    LEFT JOIN ""Tm_Item_Warehouse_Tag"" T3 ON T0.""TagId"" = T3.""TagId""
+                    ORDER BY T0.""DetDetId""
                 ";
 
                 model.AdjustmentIn_Item_TagModel___ = CONTEXT.Database.SqlQuery<AdjustmentIn_Item_TagModel>(sql, id, detId).ToList();

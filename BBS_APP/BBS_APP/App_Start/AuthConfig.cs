@@ -3,9 +3,9 @@
 //using Microsoft.Owin;
 //using Owin;
 
-//[assembly: OwinStartup(typeof(MJL_DX20.App_Start.AuthConfig))]
+//[assembly: OwinStartup(typeof(BBS_APP.App_Start.AuthConfig))]
 
-//namespace MJL_DX20.App_Start
+//namespace BBS_APP.App_Start
 //{
 //    public class AuthConfig
 //    {

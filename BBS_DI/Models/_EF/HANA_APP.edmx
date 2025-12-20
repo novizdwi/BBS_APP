@@ -793,26 +793,6 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_UAT_APP.Tp_UserAlert' does not h
           <Property Name="SubClass2Name" Type="nvarchar" MaxLength="50" />
           <Property Name="ProjectCode" Type="nvarchar" MaxLength="50" />
           <Property Name="ProjectName" Type="nvarchar" MaxLength="100" />
-          <Property Name="ApprovalStatus" Type="nvarchar" MaxLength="50" />
-          <Property Name="IsApproval" Type="varchar" MaxLength="1" />
-          <Property Name="ApprovalMessages" Type="nvarchar" MaxLength="254" />
-        </EntityType>
-        <EntityType Name="Tx_AdjustmentIn_Approval">
-          <Key>
-            <PropertyRef Name="DetId" />
-          </Key>
-          <Property Name="Id" Type="int" />
-          <Property Name="DetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StageId" Type="int" />
-          <Property Name="UserId" Type="int" />
-          <Property Name="Step" Type="int" />
-          <Property Name="Status" Type="nvarchar" MaxLength="50" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
-          <Property Name="ActionDate" Type="seconddate" />
-          <Property Name="CreatedDate" Type="seconddate" />
-          <Property Name="CreatedUser" Type="int" />
-          <Property Name="ModifiedDate" Type="seconddate" />
-          <Property Name="ModifiedUser" Type="int" />
         </EntityType>
         <EntityType Name="Tx_AdjustmentIn_Attachment">
           <Key>
@@ -924,26 +904,6 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_UAT_APP.Tp_UserAlert' does not h
           <Property Name="SubClass2Name" Type="nvarchar" MaxLength="50" />
           <Property Name="ProjectCode" Type="nvarchar" MaxLength="50" />
           <Property Name="ProjectName" Type="nvarchar" MaxLength="100" />
-          <Property Name="ApprovalStatus" Type="nvarchar" MaxLength="50" />
-          <Property Name="IsApproval" Type="varchar" MaxLength="1" />
-          <Property Name="ApprovalMessages" Type="nvarchar" MaxLength="254" />
-        </EntityType>
-        <EntityType Name="Tx_AdjustmentOut_Approval">
-          <Key>
-            <PropertyRef Name="DetId" />
-          </Key>
-          <Property Name="Id" Type="int" />
-          <Property Name="DetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StageId" Type="int" />
-          <Property Name="UserId" Type="int" />
-          <Property Name="Step" Type="int" />
-          <Property Name="Status" Type="nvarchar" MaxLength="50" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
-          <Property Name="ActionDate" Type="seconddate" />
-          <Property Name="CreatedDate" Type="seconddate" />
-          <Property Name="CreatedUser" Type="int" />
-          <Property Name="ModifiedDate" Type="seconddate" />
-          <Property Name="ModifiedUser" Type="int" />
         </EntityType>
         <EntityType Name="Tx_AdjustmentOut_Attachment">
           <Key>
@@ -1111,25 +1071,6 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_UAT_APP.Tp_UserAlert' does not h
           <Property Name="CreatedDate" Type="timestamp" />
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
-          <Property Name="ModifiedUser" Type="int" />
-          <Property Name="IsApproval" Type="varchar" MaxLength="1" />
-          <Property Name="ApprovalMessages" Type="nvarchar" MaxLength="254" />
-        </EntityType>
-        <EntityType Name="Tx_GoodsReceiptPO_Approval">
-          <Key>
-            <PropertyRef Name="DetId" />
-          </Key>
-          <Property Name="Id" Type="int" />
-          <Property Name="DetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StageId" Type="int" />
-          <Property Name="UserId" Type="int" />
-          <Property Name="Step" Type="int" />
-          <Property Name="Status" Type="nvarchar" MaxLength="50" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
-          <Property Name="ActionDate" Type="seconddate" />
-          <Property Name="CreatedDate" Type="seconddate" />
-          <Property Name="CreatedUser" Type="int" />
-          <Property Name="ModifiedDate" Type="seconddate" />
           <Property Name="ModifiedUser" Type="int" />
         </EntityType>
         <EntityType Name="Tx_GoodsReceiptPO_Item">
@@ -1307,26 +1248,6 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_UAT_APP.Tp_UserAlert' does not h
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
-          <Property Name="IsApproval" Type="varchar" MaxLength="1" />
-          <Property Name="ApprovalMessages" Type="nvarchar" MaxLength="254" />
-          <Property Name="ApprovalStatus" Type="nvarchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="Tx_StockOpname_Approval">
-          <Key>
-            <PropertyRef Name="DetId" />
-          </Key>
-          <Property Name="Id" Type="int" />
-          <Property Name="DetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StageId" Type="int" />
-          <Property Name="UserId" Type="int" />
-          <Property Name="Step" Type="int" />
-          <Property Name="Status" Type="nvarchar" MaxLength="50" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
-          <Property Name="ActionDate" Type="seconddate" />
-          <Property Name="CreatedDate" Type="seconddate" />
-          <Property Name="CreatedUser" Type="int" />
-          <Property Name="ModifiedDate" Type="seconddate" />
-          <Property Name="ModifiedUser" Type="int" />
         </EntityType>
         <EntityType Name="Tx_StockOpname_Item">
           <Key>
@@ -1399,25 +1320,6 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_UAT_APP.Tp_UserAlert' does not h
           <Property Name="SubClass2Name" Type="nvarchar" MaxLength="50" />
           <Property Name="ProjectCode" Type="nvarchar" MaxLength="50" />
           <Property Name="ProjectName" Type="nvarchar" MaxLength="100" />
-          <Property Name="IsApproval" Type="varchar" MaxLength="1" />
-          <Property Name="ApprovalMessages" Type="nvarchar" MaxLength="254" />
-        </EntityType>
-        <EntityType Name="Tx_StockSummaryOpname_Approval">
-          <Key>
-            <PropertyRef Name="DetId" />
-          </Key>
-          <Property Name="Id" Type="int" />
-          <Property Name="DetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StageId" Type="int" />
-          <Property Name="UserId" Type="int" />
-          <Property Name="Step" Type="int" />
-          <Property Name="Status" Type="nvarchar" MaxLength="50" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
-          <Property Name="ActionDate" Type="seconddate" />
-          <Property Name="CreatedDate" Type="seconddate" />
-          <Property Name="CreatedUser" Type="int" />
-          <Property Name="ModifiedDate" Type="seconddate" />
-          <Property Name="ModifiedUser" Type="int" />
         </EntityType>
         <EntityType Name="Tx_StockSummaryOpname_Item">
           <Key>
@@ -1681,25 +1583,6 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_UAT_APP.Tp_UserAlert' does not h
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
           <Property Name="ApprovalStatus" Type="nvarchar" MaxLength="50" />
-          <Property Name="IsApproval" Type="varchar" MaxLength="1" />
-          <Property Name="ApprovalMessages" Type="nvarchar" MaxLength="254" />
-        </EntityType>
-        <EntityType Name="Tx_TransferRequest_Approval">
-          <Key>
-            <PropertyRef Name="DetId" />
-          </Key>
-          <Property Name="Id" Type="int" />
-          <Property Name="DetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StageId" Type="int" />
-          <Property Name="UserId" Type="int" />
-          <Property Name="Step" Type="int" />
-          <Property Name="Status" Type="nvarchar" MaxLength="50" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
-          <Property Name="ActionDate" Type="seconddate" />
-          <Property Name="CreatedDate" Type="seconddate" />
-          <Property Name="CreatedUser" Type="int" />
-          <Property Name="ModifiedDate" Type="seconddate" />
-          <Property Name="ModifiedUser" Type="int" />
         </EntityType>
         <EntityType Name="Tx_TransferRequest_Item">
           <Key>
@@ -1761,25 +1644,6 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_UAT_APP.Tp_UserAlert' does not h
           <Property Name="CreatedDate" Type="timestamp" />
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
-          <Property Name="ModifiedUser" Type="int" />
-          <Property Name="IsApproval" Type="varchar" MaxLength="1" />
-          <Property Name="ApprovalMessages" Type="nvarchar" MaxLength="254" />
-        </EntityType>
-        <EntityType Name="Tx_TransferSummaryIn_Approval">
-          <Key>
-            <PropertyRef Name="DetId" />
-          </Key>
-          <Property Name="Id" Type="int" />
-          <Property Name="DetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StageId" Type="int" />
-          <Property Name="UserId" Type="int" />
-          <Property Name="Step" Type="int" />
-          <Property Name="Status" Type="nvarchar" MaxLength="50" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
-          <Property Name="ActionDate" Type="seconddate" />
-          <Property Name="CreatedDate" Type="seconddate" />
-          <Property Name="CreatedUser" Type="int" />
-          <Property Name="ModifiedDate" Type="seconddate" />
           <Property Name="ModifiedUser" Type="int" />
         </EntityType>
         <EntityType Name="Tx_TransferSummaryIn_Item">
@@ -2053,13 +1917,11 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_UAT_APP.Tp_UserAlert' does not h
           <EntitySet Name="Ts_Menu" EntityType="Self.Ts_Menu" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Ts_ObjectApproval" EntityType="Self.Ts_ObjectApproval" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_AdjustmentIn" EntityType="Self.Tx_AdjustmentIn" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_AdjustmentIn_Approval" EntityType="Self.Tx_AdjustmentIn_Approval" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_AdjustmentIn_Attachment" EntityType="Self.Tx_AdjustmentIn_Attachment" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_AdjustmentIn_Item" EntityType="Self.Tx_AdjustmentIn_Item" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_AdjustmentIn_Item_Tag" EntityType="Self.Tx_AdjustmentIn_Item_Tag" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_AdjustmentIn_Location" EntityType="Self.Tx_AdjustmentIn_Location" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_AdjustmentOut" EntityType="Self.Tx_AdjustmentOut" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_AdjustmentOut_Approval" EntityType="Self.Tx_AdjustmentOut_Approval" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_AdjustmentOut_Attachment" EntityType="Self.Tx_AdjustmentOut_Attachment" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_AdjustmentOut_Item" EntityType="Self.Tx_AdjustmentOut_Item" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_AdjustmentOut_Item_Tag" EntityType="Self.Tx_AdjustmentOut_Item_Tag" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
@@ -2068,7 +1930,6 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_UAT_APP.Tp_UserAlert' does not h
           <EntitySet Name="Tx_DeactiveTag_Item" EntityType="Self.Tx_DeactiveTag_Item" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_GoodIssue" EntityType="Self.Tx_GoodIssue" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_GoodsReceiptPO" EntityType="Self.Tx_GoodsReceiptPO" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_GoodsReceiptPO_Approval" EntityType="Self.Tx_GoodsReceiptPO_Approval" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_GoodsReceiptPO_Item" EntityType="Self.Tx_GoodsReceiptPO_Item" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_GoodsReceiptPO_Item_Tag" EntityType="Self.Tx_GoodsReceiptPO_Item_Tag" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_GoodsReceiptPO_Ref" EntityType="Self.Tx_GoodsReceiptPO_Ref" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
@@ -2077,11 +1938,9 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_UAT_APP.Tp_UserAlert' does not h
           <EntitySet Name="Tx_PurchaseOrder_Item_Tag" EntityType="Self.Tx_PurchaseOrder_Item_Tag" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_Request_StockOpname" EntityType="Self.Tx_Request_StockOpname" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_StockOpname" EntityType="Self.Tx_StockOpname" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_StockOpname_Approval" EntityType="Self.Tx_StockOpname_Approval" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_StockOpname_Item" EntityType="Self.Tx_StockOpname_Item" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_StockOpname_Item_Tag" EntityType="Self.Tx_StockOpname_Item_Tag" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_StockSummaryOpname" EntityType="Self.Tx_StockSummaryOpname" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_StockSummaryOpname_Approval" EntityType="Self.Tx_StockSummaryOpname_Approval" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_StockSummaryOpname_Item" EntityType="Self.Tx_StockSummaryOpname_Item" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_StockSummaryOpname_Item_Tag" EntityType="Self.Tx_StockSummaryOpname_Item_Tag" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_StockSummaryOpname_Ref" EntityType="Self.Tx_StockSummaryOpname_Ref" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
@@ -2092,10 +1951,8 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_UAT_APP.Tp_UserAlert' does not h
           <EntitySet Name="Tx_TransferOut_Item" EntityType="Self.Tx_TransferOut_Item" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_TransferOut_Item_Tag" EntityType="Self.Tx_TransferOut_Item_Tag" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_TransferRequest" EntityType="Self.Tx_TransferRequest" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferRequest_Approval" EntityType="Self.Tx_TransferRequest_Approval" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_TransferRequest_Item" EntityType="Self.Tx_TransferRequest_Item" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_TransferSummaryIn" EntityType="Self.Tx_TransferSummaryIn" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferSummaryIn_Approval" EntityType="Self.Tx_TransferSummaryIn_Approval" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_TransferSummaryIn_Item" EntityType="Self.Tx_TransferSummaryIn_Item" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_TransferSummaryIn_Item_tag" EntityType="Self.Tx_TransferSummaryIn_Item_tag" Schema="BBS_RFID_TEST_UAT_APP" store:Type="Tables" />
           <EntitySet Name="Tx_TransferSummaryIn_Item_Tag1" EntityType="Self.Tx_TransferSummaryIn_Item_Tag1" Schema="BBS_RFID_TEST_UAT_APP" Table="Tx_TransferSummaryIn_Item_Tag" store:Type="Tables" />
@@ -2178,13 +2035,11 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySet Name="Ts_Menu" EntityType="Model1.Ts_Menu" />
           <EntitySet Name="Ts_ObjectApproval" EntityType="Model1.Ts_ObjectApproval" />
           <EntitySet Name="Tx_AdjustmentIn" EntityType="Model1.Tx_AdjustmentIn" />
-          <EntitySet Name="Tx_AdjustmentIn_Approval" EntityType="Model1.Tx_AdjustmentIn_Approval" />
           <EntitySet Name="Tx_AdjustmentIn_Attachment" EntityType="Model1.Tx_AdjustmentIn_Attachment" />
           <EntitySet Name="Tx_AdjustmentIn_Item" EntityType="Model1.Tx_AdjustmentIn_Item" />
           <EntitySet Name="Tx_AdjustmentIn_Item_Tag" EntityType="Model1.Tx_AdjustmentIn_Item_Tag" />
           <EntitySet Name="Tx_AdjustmentIn_Location" EntityType="Model1.Tx_AdjustmentIn_Location" />
           <EntitySet Name="Tx_AdjustmentOut" EntityType="Model1.Tx_AdjustmentOut" />
-          <EntitySet Name="Tx_AdjustmentOut_Approval" EntityType="Model1.Tx_AdjustmentOut_Approval" />
           <EntitySet Name="Tx_AdjustmentOut_Attachment" EntityType="Model1.Tx_AdjustmentOut_Attachment" />
           <EntitySet Name="Tx_AdjustmentOut_Item" EntityType="Model1.Tx_AdjustmentOut_Item" />
           <EntitySet Name="Tx_AdjustmentOut_Item_Tag" EntityType="Model1.Tx_AdjustmentOut_Item_Tag" />
@@ -2193,7 +2048,6 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySet Name="Tx_DeactiveTag_Item" EntityType="Model1.Tx_DeactiveTag_Item" />
           <EntitySet Name="Tx_GoodIssue" EntityType="Model1.Tx_GoodIssue" />
           <EntitySet Name="Tx_GoodsReceiptPO" EntityType="Model1.Tx_GoodsReceiptPO" />
-          <EntitySet Name="Tx_GoodsReceiptPO_Approval" EntityType="Model1.Tx_GoodsReceiptPO_Approval" />
           <EntitySet Name="Tx_GoodsReceiptPO_Item" EntityType="Model1.Tx_GoodsReceiptPO_Item" />
           <EntitySet Name="Tx_GoodsReceiptPO_Item_Tag" EntityType="Model1.Tx_GoodsReceiptPO_Item_Tag" />
           <EntitySet Name="Tx_GoodsReceiptPO_Ref" EntityType="Model1.Tx_GoodsReceiptPO_Ref" />
@@ -2202,11 +2056,9 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySet Name="Tx_PurchaseOrder_Item_Tag" EntityType="Model1.Tx_PurchaseOrder_Item_Tag" />
           <EntitySet Name="Tx_Request_StockOpname" EntityType="Model1.Tx_Request_StockOpname" />
           <EntitySet Name="Tx_StockOpname" EntityType="Model1.Tx_StockOpname" />
-          <EntitySet Name="Tx_StockOpname_Approval" EntityType="Model1.Tx_StockOpname_Approval" />
           <EntitySet Name="Tx_StockOpname_Item" EntityType="Model1.Tx_StockOpname_Item" />
           <EntitySet Name="Tx_StockOpname_Item_Tag" EntityType="Model1.Tx_StockOpname_Item_Tag" />
           <EntitySet Name="Tx_StockSummaryOpname" EntityType="Model1.Tx_StockSummaryOpname" />
-          <EntitySet Name="Tx_StockSummaryOpname_Approval" EntityType="Model1.Tx_StockSummaryOpname_Approval" />
           <EntitySet Name="Tx_StockSummaryOpname_Item" EntityType="Model1.Tx_StockSummaryOpname_Item" />
           <EntitySet Name="Tx_StockSummaryOpname_Item_Tag" EntityType="Model1.Tx_StockSummaryOpname_Item_Tag" />
           <EntitySet Name="Tx_StockSummaryOpname_Ref" EntityType="Model1.Tx_StockSummaryOpname_Ref" />
@@ -2217,10 +2069,8 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySet Name="Tx_TransferOut_Item" EntityType="Model1.Tx_TransferOut_Item" />
           <EntitySet Name="Tx_TransferOut_Item_Tag" EntityType="Model1.Tx_TransferOut_Item_Tag" />
           <EntitySet Name="Tx_TransferRequest" EntityType="Model1.Tx_TransferRequest" />
-          <EntitySet Name="Tx_TransferRequest_Approval" EntityType="Model1.Tx_TransferRequest_Approval" />
           <EntitySet Name="Tx_TransferRequest_Item" EntityType="Model1.Tx_TransferRequest_Item" />
           <EntitySet Name="Tx_TransferSummaryIn" EntityType="Model1.Tx_TransferSummaryIn" />
-          <EntitySet Name="Tx_TransferSummaryIn_Approval" EntityType="Model1.Tx_TransferSummaryIn_Approval" />
           <EntitySet Name="Tx_TransferSummaryIn_Item" EntityType="Model1.Tx_TransferSummaryIn_Item" />
           <EntitySet Name="Tx_TransferSummaryIn_Item_tag" EntityType="Model1.Tx_TransferSummaryIn_Item_tag" />
           <EntitySet Name="Tx_TransferSummaryIn_Item_Tag1" EntityType="Model1.Tx_TransferSummaryIn_Item_Tag1" />
@@ -3003,26 +2853,6 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <Property Name="SubClass2Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ProjectCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ProjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Tx_AdjustmentIn_Approval">
-          <Key>
-            <PropertyRef Name="DetId" />
-          </Key>
-          <Property Name="Id" Type="Int32" />
-          <Property Name="DetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StageId" Type="Int32" />
-          <Property Name="UserId" Type="Int32" />
-          <Property Name="Step" Type="Int32" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="ActionDate" Type="DateTime" />
-          <Property Name="CreatedDate" Type="DateTime" />
-          <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
         <EntityType Name="Tx_AdjustmentIn_Attachment">
           <Key>
@@ -3134,26 +2964,6 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <Property Name="SubClass2Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ProjectCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ProjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Tx_AdjustmentOut_Approval">
-          <Key>
-            <PropertyRef Name="DetId" />
-          </Key>
-          <Property Name="Id" Type="Int32" />
-          <Property Name="DetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StageId" Type="Int32" />
-          <Property Name="UserId" Type="Int32" />
-          <Property Name="Step" Type="Int32" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="ActionDate" Type="DateTime" />
-          <Property Name="CreatedDate" Type="DateTime" />
-          <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
         <EntityType Name="Tx_AdjustmentOut_Attachment">
           <Key>
@@ -3318,25 +3128,6 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <Property Name="IsAfterPosted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
           <Property Name="CancelReason" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" />
-          <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
-          <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Tx_GoodsReceiptPO_Approval">
-          <Key>
-            <PropertyRef Name="DetId" />
-          </Key>
-          <Property Name="Id" Type="Int32" />
-          <Property Name="DetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StageId" Type="Int32" />
-          <Property Name="UserId" Type="Int32" />
-          <Property Name="Step" Type="Int32" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="ActionDate" Type="DateTime" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
@@ -3517,26 +3308,6 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
-          <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-          <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Tx_StockOpname_Approval">
-          <Key>
-            <PropertyRef Name="DetId" />
-          </Key>
-          <Property Name="Id" Type="Int32" />
-          <Property Name="DetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StageId" Type="Int32" />
-          <Property Name="UserId" Type="Int32" />
-          <Property Name="Step" Type="Int32" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="ActionDate" Type="DateTime" />
-          <Property Name="CreatedDate" Type="DateTime" />
-          <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
         <EntityType Name="Tx_StockOpname_Item">
           <Key>
@@ -3609,25 +3380,6 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <Property Name="SubClass2Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ProjectCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ProjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Tx_StockSummaryOpname_Approval">
-          <Key>
-            <PropertyRef Name="DetId" />
-          </Key>
-          <Property Name="Id" Type="Int32" />
-          <Property Name="DetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StageId" Type="Int32" />
-          <Property Name="UserId" Type="Int32" />
-          <Property Name="Step" Type="Int32" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="ActionDate" Type="DateTime" />
-          <Property Name="CreatedDate" Type="DateTime" />
-          <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
         <EntityType Name="Tx_StockSummaryOpname_Item">
           <Key>
@@ -3891,25 +3643,6 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
           <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Tx_TransferRequest_Approval">
-          <Key>
-            <PropertyRef Name="DetId" />
-          </Key>
-          <Property Name="Id" Type="Int32" />
-          <Property Name="DetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StageId" Type="Int32" />
-          <Property Name="UserId" Type="Int32" />
-          <Property Name="Step" Type="Int32" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="ActionDate" Type="DateTime" />
-          <Property Name="CreatedDate" Type="DateTime" />
-          <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
         <EntityType Name="Tx_TransferRequest_Item">
           <Key>
@@ -3968,25 +3701,6 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
           <Property Name="JournalRemarks" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
           <Property Name="CancelReason" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" />
-          <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
-          <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Tx_TransferSummaryIn_Approval">
-          <Key>
-            <PropertyRef Name="DetId" />
-          </Key>
-          <Property Name="Id" Type="Int32" />
-          <Property Name="DetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StageId" Type="Int32" />
-          <Property Name="UserId" Type="Int32" />
-          <Property Name="Step" Type="Int32" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="ActionDate" Type="DateTime" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
@@ -5019,9 +4733,6 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySetMapping Name="Tx_AdjustmentIn">
             <EntityTypeMapping TypeName="Model1.Tx_AdjustmentIn">
               <MappingFragment StoreEntitySet="Tx_AdjustmentIn">
-                <ScalarProperty Name="ApprovalMessages" ColumnName="ApprovalMessages" />
-                <ScalarProperty Name="IsApproval" ColumnName="IsApproval" />
-                <ScalarProperty Name="ApprovalStatus" ColumnName="ApprovalStatus" />
                 <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
                 <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
                 <ScalarProperty Name="SubClass2Name" ColumnName="SubClass2Name" />
@@ -5050,24 +4761,6 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
                 <ScalarProperty Name="TransDate" ColumnName="TransDate" />
                 <ScalarProperty Name="TransNo" ColumnName="TransNo" />
                 <ScalarProperty Name="TransType" ColumnName="TransType" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tx_AdjustmentIn_Approval">
-            <EntityTypeMapping TypeName="Model1.Tx_AdjustmentIn_Approval">
-              <MappingFragment StoreEntitySet="Tx_AdjustmentIn_Approval">
-                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Step" ColumnName="Step" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="StageId" ColumnName="StageId" />
-                <ScalarProperty Name="DetId" ColumnName="DetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -5156,9 +4849,6 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySetMapping Name="Tx_AdjustmentOut">
             <EntityTypeMapping TypeName="Model1.Tx_AdjustmentOut">
               <MappingFragment StoreEntitySet="Tx_AdjustmentOut">
-                <ScalarProperty Name="ApprovalMessages" ColumnName="ApprovalMessages" />
-                <ScalarProperty Name="IsApproval" ColumnName="IsApproval" />
-                <ScalarProperty Name="ApprovalStatus" ColumnName="ApprovalStatus" />
                 <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
                 <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
                 <ScalarProperty Name="SubClass2Name" ColumnName="SubClass2Name" />
@@ -5187,24 +4877,6 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
                 <ScalarProperty Name="TransDate" ColumnName="TransDate" />
                 <ScalarProperty Name="TransNo" ColumnName="TransNo" />
                 <ScalarProperty Name="TransType" ColumnName="TransType" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tx_AdjustmentOut_Approval">
-            <EntityTypeMapping TypeName="Model1.Tx_AdjustmentOut_Approval">
-              <MappingFragment StoreEntitySet="Tx_AdjustmentOut_Approval">
-                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Step" ColumnName="Step" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="StageId" ColumnName="StageId" />
-                <ScalarProperty Name="DetId" ColumnName="DetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -5359,8 +5031,6 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySetMapping Name="Tx_GoodsReceiptPO">
             <EntityTypeMapping TypeName="Model1.Tx_GoodsReceiptPO">
               <MappingFragment StoreEntitySet="Tx_GoodsReceiptPO">
-                <ScalarProperty Name="ApprovalMessages" ColumnName="ApprovalMessages" />
-                <ScalarProperty Name="IsApproval" ColumnName="IsApproval" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -5383,24 +5053,6 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
                 <ScalarProperty Name="TransDate" ColumnName="TransDate" />
                 <ScalarProperty Name="TransNo" ColumnName="TransNo" />
                 <ScalarProperty Name="TransType" ColumnName="TransType" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tx_GoodsReceiptPO_Approval">
-            <EntityTypeMapping TypeName="Model1.Tx_GoodsReceiptPO_Approval">
-              <MappingFragment StoreEntitySet="Tx_GoodsReceiptPO_Approval">
-                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Step" ColumnName="Step" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="StageId" ColumnName="StageId" />
-                <ScalarProperty Name="DetId" ColumnName="DetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -5571,9 +5223,6 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySetMapping Name="Tx_StockOpname">
             <EntityTypeMapping TypeName="Model1.Tx_StockOpname">
               <MappingFragment StoreEntitySet="Tx_StockOpname">
-                <ScalarProperty Name="ApprovalStatus" ColumnName="ApprovalStatus" />
-                <ScalarProperty Name="ApprovalMessages" ColumnName="ApprovalMessages" />
-                <ScalarProperty Name="IsApproval" ColumnName="IsApproval" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -5588,24 +5237,6 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
                 <ScalarProperty Name="TransDate" ColumnName="TransDate" />
                 <ScalarProperty Name="TransNo" ColumnName="TransNo" />
                 <ScalarProperty Name="TransType" ColumnName="TransType" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tx_StockOpname_Approval">
-            <EntityTypeMapping TypeName="Model1.Tx_StockOpname_Approval">
-              <MappingFragment StoreEntitySet="Tx_StockOpname_Approval">
-                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Step" ColumnName="Step" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="StageId" ColumnName="StageId" />
-                <ScalarProperty Name="DetId" ColumnName="DetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -5652,8 +5283,6 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySetMapping Name="Tx_StockSummaryOpname">
             <EntityTypeMapping TypeName="Model1.Tx_StockSummaryOpname">
               <MappingFragment StoreEntitySet="Tx_StockSummaryOpname">
-                <ScalarProperty Name="ApprovalMessages" ColumnName="ApprovalMessages" />
-                <ScalarProperty Name="IsApproval" ColumnName="IsApproval" />
                 <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
                 <ScalarProperty Name="ProjectCode" ColumnName="ProjectCode" />
                 <ScalarProperty Name="SubClass2Name" ColumnName="SubClass2Name" />
@@ -5683,24 +5312,6 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
                 <ScalarProperty Name="DocEntry" ColumnName="DocEntry" />
                 <ScalarProperty Name="TransNo" ColumnName="TransNo" />
                 <ScalarProperty Name="TransType" ColumnName="TransType" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tx_StockSummaryOpname_Approval">
-            <EntityTypeMapping TypeName="Model1.Tx_StockSummaryOpname_Approval">
-              <MappingFragment StoreEntitySet="Tx_StockSummaryOpname_Approval">
-                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Step" ColumnName="Step" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="StageId" ColumnName="StageId" />
-                <ScalarProperty Name="DetId" ColumnName="DetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -5949,8 +5560,6 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySetMapping Name="Tx_TransferRequest">
             <EntityTypeMapping TypeName="Model1.Tx_TransferRequest">
               <MappingFragment StoreEntitySet="Tx_TransferRequest">
-                <ScalarProperty Name="ApprovalMessages" ColumnName="ApprovalMessages" />
-                <ScalarProperty Name="IsApproval" ColumnName="IsApproval" />
                 <ScalarProperty Name="ApprovalStatus" ColumnName="ApprovalStatus" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
@@ -5976,24 +5585,6 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
                 <ScalarProperty Name="TransDate" ColumnName="TransDate" />
                 <ScalarProperty Name="TransNo" ColumnName="TransNo" />
                 <ScalarProperty Name="TransType" ColumnName="TransType" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tx_TransferRequest_Approval">
-            <EntityTypeMapping TypeName="Model1.Tx_TransferRequest_Approval">
-              <MappingFragment StoreEntitySet="Tx_TransferRequest_Approval">
-                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Step" ColumnName="Step" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="StageId" ColumnName="StageId" />
-                <ScalarProperty Name="DetId" ColumnName="DetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -6027,8 +5618,6 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySetMapping Name="Tx_TransferSummaryIn">
             <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryIn">
               <MappingFragment StoreEntitySet="Tx_TransferSummaryIn">
-                <ScalarProperty Name="ApprovalMessages" ColumnName="ApprovalMessages" />
-                <ScalarProperty Name="IsApproval" ColumnName="IsApproval" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
@@ -6060,24 +5649,6 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
                 <ScalarProperty Name="TransDate" ColumnName="TransDate" />
                 <ScalarProperty Name="TransNo" ColumnName="TransNo" />
                 <ScalarProperty Name="TransType" ColumnName="TransType" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tx_TransferSummaryIn_Approval">
-            <EntityTypeMapping TypeName="Model1.Tx_TransferSummaryIn_Approval">
-              <MappingFragment StoreEntitySet="Tx_TransferSummaryIn_Approval">
-                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Step" ColumnName="Step" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="StageId" ColumnName="StageId" />
-                <ScalarProperty Name="DetId" ColumnName="DetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
