@@ -105,6 +105,8 @@ namespace Models.Transaction.Inventory
         public List<TransferSummaryOut_ApprovalModel> ListApprovalStep_ = new List<TransferSummaryOut_ApprovalModel>();
 
         public TransferSummaryOut_Detail Details_ { get; set; }
+
+        public TransferSummaryOut_Approval ApprovalStep_ { get; set; }
     }
     public class TransferSummaryOut_Detail
     {
@@ -113,6 +115,12 @@ namespace Models.Transaction.Inventory
         public List<TransferSummaryOut_DetailModel> modifiedRowValues { get; set; }
     }
 
+    public class TransferSummaryOut_Approval
+    {
+        public List<long> deletedRowKeys { get; set; }
+        public List<TransferSummaryOut_ApprovalModel> insertedRowValues { get; set; }
+        public List<TransferSummaryOut_ApprovalModel> modifiedRowValues { get; set; }
+    }
 
     public class TransferSummaryOut_RefModel
     {
@@ -1037,9 +1045,15 @@ namespace Models.Transaction.Inventory
                         }
 
                         SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "approve", "Id", keyValue);
-
-
+                        
                         CONTEXT_TRANS.Commit();
+
+                        if (tx_TransferSummaryOut.ApprovalStatus == "Approved")
+                        {
+                            PostSAP(userId, Id);
+                        }
+
+
                     }
 
                     catch (Exception ex)

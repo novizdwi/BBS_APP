@@ -145,10 +145,15 @@ namespace BBS_APP.Controllers.Notification
 
         public ActionResult GetUnreadCount()
         {
-            int userId = (int)Session["userId"];
             Notification_Model notification_Model =  new Notification_Model();
-            // TODO: ganti dengan query approval real
-            int count = notification_Model.GetDataRowCount(userId); // contoh dummy
+            if (Session["userId"] == null)
+            {
+                return Json(0, JsonRequestBehavior.AllowGet);
+            }
+
+            int userId = Convert.ToInt32(Session["userId"]);
+
+            int count = notification_Model.GetDataRowCount(userId);
 
             return Json(count, JsonRequestBehavior.AllowGet);
         }
