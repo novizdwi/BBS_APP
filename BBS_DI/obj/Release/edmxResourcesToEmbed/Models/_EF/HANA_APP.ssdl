@@ -254,10 +254,6 @@
     </Key>
     <Property Name="ItemCode" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
-    <Property Name="CreatedDate" Type="timestamp" />
-    <Property Name="CreatedUser" Type="int" />
-    <Property Name="ModifiedDate" Type="timestamp" />
-    <Property Name="ModifiedUser" Type="int" />
     <Property Name="OnHand" Type="decimal" Precision="21" Scale="6" />
     <Property Name="IsCommitted" Type="decimal" Precision="21" Scale="2" />
     <Property Name="OnOrder" Type="decimal" Precision="21" Scale="2" />
@@ -265,6 +261,10 @@
     <Property Name="Uom" Type="nvarchar" MaxLength="50" />
     <Property Name="StockOpnameCoaCode" Type="nvarchar" MaxLength="50" />
     <Property Name="StockOpnameCoaName" Type="nvarchar" MaxLength="200" />
+    <Property Name="CreatedDate" Type="timestamp" />
+    <Property Name="CreatedUser" Type="int" />
+    <Property Name="ModifiedDate" Type="timestamp" />
+    <Property Name="ModifiedUser" Type="int" />
   </EntityType>
   <EntityType Name="Tm_Item_Warehouse">
     <Key>
@@ -275,15 +275,15 @@
     <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
     <Property Name="WhsCode" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="WhsName" Type="nvarchar" MaxLength="200" />
-    <Property Name="CreatedDate" Type="timestamp" />
-    <Property Name="CreatedUser" Type="int" />
-    <Property Name="ModifiedDate" Type="timestamp" />
-    <Property Name="ModifiedUser" Type="int" />
     <Property Name="OnHand" Type="decimal" Precision="21" Scale="6" />
     <Property Name="IsCommitted" Type="decimal" Precision="21" Scale="2" />
     <Property Name="OnOrder" Type="decimal" Precision="21" Scale="2" />
     <Property Name="UomEntry" Type="int" />
     <Property Name="Uom" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="timestamp" />
+    <Property Name="CreatedUser" Type="int" />
+    <Property Name="ModifiedDate" Type="timestamp" />
+    <Property Name="ModifiedUser" Type="int" />
   </EntityType>
   <EntityType Name="Tm_Item_Warehouse_Tag">
     <Key>
@@ -316,9 +316,8 @@
     <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
     <Property Name="WhsName" Type="nvarchar" MaxLength="200" />
     <Property Name="OldTagId" Type="nvarchar" MaxLength="200" />
-    <Property Name="NewTagId" Type="nvarchar" MaxLength="200" />
-    <Property Name="OldStatus" Type="nvarchar" MaxLength="200" />
-    <Property Name="NewStatus" Type="nvarchar" MaxLength="200" />
+    <Property Name="TagId" Type="nvarchar" MaxLength="200" />
+    <Property Name="Status" Type="nvarchar" MaxLength="200" />
     <Property Name="Event" Type="nvarchar" MaxLength="100" />
     <Property Name="ActionNote" Type="nvarchar" MaxLength="500" />
     <Property Name="CreatedDate" Type="timestamp" />
@@ -692,7 +691,7 @@
     <Property Name="ModifiedUser" Type="int" />
   </EntityType>
   <!--Errors Found During Generation:
-warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'HDB.BBS_RFID_APP.Tp_UserAlert' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="Tp_UserAlert">
     <Key>
       <PropertyRef Name="Id" />
@@ -766,18 +765,6 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="PostingDate" Type="timestamp" />
     <Property Name="AdjustmentTypeCode" Type="nvarchar" MaxLength="100" />
     <Property Name="AdjustmentTypeName" Type="nvarchar" MaxLength="100" />
-    <Property Name="Status" Type="nvarchar" MaxLength="50" />
-    <Property Name="IsAfterPosted" Type="varchar" MaxLength="1" />
-    <Property Name="IsOpeningBalance" Type="varchar" MaxLength="1" />
-    <Property Name="DocEntry" Type="int" />
-    <Property Name="Comments" Type="nvarchar" MaxLength="200" />
-    <Property Name="ScanDeviceId" Type="nvarchar" MaxLength="1000" />
-    <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
-    <Property Name="CancelReason" Type="nvarchar" MaxLength="500" />
-    <Property Name="CreatedDate" Type="timestamp" />
-    <Property Name="CreatedUser" Type="int" />
-    <Property Name="ModifiedDate" Type="timestamp" />
-    <Property Name="ModifiedUser" Type="int" />
     <Property Name="PillarsCode" Type="nvarchar" MaxLength="10" />
     <Property Name="PillarsName" Type="nvarchar" MaxLength="50" />
     <Property Name="ClassCode" Type="nvarchar" MaxLength="10" />
@@ -788,6 +775,38 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="SubClass2Name" Type="nvarchar" MaxLength="50" />
     <Property Name="ProjectCode" Type="nvarchar" MaxLength="50" />
     <Property Name="ProjectName" Type="nvarchar" MaxLength="100" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="ApprovalStatus" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsAfterPosted" Type="varchar" MaxLength="1" />
+    <Property Name="IsOpeningBalance" Type="varchar" MaxLength="1" />
+    <Property Name="DocEntry" Type="int" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="200" />
+    <Property Name="ScanDeviceId" Type="nvarchar" MaxLength="1000" />
+    <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="CancelReason" Type="nvarchar" MaxLength="500" />
+    <Property Name="IsApproval" Type="varchar" MaxLength="1" />
+    <Property Name="ApprovalMessages" Type="nvarchar" MaxLength="254" />
+    <Property Name="CreatedDate" Type="timestamp" />
+    <Property Name="CreatedUser" Type="int" />
+    <Property Name="ModifiedDate" Type="timestamp" />
+    <Property Name="ModifiedUser" Type="int" />
+  </EntityType>
+  <EntityType Name="Tx_AdjustmentIn_Approval">
+    <Key>
+      <PropertyRef Name="DetId" />
+    </Key>
+    <Property Name="Id" Type="int" />
+    <Property Name="DetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StageId" Type="int" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="Step" Type="int" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+    <Property Name="ActionDate" Type="seconddate" />
+    <Property Name="CreatedDate" Type="seconddate" />
+    <Property Name="CreatedUser" Type="int" />
+    <Property Name="ModifiedDate" Type="seconddate" />
+    <Property Name="ModifiedUser" Type="int" />
   </EntityType>
   <EntityType Name="Tx_AdjustmentIn_Attachment">
     <Key>
@@ -877,18 +896,6 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="PostingDate" Type="timestamp" />
     <Property Name="AdjustmentTypeCode" Type="nvarchar" MaxLength="100" />
     <Property Name="AdjustmentTypeName" Type="nvarchar" MaxLength="100" />
-    <Property Name="Status" Type="nvarchar" MaxLength="50" />
-    <Property Name="IsAfterPosted" Type="varchar" MaxLength="1" />
-    <Property Name="IsOpeningBalance" Type="varchar" MaxLength="1" />
-    <Property Name="DocEntry" Type="int" />
-    <Property Name="Comments" Type="nvarchar" MaxLength="200" />
-    <Property Name="ScanDeviceId" Type="nvarchar" MaxLength="1000" />
-    <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
-    <Property Name="CancelReason" Type="nvarchar" MaxLength="500" />
-    <Property Name="CreatedDate" Type="timestamp" />
-    <Property Name="CreatedUser" Type="int" />
-    <Property Name="ModifiedDate" Type="timestamp" />
-    <Property Name="ModifiedUser" Type="int" />
     <Property Name="PillarsCode" Type="nvarchar" MaxLength="10" />
     <Property Name="PillarsName" Type="nvarchar" MaxLength="50" />
     <Property Name="ClassCode" Type="nvarchar" MaxLength="10" />
@@ -899,6 +906,37 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="SubClass2Name" Type="nvarchar" MaxLength="50" />
     <Property Name="ProjectCode" Type="nvarchar" MaxLength="50" />
     <Property Name="ProjectName" Type="nvarchar" MaxLength="100" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsAfterPosted" Type="varchar" MaxLength="1" />
+    <Property Name="IsOpeningBalance" Type="varchar" MaxLength="1" />
+    <Property Name="DocEntry" Type="int" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="200" />
+    <Property Name="ScanDeviceId" Type="nvarchar" MaxLength="1000" />
+    <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="CancelReason" Type="nvarchar" MaxLength="500" />
+    <Property Name="IsApproval" Type="varchar" MaxLength="1" />
+    <Property Name="ApprovalMessages" Type="nvarchar" MaxLength="254" />
+    <Property Name="CreatedDate" Type="timestamp" />
+    <Property Name="CreatedUser" Type="int" />
+    <Property Name="ModifiedDate" Type="timestamp" />
+    <Property Name="ModifiedUser" Type="int" />
+  </EntityType>
+  <EntityType Name="Tx_AdjustmentOut_Approval">
+    <Key>
+      <PropertyRef Name="DetId" />
+    </Key>
+    <Property Name="Id" Type="int" />
+    <Property Name="DetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StageId" Type="int" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="Step" Type="int" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+    <Property Name="ActionDate" Type="seconddate" />
+    <Property Name="CreatedDate" Type="seconddate" />
+    <Property Name="CreatedUser" Type="int" />
+    <Property Name="ModifiedDate" Type="seconddate" />
+    <Property Name="ModifiedUser" Type="int" />
   </EntityType>
   <EntityType Name="Tx_AdjustmentOut_Attachment">
     <Key>
@@ -1009,6 +1047,20 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="ModifiedDate" Type="timestamp" />
     <Property Name="ModifiedUser" Type="int" />
   </EntityType>
+  <EntityType Name="Tx_DeactiveTag_Log">
+    <Key>
+      <PropertyRef Name="LogId" />
+    </Key>
+    <Property Name="LogId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TagId" Type="nvarchar" MaxLength="200" />
+    <Property Name="ItemCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
+    <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="WhsName" Type="nvarchar" MaxLength="200" />
+    <Property Name="Message" Type="nvarchar" MaxLength="5000" />
+    <Property Name="CreatedDate" Type="timestamp" />
+    <Property Name="CreatedUser" Type="int" />
+  </EntityType>
   <EntityType Name="Tx_GoodIssue">
     <Key>
       <PropertyRef Name="Id" />
@@ -1068,6 +1120,23 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="ModifiedDate" Type="timestamp" />
     <Property Name="ModifiedUser" Type="int" />
   </EntityType>
+  <EntityType Name="Tx_GoodsReceiptPO_Approval">
+    <Key>
+      <PropertyRef Name="DetId" />
+    </Key>
+    <Property Name="Id" Type="int" />
+    <Property Name="DetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StageId" Type="int" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="Step" Type="int" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+    <Property Name="ActionDate" Type="seconddate" />
+    <Property Name="CreatedDate" Type="seconddate" />
+    <Property Name="CreatedUser" Type="int" />
+    <Property Name="ModifiedDate" Type="seconddate" />
+    <Property Name="ModifiedUser" Type="int" />
+  </EntityType>
   <EntityType Name="Tx_GoodsReceiptPO_Item">
     <Key>
       <PropertyRef Name="DetId" />
@@ -1077,6 +1146,7 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
     <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
     <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="QuantityOnHandSAP" Type="decimal" Precision="21" Scale="2" />
     <Property Name="Quantity" Type="decimal" Precision="21" Scale="2" />
     <Property Name="QuantityOpen" Type="decimal" Precision="21" Scale="2" />
     <Property Name="QuantityScan" Type="decimal" Precision="21" Scale="2" />
@@ -1219,6 +1289,8 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="Description" Type="nvarchar" MaxLength="100" />
     <Property Name="Status" Type="nvarchar" MaxLength="50" />
     <Property Name="CancelReason" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsApproval" Type="varchar" MaxLength="1" />
+    <Property Name="ApprovalMessages" Type="nvarchar" MaxLength="254" />
     <Property Name="CreatedDate" Type="timestamp" />
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
@@ -1242,6 +1314,23 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="CreatedDate" Type="timestamp" />
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
+    <Property Name="ModifiedUser" Type="int" />
+  </EntityType>
+  <EntityType Name="Tx_StockOpname_Approval">
+    <Key>
+      <PropertyRef Name="DetId" />
+    </Key>
+    <Property Name="Id" Type="int" />
+    <Property Name="DetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StageId" Type="int" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="Step" Type="int" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+    <Property Name="ActionDate" Type="seconddate" />
+    <Property Name="CreatedDate" Type="seconddate" />
+    <Property Name="CreatedUser" Type="int" />
+    <Property Name="ModifiedDate" Type="seconddate" />
     <Property Name="ModifiedUser" Type="int" />
   </EntityType>
   <EntityType Name="Tx_StockOpname_Item">
@@ -1296,15 +1385,6 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="RequestNo" Type="nvarchar" MaxLength="100" />
     <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
     <Property Name="WhsName" Type="varchar" MaxLength="100" />
-    <Property Name="Status" Type="nvarchar" MaxLength="50" />
-    <Property Name="ApprovalStatus" Type="nvarchar" MaxLength="50" />
-    <Property Name="IsAfterPosted" Type="varchar" MaxLength="1" />
-    <Property Name="Comments" Type="nvarchar" MaxLength="254" />
-    <Property Name="CancelReason" Type="nvarchar" MaxLength="254" />
-    <Property Name="CreatedDate" Type="timestamp" />
-    <Property Name="CreatedUser" Type="int" />
-    <Property Name="ModifiedDate" Type="timestamp" />
-    <Property Name="ModifiedUser" Type="int" />
     <Property Name="PillarsCode" Type="nvarchar" MaxLength="10" />
     <Property Name="PillarsName" Type="nvarchar" MaxLength="50" />
     <Property Name="ClassCode" Type="nvarchar" MaxLength="10" />
@@ -1315,6 +1395,34 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="SubClass2Name" Type="nvarchar" MaxLength="50" />
     <Property Name="ProjectCode" Type="nvarchar" MaxLength="50" />
     <Property Name="ProjectName" Type="nvarchar" MaxLength="100" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="ApprovalStatus" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsAfterPosted" Type="varchar" MaxLength="1" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="254" />
+    <Property Name="CancelReason" Type="nvarchar" MaxLength="254" />
+    <Property Name="IsApproval" Type="varchar" MaxLength="1" />
+    <Property Name="ApprovalMessages" Type="nvarchar" MaxLength="254" />
+    <Property Name="CreatedDate" Type="timestamp" />
+    <Property Name="CreatedUser" Type="int" />
+    <Property Name="ModifiedDate" Type="timestamp" />
+    <Property Name="ModifiedUser" Type="int" />
+  </EntityType>
+  <EntityType Name="Tx_StockSummaryOpname_Approval">
+    <Key>
+      <PropertyRef Name="DetId" />
+    </Key>
+    <Property Name="Id" Type="int" />
+    <Property Name="DetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StageId" Type="int" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="Step" Type="int" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+    <Property Name="ActionDate" Type="seconddate" />
+    <Property Name="CreatedDate" Type="seconddate" />
+    <Property Name="CreatedUser" Type="int" />
+    <Property Name="ModifiedDate" Type="seconddate" />
+    <Property Name="ModifiedUser" Type="int" />
   </EntityType>
   <EntityType Name="Tx_StockSummaryOpname_Item">
     <Key>
@@ -1325,19 +1433,15 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
     <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
     <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="QuantityOnHandSAP" Type="decimal" Precision="21" Scale="2" />
     <Property Name="QuantityScan" Type="decimal" Precision="21" Scale="2" />
     <Property Name="QuantityValid" Type="decimal" Precision="21" Scale="2" />
+    <Property Name="QtyVariance" Type="decimal" Precision="21" Scale="2" />
     <Property Name="UnitPriceTc" Type="decimal" Precision="21" Scale="2" />
     <Property Name="UomEntry" Type="int" />
     <Property Name="Uom" Type="nvarchar" MaxLength="50" />
     <Property Name="AcctCode" Type="nvarchar" MaxLength="100" />
     <Property Name="AcctName" Type="nvarchar" MaxLength="100" />
-    <Property Name="CreatedDate" Type="timestamp" />
-    <Property Name="CreatedUser" Type="int" />
-    <Property Name="ModifiedDate" Type="timestamp" />
-    <Property Name="ModifiedUser" Type="int" />
-    <Property Name="QtyVariance" Type="decimal" Precision="21" Scale="2" />
-    <Property Name="FreeText" Type="nvarchar" MaxLength="254" />
     <Property Name="PillarsCode" Type="nvarchar" MaxLength="10" />
     <Property Name="PillarsName" Type="nvarchar" MaxLength="50" />
     <Property Name="ClassCode" Type="nvarchar" MaxLength="10" />
@@ -1348,7 +1452,11 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="SubClass2Name" Type="nvarchar" MaxLength="50" />
     <Property Name="ProjectCode" Type="nvarchar" MaxLength="50" />
     <Property Name="ProjectName" Type="nvarchar" MaxLength="100" />
-    <Property Name="QuantityOnHandSAP" Type="decimal" Precision="21" Scale="2" />
+    <Property Name="FreeText" Type="nvarchar" MaxLength="254" />
+    <Property Name="CreatedDate" Type="timestamp" />
+    <Property Name="CreatedUser" Type="int" />
+    <Property Name="ModifiedDate" Type="timestamp" />
+    <Property Name="ModifiedUser" Type="int" />
   </EntityType>
   <EntityType Name="Tx_StockSummaryOpname_Item_Tag">
     <Key>
@@ -1416,12 +1524,12 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="Comments" Type="nvarchar" MaxLength="254" />
     <Property Name="JournalRemarks" Type="nvarchar" MaxLength="254" />
     <Property Name="CancelReason" Type="nvarchar" MaxLength="254" />
-    <Property Name="CreatedDate" Type="timestamp" />
-    <Property Name="CreatedUser" Type="int" />
-    <Property Name="ModifiedDate" Type="timestamp" />
     <Property Name="ModifiedUser" Type="int" />
     <Property Name="PriceList" Type="nvarchar" MaxLength="100" />
     <Property Name="PriceListName" Type="nvarchar" MaxLength="100" />
+    <Property Name="CreatedDate" Type="timestamp" />
+    <Property Name="CreatedUser" Type="int" />
+    <Property Name="ModifiedDate" Type="timestamp" />
   </EntityType>
   <EntityType Name="Tx_TransferIn_Item">
     <Key>
@@ -1569,15 +1677,34 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="PriceList" Type="int" />
     <Property Name="PriceListName" Type="nvarchar" MaxLength="50" />
     <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="ApprovalStatus" Type="nvarchar" MaxLength="50" />
     <Property Name="IsAfterPosted" Type="varchar" MaxLength="1" />
     <Property Name="Comments" Type="nvarchar" MaxLength="254" />
     <Property Name="JournalRemarks" Type="nvarchar" MaxLength="254" />
     <Property Name="CancelReason" Type="nvarchar" MaxLength="254" />
+    <Property Name="IsApproval" Type="varchar" MaxLength="1" />
+    <Property Name="ApprovalMessage" Type="nvarchar" MaxLength="254" />
     <Property Name="CreatedDate" Type="timestamp" />
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
     <Property Name="ModifiedUser" Type="int" />
-    <Property Name="ApprovalStatus" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Tx_TransferRequest_Approval">
+    <Key>
+      <PropertyRef Name="DetId" />
+    </Key>
+    <Property Name="Id" Type="int" />
+    <Property Name="DetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StageId" Type="int" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="Step" Type="int" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+    <Property Name="ActionDate" Type="seconddate" />
+    <Property Name="CreatedDate" Type="seconddate" />
+    <Property Name="CreatedUser" Type="int" />
+    <Property Name="ModifiedDate" Type="seconddate" />
+    <Property Name="ModifiedUser" Type="int" />
   </EntityType>
   <EntityType Name="Tx_TransferRequest_Item">
     <Key>
@@ -1585,10 +1712,6 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     </Key>
     <Property Name="Id" Type="bigint" />
     <Property Name="DetId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="CreatedDate" Type="timestamp" />
-    <Property Name="CreatedUser" Type="int" />
-    <Property Name="ModifiedDate" Type="timestamp" />
-    <Property Name="ModifiedUser" Type="int" />
     <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
     <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
     <Property Name="FromWhsCode" Type="nvarchar" MaxLength="50" />
@@ -1598,11 +1721,15 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="Quantity" Type="decimal" Precision="21" Scale="2" />
     <Property Name="QuantityOpen" Type="decimal" Precision="21" Scale="2" />
     <Property Name="QuantityScan" Type="decimal" Precision="21" Scale="2" />
+    <Property Name="LineStatus" Type="nvarchar" MaxLength="50" />
     <Property Name="UomEntry" Type="int" />
     <Property Name="Uom" Type="nvarchar" MaxLength="50" />
     <Property Name="Comments" Type="nvarchar" MaxLength="254" />
     <Property Name="FreeText" Type="nvarchar" MaxLength="200" />
-    <Property Name="LineStatus" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="timestamp" />
+    <Property Name="CreatedUser" Type="int" />
+    <Property Name="ModifiedDate" Type="timestamp" />
+    <Property Name="ModifiedUser" Type="int" />
   </EntityType>
   <EntityType Name="Tx_TransferSummaryIn">
     <Key>
@@ -1625,7 +1752,7 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="FromWhsCode" Type="nvarchar" MaxLength="50" />
     <Property Name="FromWhsName" Type="varchar" MaxLength="100" />
     <Property Name="TransitWhsCode" Type="nvarchar" MaxLength="50" />
-    <Property Name="TransitWhsName" Type="nvarchar" MaxLength="100" />
+    <Property Name="TransitWhsName" Type="varchar" MaxLength="100" />
     <Property Name="ToWhsCode" Type="nvarchar" MaxLength="50" />
     <Property Name="ToWhsName" Type="varchar" MaxLength="100" />
     <Property Name="PriceList" Type="int" />
@@ -1636,9 +1763,28 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="Comments" Type="nvarchar" MaxLength="254" />
     <Property Name="JournalRemarks" Type="nvarchar" MaxLength="254" />
     <Property Name="CancelReason" Type="nvarchar" MaxLength="254" />
+    <Property Name="IsApproval" Type="varchar" MaxLength="1" />
+    <Property Name="ApprovalMessage" Type="nvarchar" MaxLength="254" />
     <Property Name="CreatedDate" Type="timestamp" />
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
+    <Property Name="ModifiedUser" Type="int" />
+  </EntityType>
+  <EntityType Name="Tx_TransferSummaryIn_Approval">
+    <Key>
+      <PropertyRef Name="DetId" />
+    </Key>
+    <Property Name="Id" Type="int" />
+    <Property Name="DetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StageId" Type="int" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="Step" Type="int" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+    <Property Name="ActionDate" Type="seconddate" />
+    <Property Name="CreatedDate" Type="seconddate" />
+    <Property Name="CreatedUser" Type="int" />
+    <Property Name="ModifiedDate" Type="seconddate" />
     <Property Name="ModifiedUser" Type="int" />
   </EntityType>
   <EntityType Name="Tx_TransferSummaryIn_Item">
@@ -1664,12 +1810,12 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="UomEntry" Type="int" />
     <Property Name="Uom" Type="nvarchar" MaxLength="50" />
     <Property Name="Comments" Type="nvarchar" MaxLength="254" />
+    <Property Name="TransitWhsCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="TransitWhsName" Type="nvarchar" MaxLength="100" />
     <Property Name="CreatedDate" Type="timestamp" />
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
     <Property Name="ModifiedUser" Type="int" />
-    <Property Name="TransitWhsCode" Type="nvarchar" MaxLength="50" />
-    <Property Name="TransitWhsName" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="Tx_TransferSummaryIn_Item_tag">
     <Key>
@@ -1759,17 +1905,17 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="PriceListName" Type="nvarchar" MaxLength="50" />
     <Property Name="ScanDeviceId" Type="nvarchar" MaxLength="1000" />
     <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="ApprovalStatus" Type="nvarchar" MaxLength="50" />
     <Property Name="IsAfterPosted" Type="varchar" MaxLength="1" />
     <Property Name="Comments" Type="nvarchar" MaxLength="254" />
     <Property Name="JournalRemarks" Type="nvarchar" MaxLength="254" />
     <Property Name="CancelReason" Type="nvarchar" MaxLength="254" />
+    <Property Name="IsApproval" Type="varchar" MaxLength="1" />
+    <Property Name="ApprovalMessages" Type="nvarchar" MaxLength="254" />
     <Property Name="CreatedDate" Type="timestamp" />
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
     <Property Name="ModifiedUser" Type="int" />
-    <Property Name="ApprovalStatus" Type="nvarchar" MaxLength="50" />
-    <Property Name="IsApproval" Type="varchar" MaxLength="1" />
-    <Property Name="ApprovalMessages" Type="nvarchar" MaxLength="254" />
   </EntityType>
   <EntityType Name="Tx_TransferSummaryOut_Approval">
     <Key>
@@ -1809,6 +1955,8 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="QuantityScan" Type="decimal" Precision="21" Scale="2" />
     <Property Name="QuantityValid" Type="decimal" Precision="21" Scale="2" />
     <Property Name="QuantityPosted" Type="decimal" Precision="21" Scale="2" />
+    <Property Name="QuantityToReceipt" Type="decimal" Precision="21" Scale="2" />
+    <Property Name="LineStatus" Type="nvarchar" MaxLength="50" />
     <Property Name="UomEntry" Type="int" />
     <Property Name="Uom" Type="nvarchar" MaxLength="50" />
     <Property Name="Comments" Type="nvarchar" MaxLength="254" />
@@ -1816,8 +1964,6 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="CreatedUser" Type="int" />
     <Property Name="ModifiedDate" Type="timestamp" />
     <Property Name="ModifiedUser" Type="int" />
-    <Property Name="QuantityToReceipt" Type="decimal" Precision="21" Scale="2" />
-    <Property Name="LineStatus" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Tx_TransferSummaryOut_Item_Tag">
     <Key>
@@ -1859,105 +2005,113 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
     <Property Name="ModifiedUser" Type="int" />
   </EntityType>
   <EntityContainer Name="Model1StoreContainer">
-    <EntitySet Name="Tm_Alert" EntityType="Self.Tm_Alert" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Alert_Role" EntityType="Self.Tm_Alert_Role" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Alert_User" EntityType="Self.Tm_Alert_User" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_AlertGroup" EntityType="Self.Tm_AlertGroup" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Approval" EntityType="Self.Tm_Approval" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Approval_Role" EntityType="Self.Tm_Approval_Role" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Approval_User" EntityType="Self.Tm_Approval_User" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_ApprovalStage" EntityType="Self.Tm_ApprovalStage" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_ApprovalStage_Role" EntityType="Self.Tm_ApprovalStage_Role" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_ApprovalStage_User" EntityType="Self.Tm_ApprovalStage_User" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_ApprovalTemplate" EntityType="Self.Tm_ApprovalTemplate" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_ApprovalTemplate_Position" EntityType="Self.Tm_ApprovalTemplate_Position" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_ApprovalTemplate_Role" EntityType="Self.Tm_ApprovalTemplate_Role" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_ApprovalTemplate_Stage" EntityType="Self.Tm_ApprovalTemplate_Stage" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_ApprovalTemplate_User" EntityType="Self.Tm_ApprovalTemplate_User" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_GeneralSetting" EntityType="Self.Tm_GeneralSetting" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_GeneralSetting_Coa" EntityType="Self.Tm_GeneralSetting_Coa" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_GeneralSetting_Item" EntityType="Self.Tm_GeneralSetting_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Item" EntityType="Self.Tm_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Item_Warehouse" EntityType="Self.Tm_Item_Warehouse" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Item_Warehouse_Tag" EntityType="Self.Tm_Item_Warehouse_Tag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Item_Warehouse_Tag_Log" EntityType="Self.Tm_Item_Warehouse_Tag_Log" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Item_Warehouse_Tag_Replace" EntityType="Self.Tm_Item_Warehouse_Tag_Replace" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Layout" EntityType="Self.Tm_Layout" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Layout_Role" EntityType="Self.Tm_Layout_Role" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Layout_User" EntityType="Self.Tm_Layout_User" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_MasterSetting" EntityType="Self.Tm_MasterSetting" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Query" EntityType="Self.Tm_Query" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Query_Param" EntityType="Self.Tm_Query_Param" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Query_Role" EntityType="Self.Tm_Query_Role" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Query_User" EntityType="Self.Tm_Query_User" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_QueryGroup" EntityType="Self.Tm_QueryGroup" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_QueryGroup_Role" EntityType="Self.Tm_QueryGroup_Role" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_QueryGroup_User" EntityType="Self.Tm_QueryGroup_User" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Report" EntityType="Self.Tm_Report" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Report_Param" EntityType="Self.Tm_Report_Param" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Report_Role" EntityType="Self.Tm_Report_Role" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Report_User" EntityType="Self.Tm_Report_User" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_ReportGroup" EntityType="Self.Tm_ReportGroup" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_ReportGroup_Role" EntityType="Self.Tm_ReportGroup_Role" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_ReportGroup_User" EntityType="Self.Tm_ReportGroup_User" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Role" EntityType="Self.Tm_Role" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_Role_Auth" EntityType="Self.Tm_Role_Auth" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_User" EntityType="Self.Tm_User" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tm_User_Warehouse" EntityType="Self.Tm_User_Warehouse" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tp_Approval" EntityType="Self.Tp_Approval" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tp_Approval_User" EntityType="Self.Tp_Approval_User" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Ts_FormatNumbering" EntityType="Self.Ts_FormatNumbering" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Ts_LayoutForm" EntityType="Self.Ts_LayoutForm" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Ts_List" EntityType="Self.Ts_List" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Ts_Menu" EntityType="Self.Ts_Menu" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Ts_ObjectApproval" EntityType="Self.Ts_ObjectApproval" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_AdjustmentIn" EntityType="Self.Tx_AdjustmentIn" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_AdjustmentIn_Attachment" EntityType="Self.Tx_AdjustmentIn_Attachment" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_AdjustmentIn_Item" EntityType="Self.Tx_AdjustmentIn_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_AdjustmentIn_Item_Tag" EntityType="Self.Tx_AdjustmentIn_Item_Tag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_AdjustmentIn_Location" EntityType="Self.Tx_AdjustmentIn_Location" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_AdjustmentOut" EntityType="Self.Tx_AdjustmentOut" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_AdjustmentOut_Attachment" EntityType="Self.Tx_AdjustmentOut_Attachment" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_AdjustmentOut_Item" EntityType="Self.Tx_AdjustmentOut_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_AdjustmentOut_Item_Tag" EntityType="Self.Tx_AdjustmentOut_Item_Tag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_AdjustmentOut_Location" EntityType="Self.Tx_AdjustmentOut_Location" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_DeactiveTag" EntityType="Self.Tx_DeactiveTag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_DeactiveTag_Item" EntityType="Self.Tx_DeactiveTag_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_GoodIssue" EntityType="Self.Tx_GoodIssue" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_GoodsReceiptPO" EntityType="Self.Tx_GoodsReceiptPO" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_GoodsReceiptPO_Item" EntityType="Self.Tx_GoodsReceiptPO_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_GoodsReceiptPO_Item_Tag" EntityType="Self.Tx_GoodsReceiptPO_Item_Tag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_GoodsReceiptPO_Ref" EntityType="Self.Tx_GoodsReceiptPO_Ref" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_PurchaseOrder" EntityType="Self.Tx_PurchaseOrder" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_PurchaseOrder_Item" EntityType="Self.Tx_PurchaseOrder_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_PurchaseOrder_Item_Tag" EntityType="Self.Tx_PurchaseOrder_Item_Tag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_Request_StockOpname" EntityType="Self.Tx_Request_StockOpname" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_StockOpname" EntityType="Self.Tx_StockOpname" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_StockOpname_Item" EntityType="Self.Tx_StockOpname_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_StockOpname_Item_Tag" EntityType="Self.Tx_StockOpname_Item_Tag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_StockSummaryOpname" EntityType="Self.Tx_StockSummaryOpname" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_StockSummaryOpname_Item" EntityType="Self.Tx_StockSummaryOpname_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_StockSummaryOpname_Item_Tag" EntityType="Self.Tx_StockSummaryOpname_Item_Tag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_StockSummaryOpname_Ref" EntityType="Self.Tx_StockSummaryOpname_Ref" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_TransferIn" EntityType="Self.Tx_TransferIn" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_TransferIn_Item" EntityType="Self.Tx_TransferIn_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_TransferIn_Item_Tag" EntityType="Self.Tx_TransferIn_Item_Tag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_TransferOut" EntityType="Self.Tx_TransferOut" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_TransferOut_Item" EntityType="Self.Tx_TransferOut_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_TransferOut_Item_Tag" EntityType="Self.Tx_TransferOut_Item_Tag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_TransferRequest" EntityType="Self.Tx_TransferRequest" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_TransferRequest_Item" EntityType="Self.Tx_TransferRequest_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_TransferSummaryIn" EntityType="Self.Tx_TransferSummaryIn" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_TransferSummaryIn_Item" EntityType="Self.Tx_TransferSummaryIn_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_TransferSummaryIn_Item_tag" EntityType="Self.Tx_TransferSummaryIn_Item_tag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_TransferSummaryIn_Item_Tag1" EntityType="Self.Tx_TransferSummaryIn_Item_Tag1" Schema="BBS_RFID_TEST_APP" Table="Tx_TransferSummaryIn_Item_Tag" store:Type="Tables" />
-    <EntitySet Name="Tx_TransferSummaryIn_Ref" EntityType="Self.Tx_TransferSummaryIn_Ref" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_TransferSummaryOut" EntityType="Self.Tx_TransferSummaryOut" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_TransferSummaryOut_Approval" EntityType="Self.Tx_TransferSummaryOut_Approval" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_TransferSummaryOut_Item" EntityType="Self.Tx_TransferSummaryOut_Item" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_TransferSummaryOut_Item_Tag" EntityType="Self.Tx_TransferSummaryOut_Item_Tag" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tx_TransferSummaryOut_Ref" EntityType="Self.Tx_TransferSummaryOut_Ref" Schema="BBS_RFID_TEST_APP" store:Type="Tables" />
-    <EntitySet Name="Tp_UserAlert" EntityType="Self.Tp_UserAlert" store:Type="Tables" store:Schema="BBS_RFID_TEST_APP">
+    <EntitySet Name="Tm_Alert" EntityType="Self.Tm_Alert" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Alert_Role" EntityType="Self.Tm_Alert_Role" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Alert_User" EntityType="Self.Tm_Alert_User" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_AlertGroup" EntityType="Self.Tm_AlertGroup" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Approval" EntityType="Self.Tm_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Approval_Role" EntityType="Self.Tm_Approval_Role" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Approval_User" EntityType="Self.Tm_Approval_User" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_ApprovalStage" EntityType="Self.Tm_ApprovalStage" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_ApprovalStage_Role" EntityType="Self.Tm_ApprovalStage_Role" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_ApprovalStage_User" EntityType="Self.Tm_ApprovalStage_User" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_ApprovalTemplate" EntityType="Self.Tm_ApprovalTemplate" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_ApprovalTemplate_Position" EntityType="Self.Tm_ApprovalTemplate_Position" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_ApprovalTemplate_Role" EntityType="Self.Tm_ApprovalTemplate_Role" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_ApprovalTemplate_Stage" EntityType="Self.Tm_ApprovalTemplate_Stage" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_ApprovalTemplate_User" EntityType="Self.Tm_ApprovalTemplate_User" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_GeneralSetting" EntityType="Self.Tm_GeneralSetting" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_GeneralSetting_Coa" EntityType="Self.Tm_GeneralSetting_Coa" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_GeneralSetting_Item" EntityType="Self.Tm_GeneralSetting_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Item" EntityType="Self.Tm_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Item_Warehouse" EntityType="Self.Tm_Item_Warehouse" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Item_Warehouse_Tag" EntityType="Self.Tm_Item_Warehouse_Tag" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Item_Warehouse_Tag_Log" EntityType="Self.Tm_Item_Warehouse_Tag_Log" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Item_Warehouse_Tag_Replace" EntityType="Self.Tm_Item_Warehouse_Tag_Replace" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Layout" EntityType="Self.Tm_Layout" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Layout_Role" EntityType="Self.Tm_Layout_Role" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Layout_User" EntityType="Self.Tm_Layout_User" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_MasterSetting" EntityType="Self.Tm_MasterSetting" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Query" EntityType="Self.Tm_Query" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Query_Param" EntityType="Self.Tm_Query_Param" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Query_Role" EntityType="Self.Tm_Query_Role" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Query_User" EntityType="Self.Tm_Query_User" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_QueryGroup" EntityType="Self.Tm_QueryGroup" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_QueryGroup_Role" EntityType="Self.Tm_QueryGroup_Role" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_QueryGroup_User" EntityType="Self.Tm_QueryGroup_User" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Report" EntityType="Self.Tm_Report" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Report_Param" EntityType="Self.Tm_Report_Param" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Report_Role" EntityType="Self.Tm_Report_Role" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Report_User" EntityType="Self.Tm_Report_User" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_ReportGroup" EntityType="Self.Tm_ReportGroup" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_ReportGroup_Role" EntityType="Self.Tm_ReportGroup_Role" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_ReportGroup_User" EntityType="Self.Tm_ReportGroup_User" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Role" EntityType="Self.Tm_Role" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_Role_Auth" EntityType="Self.Tm_Role_Auth" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_User" EntityType="Self.Tm_User" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tm_User_Warehouse" EntityType="Self.Tm_User_Warehouse" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tp_Approval" EntityType="Self.Tp_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tp_Approval_User" EntityType="Self.Tp_Approval_User" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Ts_FormatNumbering" EntityType="Self.Ts_FormatNumbering" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Ts_LayoutForm" EntityType="Self.Ts_LayoutForm" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Ts_List" EntityType="Self.Ts_List" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Ts_Menu" EntityType="Self.Ts_Menu" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Ts_ObjectApproval" EntityType="Self.Ts_ObjectApproval" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_AdjustmentIn" EntityType="Self.Tx_AdjustmentIn" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_AdjustmentIn_Approval" EntityType="Self.Tx_AdjustmentIn_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_AdjustmentIn_Attachment" EntityType="Self.Tx_AdjustmentIn_Attachment" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_AdjustmentIn_Item" EntityType="Self.Tx_AdjustmentIn_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_AdjustmentIn_Item_Tag" EntityType="Self.Tx_AdjustmentIn_Item_Tag" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_AdjustmentIn_Location" EntityType="Self.Tx_AdjustmentIn_Location" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_AdjustmentOut" EntityType="Self.Tx_AdjustmentOut" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_AdjustmentOut_Approval" EntityType="Self.Tx_AdjustmentOut_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_AdjustmentOut_Attachment" EntityType="Self.Tx_AdjustmentOut_Attachment" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_AdjustmentOut_Item" EntityType="Self.Tx_AdjustmentOut_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_AdjustmentOut_Item_Tag" EntityType="Self.Tx_AdjustmentOut_Item_Tag" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_AdjustmentOut_Location" EntityType="Self.Tx_AdjustmentOut_Location" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_DeactiveTag" EntityType="Self.Tx_DeactiveTag" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_DeactiveTag_Item" EntityType="Self.Tx_DeactiveTag_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_DeactiveTag_Log" EntityType="Self.Tx_DeactiveTag_Log" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_GoodIssue" EntityType="Self.Tx_GoodIssue" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_GoodsReceiptPO" EntityType="Self.Tx_GoodsReceiptPO" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_GoodsReceiptPO_Approval" EntityType="Self.Tx_GoodsReceiptPO_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_GoodsReceiptPO_Item" EntityType="Self.Tx_GoodsReceiptPO_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_GoodsReceiptPO_Item_Tag" EntityType="Self.Tx_GoodsReceiptPO_Item_Tag" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_GoodsReceiptPO_Ref" EntityType="Self.Tx_GoodsReceiptPO_Ref" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_PurchaseOrder" EntityType="Self.Tx_PurchaseOrder" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_PurchaseOrder_Item" EntityType="Self.Tx_PurchaseOrder_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_PurchaseOrder_Item_Tag" EntityType="Self.Tx_PurchaseOrder_Item_Tag" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_Request_StockOpname" EntityType="Self.Tx_Request_StockOpname" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_StockOpname" EntityType="Self.Tx_StockOpname" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_StockOpname_Approval" EntityType="Self.Tx_StockOpname_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_StockOpname_Item" EntityType="Self.Tx_StockOpname_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_StockOpname_Item_Tag" EntityType="Self.Tx_StockOpname_Item_Tag" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_StockSummaryOpname" EntityType="Self.Tx_StockSummaryOpname" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_StockSummaryOpname_Approval" EntityType="Self.Tx_StockSummaryOpname_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_StockSummaryOpname_Item" EntityType="Self.Tx_StockSummaryOpname_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_StockSummaryOpname_Item_Tag" EntityType="Self.Tx_StockSummaryOpname_Item_Tag" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_StockSummaryOpname_Ref" EntityType="Self.Tx_StockSummaryOpname_Ref" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_TransferIn" EntityType="Self.Tx_TransferIn" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_TransferIn_Item" EntityType="Self.Tx_TransferIn_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_TransferIn_Item_Tag" EntityType="Self.Tx_TransferIn_Item_Tag" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_TransferOut" EntityType="Self.Tx_TransferOut" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_TransferOut_Item" EntityType="Self.Tx_TransferOut_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_TransferOut_Item_Tag" EntityType="Self.Tx_TransferOut_Item_Tag" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_TransferRequest" EntityType="Self.Tx_TransferRequest" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_TransferRequest_Approval" EntityType="Self.Tx_TransferRequest_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_TransferRequest_Item" EntityType="Self.Tx_TransferRequest_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_TransferSummaryIn" EntityType="Self.Tx_TransferSummaryIn" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_TransferSummaryIn_Approval" EntityType="Self.Tx_TransferSummaryIn_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_TransferSummaryIn_Item" EntityType="Self.Tx_TransferSummaryIn_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_TransferSummaryIn_Item_tag" EntityType="Self.Tx_TransferSummaryIn_Item_tag" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_TransferSummaryIn_Item_Tag1" EntityType="Self.Tx_TransferSummaryIn_Item_Tag1" Schema="BBS_RFID_APP" Table="Tx_TransferSummaryIn_Item_Tag" store:Type="Tables" />
+    <EntitySet Name="Tx_TransferSummaryIn_Ref" EntityType="Self.Tx_TransferSummaryIn_Ref" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_TransferSummaryOut" EntityType="Self.Tx_TransferSummaryOut" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_TransferSummaryOut_Approval" EntityType="Self.Tx_TransferSummaryOut_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_TransferSummaryOut_Item" EntityType="Self.Tx_TransferSummaryOut_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_TransferSummaryOut_Item_Tag" EntityType="Self.Tx_TransferSummaryOut_Item_Tag" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tx_TransferSummaryOut_Ref" EntityType="Self.Tx_TransferSummaryOut_Ref" Schema="BBS_RFID_APP" store:Type="Tables" />
+    <EntitySet Name="Tp_UserAlert" EntityType="Self.Tp_UserAlert" store:Type="Tables" store:Schema="BBS_RFID_APP">
       <DefiningQuery>SELECT 
 "Tp_UserAlert"."Id" AS "Id", 
 "Tp_UserAlert"."UserId" AS "UserId", 
@@ -1969,7 +2123,7 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP.Tp_UserAlert' does not have 
 "Tp_UserAlert"."SenderId" AS "SenderId", 
 "Tp_UserAlert"."IsRead" AS "IsRead", 
 "Tp_UserAlert"."LastShowTime" AS "LastShowTime"
-FROM "BBS_RFID_TEST_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
+FROM "BBS_RFID_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
     </EntitySet>
   </EntityContainer>
 </Schema>

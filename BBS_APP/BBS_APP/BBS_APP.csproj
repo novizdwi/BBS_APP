@@ -375,6 +375,8 @@
     <Content Include="App_Data\OverviewContents.xml" />
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Content\dx.material.custom-scheme.css" />
+    <Content Include="Content\Images\bell.svg" />
+    <Content Include="Content\Images\bell_amber.svg" />
     <Content Include="Content\Images\buttonnew\back.png" />
     <Content Include="Content\Images\buttonnew\clear.jpg" />
     <Content Include="Content\Images\buttonnew\clear.png" />
@@ -789,7 +791,6 @@
     <Content Include="Views\Setting\ApprovalTemplate\Partial\ApprovalTemplate_Form_TabSql_Partial.cshtml" />
     <Content Include="Views\Setting\ApprovalTemplate\Partial\ApprovalTemplate_Form_TabStage_List_Partial.cshtml" />
     <Content Include="Views\Setting\ApprovalTemplate\Partial\ApprovalTemplate_Form_TabUser_List_Partial.cshtml" />
-    <Content Include="Views\Setting\ApprovalTemplate\Partial\ApprovalTemplate_List_Partial.cshtml" />
     <Content Include="Views\Setting\ApprovalTemplate\Partial\ApprovalTemplate_Panel_List_Partial.cshtml" />
     <Content Include="Views\Setting\Approval\Approval.cshtml" />
     <Content Include="Views\Setting\Approval\Partial\Approval_Form_Btn_Partial.cshtml" />
@@ -848,6 +849,7 @@
     <Content Include="Views\Notification\Partial\_Notification_Panel_List_Partial.cshtml" />
     <Content Include="Views\Notification\Partial\_Notification_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferSummaryOut\Partial\Approval\Approval_Form_TabApproval_Partial.cshtml" />
+    <Content Include="Views\Setting\ApprovalTemplate\Partial\ApprovalTemplate_List_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
