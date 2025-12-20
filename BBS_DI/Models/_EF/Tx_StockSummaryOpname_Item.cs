@@ -19,19 +19,15 @@ namespace BBS_DI.Models._EF
         public string ItemCode { get; set; }
         public string ItemName { get; set; }
         public string WhsCode { get; set; }
+        public Nullable<decimal> QuantityOnHandSAP { get; set; }
         public Nullable<decimal> QuantityScan { get; set; }
         public Nullable<decimal> QuantityValid { get; set; }
+        public Nullable<decimal> QtyVariance { get; set; }
         public Nullable<decimal> UnitPriceTc { get; set; }
         public Nullable<int> UomEntry { get; set; }
         public string Uom { get; set; }
         public string AcctCode { get; set; }
         public string AcctName { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<int> CreatedUser { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public Nullable<int> ModifiedUser { get; set; }
-        public Nullable<decimal> QtyVariance { get; set; }
-        public string FreeText { get; set; }
         public string PillarsCode { get; set; }
         public string PillarsName { get; set; }
         public string ClassCode { get; set; }
@@ -42,6 +38,10 @@ namespace BBS_DI.Models._EF
         public string SubClass2Name { get; set; }
         public string ProjectCode { get; set; }
         public string ProjectName { get; set; }
-        public Nullable<decimal> QuantityOnHandSAP { get; set; }
+        public string FreeText { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<int> CreatedUser { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public Nullable<int> ModifiedUser { get; set; }
     }
 }

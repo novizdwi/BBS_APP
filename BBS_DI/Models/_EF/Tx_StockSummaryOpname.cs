@@ -25,15 +25,6 @@ namespace BBS_DI.Models._EF
         public string RequestNo { get; set; }
         public string WhsCode { get; set; }
         public string WhsName { get; set; }
-        public string Status { get; set; }
-        public string ApprovalStatus { get; set; }
-        public string IsAfterPosted { get; set; }
-        public string Comments { get; set; }
-        public string CancelReason { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<int> CreatedUser { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public Nullable<int> ModifiedUser { get; set; }
         public string PillarsCode { get; set; }
         public string PillarsName { get; set; }
         public string ClassCode { get; set; }
@@ -44,7 +35,16 @@ namespace BBS_DI.Models._EF
         public string SubClass2Name { get; set; }
         public string ProjectCode { get; set; }
         public string ProjectName { get; set; }
+        public string Status { get; set; }
+        public string ApprovalStatus { get; set; }
+        public string IsAfterPosted { get; set; }
+        public string Comments { get; set; }
+        public string CancelReason { get; set; }
         public string IsApproval { get; set; }
         public string ApprovalMessages { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<int> CreatedUser { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public Nullable<int> ModifiedUser { get; set; }
     }
 }
