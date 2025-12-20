@@ -948,6 +948,14 @@ namespace Models.Transaction.Adjustment
             }
         }
 
+        public List<AdjustmentOut_ItemModel> GetAdjustmentOut_Items(long id)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                return AdjustmentOut_Details(id);
+            }
+        }
+
 
         #endregion
     }

@@ -8,12 +8,6 @@
         Id = ViewBag.Id;
     }
 
-    ViewBag.ReadOnly = false;
-    string status = Models._Ef.DbProvider.dbApp.Database.SqlQuery<string>("SELECT TOP 1 T0.\"Status\" FROM \"Tx_TransferRequest\" T0 WHERE T0.\"Id\"=:p0", Id).FirstOrDefault();
-    if (status != "Draft")
-    {
-        ViewBag.ReadOnly = true;
-    }
 }
 
 @Html.DevExpress().GridView(settings =>
@@ -26,6 +20,8 @@
 
     settings.Width = Unit.Percentage(100);
     settings.Height = Unit.Percentage(100);
+
+    settings.CallbackRouteValues = new { Controller = "PurchaseOrderScan", Action = "TabDetailListPartial" };
 
     settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
     settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
@@ -40,20 +36,38 @@
 
     settings.Columns.Add(column =>
     {
+        column.FieldName = "PDODocNum_";
+        column.Name = "PDODocNum_";
+        column.Caption = "Production No";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 200;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
+        txt.Width = Unit.Percentage(90);
+    });
+
+
+    settings.Columns.Add(column =>
+    {
         column.FieldName = "ItemCode";
         column.Name = "ItemCode";
         column.Caption = "Item Code";
 
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 150;
+        column.Width = 120;
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
         column.ReadOnly = true;
-        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
         column.SetDataItemTemplateContent(c =>
         {
-            c.Column.Width = Unit.Percentage(100);
+            c.Column.Width = Unit.Percentage(60);
             if (c.ItemIndex >= 0)
             {
                 string itemCode = (string)DataBinder.Eval(c.DataItem, "ItemCode");
@@ -70,6 +84,8 @@
                 }).Render();
             }
         });
+
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
     });
 
     settings.Columns.Add(column =>
@@ -82,113 +98,28 @@
         column.Width = 200;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
-
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
+
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-
+        txt.Width = Unit.Percentage(90);
     });
 
     settings.Columns.Add(column =>
     {
-        column.FieldName = "FromWhsCode";
-        column.Name = "FromWhsCode";
+        column.FieldName = "WhsCode";
+        column.Name = "WhsCode";
         column.Caption = "Whse Code";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 100;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
-
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
+
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-
-    });
-
-    settings.Columns.Add(column =>
-    {
-        column.FieldName = "FromWhsName";
-        column.Name = "FromWhsName";
-        column.Caption = "Whse Name";
-
-        column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 150;
-        column.Settings.AllowSort = DefaultBoolean.False;
-        column.ReadOnly = true;
-
-        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
-        var txt = column.PropertiesEdit as TextBoxProperties;
-        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-
-    });
-
-    settings.Columns.Add(column =>
-    {
-        column.FieldName = "ToWhsCode";
-        column.Name = "ToWhsCode";
-        column.Caption = "To Whse Code";
-
-        column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 100;
-        column.Settings.AllowSort = DefaultBoolean.False;
-        column.ReadOnly = true;
-
-        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
-        var txt = column.PropertiesEdit as TextBoxProperties;
-        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-
-    });
-
-    settings.Columns.Add(column =>
-    {
-        column.FieldName = "ToWhsName";
-        column.Name = "ToWhsName";
-        column.Caption = "To Whse Name";
-
-        column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 150;
-        column.Settings.AllowSort = DefaultBoolean.False;
-        column.ReadOnly = true;
-
-        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
-        var txt = column.PropertiesEdit as TextBoxProperties;
-        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-
-    });
-
-    settings.Columns.Add(column =>
-    {
-        column.FieldName = "TransitWhsCode";
-        column.Name = "TransitWhsCode";
-        column.Caption = "Transit";
-
-        column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 100;
-        column.Settings.AllowSort = DefaultBoolean.False;
-        column.ReadOnly = true;
-
-        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
-        var txt = column.PropertiesEdit as TextBoxProperties;
-        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-
-    });
-
-    settings.Columns.Add(column =>
-    {
-        column.FieldName = "TransitWhsName";
-        column.Name = "TransitWhsName";
-        column.Caption = "Transit Whse Name";
-
-        column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 200;
-        column.Settings.AllowSort = DefaultBoolean.False;
-        column.ReadOnly = true;
-
-        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
-        var txt = column.PropertiesEdit as TextBoxProperties;
-        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-
+        txt.Width = Unit.Percentage(90);
     });
 
     settings.Columns.Add(column =>
@@ -198,7 +129,7 @@
         column.Caption = "Qty";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 80;
+        column.Width = 0;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
@@ -209,16 +140,16 @@
 
     settings.Columns.Add(column =>
     {
-        column.FieldName = "QuantityOpen_";
-        column.Name = "QuantityOpen_";
-        column.Caption = "Quantity Open";
+        column.FieldName = "QuantityOpen";
+        column.Name = "QuantityOpen";
+        column.Caption = "Qty Open";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 80;
+        column.Width = 0;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
-
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
+
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
     });
@@ -233,96 +164,89 @@
         column.Width = 80;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
-
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
+
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
     });
 
     settings.Columns.Add(column =>
     {
-        column.FieldName = "QuantityValid";
-        column.Name = "QuantityValid";
-        column.Caption = "Qty Valid";
+        column.FieldName = "Uom";
+        column.Name = "Uom";
+        column.Caption = "UoM";
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 80;
+        column.Width = 0;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
 
-        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
     });
 
     settings.Columns.Add(column =>
     {
-        column.FieldName = "Comments";
-        column.Name = "Comments";
+        column.FieldName = "FreeText";
+        column.Name = "FreeText";
         column.Caption = "Free Text";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 200;
+        column.Width = 0;
         column.Settings.AllowSort = DefaultBoolean.False;
-        column.ReadOnly = ViewBag.ReadOnly;
+        column.ReadOnly = true;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
-        if (ViewBag.ReadOnly)
-        {
-
-            column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
-            column.CellStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
-            column.CellStyle.ForeColor = System.Drawing.Color.Black;
-            column.EditFormSettings.Visible = DefaultBoolean.False;
-        }
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
 
     });
 
-    //settings.Columns.Add(column =>
-    //{
-    //    column.FieldName = "DocEntry";
-    //    column.Name = "DocEntry";
-    //    column.Caption = "Doc Entry";
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "DocEntry";
+        column.Name = "DocEntry";
+        column.Caption = "Doc Entry";
 
-    //    column.ColumnType = MVCxGridViewColumnType.TextBox;
-    //    column.Width = 0;
-    //    column.Settings.AllowSort = DefaultBoolean.False;
-    //    column.ReadOnly = true;
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 0;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
 
-    //    var txt = column.PropertiesEdit as TextBoxProperties;
-    //    txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-    //});
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+    });
 
-    //settings.Columns.Add(column =>
-    //{
-    //    column.FieldName = "LineNum";
-    //    column.Name = "LineNum";
-    //    column.Caption = "Line Num";
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LineNum";
+        column.Name = "LineNum";
+        column.Caption = "Line Num";
 
-    //    column.ColumnType = MVCxGridViewColumnType.TextBox;
-    //    column.Width = 0;
-    //    column.Settings.AllowSort = DefaultBoolean.False;
-    //    column.ReadOnly = true;
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 0;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
 
-    //    var txt = column.PropertiesEdit as TextBoxProperties;
-    //    txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-    //});
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+    });
 
-    //settings.Columns.Add(column =>
-    //{
-    //    column.FieldName = "LineStatus";
-    //    column.Name = "LineStatus";
-    //    column.Caption = "Line Status";
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "LineStatus";
+        column.Name = "LineStatus";
+        column.Caption = "Line Status";
 
-    //    column.ColumnType = MVCxGridViewColumnType.TextBox;
-    //    column.Width = 0;
-    //    column.Settings.AllowSort = DefaultBoolean.False;
-    //    column.ReadOnly = true;
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 0;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
 
-    //    var txt = column.PropertiesEdit as TextBoxProperties;
-    //    txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-    //});
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+    });
 
     settings.Settings.ShowFooter = true;
 
@@ -333,5 +257,5 @@
     settings.ClientSideEvents.BatchEditEndEditing = "gvDetailOnBatchEditEndEditing";
     settings.ClientSideEvents.BatchEditRowValidating = "gvDetailOnBatchEditRowValidating";
 
-}).Bind(Model.ListDetails_).GetHtml()
+}).Bind(Model).GetHtml()
 

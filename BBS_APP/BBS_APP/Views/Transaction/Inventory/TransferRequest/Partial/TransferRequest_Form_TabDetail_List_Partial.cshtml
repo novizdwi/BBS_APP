@@ -84,7 +84,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 400;
-        column.Settings.AllowSort = DefaultBoolean.False;
+        
         column.ReadOnly = true;
         column.CellStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
@@ -101,7 +101,7 @@
         
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 0;
-        column.Settings.AllowSort = DefaultBoolean.False;
+        
         column.ReadOnly = true;
 
         var txt = column.PropertiesEdit as TextBoxProperties;
@@ -117,7 +117,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 0;
-        column.Settings.AllowSort = DefaultBoolean.False;
+        
         column.ReadOnly = true;
 
         var txt = column.PropertiesEdit as TextBoxProperties;
@@ -133,7 +133,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 0;
-        column.Settings.AllowSort = DefaultBoolean.False;
+        
         column.ReadOnly = true;
         column.CellStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
@@ -150,7 +150,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 0;
-        column.Settings.AllowSort = DefaultBoolean.False;
+        
         column.ReadOnly = true;
 
         var txt = column.PropertiesEdit as TextBoxProperties;
@@ -226,7 +226,7 @@
         column.Name = "QuantityOpen";
         column.Caption = "Qty In Warehouse";
         column.HeaderStyle.HorizontalAlign = HorizontalAlign.Right;
-        column.Width = 100;
+        column.Width = 120;
         column.Settings.AllowSort = DefaultBoolean.True;
         column.Settings.SortMode = DevExpress.XtraGrid.ColumnSortMode.Value;
 
@@ -254,7 +254,7 @@
 
     //    column.ColumnType = MVCxGridViewColumnType.TextBox;
     //    column.Width = 80;
-    //    column.Settings.AllowSort = DefaultBoolean.False;
+    //    
     //    column.ReadOnly = true;
 
     //    var txt = column.PropertiesEdit as TextBoxProperties;
@@ -269,7 +269,7 @@
 
     //    column.ColumnType = MVCxGridViewColumnType.TextBox;
     //    column.Width = 100;
-    //    column.Settings.AllowSort = DefaultBoolean.False;
+    //    
     //    column.ReadOnly = true;
 
     //    var txt = column.PropertiesEdit as TextBoxProperties;
@@ -283,8 +283,8 @@
         column.Caption = "Free Text";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 200;
-        column.Settings.AllowSort = DefaultBoolean.False;
+        column.Width = 250;
+        
         column.ReadOnly = ViewBag.ReadOnly;
 
         if (ViewBag.ReadOnly)
