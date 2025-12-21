@@ -21,9 +21,8 @@ namespace BBS_DI.Models._EF
         public string WhsCode { get; set; }
         public string WhsName { get; set; }
         public string OldTagId { get; set; }
-        public string NewTagId { get; set; }
-        public string OldStatus { get; set; }
-        public string NewStatus { get; set; }
+        public string TagId { get; set; }
+        public string Status { get; set; }
         public string Event { get; set; }
         public string ActionNote { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

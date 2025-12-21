@@ -32,15 +32,6 @@
     settings.SetContent(() =>
     {
 
-        //Html.DevExpress().HyperLink(settingsHL =>
-        //{
-        //    settingsHL.Name = "gvApprovalTemplateList_GvExportTo";
-        //    settingsHL.NavigateUrl = "javascript:void(0)";
-        //    settingsHL.Properties.Text = "Excel";
-        //    settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ GvExportTo(gvApprovalTemplateList, '{0}'); }}", @Url.Action("ExportTo", "ApprovalTemplate"));
-        //    settingsHL.Height = 20;
-        //}).GetHtml();
-
         Html.DevExpress().HyperLink(settingsChoose =>
         {
             settingsChoose.Name = "gvPanelListCancel";
@@ -54,8 +45,8 @@
 
     });
 
-    settings.ClientSideEvents.Resize = string.Format("function(s, e) {{ GridviewInPopupAdjustSize(popupList,gvApprovalTemplateList); }}", "");
-    settings.ClientSideEvents.EndCallback = string.Format("function(s, e) {{ GridviewInPopupAdjustSize(popupList,gvApprovalTemplateList); }}", "");
+    settings.ClientSideEvents.Resize = string.Format("function(s, e) {{ GridviewInPopupAdjustSize(popupList,gvApprovalTemplateList, 50); }}", "");
+    settings.ClientSideEvents.EndCallback = string.Format("function(s, e) {{ GridviewInPopupAdjustSize(popupList,gvApprovalTemplateList, 50); }}", "");
 
     settings.PreRender = (sender, e) =>
     {
