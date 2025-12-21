@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using DevExpress.Web.Mvc;
 using DevExpress.Web;
 
+
 using Models._Utils;
 using Models;
 using Models.Setting.ApprovalTemplate;
@@ -20,9 +21,10 @@ namespace Controllers.Setting
             var hidden_CpGvFind_SortExpression = Request["hidden_CpGvFind_SortExpression"];
             var hidden_CpGvFind_PageIndex = Request["hidden_CpGvFind_PageIndex"];
             var hidden_CpGvFind_PageSize = Request["hidden_CpGvFind_PageSize"];
-            
-            List<ApprovalTemplateView__> items = ApprovalTemplate__List_Model.GetDataList(hidden_CpGvFind_FilterExpression, hidden_CpGvFind_SortExpression, Convert.ToInt32(hidden_CpGvFind_PageIndex), Convert.ToInt32(hidden_CpGvFind_PageSize));
-            return GridViewExportHelper.ExportTypes["XLS"].Method(GridViewExportHelper.ExportGridViewSettings, items);
+
+
+            List<View___> views = ApprovalTemplate__List_Model.GetDataList(hidden_CpGvFind_FilterExpression, hidden_CpGvFind_SortExpression, Convert.ToInt32(hidden_CpGvFind_PageIndex), Convert.ToInt32(hidden_CpGvFind_PageSize));
+            return GridViewExportHelper.ExportTypes["XLS"].Method(GridViewExportHelper.ExportGridViewSettings, views);
 
         }
 
@@ -80,8 +82,8 @@ namespace Controllers.Setting
             static GridViewSettings CreateExportGridViewSettings()
             {
 
-                var listModel = new ApprovalTemplate__List_Model();
-                GridViewSettings settings = listModel.CreateExportGridViewSettings();
+
+                GridViewSettings settings = ApprovalTemplate__List_Model.CreateExportGridViewSettings();
 
 
 

@@ -716,8 +716,6 @@
     <Content Include="Views\Transaction\Inventory\TransferSummaryIn\Partial\TransferSummaryIn_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferSummaryIn\Partial\TransferSummaryIn_Panel_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferSummaryIn\TransferSummaryIn.cshtml" />
-    <Content Include="Views\_Cfl\_CflTransferRequest\Partial\_CflTransferRequest_List_Partial.cshtml" />
-    <Content Include="Views\_Cfl\_CflTransferRequest\Partial\_CflTransferRequest_Panel_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Adjustment\AdjustmentIn\AdjustmentIn.cshtml" />
     <Content Include="Views\Transaction\Adjustment\AdjustmentIn\Partial\AdjustmentIn_Form_Btn_Partial.cshtml" />
     <Content Include="Views\Transaction\Adjustment\AdjustmentIn\Partial\AdjustmentIn_Form_Partial.cshtml" />
@@ -846,6 +844,8 @@
     <Content Include="Views\Notification\Partial\_Notification_Panel_List_Partial.cshtml" />
     <Content Include="Views\Notification\Partial\_Notification_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferSummaryOut\Partial\Approval\Approval_Form_TabApproval_Partial.cshtml" />
+    <Content Include="Views\Setting\ApprovalTemplate\Partial\ApprovalTemplate_List_Partial.cshtml" />
+    <Content Include="Views\Setting\ApprovalTemplate\Partial\ApprovalTemplate_Panel_List_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -901,6 +901,7 @@
     <Compile Include="Controllers\Setting\ApprovalStage\ApprovalStageController.List.cs" />
     <Compile Include="Controllers\Setting\ApprovalStage\ApprovalStageController.List.Export.cs" />
     <Compile Include="Controllers\Setting\ApprovalStage\ApprovalStageController.Nav.cs" />
+    <Compile Include="Controllers\Setting\ApprovalTemplate\ApprovalTemplateController.List.cs" />
     <Compile Include="Controllers\Setting\ApprovalTemplate\ApprovalTemplateController.cs" />
     <Compile Include="Controllers\Setting\ApprovalTemplate\ApprovalTemplateController.List.Export.cs" />
     <Compile Include="Controllers\Setting\ApprovalTemplate\ApprovalTemplateController.Nav.cs" />
@@ -1024,8 +1025,6 @@
     <Compile Include="Controllers\_Cfl\_CflItem\_CflItemController.List.Export.cs" />
     <Compile Include="Controllers\_Cfl\_CflStockOpname\_CflStockOpnameController.List.cs" />
     <Compile Include="Controllers\_Cfl\_CflStockOpname\_CflStockOpnameController.List.Export.cs" />
-    <Compile Include="Controllers\_Cfl\_CflTransferRequest\_CflTransferRequestController.List.cs" />
-    <Compile Include="Controllers\_Cfl\_CflTransferRequest\_CflTransferRequestController.List.Export.cs" />
     <Compile Include="Controllers\_Cfl\_CflPurchaseOrder\_CflPurchaseOrderController.List.cs" />
     <Compile Include="Controllers\_Cfl\_CflPurchaseOrder\_CflPurchaseOrderController.List.Export.cs" />
     <Compile Include="Controllers\_Cfl\_CflToWarehouse\_CflToWarehouseController.List.cs" />
