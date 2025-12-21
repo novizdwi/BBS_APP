@@ -846,6 +846,8 @@
     <Content Include="Views\Transaction\Inventory\TransferSummaryOut\Partial\Approval\Approval_Form_TabApproval_Partial.cshtml" />
     <Content Include="Views\Setting\ApprovalTemplate\Partial\ApprovalTemplate_List_Partial.cshtml" />
     <Content Include="Views\Setting\ApprovalTemplate\Partial\ApprovalTemplate_Panel_List_Partial.cshtml" />
+    <Content Include="Views\_Cfl\_CflTransferRequest\Partial\_CflTransferRequest_List_Partial.cshtml" />
+    <Content Include="Views\_Cfl\_CflTransferRequest\Partial\_CflTransferRequest_Panel_List_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1029,6 +1031,8 @@
     <Compile Include="Controllers\_Cfl\_CflPurchaseOrder\_CflPurchaseOrderController.List.Export.cs" />
     <Compile Include="Controllers\_Cfl\_CflToWarehouse\_CflToWarehouseController.List.cs" />
     <Compile Include="Controllers\_Cfl\_CflToWarehouse\_CflToWarehouseController.List.Export.cs" />
+    <Compile Include="Controllers\_Cfl\_CflTransferRequest\_CflTransferRequestController.List.cs" />
+    <Compile Include="Controllers\_Cfl\_CflTransferRequest\_CflTransferRequestController.List.Export.cs" />
     <Compile Include="Controllers\_Cfl\_CflTransferSummaryOut\_CflTransferSummaryOutController.List.cs" />
     <Compile Include="Controllers\_Cfl\_CflTransferSummaryOut\_CflTransferSummaryOutController.List.Export.cs" />
     <Compile Include="Controllers\_Cfl\_CflWarehouse\_CflWarehouseController.List.cs" />

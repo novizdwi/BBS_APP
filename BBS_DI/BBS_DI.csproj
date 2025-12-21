@@ -237,6 +237,7 @@
     <Compile Include="Models\_Cfl\CflItem_Model.cs" />
     <Compile Include="Models\_Cfl\CflCoa_Model.cs" />
     <Compile Include="Models\_Cfl\CflStockOpname_Model.cs" />
+    <Compile Include="Models\_Cfl\CflTransferRequestOut_Model.cs" />
     <Compile Include="Models\_Cfl\CflTransferSummaryOut_Model.cs" />
     <Compile Include="Models\_Cfl\CflPurchaseOrder_Model.cs" />
     <Compile Include="Models\_Cfl\CflToWarehouse_Model.cs" />
