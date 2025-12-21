@@ -27,25 +27,41 @@ namespace Controllers._Cfl
             cflParam.Header = Request["hidden_CflHeader"];
             cflParam.SqlWhere = Request["hidden_CflSqlWhere"];
 
-            if (cflParam.Type == "TransferSummaryIn")
+            string ssql;
+            if (cflParam.Type == "TransferSummaryOut")
             {
-                cflParam.SqlWhere = string.Format(@"                 
-                AND EXISTS(
+
+                var hidden_CflDocId = (string)Request["hidden_CflDocId"];
+                hidden_CflDocId = hidden_CflDocId.Replace("'", "''");
+                ssql = @"AND 
+                  EXISTS(
                     SELECT 1
-                    FROM ""Tx_TransferIn"" Ta
+                    FROM ""Tx_TransferOut"" Ta
                     WHERE Ta.""Status"" = 'Posted'
                     AND T0.""Id"" = Ta.""BaseEntry""
-                    AND COALESCE(Ta.""BaseEntry"", 0) != 0
                     AND NOT EXISTS(
                         SELECT 1
-                        FROM ""Tx_TransferSummaryIn"" Tx
-                        INNER JOIN ""Tx_TransferSummaryIn_Ref"" Ty ON Tx.""Id"" = Ty.""Id""
+                        FROM ""Tx_TransferSummaryOut"" Tx
+                        INNER JOIN ""Tx_TransferSummaryOut_Ref"" Ty ON Tx.""Id"" = Ty.""Id""
                         WHERE Ty.""BaseId"" = Ta.""Id""
                         AND Tx.""Status"" != 'Cancel'
                     )
-               ) ");
-            }
+                )
+                ";
 
+                cflParam.SqlWhere = string.Format(ssql, hidden_CflDocId);
+            }
+            if (cflParam.Type == "TransferSummaryIn")
+            {
+                cflParam.IsMulti = Request["hidden_CflIsMulti"];
+                var hidden_CflDocId = (string)Request["hidden_CflDocId"];
+                hidden_CflDocId = hidden_CflDocId.Replace("'", "''");
+                ssql = @"AND
+                    T0.""Id"" NOT IN (SELECT T0_.""BaseEntry"" FROM ""Tx_TransferSummaryIn"" T0_ WHERE T0_.""Status""='Cancel' ) AND
+                    T0.""Id"" IN (SELECT T0_.""BaseEntry"" FROM ""Tx_TransferSummaryOut"" T0_ WHERE T0_.""Status""='Posted' AND IFNULL(T0_.""DocEntry"",0) <> 0 )
+                ";
+                cflParam.SqlWhere = string.Format(ssql, hidden_CflDocId);
+            }
             cflParam.IsMulti = Request["hidden_CflIsMulti"];
 
             return cflParam;
