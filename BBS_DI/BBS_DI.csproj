@@ -184,7 +184,6 @@
     <Compile Include="Models\Setting\ApprovalStageModel.cs" />
     <Compile Include="Models\Setting\ApprovalStage__List_Model.cs" />
     <Compile Include="Models\Setting\ApprovalTemplateModel.cs" />
-    <Compile Include="Models\Setting\ApprovalTemplate__List_Model.cs" />
     <Compile Include="Models\Setting\Approval__List_Model.cs" />
     <Compile Include="Models\Setting\GeneralSettingModel.cs" />
     <Compile Include="Models\Setting\LayoutModel.cs" />

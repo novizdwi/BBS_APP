@@ -789,8 +789,6 @@
     <Content Include="Views\Setting\ApprovalTemplate\Partial\ApprovalTemplate_Form_TabSql_Partial.cshtml" />
     <Content Include="Views\Setting\ApprovalTemplate\Partial\ApprovalTemplate_Form_TabStage_List_Partial.cshtml" />
     <Content Include="Views\Setting\ApprovalTemplate\Partial\ApprovalTemplate_Form_TabUser_List_Partial.cshtml" />
-    <Content Include="Views\Setting\ApprovalTemplate\Partial\ApprovalTemplate_List_Partial.cshtml" />
-    <Content Include="Views\Setting\ApprovalTemplate\Partial\ApprovalTemplate_Panel_List_Partial.cshtml" />
     <Content Include="Views\Setting\Approval\Approval.cshtml" />
     <Content Include="Views\Setting\Approval\Partial\Approval_Form_Btn_Partial.cshtml" />
     <Content Include="Views\Setting\Approval\Partial\Approval_Form_Partial.cshtml" />
@@ -904,7 +902,6 @@
     <Compile Include="Controllers\Setting\ApprovalStage\ApprovalStageController.List.Export.cs" />
     <Compile Include="Controllers\Setting\ApprovalStage\ApprovalStageController.Nav.cs" />
     <Compile Include="Controllers\Setting\ApprovalTemplate\ApprovalTemplateController.cs" />
-    <Compile Include="Controllers\Setting\ApprovalTemplate\ApprovalTemplateController.List.cs" />
     <Compile Include="Controllers\Setting\ApprovalTemplate\ApprovalTemplateController.List.Export.cs" />
     <Compile Include="Controllers\Setting\ApprovalTemplate\ApprovalTemplateController.Nav.cs" />
     <Compile Include="Controllers\Setting\ApprovalTemplate\ApprovalTemplateController.Tab.Stage.cs" />
