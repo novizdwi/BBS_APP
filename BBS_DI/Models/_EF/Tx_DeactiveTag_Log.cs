@@ -12,20 +12,16 @@ namespace BBS_DI.Models._EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Tm_Item_Warehouse
+    public partial class Tx_DeactiveTag_Log
     {
+        public long LogId { get; set; }
+        public string TagId { get; set; }
         public string ItemCode { get; set; }
         public string ItemName { get; set; }
         public string WhsCode { get; set; }
         public string WhsName { get; set; }
-        public Nullable<decimal> OnHand { get; set; }
-        public Nullable<decimal> IsCommitted { get; set; }
-        public Nullable<decimal> OnOrder { get; set; }
-        public Nullable<int> UomEntry { get; set; }
-        public string Uom { get; set; }
+        public string Message { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedUser { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public Nullable<int> ModifiedUser { get; set; }
     }
 }

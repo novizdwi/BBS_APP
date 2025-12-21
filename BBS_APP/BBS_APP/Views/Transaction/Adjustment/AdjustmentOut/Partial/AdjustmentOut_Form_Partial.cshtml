@@ -8,14 +8,11 @@
     ViewBag.ReadOnly = Model.Status == "Draft" ? false: true;
 
     string IsCanAccessOpeningBalance_ = "Y";
-    if (ViewBag.UserId != 1) {
-        IsCanAccessOpeningBalance_ = Models._Ef.DbProvider.dbApp.Database.SqlQuery<string>(@"
-            SELECT TOP 1 COALESCE(T1.""IsAccess"",'N') 
-            FROM ""Tm_User"" T0X 
-            INNER JOIN  ""Tm_Role"" T0 ON T0.""Id"" = T0X.""RoleId""
-            INNER JOIN ""Tm_Role_Auth"" T1 ON T1.""Id"" = T0.""Id"" 
-            WHERE T0X.""Id"" = :p0 AND T1.""MenuCode"" = 'AdjustmentOut/IsOpeningBalance' 
-        ", ViewBag.UserId).FirstOrDefault();
+    string MenuCode = "AdjustmentIn/IsOpeningBalance";
+
+    if (ViewBag.UserId != 1)
+    {
+        IsCanAccessOpeningBalance_ = Models._Utils.GeneralGetList.GetIsCanAccessOpeningBalance(ViewBag.UserId, MenuCode);
     }
 }
 
@@ -689,7 +686,7 @@
                 x =>
                 {
                     x.Name = "label3";
-                    x.Text = "  Modified By(" + Models._Utils.GeneralGetList.GetUserNameByUserId(Model.CreatedUser) + ", " + Models._Utils.GeneralGetList.GeFirstNameByUserId(Model.CreatedUser) + " : " + Model.ModifiedDate_ + ")";
+                    x.Text = "  Modified By(" + Models._Utils.GeneralGetList.GetUserNameByUserId(Model.ModifiedUser) + ", " + Models._Utils.GeneralGetList.GeFirstNameByUserId(Model.ModifiedUser) + " : " + Model.ModifiedDate_ + ")";
                     x.Properties.EnableClientSideAPI = true;
                 }
             )

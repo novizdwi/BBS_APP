@@ -12,20 +12,16 @@ namespace BBS_DI.Models._EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Tx_TransferSummaryIn_Item_tag
+    public partial class Tx_StockSummaryOpname_Approval
     {
-        public long Id { get; set; }
-        public Nullable<long> DetId { get; set; }
-        public Nullable<long> DetDetId { get; set; }
-        public string ItemCode { get; set; }
-        public string ItemName { get; set; }
-        public string TagId { get; set; }
-        public Nullable<decimal> Quantity { get; set; }
-        public string EventType { get; set; }
+        public Nullable<int> Id { get; set; }
+        public int DetId { get; set; }
+        public Nullable<int> StageId { get; set; }
+        public Nullable<int> UserId { get; set; }
+        public Nullable<int> Step { get; set; }
         public string Status { get; set; }
-        public Nullable<long> BaseId { get; set; }
-        public Nullable<long> BaseDetId { get; set; }
-        public Nullable<long> BaseDetDetId { get; set; }
+        public string Comments { get; set; }
+        public Nullable<System.DateTime> ActionDate { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedUser { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }

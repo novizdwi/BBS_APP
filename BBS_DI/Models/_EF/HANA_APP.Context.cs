@@ -78,19 +78,23 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Ts_Menu> Ts_Menu { get; set; }
         public virtual DbSet<Ts_ObjectApproval> Ts_ObjectApproval { get; set; }
         public virtual DbSet<Tx_AdjustmentIn> Tx_AdjustmentIn { get; set; }
+        public virtual DbSet<Tx_AdjustmentIn_Approval> Tx_AdjustmentIn_Approval { get; set; }
         public virtual DbSet<Tx_AdjustmentIn_Attachment> Tx_AdjustmentIn_Attachment { get; set; }
         public virtual DbSet<Tx_AdjustmentIn_Item> Tx_AdjustmentIn_Item { get; set; }
         public virtual DbSet<Tx_AdjustmentIn_Item_Tag> Tx_AdjustmentIn_Item_Tag { get; set; }
         public virtual DbSet<Tx_AdjustmentIn_Location> Tx_AdjustmentIn_Location { get; set; }
         public virtual DbSet<Tx_AdjustmentOut> Tx_AdjustmentOut { get; set; }
+        public virtual DbSet<Tx_AdjustmentOut_Approval> Tx_AdjustmentOut_Approval { get; set; }
         public virtual DbSet<Tx_AdjustmentOut_Attachment> Tx_AdjustmentOut_Attachment { get; set; }
         public virtual DbSet<Tx_AdjustmentOut_Item> Tx_AdjustmentOut_Item { get; set; }
         public virtual DbSet<Tx_AdjustmentOut_Item_Tag> Tx_AdjustmentOut_Item_Tag { get; set; }
         public virtual DbSet<Tx_AdjustmentOut_Location> Tx_AdjustmentOut_Location { get; set; }
         public virtual DbSet<Tx_DeactiveTag> Tx_DeactiveTag { get; set; }
         public virtual DbSet<Tx_DeactiveTag_Item> Tx_DeactiveTag_Item { get; set; }
+        public virtual DbSet<Tx_DeactiveTag_Log> Tx_DeactiveTag_Log { get; set; }
         public virtual DbSet<Tx_GoodIssue> Tx_GoodIssue { get; set; }
         public virtual DbSet<Tx_GoodsReceiptPO> Tx_GoodsReceiptPO { get; set; }
+        public virtual DbSet<Tx_GoodsReceiptPO_Approval> Tx_GoodsReceiptPO_Approval { get; set; }
         public virtual DbSet<Tx_GoodsReceiptPO_Item> Tx_GoodsReceiptPO_Item { get; set; }
         public virtual DbSet<Tx_GoodsReceiptPO_Item_Tag> Tx_GoodsReceiptPO_Item_Tag { get; set; }
         public virtual DbSet<Tx_GoodsReceiptPO_Ref> Tx_GoodsReceiptPO_Ref { get; set; }
@@ -99,9 +103,11 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_PurchaseOrder_Item_Tag> Tx_PurchaseOrder_Item_Tag { get; set; }
         public virtual DbSet<Tx_Request_StockOpname> Tx_Request_StockOpname { get; set; }
         public virtual DbSet<Tx_StockOpname> Tx_StockOpname { get; set; }
+        public virtual DbSet<Tx_StockOpname_Approval> Tx_StockOpname_Approval { get; set; }
         public virtual DbSet<Tx_StockOpname_Item> Tx_StockOpname_Item { get; set; }
         public virtual DbSet<Tx_StockOpname_Item_Tag> Tx_StockOpname_Item_Tag { get; set; }
         public virtual DbSet<Tx_StockSummaryOpname> Tx_StockSummaryOpname { get; set; }
+        public virtual DbSet<Tx_StockSummaryOpname_Approval> Tx_StockSummaryOpname_Approval { get; set; }
         public virtual DbSet<Tx_StockSummaryOpname_Item> Tx_StockSummaryOpname_Item { get; set; }
         public virtual DbSet<Tx_StockSummaryOpname_Item_Tag> Tx_StockSummaryOpname_Item_Tag { get; set; }
         public virtual DbSet<Tx_StockSummaryOpname_Ref> Tx_StockSummaryOpname_Ref { get; set; }
@@ -112,11 +118,11 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_TransferOut_Item> Tx_TransferOut_Item { get; set; }
         public virtual DbSet<Tx_TransferOut_Item_Tag> Tx_TransferOut_Item_Tag { get; set; }
         public virtual DbSet<Tx_TransferRequest> Tx_TransferRequest { get; set; }
+        public virtual DbSet<Tx_TransferRequest_Approval> Tx_TransferRequest_Approval { get; set; }
         public virtual DbSet<Tx_TransferRequest_Item> Tx_TransferRequest_Item { get; set; }
         public virtual DbSet<Tx_TransferSummaryIn> Tx_TransferSummaryIn { get; set; }
+        public virtual DbSet<Tx_TransferSummaryIn_Approval> Tx_TransferSummaryIn_Approval { get; set; }
         public virtual DbSet<Tx_TransferSummaryIn_Item> Tx_TransferSummaryIn_Item { get; set; }
-        public virtual DbSet<Tx_TransferSummaryIn_Item_tag> Tx_TransferSummaryIn_Item_tag { get; set; }
-        public virtual DbSet<Tx_TransferSummaryIn_Item_Tag1> Tx_TransferSummaryIn_Item_Tag1 { get; set; }
         public virtual DbSet<Tx_TransferSummaryIn_Ref> Tx_TransferSummaryIn_Ref { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut> Tx_TransferSummaryOut { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut_Approval> Tx_TransferSummaryOut_Approval { get; set; }

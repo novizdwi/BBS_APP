@@ -37,11 +37,11 @@ namespace BBS_DI.Models._EF
         public string Comments { get; set; }
         public string JournalRemarks { get; set; }
         public string CancelReason { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<int> CreatedUser { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> ModifiedUser { get; set; }
         public string PriceList { get; set; }
         public string PriceListName { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<int> CreatedUser { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
     }
 }

@@ -16,10 +16,6 @@ namespace BBS_DI.Models._EF
     {
         public string ItemCode { get; set; }
         public string ItemName { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<int> CreatedUser { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public Nullable<int> ModifiedUser { get; set; }
         public Nullable<decimal> OnHand { get; set; }
         public Nullable<decimal> IsCommitted { get; set; }
         public Nullable<decimal> OnOrder { get; set; }
@@ -27,5 +23,9 @@ namespace BBS_DI.Models._EF
         public string Uom { get; set; }
         public string StockOpnameCoaCode { get; set; }
         public string StockOpnameCoaName { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<int> CreatedUser { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public Nullable<int> ModifiedUser { get; set; }
     }
 }
