@@ -7,7 +7,6 @@ using System.Web.Mvc;
 using DevExpress.Web.Mvc;
 using System.Threading;
 
-
 using System.Net;
 
 using Models;
@@ -63,8 +62,7 @@ namespace Controllers.Setting
             var viewModel = GridViewExtension.GetViewModel("gvApprovalTemplateList");
             if (viewModel == null)
             {
-                var listModel = new ApprovalTemplate__List_Model();
-                viewModel = listModel.CreateGridViewModel();
+                viewModel = ApprovalTemplate__List_Model.CreateGridViewModel();
             }
 
             return viewModel;
@@ -72,10 +70,10 @@ namespace Controllers.Setting
 
         static void ProcessCustomBinding(GridViewModel viewModel)
         {
-            var listModel = new ApprovalTemplate__List_Model();
-            listModel.SetBindingData(viewModel);
-
-
+            viewModel.ProcessCustomBinding(
+                ApprovalTemplate__List_Model.GetDataRowCount,
+                ApprovalTemplate__List_Model.GetData
+            );
 
         }
 

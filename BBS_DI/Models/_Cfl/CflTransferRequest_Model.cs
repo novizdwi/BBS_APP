@@ -4,15 +4,15 @@ using DevExpress.Data.Linq;
 using DevExpress.Data.Linq.Helpers;
 using DevExpress.Web.Mvc;
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using Models;
-
 using Models._Utils;
-using Models._Ef;
-using Models._Cfl;
+using System.Data;
+using System.Dynamic;
 using BBS_DI.Models._EF;
-using System.Linq;
+using Models._Ef;
 
 namespace Models._Cfl
 {
@@ -23,124 +23,98 @@ namespace Models._Cfl
         public string Header { get; set; }
         public string SqlWhere { get; set; }
         public string IsMulti { get; set; }//"Y","N"
+
     }
 
     public class CflTransferRequest_View__
     {
         public string Id { get; set; }
+
         public string TransNo { get; set; }
 
         public string TransDate { get; set; }
 
         public string FromWhsCode { get; set; }
+
         public string FromWhsName { get; set; }
 
         public string TransitWhsCode { get; set; }
+
         public string TransitWhsName { get; set; }
 
         public string ToWhsCode { get; set; }
+
         public string ToWhsName { get; set; }
 
         public string Comments { get; set; }
+
+
     }
 
     public class CflTransferRequest_Model
     {
         public static string ssql = @"
-            SELECT DISTINCT T0.""Id"", T0.""TransNo"", 
-                T0.""TransDate"", T0.""FromWhsCode"", T0.""FromWhsName"", 
+            SELECT DISTINCT T0.""Id"", 
+                T0.""TransNo"", 
+                T0.""TransDate"", 
+                T0.""FromWhsCode"", 
+                T0.""FromWhsName"", 
                 IFNULL(T1.""U_IDU_WhsTransit"",'') AS ""TransitWhsCode"",
                 IFNULL(T2.""WhsName"",'') AS ""TransitWhsName"",
-                T0.""ToWhsCode"", T0.""ToWhsName"", T0.""Comments""
-                FROM ""Tx_TransferRequest"" T0
-                LEFT JOIN ""{DbSap}"".""OWHS"" T1 ON T1.""WhsCode"" = T0.""FromWhsCode""
-                LEFT JOIN ""{DbSap}"".""OWHS"" T2 ON T2.""WhsCode"" = IFNULL(T1.""U_IDU_WhsTransit"",'')
-                WHERE T0.""Status"" = 'Posted' AND T1.""Inactive"" = 'N'              
-        ";
-                
-        public static void SetBindingData(GridViewModel state, int userId, CflTransferRequest_ParamModel cflParam)
-        {
-            string sqlCriteria = GetSqlFromGridViewModelState.getHanaCriteria(state);
-            string sqlSort = GetSqlFromGridViewModelState.getHanaSort(state);
-
-            using (var CONTEXT = new HANA_APP())
-            {
-                var dataRowCount = GetRowCount(CONTEXT, userId, cflParam, sqlCriteria);
-                var dataList = GetDataList(CONTEXT, userId, cflParam, sqlCriteria, sqlSort, state.Pager.PageIndex, state.Pager.PageSize);
-
-                state.ProcessCustomBinding(
-                  new GridViewCustomBindingGetDataRowCountHandler(args =>
-                  {
-                      GetDataRowCount(args, dataRowCount);
-                  }),
-                  new GridViewCustomBindingGetDataHandler(args =>
-                  {
-                      GetData(args, dataList);
-                  })
-              );
-            }
-        }
-
-        public static void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e, int dataRowCount)
-        { 
-           
-            e.DataRowCount = dataRowCount;
-
-        }
+                T0.""ToWhsCode"", T0.""ToWhsName"", 
+                T0.""Comments""
+            FROM ""Tx_TransferRequest"" T0
+            LEFT JOIN ""{DbSap}"".""OWHS"" T1 ON T1.""WhsCode"" = T0.""FromWhsCode""
+            LEFT JOIN ""{DbSap}"".""OWHS"" T2 ON T2.""WhsCode"" = IFNULL(T1.""U_IDU_WhsTransit"",'')
+            WHERE T0.""Status"" = 'Posted' AND T1.""Inactive"" = 'N'
+            ";
 
 
-
-        public static void GetData(GridViewCustomBindingGetDataArgs e, List<CflTransferRequest_View__> dataList)
-        {
-
-            e.Data = dataList;
-
-        }
-
-        public static int GetRowCount(HANA_APP CONTEXT, int userId, CflTransferRequest_ParamModel cflParam, string sqlCriteria)
+        public static void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e, int userId, CflTransferRequest_ParamModel cflTransferRequestParam)
         {
             var Cfl_Sql = CflTransferRequest_Model.ssql;
-
-            Cfl_Sql = Cfl_Sql.Replace("{DbSap}", DbProvider.dbSap_Name);
             Cfl_Sql = Cfl_Sql.Replace("{UserId}", userId.ToString());
+            Cfl_Sql = Cfl_Sql.Replace("{DbSap}", DbProvider.dbSap_Name);
 
-            if (sqlCriteria == null)
-            {
-                sqlCriteria = "";
-            }
-
-
+            string sqlCriteria = GetSqlFromGridViewModelState.getHanaCriteria(e.State);
             if (sqlCriteria != "")
             {
                 sqlCriteria = " AND (" + sqlCriteria + ")";
             }
 
-            if (cflParam.SqlWhere != "")
+            if (cflTransferRequestParam.SqlWhere != "")
             {
-                sqlCriteria = cflParam.SqlWhere + sqlCriteria;
+                sqlCriteria = cflTransferRequestParam.SqlWhere + sqlCriteria;
             }
 
             int dataRowCount;
             string ssql = "";
             ssql = "SELECT COUNT(*) AS IDU FROM (" + Cfl_Sql + ") T0  WHERE 1=1 " + sqlCriteria;
-            dataRowCount = CONTEXT.Database.SqlQuery<int>(ssql).FirstOrDefault<int>();
+            dataRowCount = DbProvider.dbApp.Database.SqlQuery<int>(ssql).FirstOrDefault<int>();
 
-            return dataRowCount;
+            e.DataRowCount = dataRowCount;
+
         }
 
-        public static List<CflTransferRequest_View__> GetDataList(HANA_APP CONTEXT, int userId, CflTransferRequest_ParamModel cflParam, string sqlCriteria, string sqlSort, int PageIndex, int PageSize)
+        public static void GetData(GridViewCustomBindingGetDataArgs e, int userId, CflTransferRequest_ParamModel cflTransferRequestParam)
         {
 
-            var Cfl_Sql = CflTransferRequest_Model.ssql;
+            string sqlCriteria = GetSqlFromGridViewModelState.getHanaCriteria(e.State);
+            string sqlSort = GetSqlFromGridViewModelState.getHanaSort(e.State);
+            e.Data = GetDataList(userId, cflTransferRequestParam, sqlCriteria, sqlSort, e.State.Pager.PageIndex, e.State.Pager.PageSize);
 
-            Cfl_Sql = Cfl_Sql.Replace("{DbSap}", DbProvider.dbSap_Name);
-            Cfl_Sql = Cfl_Sql.Replace("{UserId}", userId.ToString());
+        }
 
-
+        public static List<CflTransferRequest_View__> GetDataList(int userId, CflTransferRequest_ParamModel cflTransferRequestParam, string sqlCriteria, string sqlSort, int PageIndex, int PageSize)
+        {
 
             if (sqlCriteria == null)
             {
                 sqlCriteria = "";
+            }
+            if (sqlSort == null)
+            {
+                sqlSort = "";
             }
 
             if (sqlCriteria != "")
@@ -148,57 +122,74 @@ namespace Models._Cfl
                 sqlCriteria = " AND (" + sqlCriteria + ")";
             }
 
-            if (cflParam.SqlWhere != "")
+            if (cflTransferRequestParam.SqlWhere != "")
             {
-                sqlCriteria = cflParam.SqlWhere + sqlCriteria;
+                sqlCriteria = cflTransferRequestParam.SqlWhere + sqlCriteria;
             }
 
+            var CflTransferRequests_ = GetDataList(userId, sqlCriteria, sqlSort, PageIndex, PageSize);
+
+            if (CflTransferRequests_.Count == 0)
+            {
+                CflTransferRequest_View__ item = new CflTransferRequest_View__();
+                CflTransferRequests_.Add(item);
+            }
+
+            return CflTransferRequests_;
+
+        }
+
+        public static List<CflTransferRequest_View__> GetDataList(int userId, string sqlCriteria, string sqlSort, int PageIndex, int PageSize)
+        {
+
+            var Cfl_Sql = CflTransferRequest_Model.ssql;
+
+            Cfl_Sql = Cfl_Sql.Replace("{UserId}", userId.ToString());
+            Cfl_Sql = Cfl_Sql.Replace("{DbSap}", DbProvider.dbSap_Name);
+
+            if (sqlCriteria == null)
+            {
+                sqlCriteria = "";
+            }
             if (sqlSort == null)
             {
                 sqlSort = "";
             }
 
-
             string ssql = "";
             ssql = "SELECT T0.* FROM (" + Cfl_Sql + ") T0  WHERE 1=1 " + sqlCriteria;
             string ssqlLimit = string.Format(" LIMIT {0} OFFSET {1} ", PageSize, (PageIndex) * PageSize);
 
-            var items = CONTEXT.Database.SqlQuery<CflTransferRequest_View__>(ssql + sqlSort + ssqlLimit).ToList();
+            var items = DbProvider.dbApp.Database.SqlQuery<CflTransferRequest_View__>(ssql + sqlSort + ssqlLimit).ToList();
 
             return items;
 
         }
 
+
         public static GridViewModel CreateGridViewModel()
         {
             var viewModel = new GridViewModel();
-
             return viewModel;
         }
 
+
         public static GridViewSettings CreateExportGridViewSettings(CflTransferRequest_ParamModel cflTransferRequestParam)
         {
-
             GridViewSettings settings = new GridViewSettings();
-
-            settings.Name = "List Transfer Request";
+            settings.Name = "List TransferRequest";
 
             if (cflTransferRequestParam.Header != "")
             {
-                settings.Name = "List Transfer Request " + cflTransferRequestParam.Header;
+                settings.Name = "List TransferRequest " + cflTransferRequestParam.Header;
             }
 
-            settings.KeyFieldName = "Tx_TransferRequest___.Id";
-            settings.Columns.Add("Tx_TransferRequest___.TransNo");
-
+            settings.KeyFieldName = "Id";
+            settings.Columns.Add("TransferRequestName");
             return settings;
         }
 
 
-       
-
-
     }
-
 
 }

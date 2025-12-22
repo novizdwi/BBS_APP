@@ -32,7 +32,6 @@ namespace BBS_DI.Models._EF
         public string ProjectCode { get; set; }
         public string ProjectName { get; set; }
         public string Status { get; set; }
-        public string ApprovalStatus { get; set; }
         public string IsAfterPosted { get; set; }
         public string IsOpeningBalance { get; set; }
         public Nullable<int> DocEntry { get; set; }

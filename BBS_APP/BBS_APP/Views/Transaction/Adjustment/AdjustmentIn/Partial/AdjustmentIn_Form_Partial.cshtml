@@ -1,5 +1,4 @@
-﻿@using System.Linq;
-@using Models.Transaction.Adjustment;
+﻿@using Models.Transaction.Adjustment;
 @using System.Web.Script.Serialization;
 
 @{
@@ -11,6 +10,7 @@
 
     string IsCanAccessOpeningBalance_ = "Y";
     string MenuCode = "AdjustmentIn/IsOpeningBalance";
+
     if (ViewBag.UserId != 1)
     {
         IsCanAccessOpeningBalance_ = Models._Utils.GeneralGetList.GetIsCanAccessOpeningBalance(ViewBag.UserId, MenuCode);
@@ -696,7 +696,7 @@
                 x =>
                 {
                     x.Name = "label3";
-                    x.Text = "  Modified By(" + Models._Utils.GeneralGetList.GetUserNameByUserId(Model.CreatedUser) + ", " + Models._Utils.GeneralGetList.GeFirstNameByUserId(Model.CreatedUser) + " : " + Model.ModifiedDate_ + ")";
+                    x.Text = "  Modified By(" + Models._Utils.GeneralGetList.GetUserNameByUserId(Model.ModifiedUser) + ", " + Models._Utils.GeneralGetList.GeFirstNameByUserId(Model.ModifiedUser) + " : " + Model.ModifiedDate_ + ")";
                     x.Properties.EnableClientSideAPI = true;
                 }
             )

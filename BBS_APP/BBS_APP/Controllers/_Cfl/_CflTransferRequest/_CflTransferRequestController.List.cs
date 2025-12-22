@@ -12,7 +12,6 @@ using System.Net;
 using Models._Cfl;
 
 
-
 namespace Controllers._Cfl
 {
     public partial class _CflTransferRequestController : BaseController
@@ -20,16 +19,15 @@ namespace Controllers._Cfl
         string VIEW_LIST_PARTIAL = "Partial/_CflTransferRequest_List_Partial";
         string VIEW_PANEL_LIST_PARTIAL = "Partial/_CflTransferRequest_Panel_List_Partial";
 
-        public CflTransferRequest_ParamModel GetParam(HttpRequestBase Request, int userId = 0)
+        public CflTransferRequest_ParamModel GetParam(HttpRequestBase Request)
         {
             var cflParam = new CflTransferRequest_ParamModel();
             cflParam.Type = Request["hidden_CflType"];
             cflParam.Name = Request["hidden_CflName"];
             cflParam.Header = Request["hidden_CflHeader"];
             cflParam.SqlWhere = Request["hidden_CflSqlWhere"];
-            cflParam.IsMulti = Request["hidden_CflIsMulti"];
-            string ssql;
 
+            string ssql;
             if (cflParam.Type == "TransferSummaryOut")
             {
 
@@ -53,33 +51,30 @@ namespace Controllers._Cfl
 
                 cflParam.SqlWhere = string.Format(ssql, hidden_CflDocId);
             }
-
             if (cflParam.Type == "TransferSummaryIn")
             {
-
+                cflParam.IsMulti = Request["hidden_CflIsMulti"];
                 var hidden_CflDocId = (string)Request["hidden_CflDocId"];
                 hidden_CflDocId = hidden_CflDocId.Replace("'", "''");
-                ssql = @"AND 
+                ssql = @"AND
                     T0.""Id"" NOT IN (SELECT T0_.""BaseEntry"" FROM ""Tx_TransferSummaryIn"" T0_ WHERE T0_.""Status""='Cancel' ) AND
                     T0.""Id"" IN (SELECT T0_.""BaseEntry"" FROM ""Tx_TransferSummaryOut"" T0_ WHERE T0_.""Status""='Posted' AND IFNULL(T0_.""DocEntry"",0) <> 0 )
                 ";
-
                 cflParam.SqlWhere = string.Format(ssql, hidden_CflDocId);
-              }
+            }
+            cflParam.IsMulti = Request["hidden_CflIsMulti"];
 
             return cflParam;
         }
-
 
         public ActionResult ListPartial()
         {
             int userId = (int)Session["userId"];
 
-            var cflTransferRequestParam = GetParam(Request, userId);  
+            var cflTransferRequestParam = GetParam(Request);
 
             var viewModel = GetListModel(cflTransferRequestParam.Name);
             ProcessCustomBinding(userId, cflTransferRequestParam, viewModel);
-
             return PartialView(VIEW_LIST_PARTIAL, viewModel);
         }
 
@@ -88,7 +83,7 @@ namespace Controllers._Cfl
         {
             int userId = (int)Session["userId"];
 
-            var cflTransferRequestParam = GetParam(Request, userId);  
+            var cflTransferRequestParam = GetParam(Request);
 
             var viewModel = GetListModel(cflTransferRequestParam.Name);
             viewModel.ApplyPagingState(pager);
@@ -102,12 +97,11 @@ namespace Controllers._Cfl
         {
             int userId = (int)Session["userId"];
 
-            var cflTransferRequestParam = GetParam(Request, userId);  
+            var cflTransferRequestParam = GetParam(Request);
 
             var viewModel = GetListModel(cflTransferRequestParam.Name);
             viewModel.ApplyFilteringState(filteringState);
             ProcessCustomBinding(userId, cflTransferRequestParam, viewModel);
-
             return PartialView(VIEW_LIST_PARTIAL, viewModel);
         }
 
@@ -116,7 +110,7 @@ namespace Controllers._Cfl
         {
             int userId = (int)Session["userId"];
 
-            var cflTransferRequestParam = GetParam(Request, userId);  
+            var cflTransferRequestParam = GetParam(Request);
 
             var viewModel = GetListModel(cflTransferRequestParam.Name);
             viewModel.ApplySortingState(column, reset);
@@ -139,9 +133,19 @@ namespace Controllers._Cfl
         }
 
         static void ProcessCustomBinding(int userId, CflTransferRequest_ParamModel cflTransferRequestParam, GridViewModel viewModel)
-        { 
+        {
 
-            CflTransferRequest_Model.SetBindingData(viewModel, userId, cflTransferRequestParam ); 
+            viewModel.ProcessCustomBinding(
+              new GridViewCustomBindingGetDataRowCountHandler(args =>
+              {
+                  CflTransferRequest_Model.GetDataRowCount(args, userId, cflTransferRequestParam);
+              }),
+              new GridViewCustomBindingGetDataHandler(args =>
+              {
+                  CflTransferRequest_Model.GetData(args, userId, cflTransferRequestParam);
+              })
+          );
+
 
         }
 
@@ -149,12 +153,12 @@ namespace Controllers._Cfl
         {
             int userId = (int)Session["userId"];
 
-            var cflTransferRequestParam = GetParam(Request, userId);  
+            var cflTransferRequestParam = GetParam(Request);
 
             var viewModel = GetListModel(cflTransferRequestParam.Name);
             ProcessCustomBinding(userId, cflTransferRequestParam, viewModel);
 
-            ViewBag.viewModel = viewModel; 
+            ViewBag.viewModel = viewModel;
 
             return PartialView(VIEW_PANEL_LIST_PARTIAL, cflTransferRequestParam);
         }
