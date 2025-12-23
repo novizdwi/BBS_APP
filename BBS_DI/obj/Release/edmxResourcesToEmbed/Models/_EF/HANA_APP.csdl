@@ -67,7 +67,6 @@
     <EntitySet Name="Tx_AdjustmentOut_Location" EntityType="Model1.Tx_AdjustmentOut_Location" />
     <EntitySet Name="Tx_DeactiveTag" EntityType="Model1.Tx_DeactiveTag" />
     <EntitySet Name="Tx_DeactiveTag_Item" EntityType="Model1.Tx_DeactiveTag_Item" />
-    <EntitySet Name="Tx_DeactiveTag_Log" EntityType="Model1.Tx_DeactiveTag_Log" />
     <EntitySet Name="Tx_GoodIssue" EntityType="Model1.Tx_GoodIssue" />
     <EntitySet Name="Tx_GoodsReceiptPO" EntityType="Model1.Tx_GoodsReceiptPO" />
     <EntitySet Name="Tx_GoodsReceiptPO_Approval" EntityType="Model1.Tx_GoodsReceiptPO_Approval" />
@@ -99,6 +98,8 @@
     <EntitySet Name="Tx_TransferSummaryIn" EntityType="Model1.Tx_TransferSummaryIn" />
     <EntitySet Name="Tx_TransferSummaryIn_Approval" EntityType="Model1.Tx_TransferSummaryIn_Approval" />
     <EntitySet Name="Tx_TransferSummaryIn_Item" EntityType="Model1.Tx_TransferSummaryIn_Item" />
+    <EntitySet Name="Tx_TransferSummaryIn_Item_tag" EntityType="Model1.Tx_TransferSummaryIn_Item_tag" />
+    <EntitySet Name="Tx_TransferSummaryIn_Item_Tag1" EntityType="Model1.Tx_TransferSummaryIn_Item_Tag1" />
     <EntitySet Name="Tx_TransferSummaryIn_Ref" EntityType="Model1.Tx_TransferSummaryIn_Ref" />
     <EntitySet Name="Tx_TransferSummaryOut" EntityType="Model1.Tx_TransferSummaryOut" />
     <EntitySet Name="Tx_TransferSummaryOut_Approval" EntityType="Model1.Tx_TransferSummaryOut_Approval" />
@@ -361,6 +362,10 @@
     </Key>
     <Property Name="ItemCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" />
+    <Property Name="CreatedUser" Type="Int32" />
+    <Property Name="ModifiedDate" Type="DateTime" />
+    <Property Name="ModifiedUser" Type="Int32" />
     <Property Name="OnHand" Type="Decimal" Precision="21" Scale="6" />
     <Property Name="IsCommitted" Type="Decimal" Precision="21" Scale="2" />
     <Property Name="OnOrder" Type="Decimal" Precision="21" Scale="2" />
@@ -368,10 +373,6 @@
     <Property Name="Uom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="StockOpnameCoaCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="StockOpnameCoaName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="CreatedDate" Type="DateTime" />
-    <Property Name="CreatedUser" Type="Int32" />
-    <Property Name="ModifiedDate" Type="DateTime" />
-    <Property Name="ModifiedUser" Type="Int32" />
   </EntityType>
   <EntityType Name="Tm_Item_Warehouse">
     <Key>
@@ -382,15 +383,15 @@
     <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="WhsCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="WhsName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" />
+    <Property Name="CreatedUser" Type="Int32" />
+    <Property Name="ModifiedDate" Type="DateTime" />
+    <Property Name="ModifiedUser" Type="Int32" />
     <Property Name="OnHand" Type="Decimal" Precision="21" Scale="6" />
     <Property Name="IsCommitted" Type="Decimal" Precision="21" Scale="2" />
     <Property Name="OnOrder" Type="Decimal" Precision="21" Scale="2" />
     <Property Name="UomEntry" Type="Int32" />
     <Property Name="Uom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="CreatedDate" Type="DateTime" />
-    <Property Name="CreatedUser" Type="Int32" />
-    <Property Name="ModifiedDate" Type="DateTime" />
-    <Property Name="ModifiedUser" Type="Int32" />
   </EntityType>
   <EntityType Name="Tm_Item_Warehouse_Tag">
     <Key>
@@ -423,8 +424,9 @@
     <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="WhsName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="OldTagId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="TagId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="Status" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="NewTagId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="OldStatus" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="NewStatus" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="Event" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="ActionNote" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="CreatedDate" Type="DateTime" />
@@ -855,6 +857,18 @@
     <Property Name="PostingDate" Type="DateTime" />
     <Property Name="AdjustmentTypeCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="AdjustmentTypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsAfterPosted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="IsOpeningBalance" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="DocEntry" Type="Int32" />
+    <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ScanDeviceId" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CancelReason" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" />
+    <Property Name="CreatedUser" Type="Int32" />
+    <Property Name="ModifiedDate" Type="DateTime" />
+    <Property Name="ModifiedUser" Type="Int32" />
     <Property Name="PillarsCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
     <Property Name="PillarsName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ClassCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
@@ -865,21 +879,9 @@
     <Property Name="SubClass2Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ProjectCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ProjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="IsAfterPosted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="IsOpeningBalance" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="DocEntry" Type="Int32" />
-    <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="ScanDeviceId" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-    <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="CancelReason" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
     <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-    <Property Name="CreatedDate" Type="DateTime" />
-    <Property Name="CreatedUser" Type="Int32" />
-    <Property Name="ModifiedDate" Type="DateTime" />
-    <Property Name="ModifiedUser" Type="Int32" />
   </EntityType>
   <EntityType Name="Tx_AdjustmentIn_Approval">
     <Key>
@@ -986,6 +988,18 @@
     <Property Name="PostingDate" Type="DateTime" />
     <Property Name="AdjustmentTypeCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="AdjustmentTypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsAfterPosted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="IsOpeningBalance" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="DocEntry" Type="Int32" />
+    <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ScanDeviceId" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CancelReason" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" />
+    <Property Name="CreatedUser" Type="Int32" />
+    <Property Name="ModifiedDate" Type="DateTime" />
+    <Property Name="ModifiedUser" Type="Int32" />
     <Property Name="PillarsCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
     <Property Name="PillarsName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ClassCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
@@ -996,21 +1010,9 @@
     <Property Name="SubClass2Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ProjectCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ProjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="IsAfterPosted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="IsOpeningBalance" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="DocEntry" Type="Int32" />
-    <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="ScanDeviceId" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-    <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="CancelReason" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
     <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-    <Property Name="CreatedDate" Type="DateTime" />
-    <Property Name="CreatedUser" Type="Int32" />
-    <Property Name="ModifiedDate" Type="DateTime" />
-    <Property Name="ModifiedUser" Type="Int32" />
-    <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Tx_AdjustmentOut_Approval">
     <Key>
@@ -1138,20 +1140,6 @@
     <Property Name="ModifiedDate" Type="DateTime" />
     <Property Name="ModifiedUser" Type="Int32" />
   </EntityType>
-  <EntityType Name="Tx_DeactiveTag_Log">
-    <Key>
-      <PropertyRef Name="LogId" />
-    </Key>
-    <Property Name="LogId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="TagId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="ItemCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="WhsName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="Message" Type="String" MaxLength="5000" FixedLength="false" Unicode="true" />
-    <Property Name="CreatedDate" Type="DateTime" />
-    <Property Name="CreatedUser" Type="Int32" />
-  </EntityType>
   <EntityType Name="Tx_GoodIssue">
     <Key>
       <PropertyRef Name="Id" />
@@ -1210,8 +1198,8 @@
     <Property Name="CreatedUser" Type="Int32" />
     <Property Name="ModifiedDate" Type="DateTime" />
     <Property Name="ModifiedUser" Type="Int32" />
-    <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
     <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Tx_GoodsReceiptPO_Approval">
     <Key>
@@ -1239,7 +1227,6 @@
     <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="QuantityOnHandSAP" Type="Decimal" Precision="21" Scale="2" />
     <Property Name="Quantity" Type="Decimal" Precision="21" Scale="2" />
     <Property Name="QuantityOpen" Type="Decimal" Precision="21" Scale="2" />
     <Property Name="QuantityScan" Type="Decimal" Precision="21" Scale="2" />
@@ -1382,8 +1369,6 @@
     <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="CancelReason" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
     <Property Name="CreatedDate" Type="DateTime" />
     <Property Name="CreatedUser" Type="Int32" />
     <Property Name="ModifiedDate" Type="DateTime" />
@@ -1408,6 +1393,9 @@
     <Property Name="CreatedUser" Type="Int32" />
     <Property Name="ModifiedDate" Type="DateTime" />
     <Property Name="ModifiedUser" Type="Int32" />
+    <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+    <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Tx_StockOpname_Approval">
     <Key>
@@ -1478,6 +1466,15 @@
     <Property Name="RequestNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="WhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsAfterPosted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+    <Property Name="CancelReason" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" />
+    <Property Name="CreatedUser" Type="Int32" />
+    <Property Name="ModifiedDate" Type="DateTime" />
+    <Property Name="ModifiedUser" Type="Int32" />
     <Property Name="PillarsCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
     <Property Name="PillarsName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ClassCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
@@ -1488,17 +1485,8 @@
     <Property Name="SubClass2Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ProjectCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ProjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="IsAfterPosted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-    <Property Name="CancelReason" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
     <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
     <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-    <Property Name="CreatedDate" Type="DateTime" />
-    <Property Name="CreatedUser" Type="Int32" />
-    <Property Name="ModifiedDate" Type="DateTime" />
-    <Property Name="ModifiedUser" Type="Int32" />
   </EntityType>
   <EntityType Name="Tx_StockSummaryOpname_Approval">
     <Key>
@@ -1526,15 +1514,19 @@
     <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="QuantityOnHandSAP" Type="Decimal" Precision="21" Scale="2" />
     <Property Name="QuantityScan" Type="Decimal" Precision="21" Scale="2" />
     <Property Name="QuantityValid" Type="Decimal" Precision="21" Scale="2" />
-    <Property Name="QtyVariance" Type="Decimal" Precision="21" Scale="2" />
     <Property Name="UnitPriceTc" Type="Decimal" Precision="21" Scale="2" />
     <Property Name="UomEntry" Type="Int32" />
     <Property Name="Uom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="AcctCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="AcctName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" />
+    <Property Name="CreatedUser" Type="Int32" />
+    <Property Name="ModifiedDate" Type="DateTime" />
+    <Property Name="ModifiedUser" Type="Int32" />
+    <Property Name="QtyVariance" Type="Decimal" Precision="21" Scale="2" />
+    <Property Name="FreeText" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
     <Property Name="PillarsCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
     <Property Name="PillarsName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ClassCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
@@ -1545,11 +1537,7 @@
     <Property Name="SubClass2Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ProjectCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ProjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="FreeText" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-    <Property Name="CreatedDate" Type="DateTime" />
-    <Property Name="CreatedUser" Type="Int32" />
-    <Property Name="ModifiedDate" Type="DateTime" />
-    <Property Name="ModifiedUser" Type="Int32" />
+    <Property Name="QuantityOnHandSAP" Type="Decimal" Precision="21" Scale="2" />
   </EntityType>
   <EntityType Name="Tx_StockSummaryOpname_Item_Tag">
     <Key>
@@ -1617,12 +1605,12 @@
     <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
     <Property Name="JournalRemarks" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
     <Property Name="CancelReason" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-    <Property Name="ModifiedUser" Type="Int32" />
-    <Property Name="PriceList" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="PriceListName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="CreatedDate" Type="DateTime" />
     <Property Name="CreatedUser" Type="Int32" />
     <Property Name="ModifiedDate" Type="DateTime" />
+    <Property Name="ModifiedUser" Type="Int32" />
+    <Property Name="PriceList" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="PriceListName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Tx_TransferIn_Item">
     <Key>
@@ -1770,17 +1758,16 @@
     <Property Name="PriceList" Type="Int32" />
     <Property Name="PriceListName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="IsAfterPosted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
     <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
     <Property Name="JournalRemarks" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
     <Property Name="CancelReason" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-    <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="ApprovalMessage" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
     <Property Name="CreatedDate" Type="DateTime" />
     <Property Name="CreatedUser" Type="Int32" />
     <Property Name="ModifiedDate" Type="DateTime" />
     <Property Name="ModifiedUser" Type="Int32" />
+    <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
     <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Tx_TransferRequest_Approval">
@@ -1806,6 +1793,10 @@
     </Key>
     <Property Name="Id" Type="Int64" />
     <Property Name="DetId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CreatedDate" Type="DateTime" />
+    <Property Name="CreatedUser" Type="Int32" />
+    <Property Name="ModifiedDate" Type="DateTime" />
+    <Property Name="ModifiedUser" Type="Int32" />
     <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
     <Property Name="FromWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1815,15 +1806,11 @@
     <Property Name="Quantity" Type="Decimal" Precision="21" Scale="2" />
     <Property Name="QuantityOpen" Type="Decimal" Precision="21" Scale="2" />
     <Property Name="QuantityScan" Type="Decimal" Precision="21" Scale="2" />
-    <Property Name="LineStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="UomEntry" Type="Int32" />
     <Property Name="Uom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
     <Property Name="FreeText" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="CreatedDate" Type="DateTime" />
-    <Property Name="CreatedUser" Type="Int32" />
-    <Property Name="ModifiedDate" Type="DateTime" />
-    <Property Name="ModifiedUser" Type="Int32" />
+    <Property Name="LineStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Tx_TransferSummaryIn">
     <Key>
@@ -1846,7 +1833,7 @@
     <Property Name="FromWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="FromWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="TransitWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="TransitWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="TransitWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="ToWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ToWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="PriceList" Type="Int32" />
@@ -1857,12 +1844,11 @@
     <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
     <Property Name="JournalRemarks" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
     <Property Name="CancelReason" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-    <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="ApprovalMessage" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
     <Property Name="CreatedDate" Type="DateTime" />
     <Property Name="CreatedUser" Type="Int32" />
     <Property Name="ModifiedDate" Type="DateTime" />
     <Property Name="ModifiedUser" Type="Int32" />
+    <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
     <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Tx_TransferSummaryIn_Approval">
@@ -1905,8 +1891,50 @@
     <Property Name="UomEntry" Type="Int32" />
     <Property Name="Uom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" />
+    <Property Name="CreatedUser" Type="Int32" />
+    <Property Name="ModifiedDate" Type="DateTime" />
+    <Property Name="ModifiedUser" Type="Int32" />
     <Property Name="TransitWhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="TransitWhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Tx_TransferSummaryIn_Item_tag">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DetId" Type="Int64" />
+    <Property Name="DetDetId" Type="Int64" />
+    <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="TagId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Quantity" Type="Decimal" Precision="21" Scale="6" />
+    <Property Name="EventType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BaseId" Type="Int64" />
+    <Property Name="BaseDetId" Type="Int64" />
+    <Property Name="BaseDetDetId" Type="Int64" />
+    <Property Name="CreatedDate" Type="DateTime" />
+    <Property Name="CreatedUser" Type="Int32" />
+    <Property Name="ModifiedDate" Type="DateTime" />
+    <Property Name="ModifiedUser" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Tx_TransferSummaryIn_Item_Tag1">
+    <Key>
+      <PropertyRef Name="DetDetId" />
+    </Key>
+    <Property Name="Id" Type="Int64" />
+    <Property Name="DetId" Type="Int64" />
+    <Property Name="DetDetId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="TagId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Quantity" Type="Decimal" Precision="21" Scale="6" />
+    <Property Name="EventType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BaseId" Type="Int64" />
+    <Property Name="BaseDetId" Type="Int64" />
+    <Property Name="BaseDetDetId" Type="Int64" />
     <Property Name="CreatedDate" Type="DateTime" />
     <Property Name="CreatedUser" Type="Int32" />
     <Property Name="ModifiedDate" Type="DateTime" />
@@ -1958,17 +1986,17 @@
     <Property Name="PriceListName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ScanDeviceId" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
     <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="IsAfterPosted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
     <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
     <Property Name="JournalRemarks" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
     <Property Name="CancelReason" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
-    <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-    <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
     <Property Name="CreatedDate" Type="DateTime" />
     <Property Name="CreatedUser" Type="Int32" />
     <Property Name="ModifiedDate" Type="DateTime" />
     <Property Name="ModifiedUser" Type="Int32" />
+    <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Tx_TransferSummaryOut_Approval">
     <Key>
@@ -2008,8 +2036,6 @@
     <Property Name="QuantityScan" Type="Decimal" Precision="21" Scale="2" />
     <Property Name="QuantityValid" Type="Decimal" Precision="21" Scale="2" />
     <Property Name="QuantityPosted" Type="Decimal" Precision="21" Scale="2" />
-    <Property Name="QuantityToReceipt" Type="Decimal" Precision="21" Scale="2" />
-    <Property Name="LineStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="UomEntry" Type="Int32" />
     <Property Name="Uom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
@@ -2017,6 +2043,8 @@
     <Property Name="CreatedUser" Type="Int32" />
     <Property Name="ModifiedDate" Type="DateTime" />
     <Property Name="ModifiedUser" Type="Int32" />
+    <Property Name="QuantityToReceipt" Type="Decimal" Precision="21" Scale="2" />
+    <Property Name="LineStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Tx_TransferSummaryOut_Item_Tag">
     <Key>

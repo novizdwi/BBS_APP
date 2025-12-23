@@ -37,7 +37,7 @@ namespace BBS_DI.Models._EF
         public Nullable<int> CreatedUser { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> ModifiedUser { get; set; }
-        public string ApprovalMessages { get; set; }
         public string IsApproval { get; set; }
+        public string ApprovalMessages { get; set; }
     }
 }

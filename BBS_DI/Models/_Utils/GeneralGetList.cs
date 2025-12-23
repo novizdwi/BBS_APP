@@ -817,24 +817,7 @@ namespace Models._Utils
             }
             return dt;
         }
-
-        public static string GetIsCanAccessOpeningBalance(int UserId ,string MenuCode)
-        {
-            using (var CONTEXT = new HANA_APP())
-            {
-                string ssql = @"
-                    SELECT TOP 1 COALESCE(T1.""IsAccess"",'N') 
-                    FROM ""Tm_User"" T0X 
-                    INNER JOIN  ""Tm_Role"" T0 ON T0.""Id"" = T0X.""RoleId""
-                    INNER JOIN ""Tm_Role_Auth"" T1 ON T1.""Id"" = T0.""Id"" 
-                    WHERE T0X.""Id"" = {0} AND T1.""MenuCode"" = '{1}'
-                ";
-
-                ssql = string.Format(ssql, UserId, MenuCode);
-                return CONTEXT.Database.SqlQuery<string>(ssql).FirstOrDefault();
-            }
-        }
-
+        
         public static DataTable GetCostCenters(string dimCode)
         {
             using (var CONTEXT = new HANA_APP())
