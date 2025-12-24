@@ -241,6 +241,25 @@
         txt.Width = 230;
     });
 
+    groupItem_Col2.Items.Add(itemSettings =>
+    {
+        itemSettings.Name = "FileTemplateName_";
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "File Name";
+        itemSettings.FieldName = "FileTemplateName_";
+        itemSettings.ClientVisible = false;
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "FileTemplateName_";
+        txt.ShowModelErrors = true;
+        txt.ReadOnly = true;
+        txt.ControlStyle.CssClass = "editor";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
+        //txt.Properties.ClientSideEvents.GotFocus = "function(s,e){ FileTemplateName_OnTrigger(); }";
+        txt.Width = 230;
+    });
+
     //groupItem_Col1.Items.Add(itemSettings =>
     //{
     //    itemSettings.Name = "grpVendorCode";

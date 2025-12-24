@@ -12,7 +12,14 @@
 
 
 @{
+    ViewBag.UserId = (int)Session["userId"];
     ViewBag.Title = "Transfer Request";
+    string MenuCodePost = "TransferRequest/Post";
+    string IsCanPost_ = "Y";
+    if (ViewBag.UserId != 1)
+    {
+        IsCanPost_ = Models._Utils.GeneralGetList.GetIsCanAccessOpeningBalance(ViewBag.UserId, MenuCodePost);
+    }
 }
 
 
@@ -32,6 +39,7 @@
 
 
 <script type="text/javascript">
+    var IsCanPost_ = '@IsCanPost_';
 
     var beforeSaveActiveTabName = '';
     var beforeSaveActiveTabIndex = 0;
@@ -60,6 +68,7 @@
         var btnPost = ASPxClientButton.Cast('btnPost');
 
         var btnCancel = ASPxClientButton.Cast('btnCancel');
+        var btnMenuOther = ASPxClientMenu.Cast('btnMenuOther');
 
         var formMode = '';
         if ((Id.GetValue() == '') || Id.GetValue() == '0') {
@@ -68,6 +77,8 @@
             formMode = 'edit';
         }
 
+        btnMenuOther.GetItemByName("btnMenuTemplateUpload").SetEnabled(false);
+        btnMenuOther.GetItemByName("btnMenuSetBtnTemplateDownload").SetEnabled(false);
         btnPost.SetEnabled(false);
         btnCancel.SetEnabled(false);
         switch (formMode) {
@@ -79,7 +90,9 @@
                 btnAdd.SetEnabled(true);
                 btnUpdate.SetEnabled(false);
                 btnRefresh.SetEnabled(false);
-                
+
+                btnMenuOther.GetItemByName("btnMenuTemplateUpload").SetEnabled(true);
+                btnMenuOther.GetItemByName("btnMenuSetBtnTemplateDownload").SetEnabled(true);
                 break;
             case 'edit':
 
@@ -97,6 +110,8 @@
                         btnPost.SetEnabled(true);
                         btnCancel.SetEnabled(true);
 
+                        btnMenuOther.GetItemByName("btnMenuTemplateUpload").SetEnabled(true);
+                        btnMenuOther.GetItemByName("btnMenuSetBtnTemplateDownload").SetEnabled(true);
                         break;
                     case 'Posted':
                         btnUpdate.SetEnabled(true);
@@ -119,6 +134,9 @@
             default:
 
                 break;
+        }
+        if (IsCanPost_ == "N") {
+            btnPost.SetEnabled(false);
         }
     }
 
@@ -516,6 +534,18 @@
 
 
                 break;
+            case 'btnMenuTemplateUpload':
+                var popup = ASPxClientPopupControl.Cast("popupTemplateUpload");
+                popup.callbackUrl = '@Url.Action("TemplateUpload_PopupListLoadOnDemandPartial", "TransferRequest")' + '?Id=' + Id.GetValue();
+                popup.PerformCallback();
+                popup.Show();
+
+                break;
+            case 'btnMenuSetBtnTemplateDownload':
+                var key = Id.GetValue();
+                var url = '@Url.Action("TemplateDownload", "TransferRequest")' + '?Id=' + key;
+                window.location.href = url;
+                break;
             default:
 
                 break;
@@ -736,7 +766,15 @@
 
     }
 
+    function FileTemplateName_OnTrigger() {
+        var popup = ASPxClientPopupControl.Cast("popupTemplateUpload");
+        popup.callbackUrl = '@Url.Action("TemplateUpload_PopupListLoadOnDemandPartial", "TransferRequest")' + '?Id=' + Id.GetValue(); // "/BBS_APP/TransferRequest/TemplateUpload_PopupListLoadOnDemandPartial?Id=" + Id.GetValue();
 
+        popup.PerformCallback();
+
+
+        popup.Show();
+    }
 
 
 </script>
@@ -930,8 +968,133 @@ new
 
 @Html.Partial("Partial/TransferRequest_Form_BtnBottom_Partial")
 
-
 @Html.Partial("Partial/TransferRequest_Panel_List_Partial")
+
+
+@*
+    -----------------------------------------------------------------------------
+    TransferRequestTemplateUploadDetail
+    -----------------------------------------------------------------------------
+*@
+<script>
+    function btnBrowseTemplate_OnClick (s, e)
+    {
+        UploadMultiFile.Upload();
+    }
+
+    function gvTransferRequestTemplateUploadDetailBeginCallback(s, e) {
+        e.customArgs['cbId'] = Id.GetValue();
+    }
+
+
+    function gvTransferRequestTemplateUploadDetail_OnClickBtnNew() {
+        var popup = ASPxClientPopupControl.Cast("popupTemplateUpload");
+        popup.callbackUrl = '@Url.Action("TemplateUpload_PopupListLoadOnDemandPartial", "TransferRequest")' + '?Id=' + Id.GetValue(); // "/BBS_APP/TransferRequest/TemplateUpload_PopupListLoadOnDemandPartial?Id=" + Id.GetValue();
+
+        popup.PerformCallback();
+
+
+        popup.Show();
+    }
+
+    function TemplateUpload_OnClickBtnTemplateUpload(s, e) {
+        // TemplateUpload_formDetail.action = '@Url.Action("TemplateUpload_TemplateUpload", "TransferRequest")';
+        // $("#TemplateUpload_formDetail").submit();
+
+        TemplateUploadMultiFile.TemplateUpload();
+
+    }
+
+    function TemplateUpload_OnClickBtnCancel(s, e) {
+        var popup = ASPxClientPopupControl.Cast("popupTemplateUpload");
+        popup.Hide();
+
+    }
+
+    function TemplateUpload_FileTemplateUploadComplete(s, e) {
+        var popup = ASPxClientPopupControl.Cast("popupTemplateUpload");
+        popup.Hide();
+        gvTransferRequestTemplateUploadDetail.PerformCallback();;
+    }
+
+    function TemplateUpload_FileUploadComplete(s, e) {
+        if (!e.isValid)
+            return;
+
+        try {
+            var data = JSON.parse(e.callbackData);
+
+            if (!data.success) {
+                alert(data.message);
+            } else {
+                key = Id.GetValue();
+
+                FileTemplateName_.SetValue(data.FileName);
+                var popup = ASPxClientPopupControl.Cast("popupTemplateUpload");
+                popup.Hide(); 
+                var dateValue = new Date(data.Model.TransDate);    
+
+                TransDate.SetValue(dateValue);
+                FromWhsCode.SetValue(data.Model.FromWhsCode);
+                FromWhsName.SetValue(data.Model.FromWhsName);
+                ToWhsCode.SetValue(data.Model.ToWhsCode);
+                ToWhsName.SetValue(data.Model.ToWhsName);
+                Comments.SetValue(data.Model.Comments);
+
+                var grid = ASPxClientGridView.Cast("gvTransferRequestDetail");
+                var details = data.Model.Detail_;
+                console.log(grid);
+                //reset grid
+                grid.CancelEdit(); 
+
+                for (var i = 0; i < details.length; i++) {
+                    grid.AddNewRow(); // mulai row baru 
+
+                    // Set value per column
+                    grid.batchEditApi.SetCellValue(key, "Id", key);
+                    grid.batchEditApi.SetCellValue(i, "DetId", details[i].DetId);
+                    grid.batchEditApi.SetCellValue(i, "ItemCode", details[i].ItemCode);
+                    grid.batchEditApi.SetCellValue(i, "ItemName", details[i].ItemName);
+                    grid.batchEditApi.SetCellValue(i, "Quantity", details[i].Quantity);
+                    grid.batchEditApi.SetCellValue(i, "QuantityOpen", details[i].QuantityOpen);
+                    grid.batchEditApi.SetCellValue(i, "ToWhsCode", data.Model.ToWhsCode);
+                    grid.batchEditApi.SetCellValue(i, "ToWhsName", data.Model.ToWhsName);
+                    grid.batchEditApi.SetCellValue(i, "Comments", details[i].Comments);
+
+                    gvTransferRequestDetail_ItemCode.SetValue(details[i].ItemCode);
+                    gvTransferRequestDetail_ItemName.SetValue(details[i].ItemName);
+                    gvTransferRequestDetail_Quantity.SetValue(details[i].Quantity);
+                    gvTransferRequestDetail_ToWhsCode.SetValue(data.Model.ToWhsCode);
+                    gvTransferRequestDetail_ToWhsName.SetValue(data.Model.ToWhsName);
+                    gvTransferRequestDetail_Comments.SetValue(details[i].Comments);
+                }
+
+                //alert(data.message);
+            }
+        } catch (err) {
+            alert(err);
+        }
+
+
+
+    }
+
+function gvTransferRequestTemplateUploadDetail_OnClickBtnDelete(DetId) {
+    //if (Status.GetValue() == "Posted" )
+    //{
+    //    alert("Tidak dapat di delete jika sudah posted!");
+    //    return;
+    //}
+
+    if (confirm('Delete data?')) {
+        var gv = ASPxClientGridView.Cast("gvTransferRequestTemplateUploadDetail");
+        gv.DeleteRowByKey(DetId);
+    }
+}
+</script>
+@Html.Partial("Partial/TemplateUpload/TemplateUpload_Panel_Partial")
+
+
 
 
 @Html.Partial("~/Views/_CrystalReport/Layout/Print_Panel_Partial.cshtml")

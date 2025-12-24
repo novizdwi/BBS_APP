@@ -1,4 +1,7 @@
 ﻿using DevExpress.Web;
+using Models._Utils;
+using Models.Transaction.Inventory;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -43,6 +46,13 @@ namespace BBS_APP
             MaxFileSize = 2097152
         };
 
+        public static DevExpress.Web.UploadControlValidationSettings CsvValiadationSettings = new DevExpress.Web.UploadControlValidationSettings()
+        {
+            AllowedFileExtensions = new string[] { ".csv" },
+            //MaxFileSize = 6291456
+            MaxFileSize = 2097152
+
+        };
         public static string GetFilePath(string FileName, string ModuleName, string extension)
         {
             string uploadDirectory = GetUploadDirectory();
@@ -61,17 +71,97 @@ namespace BBS_APP
             var resultFilePath = Path.Combine(uploadDirectory, ModuleName, fileTypePath, FileName);
             return resultFilePath;
         }
+
         public static void FileUploadComplete(object sender, FileUploadCompleteEventArgs e)
         {
-            if (e.UploadedFile.IsValid)
-            {
-                e.CallbackData = "mantap";
-            }
-            else
+            if (!e.UploadedFile.IsValid)
             {
                 e.CallbackData = "";
+                return;
             }
 
+            string fileName = Path.GetFileName(e.UploadedFile.FileName);
+
+            // Kirim nama file ke client
+            e.CallbackData = fileName;
+        }
+
+        public static void TransferRequestFileComplete(object sender, FileUploadCompleteEventArgs e)
+        {
+            if (!e.UploadedFile.IsValid)
+            {
+                e.CallbackData = JsonConvert.SerializeObject(new { success = false, message = "Invalid file" });
+                return;
+            }
+
+            try
+            {
+                using (var reader = new StreamReader(e.UploadedFile.FileContent))
+                {
+                    int lineNumber = 0;
+                    TransferRequestTemplateHeader model = new TransferRequestTemplateHeader();
+                    List<TransferRequestTemplateDetail> details = new List<TransferRequestTemplateDetail>();
+
+                    while (!reader.EndOfStream)
+                    {
+                        string line = reader.ReadLine();
+                        lineNumber++;
+
+                        if (string.IsNullOrWhiteSpace(line))
+                            continue;
+
+                        var columns = line.Split(';');
+
+                        if (lineNumber == 2)
+                        {
+                            if (columns.Take(3).Any(c => string.IsNullOrWhiteSpace(c)))
+                                throw new Exception("Invalid header empty value of: TransDate, FromWarehouse, or ToWarehouse");
+                            if (!DateTime.TryParseExact(columns[0], "dd-MM-yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime transDate))
+                                throw new Exception($"invalid date format: {columns[0]}");
+
+                            model = new TransferRequestTemplateHeader
+                            {
+                                TransDate = transDate,
+                                FromWhsCode = columns[1],
+                                ToWhsCode = columns[2],
+                                Comments = columns[3]
+                            };
+
+                            if (model.FromWhsCode == model.ToWhsCode)
+                                throw new Exception("From warehouse must be different than To warehouse");
+
+                            model.FromWhsName = GeneralGetList.GetWarehouseName(model.FromWhsCode);
+                            model.ToWhsName = GeneralGetList.GetWarehouseName(model.ToWhsCode);
+
+                        }
+                        else if (lineNumber >= 4)
+                        {
+                            if (columns.Take(2).Any(c => string.IsNullOrWhiteSpace(c)))
+                                throw new Exception("Invalid header empty value of ItemCode, or Quantity");
+                            if (!decimal.TryParse(columns[1], out decimal qty))
+                                throw new Exception($"Invalid quantity: {columns[1]} at line {lineNumber}");
+
+                            var detail = new TransferRequestTemplateDetail
+                            {
+                                ItemCode = columns[0],
+                                ItemName = GeneralGetList.GetItemName(columns[0]),
+                                Quantity = qty,
+                                FreeText = columns.Length > 2 ? columns[2] : null
+                            };
+                            details.Add(detail);
+                        }
+
+                        model.Detail_ = details;
+                    }
+
+                    // sukses
+                    e.CallbackData = JsonConvert.SerializeObject(new { success = true, message = "Success" , FileName = e.UploadedFile.FileName, Model = model});
+                }
+            }
+            catch (Exception ex)
+            {
+                e.CallbackData = JsonConvert.SerializeObject(new { success = false, message = ex.Message });
+            }
         }
 
         public static void DeleteFile(string ModuleName, string fileName)

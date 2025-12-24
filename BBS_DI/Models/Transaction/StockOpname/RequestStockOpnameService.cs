@@ -13,6 +13,8 @@ using BBS_DI.Models._EF;
 
 using Models._Sap;
 using SAPbobsCOM;
+using System.IO;
+using DevExpress.Web;
 
 namespace Models.Transaction.StockOpname
 {
@@ -64,7 +66,8 @@ namespace Models.Transaction.StockOpname
 
         public string ModifiedDate_ { get; set; }
     }
-    
+
+
     #endregion
 
     #region Services
