@@ -230,12 +230,12 @@
 
     settings.Columns.Add(column =>
     {
-        column.FieldName = "QuantityOpen";
-        column.Name = "QuantityOpen";
+        column.FieldName = "QuantityOnHand_";
+        column.Name = "QuantityOnHand_";
         column.Caption = "Qty In Warehouse";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 120;
+        column.Width = ViewBag.ReadOnly == true ? 0: 120;
 
         column.ReadOnly = true;
         column.CellStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
@@ -243,7 +243,30 @@
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-        txt.ClientInstanceName = "gvTransferRequestDetail_QuantityOpen"; 
+        txt.ClientInstanceName = "gvTransferRequestDetail_QuantityOnHand_";
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "QuantityOpen";
+        column.Name = "QuantityOpen";
+        column.Caption = "Qty Open";
+
+        column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+        column.Width = ViewBag.ReadOnly == true ? 120 : 0;
+
+        column.ReadOnly = true;
+        column.CellStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
+
+        var txt = column.PropertiesEdit as SpinEditProperties;
+        txt.NumberType = SpinEditNumberType.Float;
+        txt.DisplayFormatString = "#,###.##";
+        txt.DisplayFormatInEditMode = true;
+        txt.AllowMouseWheel = false;
+        txt.SpinButtons.ShowIncrementButtons = false;
+
+        txt.ClientInstanceName = "gvTransferRequestDetail_QuantityOpen";
 
     });
 

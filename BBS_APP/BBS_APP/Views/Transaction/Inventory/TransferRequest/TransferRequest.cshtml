@@ -1060,7 +1060,7 @@ new
                     grid.batchEditApi.SetCellValue(i, "ItemCode", details[i].ItemCode);
                     grid.batchEditApi.SetCellValue(i, "ItemName", details[i].ItemName);
                     grid.batchEditApi.SetCellValue(i, "Quantity", details[i].Quantity);
-                    grid.batchEditApi.SetCellValue(i, "QuantityOpen", details[i].QuantityOpen);
+                    grid.batchEditApi.SetCellValue(i, "QuantityOnHand_", details[i].QuantityOpen);
                     grid.batchEditApi.SetCellValue(i, "ToWhsCode", data.Model.ToWhsCode);
                     grid.batchEditApi.SetCellValue(i, "ToWhsName", data.Model.ToWhsName);
                     grid.batchEditApi.SetCellValue(i, "Comments", details[i].Comments);
@@ -1068,7 +1068,7 @@ new
                     gvTransferRequestDetail_ItemCode.SetValue(details[i].ItemCode);
                     gvTransferRequestDetail_ItemName.SetValue(details[i].ItemName);
                     gvTransferRequestDetail_Quantity.SetValue(details[i].Quantity);
-                    gvTransferRequestDetail_QuantityOpen.SetValue(details[i].QuantityOpen);
+                    gvTransferRequestDetail_QuantityOnHand_.SetValue(details[i].QuantityOpen);
                     gvTransferRequestDetail_ToWhsCode.SetValue(data.Model.ToWhsCode);
                     gvTransferRequestDetail_ToWhsName.SetValue(data.Model.ToWhsName);
                     gvTransferRequestDetail_Comments.SetValue(details[i].Comments);
