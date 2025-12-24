@@ -19,7 +19,6 @@ namespace BBS_DI.Models._EF
         public string ItemCode { get; set; }
         public string ItemName { get; set; }
         public string WhsCode { get; set; }
-        public Nullable<decimal> QuantityOnHandSAP { get; set; }
         public Nullable<decimal> Quantity { get; set; }
         public Nullable<decimal> QuantityOpen { get; set; }
         public Nullable<decimal> QuantityScan { get; set; }

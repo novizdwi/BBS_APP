@@ -74,6 +74,11 @@
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
         column.ReadOnly = true;
 
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ClientInstanceName = "gvTransferRequestDetail_ItemCode";
+
     });
 
     settings.Columns.Add(column =>
@@ -84,12 +89,14 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 400;
-        
+
         column.ReadOnly = true;
         column.CellStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
         var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ClientInstanceName = "gvTransferRequestDetail_ItemName";
 
     });
     /*
@@ -133,12 +140,14 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 0;
-        
+
         column.ReadOnly = true;
         column.CellStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
         var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ClientInstanceName = "gvTransferRequestDetail_ToWhsCode";
 
     });
 
@@ -150,12 +159,13 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 0;
-        
+
         column.ReadOnly = true;
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ClientInstanceName = "gvTransferRequestDetail_ToWhsName";
 
     });
 
@@ -284,7 +294,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 250;
-        
+
         column.ReadOnly = ViewBag.ReadOnly;
 
         if (ViewBag.ReadOnly)
@@ -297,7 +307,9 @@
         }
 
         var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ClientInstanceName = "gvTransferRequestDetail_Comments";
 
     });
 

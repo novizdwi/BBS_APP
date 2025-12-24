@@ -80,6 +80,8 @@ namespace Models.Transaction.Inventory
 
         public string ModifiedDate_ { get; set; }
 
+        public string FileTemplateName_ { get; set; }
+
         public List<TransferRequest_DetailModel> ListDetails_ = new List<TransferRequest_DetailModel>();
 
         public TransferRequest_Detail Details_ { get; set; }
@@ -167,6 +169,36 @@ namespace Models.Transaction.Inventory
 
     //    public string Status { get; set; }
     //}
+
+
+    public class TransferRequestTemplateHeader
+    {
+        public DateTime TransDate { get; set; }
+
+        public string FromWhsCode { get; set; }
+
+        public string FromWhsName { get; set; }
+
+        public string ToWhsCode { get; set; }
+
+        public string ToWhsName { get; set; }
+
+        public string Comments { get; set; }
+
+        public List<TransferRequestTemplateDetail> Detail_ { get; set; }
+    }
+
+
+    public class TransferRequestTemplateDetail
+    {
+        public string ItemCode { get; set; }
+
+        public string ItemName { get; set; }
+
+        public decimal Quantity { get; set; }
+
+        public string FreeText { get; set; }
+    }
 
     #endregion
 
@@ -359,14 +391,24 @@ namespace Models.Transaction.Inventory
                             String keyValue;
                             keyValue = Tx_TransferRequest.Id.ToString();
 
-                        //    CONTEXT.Database.ExecuteSqlCommand(
-                        //    "CALL \"SpGoodsReceiptPO_AddItemDetail\" ({0}, {1}, {2})",
-                        //    model._UserId,
-                        //    keyValue
-                        //);
+                            if (model.Details_ != null)
+                            {
+                                if (model.Details_.insertedRowValues != null)
+                                {
+                                    foreach (var detail in model.Details_.insertedRowValues)
+                                    {
+                                        Detail_Add(CONTEXT, detail, Convert.ToInt64(keyValue), model._UserId);
+                                    }
+                                }
+                            }
 
-                            SpNotif.SpSysTransNotif(model._UserId, CONTEXT, "after", "Tx_TransferRequest", "add", "Id", keyValue);
-
+                            //    CONTEXT.Database.ExecuteSqlCommand(
+                            //    "CALL \"SpGoodsReceiptPO_AddItemDetail\" ({0}, {1}, {2})",
+                            //    model._UserId,
+                            //    keyValue
+                            //);
+                            
+                            SpNotif.SpSysControllerTransNotif(model._UserId, "TransferRequest", CONTEXT, "after", "TransferRequest", "add", "Id", keyValue);
 
                             CONTEXT_TRANS.Commit();
                         }
@@ -412,7 +454,6 @@ namespace Models.Transaction.Inventory
                                 
                                 SpNotif.SpSysControllerTransNotif(model._UserId, "TransferRequest", CONTEXT, "before", "TransferRequest", "update", "Id", keyValue);
 
-
                                 Tx_TransferRequest Tx_TransferRequest = CONTEXT.Tx_TransferRequest.Find(model.Id);
                                 DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
                                 Tx_TransferRequest.ModifiedDate = dtModified;
@@ -455,6 +496,7 @@ namespace Models.Transaction.Inventory
                                             }
                                         }
                                     }
+
                                     SpNotif.SpSysControllerTransNotif(model._UserId, "TransferRequest", CONTEXT, "after", "TransferRequest", "update", "Id", keyValue);
                                     
                                 }
@@ -646,8 +688,7 @@ namespace Models.Transaction.Inventory
                         keyValue = id.ToString();
 
                         Tx_TransferRequest tx_TransferRequest = CONTEXT.Tx_TransferRequest.Find(id);
-
-                        SpNotif.SpSysControllerTransNotif(userId, "TransferRequest", CONTEXT, "before", "Tx_TransferRequest", "post", "Id", keyValue);
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferRequest", CONTEXT, "before", "TransferRequest", "post", "Id", keyValue); 
 
                         if (tx_TransferRequest != null)
                         {

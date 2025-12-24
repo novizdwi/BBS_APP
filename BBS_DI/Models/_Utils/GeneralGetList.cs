@@ -187,6 +187,8 @@ namespace Models._Utils
             return GetValue<string>(CONTEXT, ssql, userId);
         }
 
+
+
         public static DataTable GetDocumentType(string strType)
         {
             using (var CONTEXT = new HANA_APP())
@@ -404,6 +406,26 @@ namespace Models._Utils
 
             return GetValue<string>(CONTEXT, ssql, userId);
 
+        }
+
+        public static string GetWarehouseName(string whsCode)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                var ssql = @"SELECT T0.""WhsName""  FROM  ""{0}"".""OWHS"" T0   WHERE T0.""WhsCode""= '{1}'   ";
+                ssql = string.Format(ssql, DbProvider.dbSap_Name, whsCode);
+                return GetValue<string>(CONTEXT, ssql);
+            }
+        }
+
+        public static string GetItemName(string itemCode)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                var ssql = @"SELECT T0.""ItemName""  FROM  ""{0}"".""OITM"" T0   WHERE T0.""ItemCode""= '{1}'   ";
+                ssql = string.Format(ssql, DbProvider.dbSap_Name, itemCode);
+                return GetValue<string>(CONTEXT, ssql);
+            }
         }
 
         public static string GetUserNameByUserId(int? userId)

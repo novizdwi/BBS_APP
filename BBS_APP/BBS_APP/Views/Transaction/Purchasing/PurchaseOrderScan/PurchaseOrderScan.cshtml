@@ -12,7 +12,14 @@
 
 
 @{
+    ViewBag.UserId = (int)Session["userId"];
     ViewBag.Title = "PO Scan List";
+    string MenuCodePost = "PurchaseOrderScan/Post";
+    string IsCanPost_ = "Y";
+    if (ViewBag.UserId != 1)
+    {
+        IsCanPost_ = Models._Utils.GeneralGetList.GetIsCanAccessOpeningBalance(ViewBag.UserId, MenuCodePost);
+    }
 }
 
 
@@ -32,6 +39,7 @@
 
 
 <script type="text/javascript">
+    var IsCanPost_ = '@IsCanPost_';
 
     var beforeSaveActiveTabName = '';
     var beforeSaveActiveTabIndex = 0;
@@ -125,6 +133,9 @@
             default:
 
                 break;
+        }
+        if (IsCanPost_ == "N") {
+            btnPost.SetEnabled(false);
         }
     }
 

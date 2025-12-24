@@ -848,6 +848,9 @@
     <Content Include="Views\Setting\ApprovalTemplate\Partial\ApprovalTemplate_Panel_List_Partial.cshtml" />
     <Content Include="Views\_Cfl\_CflTransferRequest\Partial\_CflTransferRequest_List_Partial.cshtml" />
     <Content Include="Views\_Cfl\_CflTransferRequest\Partial\_CflTransferRequest_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferRequest\Partial\TemplateUpload\TemplateUpload_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferRequest\Partial\TemplateUpload\TemplateUpload_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferRequest\Partial\TemplateUpload\TemplateUpload_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -963,6 +966,7 @@
     <Compile Include="Controllers\Transaction\Inventory\TransferOut\TransferOutController.Nav.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferOut\TransferOutController.Tab.Detail.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferOut\TransferOutController.ViewItemTag.cs" />
+    <Compile Include="Controllers\Transaction\Inventory\TransferRequest\TransferRequestController.TemplateUpload.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferRequest\TransferRequestController.CancelReason.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferRequest\TransferRequestController.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferRequest\TransferRequestController.List.cs" />
