@@ -373,8 +373,8 @@ namespace Models.Transaction.Inventory
                 WHERE T0.""Id"" =:p0
                 ORDER BY T0.""DetId"" ASC
             ";
-            var goodsReceiptPO = CONTEXT.Database.SqlQuery<TransferSummaryOut_DetailModel>(ssql, id).ToList();
-            return goodsReceiptPO;
+            var transferSummaryOut = CONTEXT.Database.SqlQuery<TransferSummaryOut_DetailModel>(ssql, id).ToList();
+            return transferSummaryOut;
         }
 
         public List<TransferSummaryOut_ApprovalModel> TransferSummaryOut_ApprovalSteps(long id = 0)
@@ -1020,6 +1020,7 @@ namespace Models.Transaction.Inventory
         {
             using (var CONTEXT = new HANA_APP())
             {
+                TransferSummaryOutModel transferSummaryOutModel = GetById(userId, Id);
 
                 using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
                 {
@@ -1043,16 +1044,16 @@ namespace Models.Transaction.Inventory
 
                             CONTEXT.SaveChanges();
                         }
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateItem\"(:p0,:p1, 'before')", userId, Id);
 
                         SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "approve", "Id", keyValue);
-                        
-                        CONTEXT_TRANS.Commit();
-
+                                              
                         if (tx_TransferSummaryOut.ApprovalStatus == "Approved")
                         {
-                            PostSAP(userId, Id);
+                           PostSAP(userId, transferSummaryOutModel.Id);
                         }
 
+                        CONTEXT_TRANS.Commit();
 
                     }
 
