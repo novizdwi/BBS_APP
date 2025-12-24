@@ -1042,10 +1042,14 @@ new
                 Comments.SetValue(data.Model.Comments);
 
                 var grid = ASPxClientGridView.Cast("gvTransferRequestDetail");
-                var details = data.Model.Detail_;
-                console.log(grid);
+                var details = data.Model.Detail_; 
                 //reset grid
                 grid.CancelEdit(); 
+                //var visibleRows = grid.GetVisibleRowsOnPage();
+                //for (var i = visibleRows - 1; i >= 0; i--) {
+                //    grid.batchEditApi.StartEdit(i, 0); // aktifkan row
+                //    grid.batchEditApi.DeleteRow(i); // ini menambahkan key ke deletedRowKeys
+                //}
 
                 for (var i = 0; i < details.length; i++) {
                     grid.AddNewRow(); // mulai row baru 
@@ -1064,6 +1068,7 @@ new
                     gvTransferRequestDetail_ItemCode.SetValue(details[i].ItemCode);
                     gvTransferRequestDetail_ItemName.SetValue(details[i].ItemName);
                     gvTransferRequestDetail_Quantity.SetValue(details[i].Quantity);
+                    gvTransferRequestDetail_QuantityOpen.SetValue(details[i].QuantityOpen);
                     gvTransferRequestDetail_ToWhsCode.SetValue(data.Model.ToWhsCode);
                     gvTransferRequestDetail_ToWhsName.SetValue(data.Model.ToWhsName);
                     gvTransferRequestDetail_Comments.SetValue(details[i].Comments);

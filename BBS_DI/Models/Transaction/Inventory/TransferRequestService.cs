@@ -197,6 +197,8 @@ namespace Models.Transaction.Inventory
 
         public decimal Quantity { get; set; }
 
+        public decimal? QuantityOpen { get; set; }
+
         public string FreeText { get; set; }
     }
 
