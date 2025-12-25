@@ -80,12 +80,16 @@ namespace Models.Transaction.Adjustment
 
         public string CheckNeedApproval_ { get; set; }
 
-        public string ApprovalStatus { get; set; }
-
         public string IsOpeningBalance { get; set; }
 
         [Required(ErrorMessage = "required")]
         public string Comments { get; set; }
+
+        public string ApprovalStatus { get; set; }
+
+        public string ApprovalMessages { get; set; }
+
+        public string IsApproval { get; set; }
 
         public DateTime? CreatedDate { get; set; }
 
@@ -114,6 +118,9 @@ namespace Models.Transaction.Adjustment
         public List<GetCodeNameModel> SubClass2List { get; set; }
 
         public List<GetCodeNameModel> ProjectList { get; set; }
+
+        public List<AdjustmentOut_ApprovalModel> ListApprovalStep_ = new List<AdjustmentOut_ApprovalModel>();
+        public AdjustmentOut_Approval ApprovalStep_ { get; set; }
     }
 
     public class AdjustmentOut_Detail
@@ -121,6 +128,46 @@ namespace Models.Transaction.Adjustment
         public List<long> deletedRowKeys { get; set; }
         public List<AdjustmentOut_ItemModel> insertedRowValues { get; set; }
         public List<AdjustmentOut_ItemModel> modifiedRowValues { get; set; }
+    }
+
+
+    public class AdjustmentOut_ApprovalModel
+    {
+        private FormModeEnum _FormModeEnum = FormModeEnum.New;
+
+        public FormModeEnum _FormMode
+        {
+            get { return this._FormModeEnum; }
+            set { this._FormModeEnum = value; }
+        }
+
+        public int _UserId { get; set; }
+
+        public int? Id { get; set; }
+
+        public int? DetId { get; set; }
+
+        public int? StageId { get; set; }
+
+        public int? UserId { get; set; }
+
+        public string Username { get; set; }
+
+        public int? Step { get; set; }
+
+        public string Status { get; set; }
+
+        public string Comments { get; set; }
+
+        public DateTime? ActionDate { get; set; }
+    }
+
+
+    public class AdjustmentOut_Approval
+    {
+        public List<long> deletedRowKeys { get; set; }
+        public List<AdjustmentOut_ApprovalModel> insertedRowValues { get; set; }
+        public List<AdjustmentOut_ApprovalModel> modifiedRowValues { get; set; }
     }
 
     public class AdjustmentOut_ItemModel
@@ -491,17 +538,22 @@ namespace Models.Transaction.Adjustment
                                 SpNotif.SpSysControllerTransNotif(model._UserId, "AdjustmentOut", CONTEXT, "before", "AdjustmentOut", "update", "Id", keyValue);
 
 
-                                Tx_AdjustmentOut Tx_AdjustmentOut = CONTEXT.Tx_AdjustmentOut.Find(model.Id);
+                                Tx_AdjustmentOut tx_AdjustmentOut = CONTEXT.Tx_AdjustmentOut.Find(model.Id);
                                 DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                                Tx_AdjustmentOut.ModifiedDate = dtModified;
-                                Tx_AdjustmentOut.ModifiedUser = model._UserId;
 
-                                if (Tx_AdjustmentOut != null)
+                                var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("AdjustmentOut");
+                                //!string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
+                                tx_AdjustmentOut.IsApproval = "Y";
+                                
+                                tx_AdjustmentOut.ModifiedDate = dtModified;
+                                tx_AdjustmentOut.ModifiedUser = model._UserId;
+
+                                if (tx_AdjustmentOut != null)
                                 {
                                     var exceptColumns = new string[] { "Id", "TransNo", "CreatedUser" };
-                                    CopyProperty.CopyProperties(model, Tx_AdjustmentOut, false, exceptColumns);
-                                    Tx_AdjustmentOut.ModifiedDate = dtModified;
-                                    Tx_AdjustmentOut.ModifiedUser = model._UserId;
+                                    CopyProperty.CopyProperties(model, tx_AdjustmentOut, false, exceptColumns);
+                                    tx_AdjustmentOut.ModifiedDate = dtModified;
+                                    tx_AdjustmentOut.ModifiedUser = model._UserId;
                                     
                                     //CONTEXT.SaveChanges();
 
@@ -775,6 +827,121 @@ namespace Models.Transaction.Adjustment
                         }
 
                         SpNotif.SpSysControllerTransNotif(userId, "AdjustmentOut", CONTEXT, "after", "Tx_AdjustmentOut", "cancel", "Id", keyValue);
+
+
+                        CONTEXT_TRANS.Commit();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        CONTEXT_TRANS.Rollback();
+
+                        string errorMassage;
+                        if (ex.Message.Substring(12) == "[VALIDATION]")
+                        {
+                            errorMassage = ex.Message;
+                        }
+                        else
+                        {
+                            errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                        }
+
+                        throw new Exception(errorMassage);
+                    }
+                }
+            }
+
+        }
+
+        public void Approve(int userId, long Id, string approvalMessages)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                AdjustmentOutModel adjustmentOutModel = GetById(userId, Id);
+
+                using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        String keyValue;
+                        keyValue = Id.ToString();
+
+                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentOut", CONTEXT, "before", "Tx_AdjustmentOut", "approve", "Id", keyValue);
+
+                        Tx_AdjustmentOut tx_AdjustmentOut = CONTEXT.Tx_AdjustmentOut.Find(Id);
+                        if (tx_AdjustmentOut != null)
+                        {
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                            var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("AdjustmentOut");
+                            //tx_AdjustmentOut.Status = "";
+                            tx_AdjustmentOut.ApprovalStatus = isApprovalActive == "Y" && string.IsNullOrEmpty(tx_AdjustmentOut.ApprovalStatus) ? "Waiting" : tx_AdjustmentOut.ApprovalStatus;
+                            tx_AdjustmentOut.ApprovalMessages = approvalMessages;
+                            tx_AdjustmentOut.ModifiedDate = dtModified;
+                            tx_AdjustmentOut.ModifiedUser = userId;
+
+                            CONTEXT.SaveChanges();
+                        }
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentOut_UpdateItem\"(:p0,:p1, 'before')", userId, Id);
+
+                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentOut", CONTEXT, "after", "Tx_AdjustmentOut", "approve", "Id", keyValue);
+
+                        if (tx_AdjustmentOut.ApprovalStatus == "Approved")
+                        {
+                            PostSAP(userId, adjustmentOutModel.Id);
+                        }
+
+                        CONTEXT_TRANS.Commit();
+
+                    }
+
+                    catch (Exception ex)
+                    {
+                        CONTEXT_TRANS.Rollback();
+
+                        string errorMassage;
+                        if (ex.Message.Substring(12) == "[VALIDATION]")
+                        {
+                            errorMassage = ex.Message;
+                        }
+                        else
+                        {
+                            errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                        }
+
+                        throw new Exception(errorMassage);
+                    }
+                }
+            }
+
+        }
+
+        public void Reject(int userId, long Id, string approvalMessages)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+
+                using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        String keyValue;
+                        keyValue = Id.ToString();
+
+                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentOut", CONTEXT, "before", "Tx_AdjustmentOut", "reject", "Id", keyValue);
+
+                        Tx_AdjustmentOut tx_AdjustmentOut = CONTEXT.Tx_AdjustmentOut.Find(Id);
+                        if (tx_AdjustmentOut != null)
+                        {
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                            //tx_AdjustmentOut.Status = "";
+                            tx_AdjustmentOut.ApprovalMessages = approvalMessages;
+                            tx_AdjustmentOut.ModifiedDate = dtModified;
+                            tx_AdjustmentOut.ModifiedUser = userId;
+
+                            CONTEXT.SaveChanges();
+                        }
+
+                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentOut", CONTEXT, "after", "Tx_AdjustmentOut", "reject", "Id", keyValue);
 
 
                         CONTEXT_TRANS.Commit();

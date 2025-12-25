@@ -519,31 +519,31 @@ namespace Models.Transaction.Inventory
                     {
                         try
                         {
-                            Tx_TransferSummaryOut Tx_TransferSummaryOut = new Tx_TransferSummaryOut();
-                            CopyProperty.CopyProperties(model, Tx_TransferSummaryOut, false);
+                            Tx_TransferSummaryOut tx_TransferSummaryOut = new Tx_TransferSummaryOut();
+                            CopyProperty.CopyProperties(model, tx_TransferSummaryOut, false);
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
 
                             var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("TransferSummaryOut");
 
-                            Tx_TransferSummaryOut.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
+                            tx_TransferSummaryOut.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
                             //Tx_TransferSummaryOut.ApprovalStatus = isApprovalActive == "Y" ? "Waiting" : "";
-                            Tx_TransferSummaryOut.TransType = "TransferSummaryOut";
-                            Tx_TransferSummaryOut.CreatedDate = dtModified;
-                            Tx_TransferSummaryOut.CreatedUser = model._UserId;
-                            Tx_TransferSummaryOut.ModifiedDate = dtModified;
-                            Tx_TransferSummaryOut.ModifiedUser = model._UserId;
+                            tx_TransferSummaryOut.TransType = "TransferSummaryOut";
+                            tx_TransferSummaryOut.CreatedDate = dtModified;
+                            tx_TransferSummaryOut.CreatedUser = model._UserId;
+                            tx_TransferSummaryOut.ModifiedDate = dtModified;
+                            tx_TransferSummaryOut.ModifiedUser = model._UserId;
 
                             string dateX = model.TransDate.Value.ToString("yyyy-MM-dd");
                             string transNo = CONTEXT.Database.SqlQuery<string>("CALL \"SpSysGetNumbering\" (" + model._UserId.ToString() + ",'TransferSummaryOut','" + dateX + "','') ").SingleOrDefault();
-                            Tx_TransferSummaryOut.TransNo = transNo;
+                            tx_TransferSummaryOut.TransNo = transNo;
 
-                            CONTEXT.Tx_TransferSummaryOut.Add(Tx_TransferSummaryOut);
+                            CONTEXT.Tx_TransferSummaryOut.Add(tx_TransferSummaryOut);
                             CONTEXT.SaveChanges();
-                            Id = Tx_TransferSummaryOut.Id;
+                            Id = tx_TransferSummaryOut.Id;
 
                             String keyValue;
-                            keyValue = Tx_TransferSummaryOut.Id.ToString();
+                            keyValue = tx_TransferSummaryOut.Id.ToString();
                             
                             SpNotif.SpSysControllerTransNotif(model._UserId, "TransferSummaryOut", CONTEXT, "after", "TransferSummaryOut", "add", "Id", keyValue);
 
@@ -594,22 +594,22 @@ namespace Models.Transaction.Inventory
                                 SpNotif.SpSysControllerTransNotif(model._UserId, "TransferSummaryOut", CONTEXT, "before", "TransferSummaryOut", "update", "Id", keyValue);
 
 
-                                Tx_TransferSummaryOut Tx_TransferSummaryOut = CONTEXT.Tx_TransferSummaryOut.Find(model.Id);
+                                Tx_TransferSummaryOut tx_TransferSummaryOut = CONTEXT.Tx_TransferSummaryOut.Find(model.Id);
                                 DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                                Tx_TransferSummaryOut.ModifiedDate = dtModified;
-                                Tx_TransferSummaryOut.ModifiedUser = model._UserId;
+                                tx_TransferSummaryOut.ModifiedDate = dtModified;
+                                tx_TransferSummaryOut.ModifiedUser = model._UserId;
 
-                                if (Tx_TransferSummaryOut != null)
+                                if (tx_TransferSummaryOut != null)
                                 {
                                     var exceptColumns = new string[] { "Id", "TransNo", "CreatedUser" };
-                                    CopyProperty.CopyProperties(model, Tx_TransferSummaryOut, false, exceptColumns);
+                                    CopyProperty.CopyProperties(model, tx_TransferSummaryOut, false, exceptColumns);
 
                                     var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("TransferSummaryOut");
 
-                                    Tx_TransferSummaryOut.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
+                                    tx_TransferSummaryOut.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
                                     //Tx_TransferSummaryOut.ApprovalStatus = isApprovalActive == "Y" && Tx_TransferSummaryOut.ApprovalStatus == "" ? "Waiting" : "Approved";
-                                    Tx_TransferSummaryOut.ModifiedDate = dtModified;
-                                    Tx_TransferSummaryOut.ModifiedUser = model._UserId;
+                                    tx_TransferSummaryOut.ModifiedDate = dtModified;
+                                    tx_TransferSummaryOut.ModifiedUser = model._UserId;
 
                                     //if (model.StartDate != null)
                                     //{

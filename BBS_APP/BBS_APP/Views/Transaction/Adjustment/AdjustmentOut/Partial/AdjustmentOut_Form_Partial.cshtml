@@ -634,6 +634,47 @@
         cbo.Width = 230;
     });
 
+    groupItem_Col3.Items.Add(m => Model.ApprovalStatus, itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
+        itemSettings.Caption = "Approval Status";
+        itemSettings.FieldName = "ApprovalStatus";
+
+        ComboBoxSettings cbo = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
+        cbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+        cbo.Name = "ApprovalStatus";
+        cbo.ReadOnly = true;
+        cbo.ShowModelErrors = true;
+        cbo.Properties.TextField = "Name";
+        cbo.Properties.ValueField = "Code";
+        cbo.Properties.ValueType = typeof(string);
+        cbo.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+        cbo.Properties.DropDownButton.Visible = false;
+
+        cbo.Properties.DataSource = Models._Utils.GeneralGetList.GetList("ApprovalStatus");
+
+        cbo.ControlStyle.CssClass = "editor";
+        cbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        cbo.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        cbo.Width = 230;
+    });
+
+    groupItem_Col3.Items.Add(itemSettings =>
+    {
+        itemSettings.Name = "grpIsApproval";
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Is Approval";
+        itemSettings.FieldName = "IsApproval";
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        txt.Name = "IsApproval";
+        txt.ShowModelErrors = true;
+        txt.ReadOnly = true;
+        txt.ControlStyle.CssClass = "editor";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Width = 230;
+    });
+
     groupItem_Col4.Items.Add(itemSettings =>
     {
 

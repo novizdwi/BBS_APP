@@ -850,6 +850,13 @@
     <Content Include="Views\Notification\Partial\_Notification_List_Partial.cshtml" />
     <Content Include="Views\Transaction\Inventory\TransferSummaryOut\Partial\Approval\Approval_Form_TabApproval_Partial.cshtml" />
     <Content Include="Views\Setting\ApprovalTemplate\Partial\ApprovalTemplate_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferRequest\Partial\TemplateUpload\TemplateUpload_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferRequest\Partial\TemplateUpload\TemplateUpload_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferRequest\Partial\TemplateUpload\TemplateUpload_Partial.cshtml" />
+    <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\Approval\Approval_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\Approval\Approval_Form_TabApproval_Partial.cshtml" />
+    <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\Approval\Approval_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\Approval\Approval_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -953,6 +960,7 @@
     <Compile Include="Controllers\Transaction\Adjustment\AdjustmentOut\AdjustmentOutController.Tab.Attachment.cs" />
     <Compile Include="Controllers\Transaction\Adjustment\AdjustmentOut\AdjustmentOutController.Tab.Attachment.Detail.cs" />
     <Compile Include="Controllers\Transaction\Adjustment\AdjustmentOut\AdjustmentOutController.ViewItemTag.cs" />
+    <Compile Include="Controllers\Transaction\Adjustment\AdjustmentOut\AdjustmentOutOutController.Approval.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferIn\TransferInController.CancelReason.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferIn\TransferInController.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferIn\TransferInController.List.cs" />
@@ -970,6 +978,7 @@
     <Compile Include="Controllers\Transaction\Inventory\TransferRequest\TransferRequestController.List.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferRequest\TransferRequestController.Nav.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferRequest\TransferRequestController.Tab.Detail.cs" />
+    <Compile Include="Controllers\Transaction\Inventory\TransferRequest\TransferRequestController.TemplateUpload.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.Tab.Detail.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.CancelReason.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.cs" />
