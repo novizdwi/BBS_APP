@@ -123,6 +123,8 @@ namespace Models.Transaction.Inventory
 
         public decimal? Quantity { get; set; }
 
+        public decimal? QuantityOnHand_ { get; set; }
+
         public decimal? QuantityOpen { get; set; }
 
         public decimal? QuantityScan { get; set; }
@@ -197,7 +199,9 @@ namespace Models.Transaction.Inventory
 
         public decimal Quantity { get; set; }
 
-        public string FreeText { get; set; }
+        public decimal? QuantityOpen { get; set; }
+
+        public string Comments { get; set; }
     }
 
     #endregion
@@ -252,8 +256,10 @@ namespace Models.Transaction.Inventory
 
         public List<TransferRequest_DetailModel> TransferRequest_Details(HANA_APP CONTEXT, long id = 0)
         {
-            string ssql = @"SELECT * 
-                FROM ""Tx_TransferRequest_Item"" 
+            string ssql = @"SELECT T0.* ,
+                COALESCE(T1.""OnHand"",0) AS ""QuantityOnHand_""
+                FROM ""Tx_TransferRequest_Item"" T0
+                LEFT JOIN  """ + DbProvider.dbSap_Name + @""".""OITW"" T1 ON T0.""ItemCode"" = T1.""ItemCode"" AND T0.""FromWhsCode"" = T1.""WhsCode""
                 WHERE ""Id"" =:p0
                 ORDER BY ""DetId"" ASC
             ";

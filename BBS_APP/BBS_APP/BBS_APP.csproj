@@ -422,6 +422,7 @@
     <Content Include="Content\Images\kind1.svg" />
     <Content Include="Content\Images\kind2-white.svg" />
     <Content Include="Content\Images\kind2.svg" />
+    <Content Include="Content\Images\login-wp.jpg" />
     <Content Include="Content\Images\logo-small.svg" />
     <Content Include="Content\Images\logo.png" />
     <Content Include="Content\Images\logo.svg" />

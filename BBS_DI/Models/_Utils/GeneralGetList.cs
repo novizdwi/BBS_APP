@@ -428,6 +428,16 @@ namespace Models._Utils
             }
         }
 
+        public static decimal? GetItemWarehouseStock(string itemCode, string whsCode)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                var ssql = @"SELECT T0.""OnHand""  FROM  ""{0}"".""OITW"" T0   WHERE T0.""ItemCode"" = '{1}' AND T0.""WhsCode""= '{2}'   ";
+                ssql = string.Format(ssql, DbProvider.dbSap_Name, itemCode, whsCode);
+                return GetValue<decimal?>(CONTEXT, ssql);
+            }
+        }
+
         public static string GetUserNameByUserId(int? userId)
         {
             if (userId.HasValue)

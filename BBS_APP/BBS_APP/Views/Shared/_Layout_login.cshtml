@@ -214,7 +214,7 @@
     </script>
 </head>
 <body>
-    <div class="content-wrapper">
+    <div class="content-wrapper" style='background-image: url("../Content/Images/login-wp.jpg");height:100%;background-position: center;background-repeat: no-repeat;background-size: cover;'>
         @Html.DevExpress().Panel(settings => {
        settings.Name = "headerPanel";
        settings.FixedPosition = PanelFixedPosition.WindowTop;
@@ -266,13 +266,13 @@
                });
            }).GetHtml();
            ViewContext.Writer.Write("</div><div class='right-block'>");
-           
+
            ViewContext.Writer.Write("</div>");
 
            ViewContext.Writer.Write("<div class='dx-clear'></div>");
        });
    }).GetHtml()
-       
+
 
         <div class="content" id="pageContent">
             @RenderBody()

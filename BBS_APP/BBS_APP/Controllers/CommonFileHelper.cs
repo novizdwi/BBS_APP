@@ -146,7 +146,8 @@ namespace BBS_APP
                                 ItemCode = columns[0],
                                 ItemName = GeneralGetList.GetItemName(columns[0]),
                                 Quantity = qty,
-                                FreeText = columns.Length > 2 ? columns[2] : null
+                                QuantityOpen = GeneralGetList.GetItemWarehouseStock(columns[0], model.FromWhsCode),
+                                Comments = columns.Length > 2 ? columns[2] : null
                             };
                             details.Add(detail);
                         }
