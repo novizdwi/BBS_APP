@@ -24,12 +24,12 @@ namespace Controllers.Transaction.StockOpname
         {
             int userId = (int)Session["userId"];
 
-            StockSummaryOpnameService = new StockSummaryOpnameService();
+            stockSummaryOpnameService = new StockSummaryOpnameService();
 
             var Id = Convert.ToInt64(Request["cbId"]);
 
 
-            var modelListDetail = StockSummaryOpnameService.StockSummaryOpname_Details(Id);
+            var modelListDetail = stockSummaryOpnameService.StockSummaryOpname_Details(Id);
 
             return PartialView(VIEW_TAB_DETAIL_COMPONENT, modelListDetail);
         }

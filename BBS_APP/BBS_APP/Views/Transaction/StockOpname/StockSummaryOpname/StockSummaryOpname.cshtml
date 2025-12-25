@@ -278,12 +278,26 @@
 
     }
 
-    function OnClickBtnPost(s, e) {
+   function OnClickBtnPost(s, e) {
+
         if (BeforeSave() == false) {
             return;
         }
+        key = Id.GetValue();
+        //Post(s, e);
 
-        var formData = GetFormData();
+        var isApproval = IsApproval.GetValue();
+        var approvalStatus = ApprovalStatus.GetValue();
+
+        if (isApproval == "Y") {
+            btnShowApprovalOnClick(s, e, key);
+        } else {
+            Post(s, e);
+        }
+    }
+
+    function Post(s, e) {
+         var formData = GetFormData();
         if (confirm('Post transaction?')) {
             key = Id.GetValue();
 
@@ -307,7 +321,89 @@
                 }
             });
         }
+    }
 
+     function btnUpdateApprovalOnClick(s, e) {
+         key = Id.GetValue();
+         var reason = ApprovalMessages.GetValue();
+        if (reason == "" || reason == null) {
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Approve", "StockSummaryOpname")',
+            data: { Id: key, ApprovalMessage: reason },
+            beforeSend: function () {
+                OnBegin();
+            },
+            success: function (response) {
+                popupApproval.Hide();
+                RefreshAfterSuccess(response);
+                OnSuccessMsgBox();
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                OnFailure(jqXhr, textStatus, errorThrown)
+            },
+            complete: function () {
+                OnComplete()
+
+            }
+        });
+
+    }
+
+    function btnRejectApprovalOnClick(s, e) {
+        if (confirm('Are you sure to Reject this transaction?')) {
+             key = Id.GetValue();
+         var reason = ApprovalMessages.GetValue();
+            if (reason == "" || reason == null) {
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Reject", "StockSummaryOpname")',
+                data: { Id: key, ApprovalMessage: reason },
+                beforeSend: function () {
+                    OnBegin();
+                },
+                success: function (response) {
+                    popupApproval.Hide();
+                    RefreshAfterSuccess(response);
+                    OnSuccessMsgBox();
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    OnFailure(jqXhr, textStatus, errorThrown)
+                },
+                complete: function () {
+                    OnComplete()
+
+                }
+            });
+        }
+
+    }
+
+ function popupApproval_EndCallback(s, e) {
+        $.validator.unobtrusive.parse("#Approval_formDetail");
+
+        var popup = ASPxClientPopupControl.Cast("popupApproval");
+        if (!popup.IsVisible()) {
+            loadingPanel.Hide();
+            popup.ShowAtPos(400, 100);
+        }
+    }
+
+    function btnShowApprovalOnClick(s, e, Id) {
+        var popup = ASPxClientPopupControl.Cast("popupApproval");
+
+        popup.callbackUrl = '@Url.Action("Approval_PopupListOnDemandPartial", "StockSummaryOpname")' + '?Id=' + Id;
+        popup.PerformCallback();
+
+        if (!popup.IsVisible()) {
+            loadingPanel.Show();
+        }
     }
 
     function OnClickBtnCancel(s, e) {
@@ -887,6 +983,12 @@ new
         settings.Styles.LoadingDiv.Opacity = 0;
     }).GetHtml()
 
+
+@*-------------------------------------------------
+    Approval
+    -------------------------------------------------*@
+
+@Html.Partial("Partial/Approval/Approval_Partial")
 
 
 @*-------------------------------------------------

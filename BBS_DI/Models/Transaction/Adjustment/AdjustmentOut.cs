@@ -540,21 +540,19 @@ namespace Models.Transaction.Adjustment
 
                                 Tx_AdjustmentOut tx_AdjustmentOut = CONTEXT.Tx_AdjustmentOut.Find(model.Id);
                                 DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-
-                                var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("AdjustmentOut");
-                                //!string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
-                                tx_AdjustmentOut.IsApproval = "Y";
-                                
-                                tx_AdjustmentOut.ModifiedDate = dtModified;
-                                tx_AdjustmentOut.ModifiedUser = model._UserId;
+                                                           
 
                                 if (tx_AdjustmentOut != null)
                                 {
                                     var exceptColumns = new string[] { "Id", "TransNo", "CreatedUser" };
                                     CopyProperty.CopyProperties(model, tx_AdjustmentOut, false, exceptColumns);
+
+                                    var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("AdjustmentOut");
+
+                                    tx_AdjustmentOut.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
                                     tx_AdjustmentOut.ModifiedDate = dtModified;
                                     tx_AdjustmentOut.ModifiedUser = model._UserId;
-                                    
+
                                     //CONTEXT.SaveChanges();
 
                                     if (model.Details_ != null)

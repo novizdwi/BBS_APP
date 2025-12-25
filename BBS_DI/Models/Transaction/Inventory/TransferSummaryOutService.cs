@@ -596,9 +596,7 @@ namespace Models.Transaction.Inventory
 
                                 Tx_TransferSummaryOut tx_TransferSummaryOut = CONTEXT.Tx_TransferSummaryOut.Find(model.Id);
                                 DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                                tx_TransferSummaryOut.ModifiedDate = dtModified;
-                                tx_TransferSummaryOut.ModifiedUser = model._UserId;
-
+                             
                                 if (tx_TransferSummaryOut != null)
                                 {
                                     var exceptColumns = new string[] { "Id", "TransNo", "CreatedUser" };

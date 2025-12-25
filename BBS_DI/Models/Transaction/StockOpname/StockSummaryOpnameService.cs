@@ -99,6 +99,10 @@ namespace Models.Transaction.StockOpname
 
         public string ApprovalStatus { get; set; }
 
+        public string ApprovalMessages { get; set; }
+
+        public string IsApproval { get; set; }
+
         public string IsAfterPosted { get; set; }
 
         public string Comments { get; set; }
@@ -126,7 +130,51 @@ namespace Models.Transaction.StockOpname
         public List<GetCodeNameModel> SubClass2List { get; set; }
 
         public List<GetCodeNameModel> ProjectList { get; set; }
+
+        public List<StockSummaryOpname_ApprovalModel> ListApprovalStep_ = new List<StockSummaryOpname_ApprovalModel>();
+
+        public StockSummaryOpname_Approval ApprovalStep_ { get; set; }
     }
+
+    public class StockSummaryOpname_ApprovalModel
+    {
+        private FormModeEnum _FormModeEnum = FormModeEnum.New;
+
+        public FormModeEnum _FormMode
+        {
+            get { return this._FormModeEnum; }
+            set { this._FormModeEnum = value; }
+        }
+
+        public int _UserId { get; set; }
+
+        public int? Id { get; set; }
+
+        public int? DetId { get; set; }
+
+        public int? StageId { get; set; }
+
+        public int? UserId { get; set; }
+
+        public string Username { get; set; }
+
+        public int? Step { get; set; }
+
+        public string Status { get; set; }
+
+        public string Comments { get; set; }
+
+        public DateTime? ActionDate { get; set; }
+    }
+
+
+    public class StockSummaryOpname_Approval
+    {
+        public List<long> deletedRowKeys { get; set; }
+        public List<StockSummaryOpname_ApprovalModel> insertedRowValues { get; set; }
+        public List<StockSummaryOpname_ApprovalModel> modifiedRowValues { get; set; }
+    }
+
 
     public class StockSummaryOpname_Detail
     {
@@ -563,26 +611,30 @@ namespace Models.Transaction.StockOpname
                     {
                         try
                         {
-                            Tx_StockSummaryOpname Tx_StockSummaryOpname = new Tx_StockSummaryOpname();
-                            CopyProperty.CopyProperties(model, Tx_StockSummaryOpname, false);
+                            Tx_StockSummaryOpname tx_StockSummaryOpname = new Tx_StockSummaryOpname();
+                            CopyProperty.CopyProperties(model, tx_StockSummaryOpname, false);
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                            Tx_StockSummaryOpname.TransType = "StockSummaryOpname";
-                            Tx_StockSummaryOpname.CreatedDate = dtModified;
-                            Tx_StockSummaryOpname.CreatedUser = model._UserId;
-                            Tx_StockSummaryOpname.ModifiedDate = dtModified;
-                            Tx_StockSummaryOpname.ModifiedUser = model._UserId;
+
+                            var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("StockSummaryOpname");
+
+                            tx_StockSummaryOpname.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
+                            tx_StockSummaryOpname.TransType = "StockSummaryOpname";
+                            tx_StockSummaryOpname.CreatedDate = dtModified;
+                            tx_StockSummaryOpname.CreatedUser = model._UserId;
+                            tx_StockSummaryOpname.ModifiedDate = dtModified;
+                            tx_StockSummaryOpname.ModifiedUser = model._UserId;
 
                             string dateX = model.TransDate.Value.ToString("yyyy-MM-dd");
                             string transNo = CONTEXT.Database.SqlQuery<string>("CALL \"SpSysGetNumbering\" (" + model._UserId.ToString() + ",'StockSummaryOpname','" + dateX + "','') ").SingleOrDefault();
-                            Tx_StockSummaryOpname.TransNo = transNo;
+                            tx_StockSummaryOpname.TransNo = transNo;
 
-                            CONTEXT.Tx_StockSummaryOpname.Add(Tx_StockSummaryOpname);
+                            CONTEXT.Tx_StockSummaryOpname.Add(tx_StockSummaryOpname);
                             CONTEXT.SaveChanges();
-                            Id = Tx_StockSummaryOpname.Id;
+                            Id = tx_StockSummaryOpname.Id;
 
                             String keyValue;
-                            keyValue = Tx_StockSummaryOpname.Id.ToString();
+                            keyValue = tx_StockSummaryOpname.Id.ToString();
                             
                             SpNotif.SpSysControllerTransNotif(model._UserId, "StockSummaryOpname", CONTEXT, "after", "StockSummaryOpname", "add", "Id", keyValue);
 
@@ -633,17 +685,19 @@ namespace Models.Transaction.StockOpname
                                 SpNotif.SpSysControllerTransNotif(model._UserId, "StockSummaryOpname", CONTEXT, "before", "StockSummaryOpname", "update", "Id", keyValue);
 
 
-                                Tx_StockSummaryOpname Tx_StockSummaryOpname = CONTEXT.Tx_StockSummaryOpname.Find(model.Id);
+                                Tx_StockSummaryOpname tx_StockSummaryOpname = CONTEXT.Tx_StockSummaryOpname.Find(model.Id);
                                 DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                                Tx_StockSummaryOpname.ModifiedDate = dtModified;
-                                Tx_StockSummaryOpname.ModifiedUser = model._UserId;
-
-                                if (Tx_StockSummaryOpname != null)
+                               
+                                if (tx_StockSummaryOpname != null)
                                 {
                                     var exceptColumns = new string[] { "Id", "TransNo", "CreatedUser" };
-                                    CopyProperty.CopyProperties(model, Tx_StockSummaryOpname, false, exceptColumns);
-                                    Tx_StockSummaryOpname.ModifiedDate = dtModified;
-                                    Tx_StockSummaryOpname.ModifiedUser = model._UserId;
+                                    CopyProperty.CopyProperties(model, tx_StockSummaryOpname, false, exceptColumns);
+
+                                    var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("StockSummaryOpname");
+
+                                    tx_StockSummaryOpname.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
+                                    tx_StockSummaryOpname.ModifiedDate = dtModified;
+                                    tx_StockSummaryOpname.ModifiedUser = model._UserId;
 
                                     //if (model.StartDate != null)
                                     //{
@@ -1216,12 +1270,128 @@ namespace Models.Transaction.StockOpname
         //            }
 
         //        }
-                
+
         //        SapCompany.CleanUp(oDocument);
         //    }
 
         //    return true;
         //}
+
+        public void Approve(int userId, long Id, string approvalMessages)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                StockSummaryOpnameModel transferSummaryOutModel = GetById(userId, Id);
+
+                using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        String keyValue;
+                        keyValue = Id.ToString();
+
+                        SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "before", "Tx_StockSummaryOpname", "approve", "Id", keyValue);
+
+                        Tx_StockSummaryOpname tx_StockSummaryOpname = CONTEXT.Tx_StockSummaryOpname.Find(Id);
+                        if (tx_StockSummaryOpname != null)
+                        {
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                            var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("StockSummaryOpname");
+                            //tx_StockSummaryOpname.Status = "";
+                            tx_StockSummaryOpname.ApprovalStatus = isApprovalActive == "Y" && string.IsNullOrEmpty(tx_StockSummaryOpname.ApprovalStatus) ? "Waiting" : tx_StockSummaryOpname.ApprovalStatus;
+                            tx_StockSummaryOpname.ApprovalMessages = approvalMessages;
+                            tx_StockSummaryOpname.ModifiedDate = dtModified;
+                            tx_StockSummaryOpname.ModifiedUser = userId;
+
+                            CONTEXT.SaveChanges();
+                        }
+
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpStockSummaryOpname_UpdateItem\"(:p0,:p1, 'before')", userId, Id);
+
+                        SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "after", "Tx_StockSummaryOpname", "approve", "Id", keyValue);
+
+                        if (tx_StockSummaryOpname.ApprovalStatus == "Approved")
+                        {
+                            PostSAP(userId, transferSummaryOutModel.Id);
+                        }
+
+                        CONTEXT_TRANS.Commit();
+
+                    }
+
+                    catch (Exception ex)
+                    {
+                        CONTEXT_TRANS.Rollback();
+
+                        string errorMassage;
+                        if (ex.Message.Substring(12) == "[VALIDATION]")
+                        {
+                            errorMassage = ex.Message;
+                        }
+                        else
+                        {
+                            errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                        }
+
+                        throw new Exception(errorMassage);
+                    }
+                }
+            }
+
+        }
+
+        public void Reject(int userId, long Id, string approvalMessages)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+
+                using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        String keyValue;
+                        keyValue = Id.ToString();
+
+                        SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "before", "Tx_StockSummaryOpname", "reject", "Id", keyValue);
+
+                        Tx_StockSummaryOpname tx_StockSummaryOpname = CONTEXT.Tx_StockSummaryOpname.Find(Id);
+                        if (tx_StockSummaryOpname != null)
+                        {
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                            //tx_StockSummaryOpname.Status = "";
+                            tx_StockSummaryOpname.ApprovalMessages = approvalMessages;
+                            tx_StockSummaryOpname.ModifiedDate = dtModified;
+                            tx_StockSummaryOpname.ModifiedUser = userId;
+
+                            CONTEXT.SaveChanges();
+                        }
+
+                        SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "after", "Tx_StockSummaryOpname", "reject", "Id", keyValue);
+
+
+                        CONTEXT_TRANS.Commit();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        CONTEXT_TRANS.Rollback();
+
+                        string errorMassage;
+                        if (ex.Message.Substring(12) == "[VALIDATION]")
+                        {
+                            errorMassage = ex.Message;
+                        }
+                        else
+                        {
+                            errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                        }
+
+                        throw new Exception(errorMassage);
+                    }
+                }
+            }
+
+        }
 
         public StockSummaryOpnameItemTagView___ GetItemTags(long id, long detId)
         {

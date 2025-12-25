@@ -82,6 +82,10 @@ namespace Models.Transaction.Adjustment
 
         public string ApprovalStatus { get; set; }
 
+        public string ApprovalMessages { get; set; }
+
+        public string IsApproval { get; set; }
+
         public string IsOpeningBalance { get; set; }
 
         [Required(ErrorMessage = "required")]
@@ -114,6 +118,49 @@ namespace Models.Transaction.Adjustment
         public List<GetCodeNameModel> SubClass2List { get; set; }
 
         public List<GetCodeNameModel> ProjectList { get; set; }
+
+        public List<AdjustmentIn_ApprovalModel> ListApprovalStep_ = new List<AdjustmentIn_ApprovalModel>();
+
+        public AdjustmentIn_Approval ApprovalStep_ { get; set; }
+    }
+
+    public class AdjustmentIn_ApprovalModel
+    {
+        private FormModeEnum _FormModeEnum = FormModeEnum.New;
+
+        public FormModeEnum _FormMode
+        {
+            get { return this._FormModeEnum; }
+            set { this._FormModeEnum = value; }
+        }
+
+        public int _UserId { get; set; }
+
+        public int? Id { get; set; }
+
+        public int? DetId { get; set; }
+
+        public int? StageId { get; set; }
+
+        public int? UserId { get; set; }
+
+        public string Username { get; set; }
+
+        public int? Step { get; set; }
+
+        public string Status { get; set; }
+
+        public string Comments { get; set; }
+
+        public DateTime? ActionDate { get; set; }
+    }
+
+
+    public class AdjustmentIn_Approval
+    {
+        public List<long> deletedRowKeys { get; set; }
+        public List<AdjustmentIn_ApprovalModel> insertedRowValues { get; set; }
+        public List<AdjustmentIn_ApprovalModel> modifiedRowValues { get; set; }
     }
 
     public class AdjustmentIn_Detail
@@ -504,17 +551,18 @@ namespace Models.Transaction.Adjustment
                                 SpNotif.SpSysControllerTransNotif(model._UserId, "AdjustmentIn", CONTEXT, "before", "AdjustmentIn", "update", "Id", keyValue);
 
 
-                                Tx_AdjustmentIn Tx_AdjustmentIn = CONTEXT.Tx_AdjustmentIn.Find(model.Id);
+                                Tx_AdjustmentIn tx_AdjustmentIn = CONTEXT.Tx_AdjustmentIn.Find(model.Id);
                                 DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                                Tx_AdjustmentIn.ModifiedDate = dtModified;
-                                Tx_AdjustmentIn.ModifiedUser = model._UserId;
-
-                                if (Tx_AdjustmentIn != null)
+                           
+                                if (tx_AdjustmentIn != null)
                                 {
                                     var exceptColumns = new string[] { "Id", "TransNo", "CreatedUser" };
-                                    CopyProperty.CopyProperties(model, Tx_AdjustmentIn, false, exceptColumns);
-                                    Tx_AdjustmentIn.ModifiedDate = dtModified;
-                                    Tx_AdjustmentIn.ModifiedUser = model._UserId;
+                                    CopyProperty.CopyProperties(model, tx_AdjustmentIn, false, exceptColumns);
+                                    var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("AdjustmentIn");
+
+                                    tx_AdjustmentIn.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
+                                    tx_AdjustmentIn.ModifiedDate = dtModified;
+                                    tx_AdjustmentIn.ModifiedUser = model._UserId;
                                     
                                     //CONTEXT.SaveChanges();
                                     if (model.Details_ != null)
@@ -790,6 +838,121 @@ namespace Models.Transaction.Adjustment
                         }
 
                         SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "after", "Tx_AdjustmentIn", "cancel", "Id", keyValue);
+
+
+                        CONTEXT_TRANS.Commit();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        CONTEXT_TRANS.Rollback();
+
+                        string errorMassage;
+                        if (ex.Message.Substring(12) == "[VALIDATION]")
+                        {
+                            errorMassage = ex.Message;
+                        }
+                        else
+                        {
+                            errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                        }
+
+                        throw new Exception(errorMassage);
+                    }
+                }
+            }
+
+        }
+
+        public void Approve(int userId, long Id, string approvalMessages)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+               AdjustmentInModel adjustmentInModel = GetById(userId, Id);
+
+                using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        String keyValue;
+                        keyValue = Id.ToString();
+
+                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "before", "Tx_AdjustmentIn", "approve", "Id", keyValue);
+
+                        Tx_AdjustmentIn tx_AdjustmentIn = CONTEXT.Tx_AdjustmentIn.Find(Id);
+                        if (tx_AdjustmentIn != null)
+                        {
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                            var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("AdjustmentIn");
+                            //tx_AdjustmentIn.Status = "";
+                            tx_AdjustmentIn.ApprovalStatus = isApprovalActive == "Y" && string.IsNullOrEmpty(tx_AdjustmentIn.ApprovalStatus) ? "Waiting" : tx_AdjustmentIn.ApprovalStatus;
+                            tx_AdjustmentIn.ApprovalMessages = approvalMessages;
+                            tx_AdjustmentIn.ModifiedDate = dtModified;
+                            tx_AdjustmentIn.ModifiedUser = userId;
+
+                            CONTEXT.SaveChanges();
+                        }
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn_UpdateItem\"(:p0,:p1, 'before')", userId, Id);
+
+                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "after", "Tx_AdjustmentIn", "approve", "Id", keyValue);
+
+                        if (tx_AdjustmentIn.ApprovalStatus == "Approved")
+                        {
+                            PostSAP(userId, adjustmentInModel.Id);
+                        }
+
+                        CONTEXT_TRANS.Commit();
+
+                    }
+
+                    catch (Exception ex)
+                    {
+                        CONTEXT_TRANS.Rollback();
+
+                        string errorMassage;
+                        if (ex.Message.Substring(12) == "[VALIDATION]")
+                        {
+                            errorMassage = ex.Message;
+                        }
+                        else
+                        {
+                            errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                        }
+
+                        throw new Exception(errorMassage);
+                    }
+                }
+            }
+
+        }
+
+        public void Reject(int userId, long Id, string approvalMessages)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+
+                using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        String keyValue;
+                        keyValue = Id.ToString();
+
+                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "before", "Tx_AdjustmentIn", "reject", "Id", keyValue);
+
+                        Tx_AdjustmentIn tx_AdjustmentIn = CONTEXT.Tx_AdjustmentIn.Find(Id);
+                        if (tx_AdjustmentIn != null)
+                        {
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                            //tx_AdjustmentIn.Status = "";
+                            tx_AdjustmentIn.ApprovalMessages = approvalMessages;
+                            tx_AdjustmentIn.ModifiedDate = dtModified;
+                            tx_AdjustmentIn.ModifiedUser = userId;
+
+                            CONTEXT.SaveChanges();
+                        }
+
+                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "after", "Tx_AdjustmentIn", "reject", "Id", keyValue);
 
 
                         CONTEXT_TRANS.Commit();

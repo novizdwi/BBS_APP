@@ -18,11 +18,11 @@ namespace Controllers.Transaction.StockOpname
         {
             int userId = (int)Session["userId"];
 
-            StockSummaryOpnameService = new StockSummaryOpnameService();
+            stockSummaryOpnameService = new StockSummaryOpnameService();
             var model = new StockSummaryOpnameItemTagView___();
             if(id != 0 && detId != 0)
             {
-                model = StockSummaryOpnameService.GetItemTags(id, detId);
+                model = stockSummaryOpnameService.GetItemTags(id, detId);
             }
             return PartialView(VIEW_ITEMTAG_PANEL_PARTIAL, model);
         }

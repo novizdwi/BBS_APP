@@ -25,9 +25,9 @@ namespace Controllers.Transaction.StockOpname
             int userId = (int)Session["userId"];
 
             StockSummaryOpnameModel StockSummaryOpnameModel;
-            StockSummaryOpnameService = new StockSummaryOpnameService();
+            stockSummaryOpnameService = new StockSummaryOpnameService();
 
-            StockSummaryOpnameModel = StockSummaryOpnameService.NavFirst(userId);
+            StockSummaryOpnameModel = stockSummaryOpnameService.NavFirst(userId);
             if (StockSummaryOpnameModel != null)
             {
                 StockSummaryOpnameModel._FormMode = FormModeEnum.Edit;
@@ -50,9 +50,9 @@ namespace Controllers.Transaction.StockOpname
 
 
             StockSummaryOpnameModel StockSummaryOpnameModel;
-            StockSummaryOpnameService = new StockSummaryOpnameService();
+            stockSummaryOpnameService = new StockSummaryOpnameService();
 
-            StockSummaryOpnameModel = StockSummaryOpnameService.NavPrevious(userId, Id);
+            StockSummaryOpnameModel = stockSummaryOpnameService.NavPrevious(userId, Id);
             if (StockSummaryOpnameModel != null)
             {
                 StockSummaryOpnameModel._FormMode = FormModeEnum.Edit;
@@ -76,9 +76,9 @@ namespace Controllers.Transaction.StockOpname
 
 
             StockSummaryOpnameModel StockSummaryOpnameModel;
-            StockSummaryOpnameService = new StockSummaryOpnameService();
+            stockSummaryOpnameService = new StockSummaryOpnameService();
 
-            StockSummaryOpnameModel = StockSummaryOpnameService.NavNext(userId, Id);
+            StockSummaryOpnameModel = stockSummaryOpnameService.NavNext(userId, Id);
             if (StockSummaryOpnameModel != null)
             {
 
@@ -100,9 +100,9 @@ namespace Controllers.Transaction.StockOpname
             int userId = (int)Session["userId"];
 
             StockSummaryOpnameModel StockSummaryOpnameModel;
-            StockSummaryOpnameService = new StockSummaryOpnameService();
+            stockSummaryOpnameService = new StockSummaryOpnameService();
 
-            StockSummaryOpnameModel = StockSummaryOpnameService.NavLast(userId);
+            StockSummaryOpnameModel = stockSummaryOpnameService.NavLast(userId);
             if (StockSummaryOpnameModel != null)
             {
                 StockSummaryOpnameModel._FormMode = FormModeEnum.Edit;
