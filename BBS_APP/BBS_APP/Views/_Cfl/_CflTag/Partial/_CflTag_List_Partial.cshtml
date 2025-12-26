@@ -53,17 +53,17 @@
         {
             column.Caption = "#";
 
-            column.SetDataTagTemplateContent(c =>
+            column.SetDataItemTemplateContent(c =>
             {
 
                 ViewContext.Writer.Write(
 
                  Html.DevExpress().HyperLink(settingsHL =>
                  {
-                     settingsHL.Name = "gvCflTagListChoose_" + cpGvFind_CflName + DataBinder.Eval(c.DataTag, "TagCode") + "_" + Guid.NewGuid().ToString();
+                     settingsHL.Name = "gvCflTagListChoose_" + cpGvFind_CflName + DataBinder.Eval(c.DataItem, "TagId") + "_" + Guid.NewGuid().ToString();
                      settingsHL.NavigateUrl = "javascript:void(0)";
                      settingsHL.Properties.Text = "Choose";
-                     settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ OnClickChoose_CflTag{1}(s, e, {0}); }}", new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(c.DataTag), cpGvFind_CflName);
+                     settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ OnClickChoose_CflTag{1}(s, e, {0}); }}", new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(c.DataItem), cpGvFind_CflName);
                  }).GetHtml()
 
 
@@ -96,8 +96,22 @@
     settings.Settings.ShowFilterRow = true;
     settings.Settings.ShowFilterRowMenu = true;
 
+     
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "TagId";
+        column.Name = "TagId";
+        column.Caption = "Tag Id";
+        column.Width = 260;
 
-    settings.Columns.Add("TagId", "Tag Id");
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.ReadOnly = true;
+        column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+         
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+    });
 
     settings.SettingsPager.Position = PagerPosition.Bottom;
     settings.SettingsPager.FirstPageButton.Visible = true;
@@ -108,11 +122,11 @@
 
     if (cpGvFind_PageIndex == 0)
     {
-        settings.SettingsPager.PageSizeTagSettings.Visible = true;
+        settings.SettingsPager.PageSizeItemSettings.Visible = true;
     }
 
 
-    settings.SettingsPager.PageSizeTagSettings.Tags = new string[] { "10", "20", "50" };
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
 
     settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
     settings.Settings.VerticalScrollableHeight = 400;
@@ -153,7 +167,7 @@
 
 
     additionParam = " e.customArgs['hidden_CflDocId']=Id.GetValue(); ";
-    if (Model.Type == "ChangeItem")
+    if (cpGvFind_CflType == "ChangeItem")
     {
         additionParam += " e.customArgs['hidden_CflOriginItemCode'] = OriginItemCode.GetValue(); ";
         additionParam += " e.customArgs['hidden_CflWhsCode'] = WhsCode.GetValue(); ";

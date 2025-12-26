@@ -605,7 +605,7 @@ namespace Models.Master.Item
                         }
 
                         SpNotif.SpSysControllerTransNotif(userId, "ChangeItem", CONTEXT, "after", "Tx_ChangeItem", "post", "Id", keyValue);
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpChangeItem_UpdateItem\"(:p0,:p1,:p2)", userId, id);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpChangeItem_UpdateItem\"(:p0,:p1)", userId, id);
 
                         CONTEXT_TRANS.Commit();
                     }

@@ -860,6 +860,28 @@
     <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\Approval\Approval_Partial.cshtml" />
     <Content Include="Views\_Cfl\_CflTag\Partial\_CflTag_List_Partial.cshtml" />
     <Content Include="Views\_Cfl\_CflTag\Partial\_CflTag_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ChangeItem\ChangeItem.cshtml" />
+    <Content Include="Views\Master\Item\ChangeItem\Partial\CancelReason\CancelReason_Form_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ChangeItem\Partial\CancelReason\CancelReason_Panel_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ChangeItem\Partial\CancelReason\CancelReason_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ChangeItem\Partial\ChangeItem_Form_BtnBottom_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ChangeItem\Partial\ChangeItem_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ChangeItem\Partial\ChangeItem_Form_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ChangeItem\Partial\ChangeItem_Form_TabDetail_List_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ChangeItem\Partial\ChangeItem_List_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ChangeItem\Partial\ChangeItem_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Adjustment\AdjustmentIn\Partial\Approval\Approval_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Adjustment\AdjustmentIn\Partial\Approval\Approval_Form_TabApproval_Partial.cshtml" />
+    <Content Include="Views\Transaction\Adjustment\AdjustmentIn\Partial\Approval\Approval_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Adjustment\AdjustmentIn\Partial\Approval\Approval_Partial.cshtml" />
+    <Content Include="Views\Transaction\StockOpname\StockSummaryOpname\Partial\Approval\Approval_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\StockOpname\StockSummaryOpname\Partial\Approval\Approval_Form_TabApproval_Partial.cshtml" />
+    <Content Include="Views\Transaction\StockOpname\StockSummaryOpname\Partial\Approval\Approval_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\StockOpname\StockSummaryOpname\Partial\Approval\Approval_Partial.cshtml" />
+    <Content Include="Views\Transaction\Purchasing\GoodsReceiptPO\Partial\Approval\Approval_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Purchasing\GoodsReceiptPO\Partial\Approval\Approval_Form_TabApproval_Partial.cshtml" />
+    <Content Include="Views\Transaction\Purchasing\GoodsReceiptPO\Partial\Approval\Approval_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Purchasing\GoodsReceiptPO\Partial\Approval\Approval_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

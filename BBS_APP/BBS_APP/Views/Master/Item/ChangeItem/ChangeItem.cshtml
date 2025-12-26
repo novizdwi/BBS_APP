@@ -847,7 +847,7 @@
     cflTag_ParamModel.SqlWhere = "   ";
     cflTag_ParamModel.Header = "";
 
-    cflTag_ParamModel.IsMulti = "N";
+    cflTag_ParamModel.IsMulti = "Y";
 }
 <script type="text/javascript">
 
@@ -867,15 +867,14 @@
 
     }
 
-    function OnClickChoose_CflTagChangeItem(s, e, data) {
+    function OnClickChoose_CflTagChangeItem(s, e) {
         gvCflTagListChangeItem.GetSelectedFieldValues('TagId', GetSelectedFieldValuesCallback_CflTag);
     }
 
-    function GetSelectedFieldValuesCallback_CflTag(values) {
+    function GetSelectedFieldValuesCallback_CflTag(values) { 
         cflTagPopupListChangeItem.Hide();
 
         key = Id.GetValue(); 
-
         $.ajax({
             type: "POST",
             url: '@Url.Action("ChooseItem", "ChangeItem")',
