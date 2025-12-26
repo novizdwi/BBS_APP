@@ -858,6 +858,8 @@
     <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\Approval\Approval_Form_TabApproval_Partial.cshtml" />
     <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\Approval\Approval_Panel_Partial.cshtml" />
     <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\Approval\Approval_Partial.cshtml" />
+    <Content Include="Views\_Cfl\_CflTag\Partial\_CflTag_List_Partial.cshtml" />
+    <Content Include="Views\_Cfl\_CflTag\Partial\_CflTag_Panel_List_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
