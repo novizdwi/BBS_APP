@@ -328,6 +328,8 @@
           <Property Name="ActionNote" Type="nvarchar" MaxLength="500" />
           <Property Name="CreatedDate" Type="timestamp" />
           <Property Name="CreatedUser" Type="int" />
+          <Property Name="NewItemCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="NewItemName" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="Tm_Item_Warehouse_Tag_Replace">
           <Key>
@@ -2600,6 +2602,8 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <Property Name="ActionNote" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="NewItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NewItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tm_Item_Warehouse_Tag_Replace">
           <Key>
@@ -4680,6 +4684,8 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySetMapping Name="Tm_Item_Warehouse_Tag_Log">
             <EntityTypeMapping TypeName="Model1.Tm_Item_Warehouse_Tag_Log">
               <MappingFragment StoreEntitySet="Tm_Item_Warehouse_Tag_Log">
+                <ScalarProperty Name="NewItemName" ColumnName="NewItemName" />
+                <ScalarProperty Name="NewItemCode" ColumnName="NewItemCode" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ActionNote" ColumnName="ActionNote" />
