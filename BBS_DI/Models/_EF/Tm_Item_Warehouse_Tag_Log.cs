@@ -28,5 +28,7 @@ namespace BBS_DI.Models._EF
         public string ActionNote { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedUser { get; set; }
+        public string NewItemCode { get; set; }
+        public string NewItemName { get; set; }
     }
 }
