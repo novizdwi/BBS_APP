@@ -14,24 +14,30 @@ using Models._Cfl;
 
 namespace Controllers._Cfl
 {
-    public partial class _CflItemController : BaseController
+    public partial class _CflTagController : BaseController
     {
-        string VIEW_LIST_PARTIAL = "Partial/_CflItem_List_Partial";
-        string VIEW_PANEL_LIST_PARTIAL = "Partial/_CflItem_Panel_List_Partial";
+        string VIEW_LIST_PARTIAL = "Partial/_CflTag_List_Partial";
+        string VIEW_PANEL_LIST_PARTIAL = "Partial/_CflTag_Panel_List_Partial";
 
-        public CflItem_ParamModel GetParam(HttpRequestBase Request)
+        public CflTag_ParamModel GetParam(HttpRequestBase Request)
         {
-            var cflParam = new CflItem_ParamModel();
+            var cflParam = new CflTag_ParamModel();
             cflParam.Type = Request["hidden_CflType"];
             cflParam.Name = Request["hidden_CflName"];
             cflParam.Header = Request["hidden_CflHeader"];
             cflParam.SqlWhere = Request["hidden_CflSqlWhere"];
 
-            if (cflParam.Type == "OriginItem" || cflParam.Type == "ToItem")
+            if (cflParam.Type == "ChangeItem")
             {
                 var hidden_CflDocId = (string)Request["hidden_CflDocId"];
+                var hidden_CflOriginItemCode = (string)Request["hidden_CflOriginItemCode"];
+                var hidden_CflWhsCode = (string)Request["hidden_CflWhsCode"];
+
                 hidden_CflDocId = hidden_CflDocId.Replace("'", "''");
-                cflParam.SqlWhere = string.Format(" AND  \"ItemCode\" LIKE 'FG%' ");
+                cflParam.SqlWhere = string.Format(" " +
+                    "AND \"Status\" = 'A' " +
+                    "AND \"ItemCode\" = '"+ hidden_CflOriginItemCode + "' " +
+                    "AND \"WhsCode\" = '"+ hidden_CflWhsCode + "' ");
             }
 
             cflParam.IsMulti = Request["hidden_CflIsMulti"];
@@ -43,10 +49,10 @@ namespace Controllers._Cfl
         {
             int userId = (int)Session["userId"];
 
-            var cflItemParam = GetParam(Request);
+            var cflTagParam = GetParam(Request);
 
-            var viewModel = GetListModel(cflItemParam.Name);
-            ProcessCustomBinding(userId, cflItemParam, viewModel);
+            var viewModel = GetListModel(cflTagParam.Name);
+            ProcessCustomBinding(userId, cflTagParam, viewModel);
             return PartialView(VIEW_LIST_PARTIAL, viewModel);
         }
 
@@ -55,11 +61,11 @@ namespace Controllers._Cfl
         {
             int userId = (int)Session["userId"];
 
-            var cflItemParam = GetParam(Request);
+            var cflTagParam = GetParam(Request);
 
-            var viewModel = GetListModel(cflItemParam.Name);
+            var viewModel = GetListModel(cflTagParam.Name);
             viewModel.ApplyPagingState(pager);
-            ProcessCustomBinding(userId, cflItemParam, viewModel);
+            ProcessCustomBinding(userId, cflTagParam, viewModel);
 
             return PartialView(VIEW_LIST_PARTIAL, viewModel);
         }
@@ -69,11 +75,11 @@ namespace Controllers._Cfl
         {
             int userId = (int)Session["userId"];
 
-            var cflItemParam = GetParam(Request);
+            var cflTagParam = GetParam(Request);
 
-            var viewModel = GetListModel(cflItemParam.Name);
+            var viewModel = GetListModel(cflTagParam.Name);
             viewModel.ApplyFilteringState(filteringState);
-            ProcessCustomBinding(userId, cflItemParam, viewModel);
+            ProcessCustomBinding(userId, cflTagParam, viewModel);
             return PartialView(VIEW_LIST_PARTIAL, viewModel);
         }
 
@@ -82,11 +88,11 @@ namespace Controllers._Cfl
         {
             int userId = (int)Session["userId"];
 
-            var cflItemParam = GetParam(Request);
+            var cflTagParam = GetParam(Request);
 
-            var viewModel = GetListModel(cflItemParam.Name);
+            var viewModel = GetListModel(cflTagParam.Name);
             viewModel.ApplySortingState(column, reset);
-            ProcessCustomBinding(userId, cflItemParam, viewModel);
+            ProcessCustomBinding(userId, cflTagParam, viewModel);
 
             return PartialView(VIEW_LIST_PARTIAL, viewModel);
         }
@@ -95,26 +101,26 @@ namespace Controllers._Cfl
 
         static GridViewModel GetListModel(string name)
         {
-            var viewModel = GridViewExtension.GetViewModel("gvCflItemList" + name);
+            var viewModel = GridViewExtension.GetViewModel("gvCflTagList" + name);
             if (viewModel == null)
             {
-                viewModel = CflItem_Model.CreateGridViewModel();
+                viewModel = CflTag_Model.CreateGridViewModel();
             }
 
             return viewModel;
         }
 
-        static void ProcessCustomBinding(int userId, CflItem_ParamModel cflItemParam, GridViewModel viewModel)
+        static void ProcessCustomBinding(int userId, CflTag_ParamModel cflTagParam, GridViewModel viewModel)
         {
 
             viewModel.ProcessCustomBinding(
               new GridViewCustomBindingGetDataRowCountHandler(args =>
               {
-                  CflItem_Model.GetDataRowCount(args, userId, cflItemParam);
+                  CflTag_Model.GetDataRowCount(args, userId, cflTagParam);
               }),
               new GridViewCustomBindingGetDataHandler(args =>
               {
-                  CflItem_Model.GetData(args, userId, cflItemParam);
+                  CflTag_Model.GetData(args, userId, cflTagParam);
               })
           );
 
@@ -125,14 +131,14 @@ namespace Controllers._Cfl
         {
             int userId = (int)Session["userId"];
 
-            var cflItemParam = GetParam(Request);
+            var cflTagParam = GetParam(Request);
 
-            var viewModel = GetListModel(cflItemParam.Name);
-            ProcessCustomBinding(userId, cflItemParam, viewModel);
+            var viewModel = GetListModel(cflTagParam.Name);
+            ProcessCustomBinding(userId, cflTagParam, viewModel);
 
             ViewBag.viewModel = viewModel;
 
-            return PartialView(VIEW_PANEL_LIST_PARTIAL, cflItemParam);
+            return PartialView(VIEW_PANEL_LIST_PARTIAL, cflTagParam);
         }
 
     }

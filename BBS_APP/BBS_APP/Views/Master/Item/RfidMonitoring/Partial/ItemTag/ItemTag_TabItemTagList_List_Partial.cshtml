@@ -9,8 +9,9 @@
     settings.KeyFieldName = "LogId";
     settings.CommandColumn.Visible = false;
 
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
     settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
-    settings.Width = Unit.Percentage(100);
+    settings.Width = 1200;
     settings.CommandColumn.Width = 70;
 
 
@@ -35,7 +36,7 @@
     {
         column.FieldName = "ItemCode";
         column.Name = "ItemCode";
-        column.Caption = "Item Code";
+        column.Caption = "Old Item Code";
         column.Width = 150;
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Visible = true;
@@ -48,7 +49,32 @@
     {
         column.FieldName = "ItemName";
         column.Name = "ItemName";
-        column.Caption = "Item Name";
+        column.Caption = "Old Item Name";
+        column.Width = 280;
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Visible = true;
+
+        column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "NewItemCode";
+        column.Name = "NewItemCode";
+        column.Caption = "New Item Code";
+        column.Width = 150;
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Visible = true;
+
+        column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+    });
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "NewItemName";
+        column.Name = "NewItemName";
+        column.Caption = "New Item Name";
         column.Width = 280;
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Visible = true;

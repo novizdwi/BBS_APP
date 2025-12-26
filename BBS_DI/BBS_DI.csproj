@@ -166,6 +166,8 @@
     <Compile Include="Models\Authentication\UserModel.cs" />
     <Compile Include="Models\Authentication\User__List_Model.cs" />
     <Compile Include="Models\Master\Item\RfidMonitoringModel.cs" />
+    <Compile Include="Models\Master\Item\ChangeItemService.cs" />
+    <Compile Include="Models\Master\Item\ChangeItem__List_Model.cs" />
     <Compile Include="Models\Notification\Notification_Model.cs" />
     <Compile Include="Models\Report\ReportAlertDetail__List_Model.cs">
       <SubType>Code</SubType>
@@ -234,6 +236,7 @@
     <Compile Include="Models\_Cfl\CflCostCenter.cs" />
     <Compile Include="Models\_Cfl\CflDynamic_Model.cs" />
     <Compile Include="Models\_Cfl\CflItemByWarehouse_Model.cs" />
+    <Compile Include="Models\_Cfl\CflTag_Model.cs" />
     <Compile Include="Models\_Cfl\CflItem_Model.cs" />
     <Compile Include="Models\_Cfl\CflCoa_Model.cs" />
     <Compile Include="Models\_Cfl\CflStockOpname_Model.cs" />
@@ -453,6 +456,12 @@
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\_EF\Tx_AdjustmentOut_Location.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_ChangeItem.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_ChangeItem_Tag.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\_EF\Tx_DeactiveTag.cs">

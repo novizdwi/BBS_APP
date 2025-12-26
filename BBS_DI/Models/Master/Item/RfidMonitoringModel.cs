@@ -84,6 +84,10 @@ namespace Models.Master.Item
 
         public string ItemName { get; set; }
 
+        public string NewItemCode { get; set; }
+
+        public string NewItemName { get; set; }
+
         public string WhsCode { get; set; }
 
         public string WhsName { get; set; }
@@ -211,6 +215,8 @@ namespace Models.Master.Item
                         ) AS ""TransType"", 
                         T0.""ItemCode"",
                         T0.""ItemName"",
+                        T0.""NewItemCode"",
+                        T0.""NewItemName"",
                         T0.""WhsCode"",
                         T0.""WhsName"",
                         CASE WHEN T0.""OldStatus"" = 'I' THEN 'Inactive'

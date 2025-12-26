@@ -858,6 +858,18 @@
     <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\Approval\Approval_Form_TabApproval_Partial.cshtml" />
     <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\Approval\Approval_Panel_Partial.cshtml" />
     <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\Approval\Approval_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ChangeItem\Partial\CancelReason\CancelReason_Form_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ChangeItem\Partial\CancelReason\CancelReason_Panel_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ChangeItem\Partial\CancelReason\CancelReason_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ChangeItem\Partial\ChangeItem_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ChangeItem\Partial\ChangeItem_Form_BtnBottom_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ChangeItem\Partial\ChangeItem_Form_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ChangeItem\Partial\ChangeItem_Form_TabDetail_List_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ChangeItem\Partial\ChangeItem_List_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ChangeItem\Partial\ChangeItem_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ChangeItem\ChangeItem.cshtml" />
+    <Content Include="Views\_Cfl\_CflTag\Partial\_CflTag_List_Partial.cshtml" />
+    <Content Include="Views\_Cfl\_CflTag\Partial\_CflTag_Panel_List_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -892,6 +904,11 @@
     <Compile Include="Controllers\Master\Item\RfidMonitoring\RfidMonitoringController.ViewItemTag.cs" />
     <Compile Include="Controllers\Master\Item\RfidMonitoring\RfidMonitoringController.cs" />
     <Compile Include="Controllers\Master\Item\RfidMonitoring\RfidMonitoringController.Tab.Reference.cs" />
+    <Compile Include="Controllers\Master\Item\ChangeItem\ChangeItemController.CancelReason.cs" />
+    <Compile Include="Controllers\Master\Item\ChangeItem\ChangeItemController.cs" />
+    <Compile Include="Controllers\Master\Item\ChangeItem\ChangeItemController.List.cs" />
+    <Compile Include="Controllers\Master\Item\ChangeItem\ChangeItemController.Nav.cs" />
+    <Compile Include="Controllers\Master\Item\ChangeItem\ChangeItemController.Tab.Detail.cs" />
     <Compile Include="Controllers\Notification\_NotificationController.List.cs" />
     <Compile Include="Controllers\Report\ReportAlert\ReportAlertController.cs" />
     <Compile Include="Controllers\Report\ReportAlert\ReportAlertController.ListDetail.cs" />
@@ -1033,6 +1050,8 @@
     <Compile Include="Controllers\_Cfl\_CflCoa\_CflCoaController.List.Export.cs" />
     <Compile Include="Controllers\_Cfl\_CflDynamic\_CflDynamicController.List.cs" />
     <Compile Include="Controllers\_Cfl\_CflDynamic\_CflDynamicController.List.Export.cs" />
+    <Compile Include="Controllers\_Cfl\_CflTag\_CflTagController.List.cs" />
+    <Compile Include="Controllers\_Cfl\_CflTag\_CflTagController.List.Export.cs" />
     <Compile Include="Controllers\_Cfl\_CflItemByWarehouse\_CflItemByWarehouseController.List.cs" />
     <Compile Include="Controllers\_Cfl\_CflItemByWarehouse\_CflItemByWarehouseController.List.Export.cs" />
     <Compile Include="Controllers\_Cfl\_CflItem\_CflItemController.List.cs" />
