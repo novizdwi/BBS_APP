@@ -16,7 +16,7 @@ namespace Controllers.Transaction.StockOpname
         string VIEW_PANEL_LIST_PARTIAL = "Partial/StockSummaryOpname_Panel_List_Partial";
 
 
-        StockSummaryOpnameService StockSummaryOpnameService;
+        StockSummaryOpnameService stockSummaryOpnameService;
 
         public ActionResult Index()
         {
@@ -28,22 +28,22 @@ namespace Controllers.Transaction.StockOpname
             int userId = (int)Session["userId"];
 
 
-            StockSummaryOpnameService = new StockSummaryOpnameService();
-            StockSummaryOpnameModel StockSummaryOpnameModel;
+            stockSummaryOpnameService = new StockSummaryOpnameService();
+            StockSummaryOpnameModel stockSummaryOpnameModel;
             if (Id == 0)
             {
                 ViewBag.initNew = true;
-                StockSummaryOpnameModel = StockSummaryOpnameService.GetNewModel(userId);
-                StockSummaryOpnameModel._FormMode = FormModeEnum.New;
+                stockSummaryOpnameModel = stockSummaryOpnameService.GetNewModel(userId);
+                stockSummaryOpnameModel._FormMode = FormModeEnum.New;
             }
             else
             {
-                StockSummaryOpnameService = new StockSummaryOpnameService();
-                StockSummaryOpnameModel = StockSummaryOpnameService.GetById(userId, Id);
-                StockSummaryOpnameModel._FormMode = FormModeEnum.Edit;
+                stockSummaryOpnameService = new StockSummaryOpnameService();
+                stockSummaryOpnameModel = stockSummaryOpnameService.GetById(userId, Id);
+                stockSummaryOpnameModel._FormMode = FormModeEnum.Edit;
             }
 
-            return View(VIEW_DETAIL, StockSummaryOpnameModel);
+            return View(VIEW_DETAIL, stockSummaryOpnameModel);
         }
 
         public ActionResult DetailPartial(long Id = 0, string copyFromForm = "", long copyFromId = 0)
@@ -53,22 +53,22 @@ namespace Controllers.Transaction.StockOpname
 
             StockSummaryOpnameModel StockSummaryOpnameModel;
 
-            StockSummaryOpnameService = new StockSummaryOpnameService();
+            stockSummaryOpnameService = new StockSummaryOpnameService();
             if (Id == 0)
             {
-                StockSummaryOpnameModel = StockSummaryOpnameService.GetNewModel(userId);
+                StockSummaryOpnameModel = stockSummaryOpnameService.GetNewModel(userId);
                 StockSummaryOpnameModel._FormMode = FormModeEnum.New;
             }
             else
             {
-                StockSummaryOpnameModel = StockSummaryOpnameService.GetById(userId, Id);
+                StockSummaryOpnameModel = stockSummaryOpnameService.GetById(userId, Id);
                 if (StockSummaryOpnameModel != null)
                 {
                     StockSummaryOpnameModel._FormMode = FormModeEnum.Edit;
                 }
                 else
                 {
-                    StockSummaryOpnameModel = StockSummaryOpnameService.GetNewModel(userId);
+                    StockSummaryOpnameModel = stockSummaryOpnameService.GetNewModel(userId);
                     StockSummaryOpnameModel._FormMode = FormModeEnum.New;
                 }
             }
@@ -82,14 +82,14 @@ namespace Controllers.Transaction.StockOpname
             int userId = (int)Session["userId"];
 
             StockSummaryOpnameModel._UserId = (int)Session["userId"];
-            StockSummaryOpnameService = new StockSummaryOpnameService();
+            stockSummaryOpnameService = new StockSummaryOpnameService();
 
             if (ModelState.IsValid)
             {
                 long Id = 0;
 
-                Id = StockSummaryOpnameService.Add(StockSummaryOpnameModel);
-                StockSummaryOpnameModel = StockSummaryOpnameService.GetById(userId, Id);
+                Id = stockSummaryOpnameService.Add(StockSummaryOpnameModel);
+                StockSummaryOpnameModel = stockSummaryOpnameService.GetById(userId, Id);
                 StockSummaryOpnameModel._FormMode = Models.FormModeEnum.Edit;
             }
             else
@@ -107,15 +107,15 @@ namespace Controllers.Transaction.StockOpname
             int userId = (int)Session["userId"];
 
             StockSummaryOpnameModel._UserId = (int)Session["userId"];
-            StockSummaryOpnameService = new StockSummaryOpnameService();
+            stockSummaryOpnameService = new StockSummaryOpnameService();
             StockSummaryOpnameModel._FormMode = FormModeEnum.Edit;
 
 
 
             //if (ModelState.IsValid)
             //{
-            StockSummaryOpnameService.Update(StockSummaryOpnameModel);
-            StockSummaryOpnameModel = StockSummaryOpnameService.GetById(userId, StockSummaryOpnameModel.Id);
+            stockSummaryOpnameService.Update(StockSummaryOpnameModel);
+            StockSummaryOpnameModel = stockSummaryOpnameService.GetById(userId, StockSummaryOpnameModel.Id);
             //}
             //else
             //{
@@ -133,13 +133,13 @@ namespace Controllers.Transaction.StockOpname
             int userId = (int)Session["userId"];
 
             StockSummaryOpnameModel._UserId = (int)Session["userId"];
-            StockSummaryOpnameService = new StockSummaryOpnameService();
+            stockSummaryOpnameService = new StockSummaryOpnameService();
             StockSummaryOpnameModel._FormMode = FormModeEnum.Edit;
 
             //StockSummaryOpnameService.Update(StockSummaryOpnameModel, "Post");
             //StockSummaryOpnameService.PostAPI(userId, StockSummaryOpnameModel.Id);
-            StockSummaryOpnameService.Post(userId, StockSummaryOpnameModel);
-            StockSummaryOpnameModel = StockSummaryOpnameService.GetById(userId, StockSummaryOpnameModel.Id);
+            stockSummaryOpnameService.Post(userId, StockSummaryOpnameModel);
+            StockSummaryOpnameModel = stockSummaryOpnameService.GetById(userId, StockSummaryOpnameModel.Id);
 
             if (StockSummaryOpnameModel != null)
             {
@@ -147,7 +147,7 @@ namespace Controllers.Transaction.StockOpname
             }
             else
             {
-                StockSummaryOpnameModel = StockSummaryOpnameService.GetNewModel(userId);
+                StockSummaryOpnameModel = stockSummaryOpnameService.GetNewModel(userId);
                 StockSummaryOpnameModel._FormMode = FormModeEnum.New;
             }
 
@@ -161,17 +161,17 @@ namespace Controllers.Transaction.StockOpname
 
             StockSummaryOpnameModel StockSummaryOpnameModel;
 
-            StockSummaryOpnameService = new StockSummaryOpnameService();
-            StockSummaryOpnameService.Cancel(userId, Id, CancelReason);
+            stockSummaryOpnameService = new StockSummaryOpnameService();
+            stockSummaryOpnameService.Cancel(userId, Id, CancelReason);
 
-            StockSummaryOpnameModel = StockSummaryOpnameService.GetById(userId, Id);
+            StockSummaryOpnameModel = stockSummaryOpnameService.GetById(userId, Id);
             if (StockSummaryOpnameModel != null)
             {
                 StockSummaryOpnameModel._FormMode = FormModeEnum.Edit;
             }
             else
             {
-                StockSummaryOpnameModel = StockSummaryOpnameService.GetNewModel(userId);
+                StockSummaryOpnameModel = stockSummaryOpnameService.GetNewModel(userId);
                 StockSummaryOpnameModel._FormMode = FormModeEnum.New;
             }
 
@@ -183,11 +183,11 @@ namespace Controllers.Transaction.StockOpname
         {
             int userId = (int)Session["userId"];
 
-            StockSummaryOpnameService = new StockSummaryOpnameService();
+            stockSummaryOpnameService = new StockSummaryOpnameService();
             StockSummaryOpnameModel._FormMode = FormModeEnum.Edit;
 
-            StockSummaryOpnameService.RefreshItem(userId, StockSummaryOpnameModel.Id);
-            StockSummaryOpnameModel = StockSummaryOpnameService.GetById(userId, StockSummaryOpnameModel.Id);
+            stockSummaryOpnameService.RefreshItem(userId, StockSummaryOpnameModel.Id);
+            StockSummaryOpnameModel = stockSummaryOpnameService.GetById(userId, StockSummaryOpnameModel.Id);
 
             return PartialView(VIEW_FORM_PARTIAL, StockSummaryOpnameModel);
 

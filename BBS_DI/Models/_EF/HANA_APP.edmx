@@ -2230,6 +2230,8 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySet Name="Tx_AdjustmentOut_Item" EntityType="Model1.Tx_AdjustmentOut_Item" />
           <EntitySet Name="Tx_AdjustmentOut_Item_Tag" EntityType="Model1.Tx_AdjustmentOut_Item_Tag" />
           <EntitySet Name="Tx_AdjustmentOut_Location" EntityType="Model1.Tx_AdjustmentOut_Location" />
+          <EntitySet Name="Tx_ChangeItem" EntityType="Model1.Tx_ChangeItem" />
+          <EntitySet Name="Tx_ChangeItem_Tag" EntityType="Model1.Tx_ChangeItem_Tag" />
           <EntitySet Name="Tx_DeactiveTag" EntityType="Model1.Tx_DeactiveTag" />
           <EntitySet Name="Tx_DeactiveTag_Item" EntityType="Model1.Tx_DeactiveTag_Item" />
           <EntitySet Name="Tx_GoodIssue" EntityType="Model1.Tx_GoodIssue" />
@@ -3269,6 +3271,45 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <Property Name="BinAbsEntry" Type="Int32" />
           <Property Name="BinCode" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="TotalIssue" Type="Decimal" Precision="21" Scale="6" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Tx_ChangeItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TransNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TransDate" Type="DateTime" />
+          <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="OriginItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OriginItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ToItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ToItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsAfterPosted" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="CancelReason" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Tx_ChangeItem_Tag">
+          <Key>
+            <PropertyRef Name="DetId" />
+          </Key>
+          <Property Name="Id" Type="Int64" />
+          <Property Name="DetId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TagId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
@@ -5366,6 +5407,47 @@ FROM "BBS_RFID_TEST_UAT_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
                 <ScalarProperty Name="TotalIssue" ColumnName="TotalIssue" />
                 <ScalarProperty Name="BinCode" ColumnName="BinCode" />
                 <ScalarProperty Name="BinAbsEntry" ColumnName="BinAbsEntry" />
+                <ScalarProperty Name="DetId" ColumnName="DetId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tx_ChangeItem">
+            <EntityTypeMapping TypeName="Model1.Tx_ChangeItem">
+              <MappingFragment StoreEntitySet="Tx_ChangeItem">
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ApprovalMessages" ColumnName="ApprovalMessages" />
+                <ScalarProperty Name="IsApproval" ColumnName="IsApproval" />
+                <ScalarProperty Name="CancelReason" ColumnName="CancelReason" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="IsAfterPosted" ColumnName="IsAfterPosted" />
+                <ScalarProperty Name="ApprovalStatus" ColumnName="ApprovalStatus" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ToItemName" ColumnName="ToItemName" />
+                <ScalarProperty Name="ToItemCode" ColumnName="ToItemCode" />
+                <ScalarProperty Name="OriginItemName" ColumnName="OriginItemName" />
+                <ScalarProperty Name="OriginItemCode" ColumnName="OriginItemCode" />
+                <ScalarProperty Name="WhsName" ColumnName="WhsName" />
+                <ScalarProperty Name="WhsCode" ColumnName="WhsCode" />
+                <ScalarProperty Name="TransDate" ColumnName="TransDate" />
+                <ScalarProperty Name="TransNo" ColumnName="TransNo" />
+                <ScalarProperty Name="TransType" ColumnName="TransType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tx_ChangeItem_Tag">
+            <EntityTypeMapping TypeName="Model1.Tx_ChangeItem_Tag">
+              <MappingFragment StoreEntitySet="Tx_ChangeItem_Tag">
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
                 <ScalarProperty Name="DetId" ColumnName="DetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

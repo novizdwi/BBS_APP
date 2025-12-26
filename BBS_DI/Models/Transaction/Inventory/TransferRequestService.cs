@@ -74,6 +74,12 @@ namespace Models.Transaction.Inventory
 
         public string Comments { get; set; }
 
+        public string ApprovalStatus { get; set; }
+
+        public string ApprovalMessages { get; set; }
+
+        public string IsApproval { get; set; }
+
         public string CancelReason { get; set; }
 
         public string CreatedDate_ { get; set; }
@@ -85,7 +91,51 @@ namespace Models.Transaction.Inventory
         public List<TransferRequest_DetailModel> ListDetails_ = new List<TransferRequest_DetailModel>();
 
         public TransferRequest_Detail Details_ { get; set; }
+
+        public List<TransferRequest_ApprovalModel> ListApprovalStep_ = new List<TransferRequest_ApprovalModel>();
+
+        public TransferRequest_Approval ApprovalStep_ { get; set; }
     }
+
+    public class TransferRequest_ApprovalModel
+    {
+        private FormModeEnum _FormModeEnum = FormModeEnum.New;
+
+        public FormModeEnum _FormMode
+        {
+            get { return this._FormModeEnum; }
+            set { this._FormModeEnum = value; }
+        }
+
+        public int _UserId { get; set; }
+
+        public int? Id { get; set; }
+
+        public int? DetId { get; set; }
+
+        public int? StageId { get; set; }
+
+        public int? UserId { get; set; }
+
+        public string Username { get; set; }
+
+        public int? Step { get; set; }
+
+        public string Status { get; set; }
+
+        public string Comments { get; set; }
+
+        public DateTime? ActionDate { get; set; }
+    }
+
+
+    public class TransferRequest_Approval
+    {
+        public List<long> deletedRowKeys { get; set; }
+        public List<TransferRequest_ApprovalModel> insertedRowValues { get; set; }
+        public List<TransferRequest_ApprovalModel> modifiedRowValues { get; set; }
+    }
+
     public class TransferRequest_Detail
     {
         public List<long> deletedRowKeys { get; set; }
@@ -376,26 +426,31 @@ namespace Models.Transaction.Inventory
                         try
                         {
 
-                            Tx_TransferRequest Tx_TransferRequest = new Tx_TransferRequest();
-                            CopyProperty.CopyProperties(model, Tx_TransferRequest, false);
+                            Tx_TransferRequest tx_TransferRequest = new Tx_TransferRequest();
+                            CopyProperty.CopyProperties(model, tx_TransferRequest, false);
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                            Tx_TransferRequest.TransType = "TransferRequest";
-                            Tx_TransferRequest.CreatedDate = dtModified;
-                            Tx_TransferRequest.CreatedUser = model._UserId;
-                            Tx_TransferRequest.ModifiedDate = dtModified;
-                            Tx_TransferRequest.ModifiedUser = model._UserId;
+
+                            var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("TransferRequest");
+
+                            tx_TransferRequest.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
+                            
+                            tx_TransferRequest.TransType = "TransferRequest";
+                            tx_TransferRequest.CreatedDate = dtModified;
+                            tx_TransferRequest.CreatedUser = model._UserId;
+                            tx_TransferRequest.ModifiedDate = dtModified;
+                            tx_TransferRequest.ModifiedUser = model._UserId;
                             
                             string dateX = model.TransDate.Value.ToString("yyyy-MM-dd");
                             string transNo = CONTEXT.Database.SqlQuery<string>("CALL \"SpSysGetNumbering\" (" + model._UserId.ToString() + ",'TransferRequest','" + dateX + "','') ").SingleOrDefault();
-                            Tx_TransferRequest.TransNo = transNo;
+                            tx_TransferRequest.TransNo = transNo;
 
-                            CONTEXT.Tx_TransferRequest.Add(Tx_TransferRequest);
+                            CONTEXT.Tx_TransferRequest.Add(tx_TransferRequest);
                             CONTEXT.SaveChanges();
-                            Id = Tx_TransferRequest.Id;
+                            Id = tx_TransferRequest.Id;
 
                             String keyValue;
-                            keyValue = Tx_TransferRequest.Id.ToString();
+                            keyValue = tx_TransferRequest.Id.ToString();
 
                             if (model.Details_ != null)
                             {
@@ -460,17 +515,20 @@ namespace Models.Transaction.Inventory
                                 
                                 SpNotif.SpSysControllerTransNotif(model._UserId, "TransferRequest", CONTEXT, "before", "TransferRequest", "update", "Id", keyValue);
 
-                                Tx_TransferRequest Tx_TransferRequest = CONTEXT.Tx_TransferRequest.Find(model.Id);
+                                Tx_TransferRequest tx_TransferRequest = CONTEXT.Tx_TransferRequest.Find(model.Id);
                                 DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                                Tx_TransferRequest.ModifiedDate = dtModified;
-                                Tx_TransferRequest.ModifiedUser = model._UserId;
-
-                                if (Tx_TransferRequest != null)
+                            
+                                if (tx_TransferRequest != null)
                                 {
                                     var exceptColumns = new string[] { "Id", "TransNo", "CreatedUser" };
-                                    CopyProperty.CopyProperties(model, Tx_TransferRequest, false, exceptColumns);
-                                    Tx_TransferRequest.ModifiedDate = dtModified;
-                                    Tx_TransferRequest.ModifiedUser = model._UserId;
+                                    CopyProperty.CopyProperties(model, tx_TransferRequest, false, exceptColumns);
+
+                                    var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("TransferRequest");
+
+                                    tx_TransferRequest.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
+
+                                    tx_TransferRequest.ModifiedDate = dtModified;
+                                    tx_TransferRequest.ModifiedUser = model._UserId;
 
                                     CONTEXT.SaveChanges();
 
@@ -787,6 +845,120 @@ namespace Models.Transaction.Inventory
 
         }
 
+        public void Approve(int userId, long Id, string approvalMessages)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                TransferRequestModel adjustmentOutModel = GetById(userId, Id);
+
+                using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        String keyValue;
+                        keyValue = Id.ToString();
+
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferRequest", CONTEXT, "before", "Tx_TransferRequest", "approve", "Id", keyValue);
+
+                        Tx_TransferRequest tx_TransferRequest = CONTEXT.Tx_TransferRequest.Find(Id);
+                        if (tx_TransferRequest != null)
+                        {
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                            var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("TransferRequest");
+                            //tx_TransferRequest.Status = "";
+                            tx_TransferRequest.ApprovalStatus = isApprovalActive == "Y" && string.IsNullOrEmpty(tx_TransferRequest.ApprovalStatus) ? "Waiting" : tx_TransferRequest.ApprovalStatus;
+                            tx_TransferRequest.ApprovalMessages = approvalMessages;
+                            tx_TransferRequest.ModifiedDate = dtModified;
+                            tx_TransferRequest.ModifiedUser = userId;
+
+                            CONTEXT.SaveChanges();
+                        }
+                        //CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferRequest_UpdateItem\"(:p0,:p1, 'before')", userId, Id);
+
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferRequest", CONTEXT, "after", "Tx_TransferRequest", "approve", "Id", keyValue);
+
+                        //if (tx_TransferRequest.ApprovalStatus == "Approved")
+                        //{
+                        //    PostSAP(userId, adjustmentOutModel.Id);
+                        //}
+
+                        CONTEXT_TRANS.Commit();
+
+                    }
+
+                    catch (Exception ex)
+                    {
+                        CONTEXT_TRANS.Rollback();
+
+                        string errorMassage;
+                        if (ex.Message.Substring(12) == "[VALIDATION]")
+                        {
+                            errorMassage = ex.Message;
+                        }
+                        else
+                        {
+                            errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                        }
+
+                        throw new Exception(errorMassage);
+                    }
+                }
+            }
+
+        }
+
+        public void Reject(int userId, long Id, string approvalMessages)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+
+                using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        String keyValue;
+                        keyValue = Id.ToString();
+
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferRequest", CONTEXT, "before", "Tx_TransferRequest", "reject", "Id", keyValue);
+
+                        Tx_TransferRequest tx_TransferRequest = CONTEXT.Tx_TransferRequest.Find(Id);
+                        if (tx_TransferRequest != null)
+                        {
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                            //tx_TransferRequest.Status = "";
+                            tx_TransferRequest.ApprovalMessages = approvalMessages;
+                            tx_TransferRequest.ModifiedDate = dtModified;
+                            tx_TransferRequest.ModifiedUser = userId;
+
+                            CONTEXT.SaveChanges();
+                        }
+
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferRequest", CONTEXT, "after", "Tx_TransferRequest", "reject", "Id", keyValue);
+
+
+                        CONTEXT_TRANS.Commit();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        CONTEXT_TRANS.Rollback();
+
+                        string errorMassage;
+                        if (ex.Message.Substring(12) == "[VALIDATION]")
+                        {
+                            errorMassage = ex.Message;
+                        }
+                        else
+                        {
+                            errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                        }
+
+                        throw new Exception(errorMassage);
+                    }
+                }
+            }
+
+        }
 
         public TransferRequestItemTagView___ GetItemTags(long id, long detId)
         {

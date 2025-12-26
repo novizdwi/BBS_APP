@@ -78,11 +78,15 @@ namespace Models.Transaction.Purchasing
 
         public string Comments { get; set; }
 
+        public string ApprovalStatus { get; set; }
+
+        public string ApprovalMessages { get; set; }
+
+        public string IsApproval { get; set; }
+
         public string CancelReason { get; set; }
 
         public string CheckNeedApproval_ { get; set; }
-
-        public string ApprovalStatus { get; set; }
 
         public string CreatedDate_ { get; set; }
 
@@ -93,6 +97,49 @@ namespace Models.Transaction.Purchasing
         public List<GoodsReceiptPO_RefModel> ListRef_ = new List<GoodsReceiptPO_RefModel>();
 
         public GoodsReceiptPO_Detail Details_ { get; set; }
+
+        public List<GoodsReceiptPO_ApprovalModel> ListApprovalStep_ = new List<GoodsReceiptPO_ApprovalModel>();
+
+        public GoodsReceiptPO_Approval ApprovalStep_ { get; set; }
+    }
+
+    public class GoodsReceiptPO_ApprovalModel
+    {
+        private FormModeEnum _FormModeEnum = FormModeEnum.New;
+
+        public FormModeEnum _FormMode
+        {
+            get { return this._FormModeEnum; }
+            set { this._FormModeEnum = value; }
+        }
+
+        public int _UserId { get; set; }
+
+        public int? Id { get; set; }
+
+        public int? DetId { get; set; }
+
+        public int? StageId { get; set; }
+
+        public int? UserId { get; set; }
+
+        public string Username { get; set; }
+
+        public int? Step { get; set; }
+
+        public string Status { get; set; }
+
+        public string Comments { get; set; }
+
+        public DateTime? ActionDate { get; set; }
+    }
+
+
+    public class GoodsReceiptPO_Approval
+    {
+        public List<long> deletedRowKeys { get; set; }
+        public List<GoodsReceiptPO_ApprovalModel> insertedRowValues { get; set; }
+        public List<GoodsReceiptPO_ApprovalModel> modifiedRowValues { get; set; }
     }
 
     public class GoodsReceiptPO_RefModel
@@ -468,26 +515,31 @@ namespace Models.Transaction.Purchasing
                     {
                         try
                         {
-                            Tx_GoodsReceiptPO Tx_GoodsReceiptPO = new Tx_GoodsReceiptPO();
-                            CopyProperty.CopyProperties(model, Tx_GoodsReceiptPO, false);
+                            Tx_GoodsReceiptPO tx_GoodsReceiptPO = new Tx_GoodsReceiptPO();
+                            CopyProperty.CopyProperties(model, tx_GoodsReceiptPO, false);
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                            Tx_GoodsReceiptPO.TransType = "GoodsReceiptPO";
-                            Tx_GoodsReceiptPO.CreatedDate = dtModified;
-                            Tx_GoodsReceiptPO.CreatedUser = model._UserId;
-                            Tx_GoodsReceiptPO.ModifiedDate = dtModified;
-                            Tx_GoodsReceiptPO.ModifiedUser = model._UserId;
+
+                            var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("GoodsReceiptPO");
+
+                            tx_GoodsReceiptPO.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
+
+                            tx_GoodsReceiptPO.TransType = "GoodsReceiptPO";
+                            tx_GoodsReceiptPO.CreatedDate = dtModified;
+                            tx_GoodsReceiptPO.CreatedUser = model._UserId;
+                            tx_GoodsReceiptPO.ModifiedDate = dtModified;
+                            tx_GoodsReceiptPO.ModifiedUser = model._UserId;
 
                             string dateX = model.TransDate.Value.ToString("yyyy-MM-dd");
                             string transNo = CONTEXT.Database.SqlQuery<string>("CALL \"SpSysGetNumbering\" (" + model._UserId.ToString() + ",'GoodsReceiptPO','" + dateX + "','') ").SingleOrDefault();
-                            Tx_GoodsReceiptPO.TransNo = transNo;
+                            tx_GoodsReceiptPO.TransNo = transNo;
 
-                            CONTEXT.Tx_GoodsReceiptPO.Add(Tx_GoodsReceiptPO);
+                            CONTEXT.Tx_GoodsReceiptPO.Add(tx_GoodsReceiptPO);
                             CONTEXT.SaveChanges();
-                            Id = Tx_GoodsReceiptPO.Id;
+                            Id = tx_GoodsReceiptPO.Id;
 
                             String keyValue;
-                            keyValue = Tx_GoodsReceiptPO.Id.ToString();
+                            keyValue = tx_GoodsReceiptPO.Id.ToString();
                             
                             SpNotif.SpSysControllerTransNotif(model._UserId, "GoodsReceiptPO", CONTEXT, "after", "GoodsReceiptPO", "add", "Id", keyValue);
 
@@ -538,17 +590,19 @@ namespace Models.Transaction.Purchasing
                                 SpNotif.SpSysControllerTransNotif(model._UserId, "GoodsReceiptPO", CONTEXT, "before", "GoodsReceiptPO", "update", "Id", keyValue);
 
 
-                                Tx_GoodsReceiptPO Tx_GoodsReceiptPO = CONTEXT.Tx_GoodsReceiptPO.Find(model.Id);
+                                Tx_GoodsReceiptPO tx_GoodsReceiptPO = CONTEXT.Tx_GoodsReceiptPO.Find(model.Id);
                                 DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                                Tx_GoodsReceiptPO.ModifiedDate = dtModified;
-                                Tx_GoodsReceiptPO.ModifiedUser = model._UserId;
-
-                                if (Tx_GoodsReceiptPO != null)
+                                
+                                if (tx_GoodsReceiptPO != null)
                                 {
                                     var exceptColumns = new string[] { "Id", "TransNo", "CreatedUser" };
-                                    CopyProperty.CopyProperties(model, Tx_GoodsReceiptPO, false, exceptColumns);
-                                    Tx_GoodsReceiptPO.ModifiedDate = dtModified;
-                                    Tx_GoodsReceiptPO.ModifiedUser = model._UserId;
+                                    CopyProperty.CopyProperties(model, tx_GoodsReceiptPO, false, exceptColumns);
+
+                                    var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("GoodsReceiptPO");
+
+                                    tx_GoodsReceiptPO.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
+                                    tx_GoodsReceiptPO.ModifiedDate = dtModified;
+                                    tx_GoodsReceiptPO.ModifiedUser = model._UserId;
 
                                     //if (model.StartDate != null)
                                     //{
@@ -1107,6 +1161,121 @@ namespace Models.Transaction.Purchasing
             }
 
             return true;
+        }
+
+        public void Approve(int userId, long Id, string approvalMessages)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                GoodsReceiptPOModel transferSummaryOutModel = GetById(userId, Id);
+
+                using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        String keyValue;
+                        keyValue = Id.ToString();
+
+                        SpNotif.SpSysControllerTransNotif(userId, "GoodsReceiptPO", CONTEXT, "before", "Tx_GoodsReceiptPO", "approve", "Id", keyValue);
+
+                        Tx_GoodsReceiptPO tx_GoodsReceiptPO = CONTEXT.Tx_GoodsReceiptPO.Find(Id);
+                        if (tx_GoodsReceiptPO != null)
+                        {
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                            var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("GoodsReceiptPO");
+                            //tx_GoodsReceiptPO.Status = "";
+                            tx_GoodsReceiptPO.ApprovalStatus = isApprovalActive == "Y" && string.IsNullOrEmpty(tx_GoodsReceiptPO.ApprovalStatus) ? "Waiting" : tx_GoodsReceiptPO.ApprovalStatus;
+                            tx_GoodsReceiptPO.ApprovalMessages = approvalMessages;
+                            tx_GoodsReceiptPO.ModifiedDate = dtModified;
+                            tx_GoodsReceiptPO.ModifiedUser = userId;
+
+                            CONTEXT.SaveChanges();
+                        }
+                        //CONTEXT.Database.ExecuteSqlCommand("CALL \"SpGoodsReceiptPO_UpdateItem\"(:p0,:p1, 'before')", userId, Id);
+
+                        SpNotif.SpSysControllerTransNotif(userId, "GoodsReceiptPO", CONTEXT, "after", "Tx_GoodsReceiptPO", "approve", "Id", keyValue);
+
+                        if (tx_GoodsReceiptPO.ApprovalStatus == "Approved")
+                        {
+                            PostSAP(userId, transferSummaryOutModel.Id);
+                        }
+
+                        CONTEXT_TRANS.Commit();
+
+                    }
+
+                    catch (Exception ex)
+                    {
+                        CONTEXT_TRANS.Rollback();
+
+                        string errorMassage;
+                        if (ex.Message.Substring(12) == "[VALIDATION]")
+                        {
+                            errorMassage = ex.Message;
+                        }
+                        else
+                        {
+                            errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                        }
+
+                        throw new Exception(errorMassage);
+                    }
+                }
+            }
+
+        }
+
+        public void Reject(int userId, long Id, string approvalMessages)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+
+                using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        String keyValue;
+                        keyValue = Id.ToString();
+
+                        SpNotif.SpSysControllerTransNotif(userId, "GoodsReceiptPO", CONTEXT, "before", "Tx_GoodsReceiptPO", "reject", "Id", keyValue);
+
+                        Tx_GoodsReceiptPO tx_GoodsReceiptPO = CONTEXT.Tx_GoodsReceiptPO.Find(Id);
+                        if (tx_GoodsReceiptPO != null)
+                        {
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                            //tx_GoodsReceiptPO.Status = "";
+                            tx_GoodsReceiptPO.ApprovalMessages = approvalMessages;
+                            tx_GoodsReceiptPO.ModifiedDate = dtModified;
+                            tx_GoodsReceiptPO.ModifiedUser = userId;
+
+                            CONTEXT.SaveChanges();
+                        }
+
+                        SpNotif.SpSysControllerTransNotif(userId, "GoodsReceiptPO", CONTEXT, "after", "Tx_GoodsReceiptPO", "reject", "Id", keyValue);
+
+
+                        CONTEXT_TRANS.Commit();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        CONTEXT_TRANS.Rollback();
+
+                        string errorMassage;
+                        if (ex.Message.Substring(12) == "[VALIDATION]")
+                        {
+                            errorMassage = ex.Message;
+                        }
+                        else
+                        {
+                            errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                        }
+
+                        throw new Exception(errorMassage);
+                    }
+                }
+            }
+
         }
 
         public GoodsReceiptPOItemTagView___ GetItemTags(long id, long detId)

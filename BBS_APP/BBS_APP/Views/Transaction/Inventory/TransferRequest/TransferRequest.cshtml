@@ -256,11 +256,25 @@
     }
 
     function OnClickBtnPost(s, e) {
+
         if (BeforeSave() == false) {
             return;
         }
+        key = Id.GetValue();
+        //Post(s, e);
 
-        var formData = GetFormData();
+        var isApproval = IsApproval.GetValue();
+        var approvalStatus = ApprovalStatus.GetValue();
+
+        if (isApproval == "Y") {
+            btnShowApprovalOnClick(s, e, key);
+        } else {
+            Post(s, e);
+        }
+    }
+
+    function Post(s, e) {
+         var formData = GetFormData();
         if (confirm('Post transaction?')) {
             key = Id.GetValue();
 
@@ -284,7 +298,89 @@
                 }
             });
         }
+    }
 
+     function btnUpdateApprovalOnClick(s, e) {
+         key = Id.GetValue();
+         var reason = ApprovalMessages.GetValue();
+        if (reason == "" || reason == null) {
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Approve", "TransferRequest")',
+            data: { Id: key, ApprovalMessage: reason },
+            beforeSend: function () {
+                OnBegin();
+            },
+            success: function (response) {
+                popupApproval.Hide();
+                RefreshAfterSuccess(response);
+                OnSuccessMsgBox();
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                OnFailure(jqXhr, textStatus, errorThrown)
+            },
+            complete: function () {
+                OnComplete()
+
+            }
+        });
+
+    }
+
+    function btnRejectApprovalOnClick(s, e) {
+        if (confirm('Are you sure to Reject this transaction?')) {
+             key = Id.GetValue();
+         var reason = ApprovalMessages.GetValue();
+            if (reason == "" || reason == null) {
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Reject", "TransferRequest")',
+                data: { Id: key, ApprovalMessage: reason },
+                beforeSend: function () {
+                    OnBegin();
+                },
+                success: function (response) {
+                    popupApproval.Hide();
+                    RefreshAfterSuccess(response);
+                    OnSuccessMsgBox();
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    OnFailure(jqXhr, textStatus, errorThrown)
+                },
+                complete: function () {
+                    OnComplete()
+
+                }
+            });
+        }
+
+    }
+
+ function popupApproval_EndCallback(s, e) {
+        $.validator.unobtrusive.parse("#Approval_formDetail");
+
+        var popup = ASPxClientPopupControl.Cast("popupApproval");
+        if (!popup.IsVisible()) {
+            loadingPanel.Hide();
+            popup.ShowAtPos(400, 100);
+        }
+    }
+
+    function btnShowApprovalOnClick(s, e, Id) {
+        var popup = ASPxClientPopupControl.Cast("popupApproval");
+
+        popup.callbackUrl = '@Url.Action("Approval_PopupListOnDemandPartial", "TransferRequest")' + '?Id=' + Id;
+        popup.PerformCallback();
+
+        if (!popup.IsVisible()) {
+            loadingPanel.Show();
+        }
     }
 
     function OnClickBtnCancel(s, e) {
@@ -953,6 +1049,11 @@ new
     }).GetHtml()
 
 
+@*-------------------------------------------------
+    Approval
+    -------------------------------------------------*@
+
+@Html.Partial("Partial/Approval/Approval_Partial")
 
 @*-------------------------------------------------
     CancelReason
@@ -1031,8 +1132,8 @@ new
 
                 FileTemplateName_.SetValue(data.FileName);
                 var popup = ASPxClientPopupControl.Cast("popupTemplateUpload");
-                popup.Hide(); 
-                var dateValue = new Date(data.Model.TransDate);    
+                popup.Hide();
+                var dateValue = new Date(data.Model.TransDate);
 
                 TransDate.SetValue(dateValue);
                 FromWhsCode.SetValue(data.Model.FromWhsCode);
@@ -1042,9 +1143,9 @@ new
                 Comments.SetValue(data.Model.Comments);
 
                 var grid = ASPxClientGridView.Cast("gvTransferRequestDetail");
-                var details = data.Model.Detail_; 
+                var details = data.Model.Detail_;
                 //reset grid
-                grid.CancelEdit(); 
+                grid.CancelEdit();
                 //var visibleRows = grid.GetVisibleRowsOnPage();
                 //for (var i = visibleRows - 1; i >= 0; i--) {
                 //    grid.batchEditApi.StartEdit(i, 0); // aktifkan row
@@ -1052,7 +1153,7 @@ new
                 //}
 
                 for (var i = 0; i < details.length; i++) {
-                    grid.AddNewRow(); // mulai row baru 
+                    grid.AddNewRow(); // mulai row baru
 
                     // Set value per column
                     grid.batchEditApi.SetCellValue(key, "Id", key);

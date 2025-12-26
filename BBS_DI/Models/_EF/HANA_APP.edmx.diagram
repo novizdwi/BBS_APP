@@ -69,6 +69,8 @@
         <EntityTypeShape EntityType="Model1.Tx_AdjustmentOut_Item" Width="1.5" PointX="12.75" PointY="21.75" />
         <EntityTypeShape EntityType="Model1.Tx_AdjustmentOut_Item_Tag" Width="1.5" PointX="22.75" PointY="0.75" />
         <EntityTypeShape EntityType="Model1.Tx_AdjustmentOut_Location" Width="1.5" PointX="22.75" PointY="5.75" />
+        <EntityTypeShape EntityType="Model1.Tx_ChangeItem" Width="1.5" PointX="22.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Model1.Tx_ChangeItem_Tag" Width="1.5" PointX="22.75" PointY="15.75" />
         <EntityTypeShape EntityType="Model1.Tx_DeactiveTag" Width="1.5" PointX="22.75" PointY="19.75" />
         <EntityTypeShape EntityType="Model1.Tx_DeactiveTag_Item" Width="1.5" PointX="14.75" PointY="23.75" />
         <EntityTypeShape EntityType="Model1.Tx_GoodIssue" Width="1.5" PointX="16.75" PointY="23.75" />
@@ -111,8 +113,6 @@
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Item_Tag" Width="1.5" PointX="32.75" PointY="7.75" />
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Ref" Width="1.5" PointX="32.75" PointY="12.75" />
         <EntityTypeShape EntityType="Model1.Tp_UserAlert" Width="1.5" PointX="32.75" PointY="17.75" />
-        <EntityTypeShape EntityType="Model1.Tx_ChangeItem_Tag" Width="1.5" PointX="11.375" PointY="33.75" />
-        <EntityTypeShape EntityType="Model1.Tx_ChangeItem" Width="1.5" PointX="33.375" PointY="21.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

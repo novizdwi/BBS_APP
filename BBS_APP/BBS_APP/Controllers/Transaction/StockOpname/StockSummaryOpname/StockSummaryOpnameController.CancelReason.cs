@@ -26,17 +26,17 @@ namespace Controllers.Transaction.StockOpname
         {
             int userId = (int)Session["userId"];
 
-            StockSummaryOpnameService = new StockSummaryOpnameService();
+            stockSummaryOpnameService = new StockSummaryOpnameService();
 
             StockSummaryOpnameModel model;
 
             if (Id != 0)
             {
-                model = StockSummaryOpnameService.GetById(userId, Id);
+                model = stockSummaryOpnameService.GetById(userId, Id);
             }
             else
             {
-                model = StockSummaryOpnameService.GetNewModel(userId);
+                model = stockSummaryOpnameService.GetNewModel(userId);
             }
 
             return PartialView(VIEW_PROGRESS_PANEL_PARTIAL, model);
