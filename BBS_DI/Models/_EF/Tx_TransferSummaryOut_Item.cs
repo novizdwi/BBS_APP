@@ -31,6 +31,8 @@ namespace BBS_DI.Models._EF
         public Nullable<decimal> QuantityScan { get; set; }
         public Nullable<decimal> QuantityValid { get; set; }
         public Nullable<decimal> QuantityPosted { get; set; }
+        public Nullable<decimal> QuantityToReceipt { get; set; }
+        public string LineStatus { get; set; }
         public Nullable<int> UomEntry { get; set; }
         public string Uom { get; set; }
         public string Comments { get; set; }
@@ -38,7 +40,5 @@ namespace BBS_DI.Models._EF
         public Nullable<int> CreatedUser { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> ModifiedUser { get; set; }
-        public Nullable<decimal> QuantityToReceipt { get; set; }
-        public string LineStatus { get; set; }
     }
 }

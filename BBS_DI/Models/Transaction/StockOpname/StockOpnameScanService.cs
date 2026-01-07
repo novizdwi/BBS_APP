@@ -322,14 +322,14 @@ namespace Models.Transaction.StockOpname
                             CopyProperty.CopyProperties(model, Tx_StockOpname, false);
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                            Tx_StockOpname.TransType = "StockOpname";
+                            Tx_StockOpname.TransType = "StockOpnameScan";
                             Tx_StockOpname.CreatedDate = dtModified;
                             Tx_StockOpname.CreatedUser = model._UserId;
                             Tx_StockOpname.ModifiedDate = dtModified;
                             Tx_StockOpname.ModifiedUser = model._UserId;
                             
                             string dateX = model.TransDate.Value.ToString("yyyy-MM-dd");
-                            string transNo = CONTEXT.Database.SqlQuery<string>("CALL \"SpSysGetNumbering\" (" + model._UserId.ToString() + ",'StockOpname','" + dateX + "','') ").SingleOrDefault();
+                            string transNo = CONTEXT.Database.SqlQuery<string>("CALL \"SpSysGetNumbering\" (" + model._UserId.ToString() + ",'StockOpnameScan','" + dateX + "','') ").SingleOrDefault();
                             Tx_StockOpname.TransNo = transNo;
 
                             CONTEXT.Tx_StockOpname.Add(Tx_StockOpname);
@@ -390,7 +390,7 @@ namespace Models.Transaction.StockOpname
                                 String keyValue;
                                 keyValue = model.Id.ToString();
                                 
-                                SpNotif.SpSysControllerTransNotif(model._UserId, "StockOpname", CONTEXT, "before", "StockOpname", "update", "Id", keyValue);
+                                SpNotif.SpSysControllerTransNotif(model._UserId, "StockOpnameScan", CONTEXT, "before", "StockOpnameScan", "update", "Id", keyValue);
 
 
                                 Tx_StockOpname Tx_StockOpname = CONTEXT.Tx_StockOpname.Find(model.Id);
@@ -407,7 +407,7 @@ namespace Models.Transaction.StockOpname
 
                                     CONTEXT.SaveChanges();
                                     
-                                    SpNotif.SpSysControllerTransNotif(model._UserId, "StockOpname", CONTEXT, "after", "StockOpname", "update", "Id", keyValue);
+                                    SpNotif.SpSysControllerTransNotif(model._UserId, "StockOpnameScan", CONTEXT, "after", "StockOpnameScan", "update", "Id", keyValue);
                                     
                                 }
 
@@ -454,7 +454,7 @@ namespace Models.Transaction.StockOpname
 
                         Tx_StockOpname tx_StockOpname = CONTEXT.Tx_StockOpname.Find(id);
 
-                        SpNotif.SpSysControllerTransNotif(userId, "StockOpname", CONTEXT, "before", "Tx_StockOpname", "post", "Id", keyValue);
+                        SpNotif.SpSysControllerTransNotif(userId, "StockOpnameScan", CONTEXT, "before", "Tx_StockOpname", "post", "Id", keyValue);
 
                         if (tx_StockOpname != null)
                         {
@@ -466,7 +466,7 @@ namespace Models.Transaction.StockOpname
                             CONTEXT.SaveChanges();
                         }
 
-                        SpNotif.SpSysControllerTransNotif(userId, "StockOpname", CONTEXT, "after", "Tx_StockOpname", "post", "Id", keyValue);
+                        SpNotif.SpSysControllerTransNotif(userId, "StockOpnameScan", CONTEXT, "after", "Tx_StockOpname", "post", "Id", keyValue);
 
 
                         CONTEXT_TRANS.Commit();
@@ -507,7 +507,7 @@ namespace Models.Transaction.StockOpname
 
                         Tx_StockOpname tx_StockOpname = CONTEXT.Tx_StockOpname.Find(Id);
 
-                        SpNotif.SpSysControllerTransNotif(userId, "StockOpname", CONTEXT, "before", "Tx_StockOpname", "cancel", "Id", keyValue);
+                        SpNotif.SpSysControllerTransNotif(userId, "StockOpnameScan", CONTEXT, "before", "Tx_StockOpname", "cancel", "Id", keyValue);
                         if (tx_StockOpname != null)
                         {
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
@@ -519,7 +519,7 @@ namespace Models.Transaction.StockOpname
                             CONTEXT.SaveChanges();
                         }
 
-                        SpNotif.SpSysControllerTransNotif(userId, "StockOpname", CONTEXT, "after", "Tx_StockOpname", "cancel", "Id", keyValue);
+                        SpNotif.SpSysControllerTransNotif(userId, "StockOpnameScan", CONTEXT, "after", "Tx_StockOpname", "cancel", "Id", keyValue);
 
 
                         CONTEXT_TRANS.Commit();

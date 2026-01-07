@@ -64,7 +64,7 @@ namespace Models.Transaction.StockOpname
 
             using (var CONTEXT = new HANA_APP())
             {
-                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "StockOpname");
+                var formAuthorizeSqlWhere = GeneralGetList.GetFormTransAuthorizeSqlWhere(CONTEXT, userId, "StockOpnameScan");
                 if (!string.IsNullOrEmpty(formAuthorizeSqlWhere))
                 {
                     if (string.IsNullOrEmpty(sqlCriteria))

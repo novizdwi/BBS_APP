@@ -89,8 +89,11 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_AdjustmentOut_Item> Tx_AdjustmentOut_Item { get; set; }
         public virtual DbSet<Tx_AdjustmentOut_Item_Tag> Tx_AdjustmentOut_Item_Tag { get; set; }
         public virtual DbSet<Tx_AdjustmentOut_Location> Tx_AdjustmentOut_Location { get; set; }
+        public virtual DbSet<Tx_ChangeItem> Tx_ChangeItem { get; set; }
+        public virtual DbSet<Tx_ChangeItem_Tag> Tx_ChangeItem_Tag { get; set; }
         public virtual DbSet<Tx_DeactiveTag> Tx_DeactiveTag { get; set; }
         public virtual DbSet<Tx_DeactiveTag_Item> Tx_DeactiveTag_Item { get; set; }
+        public virtual DbSet<Tx_DeactiveTag_Log> Tx_DeactiveTag_Log { get; set; }
         public virtual DbSet<Tx_GoodIssue> Tx_GoodIssue { get; set; }
         public virtual DbSet<Tx_GoodsReceiptPO> Tx_GoodsReceiptPO { get; set; }
         public virtual DbSet<Tx_GoodsReceiptPO_Approval> Tx_GoodsReceiptPO_Approval { get; set; }
@@ -122,8 +125,7 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_TransferSummaryIn> Tx_TransferSummaryIn { get; set; }
         public virtual DbSet<Tx_TransferSummaryIn_Approval> Tx_TransferSummaryIn_Approval { get; set; }
         public virtual DbSet<Tx_TransferSummaryIn_Item> Tx_TransferSummaryIn_Item { get; set; }
-        public virtual DbSet<Tx_TransferSummaryIn_Item_tag> Tx_TransferSummaryIn_Item_tag { get; set; }
-        public virtual DbSet<Tx_TransferSummaryIn_Item_Tag1> Tx_TransferSummaryIn_Item_Tag1 { get; set; }
+        public virtual DbSet<Tx_TransferSummaryIn_Item_Tag> Tx_TransferSummaryIn_Item_Tag { get; set; }
         public virtual DbSet<Tx_TransferSummaryIn_Ref> Tx_TransferSummaryIn_Ref { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut> Tx_TransferSummaryOut { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut_Approval> Tx_TransferSummaryOut_Approval { get; set; }
@@ -131,7 +133,5 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_TransferSummaryOut_Item_Tag> Tx_TransferSummaryOut_Item_Tag { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut_Ref> Tx_TransferSummaryOut_Ref { get; set; }
         public virtual DbSet<Tp_UserAlert> Tp_UserAlert { get; set; }
-        public virtual DbSet<Tx_ChangeItem> Tx_ChangeItem { get; set; }
-        public virtual DbSet<Tx_ChangeItem_Tag> Tx_ChangeItem_Tag { get; set; }
     }
 }

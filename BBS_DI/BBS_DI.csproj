@@ -470,6 +470,9 @@
     <Compile Include="Models\_EF\Tx_DeactiveTag_Item.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\_EF\Tx_DeactiveTag_Log.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\_EF\Tx_GoodIssue.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
@@ -563,10 +566,7 @@
     <Compile Include="Models\_EF\Tx_TransferSummaryIn_Item.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\_EF\Tx_TransferSummaryIn_Item_tag.cs">
-      <DependentUpon>HANA_APP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\_EF\Tx_TransferSummaryIn_Item_Tag1.cs">
+    <Compile Include="Models\_EF\Tx_TransferSummaryIn_Item_Tag.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\_EF\Tx_TransferSummaryIn_Ref.cs">
