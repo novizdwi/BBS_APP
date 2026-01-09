@@ -634,11 +634,34 @@
         cbo.Width = 230;
     });
 
-    groupItem_Col3.Items.Add(m => Model.ApprovalStatus, itemSettings =>
+    if (Model.IsApproval == "Y" && string.IsNullOrWhiteSpace(Model.ApprovalStatus))
+    {
+        groupItem_Col4.Items.Add(itemSettings =>
+        {
+            itemSettings.Caption = "";
+            itemSettings.CaptionCellStyle.CssClass = "CaptionStyle";
+        }).SetNestedContent(() => {
+            ViewContext.Writer.Write("<table><tr><td  cellspacing=\"0\" cellpadding=\"0\" >");
+            Html.DevExpress().Label(x =>
+            {
+                x.Name = "labelIsNeedApproval";
+                x.Text = " Need Approval ";
+                x.Properties.EnableClientSideAPI = true;
+                x.ControlStyle.ForeColor = System.Drawing.Color.IndianRed;
+            }
+            )
+            .Render();
+
+            ViewContext.Writer.Write("</td></tr></table>");
+        });
+    }
+
+    groupItem_Col4.Items.Add(m => Model.ApprovalStatus, itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
         itemSettings.Caption = "Approval Status";
         itemSettings.FieldName = "ApprovalStatus";
+        itemSettings.ClientVisible = string.IsNullOrWhiteSpace(Model.ApprovalStatus) ? false : true;
 
         ComboBoxSettings cbo = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
         cbo.Properties.DropDownStyle = DropDownStyle.DropDown;
@@ -665,6 +688,8 @@
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
         itemSettings.Caption = "Is Approval";
         itemSettings.FieldName = "IsApproval";
+        itemSettings.ClientVisible = false;
+
         var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
         txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         txt.Name = "IsApproval";

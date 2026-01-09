@@ -353,12 +353,6 @@ namespace Models.Transaction.Adjustment
                     model.DocNum_ = CONTEXT.Database.SqlQuery<string>(getDocNum, id).FirstOrDefault();
                 }
 
-                //if (model.Id > 0)
-                //{
-                //    ssql = "CALL \"SpSysCheckNeedApproval\" (" + userId.ToString() + "," + model.Id.ToString() + ",'GoodsReceiptPO') ";
-                //    model.CheckNeedApproval_ = CONTEXT.Database.SqlQuery<string>(ssql).FirstOrDefault();
-                //}
-
                 model.ListDetails_ = this.AdjustmentIn_Details(CONTEXT, id);
                 model.ListAttachments_ = this.GetAdjustmentIn_Attachments(id);
                 if (method != "post")
@@ -892,7 +886,7 @@ namespace Models.Transaction.Adjustment
 
                             CONTEXT.SaveChanges();
                         }
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn_UpdateItem\"(:p0,:p1, 'before')", userId, Id);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn_UpdateItem\"(:p0,:p1)", userId, Id);
 
                         SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "after", "Tx_AdjustmentIn", "approve", "Id", keyValue);
 
