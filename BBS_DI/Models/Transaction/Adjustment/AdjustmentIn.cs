@@ -354,7 +354,8 @@ namespace Models.Transaction.Adjustment
                 }
 
                 model.ListDetails_ = this.AdjustmentIn_Details(CONTEXT, id);
-                model.ListAttachments_ = this.GetAdjustmentIn_Attachments(id);
+                model.ListAttachments_ = this.GetAdjustmentIn_Attachments(id); 
+
                 if (method != "post")
                 {
 
