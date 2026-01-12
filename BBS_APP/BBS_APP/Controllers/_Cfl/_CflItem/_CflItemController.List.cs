@@ -31,7 +31,7 @@ namespace Controllers._Cfl
             {
                 var hidden_CflDocId = (string)Request["hidden_CflDocId"];
                 hidden_CflDocId = hidden_CflDocId.Replace("'", "''");
-                cflParam.SqlWhere = string.Format(" AND  \"ItemCode\" LIKE 'FG%' ");
+                cflParam.SqlWhere = string.Format(@" AND  COALESCE(T0.""U_IDU_IsItemFG"", 'N') = 'Y' ");
             }
 
             cflParam.IsMulti = Request["hidden_CflIsMulti"];

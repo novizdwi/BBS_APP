@@ -355,6 +355,8 @@ namespace Models.Transaction.Adjustment
 
                 model.ListDetails_ = this.AdjustmentIn_Details(CONTEXT, id);
                 model.ListAttachments_ = this.GetAdjustmentIn_Attachments(id);
+                model.ListApprovalStep_ = this.GetAdjustmentIn_ApprovalSteps(id);
+
                 if (method != "post")
                 {
 
@@ -431,16 +433,16 @@ namespace Models.Transaction.Adjustment
             return AdjustmentIn;
         }
 
-        public List<AdjustmentIn_ApprovalModel> AdjustmentIn_ApprovalSteps(long id = 0)
+        public List<AdjustmentIn_ApprovalModel> GetAdjustmentIn_ApprovalSteps(long id = 0)
         {
             using (var CONTEXT = new HANA_APP())
             {
-                return AdjustmentIn_ApprovalSteps(CONTEXT, id);
+                return GetAdjustmentIn_ApprovalSteps(CONTEXT, id);
             }
 
         }
 
-        public List<AdjustmentIn_ApprovalModel> AdjustmentIn_ApprovalSteps(HANA_APP CONTEXT, long id = 0)
+        public List<AdjustmentIn_ApprovalModel> GetAdjustmentIn_ApprovalSteps(HANA_APP CONTEXT, long id = 0)
         {
             string ssql = @"SELECT T0.*, T1.""UserName""  AS Username
                 FROM ""Tx_AdjustmentIn_Approval"" T0

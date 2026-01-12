@@ -16,6 +16,10 @@ INSERT INTO "Ts_List" VALUES('RFIDTransType', '03', 'TransferSummaryIn', 'Transf
 INSERT INTO "Ts_List" VALUES('RFIDTransType', '04', 'StockSummaryOpname', 'Stock Summary Opname', '');
 INSERT INTO "Ts_List" VALUES('RFIDTransType', '05', 'AdjustmentIn', 'Adjustment In', '');
 INSERT INTO "Ts_List" VALUES('RFIDTransType', '06', 'AdjustmentOut', 'Adjustment Out', '');
+INSERT INTO "Ts_List" VALUES('RFIDTransType', '07', 'DeactiveTags', 'Deactive Tags', '');
+INSERT INTO "Ts_List" VALUES('RFIDTransType', '08', 'ReactiveTags', 'Reactive Tags', '');
+INSERT INTO "Ts_List" VALUES('RFIDTransType', '09', 'ReplaceTags', 'Replace Tags', '');
+INSERT INTO "Ts_List" VALUES('RFIDTransType', '10', 'ChangeItem', 'Change Item', '');
 
 INSERT INTO "Ts_List" VALUES('RFIDTransType', '07', 'DeactiveTags', 'Deactive Tags', '');
 INSERT INTO "Ts_List" VALUES('RFIDTransType', '08', 'ReactiveTags', 'Reactive Tags', '');
