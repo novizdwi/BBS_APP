@@ -356,6 +356,7 @@ namespace Models.Transaction.Adjustment
 
                 model.ListDetails_ = this.AdjustmentOut_Details(CONTEXT, id);
                 model.ListAttachments_ = this.GetAdjustmentOut_Attachments(id);
+                model.ListApprovalStep_ = this.AdjustmentOut_ApprovalSteps(id);
 
                 if (method != "post")
                 {
@@ -417,6 +418,27 @@ namespace Models.Transaction.Adjustment
             ";
             var AdjustmentOut = CONTEXT.Database.SqlQuery<AdjustmentOut_ItemModel>(ssql, id).ToList();
             return AdjustmentOut;
+        }
+
+        public List<AdjustmentOut_ApprovalModel> AdjustmentOut_ApprovalSteps(long id = 0)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                return AdjustmentOut_ApprovalSteps(CONTEXT, id);
+            }
+
+        }
+
+        public List<AdjustmentOut_ApprovalModel> AdjustmentOut_ApprovalSteps(HANA_APP CONTEXT, long id = 0)
+        {
+            string ssql = @"SELECT T0.*, T1.""UserName""  AS Username
+                FROM ""Tx_AdjustmentOut_Approval"" T0
+                LEFT JOIN ""Tm_User"" T1 ON T1.""Id"" = T0.""UserId""
+                WHERE T0.""Id"" =:p0
+                ORDER BY T0.""Step"" ASC
+            ";
+            var listData = CONTEXT.Database.SqlQuery<AdjustmentOut_ApprovalModel>(ssql, id).ToList();
+            return listData;
         }
 
         public AdjustmentOutModel NavFirst(int userId)
