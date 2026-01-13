@@ -18,6 +18,8 @@
     settings.KeyFieldName = "Id";
     settings.CallbackRouteValues =  new { Controller = "TransferSummaryOut", Action = "ListPartial" };
 
+    settings.Styles.Header.Wrap = DevExpress.Utils.DefaultBoolean.True;
+
     settings.Columns.Add(column =>
     {
         column.Caption = "#";
@@ -78,6 +80,14 @@
 
     settings.Columns.Add(column =>
     {
+        column.FieldName = "RequestNo";
+        column.Caption = "Request No";
+        column.Name = "RequestNo";
+        column.Width = Unit.Percentage(50);
+    });
+
+    settings.Columns.Add(column =>
+    {
         column.FieldName = "FromWhsName";
         column.Caption = "Warehouse Name";
         column.Name = "From Whs Name";
@@ -119,9 +129,9 @@
     settings.Columns.Add(column =>
     {
         column.FieldName = "DocNum";
-        column.Caption = "DocNum";
+        column.Caption = "Doc Num";
         column.Name = "SAP Doc Num";
-        column.Width = Unit.Percentage(80);
+        column.Width = Unit.Percentage(50);
     });
 
     settings.Columns.Add(column =>

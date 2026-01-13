@@ -18,6 +18,7 @@
     settings.KeyFieldName = "Id";
     settings.CallbackRouteValues =  new { Controller = "TransferSummaryIn", Action = "ListPartial" };
 
+    settings.Styles.Header.Wrap = DevExpress.Utils.DefaultBoolean.True;
     settings.Columns.Add(column =>
     {
         column.Caption = "#";
@@ -135,9 +136,9 @@
     settings.Columns.Add(column =>
     {
         column.FieldName = "DocNum";
-        column.Caption = "DocNum";
+        column.Caption = "Doc Num";
         column.Name = "SAP Doc Num";
-        column.Width = Unit.Percentage(80);
+        column.Width = Unit.Percentage(30);
     });
 
     settings.Columns.Add(column =>
