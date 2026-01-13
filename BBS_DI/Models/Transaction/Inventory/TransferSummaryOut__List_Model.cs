@@ -33,6 +33,8 @@ namespace Models.Transaction.Inventory
 
         public DateTime? TransDate { get; set; }
 
+        public string RequestNo { get; set; }
+
         public string VendorCode { get; set; }
 
         public string VendorName { get; set; }
