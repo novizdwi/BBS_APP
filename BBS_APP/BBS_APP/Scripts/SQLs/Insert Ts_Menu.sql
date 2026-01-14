@@ -119,6 +119,8 @@ INSERT INTO "Ts_Menu" VALUES ('StockSummaryOpname/Post', 'Post', 'StockSummaryOp
 INSERT INTO "Ts_Menu" VALUES ('StockSummaryOpname/Cancel', 'Cancel', 'StockSummaryOpname/Cancel', 'StockSummaryOpname', 20030306);
 INSERT INTO "Ts_Menu" VALUES ('StockSummaryOpname/Print', 'Print', 'StockSummaryOpname/Print', 'StockSummaryOpname', 20030310);
 
+
+
 INSERT INTO "Ts_Menu" VALUES ('Purchasing', 'Purchasing', NULL, 'Transaction', 2004);
 
 INSERT INTO "Ts_Menu" VALUES ('PurchaseOrderScan', 'PO Scan List', 'PurchaseOrderScan', 'Purchasing', 200401);

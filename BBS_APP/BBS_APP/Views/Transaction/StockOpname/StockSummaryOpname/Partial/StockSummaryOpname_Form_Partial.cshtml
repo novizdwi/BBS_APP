@@ -656,11 +656,12 @@
         });
     }
 
-    groupItem_Col3.Items.Add(m => Model.ApprovalStatus, itemSettings =>
+    groupItem_Col4.Items.Add(m => Model.ApprovalStatus, itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
         itemSettings.Caption = "Approval Status";
         itemSettings.FieldName = "ApprovalStatus";
+        itemSettings.ClientVisible = string.IsNullOrWhiteSpace(Model.ApprovalStatus) ? false : true;
 
         ComboBoxSettings cbo = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
         cbo.Properties.DropDownStyle = DropDownStyle.DropDown;

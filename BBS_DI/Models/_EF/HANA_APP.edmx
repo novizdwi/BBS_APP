@@ -1507,6 +1507,7 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP2.Tp_UserAlert' does not have
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
+          <Property Name="IsBypassSAP" Type="varchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="Tx_StockSummaryOpname_Item_Tag">
           <Key>
@@ -3757,6 +3758,7 @@ FROM "BBS_RFID_TEST_APP2"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
+          <Property Name="IsBypassSAP" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Tx_StockSummaryOpname_Item_Tag">
           <Key>
@@ -5842,6 +5844,7 @@ FROM "BBS_RFID_TEST_APP2"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySetMapping Name="Tx_StockSummaryOpname_Item">
             <EntityTypeMapping TypeName="Model1.Tx_StockSummaryOpname_Item">
               <MappingFragment StoreEntitySet="Tx_StockSummaryOpname_Item">
+                <ScalarProperty Name="IsBypassSAP" ColumnName="IsBypassSAP" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />

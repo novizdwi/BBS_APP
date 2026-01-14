@@ -194,6 +194,8 @@ namespace Models.Transaction.StockOpname
             set { this._FormModeEnum = value; }
         }
 
+        public int? RowNo { get; set; }
+
         public int _UserId { get; set; }
 
         public long? Id { get; set; }
@@ -275,6 +277,8 @@ namespace Models.Transaction.StockOpname
         public int? BaseLine { get; set; }
 
         public string LineStatus { get; set; }
+
+        public string IsBypassSAP { get; set; }
     }
 
     public class StockSummaryOpname_Ref
@@ -452,7 +456,8 @@ namespace Models.Transaction.StockOpname
 
         public List<StockSummaryOpname_DetailModel> StockSummaryOpname_Details(HANA_APP CONTEXT, long id = 0)
         {
-            string ssql = @"SELECT T0.*, COALESCE(T1.""OnHand"",0) AS ""OnHand"", (COALESCE(T0.""QuantityValid"",0) - COALESCE(T1.""OnHand"",0)) AS ""QtyVariance_"",
+            string ssql = @"SELECT ROW_NUMBER() OVER (PARTITION BY ""Id""  ORDER BY ""DetId"") AS ""RowNo"",
+                T0.*, COALESCE(T1.""OnHand"",0) AS ""OnHand"", (COALESCE(T0.""QuantityValid"",0) - COALESCE(T1.""OnHand"",0)) AS ""QtyVariance_"",
                 T3.""OnHand"" AS ""QuantityOnHandSAP_""
                 FROM ""Tx_StockSummaryOpname_Item"" T0
                 LEFT JOIN ""Tm_Item_Warehouse"" T1 ON T0.""ItemCode"" = T1.""ItemCode"" AND T0.""WhsCode"" = T1.""WhsCode""
@@ -881,7 +886,7 @@ namespace Models.Transaction.StockOpname
         {
             SAPbobsCOM.Company oCompany = null;
             StockSummaryOpnameModel StockSummaryOpname = GetById(userId, id, "post");
-
+            int docEntry = 0;
             using (var CONTEXT = new HANA_APP())
             {
 
@@ -903,15 +908,18 @@ namespace Models.Transaction.StockOpname
                             throw new Exception($"[VALIDATION] - Data not found");
                         }
 
-                        if(StockSummaryOpname.ListDetail_.All(q => q.QuantityValid == 0) )
+                        if(StockSummaryOpname.ListDetail_.All(q => q.QuantityValid == 0))
                         {
                             throw new Exception($"[VALIDATION] - No record created");
                         }
 
-                        int docEntry = AddInventoryPosting(oCompany, userId, id, StockSummaryOpname);
-                        if(docEntry <= 0)
+                        if(StockSummaryOpname.ListDetail_.Any(x => x.IsBypassSAP != "Y"))
                         {
-                            throw new Exception($"[VALIDATION] - No inventory posting created");
+                            docEntry = AddInventoryPosting(oCompany, userId, id, StockSummaryOpname);
+                            if(docEntry <= 0)
+                            {
+                                throw new Exception($"[VALIDATION] - No inventory posting created");
+                            }
                         }
 
                         DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
@@ -990,7 +998,7 @@ namespace Models.Transaction.StockOpname
             oDocument.UserFields.Item("U_IDU_WebTransNo").Value = model.TransNo;
             if(model.ListDetail_.Count > 0)
             {
-                foreach(var item in model.ListDetail_)
+                foreach(var item in model.ListDetail_.Where(x=>x.IsBypassSAP != "Y"))
                 {
                     if(item.QuantityValid > 0)
                     {
