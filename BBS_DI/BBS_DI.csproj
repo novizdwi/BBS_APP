@@ -165,9 +165,11 @@
     <Compile Include="Models\Authentication\Role__List_Model.cs" />
     <Compile Include="Models\Authentication\UserModel.cs" />
     <Compile Include="Models\Authentication\User__List_Model.cs" />
-    <Compile Include="Models\Master\Item\RfidMonitoringModel.cs" />
     <Compile Include="Models\Master\Item\ChangeItemService.cs" />
     <Compile Include="Models\Master\Item\ChangeItem__List_Model.cs" />
+    <Compile Include="Models\Master\Item\RfidMonitoringModel.cs" />
+    <Compile Include="Models\Master\Item\ItemMasterService.cs" />
+    <Compile Include="Models\Master\Item\ItemMaster__List_Model.cs" />
     <Compile Include="Models\Notification\Notification_Model.cs" />
     <Compile Include="Models\Report\ReportAlertDetail__List_Model.cs">
       <SubType>Code</SubType>

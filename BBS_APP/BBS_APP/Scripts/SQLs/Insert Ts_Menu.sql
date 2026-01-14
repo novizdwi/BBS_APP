@@ -15,6 +15,10 @@ INSERT INTO "Ts_Menu" VALUES ('ItemChange/Post', 'Post', 'ItemChange/Post', 'Ite
 INSERT INTO "Ts_Menu" VALUES ('ItemChange/Cancel', 'Cancel', 'ItemChange/Cancel', 'ItemChange', 10010206);
 INSERT INTO "Ts_Menu" VALUES ('ItemChange/Print', 'Print', 'ItemChange/Print', 'ItemChange', 10010207);
 
+INSERT INTO "Ts_Menu" VALUES ('ItemMaster', 'Item Master', '', 'Item', 100103);
+INSERT INTO "Ts_Menu" VALUES ('ItemMaster/Detail#User', 'Detail - User', 'ItemMaster/Detail', 'ItemMaster', 10010301);
+INSERT INTO "Ts_Menu" VALUES ('ItemMaster/Detail#All', 'Detail - All', 'ItemMaster/Detail', 'ItemMaster', 10010302);
+
 INSERT INTO "Ts_Menu" VALUES ('Transaction', 'Transaction', '', '', 20);
 
 INSERT INTO "Ts_Menu" VALUES ('Adjustment', 'Adjustment', '', 'Transaction', 2001);

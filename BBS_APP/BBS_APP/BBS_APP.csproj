@@ -882,6 +882,12 @@
     <Content Include="Views\Transaction\Purchasing\GoodsReceiptPO\Partial\Approval\Approval_Form_TabApproval_Partial.cshtml" />
     <Content Include="Views\Transaction\Purchasing\GoodsReceiptPO\Partial\Approval\Approval_Panel_Partial.cshtml" />
     <Content Include="Views\Transaction\Purchasing\GoodsReceiptPO\Partial\Approval\Approval_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ItemMaster\ItemMaster.cshtml" />
+    <Content Include="Views\Master\Item\ItemMaster\Partial\ItemMaster_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ItemMaster\Partial\ItemMaster_Form_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ItemMaster\Partial\ItemMaster_Form_TabDetail_List_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ItemMaster\Partial\ItemMaster_List_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ItemMaster\Partial\ItemMaster_Panel_List_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -913,6 +919,10 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommonFileHelper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Master\Item\ItemMaster\ItemMasterController.cs" />
+    <Compile Include="Controllers\Master\Item\ItemMaster\ItemMasterController.List.cs" />
+    <Compile Include="Controllers\Master\Item\ItemMaster\ItemMasterController.Nav.cs" />
+    <Compile Include="Controllers\Master\Item\ItemMaster\ItemMasterController.Tab.Detail.cs" />
     <Compile Include="Controllers\Master\Item\RfidMonitoring\RfidMonitoringController.ViewItemTag.cs" />
     <Compile Include="Controllers\Master\Item\RfidMonitoring\RfidMonitoringController.cs" />
     <Compile Include="Controllers\Master\Item\RfidMonitoring\RfidMonitoringController.Tab.Reference.cs" />
