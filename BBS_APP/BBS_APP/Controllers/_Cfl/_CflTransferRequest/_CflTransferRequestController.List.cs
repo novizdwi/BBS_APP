@@ -27,14 +27,15 @@ namespace Controllers._Cfl
             cflParam.Header = Request["hidden_CflHeader"];
             cflParam.SqlWhere = Request["hidden_CflSqlWhere"];
 
+            int userId = (int)Session["userId"];
+
             string ssql;
             if (cflParam.Type == "TransferSummaryOut")
             {
 
                 var hidden_CflDocId = (string)Request["hidden_CflDocId"];
                 hidden_CflDocId = hidden_CflDocId.Replace("'", "''");
-                ssql = @"AND 
-                  EXISTS(
+                ssql = @"AND EXISTS(
                     SELECT 1
                     FROM ""Tx_TransferOut"" Ta
                     WHERE Ta.""Status"" = 'Posted'
@@ -49,6 +50,14 @@ namespace Controllers._Cfl
                 )
                 ";
 
+                if(userId != 1)
+                {
+                    ssql += @"AND EXISTS(
+                        SELECT 1
+                        FROM ""Tm_User_Warehouse"" Tx
+                        WHERE Tx.""WhsCode"" = T0.""FromWhsCode"" 
+                    )";
+                } 
                 cflParam.SqlWhere = string.Format(ssql, hidden_CflDocId);
             }
             if (cflParam.Type == "TransferSummaryIn")

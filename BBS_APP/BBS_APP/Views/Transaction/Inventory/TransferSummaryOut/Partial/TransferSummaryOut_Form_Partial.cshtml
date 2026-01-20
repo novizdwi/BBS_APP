@@ -354,22 +354,7 @@
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
         txt.Width = 230;
     });
-
-    //groupItem_Col2.Items.Add(itemSettings =>
-    //{
-    //    itemSettings.Name = "grpDeviceId";
-    //    itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
-    //    itemSettings.Caption = "Device Id";
-    //    itemSettings.FieldName = "DeviceId";
-    //    var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
-    //    txt.Name = "DeviceId";
-    //    txt.ShowModelErrors = true;
-    //    txt.ReadOnly = true;
-    //    txt.ControlStyle.CssClass = "editor";
-    //    txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-    //    txt.Width = 230;
-    //});
-
+    
     groupItem_Col3.Items.Add(m => Model.Status, itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
@@ -397,7 +382,7 @@
 
     if (Model.IsApproval == "Y" && string.IsNullOrWhiteSpace(Model.ApprovalStatus))
     {
-        groupItem_Col4.Items.Add(itemSettings =>
+        groupItem_Col3.Items.Add(itemSettings =>
         {
             itemSettings.Caption = "";
             itemSettings.CaptionCellStyle.CssClass = "CaptionStyle";
