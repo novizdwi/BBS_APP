@@ -295,7 +295,7 @@ namespace Models.Setting.ApprovalTemplate
                                 WHERE T0.""Id"" = {Id} ";
                             CONTEXT.Database.ExecuteSqlCommand(ssql);
 
-                            SpNotif.SpSysControllerTransNotif(model._UserId, "ApprovalTemplate", CONTEXT, "after", "ApprovalTemplate", "add", "Id", keyValue);
+                            SpNotif.SpSysControllerTransNotif(model._UserId, "ApprovalTemplate", CONTEXT, "after", "Tm_ApprovalTemplate", "add", "Id", keyValue);
                             CONTEXT_TRANS.Commit();
 
                         }
@@ -333,7 +333,7 @@ namespace Models.Setting.ApprovalTemplate
                         String keyValue;
                         keyValue = model.Id.ToString();
                         
-                        SpNotif.SpSysControllerTransNotif(model._UserId, "ApprovalTemplate", CONTEXT, "before", "ApprovalTemplate", "update", "Id", keyValue);
+                        SpNotif.SpSysControllerTransNotif(model._UserId, "ApprovalTemplate", CONTEXT, "before", "Tm_ApprovalTemplate", "update", "Id", keyValue);
 
                         Tm_ApprovalTemplate tm_ApprovalTemplate = CONTEXT.Tm_ApprovalTemplate.Find(model.Id);
                         if (tm_ApprovalTemplate != null)
@@ -376,8 +376,7 @@ namespace Models.Setting.ApprovalTemplate
 
                             Detail_User(CONTEXT, model, model.Id);
 
-                            SpNotif.SpSysControllerTransNotif(model._UserId, "ApprovalTemplate", CONTEXT, "after", "ApprovalTemplate", "update", "Id", keyValue);
-
+                            SpNotif.SpSysControllerTransNotif(model._UserId, "ApprovalTemplate", CONTEXT, "after", "Tm_ApprovalTemplate", "update", "Id", keyValue);
                         }
                         CONTEXT_TRANS.Commit();
                     }
@@ -407,7 +406,7 @@ namespace Models.Setting.ApprovalTemplate
                     {
 
                         string keyValue = id.ToString();
-                        SpNotif.SpSysControllerTransNotif(UserId, "after", CONTEXT, "before", "ApprovalTemplate", "delete", "Id", id.ToString());
+                        SpNotif.SpSysControllerTransNotif(UserId, "ApprovalTemplate", CONTEXT, "before", "Tm_ApprovalTemplate", "delete", "Id", keyValue);
                         Tm_ApprovalTemplate tm_ApprovalTemplate = CONTEXT.Tm_ApprovalTemplate.Find(id);
 
                         CONTEXT.Database.ExecuteSqlCommand(@"DELETE FROM ""Tm_ApprovalTemplate_Role""  WHERE ""Id"" = :p0 ", id);
@@ -417,7 +416,7 @@ namespace Models.Setting.ApprovalTemplate
 
                         CONTEXT.Tm_ApprovalTemplate.Remove(tm_ApprovalTemplate);
                         CONTEXT.SaveChanges();
-                        SpNotif.SpSysControllerTransNotif(UserId, "after", CONTEXT, "after", "ApprovalTemplate", "delete", "Id", id.ToString());
+                        SpNotif.SpSysControllerTransNotif(UserId, "ApprovalTemplate", CONTEXT, "after", "Tm_ApprovalTemplate", "delete", "Id", keyValue);
 
                         CONTEXT_TRANS.Commit();
                     }

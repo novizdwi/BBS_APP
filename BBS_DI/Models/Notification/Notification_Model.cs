@@ -29,92 +29,118 @@ namespace Models.Notification
     public class Notification_View__
     {
         public int? Id { get; set; }
-        public string TransNo { get; set; }
         public string TransType { get; set; }
+        public string ObjectName { get; set; }
+        public string TransNo { get; set; }
         public DateTime RequestDate { get; set; }
-        public string Message { get; set; }
+        public int CreatedUser { get; set; }
+        public string FirstName { get; set; }
 
     }
 
     public class Notification_Model
     {
         public static string ssql = @"
-            
-            SELECT TOP 5
-                T0.""Id"",
-                T0.""TransNo"", T0.""TransType"" ,
-                T0.""CreatedDate"" AS ""RequestDate"", 
-                T0.""ApprovalMessages"" AS ""Message""
-            FROM ""Tx_AdjustmentIn"" T0
-            INNER JOIN ""Tx_AdjustmentIn_Approval"" T1 ON T1.""Id"" = T0.""Id""
-            WHERE T0.""ApprovalStatus"" = 'Waiting' AND T1.""UserId"" = {UserId}
-            
-            UNION 
+            SELECT
+                Tx.*,
+                Ty.""FirstName"",
+                Tz.""ObjectName""
+            FROM(
+                SELECT
+                    T0.""Id"",
+                    T0.""TransType"",
+                    T0.""TransNo"" AS ""TransNo"" ,
+                    T0.""CreatedDate"" AS ""RequestDate"", 
+                    T0.""CreatedUser"" AS ""CreatedUser""
+                FROM ""Tx_AdjustmentIn"" T0
+                INNER JOIN ""Tx_AdjustmentIn_Approval"" T1 ON T1.""Id"" = T0.""Id""
+                WHERE T0.""ApprovalStatus"" = 'Waiting' 
+                AND T1.""UserId"" = {UserId}
+                AND T0.""Status"" NOT IN ('Cancel', 'Posted')
+                UNION 
 
-            SELECT TOP 5
-                T0.""Id"",
-                T0.""TransNo"", T0.""TransType"" ,
-                T0.""CreatedDate"" AS ""RequestDate"", 
-                T0.""ApprovalMessages"" AS ""Message""
-            FROM ""Tx_AdjustmentOut"" T0
-            INNER JOIN ""Tx_AdjustmentOut_Approval"" T1 ON T1.""Id"" = T0.""Id""
-            WHERE T0.""ApprovalStatus"" = 'Waiting' AND T1.""UserId"" = {UserId}
-            
-            UNION
+                SELECT 
+                    T0.""Id"",
+                    T0.""TransType"",
+                    T0.""TransNo"" AS ""TransNo"" ,
+                    T0.""CreatedDate"" AS ""RequestDate"", 
+                    T0.""CreatedUser"" AS ""CreatedUser""
+                FROM ""Tx_AdjustmentOut"" T0
+                INNER JOIN ""Tx_AdjustmentOut_Approval"" T1 ON T1.""Id"" = T0.""Id""
+                WHERE T0.""ApprovalStatus"" = 'Waiting' 
+                AND T1.""UserId"" = {UserId}
+                AND T0.""Status"" NOT IN ('Cancel', 'Posted')            
+                UNION
 
-            SELECT TOP 5
-                T0.""Id"",
-                T0.""TransNo"", T0.""TransType"" ,
-                T0.""CreatedDate"" AS ""RequestDate"", 
-                T0.""ApprovalMessages"" AS ""Message""
-            FROM ""Tx_GoodsReceiptPO"" T0
-            INNER JOIN ""Tx_GoodsReceiptPO_Approval"" T1 ON T1.""Id"" = T0.""Id""
-            WHERE T0.""ApprovalStatus"" = 'Waiting' AND T1.""UserId"" = {UserId}
-            
-            UNION
+                SELECT 
+                    T0.""Id"",
+                    T0.""TransType"",
+                    T0.""TransNo"" AS ""TransNo"" ,
+                    T0.""CreatedDate"" AS ""RequestDate"", 
+                    T0.""CreatedUser"" AS ""CreatedUser""
+                FROM ""Tx_GoodsReceiptPO"" T0
+                INNER JOIN ""Tx_GoodsReceiptPO_Approval"" T1 ON T1.""Id"" = T0.""Id""
+                WHERE T0.""ApprovalStatus"" = 'Waiting' 
+                AND T1.""UserId"" = {UserId}
+                AND T0.""Status"" NOT IN ('Cancel', 'Posted')            
+                UNION
 
-             SELECT TOP 5
-                T0.""Id"",
-                T0.""TransNo"", T0.""TransType"" ,
-                T0.""CreatedDate"" AS ""RequestDate"", 
-                T0.""ApprovalMessages"" AS ""Message""
-            FROM ""Tx_StockSummaryOpname"" T0
-            INNER JOIN ""Tx_StockSummaryOpname_Approval"" T1 ON T1.""Id"" = T0.""Id""
-            WHERE T0.""ApprovalStatus"" = 'Waiting' AND T1.""UserId"" = {UserId}
-            
-            UNION
+                 SELECT 
+                    T0.""Id"",
+                    T0.""TransType"",
+                    T0.""TransNo"" AS ""TransNo"" ,
+                    T0.""CreatedDate"" AS ""RequestDate"", 
+                    T0.""CreatedUser"" AS ""CreatedUser""
+                FROM ""Tx_StockSummaryOpname"" T0
+                INNER JOIN ""Tx_StockSummaryOpname_Approval"" T1 ON T1.""Id"" = T0.""Id""
+                WHERE T0.""ApprovalStatus"" = 'Waiting' 
+                AND T1.""UserId"" = {UserId}
+                AND T0.""Status"" NOT IN ('Cancel', 'Posted')            
+                UNION
 
-            SELECT TOP 5
-                T0.""Id"",
-                T0.""TransNo"", T0.""TransType"" ,
-                T0.""CreatedDate"" AS ""RequestDate"", 
-                T0.""ApprovalMessages"" AS ""Message""
-            FROM ""Tx_TransferRequest"" T0
-            INNER JOIN ""Tx_TransferRequest_Approval"" T1 ON T1.""Id"" = T0.""Id""
-            WHERE T0.""ApprovalStatus"" = 'Waiting' AND T1.""UserId"" = {UserId}
+                SELECT 
+                    T0.""Id"",
+                    T0.""TransType"",
+                    T0.""TransNo"" AS ""TransNo"" ,
+                    T0.""CreatedDate"" AS ""RequestDate"", 
+                    T0.""CreatedUser"" AS ""CreatedUser""
+                FROM ""Tx_TransferRequest"" T0
+                INNER JOIN ""Tx_TransferRequest_Approval"" T1 ON T1.""Id"" = T0.""Id""
+                WHERE T0.""ApprovalStatus"" = 'Waiting' 
+                AND T1.""UserId"" = {UserId}
+                AND T0.""Status"" NOT IN ('Cancel', 'Posted')            
+                UNION
             
-            UNION
+                SELECT 
+                    T0.""Id"",
+                    T0.""TransType"",
+                    T0.""TransNo"" AS ""TransNo"" ,
+                    T0.""CreatedDate"" AS ""RequestDate"", 
+                    T0.""CreatedUser"" AS ""CreatedUser""
+                FROM ""Tx_TransferSummaryOut"" T0
+                INNER JOIN ""Tx_TransferSummaryOut_Approval"" T1 ON T1.""Id"" = T0.""Id""
+                WHERE T0.""ApprovalStatus"" = 'Waiting' 
+                AND T1.""UserId"" = {UserId}
+                AND T0.""Status"" NOT IN ('Cancel', 'Posted')
             
-            SELECT TOP 5
-                T0.""Id"",
-                T0.""TransNo"", T0.""TransType"" ,
-                T0.""CreatedDate"" AS ""RequestDate"", 
-                T0.""ApprovalMessages"" AS ""Message""
-            FROM ""Tx_TransferSummaryOut"" T0
-            INNER JOIN ""Tx_TransferSummaryOut_Approval"" T1 ON T1.""Id"" = T0.""Id""
-            WHERE T0.""ApprovalStatus"" = 'Waiting' AND T1.""UserId"" = {UserId}
+                UNION
             
-            UNION
+                SELECT 
+                    T0.""Id"",
+                    T0.""TransType"",
+                    T0.""TransNo"" AS ""TransNo"" ,
+                    T0.""CreatedDate"" AS ""RequestDate"", 
+                    T0.""CreatedUser"" AS ""CreatedUser""
+                FROM ""Tx_TransferSummaryIn"" T0
+                INNER JOIN ""Tx_TransferSummaryIn_Approval"" T1 ON T1.""Id"" = T0.""Id""
+                WHERE T0.""ApprovalStatus"" = 'Waiting' 
+                AND T1.""UserId"" = {UserId}
+                AND T0.""Status"" NOT IN ('Cancel', 'Posted')
+            ) Tx
+            LEFT JOIN ""Tm_User"" Ty ON Tx.""CreatedUser"" = Ty.""Id""
+            LEFT JOIN ""Ts_ObjectApproval"" Tz ON Tx.""TransType"" = Tz.""ObjectCode"" 
             
-            SELECT TOP 5
-                T0.""Id"",
-                T0.""TransNo"", T0.""TransType"" ,
-                T0.""CreatedDate"" AS ""RequestDate"", 
-                T0.""ApprovalMessages"" AS ""Message""
-            FROM ""Tx_TransferSummaryIn"" T0
-            INNER JOIN ""Tx_TransferSummaryIn_Approval"" T1 ON T1.""Id"" = T0.""Id""
-            WHERE T0.""ApprovalStatus"" = 'Waiting' AND T1.""UserId"" = {UserId}
-
+            ORDER BY Tx.""RequestDate"" DESC
         ";
 
         public static void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e, int userId, Notification_ParamModel notificationParam)
