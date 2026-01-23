@@ -1109,7 +1109,7 @@ namespace Models.Transaction.Adjustment
 
         }
 
-        public List<AdjustmentIn_Item_TagModel> GetItemTagDetail(HANA_APP CONTEXT, long id = 0, long detId)
+        public List<AdjustmentIn_Item_TagModel> GetItemTagDetail(HANA_APP CONTEXT, long id = 0, long detId = 0)
         {
             string sql = @" 
                     SELECT 
