@@ -633,7 +633,7 @@
         cbo.Width = 230;
     });
 
-    if (Model.IsApproval == "Y" && string.IsNullOrWhiteSpace(Model.ApprovalStatus))
+    if (Model.ApprovalTemplateId_.ToString() != "-1" && string.IsNullOrWhiteSpace(Model.ApprovalStatus) && Model.Id != 0 && Model.Status == "Draft")
     {
         groupItem_Col4.Items.Add(itemSettings =>
         {

@@ -301,11 +301,8 @@
     }
 
      function btnUpdateApprovalOnClick(s, e) {
-         key = Id.GetValue();
-         var reason = ApprovalMessages.GetValue();
-        if (reason == "" || reason == null) {
-            return;
-        }
+        key = Id.GetValue();
+        var reason = ApprovalMessages.GetValue();
 
         $.ajax({
             type: "POST",
@@ -334,9 +331,6 @@
         if (confirm('Are you sure to Reject this transaction?')) {
              key = Id.GetValue();
          var reason = ApprovalMessages.GetValue();
-            if (reason == "" || reason == null) {
-                return;
-            }
 
             $.ajax({
                 type: "POST",

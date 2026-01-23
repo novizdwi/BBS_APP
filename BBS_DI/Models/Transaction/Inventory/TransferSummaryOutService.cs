@@ -98,6 +98,8 @@ namespace Models.Transaction.Inventory
 
         public string ModifiedDate_ { get; set; }
 
+        public int? ApprovalTemplateId_ { get; set; }
+
         public List<TransferSummaryOut_DetailModel> ListDetails_ = new List<TransferSummaryOut_DetailModel>();
 
         public List<TransferSummaryOut_RefModel> ListRef_ = new List<TransferSummaryOut_RefModel>();
@@ -329,6 +331,13 @@ namespace Models.Transaction.Inventory
                 model.ListRef_ = this.TransferSummaryOut_Refs(CONTEXT, id);
                 model.ListDetails_ = this.TransferSummaryOut_Details(CONTEXT, id);
                 model.ListApprovalStep_ = this.TransferSummaryOut_ApprovalSteps(id);
+
+                if (model.Status == "Draft")
+                {
+                    int? approvalId = CONTEXT.Database.SqlQuery<int?>(@"CALL ""SpApproval_CheckNeedApproval""(:p0, 'AdjustmentIn', :p1) ", userId, model.Id).FirstOrDefault();
+                    model.ApprovalTemplateId_ = approvalId;
+                }
+
             }
 
             return model;

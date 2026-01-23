@@ -52,13 +52,14 @@
         column.FieldName = "SortCode";
         column.Name = "SortCode";
         column.Caption = "Sort";
-        column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.HeaderStyle.HorizontalAlign = HorizontalAlign.Center;
+        column.ColumnType = MVCxGridViewColumnType.SpinEdit;
         column.Settings.AllowSort = DefaultBoolean.False;
+        column.Width = 100;
 
-        column.Width = 50;
-
-        var txt = column.PropertiesEdit as TextBoxProperties;
+        var txt = column.PropertiesEdit as SpinEditProperties;
+        txt.SpinButtons.ShowIncrementButtons = false;
+        txt.MinValue = 1;
+        txt.MaxValue = 99999;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
 
     });

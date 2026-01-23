@@ -152,6 +152,53 @@ namespace Controllers.Transaction.Adjustment
 
             return PartialView(VIEW_FORM_PARTIAL, adjustmentOutModel);
         }
-        
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Approve(long Id, string ApprovalMessage = "")
+        {
+            int userId = (int)Session["userId"];
+
+            AdjustmentOutModel adjustmentInModel;
+
+            adjustmentOutService = new AdjustmentOutService();
+            adjustmentOutService.Approve(userId, Id, ApprovalMessage);
+
+            adjustmentInModel = adjustmentOutService.GetById(userId, Id);
+            if (adjustmentInModel != null)
+            {
+                adjustmentInModel._FormMode = FormModeEnum.Edit;
+            }
+            else
+            {
+                adjustmentInModel = adjustmentOutService.GetNewModel(userId);
+                adjustmentInModel._FormMode = FormModeEnum.New;
+            }
+
+            return PartialView(VIEW_FORM_PARTIAL, adjustmentInModel);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Reject(long Id, string ApprovalMessage = "")
+        {
+            int userId = (int)Session["userId"];
+
+            AdjustmentOutModel adjustmentInModel;
+
+            adjustmentOutService = new AdjustmentOutService();
+            adjustmentOutService.Reject(userId, Id, ApprovalMessage);
+
+            adjustmentInModel = adjustmentOutService.GetById(userId, Id);
+            if (adjustmentInModel != null)
+            {
+                adjustmentInModel._FormMode = FormModeEnum.Edit;
+            }
+            else
+            {
+                adjustmentInModel = adjustmentOutService.GetNewModel(userId);
+                adjustmentInModel._FormMode = FormModeEnum.New;
+            }
+
+            return PartialView(VIEW_FORM_PARTIAL, adjustmentInModel);
+        }
     }
 }

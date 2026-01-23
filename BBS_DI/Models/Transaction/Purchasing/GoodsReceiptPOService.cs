@@ -86,11 +86,11 @@ namespace Models.Transaction.Purchasing
 
         public string CancelReason { get; set; }
 
-        public string CheckNeedApproval_ { get; set; }
-
         public string CreatedDate_ { get; set; }
 
         public string ModifiedDate_ { get; set; }
+
+        public int? ApprovalTemplateId_ { get; set; }
 
         public List<GoodsReceiptPO_DetailModel> ListDetails_ = new List<GoodsReceiptPO_DetailModel>();
 
@@ -346,6 +346,13 @@ namespace Models.Transaction.Purchasing
 
                 model.ListRef_ = this.GoodsReceiptPO_Refs(CONTEXT, id);
                 model.ListDetails_ = this.GoodsReceiptPO_Details(CONTEXT, id);
+
+                if (model.Status == "Draft")
+                {
+                    int? approvalId = CONTEXT.Database.SqlQuery<int?>(@"CALL ""SpApproval_CheckNeedApproval""(:p0, 'AdjustmentIn', :p1) ", userId, model.Id).FirstOrDefault();
+                    model.ApprovalTemplateId_ = approvalId;
+                }
+
             }
 
             return model;

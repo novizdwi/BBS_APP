@@ -103,6 +103,8 @@ namespace Models.Transaction.Adjustment
 
         public string ModifiedDate_ { get; set; }
 
+        public int? ApprovalTemplateId_ { get; set; }
+
         public List<AdjustmentOut_ItemModel> ListDetails_ = new List<AdjustmentOut_ItemModel>();
 
         public AdjustmentOut_Detail Details_ { get; set; }

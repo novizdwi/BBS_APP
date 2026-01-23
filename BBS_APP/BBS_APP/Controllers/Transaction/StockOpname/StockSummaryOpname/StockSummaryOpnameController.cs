@@ -178,6 +178,55 @@ namespace Controllers.Transaction.StockOpname
             return PartialView(VIEW_FORM_PARTIAL, StockSummaryOpnameModel);
         }
 
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Approve(long Id, string ApprovalMessage = "")
+        {
+            int userId = (int)Session["userId"];
+
+            StockSummaryOpnameModel stockSummaryOpnameModel;
+
+            stockSummaryOpnameService = new StockSummaryOpnameService();
+            stockSummaryOpnameService.Approve(userId, Id, ApprovalMessage);
+
+            stockSummaryOpnameModel = stockSummaryOpnameService.GetById(userId, Id);
+            if (stockSummaryOpnameModel != null)
+            {
+                stockSummaryOpnameModel._FormMode = FormModeEnum.Edit;
+            }
+            else
+            {
+                stockSummaryOpnameModel = stockSummaryOpnameService.GetNewModel(userId);
+                stockSummaryOpnameModel._FormMode = FormModeEnum.New;
+            }
+
+            return PartialView(VIEW_FORM_PARTIAL, stockSummaryOpnameModel);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Reject(long Id, string ApprovalMessage = "")
+        {
+            int userId = (int)Session["userId"];
+
+            StockSummaryOpnameModel stockSummaryOpnameModel;
+
+            stockSummaryOpnameService = new StockSummaryOpnameService();
+            stockSummaryOpnameService.Reject(userId, Id, ApprovalMessage);
+
+            stockSummaryOpnameModel = stockSummaryOpnameService.GetById(userId, Id);
+            if (stockSummaryOpnameModel != null)
+            {
+                stockSummaryOpnameModel._FormMode = FormModeEnum.Edit;
+            }
+            else
+            {
+                stockSummaryOpnameModel = stockSummaryOpnameService.GetNewModel(userId);
+                stockSummaryOpnameModel._FormMode = FormModeEnum.New;
+            }
+
+            return PartialView(VIEW_FORM_PARTIAL, stockSummaryOpnameModel);
+        }
+
+
 
         public ActionResult RefreshItem(StockSummaryOpnameModel StockSummaryOpnameModel)
         {

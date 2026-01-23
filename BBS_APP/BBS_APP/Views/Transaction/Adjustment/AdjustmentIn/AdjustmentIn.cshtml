@@ -295,9 +295,6 @@ function RefreshAfterSuccess(response) {
      function btnUpdateApprovalOnClick(s, e) {
          key = Id.GetValue();
          var reason = ApprovalMessages.GetValue();
-        if (reason == "" || reason == null) {
-            return;
-        }
 
         $.ajax({
             type: "POST",
@@ -325,10 +322,7 @@ function RefreshAfterSuccess(response) {
     function btnRejectApprovalOnClick(s, e) {
         if (confirm('Are you sure to Reject this transaction?')) {
              key = Id.GetValue();
-         var reason = ApprovalMessages.GetValue();
-            if (reason == "" || reason == null) {
-                return;
-            }
+            var reason = ApprovalMessages.GetValue();
 
             $.ajax({
                 type: "POST",

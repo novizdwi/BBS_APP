@@ -78,8 +78,6 @@ namespace Models.Transaction.Adjustment
 
         public string CancelReason { get; set; }
 
-        public string CheckNeedApproval_ { get; set; }
-
         public string ApprovalStatus { get; set; }
 
         public string ApprovalMessages { get; set; }
@@ -102,6 +100,8 @@ namespace Models.Transaction.Adjustment
         public string CreatedDate_ { get; set; }
 
         public string ModifiedDate_ { get; set; }
+
+        public int? ApprovalTemplateId_ { get; set; }
 
         public List<AdjustmentIn_ItemModel> ListDetails_ = new List<AdjustmentIn_ItemModel>();
 
@@ -359,6 +359,11 @@ namespace Models.Transaction.Adjustment
 
                 if (method != "post")
                 {
+                    if(model.Status == "Draft")
+                    {                        
+                        int? approvalId = CONTEXT.Database.SqlQuery<int?>(@"CALL ""SpApproval_CheckNeedApproval""(:p0, 'AdjustmentIn', :p1) ", userId, model.Id).FirstOrDefault();
+                        model.ApprovalTemplateId_ = approvalId;
+                    }
 
                     model.PillarsList = GeneralGetList.GetCostCenterList("1");
                     model.ClassList = GeneralGetList.GetCostCenterList("2");

@@ -178,6 +178,30 @@ namespace Controllers.Transaction.Adjustment
             return PartialView(VIEW_FORM_PARTIAL, adjustmentInModel);
         }
 
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Reject(long Id, string ApprovalMessage = "")
+        {
+            int userId = (int)Session["userId"];
+
+            AdjustmentInModel adjustmentInModel;
+
+            adjustmentInService = new AdjustmentInService();
+            adjustmentInService.Reject(userId, Id, ApprovalMessage);
+
+            adjustmentInModel = adjustmentInService.GetById(userId, Id);
+            if (adjustmentInModel != null)
+            {
+                adjustmentInModel._FormMode = FormModeEnum.Edit;
+            }
+            else
+            {
+                adjustmentInModel = adjustmentInService.GetNewModel(userId);
+                adjustmentInModel._FormMode = FormModeEnum.New;
+            }
+
+            return PartialView(VIEW_FORM_PARTIAL, adjustmentInModel);
+        }
+
         public ActionResult GetPillars( string PillarsCode)
         {
             var list = Models._Utils.GeneralGetList.GetCostCenterList("1");

@@ -113,6 +113,8 @@ namespace Models.Transaction.StockOpname
 
         public string ModifiedDate_ { get; set; }
 
+        public int? ApprovalTemplateId_ { get; set; }
+
         public List<StockSummaryOpname_DetailModel> ListDetail_ = new List<StockSummaryOpname_DetailModel>();
 
         public List<StockSummaryOpname_RefModel> ListRef_ = new List<StockSummaryOpname_RefModel>();
@@ -435,6 +437,12 @@ namespace Models.Transaction.StockOpname
 
                 if (method != "post")
                 {
+                    if (model.Status == "Draft")
+                    {
+                        int? approvalId = CONTEXT.Database.SqlQuery<int?>(@"CALL ""SpApproval_CheckNeedApproval""(:p0, 'AdjustmentIn', :p1) ", userId, model.Id).FirstOrDefault();
+                        model.ApprovalTemplateId_ = approvalId;
+                    }
+
                     model.PillarsList = GeneralGetList.GetCostCenterList("1");
                     model.ClassList = GeneralGetList.GetCostCenterList("2");
                     model.SubClass1List = GeneralGetList.GetCostCenterList("3");

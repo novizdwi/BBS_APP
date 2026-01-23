@@ -151,6 +151,23 @@
     groupItem_Col1.Items.Add(itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Template Id";
+        itemSettings.FieldName = "ApprovalTemplateId_";
+        itemSettings.ClientVisible = true;
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "ApprovalTemplateId_";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
+        txt.Width = 230;
+    });
+
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
         itemSettings.Caption = "CancelReason";
         itemSettings.FieldName = "CancelReason";
         itemSettings.ClientVisible = false;
@@ -644,7 +661,7 @@
         cbo.Width = 200;
     });
 
-    if (Model.IsApproval == "Y" && string.IsNullOrWhiteSpace(Model.ApprovalStatus))
+    if (Model.ApprovalTemplateId_.ToString() != "-1" && string.IsNullOrWhiteSpace(Model.ApprovalStatus) && Model.Id != 0 && Model.Status == "Draft")
     {
         groupItem_Col4.Items.Add(itemSettings =>
         {

@@ -178,6 +178,53 @@ namespace Controllers.Transaction.Inventory
             return PartialView(VIEW_FORM_PARTIAL, transferSummaryInModel);
         }
 
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Approve(long Id, string ApprovalMessage = "")
+        {
+            int userId = (int)Session["userId"];
+
+            TransferSummaryInModel transferSummaryInModel;
+
+            transferSummaryInService = new TransferSummaryInService();
+            transferSummaryInService.Approve(userId, Id, ApprovalMessage);
+
+            transferSummaryInModel = transferSummaryInService.GetById(userId, Id);
+            if (transferSummaryInModel != null)
+            {
+                transferSummaryInModel._FormMode = FormModeEnum.Edit;
+            }
+            else
+            {
+                transferSummaryInModel = transferSummaryInService.GetNewModel(userId);
+                transferSummaryInModel._FormMode = FormModeEnum.New;
+            }
+
+            return PartialView(VIEW_FORM_PARTIAL, transferSummaryInModel);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Reject(long Id, string ApprovalMessage = "")
+        {
+            int userId = (int)Session["userId"];
+
+            TransferSummaryInModel transferSummaryInModel;
+
+            transferSummaryInService = new TransferSummaryInService();
+            transferSummaryInService.Reject(userId, Id, ApprovalMessage);
+
+            transferSummaryInModel = transferSummaryInService.GetById(userId, Id);
+            if (transferSummaryInModel != null)
+            {
+                transferSummaryInModel._FormMode = FormModeEnum.Edit;
+            }
+            else
+            {
+                transferSummaryInModel = transferSummaryInService.GetNewModel(userId);
+                transferSummaryInModel._FormMode = FormModeEnum.New;
+            }
+
+            return PartialView(VIEW_FORM_PARTIAL, transferSummaryInModel);
+        }
 
         public ActionResult RefreshItem(TransferSummaryInModel transferSummaryInModel)
         {

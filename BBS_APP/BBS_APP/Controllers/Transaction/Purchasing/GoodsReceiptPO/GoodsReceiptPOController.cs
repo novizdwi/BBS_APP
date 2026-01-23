@@ -178,6 +178,53 @@ namespace Controllers.Transaction.Purchasing
             return PartialView(VIEW_FORM_PARTIAL, goodsReceiptPOModel);
         }
 
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Approve(long Id, string ApprovalMessage = "")
+        {
+            int userId = (int)Session["userId"];
+
+            GoodsReceiptPOModel goodsReceiptPOModel;
+
+            goodsReceiptPOService = new GoodsReceiptPOService();
+            goodsReceiptPOService.Approve(userId, Id, ApprovalMessage);
+
+            goodsReceiptPOModel = goodsReceiptPOService.GetById(userId, Id);
+            if (goodsReceiptPOModel != null)
+            {
+                goodsReceiptPOModel._FormMode = FormModeEnum.Edit;
+            }
+            else
+            {
+                goodsReceiptPOModel = goodsReceiptPOService.GetNewModel(userId);
+                goodsReceiptPOModel._FormMode = FormModeEnum.New;
+            }
+
+            return PartialView(VIEW_FORM_PARTIAL, goodsReceiptPOModel);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Reject(long Id, string ApprovalMessage = "")
+        {
+            int userId = (int)Session["userId"];
+
+            GoodsReceiptPOModel goodsReceiptPOModel;
+
+            goodsReceiptPOService = new GoodsReceiptPOService();
+            goodsReceiptPOService.Reject(userId, Id, ApprovalMessage);
+
+            goodsReceiptPOModel = goodsReceiptPOService.GetById(userId, Id);
+            if (goodsReceiptPOModel != null)
+            {
+                goodsReceiptPOModel._FormMode = FormModeEnum.Edit;
+            }
+            else
+            {
+                goodsReceiptPOModel = goodsReceiptPOService.GetNewModel(userId);
+                goodsReceiptPOModel._FormMode = FormModeEnum.New;
+            }
+
+            return PartialView(VIEW_FORM_PARTIAL, goodsReceiptPOModel);
+        }
 
         public ActionResult RefreshItem(GoodsReceiptPOModel goodsReceiptPOModel)
         {
