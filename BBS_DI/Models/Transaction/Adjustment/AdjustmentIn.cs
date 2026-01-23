@@ -1094,8 +1094,24 @@ namespace Models.Transaction.Adjustment
                                 WHERE T0.""Id""=:p0 AND ""DetId"" = :p1 ";
 
                 model = CONTEXT.Database.SqlQuery<AdjustmentInItemTagView___>(sql, id, detId).FirstOrDefault();
+                model.AdjustmentIn_Item_TagModel___ = GetItemTagDetail(CONTEXT, id, detId);
+            }
 
-                sql = @" 
+            return model;
+        }
+
+        public List<AdjustmentIn_Item_TagModel> GetItemTagDetail(long id = 0, long detId = 0)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                return GetItemTagDetail(CONTEXT, id, detId);
+            }
+
+        }
+
+        public List<AdjustmentIn_Item_TagModel> GetItemTagDetail(HANA_APP CONTEXT, long id = 0, long detId)
+        {
+            string sql = @" 
                     SELECT 
                         ROW_NUMBER() OVER (ORDER BY T0.""DetDetId"") AS ""RowNo"", 
                         T0.*,
@@ -1118,12 +1134,11 @@ namespace Models.Transaction.Adjustment
                     LEFT JOIN ""Tm_Item_Warehouse_Tag"" T3 ON T0.""TagId"" = T3.""TagId""
                     ORDER BY T0.""DetDetId""
                 ";
-
-                model.AdjustmentIn_Item_TagModel___ = CONTEXT.Database.SqlQuery<AdjustmentIn_Item_TagModel>(sql, id, detId).ToList();
-            }
-
-            return model;
+            var listData = CONTEXT.Database.SqlQuery<AdjustmentIn_Item_TagModel>(sql, id, detId).ToList();
+            return listData;
         }
+
+
 
         public AdjustmentInApprovalView___ GetViewApproval(long id)
         {

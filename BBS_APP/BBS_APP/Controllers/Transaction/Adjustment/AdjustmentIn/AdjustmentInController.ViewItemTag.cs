@@ -13,6 +13,7 @@ namespace Controllers.Transaction.Adjustment
 
         string VIEW_ITEMTAG_PANEL_PARTIAL = "Partial/ItemTag/ItemTag_Panel_Partial";
         string VIEW_ITEMTAG_FORM_PARTIAL = "Partial/ItemTag/ItemTag_Form_Partial";
+        string VIEW_ITEMTAG_CONTENT = "Partial/ItemTag/ViewApproval_TabContent_List_Partial";
 
         public ActionResult ViewItemTag_PopupListOnDemandPartial(long id = 0, long detId = 0)
         {
@@ -27,6 +28,19 @@ namespace Controllers.Transaction.Adjustment
             return PartialView(VIEW_ITEMTAG_PANEL_PARTIAL, model);
         }
 
+        public ActionResult ViewItemTagListPartial()
+        {
+            int userId = (int)Session["userId"];
+
+            adjustmentInService = new AdjustmentInService();
+
+            var Id = Convert.ToInt64(Request["cbId"]);
+            var DetId = Convert.ToInt64(Request["cbDetId"]);
+
+            List<AdjustmentIn_Item_TagModel> modelList = adjustmentInService.GetItemTagDetail(Id, DetId);
+
+            return PartialView(VIEW_APPROVAL_CONTENT, modelList);
+        }
 
         public ActionResult PopupItemTagLoadOnDemandPartial()
         {

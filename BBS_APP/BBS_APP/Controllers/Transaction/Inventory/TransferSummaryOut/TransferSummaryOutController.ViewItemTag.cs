@@ -13,6 +13,7 @@ namespace Controllers.Transaction.Inventory
 
         string VIEW_ITEMTAG_PANEL_PARTIAL = "Partial/ItemTag/ItemTag_Panel_Partial";
         string VIEW_ITEMTAG_FORM_PARTIAL = "Partial/ItemTag/ItemTag_Form_Partial";
+        string VIEW_ITEMTAG_CONTENT = "Partial/ItemTag/ViewApproval_TabContent_List_Partial";
 
         public ActionResult ViewItemTag_PopupListOnDemandPartial(long id = 0, long detId = 0)
         {
