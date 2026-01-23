@@ -17,6 +17,7 @@
     ViewBag.Id = Model.Id;
     ViewBag.ReadOnly = Model.Status == "Draft" ? false : true;
 
+    string IsApproval_ = Models._Utils.GeneralGetList.GetCheckIsApproval(ViewBag.UserId, "StockSummaryOpname");
 }
 
 @Html.DevExpress().FormLayout(settings =>
@@ -87,9 +88,27 @@
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Button;
         itemSettings.Caption = "";
+        itemSettings.ClientVisible = IsApproval_ == "Y" ? true : false;
+
         var btnSettings = (ButtonSettings)itemSettings.NestedExtensionSettings;
         btnSettings.Name = "btnUpdateApproval";
-        btnSettings.Text = "Update";
+        btnSettings.Text = "Approve";
+        btnSettings.Width = 100;
+        btnSettings.ClientSideEvents.Click = "btnUpdateApprovalOnClick";
+        btnSettings.Styles.Style.Paddings.Padding = 2;
+        //btnSettings.Styles.Style.BackColor = System.Drawing.Color.ForestGreen;
+
+    });
+
+    groupItem_Col2.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Button;
+        itemSettings.Caption = "";
+        itemSettings.ClientVisible = IsApproval_ != "Y" ? true : false;
+
+        var btnSettings = (ButtonSettings)itemSettings.NestedExtensionSettings;
+        btnSettings.Name = "btnRequestApproval";
+        btnSettings.Text = "Request Approval";
         btnSettings.Width = 100;
         btnSettings.ClientSideEvents.Click = "btnUpdateApprovalOnClick";
         btnSettings.Styles.Style.Paddings.Padding = 2;
@@ -106,6 +125,8 @@
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Button;
         itemSettings.Caption = "";
+        itemSettings.ClientVisible = IsApproval_ == "Y" ? true : false;
+
         var btnSettings = (ButtonSettings)itemSettings.NestedExtensionSettings;
         btnSettings.Name = "btnRejectApproval";
         btnSettings.Text = "Reject";
@@ -121,6 +142,8 @@
     {
         group.Width = Unit.Percentage(100);
         group.Height = Unit.Pixel(50);
+        group.ClientVisible = IsApproval_ == "Y" ? true : false;
+
         group.Items.Add(item =>
         {
             item.Name = "TabApprovalList";

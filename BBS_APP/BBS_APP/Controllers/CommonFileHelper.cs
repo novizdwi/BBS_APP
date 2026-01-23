@@ -116,7 +116,7 @@ namespace BBS_APP
                         {
                             if (columns.Take(3).Any(c => string.IsNullOrWhiteSpace(c)))
                                 throw new Exception("Invalid header empty value of: TransDate, FromWarehouse, or ToWarehouse");
-                            if (!DateTime.TryParseExact(columns[0], "dd-MM-yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime transDate))
+                            if (!DateTime.TryParseExact(columns[0], "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime transDate))
                                 throw new Exception($"invalid date format: {columns[0]}");
 
                             model = new TransferRequestTemplateHeader

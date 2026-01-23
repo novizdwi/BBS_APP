@@ -30,7 +30,7 @@ namespace Controllers.Transaction.Inventory
 
             // Isi CSV (template/header)
             var csv = new StringBuilder();
-            csv.AppendLine("TransDate (dd-mm-yyyy); FromWarehouse; ToWarehouse; Remarks");
+            csv.AppendLine("TransDate (dd/mm/yyyy); FromWarehouse; ToWarehouse; Remarks");
             csv.AppendLine(";;;;");
             csv.AppendLine("ItemCode; Quantity; FreeText");
             csv.AppendLine(";;;");

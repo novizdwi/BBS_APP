@@ -64,6 +64,20 @@ namespace Models._Utils
             }
         }
 
+        public static string GetCheckIsApproval(long Id, string ObjectCode)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                string ssql = @"
+                    SELECT COALESCE(T0.""IsApproval"",'N') 
+                    FROM ""Tx_"+ ObjectCode + @""" T0
+                    WHERE T0.""Id"" = {0}                ";
+
+                ssql = string.Format(ssql, Id);
+                return CONTEXT.Database.SqlQuery<string>(ssql).FirstOrDefault();
+            }
+        }
+
         public static string GetFormTransAuthorize(HANA_APP CONTEXT, int userId, string formCode)
         {
 

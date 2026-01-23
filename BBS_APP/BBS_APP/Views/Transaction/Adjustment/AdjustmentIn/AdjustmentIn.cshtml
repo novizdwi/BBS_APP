@@ -105,7 +105,11 @@
 
                         btnPost.SetEnabled(true);
                         btnCancel.SetEnabled(true);
-
+                        
+                        if (ApprovalStatus.GetValue() == "Waiting")
+                        {
+                            btnPost.SetEnabled(false);
+                        }
                         break;
                     case 'Posted':
                         btnUpdate.SetEnabled(true);
@@ -248,25 +252,25 @@ function RefreshAfterSuccess(response) {
 
     }
 
-     function OnClickBtnPost(s, e) {
+    function OnClickBtnPost(s, e) {
 
         if (BeforeSave() == false) {
-            return;
+        return;
         }
-         key = Id.GetValue();
+        key = Id.GetValue();
 
-        var isApproval = IsApproval.GetValue();
+        var isApproval = ApprovalTemplateId_.GetValue();
         var approvalStatus = ApprovalStatus.GetValue();
 
-        if (isApproval == "Y") {
+        if (isApproval != "-1" || approvalStatus != null) {
             btnShowApprovalOnClick(s, e, key);
-        } else {
+        }else {
             Post(s, e);
         }
     }
 
     function Post(s, e) {
-         var formData = GetFormData();
+        var formData = GetFormData();
         if (confirm('Post transaction?')) {
             key = Id.GetValue();
 
@@ -292,9 +296,9 @@ function RefreshAfterSuccess(response) {
         }
     }
 
-     function btnUpdateApprovalOnClick(s, e) {
-         key = Id.GetValue();
-         var reason = ApprovalMessages.GetValue();
+    function btnUpdateApprovalOnClick(s, e) {
+        key = Id.GetValue();
+        var reason = ApprovalMessages.GetValue();
 
         $.ajax({
             type: "POST",
@@ -317,6 +321,33 @@ function RefreshAfterSuccess(response) {
             }
         });
 
+    }
+
+    function btnRequestApprovalOnClick(s, e) {
+        key = Id.GetValue();
+        var reason = ApprovalMessages.GetValue();
+        var templateId = ApprovalTemplateId_.GetValue();
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("RequestApproval", "AdjustmentIn")',
+            data: { id: key, templateId: templateId, approvalMessage: reason },
+            beforeSend: function () {
+                OnBegin();
+            },
+            success: function (response) {
+                popupApproval.Hide();
+                RefreshAfterSuccess(response);
+                OnSuccessMsgBox();
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                OnFailure(jqXhr, textStatus, errorThrown)
+            },
+            complete: function () {
+                OnComplete()
+
+            }
+        });
     }
 
     function btnRejectApprovalOnClick(s, e) {
@@ -396,8 +427,7 @@ function OnClickBtnUpdate(s, e) {
     if (BeforeSave() == false) {
         return;
     }
-
-    console.log(GetFormData());
+    
     var formData = GetFormData();
 
     $.ajax({
@@ -674,7 +704,7 @@ function popupCancelReason_EndCallback(s, e) {
             loadingPanel.Show();
         }
     }
-        
+
 
 
      function popupApproval_EndCallback(s, e) {
@@ -741,27 +771,49 @@ function btnUpdateReasonOnClick(s, e) {
 }
 
 
-function OnClickChoose(s, e, key) {
-    $.ajax({
-        type: "POST",
-        url: '@Url.Action("DetailPartial", "AdjustmentIn")',
-        data: { Id: key },
-        beforeSend: function () {
-        OnBegin();
-    },
-    success: function (response) {
-        RefreshAfterSuccess(response);
-        OnSuccess();
-        popupList.Hide();
-    },
-    error: function (jqXhr, textStatus, errorThrown) {
-    OnFailure(jqXhr, textStatus, errorThrown)
-    },
-    complete: function () {
-    OnComplete()
+    function OnClickChoose(s, e, key) {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("DetailPartial", "AdjustmentIn")',
+            data: { Id: key },
+            beforeSend: function () {
+            OnBegin();
+            },
+            success: function (response) {
+                RefreshAfterSuccess(response);
+                OnSuccess();
+                popupList.Hide();
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+            OnFailure(jqXhr, textStatus, errorThrown)
+            },
+            complete: function () {
+            OnComplete()
+            }
+        });
     }
-    });
+
+    function BtnCflStatusOnClick(id) {
+        var popup = ASPxClientPopupControl.Cast("popupViewApproval");
+        popup.callbackUrl = '@Url.Action("ViewApproval_PopupListOnDemandPartial", "AdjustmentIn")' + '?Id=' + id;
+        popup.PerformCallback();
+
+        if (!popup.IsVisible()) {
+            popup.Show();
+        }
+
     }
+
+    function popupViewApproval_EndCallback(s, e) {
+        $.validator.unobtrusive.parse("#ViewApproval_formDetail");
+
+        var popup = ASPxClientPopupControl.Cast("popupViewApproval");
+        if (!popup.IsVisible()) {
+            loadingPanel.Hide();
+            popup.ShowAtPos(400, 100);
+        }
+    }
+
 
 function BtnCflPIllarsCodeOnClick(s, e) {
     var popupCostCenter = ASPxClientPopupControl.Cast("cflCostCenterPopupListPillars");
@@ -900,6 +952,25 @@ new
     -------------------------------------------------*@
 
 @Html.Partial("Partial/Approval/Approval_Partial")
+
+@*-------------------------------------------------
+    View Approval
+    -------------------------------------------------*@
+
+<script>
+
+    function ViewApproval_OnClickBtnCancel(s, e) {
+        var popup = ASPxClientPopupControl.Cast("popupViewApproval");
+        popup.Hide();
+    }
+
+    function ViewApproval_gvContentDetailBeginCallback(s, e) {
+        e.customArgs['cbId'] = Id.GetValue();
+    }
+
+</script>
+
+@Html.Partial("Partial/ViewApproval/ViewApproval_Partial")
 
 
 @*-------------------------------------------------

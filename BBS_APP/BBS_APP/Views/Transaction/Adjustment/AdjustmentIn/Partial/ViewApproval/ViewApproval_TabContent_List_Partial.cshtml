@@ -1,5 +1,5 @@
-﻿
-@using Models;
+﻿@using Models;
+
 @{
     var Id = Convert.ToInt64(Request["cbId"]);
 
@@ -7,17 +7,21 @@
     {
         Id = ViewBag.Id;
     }
-
 }
+
 
 @Html.DevExpress().GridView(settings =>
 {
-    settings.Name = "gvApproval";
+
+    settings.Name = "ViewApproval_gvContentDetail";
+    settings.CallbackRouteValues = new { Controller = "AdjustmentIn", Action = "ViewApprovalListPartial" };
+
     settings.KeyFieldName = "DetId";
-    settings.CallbackRouteValues = new { Controller = "AdjustmentIn", Action = "TabApprovalListPartial" };
+    settings.Height = Unit.Percentage(100);
     settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
-    //settings.Settings.VerticalScrollableHeight = 350;
+    settings.Settings.VerticalScrollableHeight = 150;
     settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+    settings.Width = Unit.Percentage(100);
 
     settings.Width = Unit.Percentage(100);
     settings.Height = Unit.Percentage(100);
@@ -26,9 +30,6 @@
     settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
     settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
     settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
-
-    //settings.Settings.ShowFilterRow = true;
-    //settings.Settings.ShowFilterRowMenu = true;
 
     settings.CommandColumn.Width = 70;
     settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
@@ -54,10 +55,10 @@
 
         column.Name = "Username";
         column.FieldName = "Username";
-        column.Caption = "Username";
+        column.Caption = "Approver";
 
         column.ReadOnly = true;
-        column.Width = 100;
+        column.Width = 150;
 
     });
 
@@ -65,7 +66,7 @@
     {
         column.FieldName = "ActionDate";
         column.Name = "ActionDate";
-        column.Caption = "Request Date";
+        column.Caption = "Approve Date";
 
         column.ColumnType = MVCxGridViewColumnType.DateEdit;
         column.Width = 100;
@@ -88,7 +89,6 @@
 
     });
 
-
     settings.Columns.Add(column =>
     {
 
@@ -101,7 +101,6 @@
 
     });
 
-    settings.Settings.ShowFooter = true;
     settings.HtmlDataCellPrepared = (s, e) =>
     {
         if (e.VisibleIndex >= 0)
@@ -122,12 +121,10 @@
         }
     };
 
-    //settings.ClientSideEvents.BeginCallback = "gvApprovalOnBeginCallback";
-    //settings.ClientSideEvents.EndCallback = "gvApprovalOnEndCallback";
+    settings.Settings.ShowFooter = true;
 
-    //settings.ClientSideEvents.BatchEditStartEditing = "gvApprovalOnBatchEditStartEditing";
-    //settings.ClientSideEvents.BatchEditEndEditing = "gvApprovalOnBatchEditEndEditing";
-    //settings.ClientSideEvents.BatchEditRowValidating = "gvApprovalOnBatchEditRowValidating";
+    settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
+
+    settings.ClientSideEvents.BeginCallback = "ViewApproval_gvContentDetailBeginCallback";
 
 }).Bind(Model).GetHtml()
-

@@ -362,6 +362,11 @@ namespace Models.Transaction.Adjustment
 
                 if (method != "post")
                 {
+                    if (model.Status == "Draft")
+                    {
+                        int? approvalId = CONTEXT.Database.SqlQuery<int?>(@"CALL ""SpApproval_CheckNeedApproval""(:p0, 'AdjustmentIn', :p1) ", userId, model.Id).FirstOrDefault();
+                        model.ApprovalTemplateId_ = approvalId;
+                    }
 
                     model.PillarsList = GeneralGetList.GetCostCenterList("1");
                     model.ClassList = GeneralGetList.GetCostCenterList("2");

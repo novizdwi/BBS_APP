@@ -103,6 +103,8 @@ namespace Models.Transaction.Adjustment
 
         public int? ApprovalTemplateId_ { get; set; }
 
+        public string IsEligibleApprove_ { get; set; }
+
         public List<AdjustmentIn_ItemModel> ListDetails_ = new List<AdjustmentIn_ItemModel>();
 
         public AdjustmentIn_Detail Details_ { get; set; }
@@ -249,7 +251,7 @@ namespace Models.Transaction.Adjustment
 
         public string ItemName { get; set; }
 
-        public List<AdjustmentIn_Item_TagModel> AdjustmentIn_Item_TagModel___ { get; set; }
+        public List<AdjustmentIn_Item_TagModel> AdjustmentIn_Item_TagModel___ = new List<AdjustmentIn_Item_TagModel>();
 
     }
 
@@ -306,6 +308,20 @@ namespace Models.Transaction.Adjustment
 
 
     }
+
+    public class AdjustmentInApprovalView___
+    {
+        public long Id { get; set; }
+
+        public string FirstName { get; set; }
+
+        public DateTime? CreatedDate { get; set; }
+
+        public List<AdjustmentIn_ApprovalModel> AdjustmentIn_ApprovalModel___ { get; set; }
+
+    }
+
+
     #endregion Models
 
     #region Services
@@ -365,6 +381,16 @@ namespace Models.Transaction.Adjustment
                         model.ApprovalTemplateId_ = approvalId;
                     }
 
+                    if(model.ApprovalStatus == "Waiting")
+                    {
+                        string getDocNum = @"SELECT 'Y'
+                            FROM ""Tx_AdjustmentIn"" T0
+                            INNER JOIN  ""Tx_AdjustmentIn_Approval"" T1 ON T0.""Id"" = T1.""Id"" AND T1.""Status"" = 'Waiting'
+                            WHERE T0.""Id"" = :p0 
+                            AND T1.""UserId"" = :p1
+                        ";
+                        model.IsEligibleApprove_ = CONTEXT.Database.SqlQuery<string>(getDocNum, id, userId).FirstOrDefault();
+                    }
                     model.PillarsList = GeneralGetList.GetCostCenterList("1");
                     model.ClassList = GeneralGetList.GetCostCenterList("2");
                     model.SubClass1List = GeneralGetList.GetCostCenterList("3");
@@ -913,8 +939,7 @@ namespace Models.Transaction.Adjustment
 
                             CONTEXT.SaveChanges();
                         }
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn_UpdateItem\"(:p0,:p1)", userId, Id);
-
+                        //CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn_UpdateItem\"(:p0,:p1)", userId, Id);
                         SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "after", "Tx_AdjustmentIn", "approve", "Id", keyValue);
 
                         if (tx_AdjustmentIn.ApprovalStatus == "Approved")
@@ -922,6 +947,62 @@ namespace Models.Transaction.Adjustment
                             PostSAP(userId, adjustmentInModel.Id);
                         }
 
+                        CONTEXT_TRANS.Commit();
+
+                    }
+
+                    catch (Exception ex)
+                    {
+                        CONTEXT_TRANS.Rollback();
+
+                        string errorMassage;
+                        if (ex.Message.Substring(12) == "[VALIDATION]")
+                        {
+                            errorMassage = ex.Message;
+                        }
+                        else
+                        {
+                            errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                        }
+
+                        throw new Exception(errorMassage);
+                    }
+                }
+            }
+
+        }
+
+        public void RequestApproval(int userId, long id, int templateId, string approvalMessages)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+               AdjustmentInModel adjustmentInModel = GetById(userId, id);
+
+                using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        String keyValue;
+                        keyValue = id.ToString();
+
+                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "before", "Tx_AdjustmentIn", "requestApproval", "Id", keyValue);
+
+                        Tx_AdjustmentIn tx_AdjustmentIn = CONTEXT.Tx_AdjustmentIn.Find(id);
+                        if (tx_AdjustmentIn != null)
+                        {
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+
+                            tx_AdjustmentIn.IsApproval = "Y";
+                            tx_AdjustmentIn.ApprovalMessages = approvalMessages;
+                            tx_AdjustmentIn.ApprovalStatus = "Waiting";
+                            tx_AdjustmentIn.ModifiedDate = dtModified;
+                            tx_AdjustmentIn.ModifiedUser = userId;
+
+                            CONTEXT.SaveChanges();
+                        }
+
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpApproval_Insert\"(:p0,'AdjustmentIn',:p1, :p2)", userId, id, templateId);
+                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "after", "Tx_AdjustmentIn", "requestApproval", "Id", keyValue);
                         CONTEXT_TRANS.Commit();
 
                     }
@@ -1043,6 +1124,28 @@ namespace Models.Transaction.Adjustment
 
             return model;
         }
+
+        public AdjustmentInApprovalView___ GetViewApproval(long id)
+        {
+            AdjustmentInApprovalView___ model = new AdjustmentInApprovalView___();
+            using (var CONTEXT = new HANA_APP())
+            {
+                string sql = @"
+                    SELECT TOP 1 T0.""CreatedDate"", T1.""FirstName""
+                    FROM ""Tx_AdjustmentIn_Approval"" T0 
+                    INNER JOIN ""Tm_User"" T1 ON T0.""CreatedUser"" = T1.""Id""
+                    WHERE T0.""Id""=:p0 
+                ";
+
+                model = CONTEXT.Database.SqlQuery<AdjustmentInApprovalView___>(sql, id).FirstOrDefault();
+
+                model.AdjustmentIn_ApprovalModel___ = GetAdjustmentIn_ApprovalSteps(CONTEXT, id);
+
+            }
+
+            return model;
+        }
+
         #region Attachment
         public AdjustmentIn_AttachmentModel GetAdjustmentIn_Attachments_GetById(long id = 0)
         {

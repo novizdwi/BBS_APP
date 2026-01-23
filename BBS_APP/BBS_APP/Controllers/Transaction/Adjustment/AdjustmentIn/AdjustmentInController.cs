@@ -179,6 +179,30 @@ namespace Controllers.Transaction.Adjustment
         }
 
         [HttpPost, ValidateInput(false)]
+        public ActionResult RequestApproval(long id, int templateId, string approvalMessage = "")
+        {
+            int userId = (int)Session["userId"];
+
+            AdjustmentInModel adjustmentInModel;
+
+            adjustmentInService = new AdjustmentInService();
+            adjustmentInService.RequestApproval(userId, id, templateId, approvalMessage);
+
+            adjustmentInModel = adjustmentInService.GetById(userId, id);
+            if (adjustmentInModel != null)
+            {
+                adjustmentInModel._FormMode = FormModeEnum.Edit;
+            }
+            else
+            {
+                adjustmentInModel = adjustmentInService.GetNewModel(userId);
+                adjustmentInModel._FormMode = FormModeEnum.New;
+            }
+
+            return PartialView(VIEW_FORM_PARTIAL, adjustmentInModel);
+        }
+
+        [HttpPost, ValidateInput(false)]
         public ActionResult Reject(long Id, string ApprovalMessage = "")
         {
             int userId = (int)Session["userId"];

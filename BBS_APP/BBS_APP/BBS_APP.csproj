@@ -888,6 +888,14 @@
     <Content Include="Views\Master\Item\ItemMaster\Partial\ItemMaster_Form_TabDetail_List_Partial.cshtml" />
     <Content Include="Views\Master\Item\ItemMaster\Partial\ItemMaster_List_Partial.cshtml" />
     <Content Include="Views\Master\Item\ItemMaster\Partial\ItemMaster_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferSummaryIn\Partial\Approval\Approval_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferSummaryIn\Partial\Approval\Approval_Form_TabApproval_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferSummaryIn\Partial\Approval\Approval_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferSummaryIn\Partial\Approval\Approval_Partial.cshtml" />
+    <Content Include="Views\Transaction\Adjustment\AdjustmentIn\Partial\ViewApproval\ViewApproval_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Adjustment\AdjustmentIn\Partial\ViewApproval\ViewApproval_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Adjustment\AdjustmentIn\Partial\ViewApproval\ViewApproval_Partial.cshtml" />
+    <Content Include="Views\Transaction\Adjustment\AdjustmentIn\Partial\ViewApproval\ViewApproval_TabContent_List_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -991,6 +999,7 @@
     <Compile Include="Controllers\Transaction\Adjustment\AdjustmentIn\AdjustmentInController.Tab.Attachment.cs" />
     <Compile Include="Controllers\Transaction\Adjustment\AdjustmentIn\AdjustmentInController.Tab.Attachment.Detail.cs" />
     <Compile Include="Controllers\Transaction\Adjustment\AdjustmentIn\AdjustmentInController.Tab.Detail.cs" />
+    <Compile Include="Controllers\Transaction\Adjustment\AdjustmentIn\AdjustmentInController.ViewApproval.cs" />
     <Compile Include="Controllers\Transaction\Adjustment\AdjustmentIn\AdjustmentInController.ViewItemTag.cs" />
     <Compile Include="Controllers\Transaction\Adjustment\AdjustmentIn\AdjustmentInController.Approval.cs" />
     <Compile Include="Controllers\Transaction\Adjustment\AdjustmentOut\AdjustmentOutController.Tab.Detail.cs" />
