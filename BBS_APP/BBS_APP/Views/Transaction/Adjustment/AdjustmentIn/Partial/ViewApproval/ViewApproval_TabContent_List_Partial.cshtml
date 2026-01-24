@@ -109,8 +109,7 @@
             var status = Convert.ToString(gridView.GetRowValues(e.VisibleIndex, "Status"));
             if (status == "Waiting")
             {
-                e.Cell.BackColor = System.Drawing.Color.Gray;
-                e.Cell.ForeColor = System.Drawing.Color.White;
+                e.Cell.BackColor = System.Drawing.Color.FromName("#DEDEDE"); 
             }
             else if (status == "Rejected")
             {

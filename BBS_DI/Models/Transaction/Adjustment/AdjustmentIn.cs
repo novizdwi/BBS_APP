@@ -120,10 +120,6 @@ namespace Models.Transaction.Adjustment
         public List<GetCodeNameModel> SubClass2List { get; set; }
 
         public List<GetCodeNameModel> ProjectList { get; set; }
-
-        public List<AdjustmentIn_ApprovalModel> ListApprovalStep_ = new List<AdjustmentIn_ApprovalModel>();
-
-        public AdjustmentIn_Approval ApprovalStep_ { get; set; }
     }
 
     public class AdjustmentIn_ApprovalModel
@@ -315,10 +311,17 @@ namespace Models.Transaction.Adjustment
 
         public string FirstName { get; set; }
 
+        public string Status { get; set; }
+
+        public string RequestMassage { get; set; }
+
+        public string ApprovalMessages { get; set; }
+
         public DateTime? CreatedDate { get; set; }
 
-        public List<AdjustmentIn_ApprovalModel> AdjustmentIn_ApprovalModel___ { get; set; }
+        public List<AdjustmentIn_ApprovalModel> ApprovalStepList__ = new List<AdjustmentIn_ApprovalModel>();
 
+        public AdjustmentIn_Approval ApprovalStep__ { get; set; }
     }
 
 
@@ -371,7 +374,7 @@ namespace Models.Transaction.Adjustment
 
                 model.ListDetails_ = this.AdjustmentIn_Details(CONTEXT, id);
                 model.ListAttachments_ = this.GetAdjustmentIn_Attachments(id);
-                model.ListApprovalStep_ = this.GetAdjustmentIn_ApprovalSteps(id);
+                //model.ListApprovalStep_ = this.GetAdjustmentIn_ApprovalSteps(id);
 
                 if (method != "post")
                 {
@@ -1146,15 +1149,16 @@ namespace Models.Transaction.Adjustment
             using (var CONTEXT = new HANA_APP())
             {
                 string sql = @"
-                    SELECT TOP 1 T0.""CreatedDate"", T1.""FirstName""
+                    SELECT TOP 1 T0.""Id"", T1.""Status"", T1.""ApprovalMessages"", T0.""CreatedDate"", T2.""FirstName""
                     FROM ""Tx_AdjustmentIn_Approval"" T0 
-                    INNER JOIN ""Tm_User"" T1 ON T0.""CreatedUser"" = T1.""Id""
+                    INNER JOIN ""Tx_AdjustmentIn"" T1 ON T0.""Id"" = T1.""Id""
+                    INNER JOIN ""Tm_User"" T2 ON T0.""CreatedUser"" = T2.""Id""
                     WHERE T0.""Id""=:p0 
                 ";
 
                 model = CONTEXT.Database.SqlQuery<AdjustmentInApprovalView___>(sql, id).FirstOrDefault();
 
-                model.AdjustmentIn_ApprovalModel___ = GetAdjustmentIn_ApprovalSteps(CONTEXT, id);
+                model.ApprovalStepList__ = GetAdjustmentIn_ApprovalSteps(CONTEXT, id);
 
             }
 

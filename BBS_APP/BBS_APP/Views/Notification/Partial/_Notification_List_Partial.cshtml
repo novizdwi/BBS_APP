@@ -105,7 +105,7 @@
         column.FieldName = "TransNo";
         column.Name = "TransNo";
         column.Caption = "Trans No";
-        column.Width = 200;
+        column.Width = 120;
         column.ColumnType = MVCxGridViewColumnType.TextBox;
 
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
@@ -136,7 +136,7 @@
 
     });
 
-    settings.Columns.Add("ObjectName", "Document").Width = 150;
+    settings.Columns.Add("ObjectName", "Document").Width = 120;
 
     /*
     settings.Columns.Add(column =>
@@ -174,7 +174,8 @@
         txt.EditFormatString = "dd/MM/yyyy";
     });
 
-    settings.Columns.Add("FirstName", "Originator").Width = 200;
+    settings.Columns.Add("FirstName", "Originator").Width = 150;
+    settings.Columns.Add("Message", "Message").Width = 250;
 
 
     settings.SettingsPager.Position = PagerPosition.Bottom;

@@ -1,6 +1,6 @@
 ﻿@using Models;
 
-@model Models.Transaction.Adjustment.AdjustmentInModel
+@model Models.Transaction.Adjustment.AdjustmentInApprovalView___
 
 @Html.DevExpress().TextBox(
         settings =>
@@ -15,9 +15,8 @@
     /**/
     ViewBag.UserId = (int)Session["userId"];
     ViewBag.Id = Model.Id;
-    ViewBag.ReadOnly = Model.Status == "Draft" ? false : true;
 
-    string IsApproval_ = Models._Utils.GeneralGetList.GetCheckIsApproval(ViewBag.UserId, "AdjustmentIn");
+    string IsApproval_ = Models._Utils.GeneralGetList.GetCheckIsApproval(ViewBag.Id, "AdjustmentIn");
 
 }
 
@@ -71,12 +70,12 @@
     groupItem_Col1.Items.Add(itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Memo;
-        itemSettings.Caption = "Message";
-        itemSettings.FieldName = "ApprovalMessages";
-        itemSettings.Name = "grpApprovalMessages";
+        itemSettings.Caption = "RequestMassage";
+        itemSettings.FieldName = "RequestMassage";
+        itemSettings.Name = "grpRequestMassage";
 
         var txt = (MemoSettings)itemSettings.NestedExtensionSettings;
-        txt.Name = "ApprovalMessages";
+        txt.Name = "RequestMassage";
         txt.ShowModelErrors = true;
         txt.ControlStyle.CssClass = "editor";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
@@ -92,10 +91,10 @@
         itemSettings.ClientVisible = IsApproval_ == "Y"? true : false;
 
         var btnSettings = (ButtonSettings)itemSettings.NestedExtensionSettings;
-        btnSettings.Name = "btnUpdateApproval";
+        btnSettings.Name = "btnApproveApproval";
         btnSettings.Text = "Approve";
         btnSettings.Width = 100;
-        btnSettings.ClientSideEvents.Click = "btnUpdateApprovalOnClick";
+        btnSettings.ClientSideEvents.Click = "btnApproveApprovalOnClick";
         btnSettings.Styles.Style.Paddings.Padding = 2;
         //btnSettings.Styles.Style.BackColor = System.Drawing.Color.ForestGreen;
 
@@ -151,7 +150,7 @@
             item.SetNestedContent(() =>
             {
                 ViewContext.Writer.Write(
-                    Html.Partial("Partial/Approval/Approval_Form_TabApproval_Partial", Model.ListApprovalStep_)
+                    Html.Partial("Partial/Approval/Approval_Form_TabApproval_Partial", Model.ApprovalStepList__)
                 );
             });
         });

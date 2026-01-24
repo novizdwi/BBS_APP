@@ -109,7 +109,9 @@
                         if (ApprovalStatus.GetValue() == "Waiting")
                         {
                             btnPost.SetEnabled(false);
+                            btnMenuOther.GetItemByName("btnMenuAuthorize").SetEnabled(IsEligibleApprove_.GetValue()=="Y"? true : false );
                         }
+
                         break;
                     case 'Posted':
                         btnUpdate.SetEnabled(true);
@@ -294,11 +296,11 @@ function RefreshAfterSuccess(response) {
                 }
             });
         }
-    }
+    } 
 
-    function btnUpdateApprovalOnClick(s, e) {
+    function btnApproveApprovalOnClick(s, e) {
         key = Id.GetValue();
-        var reason = ApprovalMessages.GetValue();
+        var reason = RequestMassage.GetValue();
 
         $.ajax({
             type: "POST",
@@ -325,7 +327,7 @@ function RefreshAfterSuccess(response) {
 
     function btnRequestApprovalOnClick(s, e) {
         key = Id.GetValue();
-        var reason = ApprovalMessages.GetValue();
+        var reason = RequestMassage.GetValue();
         var templateId = ApprovalTemplateId_.GetValue();
 
         $.ajax({
@@ -353,7 +355,7 @@ function RefreshAfterSuccess(response) {
     function btnRejectApprovalOnClick(s, e) {
         if (confirm('Are you sure to Reject this transaction?')) {
              key = Id.GetValue();
-            var reason = ApprovalMessages.GetValue();
+            var reason = RequestMassage.GetValue();
 
             $.ajax({
                 type: "POST",
@@ -589,7 +591,11 @@ function OnClickBtnListFind(s, e) {
     function OnClickBtnMenuOther(s, e) {
 
         switch (e.item.name) {
+            case 'btnMenuAuthorize':
+                key = Id.GetValue();
 
+                btnShowApprovalOnClick(s, e, key);
+                break;
             case 'btnMenuSetStatusCancel':
                 key = Id.GetValue();
                 btnShowCancelReasonOnClick(s, e, key);
@@ -717,9 +723,9 @@ function popupCancelReason_EndCallback(s, e) {
         }
     }
 
-    function btnShowApprovalOnClick(s, e, Id) {
+    function btnShowApprovalOnClick(s, e, Id) { 
         var popup = ASPxClientPopupControl.Cast("popupApproval");
-
+        console.log(Id);
         popup.callbackUrl = '@Url.Action("Approval_PopupListOnDemandPartial", "AdjustmentIn")' + '?Id=' + Id;
         popup.PerformCallback();
 
@@ -950,6 +956,11 @@ new
 @*-------------------------------------------------
     Approval
     -------------------------------------------------*@
+<script>
+    function gvApprovalOnBeginCallback(s, e) {
+        e.customArgs['cbId'] = Id.GetValue();
+    }
+</script>
 
 @Html.Partial("Partial/Approval/Approval_Partial")
 
@@ -1044,28 +1055,29 @@ new
     -----------------------------------------------------------------------------
 *@
 <script>
-function gvAdjustmentInAttachmentDetailBeginCallback(s, e) {
-    e.customArgs['cbId'] = Id.GetValue();
-}
+
+    function gvAdjustmentInAttachmentDetailBeginCallback(s, e) {
+        e.customArgs['cbId'] = Id.GetValue();
+    }
 
 
-function gvAdjustmentInAttachmentDetail_OnClickBtnNew() {
-    var popup = ASPxClientPopupControl.Cast("popupAttachment");
-    popup.callbackUrl = '@Url.Action("Attachment_PopupListLoadOnDemandPartial", "AdjustmentIn")' + '?Id=' + Id.GetValue(); // "/BBS_APP/AdjustmentIn/Attachment_PopupListLoadOnDemandPartial?Id=" + Id.GetValue();
+    function gvAdjustmentInAttachmentDetail_OnClickBtnNew() {
+        var popup = ASPxClientPopupControl.Cast("popupAttachment");
+        popup.callbackUrl = '@Url.Action("Attachment_PopupListLoadOnDemandPartial", "AdjustmentIn")' + '?Id=' + Id.GetValue(); // "/BBS_APP/AdjustmentIn/Attachment_PopupListLoadOnDemandPartial?Id=" + Id.GetValue();
 
-    popup.PerformCallback();
+        popup.PerformCallback();
 
 
-    popup.Show();
-}
+        popup.Show();
+    }
 
-function Attachment_OnClickBtnUpload(s, e) {
-    // Attachment_formDetail.action = '@Url.Action("Attachment_Upload", "AdjustmentIn")';
-    // $("#Attachment_formDetail").submit();
+    function Attachment_OnClickBtnUpload(s, e) {
+        // Attachment_formDetail.action = '@Url.Action("Attachment_Upload", "AdjustmentIn")';
+        // $("#Attachment_formDetail").submit();
 
-    UploadMultiFile.Upload();
+        UploadMultiFile.Upload();
 
-}
+    }
 
 function Attachment_OnClickBtnCancel(s, e) {
     var popup = ASPxClientPopupControl.Cast("popupAttachment");
@@ -1073,11 +1085,11 @@ function Attachment_OnClickBtnCancel(s, e) {
 
 }
 
-function Attachment_FileUploadComplete(s, e) {
-    var popup = ASPxClientPopupControl.Cast("popupAttachment");
-    popup.Hide();
-    gvAdjustmentInAttachmentDetail.PerformCallback();;
-}
+    function Attachment_FileUploadComplete(s, e) {
+        var popup = ASPxClientPopupControl.Cast("popupAttachment");
+        popup.Hide();
+        gvAdjustmentInAttachmentDetail.PerformCallback();;
+    }
 
 function gvAdjustmentInAttachmentDetail_OnClickBtnDelete(DetId) {
     //if (Status.GetValue() == "Posted" )

@@ -36,7 +36,7 @@
         itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
         itemSettings.ShowCaption = DefaultBoolean.False;
         itemSettings.ColCount = 1;
-        itemSettings.Width = 300;
+        itemSettings.Width = 100;
     });
 
     var groupItem_Col2 = groupItem.Items.AddGroupItem(itemSettings =>
@@ -44,22 +44,47 @@
         itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
         itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
         itemSettings.ShowCaption = DefaultBoolean.False;
-        itemSettings.ColCount = 1;
-        settings.Width = 800;
+        itemSettings.ColCount = 1; 
     });
-    
+
 
     var groupItem_Col3 = groupItem.Items.AddGroupItem(itemSettings =>
     {
         itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
         itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
         itemSettings.ShowCaption = DefaultBoolean.False;
-        itemSettings.ColCount = 2;
-        settings.Width = 800;
+        itemSettings.ColCount = 2; 
+        itemSettings.HorizontalAlign = FormLayoutHorizontalAlign.Right;
     });
 
+    var groupItem_1 = groupItem_Col1.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        itemSettings.ColCount = 2;
+    });
 
-    groupItem_Col1.Items.Add(itemSettings =>
+    var groupItem_Col11 = groupItem_1.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        itemSettings.ColCount = 1;
+        itemSettings.CssClass = "groupCol";
+    });
+
+    var groupItem_Col12 = groupItem_1.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        itemSettings.ColCount = 1;
+        itemSettings.CssClass = "groupCol";
+        itemSettings.HorizontalAlign = FormLayoutHorizontalAlign.Right;
+    });
+
+    groupItem_Col11.Items.Add(itemSettings =>
     {
         itemSettings.Name = "FirstName";
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
@@ -72,10 +97,10 @@
         txt.ReadOnly = true;
         txt.ControlStyle.CssClass = "editor";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
-        txt.Width = 230;
+        txt.Width = 150;
     });
 
-    groupItem_Col1.Items.Add(itemSettings =>
+    groupItem_Col11.Items.Add(itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.DateEdit;
         itemSettings.Caption = "Request Date";
@@ -92,7 +117,24 @@
         txt.Properties.EditFormatString = "dd/MM/yyyy";
         txt.Properties.EditFormat = EditFormat.Date;
 
+        txt.Width = 150;
+    });
+
+    groupItem_Col12.Items.Add(m => Model.ApprovalMessages, itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Memo;
+        itemSettings.Caption = "Approval Messages";
+        itemSettings.FieldName = "ApprovalMessages";
+
+        MemoSettings txt = (MemoSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "ApprovalMessages";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
+        txt.Height = 55;
         txt.Width = 230;
+        txt.ReadOnly = true;
     });
 
 
@@ -115,7 +157,7 @@
             item.SetNestedContent(() =>
             {
                 ViewContext.Writer.Write(
-                    Html.Partial("Partial/ViewApproval/ViewApproval_TabContent_List_Partial", Model.AdjustmentIn_ApprovalModel___)
+                    Html.Partial("Partial/ViewApproval/ViewApproval_TabContent_List_Partial", Model.ApprovalStepList__)
                 );
             });
         });

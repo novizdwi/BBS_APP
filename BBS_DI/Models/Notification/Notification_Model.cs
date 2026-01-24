@@ -32,6 +32,7 @@ namespace Models.Notification
         public string TransType { get; set; }
         public string ObjectName { get; set; }
         public string TransNo { get; set; }
+        public string Message { get; set; }
         public DateTime RequestDate { get; set; }
         public int CreatedUser { get; set; }
         public string FirstName { get; set; }
@@ -50,6 +51,7 @@ namespace Models.Notification
                     T0.""Id"",
                     T0.""TransType"",
                     T0.""TransNo"" AS ""TransNo"" ,
+                    T0.""ApprovalMessages"" AS ""Message"",
                     T0.""CreatedDate"" AS ""RequestDate"", 
                     T0.""CreatedUser"" AS ""CreatedUser""
                 FROM ""Tx_AdjustmentIn"" T0
@@ -63,6 +65,7 @@ namespace Models.Notification
                     T0.""Id"",
                     T0.""TransType"",
                     T0.""TransNo"" AS ""TransNo"" ,
+                    T0.""ApprovalMessages"" AS ""Message"",
                     T0.""CreatedDate"" AS ""RequestDate"", 
                     T0.""CreatedUser"" AS ""CreatedUser""
                 FROM ""Tx_AdjustmentOut"" T0
@@ -76,6 +79,7 @@ namespace Models.Notification
                     T0.""Id"",
                     T0.""TransType"",
                     T0.""TransNo"" AS ""TransNo"" ,
+                    T0.""ApprovalMessages"" AS ""Message"",
                     T0.""CreatedDate"" AS ""RequestDate"", 
                     T0.""CreatedUser"" AS ""CreatedUser""
                 FROM ""Tx_GoodsReceiptPO"" T0
@@ -89,6 +93,7 @@ namespace Models.Notification
                     T0.""Id"",
                     T0.""TransType"",
                     T0.""TransNo"" AS ""TransNo"" ,
+                    T0.""ApprovalMessages"" AS ""Message"",
                     T0.""CreatedDate"" AS ""RequestDate"", 
                     T0.""CreatedUser"" AS ""CreatedUser""
                 FROM ""Tx_StockSummaryOpname"" T0
@@ -102,6 +107,7 @@ namespace Models.Notification
                     T0.""Id"",
                     T0.""TransType"",
                     T0.""TransNo"" AS ""TransNo"" ,
+                    T0.""ApprovalMessages"" AS ""Message"",
                     T0.""CreatedDate"" AS ""RequestDate"", 
                     T0.""CreatedUser"" AS ""CreatedUser""
                 FROM ""Tx_TransferRequest"" T0
@@ -115,6 +121,7 @@ namespace Models.Notification
                     T0.""Id"",
                     T0.""TransType"",
                     T0.""TransNo"" AS ""TransNo"" ,
+                    T0.""ApprovalMessages"" AS ""Message"",
                     T0.""CreatedDate"" AS ""RequestDate"", 
                     T0.""CreatedUser"" AS ""CreatedUser""
                 FROM ""Tx_TransferSummaryOut"" T0
@@ -129,6 +136,7 @@ namespace Models.Notification
                     T0.""Id"",
                     T0.""TransType"",
                     T0.""TransNo"" AS ""TransNo"" ,
+                    T0.""ApprovalMessages"" AS ""Message"",
                     T0.""CreatedDate"" AS ""RequestDate"", 
                     T0.""CreatedUser"" AS ""CreatedUser""
                 FROM ""Tx_TransferSummaryIn"" T0
