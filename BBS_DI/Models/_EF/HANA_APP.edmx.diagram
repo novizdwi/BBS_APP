@@ -58,7 +58,6 @@
         <EntityTypeShape EntityType="Model1.Ts_Menu" Width="1.5" PointX="20.75" PointY="0.75" />
         <EntityTypeShape EntityType="Model1.Ts_ObjectApproval" Width="1.5" PointX="20.75" PointY="3.75" />
         <EntityTypeShape EntityType="Model1.Tx_AdjustmentIn" Width="1.5" PointX="20.75" PointY="6.75" />
-        <EntityTypeShape EntityType="Model1.Tx_AdjustmentIn_Approval" Width="1.5" PointX="20.75" PointY="14.75" />
         <EntityTypeShape EntityType="Model1.Tx_AdjustmentIn_Attachment" Width="1.5" PointX="20.75" PointY="19.75" />
         <EntityTypeShape EntityType="Model1.Tx_AdjustmentIn_Item" Width="1.5" PointX="0.75" PointY="21.75" />
         <EntityTypeShape EntityType="Model1.Tx_AdjustmentIn_Item_Tag" Width="1.5" PointX="2.75" PointY="21.75" />
@@ -113,6 +112,7 @@
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Item_Tag" Width="1.5" PointX="32.75" PointY="7.75" />
         <EntityTypeShape EntityType="Model1.Tx_TransferSummaryOut_Ref" Width="1.5" PointX="32.75" PointY="12.75" />
         <EntityTypeShape EntityType="Model1.Tp_UserAlert" Width="1.5" PointX="12.75" PointY="32.75" />
+        <EntityTypeShape EntityType="Model1.Tx_AdjustmentIn_Approval" Width="1.5" PointX="31.375" PointY="32.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

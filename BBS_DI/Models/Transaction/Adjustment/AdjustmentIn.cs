@@ -914,42 +914,53 @@ namespace Models.Transaction.Adjustment
 
         }
 
-        public void Approve(int userId, long Id, string approvalMessages)
+        public void Approve(int userId, long id, string action, string approvalMessage)
         {
+            string approvalStatus = string.Empty;
+            try
+            {
+                Authorize(userId, id, action, approvalMessage);
+                using (var CONTEXT = new HANA_APP())
+                {
+                    string strApprovalStatus = @"
+                        SELECT T0.""ApprovalStatus"" 
+                        FROM ""Tx_AdjustmentIn"" T0
+                        WHERE T0.""Id"" = :p0 
+                    ";
+                    approvalStatus = CONTEXT.Database.SqlQuery<string>(strApprovalStatus, id).FirstOrDefault();
+                }
+
+                if (approvalStatus == "Approved")
+                {
+                    AdjustmentInModel adjustmentInModel = GetById(userId, id);
+                    this.Update(adjustmentInModel, "Post");
+                    this.PostSAP(userId, adjustmentInModel.Id);
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void Authorize(int userId, long id, string action, string approvalMessage)
+        { 
             using (var CONTEXT = new HANA_APP())
             {
-               AdjustmentInModel adjustmentInModel = GetById(userId, Id);
+               AdjustmentInModel adjustmentInModel = GetById(userId, id);
 
                 using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
                 {
                     try
                     {
                         String keyValue;
-                        keyValue = Id.ToString();
+                        keyValue = id.ToString();
 
-                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "before", "Tx_AdjustmentIn", "approve", "Id", keyValue);
-
-                        Tx_AdjustmentIn tx_AdjustmentIn = CONTEXT.Tx_AdjustmentIn.Find(Id);
-                        if (tx_AdjustmentIn != null)
-                        {
-                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                            var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("AdjustmentIn");
-                            //tx_AdjustmentIn.Status = "";
-                            tx_AdjustmentIn.ApprovalStatus = isApprovalActive == "Y" && string.IsNullOrEmpty(tx_AdjustmentIn.ApprovalStatus) ? "Waiting" : tx_AdjustmentIn.ApprovalStatus;
-                            tx_AdjustmentIn.ApprovalMessages = approvalMessages;
-                            tx_AdjustmentIn.ModifiedDate = dtModified;
-                            tx_AdjustmentIn.ModifiedUser = userId;
-
-                            CONTEXT.SaveChanges();
-                        }
-                        //CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn_UpdateItem\"(:p0,:p1)", userId, Id);
-                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "after", "Tx_AdjustmentIn", "approve", "Id", keyValue);
-
-                        if (tx_AdjustmentIn.ApprovalStatus == "Approved")
-                        {
-                            PostSAP(userId, adjustmentInModel.Id);
-                        }
-
+                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "before", "Tx_AdjustmentIn", action.ToLower(), "Id", keyValue);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpApproval_Authorize\"(:p0, 'AdjustmentIn', :p2, :p3, :p4)", userId, id, action, approvalMessage);
+                        CONTEXT.SaveChanges();
+                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "after", "Tx_AdjustmentIn", action.ToLower(), "Id", keyValue);
+                        
                         CONTEXT_TRANS.Commit();
 
                     }
@@ -1149,10 +1160,10 @@ namespace Models.Transaction.Adjustment
             using (var CONTEXT = new HANA_APP())
             {
                 string sql = @"
-                    SELECT TOP 1 T0.""Id"", T1.""Status"", T1.""ApprovalMessages"", T0.""CreatedDate"", T2.""FirstName""
-                    FROM ""Tx_AdjustmentIn_Approval"" T0 
-                    INNER JOIN ""Tx_AdjustmentIn"" T1 ON T0.""Id"" = T1.""Id""
-                    INNER JOIN ""Tm_User"" T2 ON T0.""CreatedUser"" = T2.""Id""
+                    SELECT TOP 1 T0.""Id"", T0.""Status"", T0.""ApprovalMessages"", T1.""CreatedDate"", T2.""FirstName""
+                    FROM ""Tx_AdjustmentIn"" T0 
+                    LEFT JOIN ""Tx_AdjustmentIn_Approval"" T1 ON T0.""Id"" = T1.""Id"" 
+                    LEFT JOIN ""Tm_User"" T2 ON T0.""CreatedUser"" = T2.""Id""
                     WHERE T0.""Id""=:p0 
                 ";
 
