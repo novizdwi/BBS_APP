@@ -107,9 +107,8 @@ namespace Models.Transaction.Inventory
         public List<TransferSummaryOut_ApprovalModel> ListApprovalStep_ = new List<TransferSummaryOut_ApprovalModel>();
 
         public TransferSummaryOut_Detail Details_ { get; set; }
-
-        public TransferSummaryOut_Approval ApprovalStep_ { get; set; }
     }
+        
     public class TransferSummaryOut_Detail
     {
         public List<long> deletedRowKeys { get; set; }

@@ -101,6 +101,7 @@ namespace Models.Transaction.Adjustment
 
         public string ModifiedDate_ { get; set; }
 
+
         public int? ApprovalTemplateId_ { get; set; }
 
         public string IsEligibleApprove_ { get; set; }

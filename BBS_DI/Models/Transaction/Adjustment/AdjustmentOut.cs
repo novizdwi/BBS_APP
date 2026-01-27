@@ -103,7 +103,10 @@ namespace Models.Transaction.Adjustment
 
         public string ModifiedDate_ { get; set; }
 
+
         public int? ApprovalTemplateId_ { get; set; }
+
+        public string IsEligibleApprove_ { get; set; }
 
         public List<AdjustmentOut_ItemModel> ListDetails_ = new List<AdjustmentOut_ItemModel>();
 
@@ -122,7 +125,6 @@ namespace Models.Transaction.Adjustment
         public List<GetCodeNameModel> ProjectList { get; set; }
 
         public List<AdjustmentOut_ApprovalModel> ListApprovalStep_ = new List<AdjustmentOut_ApprovalModel>();
-        public AdjustmentOut_Approval ApprovalStep_ { get; set; }
     }
 
     public class AdjustmentOut_Detail

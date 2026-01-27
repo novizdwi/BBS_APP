@@ -108,9 +108,7 @@ namespace Models.Transaction.Inventory
 
         public TransferSummaryIn_Detail Details_ { get; set; }
 
-        public List<TransferSummaryIn_ApprovalModel> ListApprovalStep_ = new List<TransferSummaryIn_ApprovalModel>();
-
-        public TransferSummaryIn_Approval ApprovalStep_ { get; set; }
+        public List<TransferSummaryIn_ApprovalModel> ListApprovalStep_ = new List<TransferSummaryIn_ApprovalModel>();        
     }
 
     public class TransferSummaryIn_ApprovalModel

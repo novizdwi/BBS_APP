@@ -99,8 +99,6 @@ namespace Models.Transaction.Purchasing
         public GoodsReceiptPO_Detail Details_ { get; set; }
 
         public List<GoodsReceiptPO_ApprovalModel> ListApprovalStep_ = new List<GoodsReceiptPO_ApprovalModel>();
-
-        public GoodsReceiptPO_Approval ApprovalStep_ { get; set; }
     }
 
     public class GoodsReceiptPO_ApprovalModel
