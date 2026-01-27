@@ -20,27 +20,31 @@ namespace Controllers.Transaction.Purchasing
     {
 
         string VIEW_APPROVAL_PROGRESS_PANEL_PARTIAL = "Partial/Approval/Approval_Panel_Partial";
-
         string VIEW_APPROVAL_PROGRESS_FORM_PARTIAL = "Partial/Approval/Approval_Form_Partial";
+        string VIEW_APPROVAL_PROGRESS_CONTENT = "Partial/Approval/Approval_Form_TabApproval_Partial";
 
         public ActionResult Approval_PopupListOnDemandPartial(long Id = 0)
+        {
+            int userId = (int)Session["userId"];
+            goodsReceiptPOService = new GoodsReceiptPOService();
+            GoodsReceiptPOApprovalView___ model = new GoodsReceiptPOApprovalView___();
+            if (Id != 0)
+            {
+                model = goodsReceiptPOService.GetViewApproval(Id);
+            }
+            return PartialView(VIEW_APPROVAL_PROGRESS_PANEL_PARTIAL, model);
+        }
+
+        public ActionResult TabApprovalListPartial()
         {
             int userId = (int)Session["userId"];
 
             goodsReceiptPOService = new GoodsReceiptPOService();
 
-            GoodsReceiptPOModel model;
+            var Id = Convert.ToInt64(Request["cbId"]);
+            List<GoodsReceiptPO_ApprovalModel> modelList = goodsReceiptPOService.GetGoodsReceiptPO_ApprovalSteps(Id);
 
-            if (Id != 0)
-            {
-                model = goodsReceiptPOService.GetById(userId, Id);
-            }
-            else
-            {
-                model = goodsReceiptPOService.GetNewModel(userId);
-            }
-
-            return PartialView(VIEW_APPROVAL_PROGRESS_PANEL_PARTIAL, model);
+            return PartialView(VIEW_APPROVAL_PROGRESS_CONTENT, modelList);
         }
 
 

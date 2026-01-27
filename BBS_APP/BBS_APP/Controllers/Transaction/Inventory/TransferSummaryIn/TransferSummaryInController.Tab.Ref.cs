@@ -7,9 +7,9 @@ using System.Web.Mvc;
 using DevExpress.Web.Mvc;
 using System.IO;
 using System.Threading;
+using System.Net;
 using Models.Transaction.Inventory;
 
-using System.Net;
 
 namespace Controllers.Transaction.Inventory
 {

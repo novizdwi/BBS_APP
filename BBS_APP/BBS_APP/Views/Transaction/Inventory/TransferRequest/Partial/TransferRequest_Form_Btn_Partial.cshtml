@@ -251,7 +251,7 @@
                                        {
                                            subItem.Text = "Download";
                                            subItem.Name = "btnMenuSetBtnTemplateDownload";
-                                           
+
                                        });
 
                                        itemOther.Items.Add(subItem =>
@@ -263,7 +263,11 @@
 
 
                                    });
-
+                                   item.Items.Add(itemOther =>
+                                   {
+                                       itemOther.Text = "Approval";
+                                       itemOther.Items.Add("Authorize", "btnMenuAuthorize");
+                                   });
 
                                });
 

@@ -137,10 +137,82 @@ namespace Controllers.Transaction.Inventory
             transferRequestModel._FormMode = FormModeEnum.Edit;
 
             transferRequestService.Update(transferRequestModel);
-            //transferRequestService.PostAPI(userId, transferRequestModel.Id);
             transferRequestService.Post(userId, transferRequestModel.Id);
             transferRequestModel = transferRequestService.GetById(userId, transferRequestModel.Id);
 
+            if (transferRequestModel != null)
+            {
+                transferRequestModel._FormMode = FormModeEnum.Edit;
+            }
+            else
+            {
+                transferRequestModel = transferRequestService.GetNewModel(userId);
+                transferRequestModel._FormMode = FormModeEnum.New;
+            }
+
+            return PartialView(VIEW_FORM_PARTIAL, transferRequestModel);
+        }
+
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult RequestApproval(long id, int templateId, string approvalMessage = "")
+        {
+            int userId = (int)Session["userId"];
+
+            TransferRequestModel transferRequestModel;
+
+            transferRequestService = new TransferRequestService();
+            transferRequestService.RequestApproval(userId, id, templateId, approvalMessage);
+
+            transferRequestModel = transferRequestService.GetById(userId, id);
+            if (transferRequestModel != null)
+            {
+                transferRequestModel._FormMode = FormModeEnum.Edit;
+            }
+            else
+            {
+                transferRequestModel = transferRequestService.GetNewModel(userId);
+                transferRequestModel._FormMode = FormModeEnum.New;
+            }
+
+            return PartialView(VIEW_FORM_PARTIAL, transferRequestModel);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Approve(long Id, string ApprovalMessage = "")
+        {
+            int userId = (int)Session["userId"];
+
+            TransferRequestModel transferRequestModel;
+
+            transferRequestService = new TransferRequestService();
+            transferRequestService.Approve(userId, Id, ApprovalMessage);
+
+            transferRequestModel = transferRequestService.GetById(userId, Id);
+            if (transferRequestModel != null)
+            {
+                transferRequestModel._FormMode = FormModeEnum.Edit;
+            }
+            else
+            {
+                transferRequestModel = transferRequestService.GetNewModel(userId);
+                transferRequestModel._FormMode = FormModeEnum.New;
+            }
+
+            return PartialView(VIEW_FORM_PARTIAL, transferRequestModel);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Reject(long Id, string ApprovalMessage = "")
+        {
+            int userId = (int)Session["userId"];
+
+            TransferRequestModel transferRequestModel;
+
+            transferRequestService = new TransferRequestService();
+            transferRequestService.Authorize(userId, Id, "Reject", ApprovalMessage);
+
+            transferRequestModel = transferRequestService.GetById(userId, Id);
             if (transferRequestModel != null)
             {
                 transferRequestModel._FormMode = FormModeEnum.Edit;

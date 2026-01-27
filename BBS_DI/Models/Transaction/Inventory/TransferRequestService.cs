@@ -88,13 +88,13 @@ namespace Models.Transaction.Inventory
 
         public string FileTemplateName_ { get; set; }
 
+        public int? ApprovalTemplateId_ { get; set; }
+
+        public string IsEligibleApprove_ { get; set; }
+
         public List<TransferRequest_DetailModel> ListDetails_ = new List<TransferRequest_DetailModel>();
 
         public TransferRequest_Detail Details_ { get; set; }
-
-        public List<TransferRequest_ApprovalModel> ListApprovalStep_ = new List<TransferRequest_ApprovalModel>();
-
-        public TransferRequest_Approval ApprovalStep_ { get; set; }
     }
 
     public class TransferRequest_ApprovalModel
@@ -254,6 +254,26 @@ namespace Models.Transaction.Inventory
         public string Comments { get; set; }
     }
 
+
+    public class TransferRequestApprovalView___
+    {
+        public long Id { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string Status { get; set; }
+
+        public string RequestMassage { get; set; }
+
+        public string ApprovalMessages { get; set; }
+
+        public DateTime? CreatedDate { get; set; }
+
+        public List<TransferRequest_ApprovalModel> ApprovalStepList__ = new List<TransferRequest_ApprovalModel>();
+
+        public TransferRequest_Approval ApprovalStep__ { get; set; }
+    }
+
     #endregion
 
     #region Services
@@ -291,6 +311,24 @@ namespace Models.Transaction.Inventory
                 model = CONTEXT.Database.SqlQuery<TransferRequestModel>(ssql, id).Single();
 
                 model.ListDetails_ = this.TransferRequest_Details(CONTEXT, id);
+
+                if (model.Status == "Draft")
+                {
+                    int? approvalId = CONTEXT.Database.SqlQuery<int?>(@"CALL ""SpApproval_CheckNeedApproval""(:p0, 'TransferRequest', :p1) ", userId, model.Id).FirstOrDefault();
+                    model.ApprovalTemplateId_ = approvalId;
+                }
+
+                if (model.ApprovalStatus == "Waiting")
+                {
+                    string getDocNum = @"SELECT 'Y'
+			            FROM ""Tx_TransferRequest"" T0
+			            INNER JOIN  ""Tx_TransferRequest_Approval"" T1 ON T0.""Id"" = T1.""Id"" AND T1.""Status"" = 'Waiting'
+			            WHERE T0.""Id"" = :p0 
+			            AND T1.""UserId"" = :p1
+		            ";
+                    model.IsEligibleApprove_ = CONTEXT.Database.SqlQuery<string>(getDocNum, id, userId).FirstOrDefault();
+                }
+
             }
 
             return model;
@@ -315,6 +353,27 @@ namespace Models.Transaction.Inventory
             ";
             var purchaseOrder = CONTEXT.Database.SqlQuery<TransferRequest_DetailModel>(ssql, id).ToList();
             return purchaseOrder;
+        }
+
+        public List<TransferRequest_ApprovalModel> GetTransferRequest_ApprovalSteps(long id = 0)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                return GetTransferRequest_ApprovalSteps(CONTEXT, id);
+            }
+
+        }
+
+        public List<TransferRequest_ApprovalModel> GetTransferRequest_ApprovalSteps(HANA_APP CONTEXT, long id = 0)
+        {
+            string ssql = @"SELECT T0.*, T1.""UserName""  AS Username
+                FROM ""Tx_TransferRequest_Approval"" T0
+                LEFT JOIN ""Tm_User"" T1 ON T1.""Id"" = T0.""UserId""
+                WHERE T0.""Id"" =:p0
+                ORDER BY T0.""Step"" ASC
+            ";
+            var listData = CONTEXT.Database.SqlQuery<TransferRequest_ApprovalModel>(ssql, id).ToList();
+            return listData;
         }
 
         public TransferRequestModel NavFirst(int userId)
@@ -845,43 +904,37 @@ namespace Models.Transaction.Inventory
 
         }
 
-        public void Approve(int userId, long Id, string approvalMessages)
+        public void RequestApproval(int userId, long id, int templateId, string approvalMessages)
         {
             using (var CONTEXT = new HANA_APP())
             {
-                TransferRequestModel adjustmentOutModel = GetById(userId, Id);
+                TransferRequestModel TransferRequestModel = GetById(userId, id);
 
                 using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
                 {
                     try
                     {
                         String keyValue;
-                        keyValue = Id.ToString();
+                        keyValue = id.ToString();
 
-                        SpNotif.SpSysControllerTransNotif(userId, "TransferRequest", CONTEXT, "before", "Tx_TransferRequest", "approve", "Id", keyValue);
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferRequest", CONTEXT, "before", "Tx_TransferRequest", "requestApproval", "Id", keyValue);
 
-                        Tx_TransferRequest tx_TransferRequest = CONTEXT.Tx_TransferRequest.Find(Id);
+                        Tx_TransferRequest tx_TransferRequest = CONTEXT.Tx_TransferRequest.Find(id);
                         if (tx_TransferRequest != null)
                         {
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                            var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("TransferRequest");
-                            //tx_TransferRequest.Status = "";
-                            tx_TransferRequest.ApprovalStatus = isApprovalActive == "Y" && string.IsNullOrEmpty(tx_TransferRequest.ApprovalStatus) ? "Waiting" : tx_TransferRequest.ApprovalStatus;
+
+                            tx_TransferRequest.IsApproval = "Y";
                             tx_TransferRequest.ApprovalMessages = approvalMessages;
+                            tx_TransferRequest.ApprovalStatus = "Waiting";
                             tx_TransferRequest.ModifiedDate = dtModified;
                             tx_TransferRequest.ModifiedUser = userId;
 
                             CONTEXT.SaveChanges();
                         }
-                        //CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferRequest_UpdateItem\"(:p0,:p1, 'before')", userId, Id);
 
-                        SpNotif.SpSysControllerTransNotif(userId, "TransferRequest", CONTEXT, "after", "Tx_TransferRequest", "approve", "Id", keyValue);
-
-                        //if (tx_TransferRequest.ApprovalStatus == "Approved")
-                        //{
-                        //    PostSAP(userId, adjustmentOutModel.Id);
-                        //}
-
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpApproval_Insert\"(:p0,'TransferRequest',:p1, :p2)", userId, id, templateId);
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferRequest", CONTEXT, "after", "Tx_TransferRequest", "requestApproval", "Id", keyValue);
                         CONTEXT_TRANS.Commit();
 
                     }
@@ -907,36 +960,38 @@ namespace Models.Transaction.Inventory
 
         }
 
-        public void Reject(int userId, long Id, string approvalMessages)
+        public void Approve(int userId, long id, string approvalMessage)
+        {
+            try
+            {
+                Authorize(userId, id, "Approve", approvalMessage); 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void Authorize(int userId, long id, string action, string approvalMessage)
         {
             using (var CONTEXT = new HANA_APP())
             {
+                TransferRequestModel TransferRequestModel = GetById(userId, id);
 
                 using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
                 {
                     try
                     {
                         String keyValue;
-                        keyValue = Id.ToString();
+                        keyValue = id.ToString();
 
-                        SpNotif.SpSysControllerTransNotif(userId, "TransferRequest", CONTEXT, "before", "Tx_TransferRequest", "reject", "Id", keyValue);
-
-                        Tx_TransferRequest tx_TransferRequest = CONTEXT.Tx_TransferRequest.Find(Id);
-                        if (tx_TransferRequest != null)
-                        {
-                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                            //tx_TransferRequest.Status = "";
-                            tx_TransferRequest.ApprovalMessages = approvalMessages;
-                            tx_TransferRequest.ModifiedDate = dtModified;
-                            tx_TransferRequest.ModifiedUser = userId;
-
-                            CONTEXT.SaveChanges();
-                        }
-
-                        SpNotif.SpSysControllerTransNotif(userId, "TransferRequest", CONTEXT, "after", "Tx_TransferRequest", "reject", "Id", keyValue);
-
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferRequest", CONTEXT, "before", "Tx_TransferRequest", action.ToLower(), "Id", keyValue);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpApproval_Authorize\"(:p0, 'TransferRequest', :p2, :p3, :p4)", userId, id, action, approvalMessage);
+                        CONTEXT.SaveChanges();
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferRequest", CONTEXT, "after", "Tx_TransferRequest", action.ToLower(), "Id", keyValue);
 
                         CONTEXT_TRANS.Commit();
+
                     }
 
                     catch (Exception ex)
@@ -980,6 +1035,27 @@ namespace Models.Transaction.Inventory
                 //model.TransferRequestItemTagModel___ = CONTEXT.Database.SqlQuery<TransferRequestItemTagModel>(sql, id, detId).ToList();
             }
 
+            return model;
+        }
+
+        public TransferRequestApprovalView___ GetViewApproval(long id)
+        {
+            TransferRequestApprovalView___ model = new TransferRequestApprovalView___();
+            using (var CONTEXT = new HANA_APP())
+            {
+                string sql = @"
+                    SELECT TOP 1 T0.""Id"", T0.""Status"", T0.""ApprovalMessages"", T1.""CreatedDate"", T2.""FirstName""
+                    FROM ""Tx_TransferRequest"" T0 
+                    LEFT JOIN ""Tx_TransferRequest_Approval"" T1 ON T0.""Id"" = T1.""Id"" 
+                    LEFT JOIN ""Tm_User"" T2 ON T0.""CreatedUser"" = T2.""Id""
+                    WHERE T0.""Id""=:p0 
+                ";
+
+                model = CONTEXT.Database.SqlQuery<TransferRequestApprovalView___>(sql, id).FirstOrDefault();
+
+                model.ApprovalStepList__ = GetTransferRequest_ApprovalSteps(CONTEXT, id);
+
+            }
             return model;
         }
 

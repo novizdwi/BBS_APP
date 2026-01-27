@@ -135,9 +135,7 @@ namespace Controllers.Transaction.Purchasing
             goodsReceiptPOModel._UserId = (int)Session["userId"];
             goodsReceiptPOService = new GoodsReceiptPOService();
             goodsReceiptPOModel._FormMode = FormModeEnum.Edit;
-
-            //goodsReceiptPOService.Update(goodsReceiptPOModel);
-            //goodsReceiptPOService.PostAPI(userId, goodsReceiptPOModel.Id);
+            
             goodsReceiptPOService.Post(userId, goodsReceiptPOModel);
             goodsReceiptPOModel = goodsReceiptPOService.GetById(userId, goodsReceiptPOModel.Id);
 
@@ -165,6 +163,30 @@ namespace Controllers.Transaction.Purchasing
             goodsReceiptPOService.Cancel(userId, Id, CancelReason);
 
             goodsReceiptPOModel = goodsReceiptPOService.GetById(userId, Id);
+            if (goodsReceiptPOModel != null)
+            {
+                goodsReceiptPOModel._FormMode = FormModeEnum.Edit;
+            }
+            else
+            {
+                goodsReceiptPOModel = goodsReceiptPOService.GetNewModel(userId);
+                goodsReceiptPOModel._FormMode = FormModeEnum.New;
+            }
+
+            return PartialView(VIEW_FORM_PARTIAL, goodsReceiptPOModel);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult RequestApproval(long id, int templateId, string approvalMessage = "")
+        {
+            int userId = (int)Session["userId"];
+
+            GoodsReceiptPOModel goodsReceiptPOModel;
+
+            goodsReceiptPOService = new GoodsReceiptPOService();
+            goodsReceiptPOService.RequestApproval(userId, id, templateId, approvalMessage);
+
+            goodsReceiptPOModel = goodsReceiptPOService.GetById(userId, id);
             if (goodsReceiptPOModel != null)
             {
                 goodsReceiptPOModel._FormMode = FormModeEnum.Edit;
@@ -210,7 +232,7 @@ namespace Controllers.Transaction.Purchasing
             GoodsReceiptPOModel goodsReceiptPOModel;
 
             goodsReceiptPOService = new GoodsReceiptPOService();
-            goodsReceiptPOService.Reject(userId, Id, ApprovalMessage);
+            goodsReceiptPOService.Authorize(userId, Id, "Reject", ApprovalMessage);
 
             goodsReceiptPOModel = goodsReceiptPOService.GetById(userId, Id);
             if (goodsReceiptPOModel != null)

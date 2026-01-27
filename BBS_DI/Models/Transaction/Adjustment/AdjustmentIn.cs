@@ -279,7 +279,6 @@ namespace Models.Transaction.Adjustment
         public string PostResultNote { get; set; }
     }
 
-
     public class AdjustmentIn_AttachmentModel
     {
 
@@ -915,78 +914,6 @@ namespace Models.Transaction.Adjustment
 
         }
 
-        public void Approve(int userId, long id, string action, string approvalMessage)
-        {
-            string approvalStatus = string.Empty;
-            try
-            {
-                Authorize(userId, id, action, approvalMessage);
-                using (var CONTEXT = new HANA_APP())
-                {
-                    string strApprovalStatus = @"
-                        SELECT T0.""ApprovalStatus"" 
-                        FROM ""Tx_AdjustmentIn"" T0
-                        WHERE T0.""Id"" = :p0 
-                    ";
-                    approvalStatus = CONTEXT.Database.SqlQuery<string>(strApprovalStatus, id).FirstOrDefault();
-                }
-
-                if (approvalStatus == "Approved")
-                {
-                    AdjustmentInModel adjustmentInModel = GetById(userId, id);
-                    this.Update(adjustmentInModel, "Post");
-                    this.PostSAP(userId, adjustmentInModel.Id);
-                }
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public void Authorize(int userId, long id, string action, string approvalMessage)
-        { 
-            using (var CONTEXT = new HANA_APP())
-            {
-               AdjustmentInModel adjustmentInModel = GetById(userId, id);
-
-                using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
-                {
-                    try
-                    {
-                        String keyValue;
-                        keyValue = id.ToString();
-
-                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "before", "Tx_AdjustmentIn", action.ToLower(), "Id", keyValue);
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpApproval_Authorize\"(:p0, 'AdjustmentIn', :p2, :p3, :p4)", userId, id, action, approvalMessage);
-                        CONTEXT.SaveChanges();
-                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "after", "Tx_AdjustmentIn", action.ToLower(), "Id", keyValue);
-                        
-                        CONTEXT_TRANS.Commit();
-
-                    }
-
-                    catch (Exception ex)
-                    {
-                        CONTEXT_TRANS.Rollback();
-
-                        string errorMassage;
-                        if (ex.Message.Substring(12) == "[VALIDATION]")
-                        {
-                            errorMassage = ex.Message;
-                        }
-                        else
-                        {
-                            errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
-                        }
-
-                        throw new Exception(errorMassage);
-                    }
-                }
-            }
-
-        }
-
         public void RequestApproval(int userId, long id, int templateId, string approvalMessages)
         {
             using (var CONTEXT = new HANA_APP())
@@ -1043,36 +970,55 @@ namespace Models.Transaction.Adjustment
 
         }
 
-        public void Reject(int userId, long Id, string approvalMessages)
+        public void Approve(int userId, long id, string approvalMessage)
+        {
+            string approvalStatus = string.Empty;
+            try
+            {
+                Authorize(userId, id, "Approve", approvalMessage);
+                using (var CONTEXT = new HANA_APP())
+                {
+                    string strApprovalStatus = @"
+                        SELECT T0.""ApprovalStatus"" 
+                        FROM ""Tx_AdjustmentIn"" T0
+                        WHERE T0.""Id"" = :p0 
+                    ";
+                    approvalStatus = CONTEXT.Database.SqlQuery<string>(strApprovalStatus, id).FirstOrDefault();
+                }
+
+                if (approvalStatus == "Approved")
+                {
+                    AdjustmentInModel adjustmentInModel = GetById(userId, id);
+                    this.Update(adjustmentInModel, "Post");
+                    this.PostSAP(userId, adjustmentInModel.Id);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void Authorize(int userId, long id, string action, string approvalMessage)
         {
             using (var CONTEXT = new HANA_APP())
             {
+                AdjustmentInModel adjustmentInModel = GetById(userId, id);
 
                 using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
                 {
                     try
                     {
                         String keyValue;
-                        keyValue = Id.ToString();
+                        keyValue = id.ToString();
 
-                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "before", "Tx_AdjustmentIn", "reject", "Id", keyValue);
-
-                        Tx_AdjustmentIn tx_AdjustmentIn = CONTEXT.Tx_AdjustmentIn.Find(Id);
-                        if (tx_AdjustmentIn != null)
-                        {
-                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                            //tx_AdjustmentIn.Status = "";
-                            tx_AdjustmentIn.ApprovalMessages = approvalMessages;
-                            tx_AdjustmentIn.ModifiedDate = dtModified;
-                            tx_AdjustmentIn.ModifiedUser = userId;
-
-                            CONTEXT.SaveChanges();
-                        }
-
-                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "after", "Tx_AdjustmentIn", "reject", "Id", keyValue);
-
+                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "before", "Tx_AdjustmentIn", action.ToLower(), "Id", keyValue);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpApproval_Authorize\"(:p0, 'AdjustmentIn', :p2, :p3, :p4)", userId, id, action, approvalMessage);
+                        CONTEXT.SaveChanges();
+                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "after", "Tx_AdjustmentIn", action.ToLower(), "Id", keyValue);
 
                         CONTEXT_TRANS.Commit();
+
                     }
 
                     catch (Exception ex)
@@ -1094,8 +1040,7 @@ namespace Models.Transaction.Adjustment
                 }
             }
 
-        }
-
+        }        
 
         public AdjustmentInItemTagView___ GetItemTags(long id, long detId)
         {

@@ -123,8 +123,6 @@ namespace Models.Transaction.Adjustment
         public List<GetCodeNameModel> SubClass2List { get; set; }
 
         public List<GetCodeNameModel> ProjectList { get; set; }
-
-        public List<AdjustmentOut_ApprovalModel> ListApprovalStep_ = new List<AdjustmentOut_ApprovalModel>();
     }
 
     public class AdjustmentOut_Detail
@@ -309,8 +307,27 @@ namespace Models.Transaction.Adjustment
 
         public string Guid { get; set; }
 
-
     }
+
+    public class AdjustmentOutApprovalView___
+    {
+        public long Id { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string Status { get; set; }
+
+        public string RequestMassage { get; set; }
+
+        public string ApprovalMessages { get; set; }
+
+        public DateTime? CreatedDate { get; set; }
+
+        public List<AdjustmentOut_ApprovalModel> ApprovalStepList__ = new List<AdjustmentOut_ApprovalModel>();
+
+        public AdjustmentOut_Approval ApprovalStep__ { get; set; }
+    }
+
     #endregion Models
 
     #region Services
@@ -360,14 +377,24 @@ namespace Models.Transaction.Adjustment
 
                 model.ListDetails_ = this.AdjustmentOut_Details(CONTEXT, id);
                 model.ListAttachments_ = this.GetAdjustmentOut_Attachments(id);
-                model.ListApprovalStep_ = this.GetAdjustmentOut_ApprovalSteps(id);
 
                 if (method != "post")
                 {
                     if (model.Status == "Draft")
                     {
-                        int? approvalId = CONTEXT.Database.SqlQuery<int?>(@"CALL ""SpApproval_CheckNeedApproval""(:p0, 'AdjustmentIn', :p1) ", userId, model.Id).FirstOrDefault();
+                        int? approvalId = CONTEXT.Database.SqlQuery<int?>(@"CALL ""SpApproval_CheckNeedApproval""(:p0, 'AdjustmentOut', :p1) ", userId, model.Id).FirstOrDefault();
                         model.ApprovalTemplateId_ = approvalId;
+                    }
+
+                    if (model.ApprovalStatus == "Waiting")
+                    {
+                        string getDocNum = @"SELECT 'Y'
+			                FROM ""Tx_AdjustmentOut"" T0
+			                INNER JOIN  ""Tx_AdjustmentOut_Approval"" T1 ON T0.""Id"" = T1.""Id"" AND T1.""Status"" = 'Waiting'
+			                WHERE T0.""Id"" = :p0 
+			                AND T1.""UserId"" = :p1
+		                ";
+                        model.IsEligibleApprove_ = CONTEXT.Database.SqlQuery<string>(getDocNum, id, userId).FirstOrDefault();
                     }
 
                     model.PillarsList = GeneralGetList.GetCostCenterList("1");
@@ -876,43 +903,37 @@ namespace Models.Transaction.Adjustment
 
         }
 
-        public void Approve(int userId, long Id, string approvalMessages)
+        public void RequestApproval(int userId, long id, int templateId, string approvalMessages)
         {
             using (var CONTEXT = new HANA_APP())
             {
-                AdjustmentOutModel adjustmentOutModel = GetById(userId, Id);
+                AdjustmentOutModel AdjustmentOutModel = GetById(userId, id);
 
                 using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
                 {
                     try
                     {
                         String keyValue;
-                        keyValue = Id.ToString();
+                        keyValue = id.ToString();
 
-                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentOut", CONTEXT, "before", "Tx_AdjustmentOut", "approve", "Id", keyValue);
+                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentOut", CONTEXT, "before", "Tx_AdjustmentOut", "requestApproval", "Id", keyValue);
 
-                        Tx_AdjustmentOut tx_AdjustmentOut = CONTEXT.Tx_AdjustmentOut.Find(Id);
+                        Tx_AdjustmentOut tx_AdjustmentOut = CONTEXT.Tx_AdjustmentOut.Find(id);
                         if (tx_AdjustmentOut != null)
                         {
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                            var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("AdjustmentOut");
-                            //tx_AdjustmentOut.Status = "";
-                            tx_AdjustmentOut.ApprovalStatus = isApprovalActive == "Y" && string.IsNullOrEmpty(tx_AdjustmentOut.ApprovalStatus) ? "Waiting" : tx_AdjustmentOut.ApprovalStatus;
+
+                            tx_AdjustmentOut.IsApproval = "Y";
                             tx_AdjustmentOut.ApprovalMessages = approvalMessages;
+                            tx_AdjustmentOut.ApprovalStatus = "Waiting";
                             tx_AdjustmentOut.ModifiedDate = dtModified;
                             tx_AdjustmentOut.ModifiedUser = userId;
 
                             CONTEXT.SaveChanges();
                         }
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentOut_UpdateItem\"(:p0,:p1, 'before')", userId, Id);
 
-                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentOut", CONTEXT, "after", "Tx_AdjustmentOut", "approve", "Id", keyValue);
-
-                        if (tx_AdjustmentOut.ApprovalStatus == "Approved")
-                        {
-                            PostSAP(userId, adjustmentOutModel.Id);
-                        }
-
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpApproval_Insert\"(:p0,'AdjustmentOut',:p1, :p2)", userId, id, templateId);
+                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentOut", CONTEXT, "after", "Tx_AdjustmentOut", "requestApproval", "Id", keyValue);
                         CONTEXT_TRANS.Commit();
 
                     }
@@ -938,36 +959,55 @@ namespace Models.Transaction.Adjustment
 
         }
 
-        public void Reject(int userId, long Id, string approvalMessages)
+        public void Approve(int userId, long id, string approvalMessage)
+        {
+            string approvalStatus = string.Empty;
+            try
+            {
+                Authorize(userId, id, "Approve", approvalMessage);
+                using (var CONTEXT = new HANA_APP())
+                {
+                    string strApprovalStatus = @"
+                        SELECT T0.""ApprovalStatus"" 
+                        FROM ""Tx_AdjustmentOut"" T0
+                        WHERE T0.""Id"" = :p0 
+                    ";
+                    approvalStatus = CONTEXT.Database.SqlQuery<string>(strApprovalStatus, id).FirstOrDefault();
+                }
+
+                if (approvalStatus == "Approved")
+                {
+                    AdjustmentOutModel AdjustmentOutModel = GetById(userId, id);
+                    this.Update(AdjustmentOutModel, "Post");
+                    this.PostSAP(userId, AdjustmentOutModel.Id);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void Authorize(int userId, long id, string action, string approvalMessage)
         {
             using (var CONTEXT = new HANA_APP())
             {
+                AdjustmentOutModel AdjustmentOutModel = GetById(userId, id);
 
                 using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
                 {
                     try
                     {
                         String keyValue;
-                        keyValue = Id.ToString();
+                        keyValue = id.ToString();
 
-                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentOut", CONTEXT, "before", "Tx_AdjustmentOut", "reject", "Id", keyValue);
-
-                        Tx_AdjustmentOut tx_AdjustmentOut = CONTEXT.Tx_AdjustmentOut.Find(Id);
-                        if (tx_AdjustmentOut != null)
-                        {
-                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                            //tx_AdjustmentOut.Status = "";
-                            tx_AdjustmentOut.ApprovalMessages = approvalMessages;
-                            tx_AdjustmentOut.ModifiedDate = dtModified;
-                            tx_AdjustmentOut.ModifiedUser = userId;
-
-                            CONTEXT.SaveChanges();
-                        }
-
-                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentOut", CONTEXT, "after", "Tx_AdjustmentOut", "reject", "Id", keyValue);
-
+                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentOut", CONTEXT, "before", "Tx_AdjustmentOut", action.ToLower(), "Id", keyValue);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpApproval_Authorize\"(:p0, 'AdjustmentOut', :p2, :p3, :p4)", userId, id, action, approvalMessage);
+                        CONTEXT.SaveChanges();
+                        SpNotif.SpSysControllerTransNotif(userId, "AdjustmentOut", CONTEXT, "after", "Tx_AdjustmentOut", action.ToLower(), "Id", keyValue);
 
                         CONTEXT_TRANS.Commit();
+
                     }
 
                     catch (Exception ex)
@@ -1024,6 +1064,28 @@ namespace Models.Transaction.Adjustment
 
             return model;
         }
+
+        public AdjustmentOutApprovalView___ GetViewApproval(long id)
+        {
+            AdjustmentOutApprovalView___ model = new AdjustmentOutApprovalView___();
+            using (var CONTEXT = new HANA_APP())
+            {
+                string sql = @"
+                    SELECT TOP 1 T0.""Id"", T0.""Status"", T0.""ApprovalMessages"", T1.""CreatedDate"", T2.""FirstName""
+                    FROM ""Tx_AdjustmentOut"" T0 
+                    LEFT JOIN ""Tx_AdjustmentOut_Approval"" T1 ON T0.""Id"" = T1.""Id"" 
+                    LEFT JOIN ""Tm_User"" T2 ON T0.""CreatedUser"" = T2.""Id""
+                    WHERE T0.""Id""=:p0 
+                ";
+
+                model = CONTEXT.Database.SqlQuery<AdjustmentOutApprovalView___>(sql, id).FirstOrDefault();
+
+                model.ApprovalStepList__ = GetAdjustmentOut_ApprovalSteps(CONTEXT, id);
+
+            }
+            return model;
+        }
+
         #region Attachment
         public AdjustmentOut_AttachmentModel GetAdjustmentOut_Attachments_GetById(long id = 0)
         {

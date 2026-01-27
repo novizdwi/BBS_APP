@@ -135,9 +135,7 @@ namespace Controllers.Transaction.StockOpname
             StockSummaryOpnameModel._UserId = (int)Session["userId"];
             stockSummaryOpnameService = new StockSummaryOpnameService();
             StockSummaryOpnameModel._FormMode = FormModeEnum.Edit;
-
-            //StockSummaryOpnameService.Update(StockSummaryOpnameModel, "Post");
-            //StockSummaryOpnameService.PostAPI(userId, StockSummaryOpnameModel.Id);
+            
             stockSummaryOpnameService.Post(userId, StockSummaryOpnameModel);
             StockSummaryOpnameModel = stockSummaryOpnameService.GetById(userId, StockSummaryOpnameModel.Id);
 
@@ -179,6 +177,30 @@ namespace Controllers.Transaction.StockOpname
         }
 
         [HttpPost, ValidateInput(false)]
+        public ActionResult RequestApproval(long id, int templateId, string approvalMessage = "")
+        {
+            int userId = (int)Session["userId"];
+
+            StockSummaryOpnameModel stockSummaryOpnameModel;
+
+            stockSummaryOpnameService = new StockSummaryOpnameService();
+            stockSummaryOpnameService.RequestApproval(userId, id, templateId, approvalMessage);
+
+            stockSummaryOpnameModel = stockSummaryOpnameService.GetById(userId, id);
+            if (stockSummaryOpnameModel != null)
+            {
+                stockSummaryOpnameModel._FormMode = FormModeEnum.Edit;
+            }
+            else
+            {
+                stockSummaryOpnameModel = stockSummaryOpnameService.GetNewModel(userId);
+                stockSummaryOpnameModel._FormMode = FormModeEnum.New;
+            }
+
+            return PartialView(VIEW_FORM_PARTIAL, stockSummaryOpnameModel);
+        }
+
+        [HttpPost, ValidateInput(false)]
         public ActionResult Approve(long Id, string ApprovalMessage = "")
         {
             int userId = (int)Session["userId"];
@@ -210,7 +232,7 @@ namespace Controllers.Transaction.StockOpname
             StockSummaryOpnameModel stockSummaryOpnameModel;
 
             stockSummaryOpnameService = new StockSummaryOpnameService();
-            stockSummaryOpnameService.Reject(userId, Id, ApprovalMessage);
+            stockSummaryOpnameService.Authorize(userId, Id, "Reject", ApprovalMessage);
 
             stockSummaryOpnameModel = stockSummaryOpnameService.GetById(userId, Id);
             if (stockSummaryOpnameModel != null)
@@ -225,8 +247,6 @@ namespace Controllers.Transaction.StockOpname
 
             return PartialView(VIEW_FORM_PARTIAL, stockSummaryOpnameModel);
         }
-
-
 
         public ActionResult RefreshItem(StockSummaryOpnameModel StockSummaryOpnameModel)
         {

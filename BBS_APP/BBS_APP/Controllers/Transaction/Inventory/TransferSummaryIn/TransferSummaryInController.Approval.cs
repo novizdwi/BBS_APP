@@ -20,27 +20,31 @@ namespace Controllers.Transaction.Inventory
     {
 
         string VIEW_APPROVAL_PROGRESS_PANEL_PARTIAL = "Partial/Approval/Approval_Panel_Partial";
-
         string VIEW_APPROVAL_PROGRESS_FORM_PARTIAL = "Partial/Approval/Approval_Form_Partial";
+        string VIEW_APPROVAL_PROGRESS_CONTENT = "Partial/Approval/Approval_Form_TabApproval_Partial";
 
         public ActionResult Approval_PopupListOnDemandPartial(long Id = 0)
+        {
+            int userId = (int)Session["userId"];
+            transferSummaryInService = new TransferSummaryInService();
+            TransferSummaryInApprovalView___ model = new TransferSummaryInApprovalView___();
+            if (Id != 0)
+            {
+                model = transferSummaryInService.GetViewApproval(Id);
+            }
+            return PartialView(VIEW_APPROVAL_PROGRESS_PANEL_PARTIAL, model);
+        }
+
+        public ActionResult TabApprovalListPartial()
         {
             int userId = (int)Session["userId"];
 
             transferSummaryInService = new TransferSummaryInService();
 
-            TransferSummaryInModel model;
+            var Id = Convert.ToInt64(Request["cbId"]);
+            List<TransferSummaryIn_ApprovalModel> modelList = transferSummaryInService.GetTransferSummaryIn_ApprovalSteps(Id);
 
-            if (Id != 0)
-            {
-                model = transferSummaryInService.GetById(userId, Id);
-            }
-            else
-            {
-                model = transferSummaryInService.GetNewModel(userId);
-            }
-
-            return PartialView(VIEW_APPROVAL_PROGRESS_PANEL_PARTIAL, model);
+            return PartialView(VIEW_APPROVAL_PROGRESS_CONTENT, modelList);
         }
 
 

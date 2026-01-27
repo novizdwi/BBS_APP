@@ -112,6 +112,13 @@
 
                         btnMenuOther.GetItemByName("btnMenuTemplateUpload").SetEnabled(true);
                         btnMenuOther.GetItemByName("btnMenuSetBtnTemplateDownload").SetEnabled(true);
+
+
+                        if (ApprovalStatus.GetValue() == "Waiting") {
+                            btnPost.SetEnabled(false);
+                            btnMenuOther.GetItemByName("btnMenuAuthorize").SetEnabled(IsEligibleApprove_.GetValue() == "Y" ? true : false);
+                        }
+
                         break;
                     case 'Posted':
                         btnUpdate.SetEnabled(true);
@@ -300,9 +307,9 @@
         }
     }
 
-     function btnUpdateApprovalOnClick(s, e) {
+    function btnApproveApprovalOnClick(s, e) {
         key = Id.GetValue();
-        var reason = ApprovalMessages.GetValue();
+        var reason = RequestMassage.GetValue();
 
         $.ajax({
             type: "POST",
@@ -327,10 +334,37 @@
 
     }
 
+    function btnRequestApprovalOnClick(s, e) {
+        key = Id.GetValue();
+        var reason = RequestMassage.GetValue();
+        var templateId = ApprovalTemplateId_.GetValue();
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("RequestApproval", "TransferRequest")',
+            data: { id: key, templateId: templateId, approvalMessage: reason },
+            beforeSend: function () {
+                OnBegin();
+            },
+            success: function (response) {
+                popupApproval.Hide();
+                RefreshAfterSuccess(response);
+                OnSuccessMsgBox();
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                OnFailure(jqXhr, textStatus, errorThrown)
+            },
+            complete: function () {
+                OnComplete()
+
+            }
+        });
+    }
+
     function btnRejectApprovalOnClick(s, e) {
         if (confirm('Are you sure to Reject this transaction?')) {
              key = Id.GetValue();
-         var reason = ApprovalMessages.GetValue();
+            var reason = RequestMassage.GetValue();
 
             $.ajax({
                 type: "POST",
@@ -587,7 +621,10 @@
     function OnClickBtnMenuOther(s, e) {
 
         switch (e.item.name) {
-
+            case 'btnMenuAuthorize':
+                key = Id.GetValue();
+                btnShowApprovalOnClick(s, e, key);
+                break;
             case 'btnMenuSetStatusCancel':
                 key = Id.GetValue();
                 btnShowCancelReasonOnClick(s, e, key);
@@ -1046,8 +1083,25 @@ new
 @*-------------------------------------------------
     Approval
     -------------------------------------------------*@
-
+<script>
+    function gvApprovalOnBeginCallback(s, e) {
+        e.customArgs['cbId'] = Id.GetValue();
+    }
+</script>
 @Html.Partial("Partial/Approval/Approval_Partial")
+@*-------------------------------------------------
+    View Approval
+    -------------------------------------------------*@
+<script>
+    function ViewApproval_OnClickBtnCancel(s, e) {
+        var popup = ASPxClientPopupControl.Cast("popupViewApproval");
+        popup.Hide();
+    }
+    function ViewApproval_gvContentDetailBeginCallback(s, e) {
+        e.customArgs['cbId'] = Id.GetValue();
+    }
+</script>
+@Html.Partial("Partial/ViewApproval/ViewApproval_Partial")
 
 @*-------------------------------------------------
     CancelReason

@@ -112,7 +112,6 @@ namespace Controllers.Transaction.Adjustment
             adjustmentOutService = new AdjustmentOutService();
             adjustmentOutModel._FormMode = FormModeEnum.Edit;
             
-            //adjustmentOutService.PostAPI(userId, adjustmentOutModel.Id);
             adjustmentOutService.Post(userId, adjustmentOutModel);
             adjustmentOutModel = adjustmentOutService.GetById(userId, adjustmentOutModel.Id);
 
@@ -154,27 +153,51 @@ namespace Controllers.Transaction.Adjustment
         }
 
         [HttpPost, ValidateInput(false)]
+        public ActionResult RequestApproval(long id, int templateId, string approvalMessage = "")
+        {
+            int userId = (int)Session["userId"];
+
+            AdjustmentOutModel adjustmentOutModel;
+
+            adjustmentOutService = new AdjustmentOutService();
+            adjustmentOutService.RequestApproval(userId, id, templateId, approvalMessage);
+
+            adjustmentOutModel = adjustmentOutService.GetById(userId, id);
+            if (adjustmentOutModel != null)
+            {
+                adjustmentOutModel._FormMode = FormModeEnum.Edit;
+            }
+            else
+            {
+                adjustmentOutModel = adjustmentOutService.GetNewModel(userId);
+                adjustmentOutModel._FormMode = FormModeEnum.New;
+            }
+
+            return PartialView(VIEW_FORM_PARTIAL, adjustmentOutModel);
+        }
+
+        [HttpPost, ValidateInput(false)]
         public ActionResult Approve(long Id, string ApprovalMessage = "")
         {
             int userId = (int)Session["userId"];
 
-            AdjustmentOutModel adjustmentInModel;
+            AdjustmentOutModel adjustmentOutModel;
 
             adjustmentOutService = new AdjustmentOutService();
             adjustmentOutService.Approve(userId, Id, ApprovalMessage);
 
-            adjustmentInModel = adjustmentOutService.GetById(userId, Id);
-            if (adjustmentInModel != null)
+            adjustmentOutModel = adjustmentOutService.GetById(userId, Id);
+            if (adjustmentOutModel != null)
             {
-                adjustmentInModel._FormMode = FormModeEnum.Edit;
+                adjustmentOutModel._FormMode = FormModeEnum.Edit;
             }
             else
             {
-                adjustmentInModel = adjustmentOutService.GetNewModel(userId);
-                adjustmentInModel._FormMode = FormModeEnum.New;
+                adjustmentOutModel = adjustmentOutService.GetNewModel(userId);
+                adjustmentOutModel._FormMode = FormModeEnum.New;
             }
 
-            return PartialView(VIEW_FORM_PARTIAL, adjustmentInModel);
+            return PartialView(VIEW_FORM_PARTIAL, adjustmentOutModel);
         }
 
         [HttpPost, ValidateInput(false)]
@@ -182,23 +205,23 @@ namespace Controllers.Transaction.Adjustment
         {
             int userId = (int)Session["userId"];
 
-            AdjustmentOutModel adjustmentInModel;
+            AdjustmentOutModel adjustmentOutModel;
 
             adjustmentOutService = new AdjustmentOutService();
-            adjustmentOutService.Reject(userId, Id, ApprovalMessage);
+            adjustmentOutService.Authorize(userId, Id, "Reject", ApprovalMessage);
 
-            adjustmentInModel = adjustmentOutService.GetById(userId, Id);
-            if (adjustmentInModel != null)
+            adjustmentOutModel = adjustmentOutService.GetById(userId, Id);
+            if (adjustmentOutModel != null)
             {
-                adjustmentInModel._FormMode = FormModeEnum.Edit;
+                adjustmentOutModel._FormMode = FormModeEnum.Edit;
             }
             else
             {
-                adjustmentInModel = adjustmentOutService.GetNewModel(userId);
-                adjustmentInModel._FormMode = FormModeEnum.New;
+                adjustmentOutModel = adjustmentOutService.GetNewModel(userId);
+                adjustmentOutModel._FormMode = FormModeEnum.New;
             }
 
-            return PartialView(VIEW_FORM_PARTIAL, adjustmentInModel);
+            return PartialView(VIEW_FORM_PARTIAL, adjustmentOutModel);
         }
     }
 }

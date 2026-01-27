@@ -100,11 +100,11 @@ namespace Models.Transaction.Inventory
 
         public int? ApprovalTemplateId_ { get; set; }
 
+        public string IsEligibleApprove_ { get; set; }
+
         public List<TransferSummaryOut_DetailModel> ListDetails_ = new List<TransferSummaryOut_DetailModel>();
 
         public List<TransferSummaryOut_RefModel> ListRef_ = new List<TransferSummaryOut_RefModel>();
-
-        public List<TransferSummaryOut_ApprovalModel> ListApprovalStep_ = new List<TransferSummaryOut_ApprovalModel>();
 
         public TransferSummaryOut_Detail Details_ { get; set; }
     }
@@ -289,6 +289,25 @@ namespace Models.Transaction.Inventory
         public Dictionary<long, int> LineMapping { get; set; } // LineId -> LineNum
     }
 
+    public class TransferSummaryOutApprovalView___
+    {
+        public long Id { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string Status { get; set; }
+
+        public string RequestMassage { get; set; }
+
+        public string ApprovalMessages { get; set; }
+
+        public DateTime? CreatedDate { get; set; }
+
+        public List<TransferSummaryOut_ApprovalModel> ApprovalStepList__ = new List<TransferSummaryOut_ApprovalModel>();
+
+        public TransferSummaryOut_Approval ApprovalStep__ { get; set; }
+    }
+
     #endregion
 
     #region Services
@@ -329,12 +348,22 @@ namespace Models.Transaction.Inventory
 
                 model.ListRef_ = this.TransferSummaryOut_Refs(CONTEXT, id);
                 model.ListDetails_ = this.TransferSummaryOut_Details(CONTEXT, id);
-                model.ListApprovalStep_ = this.TransferSummaryOut_ApprovalSteps(id);
 
                 if (model.Status == "Draft")
                 {
-                    int? approvalId = CONTEXT.Database.SqlQuery<int?>(@"CALL ""SpApproval_CheckNeedApproval""(:p0, 'AdjustmentIn', :p1) ", userId, model.Id).FirstOrDefault();
+                    int? approvalId = CONTEXT.Database.SqlQuery<int?>(@"CALL ""SpApproval_CheckNeedApproval""(:p0, 'TransferSummaryOut', :p1) ", userId, model.Id).FirstOrDefault();
                     model.ApprovalTemplateId_ = approvalId;
+                }
+
+                if (model.ApprovalStatus == "Waiting")
+                {
+                    string getDocNum = @"SELECT 'Y'
+			            FROM ""Tx_TransferSummaryOut"" T0
+			            INNER JOIN  ""Tx_TransferSummaryOut_Approval"" T1 ON T0.""Id"" = T1.""Id"" AND T1.""Status"" = 'Waiting'
+			            WHERE T0.""Id"" = :p0 
+			            AND T1.""UserId"" = :p1
+		            ";
+                    model.IsEligibleApprove_ = CONTEXT.Database.SqlQuery<string>(getDocNum, id, userId).FirstOrDefault();
                 }
 
             }
@@ -385,16 +414,16 @@ namespace Models.Transaction.Inventory
             return transferSummaryOut;
         }
 
-        public List<TransferSummaryOut_ApprovalModel> TransferSummaryOut_ApprovalSteps(long id = 0)
+        public List<TransferSummaryOut_ApprovalModel> GetTransferSummaryOut_ApprovalSteps(long id = 0)
         {
             using (var CONTEXT = new HANA_APP())
             {
-                return TransferSummaryOut_ApprovalSteps(CONTEXT, id);
+                return GetTransferSummaryOut_ApprovalSteps(CONTEXT, id);
             }
 
         }
 
-        public List<TransferSummaryOut_ApprovalModel> TransferSummaryOut_ApprovalSteps(HANA_APP CONTEXT, long id = 0)
+        public List<TransferSummaryOut_ApprovalModel> GetTransferSummaryOut_ApprovalSteps(HANA_APP CONTEXT, long id = 0)
         {
             string ssql = @"SELECT T0.*, T1.""UserName""  AS Username
                 FROM ""Tx_TransferSummaryOut_Approval"" T0
@@ -1022,43 +1051,37 @@ namespace Models.Transaction.Inventory
 
         }
 
-        public void Approve(int userId, long Id, string approvalMessages)
+        public void RequestApproval(int userId, long id, int templateId, string approvalMessages)
         {
             using (var CONTEXT = new HANA_APP())
             {
-                TransferSummaryOutModel transferSummaryOutModel = GetById(userId, Id);
+                TransferSummaryOutModel TransferSummaryOutModel = GetById(userId, id);
 
                 using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
                 {
                     try
                     {
                         String keyValue;
-                        keyValue = Id.ToString();
+                        keyValue = id.ToString();
 
-                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "before", "Tx_TransferSummaryOut", "approve", "Id", keyValue);
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "before", "Tx_TransferSummaryOut", "requestApproval", "Id", keyValue);
 
-                        Tx_TransferSummaryOut tx_TransferSummaryOut = CONTEXT.Tx_TransferSummaryOut.Find(Id);
+                        Tx_TransferSummaryOut tx_TransferSummaryOut = CONTEXT.Tx_TransferSummaryOut.Find(id);
                         if (tx_TransferSummaryOut != null)
                         {
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                            var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("TransferSummaryOut");
-                            //tx_TransferSummaryOut.Status = "";
-                            tx_TransferSummaryOut.ApprovalStatus = isApprovalActive == "Y" && string.IsNullOrEmpty(tx_TransferSummaryOut.ApprovalStatus)  ? "Waiting" : tx_TransferSummaryOut.ApprovalStatus;
+
+                            tx_TransferSummaryOut.IsApproval = "Y";
                             tx_TransferSummaryOut.ApprovalMessages = approvalMessages;
+                            tx_TransferSummaryOut.ApprovalStatus = "Waiting";
                             tx_TransferSummaryOut.ModifiedDate = dtModified;
                             tx_TransferSummaryOut.ModifiedUser = userId;
 
                             CONTEXT.SaveChanges();
                         }
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateItem\"(:p0,:p1, 'before')", userId, Id);
 
-                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "approve", "Id", keyValue);
-                                              
-                        if (tx_TransferSummaryOut.ApprovalStatus == "Approved")
-                        {
-                           PostSAP(userId, transferSummaryOutModel.Id);
-                        }
-
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpApproval_Insert\"(:p0,'TransferSummaryOut',:p1, :p2)", userId, id, templateId);
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "requestApproval", "Id", keyValue);
                         CONTEXT_TRANS.Commit();
 
                     }
@@ -1084,36 +1107,55 @@ namespace Models.Transaction.Inventory
 
         }
 
-        public void Reject(int userId, long Id, string approvalMessages)
+        public void Approve(int userId, long id, string approvalMessage)
+        {
+            string approvalStatus = string.Empty;
+            try
+            {
+                Authorize(userId, id, "Approve", approvalMessage);
+                using (var CONTEXT = new HANA_APP())
+                {
+                    string strApprovalStatus = @"
+                        SELECT T0.""ApprovalStatus"" 
+                        FROM ""Tx_TransferSummaryOut"" T0
+                        WHERE T0.""Id"" = :p0 
+                    ";
+                    approvalStatus = CONTEXT.Database.SqlQuery<string>(strApprovalStatus, id).FirstOrDefault();
+                }
+
+                if (approvalStatus == "Approved")
+                {
+                    TransferSummaryOutModel TransferSummaryOutModel = GetById(userId, id);
+                    this.Update(TransferSummaryOutModel, "Post");
+                    this.PostSAP(userId, TransferSummaryOutModel.Id);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void Authorize(int userId, long id, string action, string approvalMessage)
         {
             using (var CONTEXT = new HANA_APP())
             {
+                TransferSummaryOutModel TransferSummaryOutModel = GetById(userId, id);
 
                 using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
                 {
                     try
                     {
                         String keyValue;
-                        keyValue = Id.ToString();
+                        keyValue = id.ToString();
 
-                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "before", "Tx_TransferSummaryOut", "reject", "Id", keyValue);
-
-                        Tx_TransferSummaryOut tx_TransferSummaryOut = CONTEXT.Tx_TransferSummaryOut.Find(Id);
-                        if (tx_TransferSummaryOut != null)
-                        {
-                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                            //tx_TransferSummaryOut.Status = "";
-                            tx_TransferSummaryOut.ApprovalMessages = approvalMessages;
-                            tx_TransferSummaryOut.ModifiedDate = dtModified;
-                            tx_TransferSummaryOut.ModifiedUser = userId;
-
-                            CONTEXT.SaveChanges();
-                        }
-
-                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "reject", "Id", keyValue);
-
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "before", "Tx_TransferSummaryOut", action.ToLower(), "Id", keyValue);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpApproval_Authorize\"(:p0, 'TransferSummaryOut', :p2, :p3, :p4)", userId, id, action, approvalMessage);
+                        CONTEXT.SaveChanges();
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", action.ToLower(), "Id", keyValue);
 
                         CONTEXT_TRANS.Commit();
+
                     }
 
                     catch (Exception ex)
@@ -1157,6 +1199,27 @@ namespace Models.Transaction.Inventory
                 model.TransferSummaryOutItemTagModel___ = CONTEXT.Database.SqlQuery<TransferSummaryOutItemTagModel>(sql, id, detId).ToList();
             }
 
+            return model;
+        }
+
+        public TransferSummaryOutApprovalView___ GetViewApproval(long id)
+        {
+            TransferSummaryOutApprovalView___ model = new TransferSummaryOutApprovalView___();
+            using (var CONTEXT = new HANA_APP())
+            {
+                string sql = @"
+                    SELECT TOP 1 T0.""Id"", T0.""Status"", T0.""ApprovalMessages"", T1.""CreatedDate"", T2.""FirstName""
+                    FROM ""Tx_TransferSummaryOut"" T0 
+                    LEFT JOIN ""Tx_TransferSummaryOut_Approval"" T1 ON T0.""Id"" = T1.""Id"" 
+                    LEFT JOIN ""Tm_User"" T2 ON T0.""CreatedUser"" = T2.""Id""
+                    WHERE T0.""Id""=:p0 
+                ";
+
+                model = CONTEXT.Database.SqlQuery<TransferSummaryOutApprovalView___>(sql, id).FirstOrDefault();
+
+                model.ApprovalStepList__ = GetTransferSummaryOut_ApprovalSteps(CONTEXT, id);
+
+            }
             return model;
         }
 

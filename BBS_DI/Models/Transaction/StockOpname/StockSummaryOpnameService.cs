@@ -115,6 +115,8 @@ namespace Models.Transaction.StockOpname
 
         public int? ApprovalTemplateId_ { get; set; }
 
+        public string IsEligibleApprove_ { get; set; }
+
         public List<StockSummaryOpname_DetailModel> ListDetail_ = new List<StockSummaryOpname_DetailModel>();
 
         public List<StockSummaryOpname_RefModel> ListRef_ = new List<StockSummaryOpname_RefModel>();
@@ -132,10 +134,6 @@ namespace Models.Transaction.StockOpname
         public List<GetCodeNameModel> SubClass2List { get; set; }
 
         public List<GetCodeNameModel> ProjectList { get; set; }
-
-        public List<StockSummaryOpname_ApprovalModel> ListApprovalStep_ = new List<StockSummaryOpname_ApprovalModel>();
-
-        public StockSummaryOpname_Approval ApprovalStep_ { get; set; }
     }
 
     public class StockSummaryOpname_ApprovalModel
@@ -372,6 +370,25 @@ namespace Models.Transaction.StockOpname
         public long? GoodsReceiptId { get; set; }
     }
 
+    public class StockSummaryOpnameApprovalView___
+    {
+        public long Id { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string Status { get; set; }
+
+        public string RequestMassage { get; set; }
+
+        public string ApprovalMessages { get; set; }
+
+        public DateTime? CreatedDate { get; set; }
+
+        public List<StockSummaryOpname_ApprovalModel> ApprovalStepList__ = new List<StockSummaryOpname_ApprovalModel>();
+
+        public StockSummaryOpname_Approval ApprovalStep__ { get; set; }
+    }
+
     #endregion
 
     #region Services
@@ -439,8 +456,20 @@ namespace Models.Transaction.StockOpname
                 {
                     if (model.Status == "Draft")
                     {
-                        int? approvalId = CONTEXT.Database.SqlQuery<int?>(@"CALL ""SpApproval_CheckNeedApproval""(:p0, 'AdjustmentIn', :p1) ", userId, model.Id).FirstOrDefault();
+                        int? approvalId = CONTEXT.Database.SqlQuery<int?>(@"CALL ""SpApproval_CheckNeedApproval""(:p0, 'StockSummaryOpname', :p1) ", userId, model.Id).FirstOrDefault();
                         model.ApprovalTemplateId_ = approvalId;
+                    }
+
+                    if (model.ApprovalStatus == "Waiting")
+                    {
+                        string getDocNum = @"SELECT 'Y'
+			                FROM ""Tx_StockSummaryOpname"" T0
+			                INNER JOIN  ""Tx_StockSummaryOpname_Approval"" T1 ON T0.""Id"" = T1.""Id"" AND T1.""Status"" = 'Waiting'
+			                WHERE T0.""Id"" = :p0 
+			                AND T1.""UserId"" = :p1
+		                ";
+
+                        model.IsEligibleApprove_ = CONTEXT.Database.SqlQuery<string>(getDocNum, id, userId).FirstOrDefault();
                     }
 
                     model.PillarsList = GeneralGetList.GetCostCenterList("1");
@@ -497,6 +526,27 @@ namespace Models.Transaction.StockOpname
             ";
             var StockSummaryOpname = CONTEXT.Database.SqlQuery<StockSummaryOpname_RefModel>(ssql, id).ToList();
             return StockSummaryOpname;
+        }
+
+        public List<StockSummaryOpname_ApprovalModel> GetStockSummaryOpname_ApprovalSteps(long id = 0)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                return GetStockSummaryOpname_ApprovalSteps(CONTEXT, id);
+            }
+
+        }
+
+        public List<StockSummaryOpname_ApprovalModel> GetStockSummaryOpname_ApprovalSteps(HANA_APP CONTEXT, long id = 0)
+        {
+            string ssql = @"SELECT T0.*, T1.""UserName""  AS Username
+                FROM ""Tx_StockSummaryOpname_Approval"" T0
+                LEFT JOIN ""Tm_User"" T1 ON T1.""Id"" = T0.""UserId""
+                WHERE T0.""Id"" =:p0
+                ORDER BY T0.""Step"" ASC
+            ";
+            var listData = CONTEXT.Database.SqlQuery<StockSummaryOpname_ApprovalModel>(ssql, id).ToList();
+            return listData;
         }
 
         public StockSummaryOpnameModel NavFirst(int userId)
@@ -1262,75 +1312,37 @@ namespace Models.Transaction.StockOpname
 
         }
 
-        //public bool Cancel_InventoryPosting(SAPbobsCOM.Company oCompany, int id)
-        //{
-        //    int nErr;
-        //    string errMsg;
-
-        //    if (id != 0)
-        //    {
-        //        SAPbobsCOM.Documents oDocument = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oPurchaseDeliveryNotes);
-        //        SAPbobsCOM.Documents oCancelDocument = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oPurchaseDeliveryNotes);
-
-        //        if (oDocument.GetByKey(id))
-        //        {
-        //            oCancelDocument = oDocument.CreateCancellationDocument();
-        //            if (oCancelDocument.Add() != 0)
-        //            {
-        //                nErr = oCompany.GetLastErrorCode();
-        //                errMsg = oCompany.GetLastErrorDescription();
-
-        //                SapCompany.CleanUp(oDocument);
-
-        //                throw new Exception("[VALIDATION] - Cancel GRPO |" + nErr.ToString() + "|" + errMsg);
-        //            }
-
-        //        }
-
-        //        SapCompany.CleanUp(oDocument);
-        //    }
-
-        //    return true;
-        //}
-
-        public void Approve(int userId, long Id, string approvalMessages)
+        public void RequestApproval(int userId, long id, int templateId, string approvalMessages)
         {
             using (var CONTEXT = new HANA_APP())
             {
-                StockSummaryOpnameModel transferSummaryOutModel = GetById(userId, Id);
+                StockSummaryOpnameModel StockSummaryOpnameModel = GetById(userId, id);
 
                 using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
                 {
                     try
                     {
                         String keyValue;
-                        keyValue = Id.ToString();
+                        keyValue = id.ToString();
 
-                        SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "before", "Tx_StockSummaryOpname", "approve", "Id", keyValue);
+                        SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "before", "Tx_StockSummaryOpname", "requestApproval", "Id", keyValue);
 
-                        Tx_StockSummaryOpname tx_StockSummaryOpname = CONTEXT.Tx_StockSummaryOpname.Find(Id);
+                        Tx_StockSummaryOpname tx_StockSummaryOpname = CONTEXT.Tx_StockSummaryOpname.Find(id);
                         if (tx_StockSummaryOpname != null)
                         {
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                            var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("StockSummaryOpname");
-                            //tx_StockSummaryOpname.Status = "";
-                            tx_StockSummaryOpname.ApprovalStatus = isApprovalActive == "Y" && string.IsNullOrEmpty(tx_StockSummaryOpname.ApprovalStatus) ? "Waiting" : tx_StockSummaryOpname.ApprovalStatus;
+
+                            tx_StockSummaryOpname.IsApproval = "Y";
                             tx_StockSummaryOpname.ApprovalMessages = approvalMessages;
+                            tx_StockSummaryOpname.ApprovalStatus = "Waiting";
                             tx_StockSummaryOpname.ModifiedDate = dtModified;
                             tx_StockSummaryOpname.ModifiedUser = userId;
 
                             CONTEXT.SaveChanges();
                         }
 
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpStockSummaryOpname_UpdateItem\"(:p0,:p1, 'before')", userId, Id);
-
-                        SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "after", "Tx_StockSummaryOpname", "approve", "Id", keyValue);
-
-                        if (tx_StockSummaryOpname.ApprovalStatus == "Approved")
-                        {
-                            PostSAP(userId, transferSummaryOutModel.Id);
-                        }
-
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpApproval_Insert\"(:p0,'StockSummaryOpname',:p1, :p2)", userId, id, templateId);
+                        SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "after", "Tx_StockSummaryOpname", "requestApproval", "Id", keyValue);
                         CONTEXT_TRANS.Commit();
 
                     }
@@ -1356,36 +1368,55 @@ namespace Models.Transaction.StockOpname
 
         }
 
-        public void Reject(int userId, long Id, string approvalMessages)
+        public void Approve(int userId, long id, string approvalMessage)
+        {
+            string approvalStatus = string.Empty;
+            try
+            {
+                Authorize(userId, id, "Approve", approvalMessage);
+                using (var CONTEXT = new HANA_APP())
+                {
+                    string strApprovalStatus = @"
+                        SELECT T0.""ApprovalStatus"" 
+                        FROM ""Tx_StockSummaryOpname"" T0
+                        WHERE T0.""Id"" = :p0 
+                    ";
+                    approvalStatus = CONTEXT.Database.SqlQuery<string>(strApprovalStatus, id).FirstOrDefault();
+                }
+
+                if (approvalStatus == "Approved")
+                {
+                    StockSummaryOpnameModel StockSummaryOpnameModel = GetById(userId, id);
+                    this.Update(StockSummaryOpnameModel, "Post");
+                    this.PostSAP(userId, StockSummaryOpnameModel.Id);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void Authorize(int userId, long id, string action, string approvalMessage)
         {
             using (var CONTEXT = new HANA_APP())
             {
+                StockSummaryOpnameModel StockSummaryOpnameModel = GetById(userId, id);
 
                 using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
                 {
                     try
                     {
                         String keyValue;
-                        keyValue = Id.ToString();
+                        keyValue = id.ToString();
 
-                        SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "before", "Tx_StockSummaryOpname", "reject", "Id", keyValue);
-
-                        Tx_StockSummaryOpname tx_StockSummaryOpname = CONTEXT.Tx_StockSummaryOpname.Find(Id);
-                        if (tx_StockSummaryOpname != null)
-                        {
-                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                            //tx_StockSummaryOpname.Status = "";
-                            tx_StockSummaryOpname.ApprovalMessages = approvalMessages;
-                            tx_StockSummaryOpname.ModifiedDate = dtModified;
-                            tx_StockSummaryOpname.ModifiedUser = userId;
-
-                            CONTEXT.SaveChanges();
-                        }
-
-                        SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "after", "Tx_StockSummaryOpname", "reject", "Id", keyValue);
-
+                        SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "before", "Tx_StockSummaryOpname", action.ToLower(), "Id", keyValue);
+                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpApproval_Authorize\"(:p0, 'StockSummaryOpname', :p2, :p3, :p4)", userId, id, action, approvalMessage);
+                        CONTEXT.SaveChanges();
+                        SpNotif.SpSysControllerTransNotif(userId, "StockSummaryOpname", CONTEXT, "after", "Tx_StockSummaryOpname", action.ToLower(), "Id", keyValue);
 
                         CONTEXT_TRANS.Commit();
+
                     }
 
                     catch (Exception ex)
@@ -1429,6 +1460,27 @@ namespace Models.Transaction.StockOpname
                 model.StockSummaryOpnameItemTagModel___ = CONTEXT.Database.SqlQuery<StockSummaryOpnameItemTagModel>(sql, id, detId).ToList();
             }
 
+            return model;
+        }
+
+        public StockSummaryOpnameApprovalView___ GetViewApproval(long id)
+        {
+            StockSummaryOpnameApprovalView___ model = new StockSummaryOpnameApprovalView___();
+            using (var CONTEXT = new HANA_APP())
+            {
+                string sql = @"
+                    SELECT TOP 1 T0.""Id"", T0.""Status"", T0.""ApprovalMessages"", T1.""CreatedDate"", T2.""FirstName""
+                    FROM ""Tx_StockSummaryOpname"" T0 
+                    LEFT JOIN ""Tx_StockSummaryOpname_Approval"" T1 ON T0.""Id"" = T1.""Id"" 
+                    LEFT JOIN ""Tm_User"" T2 ON T0.""CreatedUser"" = T2.""Id""
+                    WHERE T0.""Id""=:p0 
+                ";
+
+                model = CONTEXT.Database.SqlQuery<StockSummaryOpnameApprovalView___>(sql, id).FirstOrDefault();
+
+                model.ApprovalStepList__ = GetStockSummaryOpname_ApprovalSteps(CONTEXT, id);
+
+            }
             return model;
         }
 

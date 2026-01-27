@@ -896,6 +896,34 @@
     <Content Include="Views\Transaction\Adjustment\AdjustmentIn\Partial\ViewApproval\ViewApproval_Panel_Partial.cshtml" />
     <Content Include="Views\Transaction\Adjustment\AdjustmentIn\Partial\ViewApproval\ViewApproval_Partial.cshtml" />
     <Content Include="Views\Transaction\Adjustment\AdjustmentIn\Partial\ViewApproval\ViewApproval_TabContent_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\ViewApproval\ViewApproval_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\ViewApproval\ViewApproval_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\ViewApproval\ViewApproval_Partial.cshtml" />
+    <Content Include="Views\Transaction\Adjustment\AdjustmentOut\Partial\ViewApproval\ViewApproval_TabContent_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferRequest\Partial\Approval\Approval_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferRequest\Partial\Approval\Approval_Form_TabApproval_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferRequest\Partial\Approval\Approval_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferRequest\Partial\Approval\Approval_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferRequest\Partial\ViewApproval\ViewApproval_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferRequest\Partial\ViewApproval\ViewApproval_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferRequest\Partial\ViewApproval\ViewApproval_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferRequest\Partial\ViewApproval\ViewApproval_TabContent_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferSummaryIn\Partial\ViewApproval\ViewApproval_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferSummaryIn\Partial\ViewApproval\ViewApproval_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferSummaryIn\Partial\ViewApproval\ViewApproval_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferSummaryIn\Partial\ViewApproval\ViewApproval_TabContent_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferSummaryOut\Partial\ViewApproval\ViewApproval_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferSummaryOut\Partial\ViewApproval\ViewApproval_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferSummaryOut\Partial\ViewApproval\ViewApproval_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferSummaryOut\Partial\ViewApproval\ViewApproval_TabContent_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Purchasing\GoodsReceiptPO\Partial\ViewApproval\ViewApproval_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Purchasing\GoodsReceiptPO\Partial\ViewApproval\ViewApproval_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Purchasing\GoodsReceiptPO\Partial\ViewApproval\ViewApproval_Partial.cshtml" />
+    <Content Include="Views\Transaction\Purchasing\GoodsReceiptPO\Partial\ViewApproval\ViewApproval_TabContent_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\StockOpname\StockSummaryOpname\Partial\ViewApproval\ViewApproval_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\StockOpname\StockSummaryOpname\Partial\ViewApproval\ViewApproval_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\StockOpname\StockSummaryOpname\Partial\ViewApproval\ViewApproval_Partial.cshtml" />
+    <Content Include="Views\Transaction\StockOpname\StockSummaryOpname\Partial\ViewApproval\ViewApproval_TabContent_List_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1002,6 +1030,7 @@
     <Compile Include="Controllers\Transaction\Adjustment\AdjustmentIn\AdjustmentInController.ViewApproval.cs" />
     <Compile Include="Controllers\Transaction\Adjustment\AdjustmentIn\AdjustmentInController.ViewItemTag.cs" />
     <Compile Include="Controllers\Transaction\Adjustment\AdjustmentIn\AdjustmentInController.Approval.cs" />
+    <Compile Include="Controllers\Transaction\Adjustment\AdjustmentOut\AdjustmentOutController.ViewApproval.cs" />
     <Compile Include="Controllers\Transaction\Adjustment\AdjustmentOut\AdjustmentOutController.Tab.Detail.cs" />
     <Compile Include="Controllers\Transaction\Adjustment\AdjustmentOut\AdjustmentOutController.CancelReason.cs" />
     <Compile Include="Controllers\Transaction\Adjustment\AdjustmentOut\AdjustmentOutController.cs" />
@@ -1023,6 +1052,7 @@
     <Compile Include="Controllers\Transaction\Inventory\TransferOut\TransferOutController.Nav.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferOut\TransferOutController.Tab.Detail.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferOut\TransferOutController.ViewItemTag.cs" />
+    <Compile Include="Controllers\Transaction\Inventory\TransferRequest\TransferRequestController.ViewApproval.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferRequest\TransferRequestController.CancelReason.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferRequest\TransferRequestController.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferRequest\TransferRequestController.List.cs" />
@@ -1030,6 +1060,7 @@
     <Compile Include="Controllers\Transaction\Inventory\TransferRequest\TransferRequestController.Tab.Detail.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferRequest\TransferRequestController.TemplateUpload.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferRequest\TransferRequestController.Approval.cs" />
+    <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.ViewApproval.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.Tab.Detail.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.CancelReason.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.cs" />
@@ -1038,6 +1069,7 @@
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.Tab.Ref.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.ViewItemTag.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.Approval.cs" />
+    <Compile Include="Controllers\Transaction\Inventory\TransferSummaryOut\TransferSummaryOutController.ViewApproval.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryOut\TransferSummaryOutController.Tab.Detail.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryOut\TransferSummaryOutController.Approval.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryOut\TransferSummaryOutController.CancelReason.cs" />
@@ -1046,6 +1078,7 @@
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryOut\TransferSummaryOutController.Nav.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryOut\TransferSummaryOutController.Tab.Ref.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryOut\TransferSummaryOutController.ViewItemTag.cs" />
+    <Compile Include="Controllers\Transaction\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.ViewApproval.cs" />
     <Compile Include="Controllers\Transaction\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.Approval.cs" />
     <Compile Include="Controllers\Transaction\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.Tab.Detail.cs" />
     <Compile Include="Controllers\Transaction\Purchasing\GoodsReceiptPO\GoodsReceiptPOController.CancelReason.cs" />
@@ -1060,6 +1093,7 @@
     <Compile Include="Controllers\Transaction\Purchasing\PurchaseOrderScan\PurchaseOrderScanController.Nav.cs" />
     <Compile Include="Controllers\Transaction\Purchasing\PurchaseOrderScan\PurchaseOrderScanController.Tab.Detail.cs" />
     <Compile Include="Controllers\Transaction\Purchasing\PurchaseOrderScan\PurchaseOrderScanController.ViewItemTag.cs" />
+    <Compile Include="Controllers\Transaction\StockOpname\StockSummaryOpname\StockSummaryOpnameController.ViewApproval.cs" />
     <Compile Include="Controllers\Transaction\StockOpname\StockSummaryOpname\StockSummaryOpnameController.Approval.cs" />
     <Compile Include="Controllers\Transaction\StockOpname\StockSummaryOpname\StockSummaryOpnameController.Tab.Ref.cs" />
     <Compile Include="Controllers\Transaction\StockOpname\StockSummaryOpname\StockSummaryOpnameController.Tab.Detail.cs" />

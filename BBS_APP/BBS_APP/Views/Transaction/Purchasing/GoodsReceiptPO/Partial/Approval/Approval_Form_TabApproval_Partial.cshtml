@@ -14,7 +14,7 @@
 {
     settings.Name = "gvApproval";
     settings.KeyFieldName = "DetId";
-    settings.CallbackRouteValues = new { Controller = "GoodsReceiptPO", Action = "TabApprovalListPartial" };
+    settings.CallbackRouteValues = new { Controller = "AdjustmentOut", Action = "TabApprovalListPartial" };
     settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
     //settings.Settings.VerticalScrollableHeight = 350;
     settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
@@ -100,6 +100,37 @@
         column.Width = 200;
 
     });
+
+    settings.Settings.ShowFooter = true;
+    settings.HtmlDataCellPrepared = (s, e) =>
+    {
+        if (e.VisibleIndex >= 0)
+        {
+            ASPxGridView gridView = (ASPxGridView)s;
+            var status = Convert.ToString(gridView.GetRowValues(e.VisibleIndex, "Status"));
+            if (status == "Waiting")
+            {
+                e.Cell.BackColor = System.Drawing.Color.Gray;
+                e.Cell.ForeColor = System.Drawing.Color.White;
+            }
+            else if (status == "Rejected")
+            {
+                e.Cell.BackColor = System.Drawing.Color.IndianRed;
+                e.Cell.ForeColor = System.Drawing.Color.White;
+            }
+
+        }
+    };
+
+    settings.ClientSideEvents.BeginCallback = "gvApprovalOnBeginCallback";
+    //settings.ClientSideEvents.EndCallback = "gvApprovalOnEndCallback";
+
+    //settings.ClientSideEvents.BatchEditStartEditing = "gvApprovalOnBatchEditStartEditing";
+    //settings.ClientSideEvents.BatchEditEndEditing = "gvApprovalOnBatchEditEndEditing";
+    //settings.ClientSideEvents.BatchEditRowValidating = "gvApprovalOnBatchEditRowValidating";
+
+}).Bind(Model).GetHtml()
+
 
     settings.Settings.ShowFooter = true;
 

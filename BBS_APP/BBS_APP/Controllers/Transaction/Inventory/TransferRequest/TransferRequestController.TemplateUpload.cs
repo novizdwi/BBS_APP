@@ -11,11 +11,11 @@ using System.Threading;
 using System.Net;
 
 using Models;
-using Models.Transaction.Inventory;
 using System.Text;
 using BBS_APP;
 
 using Newtonsoft.Json;
+using Models.Transaction.Inventory;
 
 namespace Controllers.Transaction.Inventory
 {

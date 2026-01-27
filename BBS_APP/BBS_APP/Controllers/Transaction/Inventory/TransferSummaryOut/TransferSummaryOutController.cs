@@ -136,9 +136,7 @@ namespace Controllers.Transaction.Inventory
             transferSummaryOutModel._UserId = (int)Session["userId"];
             transferSummaryOutService = new TransferSummaryOutService();
             transferSummaryOutModel._FormMode = FormModeEnum.Edit;
-
-            //transferSummaryOutService.Update(transferSummaryOutModel);
-            //transferSummaryOutService.PostAPI(userId, transferSummaryOutModel.Id);
+            
             transferSummaryOutService.Post(userId, transferSummaryOutModel);
             transferSummaryOutModel = transferSummaryOutService.GetById(userId, transferSummaryOutModel.Id);
 
@@ -181,6 +179,30 @@ namespace Controllers.Transaction.Inventory
 
 
         [HttpPost, ValidateInput(false)]
+        public ActionResult RequestApproval(long id, int templateId, string approvalMessage = "")
+        {
+            int userId = (int)Session["userId"];
+
+            TransferSummaryOutModel transferSummaryOutModel;
+
+            transferSummaryOutService = new TransferSummaryOutService();
+            transferSummaryOutService.RequestApproval(userId, id, templateId, approvalMessage);
+
+            transferSummaryOutModel = transferSummaryOutService.GetById(userId, id);
+            if (transferSummaryOutModel != null)
+            {
+                transferSummaryOutModel._FormMode = FormModeEnum.Edit;
+            }
+            else
+            {
+                transferSummaryOutModel = transferSummaryOutService.GetNewModel(userId);
+                transferSummaryOutModel._FormMode = FormModeEnum.New;
+            }
+
+            return PartialView(VIEW_FORM_PARTIAL, transferSummaryOutModel);
+        }
+
+        [HttpPost, ValidateInput(false)]
         public ActionResult Approve(long Id, string ApprovalMessage = "")
         {
             int userId = (int)Session["userId"];
@@ -212,7 +234,7 @@ namespace Controllers.Transaction.Inventory
             TransferSummaryOutModel transferSummaryOutModel;
 
             transferSummaryOutService = new TransferSummaryOutService();
-            transferSummaryOutService.Reject(userId, Id, ApprovalMessage);
+            transferSummaryOutService.Authorize(userId, Id, "Reject", ApprovalMessage);
 
             transferSummaryOutModel = transferSummaryOutService.GetById(userId, Id);
             if (transferSummaryOutModel != null)

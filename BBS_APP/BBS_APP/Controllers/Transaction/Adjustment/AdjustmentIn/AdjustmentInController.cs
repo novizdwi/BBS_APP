@@ -186,7 +186,7 @@ namespace Controllers.Transaction.Adjustment
             AdjustmentInModel adjustmentInModel;
 
             adjustmentInService = new AdjustmentInService();
-            adjustmentInService.Approve(userId, Id, "Approve", ApprovalMessage);
+            adjustmentInService.Approve(userId, Id, ApprovalMessage);
 
             adjustmentInModel = adjustmentInService.GetById(userId, Id);
             if (adjustmentInModel != null)

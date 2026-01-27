@@ -135,9 +135,7 @@ namespace Controllers.Transaction.Inventory
             transferSummaryInModel._UserId = (int)Session["userId"];
             transferSummaryInService = new TransferSummaryInService();
             transferSummaryInModel._FormMode = FormModeEnum.Edit;
-
-            //transferSummaryInService.Update(transferSummaryInModel);
-            //transferSummaryInService.PostAPI(userId, transferSummaryInModel.Id);
+            
             transferSummaryInService.Post(userId, transferSummaryInModel);
             transferSummaryInModel = transferSummaryInService.GetById(userId, transferSummaryInModel.Id);
 
@@ -165,6 +163,30 @@ namespace Controllers.Transaction.Inventory
             transferSummaryInService.Cancel(userId, Id, CancelReason);
 
             transferSummaryInModel = transferSummaryInService.GetById(userId, Id);
+            if (transferSummaryInModel != null)
+            {
+                transferSummaryInModel._FormMode = FormModeEnum.Edit;
+            }
+            else
+            {
+                transferSummaryInModel = transferSummaryInService.GetNewModel(userId);
+                transferSummaryInModel._FormMode = FormModeEnum.New;
+            }
+
+            return PartialView(VIEW_FORM_PARTIAL, transferSummaryInModel);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult RequestApproval(long id, int templateId, string approvalMessage = "")
+        {
+            int userId = (int)Session["userId"];
+
+            TransferSummaryInModel transferSummaryInModel;
+
+            transferSummaryInService = new TransferSummaryInService();
+            transferSummaryInService.RequestApproval(userId, id, templateId, approvalMessage);
+
+            transferSummaryInModel = transferSummaryInService.GetById(userId, id);
             if (transferSummaryInModel != null)
             {
                 transferSummaryInModel._FormMode = FormModeEnum.Edit;
@@ -210,7 +232,7 @@ namespace Controllers.Transaction.Inventory
             TransferSummaryInModel transferSummaryInModel;
 
             transferSummaryInService = new TransferSummaryInService();
-            transferSummaryInService.Reject(userId, Id, ApprovalMessage);
+            transferSummaryInService.Authorize(userId, Id, "Reject", ApprovalMessage);
 
             transferSummaryInModel = transferSummaryInService.GetById(userId, Id);
             if (transferSummaryInModel != null)

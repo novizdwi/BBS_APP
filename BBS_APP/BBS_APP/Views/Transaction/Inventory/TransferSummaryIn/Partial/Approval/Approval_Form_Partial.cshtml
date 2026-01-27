@@ -1,6 +1,6 @@
 ﻿@using Models;
 
-@model Models.Transaction.Inventory.TransferSummaryInModel
+@model Models.Transaction.Adjustment.TransferSummaryInApprovalView___
 
 @Html.DevExpress().TextBox(
         settings =>
@@ -15,9 +15,9 @@
     /**/
     ViewBag.UserId = (int)Session["userId"];
     ViewBag.Id = Model.Id;
-    ViewBag.ReadOnly = Model.Status == "Draft" ? false : true;
 
-    string IsApproval_ = Models._Utils.GeneralGetList.GetCheckIsApproval(ViewBag.UserId, "TransferSummaryIn");
+    string IsApproval_ = Models._Utils.GeneralGetList.GetCheckIsApproval(ViewBag.Id, "TransferSummaryIn");
+
 }
 
 @Html.DevExpress().FormLayout(settings =>
@@ -71,11 +71,11 @@
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Memo;
         itemSettings.Caption = "Message";
-        itemSettings.FieldName = "ApprovalMessages";
-        itemSettings.Name = "grpApprovalMessages";
+        itemSettings.FieldName = "RequestMassage";
+        itemSettings.Name = "grpRequestMassage";
 
         var txt = (MemoSettings)itemSettings.NestedExtensionSettings;
-        txt.Name = "ApprovalMessages";
+        txt.Name = "RequestMassage";
         txt.ShowModelErrors = true;
         txt.ControlStyle.CssClass = "editor";
         txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
@@ -88,13 +88,13 @@
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Button;
         itemSettings.Caption = "";
-        itemSettings.ClientVisible = IsApproval_ == "Y" ? true : false;
+        itemSettings.ClientVisible = IsApproval_ == "Y"? true : false;
 
         var btnSettings = (ButtonSettings)itemSettings.NestedExtensionSettings;
-        btnSettings.Name = "btnUpdateApproval";
+        btnSettings.Name = "btnApproveApproval";
         btnSettings.Text = "Approve";
         btnSettings.Width = 100;
-        btnSettings.ClientSideEvents.Click = "btnUpdateApprovalOnClick";
+        btnSettings.ClientSideEvents.Click = "btnApproveApprovalOnClick";
         btnSettings.Styles.Style.Paddings.Padding = 2;
         //btnSettings.Styles.Style.BackColor = System.Drawing.Color.ForestGreen;
 
@@ -110,7 +110,7 @@
         btnSettings.Name = "btnRequestApproval";
         btnSettings.Text = "Request Approval";
         btnSettings.Width = 100;
-        btnSettings.ClientSideEvents.Click = "btnUpdateApprovalOnClick";
+        btnSettings.ClientSideEvents.Click = "btnRequestApprovalOnClick";
         btnSettings.Styles.Style.Paddings.Padding = 2;
         //btnSettings.Styles.Style.BackColor = System.Drawing.Color.ForestGreen;
 
@@ -143,7 +143,6 @@
         group.Width = Unit.Percentage(100);
         group.Height = Unit.Pixel(50);
         group.ClientVisible = IsApproval_ == "Y" ? true : false;
-
         group.Items.Add(item =>
         {
             item.Name = "TabApprovalList";
@@ -151,7 +150,7 @@
             item.SetNestedContent(() =>
             {
                 ViewContext.Writer.Write(
-                    Html.Partial("Partial/Approval/Approval_Form_TabApproval_Partial", Model.ListApprovalStep_)
+                    Html.Partial("Partial/Approval/Approval_Form_TabApproval_Partial", Model.ApprovalStepList__)
                 );
             });
         });
