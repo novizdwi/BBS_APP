@@ -123,6 +123,22 @@
 
     groupItem_Col1.Items.Add(itemSettings =>
     {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "IsEligibleApprove_";
+        itemSettings.FieldName = "IsEligibleApprove_";
+        itemSettings.ClientVisible = false;
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "IsEligibleApprove_";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
+        txt.Width = 230;
+    });
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
         itemSettings.Name = "grpBaseId";
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
         itemSettings.Caption = "Transfer Out Id";
@@ -502,6 +518,7 @@
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
         itemSettings.Caption = "Approval Status";
         itemSettings.FieldName = "ApprovalStatus";
+        itemSettings.ClientVisible = string.IsNullOrWhiteSpace(Model.ApprovalStatus) ? false : true;
 
         ComboBoxSettings cbo = (ComboBoxSettings)itemSettings.NestedExtensionSettings;
         cbo.Properties.DropDownStyle = DropDownStyle.DropDown;
@@ -520,6 +537,16 @@
         cbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
         cbo.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
         cbo.Width = 230;
+
+        EditButton lookUpButton = new EditButton();
+        lookUpButton.Text = "";
+        lookUpButton.Image.Url = "~/Content/Images/buttonnew/find-hitam.png";
+        lookUpButton.Image.Width = 15;
+        if (Model.ApprovalStatus != null)
+        {
+            cbo.Properties.Buttons.Add(lookUpButton);
+            cbo.Properties.ClientSideEvents.ButtonClick = string.Format("function(s, e) {{ BtnCflStatusOnClick('{0}',); }}", Model.Id);
+        }
     });
 
     groupItem_Col3.Items.Add(itemSettings =>

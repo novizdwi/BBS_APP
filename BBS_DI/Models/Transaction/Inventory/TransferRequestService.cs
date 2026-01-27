@@ -254,7 +254,6 @@ namespace Models.Transaction.Inventory
         public string Comments { get; set; }
     }
 
-
     public class TransferRequestApprovalView___
     {
         public long Id { get; set; }
@@ -489,11 +488,7 @@ namespace Models.Transaction.Inventory
                             CopyProperty.CopyProperties(model, tx_TransferRequest, false);
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-
-                            var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("TransferRequest");
-
-                            tx_TransferRequest.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
-                            
+                                                        
                             tx_TransferRequest.TransType = "TransferRequest";
                             tx_TransferRequest.CreatedDate = dtModified;
                             tx_TransferRequest.CreatedUser = model._UserId;
@@ -581,10 +576,6 @@ namespace Models.Transaction.Inventory
                                 {
                                     var exceptColumns = new string[] { "Id", "TransNo", "CreatedUser" };
                                     CopyProperty.CopyProperties(model, tx_TransferRequest, false, exceptColumns);
-
-                                    var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("TransferRequest");
-
-                                    tx_TransferRequest.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
 
                                     tx_TransferRequest.ModifiedDate = dtModified;
                                     tx_TransferRequest.ModifiedUser = model._UserId;
@@ -962,9 +953,23 @@ namespace Models.Transaction.Inventory
 
         public void Approve(int userId, long id, string approvalMessage)
         {
+            string approvalStatus = string.Empty;
             try
             {
-                Authorize(userId, id, "Approve", approvalMessage); 
+                Authorize(userId, id, "Approve", approvalMessage);
+                using (var CONTEXT = new HANA_APP())
+                {
+                    string strApprovalStatus = @"
+                        SELECT T0.""ApprovalStatus"" 
+                        FROM ""Tx_TransferRequest"" T0
+                        WHERE T0.""Id"" = :p0 
+                    ";
+                    approvalStatus = CONTEXT.Database.SqlQuery<string>(strApprovalStatus, id).FirstOrDefault();
+                }
+                if (approvalStatus == "Approved")
+                {
+                    this.Post(userId, id);
+                }
             }
             catch (Exception ex)
             {

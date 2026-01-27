@@ -263,12 +263,11 @@
             return;
         }
         key = Id.GetValue();
-        //Post(s, e);
 
-        var isApproval = IsApproval.GetValue();
+        var isApproval = ApprovalTemplateId_.GetValue();
         var approvalStatus = ApprovalStatus.GetValue();
 
-        if (isApproval == "Y") {
+        if (isApproval != "-1" || approvalStatus != null) {
             btnShowApprovalOnClick(s, e, key);
         } else {
             Post(s, e);
@@ -800,6 +799,26 @@
         });
     }
 
+    function BtnCflStatusOnClick(id) {
+        var popup = ASPxClientPopupControl.Cast("popupViewApproval");
+        popup.callbackUrl = '@Url.Action("ViewApproval_PopupListOnDemandPartial", "AdjustmentOut")' + '?Id=' + id;
+        popup.PerformCallback();
+
+        if (!popup.IsVisible()) {
+            popup.Show();
+        }
+
+    }
+	
+	function popupViewApproval_EndCallback(s, e) {
+        $.validator.unobtrusive.parse("#ViewApproval_formDetail");
+
+        var popup = ASPxClientPopupControl.Cast("popupViewApproval");
+        if (!popup.IsVisible()) {
+            loadingPanel.Hide();
+            popup.ShowAtPos(400, 100);
+        }
+    }
 
 </script>
 
@@ -850,27 +869,27 @@
     }
 
     function gvDetail_PillarsCodeOnChange(s, e, name) {
-        var PillarsName = ASPxClientTextBox.Cast("gvAdjustmentInDetail_PillarsName");
+        var PillarsName = ASPxClientTextBox.Cast("gvAdjustmentOutDetail_PillarsName");
         PillarsName.SetValue(name);
     }
 
     function gvDetail_ClassCodeOnChange(s, e, name) {
-        var ClassName = ASPxClientTextBox.Cast("gvAdjustmentInDetail_ClassName");
+        var ClassName = ASPxClientTextBox.Cast("gvAdjustmentOutDetail_ClassName");
         ClassName.SetValue(name);
     }
 
     function gvDetail_SubClass1CodeOnChange(s, e, name) {
-        var SubClass1Name = ASPxClientTextBox.Cast("gvAdjustmentInDetail_SubClass1Name");
+        var SubClass1Name = ASPxClientTextBox.Cast("gvAdjustmentOutDetail_SubClass1Name");
         SubClass1Name.SetValue(name);
     }
 
     function gvDetail_SubClass2CodeOnChange(s, e, name) {
-        var SubClass2Name = ASPxClientTextBox.Cast("gvAdjustmentInDetail_SubClass2Name");
+        var SubClass2Name = ASPxClientTextBox.Cast("gvAdjustmentOutDetail_SubClass2Name");
         SubClass2Name.SetValue(name);
     }
 
     function gvDetail_ProjectCodeOnChange(s, e, name) {
-        var ProjectName = ASPxClientTextBox.Cast("gvAdjustmentInDetail_ProjectName");
+        var ProjectName = ASPxClientTextBox.Cast("gvAdjustmentOutDetail_ProjectName");
         ProjectName.SetValue(name);
     }
 

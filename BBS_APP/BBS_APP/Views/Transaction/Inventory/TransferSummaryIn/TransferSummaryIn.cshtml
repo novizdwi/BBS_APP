@@ -278,18 +278,17 @@
 
     }
 
-   function OnClickBtnPost(s, e) {
+    function OnClickBtnPost(s, e) {
 
         if (BeforeSave() == false) {
             return;
         }
         key = Id.GetValue();
-        //Post(s, e);
 
-        var isApproval = IsApproval.GetValue();
+        var isApproval = ApprovalTemplateId_.GetValue();
         var approvalStatus = ApprovalStatus.GetValue();
 
-        if (isApproval == "Y") {
+        if (isApproval != "-1" || approvalStatus != null) {
             btnShowApprovalOnClick(s, e, key);
         } else {
             Post(s, e);
@@ -773,6 +772,26 @@
         cflTransferSummaryOutPopupListTransferSummaryIn.Show();
     }
 
+    function BtnCflStatusOnClick(id) {
+        var popup = ASPxClientPopupControl.Cast("popupViewApproval");
+        popup.callbackUrl = '@Url.Action("ViewApproval_PopupListOnDemandPartial", "TransferSummaryIn")' + '?Id=' + id;
+        popup.PerformCallback();
+
+        if (!popup.IsVisible()) {
+            popup.Show();
+        }
+
+    }
+	
+	function popupViewApproval_EndCallback(s, e) {
+        $.validator.unobtrusive.parse("#ViewApproval_formDetail");
+
+        var popup = ASPxClientPopupControl.Cast("popupViewApproval");
+        if (!popup.IsVisible()) {
+            loadingPanel.Hide();
+            popup.ShowAtPos(400, 100);
+        }
+    }
 </script>
 
 

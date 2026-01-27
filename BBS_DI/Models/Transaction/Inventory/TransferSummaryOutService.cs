@@ -560,11 +560,7 @@ namespace Models.Transaction.Inventory
                             CopyProperty.CopyProperties(model, tx_TransferSummaryOut, false);
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-
-                            var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("TransferSummaryOut");
-
-                            tx_TransferSummaryOut.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
-                            //Tx_TransferSummaryOut.ApprovalStatus = isApprovalActive == "Y" ? "Waiting" : "";
+                            
                             tx_TransferSummaryOut.TransType = "TransferSummaryOut";
                             tx_TransferSummaryOut.CreatedDate = dtModified;
                             tx_TransferSummaryOut.CreatedUser = model._UserId;
@@ -639,9 +635,6 @@ namespace Models.Transaction.Inventory
                                     var exceptColumns = new string[] { "Id", "TransNo", "CreatedUser" };
                                     CopyProperty.CopyProperties(model, tx_TransferSummaryOut, false, exceptColumns);
 
-                                    var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("TransferSummaryOut");
-
-                                    tx_TransferSummaryOut.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
                                     //Tx_TransferSummaryOut.ApprovalStatus = isApprovalActive == "Y" && Tx_TransferSummaryOut.ApprovalStatus == "" ? "Waiting" : "Approved";
                                     tx_TransferSummaryOut.ModifiedDate = dtModified;
                                     tx_TransferSummaryOut.ModifiedUser = model._UserId;

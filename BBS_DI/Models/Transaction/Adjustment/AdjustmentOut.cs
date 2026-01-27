@@ -598,10 +598,6 @@ namespace Models.Transaction.Adjustment
                                 {
                                     var exceptColumns = new string[] { "Id", "TransNo", "CreatedUser" };
                                     CopyProperty.CopyProperties(model, tx_AdjustmentOut, false, exceptColumns);
-
-                                    var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("AdjustmentOut");
-
-                                    tx_AdjustmentOut.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
                                     tx_AdjustmentOut.ModifiedDate = dtModified;
                                     tx_AdjustmentOut.ModifiedUser = model._UserId;
 

@@ -561,11 +561,7 @@ namespace Models.Transaction.Inventory
                             Tx_TransferSummaryIn tx_TransferSummaryIn = new Tx_TransferSummaryIn();
                             CopyProperty.CopyProperties(model, tx_TransferSummaryIn, false);
 
-                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-
-                            var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("TransferSummaryIn");
-
-                            tx_TransferSummaryIn.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();                            
 
                             tx_TransferSummaryIn.TransType = "TransferSummaryIn";
                             tx_TransferSummaryIn.CreatedDate = dtModified;
@@ -641,9 +637,6 @@ namespace Models.Transaction.Inventory
                                     var exceptColumns = new string[] { "Id", "TransNo", "CreatedUser" };
                                     CopyProperty.CopyProperties(model, tx_TransferSummaryIn, false, exceptColumns);
 
-                                    var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("TransferSummaryIn");
-
-                                    tx_TransferSummaryIn.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
                                     tx_TransferSummaryIn.ModifiedDate = dtModified;
                                     tx_TransferSummaryIn.ModifiedUser = model._UserId;
 

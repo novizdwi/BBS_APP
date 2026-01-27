@@ -569,11 +569,7 @@ namespace Models.Transaction.Purchasing
                             Tx_GoodsReceiptPO tx_GoodsReceiptPO = new Tx_GoodsReceiptPO();
                             CopyProperty.CopyProperties(model, tx_GoodsReceiptPO, false);
 
-                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-
-                            var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("GoodsReceiptPO");
-
-                            tx_GoodsReceiptPO.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();                            
 
                             tx_GoodsReceiptPO.TransType = "GoodsReceiptPO";
                             tx_GoodsReceiptPO.CreatedDate = dtModified;

@@ -678,10 +678,7 @@ namespace Models.Transaction.StockOpname
                             CopyProperty.CopyProperties(model, tx_StockSummaryOpname, false);
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-
-                            var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("StockSummaryOpname");
-
-                            tx_StockSummaryOpname.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
+                            
                             tx_StockSummaryOpname.TransType = "StockSummaryOpname";
                             tx_StockSummaryOpname.CreatedDate = dtModified;
                             tx_StockSummaryOpname.CreatedUser = model._UserId;
@@ -756,9 +753,6 @@ namespace Models.Transaction.StockOpname
                                     var exceptColumns = new string[] { "Id", "TransNo", "CreatedUser" };
                                     CopyProperty.CopyProperties(model, tx_StockSummaryOpname, false, exceptColumns);
 
-                                    var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("StockSummaryOpname");
-
-                                    tx_StockSummaryOpname.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
                                     tx_StockSummaryOpname.ModifiedDate = dtModified;
                                     tx_StockSummaryOpname.ModifiedUser = model._UserId;
 
