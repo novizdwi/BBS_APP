@@ -973,22 +973,22 @@ namespace Models.Transaction.Adjustment
             string approvalStatus = string.Empty;
             try
             {
-                Authorize(userId, id, "Approve", approvalMessage);
-                using (var CONTEXT = new HANA_APP())
-                {
-                    string strApprovalStatus = @"
-                        SELECT T0.""ApprovalStatus"" 
-                        FROM ""Tx_AdjustmentIn"" T0
-                        WHERE T0.""Id"" = :p0 
-                    ";
-                    approvalStatus = CONTEXT.Database.SqlQuery<string>(strApprovalStatus, id).FirstOrDefault();
-                }
+                approvalStatus = Authorize(userId, id, "Approve", approvalMessage);
 
                 if (approvalStatus == "Approved")
                 {
-                    AdjustmentInModel adjustmentInModel = GetById(userId, id);
-                    this.Update(adjustmentInModel, "Post");
-                    this.PostSAP(userId, adjustmentInModel.Id);
+                    //AdjustmentInModel adjustmentInModel = GetById(userId, id);
+                    //this.Update(adjustmentInModel, "Post");
+                    using (var CONTEXT = new HANA_APP())
+                    {
+                        using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                        {
+                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpAdjustmentIn_UpdateItem\"(:p0,:p1)", userId, id);
+                            CONTEXT.SaveChanges();
+                        }
+                    }
+
+                    this.PostSAP(userId, id);
                 }
             }
             catch (Exception ex)
@@ -997,12 +997,11 @@ namespace Models.Transaction.Adjustment
             }
         }
 
-        public void Authorize(int userId, long id, string action, string approvalMessage)
+        public string Authorize(int userId, long id, string action, string approvalMessage)
         {
+            string approvalStatus = string.Empty;
             using (var CONTEXT = new HANA_APP())
             {
-                AdjustmentInModel adjustmentInModel = GetById(userId, id);
-
                 using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
                 {
                     try
@@ -1016,7 +1015,13 @@ namespace Models.Transaction.Adjustment
                         SpNotif.SpSysControllerTransNotif(userId, "AdjustmentIn", CONTEXT, "after", "Tx_AdjustmentIn", action.ToLower(), "Id", keyValue);
 
                         CONTEXT_TRANS.Commit();
-
+                        string strApprovalStatus = @"
+                            SELECT T0.""ApprovalStatus"" 
+                            FROM ""Tx_AdjustmentIn"" T0
+                            WHERE T0.""Id"" = :p0 
+                        ";
+                        approvalStatus = CONTEXT.Database.SqlQuery<string>(strApprovalStatus, id).FirstOrDefault();
+                        return approvalStatus;
                     }
 
                     catch (Exception ex)

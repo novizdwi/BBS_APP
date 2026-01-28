@@ -756,20 +756,6 @@ namespace Models.Transaction.StockOpname
                                     tx_StockSummaryOpname.ModifiedDate = dtModified;
                                     tx_StockSummaryOpname.ModifiedUser = model._UserId;
 
-                                    //if (model.StartDate != null)
-                                    //{
-                                    //    Tx_StockSummaryOpname.Status2 = "On Progress";
-                                    //}
-                                    //else
-                                    //{
-                                    //    Tx_StockSummaryOpname.Status2 = "Open";
-                                    //}
-
-                                    //if (model.EndDate != null)
-                                    //{
-                                    //    Tx_StockSummaryOpname.Status2 = "Close";
-                                    //}
-
                                     if (method == "Post")
                                     {
                                         CONTEXT.Database.ExecuteSqlCommand("CALL \"StockSummaryOpname_UpdateItem\"(:p0,:p1)", model._UserId, model.Id);
@@ -1367,22 +1353,22 @@ namespace Models.Transaction.StockOpname
             string approvalStatus = string.Empty;
             try
             {
-                Authorize(userId, id, "Approve", approvalMessage);
-                using (var CONTEXT = new HANA_APP())
-                {
-                    string strApprovalStatus = @"
-                        SELECT T0.""ApprovalStatus"" 
-                        FROM ""Tx_StockSummaryOpname"" T0
-                        WHERE T0.""Id"" = :p0 
-                    ";
-                    approvalStatus = CONTEXT.Database.SqlQuery<string>(strApprovalStatus, id).FirstOrDefault();
-                }
+                approvalStatus = Authorize(userId, id, "Approve", approvalMessage);
 
                 if (approvalStatus == "Approved")
                 {
-                    StockSummaryOpnameModel StockSummaryOpnameModel = GetById(userId, id);
-                    this.Update(StockSummaryOpnameModel, "Post");
-                    this.PostSAP(userId, StockSummaryOpnameModel.Id);
+                    //StockSummaryOpnameModel StockSummaryOpnameModel = GetById(userId, id);
+                    //this.Update(StockSummaryOpnameModel, "Post");
+                    using (var CONTEXT = new HANA_APP())
+                    {
+                        using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                        {
+                            CONTEXT.Database.ExecuteSqlCommand("CALL \"StockSummaryOpname_UpdateItem\"(:p0,:p1)", userId, id);
+                            CONTEXT.SaveChanges();
+                        }
+                    }
+
+                    this.PostSAP(userId, id);
                 }
             }
             catch (Exception ex)
@@ -1391,12 +1377,11 @@ namespace Models.Transaction.StockOpname
             }
         }
 
-        public void Authorize(int userId, long id, string action, string approvalMessage)
+        public string Authorize(int userId, long id, string action, string approvalMessage)
         {
+            string approvalStatus = string.Empty;
             using (var CONTEXT = new HANA_APP())
             {
-                StockSummaryOpnameModel StockSummaryOpnameModel = GetById(userId, id);
-
                 using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
                 {
                     try
@@ -1411,6 +1396,14 @@ namespace Models.Transaction.StockOpname
 
                         CONTEXT_TRANS.Commit();
 
+                        string strApprovalStatus = @"
+                            SELECT T0.""ApprovalStatus"" 
+                            FROM ""Tx_StockSummaryOpname"" T0
+                            WHERE T0.""Id"" = :p0 
+                        ";
+
+                        approvalStatus = CONTEXT.Database.SqlQuery<string>(strApprovalStatus, id).FirstOrDefault();
+                        return approvalStatus;
                     }
 
                     catch (Exception ex)

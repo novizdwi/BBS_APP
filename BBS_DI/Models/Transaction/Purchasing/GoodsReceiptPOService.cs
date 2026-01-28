@@ -1271,22 +1271,13 @@ namespace Models.Transaction.Purchasing
             string approvalStatus = string.Empty;
             try
             {
-                Authorize(userId, id, "Approve", approvalMessage);
-                using (var CONTEXT = new HANA_APP())
-                {
-                    string strApprovalStatus = @"
-                        SELECT T0.""ApprovalStatus"" 
-                        FROM ""Tx_GoodsReceiptPO"" T0
-                        WHERE T0.""Id"" = :p0 
-                    ";
-                    approvalStatus = CONTEXT.Database.SqlQuery<string>(strApprovalStatus, id).FirstOrDefault();
-                }
+                approvalStatus = Authorize(userId, id, "Approve", approvalMessage);
 
                 if (approvalStatus == "Approved")
                 {
-                    GoodsReceiptPOModel GoodsReceiptPOModel = GetById(userId, id);
-                    this.Update(GoodsReceiptPOModel);
-                    this.PostSAP(userId, GoodsReceiptPOModel.Id);
+                    //GoodsReceiptPOModel GoodsReceiptPOModel = GetById(userId, id);
+                    //this.Update(GoodsReceiptPOModel);
+                    this.PostSAP(userId, id);
                 }
             }
             catch (Exception ex)
@@ -1295,12 +1286,11 @@ namespace Models.Transaction.Purchasing
             }
         }
 
-        public void Authorize(int userId, long id, string action, string approvalMessage)
+        public string Authorize(int userId, long id, string action, string approvalMessage)
         {
+            string approvalStatus = string.Empty;
             using (var CONTEXT = new HANA_APP())
             {
-                GoodsReceiptPOModel GoodsReceiptPOModel = GetById(userId, id);
-
                 using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
                 {
                     try
@@ -1314,6 +1304,13 @@ namespace Models.Transaction.Purchasing
                         SpNotif.SpSysControllerTransNotif(userId, "GoodsReceiptPO", CONTEXT, "after", "Tx_GoodsReceiptPO", action.ToLower(), "Id", keyValue);
 
                         CONTEXT_TRANS.Commit();
+                        string strApprovalStatus = @"
+                            SELECT T0.""ApprovalStatus"" 
+                            FROM ""Tx_GoodsReceiptPO"" T0
+                            WHERE T0.""Id"" = :p0 
+                        ";
+                        approvalStatus = CONTEXT.Database.SqlQuery<string>(strApprovalStatus, id).FirstOrDefault();
+                        return approvalStatus;
 
                     }
 

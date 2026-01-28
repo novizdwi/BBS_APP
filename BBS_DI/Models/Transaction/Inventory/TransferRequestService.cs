@@ -956,16 +956,8 @@ namespace Models.Transaction.Inventory
             string approvalStatus = string.Empty;
             try
             {
-                Authorize(userId, id, "Approve", approvalMessage);
-                using (var CONTEXT = new HANA_APP())
-                {
-                    string strApprovalStatus = @"
-                        SELECT T0.""ApprovalStatus"" 
-                        FROM ""Tx_TransferRequest"" T0
-                        WHERE T0.""Id"" = :p0 
-                    ";
-                    approvalStatus = CONTEXT.Database.SqlQuery<string>(strApprovalStatus, id).FirstOrDefault();
-                }
+                approvalStatus = Authorize(userId, id, "Approve", approvalMessage);
+
                 if (approvalStatus == "Approved")
                 {
                     this.Post(userId, id);
@@ -977,12 +969,11 @@ namespace Models.Transaction.Inventory
             }
         }
 
-        public void Authorize(int userId, long id, string action, string approvalMessage)
+        public string Authorize(int userId, long id, string action, string approvalMessage)
         {
+            string approvalStatus = string.Empty;
             using (var CONTEXT = new HANA_APP())
             {
-                TransferRequestModel TransferRequestModel = GetById(userId, id);
-
                 using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
                 {
                     try
@@ -997,6 +988,13 @@ namespace Models.Transaction.Inventory
 
                         CONTEXT_TRANS.Commit();
 
+                        string strApprovalStatus = @"
+                            SELECT T0.""ApprovalStatus"" 
+                            FROM ""Tx_TransferRequest"" T0
+                            WHERE T0.""Id"" = :p0 
+                        ";
+                        approvalStatus = CONTEXT.Database.SqlQuery<string>(strApprovalStatus, id).FirstOrDefault();
+                        return approvalStatus;
                     }
 
                     catch (Exception ex)

@@ -1105,22 +1105,22 @@ namespace Models.Transaction.Inventory
             string approvalStatus = string.Empty;
             try
             {
-                Authorize(userId, id, "Approve", approvalMessage);
-                using (var CONTEXT = new HANA_APP())
-                {
-                    string strApprovalStatus = @"
-                        SELECT T0.""ApprovalStatus"" 
-                        FROM ""Tx_TransferSummaryOut"" T0
-                        WHERE T0.""Id"" = :p0 
-                    ";
-                    approvalStatus = CONTEXT.Database.SqlQuery<string>(strApprovalStatus, id).FirstOrDefault();
-                }
+                approvalStatus = Authorize(userId, id, "Approve", approvalMessage);
 
                 if (approvalStatus == "Approved")
                 {
-                    TransferSummaryOutModel TransferSummaryOutModel = GetById(userId, id);
-                    this.Update(TransferSummaryOutModel, "Post");
-                    this.PostSAP(userId, TransferSummaryOutModel.Id);
+                    //TransferSummaryOutModel TransferSummaryOutModel = GetById(userId, id);
+                    //this.Update(TransferSummaryOutModel, "Post");
+                    using (var CONTEXT = new HANA_APP())
+                    {
+                        using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
+                        {
+                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateItem\"(:p0,:p1, 'before')", userId, id);
+                            CONTEXT.SaveChanges();
+                        }
+                    }
+
+                    this.PostSAP(userId, id);
                 }
             }
             catch (Exception ex)
@@ -1129,12 +1129,11 @@ namespace Models.Transaction.Inventory
             }
         }
 
-        public void Authorize(int userId, long id, string action, string approvalMessage)
+        public string Authorize(int userId, long id, string action, string approvalMessage)
         {
+            string approvalStatus = string.Empty;
             using (var CONTEXT = new HANA_APP())
             {
-                TransferSummaryOutModel TransferSummaryOutModel = GetById(userId, id);
-
                 using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
                 {
                     try
@@ -1148,7 +1147,14 @@ namespace Models.Transaction.Inventory
                         SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", action.ToLower(), "Id", keyValue);
 
                         CONTEXT_TRANS.Commit();
+                        string strApprovalStatus = @"
+                            SELECT T0.""ApprovalStatus"" 
+                            FROM ""Tx_TransferSummaryOut"" T0
+                            WHERE T0.""Id"" = :p0 
+                        ";
 
+                        approvalStatus = CONTEXT.Database.SqlQuery<string>(strApprovalStatus, id).FirstOrDefault();
+                        return approvalStatus;
                     }
 
                     catch (Exception ex)
