@@ -91,7 +91,7 @@
         column.FieldName = "FromWhsName";
         column.Caption = "Warehouse Name";
         column.Name = "From Whs Name";
-        column.Width = Unit.Percentage(100);
+        column.Width = Unit.Percentage(80);
     });
 
     settings.Columns.Add(column =>
@@ -107,7 +107,7 @@
         column.FieldName = "TransitWhsName";
         column.Caption = "Transit Warehouse Name";
         column.Name = "TransitWhsName";
-        column.Width = Unit.Percentage(100);
+        column.Width = Unit.Percentage(50);
     });
 
     settings.Columns.Add(column =>
@@ -123,7 +123,7 @@
         column.FieldName = "ToWhsName";
         column.Caption = "To Warehouse Name";
         column.Name = "ToWhsName";
-        column.Width = Unit.Percentage(100);
+        column.Width = Unit.Percentage(60);
     });
 
     settings.Columns.Add(column =>
@@ -140,6 +140,14 @@
         column.Caption = "Status";
         column.Name = "Status";
         column.Width = Unit.Percentage(50);
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ApprovalStatus";
+        column.Caption = "Approval Status";
+        column.Name = "ApprovalStatus";
+        column.Width = Unit.Percentage(30);
     });
 
     settings.SettingsPager.Position = PagerPosition.Bottom;

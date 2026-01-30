@@ -116,6 +116,14 @@
         column.Width = Unit.Percentage(25);
     });
 
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ApprovalStatus";
+        column.Caption = "Approval Status";
+        column.Name = "ApprovalStatus";
+        column.Width = Unit.Percentage(30);
+    });
+
     settings.SettingsPager.Position = PagerPosition.Bottom;
     settings.SettingsPager.FirstPageButton.Visible = true;
     settings.SettingsPager.LastPageButton.Visible = true;

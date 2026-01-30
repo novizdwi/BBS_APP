@@ -89,7 +89,7 @@
         column.FieldName = "AdjustmentTypeName_";
         column.Caption = "Adjustment Type";
         column.Name = "AdjustmentTypeName_";
-        column.Width = Unit.Percentage(80);
+        column.Width = Unit.Percentage(50);
     });
 
     settings.Columns.Add(column =>
@@ -121,6 +121,14 @@
         column.FieldName = "Status";
         column.Caption = "Status";
         column.Name = "Status";
+        column.Width = Unit.Percentage(30);
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ApprovalStatus";
+        column.Caption = "Approval Status";
+        column.Name = "ApprovalStatus";
         column.Width = Unit.Percentage(30);
     });
 

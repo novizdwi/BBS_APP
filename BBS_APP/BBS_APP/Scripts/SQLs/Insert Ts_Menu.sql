@@ -6,14 +6,14 @@ INSERT INTO "Ts_Menu" VALUES ('RfidMonitoring', 'RFID', '', 'Item', 100101);
 INSERT INTO "Ts_Menu" VALUES ('RfidMonitoring/Detail#User', 'Detail - User', 'RfidMonitoring/Detail', 'RfidMonitoring', 10010101);
 INSERT INTO "Ts_Menu" VALUES ('RfidMonitoring/Detail#All', 'Detail - All', 'RfidMonitoring/Detail', 'RfidMonitoring', 10010102);
 
-INSERT INTO "Ts_Menu" VALUES ('ItemChange', 'Item Change', '', 'Item', 100102);
-INSERT INTO "Ts_Menu" VALUES ('ItemChange/Detail#User', 'Detail - User', 'ItemChange/Detail', 'ItemChange', 10010201);
-INSERT INTO "Ts_Menu" VALUES ('ItemChange/Detail#All', 'Detail - All', 'ItemChange/Detail', 'ItemChange', 10010202);
-INSERT INTO "Ts_Menu" VALUES ('ItemChange/Add', 'Add', 'ItemChange/Add', 'ItemChange', 10010203);
-INSERT INTO "Ts_Menu" VALUES ('ItemChange/Update', 'Update', 'ItemChange/Update', 'ItemChange', 10010204);
-INSERT INTO "Ts_Menu" VALUES ('ItemChange/Post', 'Post', 'ItemChange/Post', 'ItemChange', 10010205);
-INSERT INTO "Ts_Menu" VALUES ('ItemChange/Cancel', 'Cancel', 'ItemChange/Cancel', 'ItemChange', 10010206);
-INSERT INTO "Ts_Menu" VALUES ('ItemChange/Print', 'Print', 'ItemChange/Print', 'ItemChange', 10010207);
+INSERT INTO "Ts_Menu" VALUES ('ChangeItem', 'Change Item', '', 'Item', 100102);
+INSERT INTO "Ts_Menu" VALUES ('ChangeItem/Detail#User', 'Detail - User', 'ChangeItem/Detail', 'ChangeItem', 10010201);
+INSERT INTO "Ts_Menu" VALUES ('ChangeItem/Detail#All', 'Detail - All', 'ChangeItem/Detail', 'ChangeItem', 10010202);
+INSERT INTO "Ts_Menu" VALUES ('ChangeItem/Add', 'Add', 'ChangeItem/Add', 'ChangeItem', 10010203);
+INSERT INTO "Ts_Menu" VALUES ('ChangeItem/Update', 'Update', 'ChangeItem/Update', 'ChangeItem', 10010204);
+INSERT INTO "Ts_Menu" VALUES ('ChangeItem/Post', 'Post', 'ChangeItem/Post', 'ChangeItem', 10010205);
+INSERT INTO "Ts_Menu" VALUES ('ChangeItem/Cancel', 'Cancel', 'ChangeItem/Cancel', 'ChangeItem', 10010206);
+INSERT INTO "Ts_Menu" VALUES ('ChangeItem/Print', 'Print', 'ChangeItem/Print', 'ChangeItem', 10010207);
 
 INSERT INTO "Ts_Menu" VALUES ('ItemMaster', 'Item Master', '', 'Item', 100103);
 INSERT INTO "Ts_Menu" VALUES ('ItemMaster/Detail#User', 'Detail - User', 'ItemMaster/Detail', 'ItemMaster', 10010301);

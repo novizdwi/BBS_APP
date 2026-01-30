@@ -51,6 +51,8 @@ namespace Models.Transaction.Inventory
 
         public string Status { get; set; }
 
+        public string ApprovalStatus { get; set; }
+
         public string Comments { get; set; }
 
     }
