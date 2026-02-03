@@ -8,7 +8,7 @@ using Models.Master.Item;
 
 namespace Controllers.Master.Item
 {
-    public partial class ChangeItemController : BaseController
+    public partial class ChangeItemController : BaseController //cuy
     {
         string VIEW_DETAIL = "ChangeItem";
         string VIEW_FORM_PARTIAL = "Partial/ChangeItem_Form_Partial";
