@@ -78,6 +78,7 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Ts_Menu> Ts_Menu { get; set; }
         public virtual DbSet<Ts_ObjectApproval> Ts_ObjectApproval { get; set; }
         public virtual DbSet<Tx_AdjustmentIn> Tx_AdjustmentIn { get; set; }
+        public virtual DbSet<Tx_AdjustmentIn_Approval> Tx_AdjustmentIn_Approval { get; set; }
         public virtual DbSet<Tx_AdjustmentIn_Attachment> Tx_AdjustmentIn_Attachment { get; set; }
         public virtual DbSet<Tx_AdjustmentIn_Item> Tx_AdjustmentIn_Item { get; set; }
         public virtual DbSet<Tx_AdjustmentIn_Item_Tag> Tx_AdjustmentIn_Item_Tag { get; set; }
@@ -91,7 +92,7 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_ChangeItem> Tx_ChangeItem { get; set; }
         public virtual DbSet<Tx_ChangeItem_Tag> Tx_ChangeItem_Tag { get; set; }
         public virtual DbSet<Tx_DeactiveTag> Tx_DeactiveTag { get; set; }
-        public virtual DbSet<Tx_DeactiveTag_Item> Tx_DeactiveTag_Item { get; set; }
+        public virtual DbSet<Tx_DeactiveTag_Approval> Tx_DeactiveTag_Approval { get; set; }
         public virtual DbSet<Tx_DeactiveTag_Log> Tx_DeactiveTag_Log { get; set; }
         public virtual DbSet<Tx_GoodIssue> Tx_GoodIssue { get; set; }
         public virtual DbSet<Tx_GoodsReceiptPO> Tx_GoodsReceiptPO { get; set; }
@@ -132,6 +133,6 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_TransferSummaryOut_Item_Tag> Tx_TransferSummaryOut_Item_Tag { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut_Ref> Tx_TransferSummaryOut_Ref { get; set; }
         public virtual DbSet<Tp_UserAlert> Tp_UserAlert { get; set; }
-        public virtual DbSet<Tx_AdjustmentIn_Approval> Tx_AdjustmentIn_Approval { get; set; }
+        public virtual DbSet<Tx_DeactiveTag_Item> Tx_DeactiveTag_Item { get; set; }
     }
 }

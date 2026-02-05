@@ -924,6 +924,24 @@
     <Content Include="Views\Transaction\StockOpname\StockSummaryOpname\Partial\ViewApproval\ViewApproval_Panel_Partial.cshtml" />
     <Content Include="Views\Transaction\StockOpname\StockSummaryOpname\Partial\ViewApproval\ViewApproval_Partial.cshtml" />
     <Content Include="Views\Transaction\StockOpname\StockSummaryOpname\Partial\ViewApproval\ViewApproval_TabContent_List_Partial.cshtml" />
+    <Content Include="Views\Master\Item\DeactiveTag\DeactiveTag.cshtml" />
+    <Content Include="Views\Master\Item\DeactiveTag\Partial\DeactiveTag_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Master\Item\DeactiveTag\Partial\DeactiveTag_Form_BtnBottom_Partial.cshtml" />
+    <Content Include="Views\Master\Item\DeactiveTag\Partial\DeactiveTag_Form_Partial.cshtml" />
+    <Content Include="Views\Master\Item\DeactiveTag\Partial\DeactiveTag_Form_TabDetail_List_Partial.cshtml" />
+    <Content Include="Views\Master\Item\DeactiveTag\Partial\DeactiveTag_List_Partial.cshtml" />
+    <Content Include="Views\Master\Item\DeactiveTag\Partial\DeactiveTag_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Master\Item\DeactiveTag\Partial\Approval\Approval_Form_Partial.cshtml" />
+    <Content Include="Views\Master\Item\DeactiveTag\Partial\Approval\Approval_Form_TabApproval_Partial.cshtml" />
+    <Content Include="Views\Master\Item\DeactiveTag\Partial\Approval\Approval_Panel_Partial.cshtml" />
+    <Content Include="Views\Master\Item\DeactiveTag\Partial\Approval\Approval_Partial.cshtml" />
+    <Content Include="Views\Master\Item\DeactiveTag\Partial\CancelReason\CancelReason_Form_Partial.cshtml" />
+    <Content Include="Views\Master\Item\DeactiveTag\Partial\CancelReason\CancelReason_Panel_Partial.cshtml" />
+    <Content Include="Views\Master\Item\DeactiveTag\Partial\CancelReason\CancelReason_Partial.cshtml" />
+    <Content Include="Views\Master\Item\DeactiveTag\Partial\ViewApproval\ViewApproval_Form_Partial.cshtml" />
+    <Content Include="Views\Master\Item\DeactiveTag\Partial\ViewApproval\ViewApproval_Panel_Partial.cshtml" />
+    <Content Include="Views\Master\Item\DeactiveTag\Partial\ViewApproval\ViewApproval_Partial.cshtml" />
+    <Content Include="Views\Master\Item\DeactiveTag\Partial\ViewApproval\ViewApproval_TabContent_List_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -955,6 +973,13 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommonFileHelper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Master\Item\DeactiveTag\DeactiveTagController.Approval.cs" />
+    <Compile Include="Controllers\Master\Item\DeactiveTag\DeactiveTagController.CancelReason.cs" />
+    <Compile Include="Controllers\Master\Item\DeactiveTag\DeactiveTagController.cs" />
+    <Compile Include="Controllers\Master\Item\DeactiveTag\DeactiveTagController.List.cs" />
+    <Compile Include="Controllers\Master\Item\DeactiveTag\DeactiveTagController.Nav.cs" />
+    <Compile Include="Controllers\Master\Item\DeactiveTag\DeactiveTagController.Tab.Detail.cs" />
+    <Compile Include="Controllers\Master\Item\DeactiveTag\DeactiveTagController.ViewApproval.cs" />
     <Compile Include="Controllers\Master\Item\ItemMaster\ItemMasterController.cs" />
     <Compile Include="Controllers\Master\Item\ItemMaster\ItemMasterController.List.cs" />
     <Compile Include="Controllers\Master\Item\ItemMaster\ItemMasterController.Nav.cs" />

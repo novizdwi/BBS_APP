@@ -21,8 +21,11 @@ namespace BBS_DI.Models._EF
         public Nullable<System.DateTime> TransDate { get; set; }
         public Nullable<System.DateTime> PostingDate { get; set; }
         public string Status { get; set; }
-        public string Remarks { get; set; }
+        public string ApprovalStatus { get; set; }
+        public string Comments { get; set; }
         public string CancelReason { get; set; }
+        public string IsApproval { get; set; }
+        public string ApprovalMessages { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedUser { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }

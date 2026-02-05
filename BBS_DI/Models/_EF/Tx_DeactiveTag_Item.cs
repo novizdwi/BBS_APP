@@ -15,11 +15,13 @@ namespace BBS_DI.Models._EF
     public partial class Tx_DeactiveTag_Item
     {
         public long Id { get; set; }
+        public long DetId { get; set; }
         public string TagId { get; set; }
         public string ItemCode { get; set; }
         public string ItemName { get; set; }
         public string FreeText { get; set; }
         public string WhsCode { get; set; }
+        public string WhsName { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedUser { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }

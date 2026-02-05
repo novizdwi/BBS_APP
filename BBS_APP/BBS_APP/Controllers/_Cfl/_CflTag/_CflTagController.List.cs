@@ -39,6 +39,13 @@ namespace Controllers._Cfl
                     "AND \"ItemCode\" = '"+ hidden_CflOriginItemCode + "' " +
                     "AND \"WhsCode\" = '"+ hidden_CflWhsCode + "' ");
             }
+            else if(cflParam.Type == "DeactiveTag")
+            {
+                var hidden_CflDocId = (string)Request["hidden_CflDocId"];
+                hidden_CflDocId = hidden_CflDocId.Replace("'", "''");
+                cflParam.SqlWhere = string.Format(" " +
+                    "AND \"Status\" = 'A'  ");
+            }
 
             cflParam.IsMulti = Request["hidden_CflIsMulti"];
             

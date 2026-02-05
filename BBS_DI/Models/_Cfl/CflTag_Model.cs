@@ -29,13 +29,30 @@ namespace Models._Cfl
     public class CflTag_View__
     {
         public string TagId { get; set; } 
+
+        public string ItemCode { get; set; }
+
+        public string ItemName { get; set; }
+
+        public string WhsCode { get; set; }
+
+        public string WhsName { get; set; }
+
+        public string Status { get; set; }
+
+        public string Status_ { get; set; }
+
     }
 
     public class CflTag_Model
     {
 
 
-        public static string ssql = @" SELECT T0.* FROM  ""Tm_Item_Warehouse_Tag"" T0 ";
+        public static string ssql = @" SELECT T0.*,
+            T1.""Name"" AS ""Status_""
+            FROM  ""Tm_Item_Warehouse_Tag"" T0
+            LEFT JOIN ""Ts_List"" T1 ON T0.""Status"" = T1.""Code"" AND T1.""Type"" = 'RFIDStatus'
+        ";
 
 
         public static void GetDataRowCount(GridViewCustomBindingGetDataRowCountArgs e, int userId, CflTag_ParamModel cflTagParam)

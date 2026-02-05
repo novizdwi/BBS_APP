@@ -1073,23 +1073,45 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP3.Tp_UserAlert' does not have
           <Property Name="TransDate" Type="timestamp" />
           <Property Name="PostingDate" Type="timestamp" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
-          <Property Name="Remarks" Type="nvarchar" MaxLength="200" />
+          <Property Name="ApprovalStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="200" />
           <Property Name="CancelReason" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsApproval" Type="varchar" MaxLength="1" />
+          <Property Name="ApprovalMessages" Type="nvarchar" MaxLength="254" />
           <Property Name="CreatedDate" Type="timestamp" />
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
         </EntityType>
+        <EntityType Name="Tx_DeactiveTag_Approval">
+          <Key>
+            <PropertyRef Name="DetId" />
+          </Key>
+          <Property Name="Id" Type="int" />
+          <Property Name="DetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StageId" Type="int" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Step" Type="int" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ActionDate" Type="seconddate" />
+          <Property Name="CreatedDate" Type="seconddate" />
+          <Property Name="CreatedUser" Type="int" />
+          <Property Name="ModifiedDate" Type="seconddate" />
+          <Property Name="ModifiedUser" Type="int" />
+        </EntityType>
         <EntityType Name="Tx_DeactiveTag_Item">
           <Key>
-            <PropertyRef Name="TagId" />
+            <PropertyRef Name="DetId" />
           </Key>
           <Property Name="Id" Type="bigint" Nullable="false" />
-          <Property Name="TagId" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="DetId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TagId" Type="nvarchar" MaxLength="200" />
           <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
           <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
           <Property Name="FreeText" Type="nvarchar" MaxLength="1000" />
           <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="WhsName" Type="nvarchar" MaxLength="200" />
           <Property Name="CreatedDate" Type="timestamp" />
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
@@ -2104,6 +2126,7 @@ warning 6002: The table/view 'HDB.BBS_RFID_TEST_APP3.Tp_UserAlert' does not have
           <EntitySet Name="Tx_ChangeItem" EntityType="Self.Tx_ChangeItem" Schema="BBS_RFID_TEST_APP3" store:Type="Tables" />
           <EntitySet Name="Tx_ChangeItem_Tag" EntityType="Self.Tx_ChangeItem_Tag" Schema="BBS_RFID_TEST_APP3" store:Type="Tables" />
           <EntitySet Name="Tx_DeactiveTag" EntityType="Self.Tx_DeactiveTag" Schema="BBS_RFID_TEST_APP3" store:Type="Tables" />
+          <EntitySet Name="Tx_DeactiveTag_Approval" EntityType="Self.Tx_DeactiveTag_Approval" Schema="BBS_RFID_TEST_APP3" store:Type="Tables" />
           <EntitySet Name="Tx_DeactiveTag_Item" EntityType="Self.Tx_DeactiveTag_Item" Schema="BBS_RFID_TEST_APP3" store:Type="Tables" />
           <EntitySet Name="Tx_DeactiveTag_Log" EntityType="Self.Tx_DeactiveTag_Log" Schema="BBS_RFID_TEST_APP3" store:Type="Tables" />
           <EntitySet Name="Tx_GoodIssue" EntityType="Self.Tx_GoodIssue" Schema="BBS_RFID_TEST_APP3" store:Type="Tables" />
@@ -2217,6 +2240,7 @@ FROM "BBS_RFID_TEST_APP3"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySet Name="Ts_Menu" EntityType="Model1.Ts_Menu" />
           <EntitySet Name="Ts_ObjectApproval" EntityType="Model1.Ts_ObjectApproval" />
           <EntitySet Name="Tx_AdjustmentIn" EntityType="Model1.Tx_AdjustmentIn" />
+          <EntitySet Name="Tx_AdjustmentIn_Approval" EntityType="Model1.Tx_AdjustmentIn_Approval" />
           <EntitySet Name="Tx_AdjustmentIn_Attachment" EntityType="Model1.Tx_AdjustmentIn_Attachment" />
           <EntitySet Name="Tx_AdjustmentIn_Item" EntityType="Model1.Tx_AdjustmentIn_Item" />
           <EntitySet Name="Tx_AdjustmentIn_Item_Tag" EntityType="Model1.Tx_AdjustmentIn_Item_Tag" />
@@ -2230,7 +2254,7 @@ FROM "BBS_RFID_TEST_APP3"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySet Name="Tx_ChangeItem" EntityType="Model1.Tx_ChangeItem" />
           <EntitySet Name="Tx_ChangeItem_Tag" EntityType="Model1.Tx_ChangeItem_Tag" />
           <EntitySet Name="Tx_DeactiveTag" EntityType="Model1.Tx_DeactiveTag" />
-          <EntitySet Name="Tx_DeactiveTag_Item" EntityType="Model1.Tx_DeactiveTag_Item" />
+          <EntitySet Name="Tx_DeactiveTag_Approval" EntityType="Model1.Tx_DeactiveTag_Approval" />
           <EntitySet Name="Tx_DeactiveTag_Log" EntityType="Model1.Tx_DeactiveTag_Log" />
           <EntitySet Name="Tx_GoodIssue" EntityType="Model1.Tx_GoodIssue" />
           <EntitySet Name="Tx_GoodsReceiptPO" EntityType="Model1.Tx_GoodsReceiptPO" />
@@ -2271,7 +2295,7 @@ FROM "BBS_RFID_TEST_APP3"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySet Name="Tx_TransferSummaryOut_Item_Tag" EntityType="Model1.Tx_TransferSummaryOut_Item_Tag" />
           <EntitySet Name="Tx_TransferSummaryOut_Ref" EntityType="Model1.Tx_TransferSummaryOut_Ref" />
           <EntitySet Name="Tp_UserAlert" EntityType="Model1.Tp_UserAlert" />
-          <EntitySet Name="Tx_AdjustmentIn_Approval" EntityType="Model1.Tx_AdjustmentIn_Approval" />
+          <EntitySet Name="Tx_DeactiveTag_Item" EntityType="Model1.Tx_DeactiveTag_Item" />
         </EntityContainer>
         <EntityType Name="Tm_Alert">
           <Key>
@@ -3050,6 +3074,23 @@ FROM "BBS_RFID_TEST_APP3"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
+        <EntityType Name="Tx_AdjustmentIn_Approval">
+          <Key>
+            <PropertyRef Name="DetId" />
+          </Key>
+          <Property Name="Id" Type="Int64" />
+          <Property Name="DetId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StageId" Type="Int32" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Step" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ActionDate" Type="DateTime" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
+        </EntityType>
         <EntityType Name="Tx_AdjustmentIn_Attachment">
           <Key>
             <PropertyRef Name="DetId" />
@@ -3307,23 +3348,28 @@ FROM "BBS_RFID_TEST_APP3"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <Property Name="TransDate" Type="DateTime" />
           <Property Name="PostingDate" Type="DateTime" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CancelReason" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
-        <EntityType Name="Tx_DeactiveTag_Item">
+        <EntityType Name="Tx_DeactiveTag_Approval">
           <Key>
-            <PropertyRef Name="TagId" />
+            <PropertyRef Name="DetId" />
           </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" />
-          <Property Name="TagId" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="FreeText" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Int32" />
+          <Property Name="DetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StageId" Type="Int32" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Step" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ActionDate" Type="DateTime" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
@@ -4285,18 +4331,18 @@ FROM "BBS_RFID_TEST_APP3"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <Property Name="IsRead" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="LastShowTime" Type="DateTime" />
         </EntityType>
-        <EntityType Name="Tx_AdjustmentIn_Approval">
+        <EntityType Name="Tx_DeactiveTag_Item">
           <Key>
             <PropertyRef Name="DetId" />
           </Key>
-          <Property Name="Id" Type="Int64" />
+          <Property Name="Id" Type="Int64" Nullable="false" />
           <Property Name="DetId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StageId" Type="Int32" />
-          <Property Name="UserId" Type="Int32" />
-          <Property Name="Step" Type="Int32" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="ActionDate" Type="DateTime" />
+          <Property Name="TagId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FreeText" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WhsName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
@@ -5134,6 +5180,24 @@ FROM "BBS_RFID_TEST_APP3"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Tx_AdjustmentIn_Approval">
+            <EntityTypeMapping TypeName="Model1.Tx_AdjustmentIn_Approval">
+              <MappingFragment StoreEntitySet="Tx_AdjustmentIn_Approval">
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Step" ColumnName="Step" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="StageId" ColumnName="StageId" />
+                <ScalarProperty Name="DetId" ColumnName="DetId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tx_AdjustmentIn_Attachment">
             <EntityTypeMapping TypeName="Model1.Tx_AdjustmentIn_Attachment">
               <MappingFragment StoreEntitySet="Tx_AdjustmentIn_Attachment">
@@ -5399,8 +5463,11 @@ FROM "BBS_RFID_TEST_APP3"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ApprovalMessages" ColumnName="ApprovalMessages" />
+                <ScalarProperty Name="IsApproval" ColumnName="IsApproval" />
                 <ScalarProperty Name="CancelReason" ColumnName="CancelReason" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="ApprovalStatus" ColumnName="ApprovalStatus" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="PostingDate" ColumnName="PostingDate" />
                 <ScalarProperty Name="TransDate" ColumnName="TransDate" />
@@ -5411,18 +5478,20 @@ FROM "BBS_RFID_TEST_APP3"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tx_DeactiveTag_Item">
-            <EntityTypeMapping TypeName="Model1.Tx_DeactiveTag_Item">
-              <MappingFragment StoreEntitySet="Tx_DeactiveTag_Item">
+          <EntitySetMapping Name="Tx_DeactiveTag_Approval">
+            <EntityTypeMapping TypeName="Model1.Tx_DeactiveTag_Approval">
+              <MappingFragment StoreEntitySet="Tx_DeactiveTag_Approval">
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="WhsCode" ColumnName="WhsCode" />
-                <ScalarProperty Name="FreeText" ColumnName="FreeText" />
-                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
-                <ScalarProperty Name="TagId" ColumnName="TagId" />
+                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Step" ColumnName="Step" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="StageId" ColumnName="StageId" />
+                <ScalarProperty Name="DetId" ColumnName="DetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -6423,19 +6492,19 @@ FROM "BBS_RFID_TEST_APP3"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tx_AdjustmentIn_Approval">
-            <EntityTypeMapping TypeName="Model1.Tx_AdjustmentIn_Approval">
-              <MappingFragment StoreEntitySet="Tx_AdjustmentIn_Approval">
+          <EntitySetMapping Name="Tx_DeactiveTag_Item">
+            <EntityTypeMapping TypeName="Model1.Tx_DeactiveTag_Item">
+              <MappingFragment StoreEntitySet="Tx_DeactiveTag_Item">
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Step" ColumnName="Step" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="StageId" ColumnName="StageId" />
+                <ScalarProperty Name="WhsName" ColumnName="WhsName" />
+                <ScalarProperty Name="WhsCode" ColumnName="WhsCode" />
+                <ScalarProperty Name="FreeText" ColumnName="FreeText" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
                 <ScalarProperty Name="DetId" ColumnName="DetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
