@@ -31,6 +31,8 @@ namespace Models.Transaction.Inventory
 
         public string TransNo { get; set; }
 
+        public string BaseDocNum { get; set; }
+
         public DateTime? TransDate { get; set; }
 
         public string VendorCode { get; set; }

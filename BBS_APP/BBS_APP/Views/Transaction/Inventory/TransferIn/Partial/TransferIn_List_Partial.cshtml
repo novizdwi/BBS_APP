@@ -18,6 +18,8 @@
     settings.KeyFieldName = "Id";
     settings.CallbackRouteValues =  new { Controller = "TransferIn", Action = "ListPartial" };
 
+    settings.Styles.Header.Wrap = DevExpress.Utils.DefaultBoolean.True;
+
     settings.Columns.Add(column =>
     {
         column.Caption = "#";
@@ -68,7 +70,7 @@
         column.Name = "TransDate";
         column.Caption = "Document Date";
         column.ColumnType = MVCxGridViewColumnType.DateEdit;
-        column.Width = Unit.Percentage(30);
+        column.Width = Unit.Percentage(45);
 
         var txt = column.PropertiesEdit as DateEditProperties;
         txt.EditFormat = EditFormat.Date;
@@ -79,8 +81,8 @@
     settings.Columns.Add(column =>
     {
         column.FieldName = "BaseDocNum";
-        column.Caption = "BaseDocNum";
-        column.Name = "Summary Out Trans No";
+        column.Caption = "Summary Out Trans No";
+        column.Name = "BaseDocNum";
         column.Width = Unit.Percentage(45);
     });
 
@@ -89,7 +91,7 @@
         column.FieldName = "FromWhsName";
         column.Caption = "Warehouse Name";
         column.Name = "From Whs Name";
-        column.Width = Unit.Percentage(100);
+        column.Width = Unit.Percentage(90);
     });
 
     settings.Columns.Add(column =>
@@ -105,7 +107,7 @@
         column.FieldName = "ToWhsName";
         column.Caption = "To Warehouse Name";
         column.Name = "To Whs Name";
-        column.Width = Unit.Percentage(100);
+        column.Width = Unit.Percentage(90);
     });
 
     settings.Columns.Add(column =>
