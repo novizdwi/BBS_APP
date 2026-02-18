@@ -37,3 +37,6 @@ INSERT INTO "Ts_LayoutForm" VALUES('StockSummaryOpname','Stock Summary Opname','
 INSERT INTO "Ts_LayoutForm" VALUES('PurchaseOrderScan','Purchase Order Scan','0501');
 INSERT INTO "Ts_LayoutForm" VALUES('StockOpnameScan','Stock Opname Scan','0502');
 INSERT INTO "Ts_LayoutForm" VALUES('GoodsReceiptPO','Goods Receipt PO','0503');
+
+INSERT INTO "Ts_List" VALUES('LineStatus', '01', 'Open', 'Open', '');
+INSERT INTO "Ts_List" VALUES('LineStatus', '02', 'Closed', 'Closed', '');
