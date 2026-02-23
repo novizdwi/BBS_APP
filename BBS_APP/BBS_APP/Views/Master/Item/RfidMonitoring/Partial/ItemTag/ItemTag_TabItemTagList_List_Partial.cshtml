@@ -34,6 +34,18 @@
 
     settings.Columns.Add(column =>
     {
+        column.FieldName = "BaseTransNo";
+        column.Name = "BaseTransNo";
+        column.Caption = "Trans No";
+        column.Width = 120;
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Visible = true;
+
+        column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+    });
+
+    settings.Columns.Add(column =>
+    {
         column.FieldName = "ItemCode";
         column.Name = "ItemCode";
         column.Caption = "Old Item Code";

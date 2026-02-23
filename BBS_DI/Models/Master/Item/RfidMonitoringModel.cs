@@ -78,6 +78,10 @@ namespace Models.Master.Item
 
         public string TransType { get; set; }
 
+        public long? BaseId { get; set; }
+
+        public string BaseTransNo { get; set; }
+
         public string TransactionName_ { get; set; }
 
         public string ItemCode { get; set; }
@@ -212,7 +216,9 @@ namespace Models.Master.Item
                         T0.""LogId"",
                         LTRIM(
                             REPLACE_REGEXPR('([A-Z])' IN T0.""BaseType"" WITH ' \1' OCCURRENCE ALL)
-                        ) AS ""TransType"", 
+                        ) AS ""TransType"",
+                        T0.""BaseId"",
+                        T0.""BaseTransNo"",
                         T0.""ItemCode"",
                         T0.""ItemName"",
                         T0.""NewItemCode"",

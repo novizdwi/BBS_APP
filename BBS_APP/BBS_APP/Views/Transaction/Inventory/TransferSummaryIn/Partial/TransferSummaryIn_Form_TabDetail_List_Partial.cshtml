@@ -27,6 +27,9 @@
     settings.Width = Unit.Percentage(100);
     settings.Height = Unit.Percentage(100);
 
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowFilterRowMenu = true;
+
     settings.CallbackRouteValues = new { Controller = "TransferSummaryIn", Action = "TabDetailListPartial" };
 
     settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
@@ -82,7 +85,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 200;
-        
+
         column.ReadOnly = true;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
@@ -99,7 +102,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 100;
-        
+
         column.ReadOnly = true;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
@@ -116,7 +119,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 150;
-        
+
         column.ReadOnly = true;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
@@ -133,7 +136,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 100;
-        
+
         column.ReadOnly = true;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
@@ -150,7 +153,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 150;
-        
+
         column.ReadOnly = true;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
@@ -167,7 +170,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 100;
-        
+
         column.ReadOnly = true;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
@@ -184,7 +187,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 200;
-        
+
         column.ReadOnly = true;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
@@ -201,7 +204,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 80;
-        
+
         column.ReadOnly = true;
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
@@ -217,7 +220,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 100;
-        
+
         column.ReadOnly = true;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
@@ -233,7 +236,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 80;
-        
+
         column.ReadOnly = true;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
@@ -249,7 +252,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 80;
-        
+
         column.ReadOnly = true;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
@@ -265,7 +268,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 200;
-        
+
         column.ReadOnly = ViewBag.ReadOnly;
 
         if (ViewBag.ReadOnly)
