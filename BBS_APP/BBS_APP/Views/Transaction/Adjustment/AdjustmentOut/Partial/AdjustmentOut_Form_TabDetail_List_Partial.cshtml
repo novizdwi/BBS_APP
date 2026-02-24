@@ -16,9 +16,12 @@
 {
     settings.Name = "gvDetail";
     settings.KeyFieldName = "DetId";
-    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
-    //settings.Settings.VerticalScrollableHeight = 350;
+    /* ===== FIX FOOTER ALIGNMENT ===== */
+    settings.Settings.UseFixedTableLayout = true;
+    settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
     settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+    /* ================================= */
 
     settings.Width = Unit.Percentage(100);
     settings.Height = Unit.Percentage(100);
@@ -48,12 +51,11 @@
         column.Width = 150;
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
         column.ReadOnly = true;
-        
+
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
         column.SetDataItemTemplateContent(c =>
-        {
-            c.Column.Width = Unit.Percentage(100);
+        { 
             if (c.ItemIndex >= 0)
             {
                 string itemCode = (string)DataBinder.Eval(c.DataItem, "ItemCode");
@@ -82,13 +84,13 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 300;
-        
+
         column.ReadOnly = true;
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-        txt.Style.Width = Unit.Percentage(100);
+        txt.Style.Width = 150;
 
     });
 
@@ -100,7 +102,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 100;
-        
+
         column.ReadOnly = true;
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
@@ -135,6 +137,12 @@
         txt.AllowMouseWheel = false;
         txt.SpinButtons.ShowIncrementButtons = false;
 
+        ASPxSummaryItem summary = new ASPxSummaryItem();
+        summary.FieldName = column.FieldName;
+        summary.SummaryType = DevExpress.Data.SummaryItemType.Sum;
+        summary.DisplayFormat = "{0:#,###}";
+        settings.TotalSummary.Add(summary);
+
     });
 
     settings.Columns.Add(column =>
@@ -145,13 +153,19 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 90;
-        
+
         column.ReadOnly = true;
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
         txt.DisplayFormatString = "#,###";
+
+        ASPxSummaryItem summary = new ASPxSummaryItem();
+        summary.FieldName = column.FieldName;
+        summary.SummaryType = DevExpress.Data.SummaryItemType.Sum;
+        summary.DisplayFormat = "{0:#,###}";
+        settings.TotalSummary.Add(summary);
     });
 
     settings.Columns.Add(column =>
@@ -162,13 +176,19 @@
         column.Width = status != "Draft" ? 90 : 0;
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        
+
         column.ReadOnly = true;
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
         txt.DisplayFormatString = "#,###";
+
+        ASPxSummaryItem summary = new ASPxSummaryItem();
+        summary.FieldName = column.FieldName;
+        summary.SummaryType = DevExpress.Data.SummaryItemType.Sum;
+        summary.DisplayFormat = "{0:#,###}";
+        settings.TotalSummary.Add(summary);
     });
 
     settings.Columns.Add(column =>
@@ -179,7 +199,7 @@
         column.Width = status == "Draft" ? 90 : 0;
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        
+
         column.ReadOnly = true;
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
@@ -196,7 +216,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 100;
-        
+
         column.ReadOnly = true;
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
@@ -230,7 +250,7 @@
         cbo.TextFormatString = "{0}";
         cbo.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
-        
+
         column.ReadOnly = ViewBag.ReadOnly;
 
     });
@@ -243,7 +263,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 200;
-        
+
         column.ReadOnly = true;
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
@@ -281,7 +301,7 @@
         cbo.TextFormatString = "{0}";
         cbo.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
-        
+
         column.ReadOnly = ViewBag.ReadOnly;
 
     });
@@ -294,7 +314,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 200;
-        
+
         column.ReadOnly = true;
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
@@ -332,7 +352,7 @@
         cbo.TextFormatString = "{0}";
         cbo.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
-        
+
         column.ReadOnly = ViewBag.ReadOnly;
 
     });
@@ -345,7 +365,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 200;
-        
+
         column.ReadOnly = true;
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
@@ -383,7 +403,7 @@
         cbo.TextFormatString = "{0}";
         cbo.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
-        
+
         column.ReadOnly = ViewBag.ReadOnly;
 
     });
@@ -396,7 +416,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 200;
-        
+
         column.ReadOnly = true;
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
@@ -434,7 +454,7 @@
         cbo.TextFormatString = "{0}";
         cbo.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
-        
+
         column.ReadOnly = ViewBag.ReadOnly;
 
     });
@@ -447,7 +467,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 200;
-        
+
         column.ReadOnly = true;
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
@@ -464,7 +484,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 0;
-        
+
         column.ReadOnly = true;
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
@@ -481,7 +501,7 @@
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 0;
-        
+
         column.ReadOnly = true;
 
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
