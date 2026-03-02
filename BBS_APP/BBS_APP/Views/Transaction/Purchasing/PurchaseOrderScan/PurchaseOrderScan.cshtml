@@ -624,7 +624,14 @@
         });
     }
 
-
+    function onClickBtnViewSummary(s, e, summaryId)
+    {
+        var guid = CreateGuid();
+        window.open('', guid);
+        SubmitForm(guid, '@Url.Action("Detail", "GoodsReceiptPO")', 'post', {
+            Id: summaryId
+        });
+    }
 </script>
 
 

@@ -61,7 +61,7 @@
         column.FieldName = "TransNo";
         column.Caption = "Trans No";
         column.Name = "TransNo";
-        column.Width = Unit.Percentage(45);
+        column.Width = 120;
     });
 
     settings.Columns.Add(column =>
@@ -70,7 +70,7 @@
         column.Name = "TransDate";
         column.Caption = "Document Date";
         column.ColumnType = MVCxGridViewColumnType.DateEdit;
-        column.Width = Unit.Percentage(45);
+        column.Width = 100;
 
         var txt = column.PropertiesEdit as DateEditProperties;
         txt.EditFormat = EditFormat.Date;
@@ -83,7 +83,7 @@
         column.FieldName = "BaseDocNum";
         column.Caption = "Request No";
         column.Name = "BaseDocNum";
-        column.Width = Unit.Percentage(45);
+        column.Width = 100;
     });
 
     settings.Columns.Add(column =>
@@ -91,7 +91,7 @@
         column.FieldName = "FromWhsCode";
         column.Caption = "From Warehouse";
         column.Name = "FromWhsCode";
-        column.Width = Unit.Percentage(50);
+        column.Width = 100;
     });
 
     settings.Columns.Add(column =>
@@ -99,7 +99,7 @@
         column.FieldName = "FromWhsName";
         column.Caption = "Warehouse Name";
         column.Name = "From Whs Name";
-        column.Width = Unit.Percentage(80);
+        column.Width = 150;
     });
 
     settings.Columns.Add(column =>
@@ -107,7 +107,7 @@
         column.FieldName = "ToWhsCode";
         column.Caption = "To Warehouse";
         column.Name = "To Warehouse";
-        column.Width = Unit.Percentage(50);
+        column.Width = 100;
     });
 
     settings.Columns.Add(column =>
@@ -115,7 +115,7 @@
         column.FieldName = "ToWhsName";
         column.Caption = "To Warehouse Name";
         column.Name = "To Warehouse";
-        column.Width = Unit.Percentage(100);
+        column.Width = 150;
     });
 
 
@@ -124,7 +124,15 @@
         column.FieldName = "Status";
         column.Caption = "Status";
         column.Name = "Status";
-        column.Width = Unit.Percentage(50);
+        column.Width = 120;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "SummaryTransNo_";
+        column.Caption = "Summary In No";
+        column.Name = "SummaryTransNo_";
+        column.Width = 120;
     });
 
     settings.SettingsPager.Position = PagerPosition.Bottom;

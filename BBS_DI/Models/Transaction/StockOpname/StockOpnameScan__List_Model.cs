@@ -47,14 +47,26 @@ namespace Models.Transaction.StockOpname
 
         public DateTime? EndDate { get; set; }
 
+        public string SummaryTransNo_ { get; set; }
+
     }
 
     public class StockOpnameScan__List_Model
     {
-        static string ViewSql = "SELECT T0.*, T1.\"FirstName\" AS \"CreatedUserName\", T2.\"WhsName\" " +
+        static string ViewSql = "SELECT T0.*, T1.\"FirstName\" AS \"CreatedUserName\", T2.\"WhsName\", T3_.\"TransNo\" AS \"SummaryTransNo_\" " +
                         "FROM \"Tx_StockOpname\" T0 " +
                         "INNER JOIN \"Tm_User\" T1 ON T0.\"CreatedUser\" = T1.\"Id\" " +
                         "LEFT JOIN \"" + DbProvider.dbSap_Name + "\".\"OWHS\" T2 ON T0.\"WhsCode\" = T2.\"WhsCode\" "+
+
+                        "LEFT JOIN ( " +
+                        "SELECT " +
+                        "   T0.\"TransNo\", " +
+                        "   T1.\"BaseId\" " +
+                        "FROM \"Tx_StockSummaryOpname\" T0 " +
+                        "INNER JOIN \"Tx_StockSummaryOpname_Ref\" T1 ON T0.\"Id\" = T1.\"Id\" " +
+                        "WHERE T0.\"Status\" NOT IN ('Cancel') " +
+                        ") T3_ ON T0.\"Id\" = T3_.\"BaseId\"  " +
+
                         "ORDER BY T0.\"CreatedDate\" DESC ";
 
         public static void SetBindingData(GridViewModel state, int userId, ListFindParamStockOpnameScan cflParam)

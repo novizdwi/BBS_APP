@@ -49,13 +49,25 @@ namespace Models.Transaction.Purchasing
 
         public DateTime? EndDate { get; set; }
 
+        public string SummaryTransNo_ { get; set; }
+
     }
 
     public class PurchaseOrderScan__List_Model
     {
-        static string ViewSql = "SELECT T0.*, T1.\"FirstName\" AS \"CreatedUserName\"  " +
+        static string ViewSql = "SELECT T0.*, T1.\"FirstName\" AS \"CreatedUserName\", T2_.\"TransNo\" AS \"SummaryTransNo_\" " +
                                 "FROM \"Tx_PurchaseOrder\" T0 " +
                                 "INNER JOIN \"Tm_User\" T1 ON T0.\"CreatedUser\" = T1.\"Id\" " +
+
+                                "LEFT JOIN ( " +
+                                "SELECT " +
+                                "   T0.\"TransNo\", " +
+                                "   T1.\"BaseId\" " +
+                                "FROM \"Tx_GoodsReceiptPO\" T0 " +
+                                "INNER JOIN \"Tx_GoodsReceiptPO_Ref\" T1 ON T0.\"Id\" = T1.\"Id\" " +
+                                "WHERE T0.\"Status\" NOT IN ('Cancel') " +
+                                ") T2_ ON T0.\"Id\" = T2_.\"BaseId\"  " +
+
                                 "ORDER BY T0.\"CreatedDate\" DESC";
 
         public static void SetBindingData(GridViewModel state, int userId, ListFindParamPurchaseOrderScan cflParam)

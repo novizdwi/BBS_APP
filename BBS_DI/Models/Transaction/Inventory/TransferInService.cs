@@ -86,10 +86,15 @@ namespace Models.Transaction.Inventory
 
         public string ModifiedDate_ { get; set; }
 
+        public long? SummaryId_ { get; set; }
+
+        public string SummaryTransNo_ { get; set; }
+
         public List<TransferIn_DetailModel> ListDetails_ = new List<TransferIn_DetailModel>();
 
         public TransferIn_Detail Details_ { get; set; }
     }
+
     public class TransferIn_Detail
     {
         public List<long> deletedRowKeys { get; set; }
@@ -217,6 +222,27 @@ namespace Models.Transaction.Inventory
                 model = CONTEXT.Database.SqlQuery<TransferInModel>(ssql, id).Single();
 
                 model.ListDetails_ = this.TransferIn_Details(CONTEXT, id);
+                if(model.Status != "Draft")
+                {
+                    string sSummaryId = @"
+                        SELECT T1.""Id""
+                        FROM ""Tx_TransferSummaryIn_Ref"" T0
+                        INNER JOIN ""Tx_TransferSummaryIn"" T1 ON T0.""Id"" = T1.""Id""
+                        WHERE T0.""Status"" NOT IN('Cancel')
+                        AND T0.""BaseId"" = :p0
+                    ";
+                    model.SummaryId_ = CONTEXT.Database.SqlQuery<long?>(sSummaryId, id).SingleOrDefault();
+
+                    string sSummaryNo = @"
+                        SELECT T1.""TransNo""
+                        FROM ""Tx_TransferSummaryIn_Ref"" T0
+                        INNER JOIN ""Tx_TransferSummaryIn"" T1 ON T0.""Id"" = T1.""Id""
+                        WHERE T0.""Status"" NOT IN('Cancel')
+                        AND T0.""BaseId"" = :p0
+                    ";
+                    model.SummaryTransNo_ = CONTEXT.Database.SqlQuery<string>(sSummaryNo, id).SingleOrDefault();
+
+                }
             }
 
             return model;

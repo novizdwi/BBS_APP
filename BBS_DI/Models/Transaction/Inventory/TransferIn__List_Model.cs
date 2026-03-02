@@ -55,13 +55,24 @@ namespace Models.Transaction.Inventory
 
         public string Comments { get; set; }
 
+        public string SummaryTransNo_ { get; set; }
     }
 
     public class TransferIn__List_Model
     {
-        static string ViewSql = "SELECT T0.*, T1.\"TransNo\" AS \"SummaryOutTransNo\" " +
+        static string ViewSql = "SELECT T0.*, T1.\"TransNo\" AS \"SummaryOutTransNo\", T2_.\"TransNo\" AS \"SummaryTransNo_\"  " +
                                 "FROM \"Tx_TransferIn\" T0 " +
                                 "LEFT JOIN \"Tx_TransferSummaryOut\" T1 ON T0.\"BaseEntry\" =T1.\"Id\"  " +
+
+                                "LEFT JOIN ( "+
+                                "SELECT " +
+                                "   T0.\"TransNo\", " +
+                                "   T1.\"BaseId\" " +
+                                "FROM \"Tx_TransferSummaryIn\" T0 " +
+                                "INNER JOIN \"Tx_TransferSummaryIn_Ref\" T1 ON T0.\"Id\" = T1.\"Id\" " +
+                                "WHERE T0.\"Status\" NOT IN ('Cancel') " +
+                                ") T2_ ON T0.\"Id\" = T2_.\"BaseId\"  " +
+
                                 "ORDER BY T0.\"CreatedDate\" DESC";
 
         public static void SetBindingData(GridViewModel state, int userId, ListFindParamTransferIn cflParam)
