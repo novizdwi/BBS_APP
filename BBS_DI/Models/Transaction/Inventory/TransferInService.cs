@@ -225,20 +225,22 @@ namespace Models.Transaction.Inventory
                 if(model.Status != "Draft")
                 {
                     string sSummaryId = @"
-                        SELECT T1.""Id""
+                        SELECT TOP 1 T1.""Id""
                         FROM ""Tx_TransferSummaryIn_Ref"" T0
                         INNER JOIN ""Tx_TransferSummaryIn"" T1 ON T0.""Id"" = T1.""Id""
                         WHERE T0.""Status"" NOT IN('Cancel')
                         AND T0.""BaseId"" = :p0
+                       ORDER BY T1.""Id"" DESC
                     ";
                     model.SummaryId_ = CONTEXT.Database.SqlQuery<long?>(sSummaryId, id).SingleOrDefault();
 
                     string sSummaryNo = @"
-                        SELECT T1.""TransNo""
+                        SELECT TOP 1 T1.""TransNo""
                         FROM ""Tx_TransferSummaryIn_Ref"" T0
                         INNER JOIN ""Tx_TransferSummaryIn"" T1 ON T0.""Id"" = T1.""Id""
                         WHERE T0.""Status"" NOT IN('Cancel')
                         AND T0.""BaseId"" = :p0
+                       ORDER BY T1.""Id"" DESC
                     ";
                     model.SummaryTransNo_ = CONTEXT.Database.SqlQuery<string>(sSummaryNo, id).SingleOrDefault();
 
