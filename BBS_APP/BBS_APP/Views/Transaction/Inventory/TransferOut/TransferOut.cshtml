@@ -651,7 +651,14 @@
         });
     }
 
-
+    function onClickBtnViewSummary(s, e, summaryId)
+    {
+        var guid = CreateGuid();
+        window.open('', guid);
+        SubmitForm(guid, '@Url.Action("Detail", "TransferSummaryOut")', 'post', {
+            Id: summaryId
+        });
+    }
 </script>
 
 

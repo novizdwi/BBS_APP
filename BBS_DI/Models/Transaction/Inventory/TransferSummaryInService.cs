@@ -99,11 +99,11 @@ namespace Models.Transaction.Inventory
         public string CreatedDate_ { get; set; }
 
         public string ModifiedDate_ { get; set; }
-
         public int? ApprovalTemplateId_ { get; set; }
 
         public string IsEligibleApprove_ { get; set; }
 
+        public string IsAnyDeactiveTag_ { get; set; }
         public List<TransferSummaryIn_DetailModel> ListDetails_ = new List<TransferSummaryIn_DetailModel>();
 
         public List<TransferSummaryIn_RefModel> ListRef_ = new List<TransferSummaryIn_RefModel>();
@@ -325,15 +325,15 @@ namespace Models.Transaction.Inventory
             return model;
         }
 
-        public TransferSummaryInModel GetById(int userId, long id = 0)
+        public TransferSummaryInModel GetById(int userId, long id = 0, string method = "")
         {
             using (var CONTEXT = new HANA_APP())
             {
-                return GetById(CONTEXT, userId, id);
+                return GetById(CONTEXT, userId, id, method);
             }
         }
 
-        public TransferSummaryInModel GetById(HANA_APP CONTEXT, int userId, long id = 0)
+        public TransferSummaryInModel GetById(HANA_APP CONTEXT, int userId, long id = 0, string method = "")
         {
             TransferSummaryInModel model = null;
             if (id != 0)
@@ -350,6 +350,8 @@ namespace Models.Transaction.Inventory
 
                 model.ListRef_ = this.TransferSummaryIn_Refs(CONTEXT, id);
                 model.ListDetails_ = this.TransferSummaryIn_Details(CONTEXT, id);
+
+
 
                 if (model.Status == "Draft")
                 {
@@ -562,6 +564,10 @@ namespace Models.Transaction.Inventory
                             CopyProperty.CopyProperties(model, tx_TransferSummaryIn, false);
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();                            
+
+                            var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("TransferSummaryIn");
+
+                            tx_TransferSummaryIn.IsApproval = !string.IsNullOrEmpty(isApprovalActive) ? isApprovalActive : "N";
 
                             tx_TransferSummaryIn.TransType = "TransferSummaryIn";
                             tx_TransferSummaryIn.CreatedDate = dtModified;
@@ -820,7 +826,7 @@ namespace Models.Transaction.Inventory
         {
             SAPbobsCOM.Company oCompany = null;
 
-            TransferSummaryInModel syncTransferSummaryIn = GetById(userId, id);
+            TransferSummaryInModel syncTransferSummaryIn = GetById(userId, id, "Post");
             using (var CONTEXT = new HANA_APP())
             {
 
@@ -839,8 +845,14 @@ namespace Models.Transaction.Inventory
                         Tx_TransferSummaryIn tx_TransferSummaryIn = CONTEXT.Tx_TransferSummaryIn.Find(id);
                         if (syncTransferSummaryIn.ListDetails_.All(q => !q.QuantityPosted.HasValue || q.QuantityPosted == 0))
                         {
-                            throw new Exception("No record posted");
+                            throw new Exception("One or more RFID is already posted in another transaction");
                         }
+                        if (syncTransferSummaryIn.IsAnyDeactiveTag_ == "Y")
+                        {
+                            throw new Exception("One or more RFID statuses has already changed to Inactive");
+                        }
+
+
 
                         if (tx_TransferSummaryIn != null)
                         {

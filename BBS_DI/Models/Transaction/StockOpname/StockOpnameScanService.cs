@@ -64,6 +64,10 @@ namespace Models.Transaction.StockOpname
 
         public string ModifiedDate_ { get; set; }
 
+        public long? SummaryId_ { get; set; }
+
+        public string SummaryTransNo_ { get; set; }
+
         public List<StockOpnameScan_ItemModel> ListDetails_ = new List<StockOpnameScan_ItemModel>();
 
         public StockOpnameScan_Item Details_ { get; set; }
@@ -184,6 +188,31 @@ namespace Models.Transaction.StockOpname
                 model = CONTEXT.Database.SqlQuery<StockOpnameScanModel>(ssql, id).Single();
 
                 model.ListDetails_ = this.StockOpname_Items(CONTEXT, id);
+
+                if (model.Status != "Draft")
+                {
+                    string sSummaryId = @"
+                        SELECT TOP 1 T1.""Id""
+                        FROM ""Tx_StockSummaryOpname_Ref"" T0
+                        INNER JOIN ""Tx_StockSummaryOpname"" T1 ON T0.""Id"" = T1.""Id""
+                        WHERE T0.""Status"" NOT IN('Cancel')
+                        AND T0.""BaseId"" = :p0
+                        ORDER BY T1.""Id"" DESC
+                    ";
+                    model.SummaryId_ = CONTEXT.Database.SqlQuery<long?>(sSummaryId, id).SingleOrDefault();
+
+                    string sSummaryNo = @"
+                        SELECT TOP 1 T1.""TransNo""
+                        FROM ""Tx_StockSummaryOpname_Ref"" T0
+                        INNER JOIN ""Tx_StockSummaryOpname"" T1 ON T0.""Id"" = T1.""Id""
+                        WHERE T0.""Status"" NOT IN('Cancel')
+                        AND T0.""BaseId"" = :p0
+                        ORDER BY T1.""Id"" DESC
+                    ";
+                    model.SummaryTransNo_ = CONTEXT.Database.SqlQuery<string>(sSummaryNo, id).SingleOrDefault();
+
+                }
+
             }
 
             return model;

@@ -59,7 +59,7 @@
         column.FieldName = "TransNo";
         column.Caption = "Trans No";
         column.Name = "TransNo";
-        column.Width = Unit.Percentage(50);
+        column.Width = 120;
     });
 
     settings.Columns.Add(column =>
@@ -68,7 +68,7 @@
         column.Name = "TransDate";
         column.Caption = "Trans Date";
         column.ColumnType = MVCxGridViewColumnType.DateEdit;
-        column.Width = Unit.Percentage(35);
+        column.Width = 100;
 
         var txt = column.PropertiesEdit as DateEditProperties;
         txt.EditFormat = EditFormat.Date;
@@ -81,7 +81,7 @@
         column.FieldName = "VendorCode";
         column.Caption = "Vendor Code";
         column.Name = "VendorCode";
-        column.Width = Unit.Percentage(50);
+        column.Width = 100;
     });
 
     settings.Columns.Add(column =>
@@ -89,7 +89,7 @@
         column.FieldName = "VendorName";
         column.Caption = "Vendor Name";
         column.Name = "Vendor Name";
-        column.Width = Unit.Percentage(100);
+        column.Width = 150;
     });
 
     settings.Columns.Add(column =>
@@ -97,7 +97,7 @@
         column.FieldName = "DocNum";
         column.Caption = "PO Doc Num";
         column.Name = "DocNum";
-        column.Width = Unit.Percentage(80);
+        column.Width = 120;
     });
 
     settings.Columns.Add(column =>
@@ -105,7 +105,7 @@
         column.FieldName = "Status";
         column.Caption = "Status";
         column.Name = "Status";
-        column.Width = Unit.Percentage(50);
+        column.Width = 120;
     });
 
     settings.Columns.Add(column =>
@@ -113,7 +113,15 @@
         column.FieldName = "CreatedUserName";
         column.Caption = "Created User";
         column.Name = "CreatedUserName";
-        column.Width = Unit.Percentage(50);
+        column.Width = 120;
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "SummaryTransNo_";
+        column.Caption = "GRPO No";
+        column.Name = "SummaryTransNo_";
+        column.Width = 120;
     });
 
     settings.SettingsPager.Position = PagerPosition.Bottom;

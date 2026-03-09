@@ -14,9 +14,13 @@
 {
     settings.Name = "gvDetail";
     settings.KeyFieldName = "DetId";
-    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
-    //settings.Settings.VerticalScrollableHeight = 350;
+
+    /* ===== FIX FOOTER ALIGNMENT ===== */
+    settings.Settings.UseFixedTableLayout = true;
+    settings.SettingsBehavior.ColumnResizeMode = ColumnResizeMode.Control;
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
     settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+    /* ================================= */
 
     settings.Width = Unit.Percentage(100);
     settings.Height = Unit.Percentage(100);
@@ -48,8 +52,7 @@
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
 
-        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
-        txt.Width = Unit.Percentage(90);
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED"); 
     });
 
 
@@ -66,8 +69,7 @@
         column.ReadOnly = true;
 
         column.SetDataItemTemplateContent(c =>
-        {
-            c.Column.Width = Unit.Percentage(60);
+        { 
             if (c.ItemIndex >= 0)
             {
                 string itemCode = (string)DataBinder.Eval(c.DataItem, "ItemCode");
@@ -136,6 +138,12 @@
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+        ASPxSummaryItem summary = new ASPxSummaryItem();
+        summary.FieldName = column.FieldName;
+        summary.SummaryType = DevExpress.Data.SummaryItemType.Sum;
+        summary.DisplayFormat = "{0:#,###}";
+        settings.TotalSummary.Add(summary);
     });
 
     settings.Columns.Add(column =>
@@ -152,6 +160,12 @@
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+        ASPxSummaryItem summary = new ASPxSummaryItem();
+        summary.FieldName = column.FieldName;
+        summary.SummaryType = DevExpress.Data.SummaryItemType.Sum;
+        summary.DisplayFormat = "{0:#,###}";
+        settings.TotalSummary.Add(summary);
     });
 
     settings.Columns.Add(column =>
@@ -168,6 +182,12 @@
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+        ASPxSummaryItem summary = new ASPxSummaryItem();
+        summary.FieldName = column.FieldName;
+        summary.SummaryType = DevExpress.Data.SummaryItemType.Sum;
+        summary.DisplayFormat = "{0:#,###}";
+        settings.TotalSummary.Add(summary);
     });
 
     settings.Columns.Add(column =>

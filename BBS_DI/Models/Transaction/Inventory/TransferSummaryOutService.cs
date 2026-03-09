@@ -102,6 +102,8 @@ namespace Models.Transaction.Inventory
 
         public string IsEligibleApprove_ { get; set; }
 
+        public string IsAnyDeactiveTag_ { get; set; }
+
         public List<TransferSummaryOut_DetailModel> ListDetails_ = new List<TransferSummaryOut_DetailModel>();
 
         public List<TransferSummaryOut_RefModel> ListRef_ = new List<TransferSummaryOut_RefModel>();
@@ -323,15 +325,15 @@ namespace Models.Transaction.Inventory
             return model;
         }
 
-        public TransferSummaryOutModel GetById(int userId, long id = 0)
+        public TransferSummaryOutModel GetById(int userId, long id = 0, string method = "")
         {
             using (var CONTEXT = new HANA_APP())
             {
-                return GetById(CONTEXT, userId, id);
+                return GetById(CONTEXT, userId, id, method);
             }
         }
 
-        public TransferSummaryOutModel GetById(HANA_APP CONTEXT, int userId, long id = 0)
+        public TransferSummaryOutModel GetById(HANA_APP CONTEXT, int userId, long id = 0, string method = "")
         {
             TransferSummaryOutModel model = null;
             if (id != 0)
@@ -348,6 +350,21 @@ namespace Models.Transaction.Inventory
 
                 model.ListRef_ = this.TransferSummaryOut_Refs(CONTEXT, id);
                 model.ListDetails_ = this.TransferSummaryOut_Details(CONTEXT, id);
+                model.ListApprovalStep_ = this.TransferSummaryOut_ApprovalSteps(id);
+
+                if (method == "Post")
+                {
+                    ssql = @"SELECT TOP 1 'Y'
+                        FROM ""Tx_TransferSummaryOut_Item_Tag"" T0
+                        INNER JOIN ""Tm_Item_Warehouse_Tag"" T1 ON T0.""TagId"" = T1.""TagId""
+                        WHERE T1.""Status"" = 'I'
+                        AND T0.""Id"" = :p0
+                    ";
+                    string checkDeactive = CONTEXT.Database.SqlQuery<string>(ssql, id).FirstOrDefault();
+                    model.IsAnyDeactiveTag_ = checkDeactive;
+                }
+
+            }
 
                 if (model.Status == "Draft")
                 {
@@ -830,12 +847,17 @@ namespace Models.Transaction.Inventory
                         String keyValue;
                         keyValue = id.ToString();
 
-                        TransferSummaryOutModel syncTransferSummaryOut = GetById(userId, id);
+                        TransferSummaryOutModel syncTransferSummaryOut = GetById(userId, id, "Post");
 
                         SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "before", "Tx_TransferSummaryOut", "post", "Id", keyValue);
                         if (syncTransferSummaryOut.ListDetails_.All(q => !q.QuantityPosted.HasValue || q.QuantityPosted == 0 ) )
                         {
-                            throw new Exception("No record posted");
+                            throw new Exception("One or more RFID is already posted in another transaction");
+                        }
+
+                        if (syncTransferSummaryOut.IsAnyDeactiveTag_ == "Y")
+                        {
+                            throw new Exception("One or more RFID statuses has already changed to Inactive");
                         }
 
                         Tx_TransferSummaryOut tx_TransferSummaryOut = CONTEXT.Tx_TransferSummaryOut.Find(id);

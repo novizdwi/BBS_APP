@@ -381,6 +381,32 @@
         cbo.Width = 230;
     });
 
+    if (!string.IsNullOrWhiteSpace(Model.SummaryTransNo_))
+    {
+        groupItem_Col3.Items.Add(itemSettings =>
+        {
+            itemSettings.Caption = "Summary No";
+        })
+         .SetNestedContent(() =>
+         {
+
+             ViewContext.Writer.Write("<table  cellspacing=\"0\" cellpadding=\"0\" style=\"margin:0.65em 0 0.67em 0!important;\" ><tr><td  cellspacing=\"0\" cellpadding=\"0\" >");
+
+             Html.DevExpress().HyperLink(settingsHL =>
+             {
+                 settingsHL.Name = "BtnViewSummary";
+                 settingsHL.NavigateUrl = "javascript:void(0)";
+                 settingsHL.Properties.Text = Model.SummaryTransNo_;
+                 settingsHL.Properties.ClientSideEvents.Click = string.Format(" function(s, e) {{ onClickBtnViewSummary(s, e, '{0}'); }} ", Model.SummaryId_);
+                 settingsHL.ControlStyle.ForeColor = System.Drawing.Color.DarkBlue;
+             }).Render();
+
+
+
+             ViewContext.Writer.Write("</td></tr></table>");
+         });
+    }
+
     if (Model._FormMode != Models.FormModeEnum.New)
     {
         groupItem_Col3.Items.Add(itemSettings =>
