@@ -350,8 +350,12 @@ namespace Models.Transaction.Inventory
 
                 model.ListRef_ = this.TransferSummaryOut_Refs(CONTEXT, id);
                 model.ListDetails_ = this.TransferSummaryOut_Details(CONTEXT, id);
-                model.ListApprovalStep_ = this.TransferSummaryOut_ApprovalSteps(id);
 
+                if (model.Status == "Draft")
+                {
+                    int? approvalId = CONTEXT.Database.SqlQuery<int?>(@"CALL ""SpApproval_CheckNeedApproval""(:p0, 'TransferSummaryOut', :p1) ", userId, model.Id).FirstOrDefault();
+                    model.ApprovalTemplateId_ = approvalId;
+                }
                 if (method == "Post")
                 {
                     ssql = @"SELECT TOP 1 'Y'
@@ -362,16 +366,7 @@ namespace Models.Transaction.Inventory
                     ";
                     string checkDeactive = CONTEXT.Database.SqlQuery<string>(ssql, id).FirstOrDefault();
                     model.IsAnyDeactiveTag_ = checkDeactive;
-                }
-
-            }
-
-                if (model.Status == "Draft")
-                {
-                    int? approvalId = CONTEXT.Database.SqlQuery<int?>(@"CALL ""SpApproval_CheckNeedApproval""(:p0, 'TransferSummaryOut', :p1) ", userId, model.Id).FirstOrDefault();
-                    model.ApprovalTemplateId_ = approvalId;
-                }
-
+                } 
                 if (model.ApprovalStatus == "Waiting")
                 {
                     string getDocNum = @"SELECT 'Y'

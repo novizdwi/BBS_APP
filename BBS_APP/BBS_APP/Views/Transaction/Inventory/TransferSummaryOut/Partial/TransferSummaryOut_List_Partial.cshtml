@@ -61,7 +61,7 @@
         column.FieldName = "TransNo";
         column.Caption = "Trans No";
         column.Name = "TransNo";
-        column.Width = Unit.Percentage(50);
+        column.Width = 120;
     });
 
     settings.Columns.Add(column =>
@@ -70,7 +70,7 @@
         column.Name = "TransDate";
         column.Caption = "Trans Date";
         column.ColumnType = MVCxGridViewColumnType.DateEdit;
-        column.Width = Unit.Percentage(50);
+        column.Width = 80;
 
         var txt = column.PropertiesEdit as DateEditProperties;
         txt.EditFormat = EditFormat.Date;
@@ -83,7 +83,7 @@
         column.FieldName = "RequestNo";
         column.Caption = "Request No";
         column.Name = "RequestNo";
-        column.Width = Unit.Percentage(50);
+        column.Width = 120;
     });
 
     settings.Columns.Add(column =>
@@ -91,7 +91,7 @@
         column.FieldName = "FromWhsName";
         column.Caption = "Warehouse Name";
         column.Name = "From Whs Name";
-        column.Width = Unit.Percentage(80);
+        column.Width = 150;
     });
 
     settings.Columns.Add(column =>
@@ -99,7 +99,7 @@
         column.FieldName = "TransitWhsCode";
         column.Caption = "Transit Warehouse";
         column.Name = "TransitWhsCode";
-        column.Width = Unit.Percentage(50);
+        column.Width = 80;
     });
 
     settings.Columns.Add(column =>
@@ -107,7 +107,7 @@
         column.FieldName = "TransitWhsName";
         column.Caption = "Transit Warehouse Name";
         column.Name = "TransitWhsName";
-        column.Width = Unit.Percentage(50);
+        column.Width = 80;
     });
 
     settings.Columns.Add(column =>
@@ -115,7 +115,7 @@
         column.FieldName = "ToWhsCode";
         column.Caption = "To Warehouse";
         column.Name = "ToWhsCode";
-        column.Width = Unit.Percentage(50);
+        column.Width = 80;
     });
 
     settings.Columns.Add(column =>
@@ -123,7 +123,7 @@
         column.FieldName = "ToWhsName";
         column.Caption = "To Warehouse Name";
         column.Name = "ToWhsName";
-        column.Width = Unit.Percentage(60);
+        column.Width = 150;
     });
 
     settings.Columns.Add(column =>
@@ -131,7 +131,7 @@
         column.FieldName = "DocNum";
         column.Caption = "Doc Num";
         column.Name = "SAP Doc Num";
-        column.Width = Unit.Percentage(50);
+        column.Width = 90;
     });
 
     settings.Columns.Add(column =>
@@ -139,7 +139,7 @@
         column.FieldName = "Status";
         column.Caption = "Status";
         column.Name = "Status";
-        column.Width = Unit.Percentage(50);
+        column.Width = 90;
     });
 
     settings.Columns.Add(column =>
@@ -147,7 +147,7 @@
         column.FieldName = "ApprovalStatus";
         column.Caption = "Approval Status";
         column.Name = "ApprovalStatus";
-        column.Width = Unit.Percentage(30);
+        column.Width = 120;
     });
 
     settings.SettingsPager.Position = PagerPosition.Bottom;

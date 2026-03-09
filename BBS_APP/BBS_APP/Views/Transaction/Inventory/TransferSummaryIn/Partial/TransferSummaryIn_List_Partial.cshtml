@@ -149,6 +149,14 @@
         column.Width = 90;
     });
 
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ApprovalStatus";
+        column.Caption = "Approval Status";
+        column.Name = "ApprovalStatus";
+        column.Width = 90;
+    });
+
     settings.SettingsPager.Position = PagerPosition.Bottom;
     settings.SettingsPager.FirstPageButton.Visible = true;
     settings.SettingsPager.LastPageButton.Visible = true;

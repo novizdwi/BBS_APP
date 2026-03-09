@@ -292,7 +292,7 @@
         var isApproval = ApprovalTemplateId_.GetValue();
         var approvalStatus = ApprovalStatus.GetValue();
 
-        if (isApproval != "-1" || approvalStatus != null) {
+        if ((isApproval != "-1" || approvalStatus != null) && approvalStatus != "Approved") {
             btnShowApprovalOnClick(s, e, key);
         } else {
             Post(s, e);
