@@ -845,7 +845,22 @@ namespace Models.Transaction.Inventory
                         Tx_TransferSummaryIn tx_TransferSummaryIn = CONTEXT.Tx_TransferSummaryIn.Find(id);
                         if (syncTransferSummaryIn.ListDetails_.All(q => !q.QuantityPosted.HasValue || q.QuantityPosted == 0))
                         {
-                            throw new Exception("One or more RFID is already posted in another transaction");
+                            string strDuplicateTransNo = @"SELECT STRING_AGG('Tag: '||T2.""TagId""||' No: '||T0.""TransNo"") AS ""Result""
+                                FROM ""Tx_TransferSummaryIn"" T0
+                                INNER JOIN ""Tx_TransferSummaryIn_Item_Tag"" T2 ON T0.""Id"" = T2.""Id""
+                                WHERE T0.""Status"" = 'Posted' 
+                                AND EXISTS(
+	                                SELECT 1
+	                                FROM ""Tx_TransferSummaryIn_Item_Tag"" Tx
+	                                INNER JOIN ""Tx_TransferSummaryIn"" Ty ON Tx.""Id"" = Ty.""Id""
+	                                WHERE Tx.""Id"" != T0.""Id""
+	                                AND Tx.""TagId"" = T2.""TagId""  
+	                                AND Ty.""Id"" = :p0
+                                ) 
+		                    ";
+
+                            string duplicate = CONTEXT.Database.SqlQuery<string>(strDuplicateTransNo, id).FirstOrDefault();
+                            throw new Exception("One or more RFID is already posted in another transaction: \n"+ duplicate);
                         }
                         if (syncTransferSummaryIn.IsAnyDeactiveTag_ == "Y")
                         {

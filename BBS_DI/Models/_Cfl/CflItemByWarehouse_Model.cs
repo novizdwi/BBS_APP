@@ -54,10 +54,10 @@ namespace Models._Cfl
                                         T1.""OnHand"" AS ""Quantity"", T0.""IUoMEntry"" AS ""UomEntry"",
                                         T3.""UomCode"", T3.""UomName"" 
                                         FROM ""{DbSap}"".""OITM"" T0 
-                                        INNER JOIN ""{DbSap}"".""OITW"" T1 ON T1.""ItemCode"" = T0.""ItemCode""
-                                        INNER JOIN ""{DbSap}"".""OWHS"" T2 ON T2.""WhsCode"" = T1.""WhsCode""
+                                        LEFT JOIN ""{DbSap}"".""OITW"" T1 ON T1.""ItemCode"" = T0.""ItemCode""
+                                        LEFT JOIN ""{DbSap}"".""OWHS"" T2 ON T2.""WhsCode"" = T1.""WhsCode""
                                         LEFT JOIN ""{DbSap}"".""OUOM"" T3 ON T3.""UomEntry"" = T0.""IUoMEntry""
-                                        WHERE T1.""OnHand"" <> 0 AND T0.""frozenFor"" = 'N'
+                                        WHERE T0.""frozenFor"" = 'N'
                                         ORDER BY T0.""ItemCode"", T1.""WhsCode""
                                     ";
 
