@@ -14,8 +14,8 @@ namespace BBS_DI.Models._EF
     
     public partial class Tx_AdjustmentIn_Approval
     {
-        public Nullable<long> Id { get; set; }
-        public long DetId { get; set; }
+        public Nullable<int> Id { get; set; }
+        public int DetId { get; set; }
         public Nullable<int> StageId { get; set; }
         public Nullable<int> UserId { get; set; }
         public Nullable<int> Step { get; set; }

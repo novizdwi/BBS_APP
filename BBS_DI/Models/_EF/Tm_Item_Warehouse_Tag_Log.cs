@@ -30,5 +30,7 @@ namespace BBS_DI.Models._EF
         public Nullable<int> CreatedUser { get; set; }
         public string NewItemCode { get; set; }
         public string NewItemName { get; set; }
+        public Nullable<long> BaseId { get; set; }
+        public string BaseTransNo { get; set; }
     }
 }
