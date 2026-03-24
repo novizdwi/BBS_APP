@@ -21,6 +21,9 @@
     settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
     /* ================================= */
 
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowFilterRowMenu = true;
+
     settings.Width = Unit.Percentage(100);
     settings.Height = Unit.Percentage(100);
 
@@ -54,7 +57,7 @@
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
         column.SetDataItemTemplateContent(c =>
-        { 
+        {
             if (c.ItemIndex >= 0)
             {
                 string itemCode = (string)DataBinder.Eval(c.DataItem, "ItemCode");
