@@ -408,9 +408,9 @@ namespace Models.Transaction.Inventory
 
         public List<TransferSummaryIn_DetailModel> TransferSummaryIn_Details(HANA_APP CONTEXT, long id = 0)
         {
-            string ssql = @"SELECT T0.* , T1.""QuantityOpen"" AS ""QuantityOpen_"" 
+            string ssql = @"SELECT T0.* , T1.""QuantityToReceipt"" AS ""QuantityOpen_"" 
                 FROM ""Tx_TransferSummaryIn_Item"" T0
-                LEFT JOIN ""Tx_TransferSummaryIn_Item"" T1 ON T0.""BaseDetId"" = T1.""DetId""
+                LEFT JOIN ""Tx_TransferSummaryOut_Item"" T1 ON T0.""BaseDetId"" = T1.""DetId""
                 WHERE T0.""Id"" =:p0
                 ORDER BY T0.""DetId"" ASC
             ";
@@ -845,7 +845,7 @@ namespace Models.Transaction.Inventory
                         Tx_TransferSummaryIn tx_TransferSummaryIn = CONTEXT.Tx_TransferSummaryIn.Find(id);
                         if (syncTransferSummaryIn.ListDetails_.All(q => !q.QuantityPosted.HasValue || q.QuantityPosted == 0))
                         {
-                            string strDuplicateTransNo = @"SELECT STRING_AGG('<br /> Tag: '||T2.""TagId""||' No: '||T0.""TransNo"") AS ""Result""
+                            string strDuplicateTransNo = @"SELECT STRING_AGG(' Tag: '||T2.""TagId""||' No: '||T0.""TransNo"") AS ""Result""
                                 FROM ""Tx_TransferSummaryIn"" T0
                                 INNER JOIN ""Tx_TransferSummaryIn_Item_Tag"" T2 ON T0.""Id"" = T2.""Id""
                                 WHERE T0.""Status"" = 'Posted' 
