@@ -44,7 +44,7 @@ namespace Models._Cfl
     public class CflStockOpname_Model
     {
         public static string ssql = @"
-            SELECT DISTINCT T0.""RequestId"" AS ""Id"", T0.""RequestId"", T0.""RequestNo"", T0.""TransDate"", T0.""Comments"", T0.""WhsCode"", T1.""WhsName""
+            SELECT DISTINCT T0.""RequestId"" AS ""Id"", T0.""RequestId"", T0.""RequestNo"",  T0.""WhsCode"", T1.""WhsName""
             FROM ""Tx_StockOpname"" T0 " +
             @"LEFT JOIN """ + DbProvider.dbSap_Name + @""".""OWHS"" T1 ON T0.""WhsCode"" = T1.""WhsCode""
             WHERE T0.""Status"" = 'Posted'

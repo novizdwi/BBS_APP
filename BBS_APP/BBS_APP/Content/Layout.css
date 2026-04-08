@@ -45,11 +45,11 @@ html
 
 /* Footer */
 .footer-wrapper {
-    height: 46px; /* Footer Height */
+    height: 4em; /* Footer Height */
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: white;
+    background-color: #A2ABB8;
 }
 
 .footer
@@ -58,13 +58,13 @@ html
     /*color: #999999;*/
 }
 
-.footer-link
-{
-    color: #999999;
+.footer-link {
+    color: #1B1D2B;
     border-right: 1px solid #bbbbbb;
     margin-right: 7px;
     padding-right: 10px;
     white-space: nowrap;
+    font-weight:bolder;
 }
 
 .footer-link:last-child

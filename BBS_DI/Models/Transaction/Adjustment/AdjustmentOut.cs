@@ -838,7 +838,7 @@ namespace Models.Transaction.Adjustment
 
                 SapCompany.CleanUp(oDocument);
 
-                throw new Exception("[VALIDATION] - Add Goods Receipt : " + nErr.ToString() + "|" + errMsg);
+                throw new Exception("[VALIDATION] - Add Adjustment Out : " + nErr.ToString() + "|" + errMsg);
             }
             result = oCompany.GetNewObjectKey();
             SapCompany.CleanUp(oDocument);

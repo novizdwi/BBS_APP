@@ -856,15 +856,19 @@ namespace Models.Transaction.Inventory
 	                                WHERE Tx.""Id"" != T0.""Id""
 	                                AND Tx.""TagId"" = T2.""TagId""  
 	                                AND Ty.""Id"" = :p0
+                                    AND Ty.""BaseTransNo"" = T0.""BaseTransNo""
                                 ) 
 		                    ";
 
                             string duplicate = CONTEXT.Database.SqlQuery<string>(strDuplicateTransNo, id).FirstOrDefault();
-                            if (duplicate.Length > 100)
+                            if(!string.IsNullOrEmpty(duplicate))
                             {
-                                duplicate = duplicate.Substring(0, 99) + "... ";
+                                if (duplicate.Length > 100)
+                                {
+                                    duplicate = duplicate.Substring(0, 99) + "... ";
+                                }
+                                throw new Exception("One or more RFID is already posted in another transaction:"+ duplicate);
                             }
-                            throw new Exception("One or more RFID is already posted in another transaction:"+ duplicate);
                         }
                         if (syncTransferSummaryIn.IsAnyDeactiveTag_ == "Y")
                         {

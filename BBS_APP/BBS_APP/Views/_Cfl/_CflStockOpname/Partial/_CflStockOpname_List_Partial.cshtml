@@ -110,7 +110,7 @@
 
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
     });
-
+    /*
     settings.Columns.Add(column =>
     {
         column.FieldName = "TransDate";
@@ -122,9 +122,9 @@
         txt.DisplayFormatString = "dd/MM/yyyy";
         txt.EditFormatString = "dd/MM/yyyy";
     });
-
+    */
     settings.Columns.Add("WhsCode", "Whs Code").Width = 100;
-    settings.Columns.Add("WhsName", "Whs Name").Width = 100;
+    settings.Columns.Add("WhsName", "Whs Name").Width = 200;
 
     settings.SettingsPager.Position = PagerPosition.Bottom;
     settings.SettingsPager.FirstPageButton.Visible = true;
