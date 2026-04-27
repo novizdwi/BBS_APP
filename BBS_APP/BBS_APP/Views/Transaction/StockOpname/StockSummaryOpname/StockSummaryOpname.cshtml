@@ -132,7 +132,7 @@
 
                 break;
         }
-        if (IsCanPost_ == "N") {
+        if (IsCanPost_ == "N" || WhsCode.GetValue().startsWith("TR")) {
             btnPost.SetEnabled(false);
         }
 
