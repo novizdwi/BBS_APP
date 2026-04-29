@@ -862,6 +862,11 @@ namespace Models.Transaction.Purchasing
                             throw new Exception($"[VALIDATION] - GRPO Data not found");
                         }
 
+                        if (syncGRPO.ListDetails_.All(q => q.QuantityValid == 0))
+                        {
+                            throw new Exception($"[VALIDATION] - No record created");
+                        }
+
                         GRPOAddResultModel GRPOResult = AddGoodsReceiptPO(oCompany, userId, id, syncGRPO);
                         if(GRPOResult != null)
                         {
@@ -998,9 +1003,9 @@ namespace Models.Transaction.Purchasing
             
             int i = 0;
             Dictionary<long, int> InsertedLine = new Dictionary<long, int>();
-            if (model.ListDetails_.Count > 0)
+            if (model.ListDetails_.Count(x => x.QuantityValid > 0) > 0)
             {
-                foreach (var item in model.ListDetails_)
+                foreach (var item in model.ListDetails_.Where(x => x.QuantityValid > 0))
                 {
                     oDocument.Lines.BaseType = 22;
                     oDocument.Lines.BaseEntry = Convert.ToInt32(item.BaseEntry);

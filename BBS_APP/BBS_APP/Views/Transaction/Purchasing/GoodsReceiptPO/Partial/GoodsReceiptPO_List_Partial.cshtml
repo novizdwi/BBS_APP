@@ -59,7 +59,7 @@
         column.FieldName = "TransNo";
         column.Caption = "Trans No";
         column.Name = "TransNo";
-        column.Width = Unit.Percentage(30);
+        column.Width = 120;
     });
 
     settings.Columns.Add(column =>
@@ -68,7 +68,7 @@
         column.Name = "TransDate";
         column.Caption = "Trans Date";
         column.ColumnType = MVCxGridViewColumnType.DateEdit;
-        column.Width = Unit.Percentage(30);
+        column.Width = 120;
 
         var txt = column.PropertiesEdit as DateEditProperties;
         txt.EditFormat = EditFormat.Date;
@@ -81,7 +81,7 @@
         column.FieldName = "VendorCode";
         column.Caption = "Vendor Code";
         column.Name = "VendorCode";
-        column.Width = Unit.Percentage(30);
+        column.Width = 120;
     });
 
     settings.Columns.Add(column =>
@@ -89,7 +89,7 @@
         column.FieldName = "VendorName";
         column.Caption = "Vendor Name";
         column.Name = "VendorName";
-        column.Width = Unit.Percentage(100);
+        column.Width = 300;
     });
 
     settings.Columns.Add(column =>
@@ -97,7 +97,7 @@
         column.FieldName = "BaseDocNum";
         column.Caption = "PO Doc Num";
         column.Name = "BaseDocNum";
-        column.Width = Unit.Percentage(45);
+        column.Width = 120;
     });
 
     settings.Columns.Add(column =>
@@ -105,7 +105,7 @@
         column.FieldName = "GrpoDocNum";
         column.Caption = "GRPO Doc Num";
         column.Name = "GrpoDocNum";
-        column.Width = Unit.Percentage(45);
+        column.Width = 120;
     });
 
     settings.Columns.Add(column =>
@@ -113,7 +113,7 @@
         column.FieldName = "Status";
         column.Caption = "Status";
         column.Name = "Status";
-        column.Width = Unit.Percentage(25);
+        column.Width = 80;
     });
 
     settings.Columns.Add(column =>
@@ -121,7 +121,7 @@
         column.FieldName = "ApprovalStatus";
         column.Caption = "Approval Status";
         column.Name = "ApprovalStatus";
-        column.Width = Unit.Percentage(30);
+        column.Width = 120;
     });
 
     settings.SettingsPager.Position = PagerPosition.Bottom;
