@@ -719,10 +719,13 @@ namespace Models.Transaction.Adjustment
                             {
                                 docEntry = AddGoodsIssue(oCompany, userId, id, syncAdjustmentOut);
                             }
-
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
                             tx_AdjustmentOut.PostingDate = dtModified;
-                            tx_AdjustmentOut.DocEntry = Convert.ToInt32(docEntry);
+                            if (!string.IsNullOrEmpty(docEntry))
+                            {
+                                tx_AdjustmentOut.DocEntry = Convert.ToInt32(docEntry);
+                            }
+
                             tx_AdjustmentOut.Status = "Posted";
 
                             tx_AdjustmentOut.IsAfterPosted = "Y";
