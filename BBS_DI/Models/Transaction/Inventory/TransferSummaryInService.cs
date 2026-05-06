@@ -108,7 +108,7 @@ namespace Models.Transaction.Inventory
 
         public List<TransferSummaryIn_RefModel> ListRef_ = new List<TransferSummaryIn_RefModel>();
 
-        public TransferSummaryIn_Detail Details_ { get; set; } 
+        public TransferSummaryIn_Detail Details_ { get; set; }
     }
 
     public class TransferSummaryIn_ApprovalModel
@@ -203,7 +203,7 @@ namespace Models.Transaction.Inventory
         public long? Id { get; set; }
 
         public long? DetId { get; set; }
-        
+
         public string ItemCode { get; set; }
 
         public string ItemName { get; set; }
@@ -563,7 +563,7 @@ namespace Models.Transaction.Inventory
                             Tx_TransferSummaryIn tx_TransferSummaryIn = new Tx_TransferSummaryIn();
                             CopyProperty.CopyProperties(model, tx_TransferSummaryIn, false);
 
-                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();                            
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
 
                             var isApprovalActive = _Utils.GeneralGetList.GetApprovalActive("TransferSummaryIn");
 
@@ -585,7 +585,7 @@ namespace Models.Transaction.Inventory
 
                             String keyValue;
                             keyValue = tx_TransferSummaryIn.Id.ToString();
-                            
+
                             SpNotif.SpSysControllerTransNotif(model._UserId, "TransferSummaryIn", CONTEXT, "after", "TransferSummaryIn", "add", "Id", keyValue);
 
                             CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryIn_AddItemDetail\"(:p0,:p1,'Add')", model._UserId, Id);
@@ -631,13 +631,13 @@ namespace Models.Transaction.Inventory
                             {
                                 String keyValue;
                                 keyValue = model.Id.ToString();
-                                
+
                                 SpNotif.SpSysControllerTransNotif(model._UserId, "TransferSummaryIn", CONTEXT, "before", "TransferSummaryIn", "update", "Id", keyValue);
 
 
                                 Tx_TransferSummaryIn tx_TransferSummaryIn = CONTEXT.Tx_TransferSummaryIn.Find(model.Id);
                                 DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                             
+
                                 if (tx_TransferSummaryIn != null)
                                 {
                                     var exceptColumns = new string[] { "Id", "TransNo", "CreatedUser" };
@@ -662,31 +662,31 @@ namespace Models.Transaction.Inventory
 
                                     if (model.Details_ != null)
                                     {
-                                    //    if (model.Details_.insertedRowValues != null)
-                                    //    {
-                                    //        foreach (var detail in model.Details_.insertedRowValues)
-                                    //        {
-                                    //            Detail_Add(CONTEXT, detail, model.Id, model._UserId);
-                                    //        }
-                                    //    }
+                                        //    if (model.Details_.insertedRowValues != null)
+                                        //    {
+                                        //        foreach (var detail in model.Details_.insertedRowValues)
+                                        //        {
+                                        //            Detail_Add(CONTEXT, detail, model.Id, model._UserId);
+                                        //        }
+                                        //    }
 
-                                    if (model.Details_.modifiedRowValues != null)
-                                    {
-                                        foreach (var detail in model.Details_.modifiedRowValues)
+                                        if (model.Details_.modifiedRowValues != null)
                                         {
-                                            Detail_Update(CONTEXT, detail, model._UserId);
+                                            foreach (var detail in model.Details_.modifiedRowValues)
+                                            {
+                                                Detail_Update(CONTEXT, detail, model._UserId);
+                                            }
                                         }
-                                    }
 
-                                    //    if (model.Details_.deletedRowKeys != null)
-                                    //    {
-                                    //        foreach (var detId in model.Details_.deletedRowKeys)
-                                    //        {
-                                    //            TransferSummaryIn_DetailModel detailModel = new TransferSummaryIn_DetailModel();
-                                    //            detailModel.DetId = detId;
-                                    //            Detail_Delete(CONTEXT, detailModel);
-                                    //        }
-                                    //    }
+                                        //    if (model.Details_.deletedRowKeys != null)
+                                        //    {
+                                        //        foreach (var detId in model.Details_.deletedRowKeys)
+                                        //        {
+                                        //            TransferSummaryIn_DetailModel detailModel = new TransferSummaryIn_DetailModel();
+                                        //            detailModel.DetId = detId;
+                                        //            Detail_Delete(CONTEXT, detailModel);
+                                        //        }
+                                        //    }
                                     }
 
                                     if (method == "Post")
@@ -840,7 +840,7 @@ namespace Models.Transaction.Inventory
                         String keyValue;
                         keyValue = id.ToString();
 
-                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", CONTEXT, "before", "Tx_TransferSummaryIn", "post", "Id", keyValue);
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", oCompany, "before", "Tx_TransferSummaryIn", "post", "Id", keyValue);
 
                         Tx_TransferSummaryIn tx_TransferSummaryIn = CONTEXT.Tx_TransferSummaryIn.Find(id);
                         if (syncTransferSummaryIn.ListDetails_.All(q => !q.QuantityPosted.HasValue || q.QuantityPosted == 0))
@@ -861,13 +861,13 @@ namespace Models.Transaction.Inventory
 		                    ";
 
                             string duplicate = CONTEXT.Database.SqlQuery<string>(strDuplicateTransNo, id).FirstOrDefault();
-                            if(!string.IsNullOrEmpty(duplicate))
+                            if (!string.IsNullOrEmpty(duplicate))
                             {
                                 if (duplicate.Length > 100)
                                 {
                                     duplicate = duplicate.Substring(0, 99) + "... ";
                                 }
-                                throw new Exception("One or more RFID is already posted in another transaction:"+ duplicate);
+                                throw new Exception("One or more RFID is already posted in another transaction:" + duplicate);
                             }
                         }
                         if (syncTransferSummaryIn.IsAnyDeactiveTag_ == "Y")
@@ -880,8 +880,7 @@ namespace Models.Transaction.Inventory
                         if (tx_TransferSummaryIn != null)
                         {
                             string docEntry_ = AddTransferSummaryIn(oCompany, userId, id, syncTransferSummaryIn);
-
-                            if (!string.IsNullOrEmpty(docEntry_))
+                            if (Int32.TryParse(docEntry_, out int docEntryOut))
                             {
                                 string ssql = @"SELECT ""DocNum"" 
                                             FROM """ + DbProvider.dbSap_Name + @""".""OWTR"" T0
@@ -891,8 +890,8 @@ namespace Models.Transaction.Inventory
                                 string docNum = CONTEXT.Database.SqlQuery<string>(ssql, id).FirstOrDefault();
 
                                 DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-                                
-                                tx_TransferSummaryIn.DocEntry = Convert.ToInt64(docEntry_);
+
+                                tx_TransferSummaryIn.DocEntry = Convert.ToInt64(docEntryOut);
                                 tx_TransferSummaryIn.DocNum = docNum;
                                 tx_TransferSummaryIn.PostingDate = dtModified;
 
@@ -903,9 +902,9 @@ namespace Models.Transaction.Inventory
 
                                 CONTEXT.SaveChanges();
 
-                                CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_TransferItemTag\"(:p0,:p1, 'TransferSummaryIn', 'A')", userId, id);
-                                CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryIn_UpdateItem\"(:p0,:p1, 'after')", userId, id);
-                                SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", CONTEXT, "after", "Tx_TransferSummaryIn", "post", "Id", keyValue);
+                                //CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_TransferItemTag\"(:p0,:p1, 'TransferSummaryIn', 'A')", userId, id);
+                                //CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryIn_UpdateItem\"(:p0,:p1, 'after')", userId, id);
+                                SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", oCompany, "after", "Tx_TransferSummaryIn", "post", "Id", keyValue);
 
                                 CONTEXT_TRANS.Commit();
                             }
@@ -971,7 +970,7 @@ namespace Models.Transaction.Inventory
             if (model.Address != null)
             {
                 oInventoryTransfer.Address = model.Address;
-            } 
+            }
 
             if (model.ListDetails_.Count > 0)
             {
@@ -1000,12 +999,12 @@ namespace Models.Transaction.Inventory
 
                 throw new Exception("[VALIDATION] - Add Transfer Summary Out : " + nErr.ToString() + "|" + errMsg);
             }
-            result = oCompany.GetNewObjectKey(); 
+            result = oCompany.GetNewObjectKey();
 
             return result;
         }
 
-            
+
 
         public void Cancel(int userId, long Id, string cancelReason)
         {
