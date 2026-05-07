@@ -840,7 +840,7 @@ namespace Models.Transaction.Inventory
                         String keyValue;
                         keyValue = id.ToString();
 
-                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", oCompany, "before", "Tx_TransferSummaryIn", "post", "Id", keyValue);
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", CONTEXT, "before", "Tx_TransferSummaryIn", "post", "Id", keyValue);
 
                         Tx_TransferSummaryIn tx_TransferSummaryIn = CONTEXT.Tx_TransferSummaryIn.Find(id);
                         if (syncTransferSummaryIn.ListDetails_.All(q => !q.QuantityPosted.HasValue || q.QuantityPosted == 0))
@@ -902,9 +902,9 @@ namespace Models.Transaction.Inventory
 
                                 CONTEXT.SaveChanges();
 
-                                //CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_TransferItemTag\"(:p0,:p1, 'TransferSummaryIn', 'A')", userId, id);
-                                //CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryIn_UpdateItem\"(:p0,:p1, 'after')", userId, id);
-                                SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", oCompany, "after", "Tx_TransferSummaryIn", "post", "Id", keyValue);
+                                CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_TransferItemTag\"(:p0,:p1, 'TransferSummaryIn', 'A')", userId, id);
+                                CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryIn_UpdateItem\"(:p0,:p1, 'after')", userId, id);
+                                SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", CONTEXT, "after", "Tx_TransferSummaryIn", "post", "Id", keyValue);
 
                                 CONTEXT_TRANS.Commit();
                             }
