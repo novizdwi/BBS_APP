@@ -817,6 +817,25 @@ namespace Models.Transaction.Inventory
         {
             try
             {
+                using (var CONTEXT = new HANA_APP())
+                {
+                    var statusCheck = CONTEXT.Database.SqlQuery<StatusCheckModel>(@"
+                        SELECT ""Status"", ""ApprovalStatus"", ""IsApproval""
+                        FROM ""Tx_TransferSummaryOut""
+                        WHERE ""Id"" = :p0
+                    ", transferSummaryOutModel.Id).FirstOrDefault();
+
+                    if (statusCheck == null)
+                        throw new Exception("[VALIDATION] Transaction not found.");
+
+                    if (statusCheck.ApprovalStatus == "Rejected")
+                        throw new Exception("[VALIDATION] Cannot post. Transaction has been Rejected.");
+
+                    if (statusCheck.ApprovalStatus == "Waiting")
+                        throw new Exception("[VALIDATION] Cannot post. Transaction is still waiting for Approval.");
+                }
+
+
                 Update(transferSummaryOutModel, "Post");
                 PostSAP(userId, transferSummaryOutModel.Id);
 
@@ -862,7 +881,7 @@ namespace Models.Transaction.Inventory
                             //string docEntry_ = 4382.ToString();
 
                             string docEntry_ = AddTransferSummaryOut(oCompany, userId, id, syncTransferSummaryOut);
-                            if(!Int32.TryParse(docEntry_, out int docEntryOut))
+                            if(!Int32.TryParse(docEntry_, out int docEntryOut) || docEntryOut <= 0 )
                             {
                                 throw new Exception("An error occured during post, please try again ");
                             } 

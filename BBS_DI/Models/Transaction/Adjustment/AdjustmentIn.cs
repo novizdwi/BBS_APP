@@ -689,6 +689,24 @@ namespace Models.Transaction.Adjustment
         {
             try
             {
+                using (var CONTEXT = new HANA_APP())
+                {
+                    var statusCheck = CONTEXT.Database.SqlQuery<StatusCheckModel>(@"
+                        SELECT ""Status"", ""ApprovalStatus"", ""IsApproval""
+                        FROM ""Tx_AdjustmentIn""
+                        WHERE ""Id"" = :p0
+                    ", adjustmentInModel.Id).FirstOrDefault();
+
+                    if (statusCheck == null)
+                        throw new Exception("[VALIDATION] Transaction not found.");
+
+                    if (statusCheck.ApprovalStatus == "Rejected")
+                        throw new Exception("[VALIDATION] Cannot post. Transaction has been Rejected.");
+
+                    if (statusCheck.ApprovalStatus == "Waiting")
+                        throw new Exception("[VALIDATION] Cannot post. Transaction is still waiting for Approval.");
+                }
+
                 Update(adjustmentInModel, "Post");
                 PostSAP(userId, adjustmentInModel.Id);
 

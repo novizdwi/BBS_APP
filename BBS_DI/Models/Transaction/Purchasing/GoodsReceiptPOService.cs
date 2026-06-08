@@ -825,6 +825,24 @@ namespace Models.Transaction.Purchasing
         {
             try
             {
+                using (var CONTEXT = new HANA_APP())
+                {
+                    var statusCheck = CONTEXT.Database.SqlQuery<StatusCheckModel>(@"
+                        SELECT ""Status"", ""ApprovalStatus"", ""IsApproval""
+                        FROM ""Tx_GoodsReceiptPO""
+                        WHERE ""Id"" = :p0
+                    ", goodsReceiptPOModel.Id).FirstOrDefault();
+
+                    if (statusCheck == null)
+                        throw new Exception("[VALIDATION] Transaction not found.");
+
+                    if (statusCheck.ApprovalStatus == "Rejected")
+                        throw new Exception("[VALIDATION] Cannot post. Transaction has been Rejected.");
+
+                    if (statusCheck.ApprovalStatus == "Waiting")
+                        throw new Exception("[VALIDATION] Cannot post. Transaction is still waiting for Approval.");
+                }
+
                 Update(goodsReceiptPOModel);
                 PostSAP(userId, goodsReceiptPOModel.Id);
 
