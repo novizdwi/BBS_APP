@@ -880,34 +880,36 @@ namespace Models.Transaction.Inventory
                         if (tx_TransferSummaryIn != null)
                         {
                             string docEntry_ = AddTransferSummaryIn(oCompany, userId, id, syncTransferSummaryIn);
-                            if (Int32.TryParse(docEntry_, out int docEntryOut))
+                            if(!Int32.TryParse(docEntry_, out int docEntryOut))
                             {
-                                string ssql = @"SELECT ""DocNum"" 
-                                            FROM """ + DbProvider.dbSap_Name + @""".""OWTR"" T0
-                                            WHERE T0.""DocEntry"" = " + docEntry_ + @" 
-                                            ";
-
-                                string docNum = CONTEXT.Database.SqlQuery<string>(ssql, id).FirstOrDefault();
-
-                                DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-
-                                tx_TransferSummaryIn.DocEntry = Convert.ToInt64(docEntryOut);
-                                tx_TransferSummaryIn.DocNum = docNum;
-                                tx_TransferSummaryIn.PostingDate = dtModified;
-
-                                tx_TransferSummaryIn.Status = "Posted";
-                                tx_TransferSummaryIn.IsAfterPosted = "Y";
-                                tx_TransferSummaryIn.ModifiedDate = dtModified;
-                                tx_TransferSummaryIn.ModifiedUser = userId;
-
-                                CONTEXT.SaveChanges();
-
-                                CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_TransferItemTag\"(:p0,:p1, 'TransferSummaryIn', 'A')", userId, id);
-                                CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryIn_UpdateItem\"(:p0,:p1, 'after')", userId, id);
-                                SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", CONTEXT, "after", "Tx_TransferSummaryIn", "post", "Id", keyValue);
-
-                                CONTEXT_TRANS.Commit();
+                                throw new Exception("An error occured during post, please try again ");
                             }
+                             
+                            string ssql = @"SELECT ""DocNum"" 
+                                        FROM """ + DbProvider.dbSap_Name + @""".""OWTR"" T0
+                                        WHERE T0.""DocEntry"" = " + docEntry_ + @" 
+                                        ";
+
+                            string docNum = CONTEXT.Database.SqlQuery<string>(ssql, id).FirstOrDefault();
+
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+
+                            tx_TransferSummaryIn.DocEntry = Convert.ToInt64(docEntry_);
+                            tx_TransferSummaryIn.DocNum = docNum;
+                            tx_TransferSummaryIn.PostingDate = dtModified;
+
+                            tx_TransferSummaryIn.Status = "Posted";
+                            tx_TransferSummaryIn.IsAfterPosted = "Y";
+                            tx_TransferSummaryIn.ModifiedDate = dtModified;
+                            tx_TransferSummaryIn.ModifiedUser = userId;
+
+                            CONTEXT.SaveChanges();
+
+                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_TransferItemTag\"(:p0,:p1, 'TransferSummaryIn', 'A')", userId, id);
+                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryIn_UpdateItem\"(:p0,:p1, 'after')", userId, id);
+                            SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", CONTEXT, "after", "Tx_TransferSummaryIn", "post", "Id", keyValue);
+
+                            CONTEXT_TRANS.Commit(); 
                         }
 
                     }

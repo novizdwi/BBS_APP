@@ -862,37 +862,39 @@ namespace Models.Transaction.Inventory
                             //string docEntry_ = 4382.ToString();
 
                             string docEntry_ = AddTransferSummaryOut(oCompany, userId, id, syncTransferSummaryOut);
-
-                            if (!string.IsNullOrEmpty(docEntry_))
+                            if(!Int32.TryParse(docEntry_, out int docEntryOut))
                             {
-                                string ssql = @"SELECT ""DocNum"" 
-                                            FROM """ + DbProvider.dbSap_Name + @""".""OWTR"" T0
-                                            WHERE T0.""DocEntry"" = " + docEntry_ + @" 
-                                            ";
+                                throw new Exception("An error occured during post, please try again ");
+                            } 
 
-                                string docNum = CONTEXT.Database.SqlQuery<string>(ssql, id).FirstOrDefault();
+                            string ssql = @"SELECT ""DocNum"" 
+                                        FROM """ + DbProvider.dbSap_Name + @""".""OWTR"" T0
+                                        WHERE T0.""DocEntry"" = " + docEntry_ + @" 
+                                        ";
 
-                                DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                            string docNum = CONTEXT.Database.SqlQuery<string>(ssql, id).FirstOrDefault();
 
-                                tx_TransferSummaryOut.PostingDate = dtModified;
-                                tx_TransferSummaryOut.DocEntry = Convert.ToInt64(docEntry_);
-                                tx_TransferSummaryOut.DocNum = docNum;
-                                tx_TransferSummaryOut.PostingDate = dtModified;
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
 
-                                tx_TransferSummaryOut.Status = "Posted";
-                                tx_TransferSummaryOut.IsAfterPosted = "Y";
-                                tx_TransferSummaryOut.ModifiedDate = dtModified;
-                                tx_TransferSummaryOut.ModifiedUser = userId;
+                            tx_TransferSummaryOut.PostingDate = dtModified;
+                            tx_TransferSummaryOut.DocEntry = Convert.ToInt64(docEntry_);
+                            tx_TransferSummaryOut.DocNum = docNum;
+                            tx_TransferSummaryOut.PostingDate = dtModified;
 
-                                CONTEXT.SaveChanges();
+                            tx_TransferSummaryOut.Status = "Posted";
+                            tx_TransferSummaryOut.IsAfterPosted = "Y";
+                            tx_TransferSummaryOut.ModifiedDate = dtModified;
+                            tx_TransferSummaryOut.ModifiedUser = userId;
 
-                                CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_TransferItemTag\"(:p0,:p1, 'TransferSummaryOut', 'A')", userId, id);
-                                CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateItem\"(:p0,:p1, 'after')", userId, id);
-                                SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "post", "Id", keyValue);
+                            CONTEXT.SaveChanges();
+
+                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_TransferItemTag\"(:p0,:p1, 'TransferSummaryOut', 'A')", userId, id);
+                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateItem\"(:p0,:p1, 'after')", userId, id);
+                            SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "post", "Id", keyValue);
                              
 
-                                CONTEXT_TRANS.Commit();
-                            }                            
+                            CONTEXT_TRANS.Commit();
+                                                        
                         }
 
                     }
