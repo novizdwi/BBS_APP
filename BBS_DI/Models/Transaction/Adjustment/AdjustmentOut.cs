@@ -736,13 +736,15 @@ namespace Models.Transaction.Adjustment
                             if (syncAdjustmentOut.IsOpeningBalance != "Y")
                             {
                                 docEntry = AddGoodsIssue(oCompany, userId, id, syncAdjustmentOut);
+                                if (!Int32.TryParse(docEntry, out int docEntryOut) || docEntryOut <= 0)
+                                {
+                                    throw new Exception("[VALIDATION] Failed to get DocEntry from SAP.");
+                                }
+                                tx_AdjustmentOut.DocEntry = docEntryOut;
                             }
+
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
                             tx_AdjustmentOut.PostingDate = dtModified;
-                            if (!string.IsNullOrEmpty(docEntry))
-                            {
-                                tx_AdjustmentOut.DocEntry = Convert.ToInt32(docEntry);
-                            }
 
                             tx_AdjustmentOut.Status = "Posted";
 

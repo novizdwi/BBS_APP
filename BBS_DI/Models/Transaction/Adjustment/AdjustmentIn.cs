@@ -744,14 +744,15 @@ namespace Models.Transaction.Adjustment
                             if (syncAdjustmentIn.IsOpeningBalance != "Y")
                             {
                                 docEntry = AddGoodsReceipt(oCompany, userId, id, syncAdjustmentIn);
+                                if (!Int32.TryParse(docEntry, out int docEntryOut) || docEntryOut <= 0)
+                                {
+                                    throw new Exception("[VALIDATION] Failed to get DocEntry from SAP.");
+                                }
+                                tx_AdjustmentIn.DocEntry = docEntryOut;
                             }
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
                             tx_AdjustmentIn.PostingDate = dtModified;
-                            if(!string.IsNullOrEmpty(docEntry))
-                            {
-                                tx_AdjustmentIn.DocEntry = Convert.ToInt32(docEntry);
-                            }
 
                             tx_AdjustmentIn.Status = "Posted";
 
