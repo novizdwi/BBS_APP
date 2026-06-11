@@ -823,6 +823,9 @@ namespace Models.Transaction.Inventory
                     if (statusCheck == null)
                         throw new Exception("[VALIDATION] Transaction not found.");
 
+                    if (statusCheck.Status == "Cancel")
+                        throw new Exception("[VALIDATION] Cannot post. Transaction has been Cancel.");
+
                     if (statusCheck.ApprovalStatus == "Rejected")
                         throw new Exception("[VALIDATION] Cannot post. Transaction has been Rejected.");
 
@@ -852,8 +855,8 @@ namespace Models.Transaction.Inventory
                 {
                     try
                     {
-                        //oCompany.StartTransaction();
                         oCompany = SAPCachedCompany.GetCompany();
+                        oCompany.StartTransaction();
 
                         String keyValue;
                         keyValue = id.ToString();

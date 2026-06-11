@@ -700,6 +700,9 @@ namespace Models.Transaction.Adjustment
                     if (statusCheck == null)
                         throw new Exception("[VALIDATION] Transaction not found.");
 
+                    if (statusCheck.Status == "Cancel")
+                        throw new Exception("[VALIDATION] Cannot post. Transaction has been Cancel.");
+
                     if (statusCheck.ApprovalStatus == "Rejected")
                         throw new Exception("[VALIDATION] Cannot post. Transaction has been Rejected.");
 

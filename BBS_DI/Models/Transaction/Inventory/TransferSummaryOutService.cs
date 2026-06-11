@@ -828,6 +828,9 @@ namespace Models.Transaction.Inventory
                     if (statusCheck == null)
                         throw new Exception("[VALIDATION] Transaction not found.");
 
+                    if (statusCheck.Status == "Cancel")
+                        throw new Exception("[VALIDATION] Cannot post. Transaction has been Cancel.");
+
                     if (statusCheck.ApprovalStatus == "Rejected")
                         throw new Exception("[VALIDATION] Cannot post. Transaction has been Rejected.");
 
@@ -856,7 +859,7 @@ namespace Models.Transaction.Inventory
                     try
                     {
                         oCompany = SAPCachedCompany.GetCompany();
-                        //oCompany.StartTransaction();
+                        oCompany.StartTransaction();
 
                         String keyValue;
                         keyValue = id.ToString();
@@ -1047,7 +1050,6 @@ namespace Models.Transaction.Inventory
                         {
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
                             tx_TransferSummaryOut.Status = "Cancel";
-                            tx_TransferSummaryOut.ApprovalStatus = "Rejected";
                             tx_TransferSummaryOut.CancelReason = cancelReason;
                             tx_TransferSummaryOut.ModifiedDate = dtModified;
                             tx_TransferSummaryOut.ModifiedUser = userId;
