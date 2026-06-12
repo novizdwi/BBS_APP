@@ -210,25 +210,6 @@
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
         </EntityType>
-        <EntityType Name="Tm_Driver">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TransType" Type="nvarchar" MaxLength="50" />
-          <Property Name="FirstName" Type="nvarchar" MaxLength="100" />
-          <Property Name="LastName" Type="nvarchar" MaxLength="100" />
-          <Property Name="Address" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Handphone" Type="nvarchar" MaxLength="50" />
-          <Property Name="IdCardNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="DrivingLicenceNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="Remarks" Type="nvarchar" MaxLength="200" />
-          <Property Name="IsActive" Type="varchar" MaxLength="1" />
-          <Property Name="CreatedDate" Type="timestamp" />
-          <Property Name="CreatedUser" Type="int" />
-          <Property Name="ModifiedDate" Type="timestamp" />
-          <Property Name="ModifiedUser" Type="int" />
-        </EntityType>
         <EntityType Name="Tm_GeneralSetting">
           <Key>
             <PropertyRef Name="Id" />
@@ -686,37 +667,6 @@
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
         </EntityType>
-        <EntityType Name="Tm_Vehicle">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TransType" Type="nvarchar" MaxLength="50" />
-          <Property Name="VehicleNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="VehicleName" Type="nvarchar" MaxLength="50" />
-          <Property Name="VehicleType" Type="int" />
-          <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="WhsName" Type="nvarchar" MaxLength="100" />
-          <Property Name="Remarks" Type="nvarchar" MaxLength="200" />
-          <Property Name="IsActive" Type="nvarchar" MaxLength="10" />
-          <Property Name="CreatedDate" Type="timestamp" />
-          <Property Name="CreatedUser" Type="int" />
-          <Property Name="ModifiedDate" Type="timestamp" />
-          <Property Name="ModifiedUser" Type="int" />
-        </EntityType>
-        <EntityType Name="Tm_VehicleType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TypeName" Type="nvarchar" MaxLength="200" />
-          <Property Name="Remarks" Type="nvarchar" MaxLength="200" />
-          <Property Name="IsActive" Type="varchar" MaxLength="1" />
-          <Property Name="CreatedDate" Type="timestamp" />
-          <Property Name="CreatedUser" Type="int" />
-          <Property Name="ModifiedDate" Type="timestamp" />
-          <Property Name="ModifiedUser" Type="int" />
-        </EntityType>
         <EntityType Name="Tp_Approval">
           <Key>
             <PropertyRef Name="Id" />
@@ -751,7 +701,7 @@
           <Property Name="ModifiedUser" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'HDB.BBS_RFID_APP.Tp_UserAlert' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'HDB.BBS_RFID_TEST.Tp_UserAlert' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Tp_UserAlert">
           <Key>
             <PropertyRef Name="Id" />
@@ -1398,6 +1348,75 @@ warning 6002: The table/view 'HDB.BBS_RFID_APP.Tp_UserAlert' does not have a pri
           <Property Name="CreatedUser" Type="int" />
           <Property Name="ModifiedDate" Type="timestamp" />
           <Property Name="ModifiedUser" Type="int" />
+        </EntityType>
+        <EntityType Name="Tx_ReactiveTag">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransType" Type="nvarchar" MaxLength="50" />
+          <Property Name="TransNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="ScanDeviceId" Type="nvarchar" MaxLength="1000" />
+          <Property Name="TransDate" Type="timestamp" />
+          <Property Name="PostingDate" Type="timestamp" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="ApprovalStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="200" />
+          <Property Name="CancelReason" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsApproval" Type="varchar" MaxLength="1" />
+          <Property Name="ApprovalMessages" Type="nvarchar" MaxLength="254" />
+          <Property Name="CreatedDate" Type="timestamp" />
+          <Property Name="CreatedUser" Type="int" />
+          <Property Name="ModifiedDate" Type="timestamp" />
+          <Property Name="ModifiedUser" Type="int" />
+        </EntityType>
+        <EntityType Name="Tx_ReactiveTag_Approval">
+          <Key>
+            <PropertyRef Name="DetId" />
+          </Key>
+          <Property Name="Id" Type="int" />
+          <Property Name="DetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StageId" Type="int" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Step" Type="int" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ActionDate" Type="seconddate" />
+          <Property Name="CreatedDate" Type="seconddate" />
+          <Property Name="CreatedUser" Type="int" />
+          <Property Name="ModifiedDate" Type="seconddate" />
+          <Property Name="ModifiedUser" Type="int" />
+        </EntityType>
+        <EntityType Name="Tx_ReactiveTag_Item">
+          <Key>
+            <PropertyRef Name="DetId" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="DetId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TagId" Type="nvarchar" MaxLength="200" />
+          <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
+          <Property Name="FreeText" Type="nvarchar" MaxLength="1000" />
+          <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="WhsName" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedDate" Type="timestamp" />
+          <Property Name="CreatedUser" Type="int" />
+          <Property Name="ModifiedDate" Type="timestamp" />
+          <Property Name="ModifiedUser" Type="int" />
+        </EntityType>
+        <EntityType Name="Tx_ReactiveTag_Log">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="LogId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TagId" Type="nvarchar" MaxLength="200" />
+          <Property Name="ItemCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="200" />
+          <Property Name="WhsCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="WhsName" Type="nvarchar" MaxLength="200" />
+          <Property Name="Message" Type="nvarchar" MaxLength="5000" />
+          <Property Name="CreatedDate" Type="timestamp" />
+          <Property Name="CreatedUser" Type="int" />
         </EntityType>
         <EntityType Name="Tx_Request_StockOpname">
           <Key>
@@ -2111,118 +2130,119 @@ warning 6002: The table/view 'HDB.BBS_RFID_APP.Tp_UserAlert' does not have a pri
           <Property Name="ModifiedUser" Type="int" />
         </EntityType>
         <EntityContainer Name="Model1StoreContainer">
-          <EntitySet Name="Tm_Alert" EntityType="Self.Tm_Alert" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Alert_Role" EntityType="Self.Tm_Alert_Role" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Alert_User" EntityType="Self.Tm_Alert_User" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_AlertGroup" EntityType="Self.Tm_AlertGroup" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Approval" EntityType="Self.Tm_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Approval_Role" EntityType="Self.Tm_Approval_Role" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Approval_User" EntityType="Self.Tm_Approval_User" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_ApprovalStage" EntityType="Self.Tm_ApprovalStage" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_ApprovalStage_Role" EntityType="Self.Tm_ApprovalStage_Role" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_ApprovalStage_User" EntityType="Self.Tm_ApprovalStage_User" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_ApprovalTemplate" EntityType="Self.Tm_ApprovalTemplate" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_ApprovalTemplate_Position" EntityType="Self.Tm_ApprovalTemplate_Position" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_ApprovalTemplate_Role" EntityType="Self.Tm_ApprovalTemplate_Role" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_ApprovalTemplate_Stage" EntityType="Self.Tm_ApprovalTemplate_Stage" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_ApprovalTemplate_User" EntityType="Self.Tm_ApprovalTemplate_User" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Driver" EntityType="Self.Tm_Driver" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_GeneralSetting" EntityType="Self.Tm_GeneralSetting" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_GeneralSetting_Coa" EntityType="Self.Tm_GeneralSetting_Coa" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_GeneralSetting_Item" EntityType="Self.Tm_GeneralSetting_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Item" EntityType="Self.Tm_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Item_Warehouse" EntityType="Self.Tm_Item_Warehouse" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Item_Warehouse_Tag" EntityType="Self.Tm_Item_Warehouse_Tag" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Item_Warehouse_Tag_Log" EntityType="Self.Tm_Item_Warehouse_Tag_Log" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Item_Warehouse_Tag_Replace" EntityType="Self.Tm_Item_Warehouse_Tag_Replace" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Layout" EntityType="Self.Tm_Layout" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Layout_Role" EntityType="Self.Tm_Layout_Role" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Layout_User" EntityType="Self.Tm_Layout_User" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_MasterSetting" EntityType="Self.Tm_MasterSetting" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Query" EntityType="Self.Tm_Query" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Query_Param" EntityType="Self.Tm_Query_Param" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Query_Role" EntityType="Self.Tm_Query_Role" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Query_User" EntityType="Self.Tm_Query_User" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_QueryGroup" EntityType="Self.Tm_QueryGroup" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_QueryGroup_Role" EntityType="Self.Tm_QueryGroup_Role" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_QueryGroup_User" EntityType="Self.Tm_QueryGroup_User" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Report" EntityType="Self.Tm_Report" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Report_Param" EntityType="Self.Tm_Report_Param" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Report_Role" EntityType="Self.Tm_Report_Role" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Report_User" EntityType="Self.Tm_Report_User" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_ReportGroup" EntityType="Self.Tm_ReportGroup" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_ReportGroup_Role" EntityType="Self.Tm_ReportGroup_Role" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_ReportGroup_User" EntityType="Self.Tm_ReportGroup_User" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Role" EntityType="Self.Tm_Role" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Role_Auth" EntityType="Self.Tm_Role_Auth" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_User" EntityType="Self.Tm_User" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_User_Warehouse" EntityType="Self.Tm_User_Warehouse" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_Vehicle" EntityType="Self.Tm_Vehicle" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tm_VehicleType" EntityType="Self.Tm_VehicleType" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tp_Approval" EntityType="Self.Tp_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tp_Approval_User" EntityType="Self.Tp_Approval_User" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Ts_FormatNumbering" EntityType="Self.Ts_FormatNumbering" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Ts_LayoutForm" EntityType="Self.Ts_LayoutForm" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Ts_List" EntityType="Self.Ts_List" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Ts_Menu" EntityType="Self.Ts_Menu" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Ts_ObjectApproval" EntityType="Self.Ts_ObjectApproval" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_AdjustmentIn" EntityType="Self.Tx_AdjustmentIn" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_AdjustmentIn_Approval" EntityType="Self.Tx_AdjustmentIn_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_AdjustmentIn_Attachment" EntityType="Self.Tx_AdjustmentIn_Attachment" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_AdjustmentIn_Item" EntityType="Self.Tx_AdjustmentIn_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_AdjustmentIn_Item_Tag" EntityType="Self.Tx_AdjustmentIn_Item_Tag" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_AdjustmentIn_Location" EntityType="Self.Tx_AdjustmentIn_Location" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_AdjustmentOut" EntityType="Self.Tx_AdjustmentOut" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_AdjustmentOut_Approval" EntityType="Self.Tx_AdjustmentOut_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_AdjustmentOut_Attachment" EntityType="Self.Tx_AdjustmentOut_Attachment" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_AdjustmentOut_Item" EntityType="Self.Tx_AdjustmentOut_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_AdjustmentOut_Item_Tag" EntityType="Self.Tx_AdjustmentOut_Item_Tag" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_AdjustmentOut_Location" EntityType="Self.Tx_AdjustmentOut_Location" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_ChangeItem" EntityType="Self.Tx_ChangeItem" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_ChangeItem_Tag" EntityType="Self.Tx_ChangeItem_Tag" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_DeactiveTag" EntityType="Self.Tx_DeactiveTag" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_DeactiveTag_Approval" EntityType="Self.Tx_DeactiveTag_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_DeactiveTag_Item" EntityType="Self.Tx_DeactiveTag_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_DeactiveTag_Log" EntityType="Self.Tx_DeactiveTag_Log" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_GoodIssue" EntityType="Self.Tx_GoodIssue" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_GoodsReceiptPO" EntityType="Self.Tx_GoodsReceiptPO" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_GoodsReceiptPO_Approval" EntityType="Self.Tx_GoodsReceiptPO_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_GoodsReceiptPO_Item" EntityType="Self.Tx_GoodsReceiptPO_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_GoodsReceiptPO_Item_Tag" EntityType="Self.Tx_GoodsReceiptPO_Item_Tag" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_GoodsReceiptPO_Ref" EntityType="Self.Tx_GoodsReceiptPO_Ref" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_PurchaseOrder" EntityType="Self.Tx_PurchaseOrder" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_PurchaseOrder_Item" EntityType="Self.Tx_PurchaseOrder_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_PurchaseOrder_Item_Tag" EntityType="Self.Tx_PurchaseOrder_Item_Tag" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_Request_StockOpname" EntityType="Self.Tx_Request_StockOpname" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_StockOpname" EntityType="Self.Tx_StockOpname" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_StockOpname_Approval" EntityType="Self.Tx_StockOpname_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_StockOpname_Item" EntityType="Self.Tx_StockOpname_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_StockOpname_Item_Tag" EntityType="Self.Tx_StockOpname_Item_Tag" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_StockSummaryOpname" EntityType="Self.Tx_StockSummaryOpname" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_StockSummaryOpname_Approval" EntityType="Self.Tx_StockSummaryOpname_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_StockSummaryOpname_Item" EntityType="Self.Tx_StockSummaryOpname_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_StockSummaryOpname_Item_Tag" EntityType="Self.Tx_StockSummaryOpname_Item_Tag" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_StockSummaryOpname_Ref" EntityType="Self.Tx_StockSummaryOpname_Ref" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferIn" EntityType="Self.Tx_TransferIn" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferIn_Item" EntityType="Self.Tx_TransferIn_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferIn_Item_Tag" EntityType="Self.Tx_TransferIn_Item_Tag" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferOut" EntityType="Self.Tx_TransferOut" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferOut_Item" EntityType="Self.Tx_TransferOut_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferOut_Item_Tag" EntityType="Self.Tx_TransferOut_Item_Tag" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferRequest" EntityType="Self.Tx_TransferRequest" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferRequest_Approval" EntityType="Self.Tx_TransferRequest_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferRequest_Item" EntityType="Self.Tx_TransferRequest_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferSummaryIn" EntityType="Self.Tx_TransferSummaryIn" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferSummaryIn_Approval" EntityType="Self.Tx_TransferSummaryIn_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferSummaryIn_Item" EntityType="Self.Tx_TransferSummaryIn_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferSummaryIn_Item_Tag" EntityType="Self.Tx_TransferSummaryIn_Item_Tag" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferSummaryIn_Ref" EntityType="Self.Tx_TransferSummaryIn_Ref" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferSummaryOut" EntityType="Self.Tx_TransferSummaryOut" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferSummaryOut_Approval" EntityType="Self.Tx_TransferSummaryOut_Approval" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferSummaryOut_Item" EntityType="Self.Tx_TransferSummaryOut_Item" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferSummaryOut_Item_Tag" EntityType="Self.Tx_TransferSummaryOut_Item_Tag" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tx_TransferSummaryOut_Ref" EntityType="Self.Tx_TransferSummaryOut_Ref" Schema="BBS_RFID_APP" store:Type="Tables" />
-          <EntitySet Name="Tp_UserAlert" EntityType="Self.Tp_UserAlert" store:Type="Tables" store:Schema="BBS_RFID_APP">
+          <EntitySet Name="Tm_Alert" EntityType="Self.Tm_Alert" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Alert_Role" EntityType="Self.Tm_Alert_Role" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Alert_User" EntityType="Self.Tm_Alert_User" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_AlertGroup" EntityType="Self.Tm_AlertGroup" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Approval" EntityType="Self.Tm_Approval" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Approval_Role" EntityType="Self.Tm_Approval_Role" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Approval_User" EntityType="Self.Tm_Approval_User" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_ApprovalStage" EntityType="Self.Tm_ApprovalStage" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_ApprovalStage_Role" EntityType="Self.Tm_ApprovalStage_Role" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_ApprovalStage_User" EntityType="Self.Tm_ApprovalStage_User" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_ApprovalTemplate" EntityType="Self.Tm_ApprovalTemplate" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_ApprovalTemplate_Position" EntityType="Self.Tm_ApprovalTemplate_Position" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_ApprovalTemplate_Role" EntityType="Self.Tm_ApprovalTemplate_Role" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_ApprovalTemplate_Stage" EntityType="Self.Tm_ApprovalTemplate_Stage" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_ApprovalTemplate_User" EntityType="Self.Tm_ApprovalTemplate_User" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_GeneralSetting" EntityType="Self.Tm_GeneralSetting" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_GeneralSetting_Coa" EntityType="Self.Tm_GeneralSetting_Coa" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_GeneralSetting_Item" EntityType="Self.Tm_GeneralSetting_Item" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Item" EntityType="Self.Tm_Item" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Item_Warehouse" EntityType="Self.Tm_Item_Warehouse" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Item_Warehouse_Tag" EntityType="Self.Tm_Item_Warehouse_Tag" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Item_Warehouse_Tag_Log" EntityType="Self.Tm_Item_Warehouse_Tag_Log" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Item_Warehouse_Tag_Replace" EntityType="Self.Tm_Item_Warehouse_Tag_Replace" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Layout" EntityType="Self.Tm_Layout" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Layout_Role" EntityType="Self.Tm_Layout_Role" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Layout_User" EntityType="Self.Tm_Layout_User" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_MasterSetting" EntityType="Self.Tm_MasterSetting" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Query" EntityType="Self.Tm_Query" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Query_Param" EntityType="Self.Tm_Query_Param" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Query_Role" EntityType="Self.Tm_Query_Role" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Query_User" EntityType="Self.Tm_Query_User" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_QueryGroup" EntityType="Self.Tm_QueryGroup" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_QueryGroup_Role" EntityType="Self.Tm_QueryGroup_Role" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_QueryGroup_User" EntityType="Self.Tm_QueryGroup_User" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Report" EntityType="Self.Tm_Report" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Report_Param" EntityType="Self.Tm_Report_Param" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Report_Role" EntityType="Self.Tm_Report_Role" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Report_User" EntityType="Self.Tm_Report_User" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_ReportGroup" EntityType="Self.Tm_ReportGroup" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_ReportGroup_Role" EntityType="Self.Tm_ReportGroup_Role" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_ReportGroup_User" EntityType="Self.Tm_ReportGroup_User" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Role" EntityType="Self.Tm_Role" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_Role_Auth" EntityType="Self.Tm_Role_Auth" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_User" EntityType="Self.Tm_User" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tm_User_Warehouse" EntityType="Self.Tm_User_Warehouse" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tp_Approval" EntityType="Self.Tp_Approval" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tp_Approval_User" EntityType="Self.Tp_Approval_User" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Ts_FormatNumbering" EntityType="Self.Ts_FormatNumbering" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Ts_LayoutForm" EntityType="Self.Ts_LayoutForm" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Ts_List" EntityType="Self.Ts_List" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Ts_Menu" EntityType="Self.Ts_Menu" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Ts_ObjectApproval" EntityType="Self.Ts_ObjectApproval" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_AdjustmentIn" EntityType="Self.Tx_AdjustmentIn" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_AdjustmentIn_Approval" EntityType="Self.Tx_AdjustmentIn_Approval" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_AdjustmentIn_Attachment" EntityType="Self.Tx_AdjustmentIn_Attachment" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_AdjustmentIn_Item" EntityType="Self.Tx_AdjustmentIn_Item" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_AdjustmentIn_Item_Tag" EntityType="Self.Tx_AdjustmentIn_Item_Tag" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_AdjustmentIn_Location" EntityType="Self.Tx_AdjustmentIn_Location" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_AdjustmentOut" EntityType="Self.Tx_AdjustmentOut" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_AdjustmentOut_Approval" EntityType="Self.Tx_AdjustmentOut_Approval" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_AdjustmentOut_Attachment" EntityType="Self.Tx_AdjustmentOut_Attachment" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_AdjustmentOut_Item" EntityType="Self.Tx_AdjustmentOut_Item" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_AdjustmentOut_Item_Tag" EntityType="Self.Tx_AdjustmentOut_Item_Tag" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_AdjustmentOut_Location" EntityType="Self.Tx_AdjustmentOut_Location" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_ChangeItem" EntityType="Self.Tx_ChangeItem" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_ChangeItem_Tag" EntityType="Self.Tx_ChangeItem_Tag" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_DeactiveTag" EntityType="Self.Tx_DeactiveTag" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_DeactiveTag_Approval" EntityType="Self.Tx_DeactiveTag_Approval" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_DeactiveTag_Item" EntityType="Self.Tx_DeactiveTag_Item" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_DeactiveTag_Log" EntityType="Self.Tx_DeactiveTag_Log" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_GoodIssue" EntityType="Self.Tx_GoodIssue" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_GoodsReceiptPO" EntityType="Self.Tx_GoodsReceiptPO" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_GoodsReceiptPO_Approval" EntityType="Self.Tx_GoodsReceiptPO_Approval" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_GoodsReceiptPO_Item" EntityType="Self.Tx_GoodsReceiptPO_Item" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_GoodsReceiptPO_Item_Tag" EntityType="Self.Tx_GoodsReceiptPO_Item_Tag" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_GoodsReceiptPO_Ref" EntityType="Self.Tx_GoodsReceiptPO_Ref" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_PurchaseOrder" EntityType="Self.Tx_PurchaseOrder" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_PurchaseOrder_Item" EntityType="Self.Tx_PurchaseOrder_Item" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_PurchaseOrder_Item_Tag" EntityType="Self.Tx_PurchaseOrder_Item_Tag" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_ReactiveTag" EntityType="Self.Tx_ReactiveTag" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_ReactiveTag_Approval" EntityType="Self.Tx_ReactiveTag_Approval" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_ReactiveTag_Item" EntityType="Self.Tx_ReactiveTag_Item" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_ReactiveTag_Log" EntityType="Self.Tx_ReactiveTag_Log" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_Request_StockOpname" EntityType="Self.Tx_Request_StockOpname" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_StockOpname" EntityType="Self.Tx_StockOpname" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_StockOpname_Approval" EntityType="Self.Tx_StockOpname_Approval" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_StockOpname_Item" EntityType="Self.Tx_StockOpname_Item" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_StockOpname_Item_Tag" EntityType="Self.Tx_StockOpname_Item_Tag" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_StockSummaryOpname" EntityType="Self.Tx_StockSummaryOpname" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_StockSummaryOpname_Approval" EntityType="Self.Tx_StockSummaryOpname_Approval" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_StockSummaryOpname_Item" EntityType="Self.Tx_StockSummaryOpname_Item" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_StockSummaryOpname_Item_Tag" EntityType="Self.Tx_StockSummaryOpname_Item_Tag" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_StockSummaryOpname_Ref" EntityType="Self.Tx_StockSummaryOpname_Ref" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_TransferIn" EntityType="Self.Tx_TransferIn" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_TransferIn_Item" EntityType="Self.Tx_TransferIn_Item" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_TransferIn_Item_Tag" EntityType="Self.Tx_TransferIn_Item_Tag" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_TransferOut" EntityType="Self.Tx_TransferOut" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_TransferOut_Item" EntityType="Self.Tx_TransferOut_Item" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_TransferOut_Item_Tag" EntityType="Self.Tx_TransferOut_Item_Tag" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_TransferRequest" EntityType="Self.Tx_TransferRequest" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_TransferRequest_Approval" EntityType="Self.Tx_TransferRequest_Approval" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_TransferRequest_Item" EntityType="Self.Tx_TransferRequest_Item" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_TransferSummaryIn" EntityType="Self.Tx_TransferSummaryIn" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_TransferSummaryIn_Approval" EntityType="Self.Tx_TransferSummaryIn_Approval" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_TransferSummaryIn_Item" EntityType="Self.Tx_TransferSummaryIn_Item" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_TransferSummaryIn_Item_Tag" EntityType="Self.Tx_TransferSummaryIn_Item_Tag" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_TransferSummaryIn_Ref" EntityType="Self.Tx_TransferSummaryIn_Ref" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_TransferSummaryOut" EntityType="Self.Tx_TransferSummaryOut" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_TransferSummaryOut_Approval" EntityType="Self.Tx_TransferSummaryOut_Approval" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_TransferSummaryOut_Item" EntityType="Self.Tx_TransferSummaryOut_Item" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_TransferSummaryOut_Item_Tag" EntityType="Self.Tx_TransferSummaryOut_Item_Tag" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tx_TransferSummaryOut_Ref" EntityType="Self.Tx_TransferSummaryOut_Ref" Schema="BBS_RFID_TEST" store:Type="Tables" />
+          <EntitySet Name="Tp_UserAlert" EntityType="Self.Tp_UserAlert" store:Type="Tables" store:Schema="BBS_RFID_TEST">
             <DefiningQuery>SELECT 
 "Tp_UserAlert"."Id" AS "Id", 
 "Tp_UserAlert"."UserId" AS "UserId", 
@@ -2234,7 +2254,7 @@ warning 6002: The table/view 'HDB.BBS_RFID_APP.Tp_UserAlert' does not have a pri
 "Tp_UserAlert"."SenderId" AS "SenderId", 
 "Tp_UserAlert"."IsRead" AS "IsRead", 
 "Tp_UserAlert"."LastShowTime" AS "LastShowTime"
-FROM "BBS_RFID_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
+FROM "BBS_RFID_TEST"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -2351,9 +2371,10 @@ FROM "BBS_RFID_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <EntitySet Name="Tx_TransferSummaryOut_Item_Tag" EntityType="Model1.Tx_TransferSummaryOut_Item_Tag" />
           <EntitySet Name="Tx_TransferSummaryOut_Ref" EntityType="Model1.Tx_TransferSummaryOut_Ref" />
           <EntitySet Name="Tp_UserAlert" EntityType="Model1.Tp_UserAlert" />
-          <EntitySet Name="Tm_Driver" EntityType="Model1.Tm_Driver" />
-          <EntitySet Name="Tm_Vehicle" EntityType="Model1.Tm_Vehicle" />
-          <EntitySet Name="Tm_VehicleType" EntityType="Model1.Tm_VehicleType" />
+          <EntitySet Name="Tx_ReactiveTag" EntityType="Model1.Tx_ReactiveTag" />
+          <EntitySet Name="Tx_ReactiveTag_Approval" EntityType="Model1.Tx_ReactiveTag_Approval" />
+          <EntitySet Name="Tx_ReactiveTag_Item" EntityType="Model1.Tx_ReactiveTag_Item" />
+          <EntitySet Name="Tx_ReactiveTag_Log" EntityType="Model1.Tx_ReactiveTag_Log" />
         </EntityContainer>
         <EntityType Name="Tm_Alert">
           <Key>
@@ -4408,55 +4429,74 @@ FROM "BBS_RFID_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
           <Property Name="IsRead" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="LastShowTime" Type="DateTime" />
         </EntityType>
-        <EntityType Name="Tm_Driver">
+        <EntityType Name="Tx_ReactiveTag">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TransType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Handphone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IdCardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DrivingLicenceNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="TransNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ScanDeviceId" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="TransDate" Type="DateTime" />
+          <Property Name="PostingDate" Type="DateTime" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ApprovalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CancelReason" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsApproval" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="ApprovalMessages" Type="String" MaxLength="254" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
-        <EntityType Name="Tm_Vehicle">
+        <EntityType Name="Tx_ReactiveTag_Approval">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="DetId" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TransType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="VehicleNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="VehicleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="VehicleType" Type="Int32" />
+          <Property Name="Id" Type="Int32" />
+          <Property Name="DetId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StageId" Type="Int32" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Step" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ActionDate" Type="DateTime" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedUser" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" />
+          <Property Name="ModifiedUser" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Tx_ReactiveTag_Item">
+          <Key>
+            <PropertyRef Name="DetId" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="DetId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TagId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FreeText" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="WhsName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="WhsName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedUser" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" />
           <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
-        <EntityType Name="Tm_VehicleType">
+        <EntityType Name="Tx_ReactiveTag_Log">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="LogId" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TypeName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="LogId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TagId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ItemCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="WhsCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WhsName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" MaxLength="5000" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" />
           <Property Name="CreatedUser" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" />
-          <Property Name="ModifiedUser" Type="Int32" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -6622,56 +6662,76 @@ FROM "BBS_RFID_APP"."Tp_UserAlert" AS "Tp_UserAlert"</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tm_Driver">
-            <EntityTypeMapping TypeName="Model1.Tm_Driver">
-              <MappingFragment StoreEntitySet="Tm_Driver">
+          <EntitySetMapping Name="Tx_ReactiveTag">
+            <EntityTypeMapping TypeName="Model1.Tx_ReactiveTag">
+              <MappingFragment StoreEntitySet="Tx_ReactiveTag">
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="DrivingLicenceNo" ColumnName="DrivingLicenceNo" />
-                <ScalarProperty Name="IdCardNo" ColumnName="IdCardNo" />
-                <ScalarProperty Name="Handphone" ColumnName="Handphone" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ApprovalMessages" ColumnName="ApprovalMessages" />
+                <ScalarProperty Name="IsApproval" ColumnName="IsApproval" />
+                <ScalarProperty Name="CancelReason" ColumnName="CancelReason" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="ApprovalStatus" ColumnName="ApprovalStatus" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PostingDate" ColumnName="PostingDate" />
+                <ScalarProperty Name="TransDate" ColumnName="TransDate" />
+                <ScalarProperty Name="ScanDeviceId" ColumnName="ScanDeviceId" />
+                <ScalarProperty Name="TransNo" ColumnName="TransNo" />
                 <ScalarProperty Name="TransType" ColumnName="TransType" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tm_Vehicle">
-            <EntityTypeMapping TypeName="Model1.Tm_Vehicle">
-              <MappingFragment StoreEntitySet="Tm_Vehicle">
+          <EntitySetMapping Name="Tx_ReactiveTag_Approval">
+            <EntityTypeMapping TypeName="Model1.Tx_ReactiveTag_Approval">
+              <MappingFragment StoreEntitySet="Tx_ReactiveTag_Approval">
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Step" ColumnName="Step" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="StageId" ColumnName="StageId" />
+                <ScalarProperty Name="DetId" ColumnName="DetId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tx_ReactiveTag_Item">
+            <EntityTypeMapping TypeName="Model1.Tx_ReactiveTag_Item">
+              <MappingFragment StoreEntitySet="Tx_ReactiveTag_Item">
+                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="WhsName" ColumnName="WhsName" />
                 <ScalarProperty Name="WhsCode" ColumnName="WhsCode" />
-                <ScalarProperty Name="VehicleType" ColumnName="VehicleType" />
-                <ScalarProperty Name="VehicleName" ColumnName="VehicleName" />
-                <ScalarProperty Name="VehicleNo" ColumnName="VehicleNo" />
-                <ScalarProperty Name="TransType" ColumnName="TransType" />
+                <ScalarProperty Name="FreeText" ColumnName="FreeText" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
+                <ScalarProperty Name="DetId" ColumnName="DetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tm_VehicleType">
-            <EntityTypeMapping TypeName="Model1.Tm_VehicleType">
-              <MappingFragment StoreEntitySet="Tm_VehicleType">
-                <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <EntitySetMapping Name="Tx_ReactiveTag_Log">
+            <EntityTypeMapping TypeName="Model1.Tx_ReactiveTag_Log">
+              <MappingFragment StoreEntitySet="Tx_ReactiveTag_Log">
                 <ScalarProperty Name="CreatedUser" ColumnName="CreatedUser" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="WhsName" ColumnName="WhsName" />
+                <ScalarProperty Name="WhsCode" ColumnName="WhsCode" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
+                <ScalarProperty Name="LogId" ColumnName="LogId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

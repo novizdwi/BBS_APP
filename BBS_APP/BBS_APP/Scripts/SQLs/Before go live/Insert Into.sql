@@ -1,6 +1,7 @@
 INSERT INTO "Ts_FormatNumbering" VALUES('AdjustmentIn', 'Adjustment In', 'ADIN-','YYMM',4);
 INSERT INTO "Ts_FormatNumbering" VALUES('AdjustmentOut', 'Adjustment Out', 'ADOU-','YYMM',4);
 INSERT INTO "Ts_FormatNumbering" VALUES('ChangeItem', 'Change Item', 'IC-','YYMM',4);
+INSERT INTO "Ts_FormatNumbering" VALUES('ReactiveTag', 'Reactive Item', 'RT-','YYMM',4);
 
 INSERT INTO "Ts_List" VALUES('RFIDStatus', '01', 'A', 'Active', '');
 INSERT INTO "Ts_List" VALUES('RFIDStatus', '02', 'I', 'Inactive', '');
@@ -19,11 +20,7 @@ INSERT INTO "Ts_List" VALUES('RFIDTransType', '06', 'AdjustmentOut', 'Adjustment
 INSERT INTO "Ts_List" VALUES('RFIDTransType', '07', 'DeactiveTags', 'Deactive Tags', '');
 INSERT INTO "Ts_List" VALUES('RFIDTransType', '08', 'ReactiveTags', 'Reactive Tags', '');
 INSERT INTO "Ts_List" VALUES('RFIDTransType', '09', 'ReplaceTags', 'Replace Tags', '');
-INSERT INTO "Ts_List" VALUES('RFIDTransType', '10', 'ChangeItem', 'Change Item', '');
-
-INSERT INTO "Ts_List" VALUES('RFIDTransType', '07', 'DeactiveTags', 'Deactive Tags', '');
-INSERT INTO "Ts_List" VALUES('RFIDTransType', '08', 'ReactiveTags', 'Reactive Tags', '');
-INSERT INTO "Ts_List" VALUES('RFIDTransType', '09', 'ReplaceTags', 'Replace Tags', ''); 
+INSERT INTO "Ts_List" VALUES('RFIDTransType', '10', 'ChangeItem', 'Change Item', ''); 
 
 INSERT INTO "Ts_LayoutForm" VALUES('AdjustmentIn','Adjustment In','0201');
 INSERT INTO "Ts_LayoutForm" VALUES('AdjustmentOut','Adjustment Out','0202');

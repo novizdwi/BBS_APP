@@ -15,6 +15,24 @@ INSERT INTO "Ts_Menu" VALUES ('ChangeItem/Post', 'Post', 'ChangeItem/Post', 'Cha
 INSERT INTO "Ts_Menu" VALUES ('ChangeItem/Cancel', 'Cancel', 'ChangeItem/Cancel', 'ChangeItem', 10010206);
 INSERT INTO "Ts_Menu" VALUES ('ChangeItem/Print', 'Print', 'ChangeItem/Print', 'ChangeItem', 10010207);
 
+INSERT INTO "Ts_Menu" VALUES ('DeactiveTag', 'Deactive Tag', '', 'Item', 100103);
+INSERT INTO "Ts_Menu" VALUES ('DeactiveTag/Detail#User', 'Detail - User', 'DeactiveTag/Detail', 'DeactiveTag', 10010301);
+INSERT INTO "Ts_Menu" VALUES ('DeactiveTag/Detail#All', 'Detail - All', 'DeactiveTag/Detail', 'DeactiveTag', 10010302);
+INSERT INTO "Ts_Menu" VALUES ('DeactiveTag/Add', 'Add', 'DeactiveTag/Add', 'DeactiveTag', 10010303);
+INSERT INTO "Ts_Menu" VALUES ('DeactiveTag/Update', 'Update', 'DeactiveTag/Update', 'DeactiveTag', 10010304);
+INSERT INTO "Ts_Menu" VALUES ('DeactiveTag/Post', 'Post', 'DeactiveTag/Post', 'DeactiveTag', 10010305);
+INSERT INTO "Ts_Menu" VALUES ('DeactiveTag/Cancel', 'Cancel', 'DeactiveTag/Cancel', 'DeactiveTag', 10010306);
+INSERT INTO "Ts_Menu" VALUES ('DeactiveTag/Print', 'Print', 'DeactiveTag/Print', 'DeactiveTag', 10010307);
+
+INSERT INTO "Ts_Menu" VALUES ('ReactiveTag', 'Reactive Tag', '', 'Item', 100104);
+INSERT INTO "Ts_Menu" VALUES ('ReactiveTag/Detail#User', 'Detail - User', 'ReactiveTag/Detail', 'ReactiveTag', 10010401);
+INSERT INTO "Ts_Menu" VALUES ('ReactiveTag/Detail#All', 'Detail - All', 'ReactiveTag/Detail', 'ReactiveTag', 10010402);
+INSERT INTO "Ts_Menu" VALUES ('ReactiveTag/Add', 'Add', 'ReactiveTag/Add', 'ReactiveTag', 10010403);
+INSERT INTO "Ts_Menu" VALUES ('ReactiveTag/Update', 'Update', 'ReactiveTag/Update', 'ReactiveTag', 10010404);
+INSERT INTO "Ts_Menu" VALUES ('ReactiveTag/Post', 'Post', 'ReactiveTag/Post', 'ReactiveTag', 10010405);
+INSERT INTO "Ts_Menu" VALUES ('ReactiveTag/Cancel', 'Cancel', 'ReactiveTag/Cancel', 'ReactiveTag', 10010406);
+INSERT INTO "Ts_Menu" VALUES ('ReactiveTag/Print', 'Print', 'ReactiveTag/Print', 'ReactiveTag', 10010407);
+
 INSERT INTO "Ts_Menu" VALUES ('ItemMaster', 'Item Master', '', 'Item', 100103);
 INSERT INTO "Ts_Menu" VALUES ('ItemMaster/Detail#User', 'Detail - User', 'ItemMaster/Detail', 'ItemMaster', 10010301);
 INSERT INTO "Ts_Menu" VALUES ('ItemMaster/Detail#All', 'Detail - All', 'ItemMaster/Detail', 'ItemMaster', 10010302);

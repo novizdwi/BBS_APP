@@ -46,7 +46,13 @@ namespace Controllers._Cfl
                 cflParam.SqlWhere = string.Format(" " +
                     "AND \"Status\" = 'A'  ");
             }
-
+            else if (cflParam.Type == "ReactiveTag")
+            {
+                var hidden_CflDocId = (string)Request["hidden_CflDocId"];
+                hidden_CflDocId = hidden_CflDocId.Replace("'", "''");
+                cflParam.SqlWhere = string.Format(" " +
+                    "AND \"Status\" = 'I'  ");
+            }
             cflParam.IsMulti = Request["hidden_CflIsMulti"];
             
             return cflParam;

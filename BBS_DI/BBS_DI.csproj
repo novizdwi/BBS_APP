@@ -169,6 +169,8 @@
     <Compile Include="Models\Master\Item\DeactiveTag__List_Model.cs" />
     <Compile Include="Models\Master\Item\ChangeItemService.cs" />
     <Compile Include="Models\Master\Item\ChangeItem__List_Model.cs" />
+    <Compile Include="Models\Master\Item\ReactiveTag.cs" />
+    <Compile Include="Models\Master\Item\ReactiveTag__List_Model.cs" />
     <Compile Include="Models\Master\Item\RfidMonitoringModel.cs" />
     <Compile Include="Models\Master\Item\ItemMasterService.cs" />
     <Compile Include="Models\Master\Item\ItemMaster__List_Model.cs" />
@@ -312,9 +314,6 @@
     <Compile Include="Models\_EF\Tm_Approval_User.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\_EF\Tm_Driver.cs">
-      <DependentUpon>HANA_APP.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\_EF\Tm_GeneralSetting.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
@@ -403,12 +402,6 @@
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\_EF\Tm_User_Warehouse.cs">
-      <DependentUpon>HANA_APP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\_EF\Tm_Vehicle.cs">
-      <DependentUpon>HANA_APP.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\_EF\Tm_VehicleType.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\_EF\Tp_Approval.cs">
@@ -514,6 +507,18 @@
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\_EF\Tx_PurchaseOrder_Item_Tag.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_ReactiveTag.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_ReactiveTag_Approval.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_ReactiveTag_Item.cs">
+      <DependentUpon>HANA_APP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\_EF\Tx_ReactiveTag_Log.cs">
       <DependentUpon>HANA_APP.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\_EF\Tx_Request_StockOpname.cs">

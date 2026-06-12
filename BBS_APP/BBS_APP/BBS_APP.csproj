@@ -942,6 +942,24 @@
     <Content Include="Views\Master\Item\DeactiveTag\Partial\ViewApproval\ViewApproval_Panel_Partial.cshtml" />
     <Content Include="Views\Master\Item\DeactiveTag\Partial\ViewApproval\ViewApproval_Partial.cshtml" />
     <Content Include="Views\Master\Item\DeactiveTag\Partial\ViewApproval\ViewApproval_TabContent_List_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ReactiveTag\Partial\Approval\Approval_Form_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ReactiveTag\Partial\Approval\Approval_Form_TabApproval_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ReactiveTag\Partial\Approval\Approval_Panel_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ReactiveTag\Partial\Approval\Approval_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ReactiveTag\Partial\CancelReason\CancelReason_Form_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ReactiveTag\Partial\CancelReason\CancelReason_Panel_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ReactiveTag\Partial\CancelReason\CancelReason_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ReactiveTag\Partial\ReactiveTag_Form_BtnBottom_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ReactiveTag\Partial\ReactiveTag_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ReactiveTag\Partial\ReactiveTag_Form_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ReactiveTag\Partial\ReactiveTag_Form_TabDetail_List_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ReactiveTag\Partial\ReactiveTag_List_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ReactiveTag\Partial\ReactiveTag_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ReactiveTag\Partial\ViewApproval\ViewApproval_Form_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ReactiveTag\Partial\ViewApproval\ViewApproval_Panel_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ReactiveTag\Partial\ViewApproval\ViewApproval_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ReactiveTag\Partial\ViewApproval\ViewApproval_TabContent_List_Partial.cshtml" />
+    <Content Include="Views\Master\Item\ReactiveTag\ReactiveTag.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -984,6 +1002,13 @@
     <Compile Include="Controllers\Master\Item\ItemMaster\ItemMasterController.List.cs" />
     <Compile Include="Controllers\Master\Item\ItemMaster\ItemMasterController.Nav.cs" />
     <Compile Include="Controllers\Master\Item\ItemMaster\ItemMasterController.Tab.Detail.cs" />
+    <Compile Include="Controllers\Master\Item\ReactiveTag\ReactiveTagController.Approval.cs" />
+    <Compile Include="Controllers\Master\Item\ReactiveTag\ReactiveTagController.CancelReason.cs" />
+    <Compile Include="Controllers\Master\Item\ReactiveTag\ReactiveTagController.cs" />
+    <Compile Include="Controllers\Master\Item\ReactiveTag\ReactiveTagController.List.cs" />
+    <Compile Include="Controllers\Master\Item\ReactiveTag\ReactiveTagController.Nav.cs" />
+    <Compile Include="Controllers\Master\Item\ReactiveTag\ReactiveTagController.Tab.Detail.cs" />
+    <Compile Include="Controllers\Master\Item\ReactiveTag\ReactiveTagController.ViewApproval.cs" />
     <Compile Include="Controllers\Master\Item\RfidMonitoring\RfidMonitoringController.ViewItemTag.cs" />
     <Compile Include="Controllers\Master\Item\RfidMonitoring\RfidMonitoringController.cs" />
     <Compile Include="Controllers\Master\Item\RfidMonitoring\RfidMonitoringController.Tab.Reference.cs" />

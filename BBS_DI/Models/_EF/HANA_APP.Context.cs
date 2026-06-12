@@ -134,8 +134,9 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_TransferSummaryOut_Item_Tag> Tx_TransferSummaryOut_Item_Tag { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut_Ref> Tx_TransferSummaryOut_Ref { get; set; }
         public virtual DbSet<Tp_UserAlert> Tp_UserAlert { get; set; }
-        public virtual DbSet<Tm_Driver> Tm_Driver { get; set; }
-        public virtual DbSet<Tm_Vehicle> Tm_Vehicle { get; set; }
-        public virtual DbSet<Tm_VehicleType> Tm_VehicleType { get; set; }
+        public virtual DbSet<Tx_ReactiveTag> Tx_ReactiveTag { get; set; }
+        public virtual DbSet<Tx_ReactiveTag_Approval> Tx_ReactiveTag_Approval { get; set; }
+        public virtual DbSet<Tx_ReactiveTag_Item> Tx_ReactiveTag_Item { get; set; }
+        public virtual DbSet<Tx_ReactiveTag_Log> Tx_ReactiveTag_Log { get; set; }
     }
 }
