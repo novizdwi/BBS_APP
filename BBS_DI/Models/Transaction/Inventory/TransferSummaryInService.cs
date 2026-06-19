@@ -99,11 +99,15 @@ namespace Models.Transaction.Inventory
         public string CreatedDate_ { get; set; }
 
         public string ModifiedDate_ { get; set; }
+
         public int? ApprovalTemplateId_ { get; set; }
 
         public string IsEligibleApprove_ { get; set; }
 
         public string IsAnyDeactiveTag_ { get; set; }
+
+        public string IsExistsInvalidQuantity_ { get; set; }
+
         public List<TransferSummaryIn_DetailModel> ListDetails_ = new List<TransferSummaryIn_DetailModel>();
 
         public List<TransferSummaryIn_RefModel> ListRef_ = new List<TransferSummaryIn_RefModel>();
@@ -230,6 +234,8 @@ namespace Models.Transaction.Inventory
 
         public decimal? QuantityValid { get; set; }
 
+        public decimal? QuantityInvalid_ { get; set; }
+
         public decimal? QuantityPosted { get; set; }
 
         public int? UomEntry { get; set; }
@@ -351,7 +357,7 @@ namespace Models.Transaction.Inventory
                 model.ListRef_ = this.TransferSummaryIn_Refs(CONTEXT, id);
                 model.ListDetails_ = this.TransferSummaryIn_Details(CONTEXT, id);
 
-
+                model.IsExistsInvalidQuantity_ = model.ListDetails_.Any(x => x.QuantityInvalid_ > 0) ? "1" : "0";
 
                 if (model.Status == "Draft")
                 {
@@ -408,7 +414,8 @@ namespace Models.Transaction.Inventory
 
         public List<TransferSummaryIn_DetailModel> TransferSummaryIn_Details(HANA_APP CONTEXT, long id = 0)
         {
-            string ssql = @"SELECT T0.* , T1.""QuantityToReceipt"" AS ""QuantityOpen_"" 
+            string ssql = @"SELECT T0.* , T1.""QuantityToReceipt"" AS ""QuantityOpen_"" ,
+                (COALESCE(T0.""QuantityScan"",0) - COALESCE(T0.""QuantityValid"",0))AS ""QuantityInvalid_"" 
                 FROM ""Tx_TransferSummaryIn_Item"" T0
                 LEFT JOIN ""Tx_TransferSummaryOut_Item"" T1 ON T0.""BaseDetId"" = T1.""DetId""
                 WHERE T0.""Id"" =:p0

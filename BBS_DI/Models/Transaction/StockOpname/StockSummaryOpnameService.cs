@@ -117,6 +117,8 @@ namespace Models.Transaction.StockOpname
 
         public string IsEligibleApprove_ { get; set; }
 
+        public string IsExistsInvalidQuantity_ { get; set; }
+
         public List<StockSummaryOpname_DetailModel> ListDetail_ = new List<StockSummaryOpname_DetailModel>();
 
         public List<StockSummaryOpname_RefModel> ListRef_ = new List<StockSummaryOpname_RefModel>();
@@ -235,6 +237,8 @@ namespace Models.Transaction.StockOpname
         public decimal? Quantity { get; set; }
 
         public decimal? QuantityValid  { get; set; }
+
+        public decimal? QuantityInvalid_ { get; set; }
 
         public decimal? QuantityScan { get; set; }
 
@@ -452,6 +456,7 @@ namespace Models.Transaction.StockOpname
                 model.ListDetail_ = this.StockSummaryOpname_Details(CONTEXT, id);
                 model.ListRef_ = this.StockSummaryOpname_Refs(CONTEXT, id);
 
+                model.IsExistsInvalidQuantity_ = model.ListDetail_.Any(x => x.QuantityInvalid_ > 0) ? "1" : "0";
                 if (method != "post")
                 {
                     if (model.Status == "Draft")
@@ -495,7 +500,7 @@ namespace Models.Transaction.StockOpname
         {
             string ssql = @"SELECT ROW_NUMBER() OVER (PARTITION BY ""Id""  ORDER BY ""DetId"") AS ""RowNo"",
                 T0.*, COALESCE(T1.""OnHand"",0) AS ""OnHand"", (COALESCE(T0.""QuantityValid"",0) - COALESCE(T1.""OnHand"",0)) AS ""QtyVariance_"",
-                T3.""OnHand"" AS ""QuantityOnHandSAP_""
+                (COALESCE(T0.""QuantityScan"",0) - COALESCE(T0.""QuantityValid"",0))AS ""QuantityInvalid_"" , T3.""OnHand"" AS ""QuantityOnHandSAP_""
                 FROM ""Tx_StockSummaryOpname_Item"" T0
                 LEFT JOIN ""Tm_Item_Warehouse"" T1 ON T0.""ItemCode"" = T1.""ItemCode"" AND T0.""WhsCode"" = T1.""WhsCode""
                 LEFT JOIN """ + DbProvider.dbSap_Name + @""".""OITW"" T3 ON T0.""ItemCode"" = T3.""ItemCode"" AND T0.""WhsCode"" = T3.""WhsCode""

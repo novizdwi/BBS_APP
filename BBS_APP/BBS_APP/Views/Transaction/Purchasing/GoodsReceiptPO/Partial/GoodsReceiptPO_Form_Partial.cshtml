@@ -140,6 +140,22 @@
     groupItem_Col1.Items.Add(itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "IsExistsInvalidQuantity_";
+        itemSettings.FieldName = "IsExistsInvalidQuantity_";
+        itemSettings.ClientVisible = false;
+
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "IsExistsInvalidQuantity_";
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editornoimage";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.FromName("#EDEDED");
+        txt.Width = 230;
+    });
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
         itemSettings.Caption = "IsEligibleApprove_";
         itemSettings.FieldName = "IsEligibleApprove_";
         itemSettings.ClientVisible = false;

@@ -94,6 +94,8 @@ namespace Models.Transaction.Purchasing
 
         public string IsEligibleApprove_ { get; set; }
 
+        public string IsExistsInvalidQuantity_ { get; set; }
+
         public List<GoodsReceiptPO_DetailModel> ListDetails_ = new List<GoodsReceiptPO_DetailModel>();
 
         public List<GoodsReceiptPO_RefModel> ListRef_ = new List<GoodsReceiptPO_RefModel>();
@@ -223,6 +225,8 @@ namespace Models.Transaction.Purchasing
         public decimal? QuantityScan { get; set; }
 
         public decimal? QuantityValid { get; set; }
+
+        public decimal? QuantityInvalid_ { get; set; }
 
         public int? UomEntry { get; set; }
 
@@ -391,7 +395,8 @@ namespace Models.Transaction.Purchasing
 
         public List<GoodsReceiptPO_DetailModel> GoodsReceiptPO_Details(HANA_APP CONTEXT, long id = 0)
         {
-            string ssql = @"SELECT T0.*, T1.""DocNum"" AS ""PDODocNum_"", T2.""DocNum"" AS ""GRDocNum_""
+            string ssql = @"SELECT T0.*, T1.""DocNum"" AS ""PDODocNum_"", T2.""DocNum"" AS ""GRDocNum_"",
+                (COALESCE(T0.""QuantityScan"",0) - COALESCE(T0.""QuantityValid"",0))AS ""QuantityInvalid_"" 
                 FROM ""Tx_GoodsReceiptPO_Item"" T0
                 LEFT JOIN """ + DbProvider.dbSap_Name + @""".""OWOR"" T1 ON T0.""IdPDO"" = T1.""DocEntry""
                 LEFT JOIN """ + DbProvider.dbSap_Name + @""".""OIGN"" T2 ON T0.""GoodsReceiptDocEntry"" = T2.""DocEntry""

@@ -106,6 +106,8 @@ namespace Models.Transaction.Adjustment
 
         public string IsEligibleApprove_ { get; set; }
 
+        public string IsExistsInvalidQuantity_ { get; set; }
+
         public List<AdjustmentIn_ItemModel> ListDetails_ = new List<AdjustmentIn_ItemModel>();
 
         public AdjustmentIn_Detail Details_ { get; set; }

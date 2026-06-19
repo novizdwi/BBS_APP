@@ -283,6 +283,27 @@
 
     settings.Columns.Add(column =>
     {
+        column.FieldName = "QuantityInvalid_";
+        column.Name = "QuantityInvalid_";
+        column.Caption = "Quantity Invalid";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 80;
+        column.ReadOnly = true;
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+        ASPxSummaryItem summary = new ASPxSummaryItem();
+        summary.FieldName = column.FieldName;
+        summary.SummaryType = DevExpress.Data.SummaryItemType.Sum;
+        summary.DisplayFormat = "{0:#,###}";
+        settings.TotalSummary.Add(summary);
+    });
+
+    settings.Columns.Add(column =>
+    {
         column.FieldName = "QuantityOnHandSAP_";
         column.Name = "QuantityOnHandSAP_";
         column.Caption = "On Hand SAP";
@@ -720,6 +741,22 @@
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
     });
+
+    settings.HtmlRowPrepared = (sender, e) =>
+    {
+        if (e.RowType == GridViewRowType.Data)
+        {
+            string val = Convert.ToString(e.GetValue("QuantityInvalid_"));
+            decimal qtyInvalid = 0;
+            decimal.TryParse(val, out qtyInvalid);
+
+            if (qtyInvalid > 0)
+            {
+                e.Row.BackColor = System.Drawing.Color.FromName("#FFD2D2"); // merah muda
+                e.Row.ForeColor = System.Drawing.Color.DarkRed;
+            }
+        }
+    };
 
     settings.Settings.ShowFooter = true;
 

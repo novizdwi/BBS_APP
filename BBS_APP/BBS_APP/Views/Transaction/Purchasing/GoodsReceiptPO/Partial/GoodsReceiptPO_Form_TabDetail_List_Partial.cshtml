@@ -189,6 +189,22 @@
         txt.DisplayFormatString = "#,###.##";
     });
 
+    settings.HtmlRowPrepared = (sender, e) =>
+    {
+        if (e.RowType == GridViewRowType.Data)
+        {
+            string val = Convert.ToString(e.GetValue("QuantityInvalid_"));
+            decimal qtyInvalid = 0;
+            decimal.TryParse(val, out qtyInvalid);
+
+            if (qtyInvalid > 0)
+            {
+                e.Row.BackColor = System.Drawing.Color.FromName("#FFD2D2"); // merah muda
+                e.Row.ForeColor = System.Drawing.Color.DarkRed;
+            }
+        }
+    };
+
     settings.Columns.Add(column =>
     {
         column.FieldName = "Uom";
@@ -283,6 +299,22 @@
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
     });
+
+    settings.HtmlRowPrepared = (sender, e) =>
+    {
+        if (e.RowType == GridViewRowType.Data)
+        {
+            string val = Convert.ToString(e.GetValue("QuantityInvalid_"));
+            decimal qtyInvalid = 0;
+            decimal.TryParse(val, out qtyInvalid);
+
+            if (qtyInvalid > 0)
+            {
+                e.Row.BackColor = System.Drawing.Color.FromName("#FFD2D2"); // merah muda
+                e.Row.ForeColor = System.Drawing.Color.DarkRed;
+            }
+        }
+    };
 
     settings.Settings.ShowFooter = true;
 

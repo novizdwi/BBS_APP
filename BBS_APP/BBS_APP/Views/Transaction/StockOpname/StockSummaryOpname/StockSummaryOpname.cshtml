@@ -289,6 +289,18 @@
         }
         key = Id.GetValue();
 
+        var IsExistsInvalidQuantity = IsExistsInvalidQuantity_.GetValue();
+        if (IsExistsInvalidQuantity == "1") {
+            if (!confirm('One or more lines have invalid quantities. Do you want to continue posting?')) {
+                return;
+            }
+        }
+        else {
+            if (!confirm('Post transaction?')) {
+                return;
+            }
+        }
+
         var isApproval = ApprovalTemplateId_.GetValue();
         var approvalStatus = ApprovalStatus.GetValue();
 
@@ -300,8 +312,8 @@
     }
 
     function Post(s, e) {
-         var formData = GetFormData();
-        if (confirm('Post transaction?')) {
+        var formData = GetFormData();
+        {
             key = Id.GetValue();
 
             $.ajax({
@@ -643,42 +655,6 @@
             case 'btnMenuAuthorize':
                 key = Id.GetValue();
                 btnShowApprovalOnClick(s, e, key);
-                break;
-            case 'btnMenuSetStatusCancel':
-                key = Id.GetValue();
-                btnShowCancelReasonOnClick(s, e, key);
-
-                break;
-            case 'btnMenuSetStatusPost':
-                if (BeforeSave() == false) {
-                    return;
-                }
-                var formData = GetFormData();
-                if (confirm('Post transaction?')) {
-                    key = Id.GetValue();
-
-                    $.ajax({
-                        type: "POST",
-                        url: '@Url.Action("Post", "StockSummaryOpname")',
-                        data: formData,
-                        beforeSend: function () {
-                            OnBegin();
-                        },
-                        success: function (response) {
-                            RefreshAfterSuccess(response);
-                            OnSuccessMsgBox();
-
-                        },
-                        error: function (jqXhr, textStatus, errorThrown) {
-                            OnFailure(jqXhr, textStatus, errorThrown)
-                        },
-                        complete: function () {
-                            OnComplete()
-                        }
-                    });
-                }
-
-
                 break;
             default:
 
