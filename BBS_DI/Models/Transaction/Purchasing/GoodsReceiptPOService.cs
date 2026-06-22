@@ -277,6 +277,8 @@ namespace Models.Transaction.Purchasing
         public string EventType { get; set; }
 
         public string Status { get; set; }
+
+        public string ErrorMessage { get; set; }
     }
 
     public class GRPOAddResultModel

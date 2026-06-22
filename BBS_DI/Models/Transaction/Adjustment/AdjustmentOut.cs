@@ -283,6 +283,8 @@ namespace Models.Transaction.Adjustment
         public string Information { get; set; }
 
         public string PostResultNote { get; set; }
+
+        public string ErrorMessage { get; set; }
     }
 
 

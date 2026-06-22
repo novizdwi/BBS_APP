@@ -104,6 +104,10 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_PurchaseOrder> Tx_PurchaseOrder { get; set; }
         public virtual DbSet<Tx_PurchaseOrder_Item> Tx_PurchaseOrder_Item { get; set; }
         public virtual DbSet<Tx_PurchaseOrder_Item_Tag> Tx_PurchaseOrder_Item_Tag { get; set; }
+        public virtual DbSet<Tx_ReactiveTag> Tx_ReactiveTag { get; set; }
+        public virtual DbSet<Tx_ReactiveTag_Approval> Tx_ReactiveTag_Approval { get; set; }
+        public virtual DbSet<Tx_ReactiveTag_Item> Tx_ReactiveTag_Item { get; set; }
+        public virtual DbSet<Tx_ReactiveTag_Log> Tx_ReactiveTag_Log { get; set; }
         public virtual DbSet<Tx_Request_StockOpname> Tx_Request_StockOpname { get; set; }
         public virtual DbSet<Tx_StockOpname> Tx_StockOpname { get; set; }
         public virtual DbSet<Tx_StockOpname_Approval> Tx_StockOpname_Approval { get; set; }
@@ -134,9 +138,5 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_TransferSummaryOut_Item_Tag> Tx_TransferSummaryOut_Item_Tag { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut_Ref> Tx_TransferSummaryOut_Ref { get; set; }
         public virtual DbSet<Tp_UserAlert> Tp_UserAlert { get; set; }
-        public virtual DbSet<Tx_ReactiveTag> Tx_ReactiveTag { get; set; }
-        public virtual DbSet<Tx_ReactiveTag_Approval> Tx_ReactiveTag_Approval { get; set; }
-        public virtual DbSet<Tx_ReactiveTag_Item> Tx_ReactiveTag_Item { get; set; }
-        public virtual DbSet<Tx_ReactiveTag_Log> Tx_ReactiveTag_Log { get; set; }
     }
 }

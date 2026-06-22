@@ -289,6 +289,8 @@ namespace Models.Transaction.Inventory
         public string EventType { get; set; }
 
         public string Status { get; set; }
+
+        public string ErrorMessage { get; set; }
     }
 
     public class TransferSummaryInAddResultModel
@@ -862,8 +864,7 @@ namespace Models.Transaction.Inventory
                 {
                     try
                     {
-                        oCompany = SAPCachedCompany.GetCompany();
-                        oCompany.StartTransaction();
+                        oCompany = SAPCachedCompany.GetCompany(); 
 
                         String keyValue;
                         keyValue = id.ToString();
@@ -903,14 +904,35 @@ namespace Models.Transaction.Inventory
                             throw new Exception("One or more RFID statuses has already changed to Inactive");
                         }
 
-
-
                         if (tx_TransferSummaryIn != null)
                         {
                             string docEntry_ = AddTransferSummaryIn(oCompany, userId, id, syncTransferSummaryIn);
-                            if(!Int32.TryParse(docEntry_, out int docEntryOut) || docEntryOut <= 0 )
+
+                            string ssqlCheckSap = @"SELECT T1.""DocEntry""
+                                FROM ""Tx_TransferSummaryIn"" T0
+                                INNER JOIN """ + DbProvider.dbSap_Name + @""".""OWTR"" T1 ON T0.""Id"" = T1.""U_IDU_WebId"" AND T0.""TransNo"" = T1.""U_IDU_WebTransNo""
+                                WHERE T0.""Id"" = :p0
+                                AND T1.""CANCELED"" = 'N'
+                            ";
+
+                            string existingDocEntry = CONTEXT.Database.SqlQuery<string>(ssqlCheckSap, id).FirstOrDefault();
+                            if (!string.IsNullOrEmpty(existingDocEntry))
                             {
-                                throw new Exception("An error occured during post, please try again ");
+                                if (syncTransferSummaryIn.Status == "Posted")
+                                {
+                                    throw new Exception("[VALIDATION] Transaction sudah pernah di-post ke SAP dengan DocEntry " + existingDocEntry);
+                                }
+                                docEntry_ = existingDocEntry;
+                            }
+                            else
+                            {
+                                oCompany.StartTransaction();
+                                docEntry_ = AddTransferSummaryIn(oCompany, userId, id, syncTransferSummaryIn);
+                                if (!Int32.TryParse(docEntry_, out int docEntryOut) || docEntryOut <= 0 )
+                                {
+                                    throw new Exception("An error occured during post, please try again ");
+                                }
+
                             }
                              
                             string ssql = @"SELECT ""DocNum"" 
@@ -937,6 +959,11 @@ namespace Models.Transaction.Inventory
                             CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryIn_UpdateItem\"(:p0,:p1, 'after')", userId, id);
                             SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", CONTEXT, "after", "Tx_TransferSummaryIn", "post", "Id", keyValue);
 
+                            if (oCompany.InTransaction)
+                            {
+                                oCompany.EndTransaction(BoWfTransOpt.wf_Commit);
+                            }
+
                             CONTEXT_TRANS.Commit(); 
                         }
 
@@ -945,6 +972,11 @@ namespace Models.Transaction.Inventory
                     catch (Exception ex)
                     {
                         CONTEXT_TRANS.Rollback();
+                        if (oCompany != null && oCompany.InTransaction)
+                        {
+                            oCompany.EndTransaction(BoWfTransOpt.wf_RollBack);
+                        }
+
 
                         string errorMassage;
                         if (ex.Message.Substring(12) == "[VALIDATION]")
@@ -1034,7 +1066,31 @@ namespace Models.Transaction.Inventory
             return result;
         }
 
+        private void CancelInventoryTransfer(Company oCompany, int docEntry, string cancelReason)
+        {
+            int lRet;
+            string errMsg;
 
+            SAPbobsCOM.StockTransfer oTransfer = (SAPbobsCOM.StockTransfer)oCompany.GetBusinessObject( SAPbobsCOM.BoObjectTypes.oStockTransfer);
+
+            if (!oTransfer.GetByKey(docEntry))
+                throw new Exception($"Document {docEntry} not found");
+
+            if (!string.IsNullOrEmpty(cancelReason))
+            {
+                oTransfer.Comments = (oTransfer.Comments ?? "") + $" | CANCEL REASON: {cancelReason}";
+            }
+
+            lRet = oTransfer.Cancel();
+
+            if (lRet != 0)
+            {
+                int errCode = oCompany.GetLastErrorCode();
+                errMsg = oCompany.GetLastErrorDescription();
+
+                throw new Exception($"Cancel failed: {errCode} - {errMsg}");
+            }
+        }
 
         public void Cancel(int userId, long Id, string cancelReason)
         {
@@ -1053,6 +1109,10 @@ namespace Models.Transaction.Inventory
                         Tx_TransferSummaryIn tx_TransferSummaryIn = CONTEXT.Tx_TransferSummaryIn.Find(Id);
                         if (tx_TransferSummaryIn != null)
                         {
+                            if(tx_TransferSummaryIn.Status == "Posted")
+                            {
+
+                            }
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
                             tx_TransferSummaryIn.Status = "Cancel";
                             tx_TransferSummaryIn.CancelReason = cancelReason;

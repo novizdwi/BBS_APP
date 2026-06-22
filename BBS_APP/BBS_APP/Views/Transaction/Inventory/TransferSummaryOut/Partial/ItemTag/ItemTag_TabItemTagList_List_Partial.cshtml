@@ -60,6 +60,18 @@
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
     });
 
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "ErrorMessage";
+        column.Name = "ErrorMessage";
+        column.Caption = "Message";
+        column.Width = 160;
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Visible = true;
+
+        column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+    });
+
     settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
 
     settings.HtmlDataCellPrepared = (s, e) =>

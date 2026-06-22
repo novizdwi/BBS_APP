@@ -287,6 +287,8 @@ namespace Models.Transaction.Inventory
         public string EventType { get; set; }
 
         public string Status { get; set; }
+
+        public string ErrorMessage { get; set; }
     }
 
     public class TransferSummaryOutAddResultModel
@@ -865,7 +867,6 @@ namespace Models.Transaction.Inventory
                     try
                     {
                         oCompany = SAPCachedCompany.GetCompany();
-                        oCompany.StartTransaction();
 
                         String keyValue;
                         keyValue = id.ToString();
@@ -889,11 +890,33 @@ namespace Models.Transaction.Inventory
                             //TransferSummaryOutAddResultModel TransferSummaryOutResult = new TransferSummaryOutAddResultModel();
                             //string docEntry_ = 4382.ToString();
 
-                            string docEntry_ = AddTransferSummaryOut(oCompany, userId, id, syncTransferSummaryOut);
-                            if(!Int32.TryParse(docEntry_, out int docEntryOut) || docEntryOut <= 0 )
+                            string docEntry_ = string.Empty;
+                            string ssqlCheckSap = @"SELECT T1.""DocEntry""
+                                    FROM ""Tx_TransferSummaryOut"" T0
+                                    INNER JOIN """ + DbProvider.dbSap_Name + @""".""OWTR"" T1  ON T0.""Id"" = T1.""U_IDU_WebId""  AND T0.""TransNo"" = T1.""U_IDU_WebTransNo""
+                                    WHERE T0.""Id"" = :p0
+                                    AND T1.""CANCELED"" = 'N'
+                                ";
+
+                            string existingDocEntry = CONTEXT.Database.SqlQuery<string>(ssqlCheckSap, id).FirstOrDefault();
+
+                            if (!string.IsNullOrEmpty(existingDocEntry))
                             {
-                                throw new Exception("An error occured during post, please try again ");
-                            } 
+                                if (syncTransferSummaryOut.Status == "Posted")
+                                {
+                                    throw new Exception("[VALIDATION] Transaction sudah pernah di-post ke SAP dengan DocEntry " + existingDocEntry);
+                                }
+                                docEntry_ = existingDocEntry;
+                            }
+                            else
+                            {
+                                oCompany.StartTransaction();
+                                docEntry_ = AddTransferSummaryOut(oCompany, userId, id, syncTransferSummaryOut);
+                                if (!Int32.TryParse(docEntry_, out int docEntryOut) || docEntryOut <= 0)
+                                {
+                                    throw new Exception("An error occured during post, please try again ");
+                                }
+                            }
 
                             string ssql = @"SELECT ""DocNum"" 
                                         FROM """ + DbProvider.dbSap_Name + @""".""OWTR"" T0
@@ -919,10 +942,12 @@ namespace Models.Transaction.Inventory
                             CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_TransferItemTag\"(:p0,:p1, 'TransferSummaryOut', 'A')", userId, id);
                             CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateItem\"(:p0,:p1, 'after')", userId, id);
                             SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "post", "Id", keyValue);
-                             
+                            if (oCompany.InTransaction)
+                            {
+                                oCompany.EndTransaction(BoWfTransOpt.wf_Commit);
+                            }
 
-                            CONTEXT_TRANS.Commit();
-                                                        
+                            CONTEXT_TRANS.Commit();                                                        
                         }
 
                     }
@@ -930,11 +955,10 @@ namespace Models.Transaction.Inventory
                     catch (Exception ex)
                     {
                         CONTEXT_TRANS.Rollback();
-
-                        //if (oCompany.InTransaction)
-                        //{
-                        //    oCompany.EndTransaction(BoWfTransOpt.wf_RollBack);
-                        //}
+                        if (oCompany.InTransaction)
+                        {
+                            oCompany.EndTransaction(BoWfTransOpt.wf_RollBack);
+                        }
 
                         string errorMassage;
                         if (ex.Message.Substring(12) == "[VALIDATION]")
