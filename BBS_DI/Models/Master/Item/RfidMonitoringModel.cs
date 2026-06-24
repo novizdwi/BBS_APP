@@ -102,6 +102,8 @@ namespace Models.Master.Item
 
         public string Status { get; set; }
 
+        public string Event { get; set; }
+
         public DateTime? CreatedDate { get; set; }
 
         public string CreatedUser { get; set; }
@@ -219,6 +221,7 @@ namespace Models.Master.Item
                         ) AS ""TransType"",
                         T0.""BaseId"",
                         T0.""BaseTransNo"",
+                        T0.""Event"",
                         T0.""ItemCode"",
                         T0.""ItemName"",
                         T0.""NewItemCode"",

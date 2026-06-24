@@ -867,6 +867,7 @@ namespace Models.Transaction.Inventory
                     try
                     {
                         oCompany = SAPCachedCompany.GetCompany();
+                        oCompany.StartTransaction();
 
                         String keyValue;
                         keyValue = id.ToString();
@@ -910,7 +911,6 @@ namespace Models.Transaction.Inventory
                             }
                             else
                             {
-                                oCompany.StartTransaction();
                                 docEntry_ = AddTransferSummaryOut(oCompany, userId, id, syncTransferSummaryOut);
                                 if (!Int32.TryParse(docEntry_, out int docEntryOut) || docEntryOut <= 0)
                                 {
@@ -1063,9 +1063,9 @@ namespace Models.Transaction.Inventory
 
         public void Cancel(int userId, long Id, string cancelReason)
         {
+            SAPbobsCOM.Company oCompany = null;
             using (var CONTEXT = new HANA_APP())
             {
-
                 using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
                 {
                     try
@@ -1078,6 +1078,15 @@ namespace Models.Transaction.Inventory
                         Tx_TransferSummaryOut tx_TransferSummaryOut = CONTEXT.Tx_TransferSummaryOut.Find(Id);
                         if (tx_TransferSummaryOut != null)
                         {
+                            string isAfterPosted = tx_TransferSummaryOut.Status == "Posted" ? "Y" : "N";
+                            if (isAfterPosted == "Y")
+                            {
+                                oCompany = SAPCachedCompany.GetCompany();
+                                int docEntry = (int)tx_TransferSummaryOut.DocEntry;
+                                CancelInventoryTransfer(oCompany, docEntry, cancelReason);
+
+                            }
+
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
                             tx_TransferSummaryOut.Status = "Cancel";
                             tx_TransferSummaryOut.CancelReason = cancelReason;
@@ -1085,6 +1094,11 @@ namespace Models.Transaction.Inventory
                             tx_TransferSummaryOut.ModifiedUser = userId;
 
                             CONTEXT.SaveChanges();
+                            if (isAfterPosted == "Y")
+                            {
+                                CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_CancelTransferItemTag\"(:p0,:p1, 'TransferSummaryOut')", userId, Id);
+                            }
+
                         }
 
                         SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "cancel", "Id", keyValue);
@@ -1112,6 +1126,34 @@ namespace Models.Transaction.Inventory
                 }
             }
 
+        }
+
+        private int CancelInventoryTransfer(Company oCompany, int docEntry, string cancelReason)
+        {
+            int lRet;
+            string errMsg;
+
+            SAPbobsCOM.StockTransfer oTransfer = (SAPbobsCOM.StockTransfer)oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oStockTransfer);
+
+            if (!oTransfer.GetByKey(docEntry))
+                throw new Exception($"Document {docEntry} not found");
+
+            if (!string.IsNullOrEmpty(cancelReason))
+            {
+                oTransfer.Comments = (oTransfer.Comments ?? "") + $" | CANCEL REASON: {cancelReason}";
+            }
+
+            lRet = oTransfer.Cancel();
+
+            if (lRet != 0)
+            {
+                int errCode = oCompany.GetLastErrorCode();
+                errMsg = oCompany.GetLastErrorDescription();
+
+                throw new Exception($"Cancel failed: {errCode} - {errMsg}");
+            }
+
+            return lRet;
         }
 
         public void RequestApproval(int userId, long id, int templateId, string approvalMessages)

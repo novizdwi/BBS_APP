@@ -46,6 +46,18 @@
 
     settings.Columns.Add(column =>
     {
+        column.FieldName = "Event";
+        column.Name = "Event";
+        column.Caption = "Event";
+        column.Width = 120;
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Visible = true;
+
+        column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+    });
+
+    settings.Columns.Add(column =>
+    {
         column.FieldName = "ItemCode";
         column.Name = "ItemCode";
         column.Caption = "Old Item Code";
@@ -178,6 +190,19 @@
 
         column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
     });
+
+    settings.HtmlRowPrepared = (sender, e) =>
+    {
+        if (e.RowType == GridViewRowType.Data)
+        {
+            string val = Convert.ToString(e.GetValue("Event"));
+            if (val == "Cancellation")
+            {
+                e.Row.BackColor = System.Drawing.Color.FromName("#FFD2D2"); // merah muda
+                e.Row.ForeColor = System.Drawing.Color.DarkRed;
+            }
+        }
+    };
 
     settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
 

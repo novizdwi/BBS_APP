@@ -864,7 +864,8 @@ namespace Models.Transaction.Inventory
                 {
                     try
                     {
-                        oCompany = SAPCachedCompany.GetCompany(); 
+                        oCompany = SAPCachedCompany.GetCompany();
+                        oCompany.StartTransaction();
 
                         String keyValue;
                         keyValue = id.ToString();
@@ -926,7 +927,6 @@ namespace Models.Transaction.Inventory
                             }
                             else
                             {
-                                oCompany.StartTransaction();
                                 docEntry_ = AddTransferSummaryIn(oCompany, userId, id, syncTransferSummaryIn);
                                 if (!Int32.TryParse(docEntry_, out int docEntryOut) || docEntryOut <= 0 )
                                 {
@@ -1066,7 +1066,7 @@ namespace Models.Transaction.Inventory
             return result;
         }
 
-        private void CancelInventoryTransfer(Company oCompany, int docEntry, string cancelReason)
+        private int CancelInventoryTransfer(Company oCompany, int docEntry, string cancelReason)
         {
             int lRet;
             string errMsg;
@@ -1090,10 +1090,13 @@ namespace Models.Transaction.Inventory
 
                 throw new Exception($"Cancel failed: {errCode} - {errMsg}");
             }
+
+            return lRet;
         }
 
         public void Cancel(int userId, long Id, string cancelReason)
         {
+            SAPbobsCOM.Company oCompany = null;
             using (var CONTEXT = new HANA_APP())
             {
 
@@ -1109,10 +1112,15 @@ namespace Models.Transaction.Inventory
                         Tx_TransferSummaryIn tx_TransferSummaryIn = CONTEXT.Tx_TransferSummaryIn.Find(Id);
                         if (tx_TransferSummaryIn != null)
                         {
-                            if(tx_TransferSummaryIn.Status == "Posted")
+                            string isAfterPosted = tx_TransferSummaryIn.Status == "Posted"? "Y" : "N";
+                            if(isAfterPosted == "Y")
                             {
+                                oCompany = SAPCachedCompany.GetCompany();
+                                int docEntry = (int)tx_TransferSummaryIn.DocEntry;
+                                CancelInventoryTransfer(oCompany, docEntry, cancelReason);
 
                             }
+
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
                             tx_TransferSummaryIn.Status = "Cancel";
                             tx_TransferSummaryIn.CancelReason = cancelReason;
@@ -1120,11 +1128,21 @@ namespace Models.Transaction.Inventory
                             tx_TransferSummaryIn.ModifiedUser = userId;
 
                             CONTEXT.SaveChanges();
+
+                            if (isAfterPosted == "Y")
+                            {
+                                CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_CancelTransferItemTag\"(:p0,:p1, 'TransferSummaryIn')", userId, Id);
+                            }
+
                         }
 
                         SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryIn", CONTEXT, "after", "Tx_TransferSummaryIn", "cancel", "Id", keyValue);
 
                         //CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryIn_UpdateStatus\"(:p0,:p1,'cancel')", userId, Id);
+                        if (oCompany.InTransaction)
+                        {
+                            oCompany.EndTransaction(BoWfTransOpt.wf_Commit);
+                        }
 
                         CONTEXT_TRANS.Commit();
                     }
@@ -1132,6 +1150,11 @@ namespace Models.Transaction.Inventory
                     catch (Exception ex)
                     {
                         CONTEXT_TRANS.Rollback();
+                        if (oCompany.InTransaction)
+                        {
+                            oCompany.EndTransaction(BoWfTransOpt.wf_RollBack);
+                        }
+
 
                         string errorMassage;
                         if (ex.Message.Substring(12) == "[VALIDATION]")
@@ -1144,6 +1167,11 @@ namespace Models.Transaction.Inventory
                         }
 
                         throw new Exception(errorMassage);
+                    }
+                    finally
+                    {
+                        SapCompany.CleanUpGCCollect();
+                        SAPCachedCompany.Release(oCompany);
                     }
                 }
             }
