@@ -918,30 +918,23 @@ namespace Models.Transaction.Inventory
                                 }
                             }
 
-                            string ssql = @"SELECT ""DocNum"" 
-                                        FROM """ + DbProvider.dbSap_Name + @""".""OWTR"" T0
-                                        WHERE T0.""DocEntry"" = " + docEntry_ + @" 
-                                        ";
+                            Recordset rs = (Recordset)oCompany.GetBusinessObject(BoObjectTypes.BoRecordset);
+                            string sqlUpdate = $@"
+                                UPDATE ""{DbProvider.dbApp_Name}"".""Tx_TransferSummaryOut""
+                                SET ""Status"" = 'Posted',
+                                    ""DocEntry"" = {docEntry_},
+                                    ""PostingDate"" = CURRENT_TIMESTAMP,
+                                    ""DocNum"" = (SELECT ""DocNum"" FROM ""{DbProvider.dbSap_Name}"".""OWTR"" WHERE ""DocEntry"" = {docEntry_}),
+                                    ""IsAfterPosted"" = 'Y',
+                                    ""ModifiedUser"" = {userId},
+                                    ""ModifiedDate"" = CURRENT_TIMESTAMP
+                                WHERE ""Id"" = {id}";
+                            rs.DoQuery(sqlUpdate);
 
-                            string docNum = CONTEXT.Database.SqlQuery<string>(ssql, id).FirstOrDefault();
-
-                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-
-                            tx_TransferSummaryOut.PostingDate = dtModified;
-                            tx_TransferSummaryOut.DocEntry = Convert.ToInt64(docEntry_);
-                            tx_TransferSummaryOut.DocNum = docNum;
-                            tx_TransferSummaryOut.PostingDate = dtModified;
-
-                            tx_TransferSummaryOut.Status = "Posted";
-                            tx_TransferSummaryOut.IsAfterPosted = "Y";
-                            tx_TransferSummaryOut.ModifiedDate = dtModified;
-                            tx_TransferSummaryOut.ModifiedUser = userId;
-
-                            CONTEXT.SaveChanges();
-
-                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_TransferItemTag\"(:p0,:p1, 'TransferSummaryOut', 'A')", userId, id);
-                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateItem\"(:p0,:p1, 'after')", userId, id);
+                            rs.DoQuery($"CALL \"{DbProvider.dbApp_Name}\".\"SpItem_TransferItemTag\"({userId}, {id}, 'TransferSummaryOut', 'A')");
+                            rs.DoQuery($"CALL \"{DbProvider.dbApp_Name}\".\"SpTransferSummaryIn_UpdateItem\"({userId}, {id}, 'after')");
                             SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "post", "Id", keyValue);
+
                             if (oCompany.InTransaction)
                             {
                                 oCompany.EndTransaction(BoWfTransOpt.wf_Commit);
@@ -1064,6 +1057,7 @@ namespace Models.Transaction.Inventory
         public void Cancel(int userId, long Id, string cancelReason)
         {
             SAPbobsCOM.Company oCompany = null;
+
             using (var CONTEXT = new HANA_APP())
             {
                 using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
@@ -1072,6 +1066,7 @@ namespace Models.Transaction.Inventory
                     {
                         String keyValue;
                         keyValue = Id.ToString();
+                        oCompany = SAPCachedCompany.GetCompany();
 
                         SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "before", "Tx_TransferSummaryOut", "cancel", "Id", keyValue);
 
@@ -1081,7 +1076,7 @@ namespace Models.Transaction.Inventory
                             string isAfterPosted = tx_TransferSummaryOut.Status == "Posted" ? "Y" : "N";
                             if (isAfterPosted == "Y")
                             {
-                                oCompany = SAPCachedCompany.GetCompany();
+                                
                                 int docEntry = (int)tx_TransferSummaryOut.DocEntry;
                                 CancelInventoryTransfer(oCompany, docEntry, cancelReason);
 
@@ -1102,7 +1097,6 @@ namespace Models.Transaction.Inventory
                         }
 
                         SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "cancel", "Id", keyValue);
-
                         
                         CONTEXT_TRANS.Commit();
                     }

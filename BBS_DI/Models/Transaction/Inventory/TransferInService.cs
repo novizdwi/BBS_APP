@@ -182,6 +182,8 @@ namespace Models.Transaction.Inventory
 
         public string EventType { get; set; }
 
+        public string ErrorMessage { get; set; }
+
         public string Status { get; set; }
     }
 
