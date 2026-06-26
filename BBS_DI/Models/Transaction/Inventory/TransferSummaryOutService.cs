@@ -932,7 +932,7 @@ namespace Models.Transaction.Inventory
                             rs.DoQuery(sqlUpdate);
 
                             rs.DoQuery($"CALL \"{DbProvider.dbApp_Name}\".\"SpItem_TransferItemTag\"({userId}, {id}, 'TransferSummaryOut', 'A')");
-                            rs.DoQuery($"CALL \"{DbProvider.dbApp_Name}\".\"SpTransferSummaryIn_UpdateItem\"({userId}, {id}, 'after')");
+                            rs.DoQuery($"CALL \"{DbProvider.dbApp_Name}\".\"SpTransferSummaryOut_UpdateItem\"({userId}, {id}, 'after')");
                             SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "post", "Id", keyValue);
 
                             if (oCompany.InTransaction)
