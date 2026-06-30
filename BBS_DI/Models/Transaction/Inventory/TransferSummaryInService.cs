@@ -907,8 +907,8 @@ namespace Models.Transaction.Inventory
 
                         if (tx_TransferSummaryIn != null)
                         {
-                            string docEntry_ = AddTransferSummaryIn(oCompany, userId, id, syncTransferSummaryIn);
 
+                            string docEntry_ = string.Empty;
                             string ssqlCheckSap = @"SELECT T1.""DocEntry""
                                 FROM ""Tx_TransferSummaryIn"" T0
                                 INNER JOIN """ + DbProvider.dbSap_Name + @""".""OWTR"" T1 ON T0.""Id"" = T1.""U_IDU_WebId"" AND T0.""TransNo"" = T1.""U_IDU_WebTransNo""
