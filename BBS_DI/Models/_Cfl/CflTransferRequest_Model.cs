@@ -59,13 +59,14 @@ namespace Models._Cfl
                 T0.""TransDate"", 
                 T0.""FromWhsCode"", 
                 T0.""FromWhsName"", 
-                IFNULL(T1.""U_IDU_WhsTransit"",'') AS ""TransitWhsCode"",
-                IFNULL(T2.""WhsName"",'') AS ""TransitWhsName"",
+                IFNULL(T3.""WhsCode"",'') AS ""TransitWhsCode"",
+                IFNULL(T3.""WhsName"",'') AS ""TransitWhsName"",
                 T0.""ToWhsCode"", T0.""ToWhsName"", 
                 T0.""Comments""
             FROM ""Tx_TransferRequest"" T0
             LEFT JOIN ""{DbSap}"".""OWHS"" T1 ON T1.""WhsCode"" = T0.""FromWhsCode""
-            LEFT JOIN ""{DbSap}"".""OWHS"" T2 ON T2.""WhsCode"" = IFNULL(T1.""U_IDU_WhsTransit"",'')
+            LEFT JOIN ""{DbSap}"".""OWHS"" T2 ON T2.""WhsCode"" = T0.""ToWhsCode""
+            LEFT JOIN ""{DbSap}"".""OWHS"" T3 ON T3.""WhsCode"" = T2.""U_IDU_WhsTransit""
             WHERE T0.""Status"" = 'Posted' AND T1.""Inactive"" = 'N'
             ";
 

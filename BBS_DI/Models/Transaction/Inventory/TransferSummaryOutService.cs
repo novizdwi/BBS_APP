@@ -704,7 +704,7 @@ namespace Models.Transaction.Inventory
 
                                     if(method == "Post")
                                     {
-                                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateItem\"(:p0,:p1, 'before')", model._UserId, model.Id);
+                                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateItem\"(:p0,:p1, 'before', 0)", model._UserId, model.Id);
                                     }
                                     CONTEXT.SaveChanges();
 
@@ -919,6 +919,7 @@ namespace Models.Transaction.Inventory
                             }
 
                             Recordset rs = (Recordset)oCompany.GetBusinessObject(BoObjectTypes.BoRecordset);
+                            /*
                             string sqlUpdate = $@"
                                 UPDATE ""{DbProvider.dbApp_Name}"".""Tx_TransferSummaryOut""
                                 SET ""Status"" = 'Posted',
@@ -929,10 +930,15 @@ namespace Models.Transaction.Inventory
                                     ""ModifiedUser"" = {userId},
                                     ""ModifiedDate"" = CURRENT_TIMESTAMP
                                 WHERE ""Id"" = {id}";
-                            rs.DoQuery(sqlUpdate);
+
+                            ExecuteQuery(rs, sqlUpdate, "Update TransferSummaryOut");
+                            ExecuteQuery(rs, $"CALL \"{DbProvider.dbApp_Name}\".\"SpItem_TransferItemTag\"({userId}, {id}, 'TransferSummaryOut', 'A')", "SpItem_TransferItemTag");
+                            ExecuteQuery(rs, $"CALL \"{DbProvider.dbApp_Name}\".\"SpTransferSummaryOut_UpdateItem\"({userId}, {id}, 'after')", "SpTransferSummaryOut_UpdateItem after");
+                            */
 
                             rs.DoQuery($"CALL \"{DbProvider.dbApp_Name}\".\"SpItem_TransferItemTag\"({userId}, {id}, 'TransferSummaryOut', 'A')");
-                            rs.DoQuery($"CALL \"{DbProvider.dbApp_Name}\".\"SpTransferSummaryOut_UpdateItem\"({userId}, {id}, 'after')");
+                            rs.DoQuery($"CALL \"{DbProvider.dbApp_Name}\".\"SpTransferSummaryOut_UpdateItem\"({userId}, {id}, 'after', {docEntry_})");
+
                             SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "post", "Id", keyValue);
 
                             if (oCompany.InTransaction)
@@ -1221,7 +1227,7 @@ namespace Models.Transaction.Inventory
                     {
                         using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
                         {
-                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateItem\"(:p0,:p1, 'before')", userId, id);
+                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateItem\"(:p0,:p1, 'before', 0)", userId, id);
                             CONTEXT.SaveChanges();
                         }
                     }
@@ -1328,6 +1334,17 @@ namespace Models.Transaction.Inventory
             return model;
         }
 
+        private void ExecuteQuery(SAPbobsCOM.Recordset rs, string sql, string context = "")
+        {
+            try
+            {
+                rs.DoQuery(sql);
+            }
+            catch (System.Runtime.InteropServices.COMException ex)
+            {
+                throw new Exception($"[VALIDATION] {context}: {ex.ErrorCode} - {ex.Message}");
+            }
+        }
     }
 
 
