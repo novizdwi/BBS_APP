@@ -918,8 +918,7 @@ namespace Models.Transaction.Purchasing
                         DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
 
                         tx_GoodsReceiptPO.PostingDate = dtModified;
-                        tx_GoodsReceiptPO.DocEntry = Convert.ToInt64(GRPOResult.DocEntry);
-                        //tx_GoodsReceiptPO.DocNum = docNum;
+                        tx_GoodsReceiptPO.DocEntry = Convert.ToInt64(GRPOResult.DocEntry); 
 
                         tx_GoodsReceiptPO.Status = "Posted";
                         tx_GoodsReceiptPO.IsAfterPosted = "Y";
@@ -1241,6 +1240,18 @@ namespace Models.Transaction.Purchasing
             }
 
             return true;
+        }
+
+        private void ExecuteQuery(SAPbobsCOM.Recordset rs, string sql, string context = "")
+        {
+            try
+            {
+                rs.DoQuery(sql);
+            }
+            catch (System.Runtime.InteropServices.COMException ex)
+            {
+                throw new Exception($"[VALIDATION] {context}: {ex.ErrorCode} - {ex.Message}");
+            }
         }
 
         public void RequestApproval(int userId, long id, int templateId, string approvalMessages)

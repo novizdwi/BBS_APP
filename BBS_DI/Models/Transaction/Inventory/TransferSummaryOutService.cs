@@ -704,7 +704,7 @@ namespace Models.Transaction.Inventory
 
                                     if(method == "Post")
                                     {
-                                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateItem\"(:p0,:p1, 'before', 0)", model._UserId, model.Id);
+                                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateItem\"(:p0,:p1, 'before')", model._UserId, model.Id);
                                     }
                                     CONTEXT.SaveChanges();
 
@@ -883,7 +883,7 @@ namespace Models.Transaction.Inventory
                         if (syncTransferSummaryOut.IsAnyDeactiveTag_ == "Y")
                         {
                             throw new Exception("One or more RFID statuses has already changed to Inactive");
-                        }
+                        } 
 
                         Tx_TransferSummaryOut tx_TransferSummaryOut = CONTEXT.Tx_TransferSummaryOut.Find(id);
                         if (tx_TransferSummaryOut != null)
@@ -892,22 +892,28 @@ namespace Models.Transaction.Inventory
                             //string docEntry_ = 4382.ToString();
 
                             string docEntry_ = string.Empty;
-                            string ssqlCheckSap = @"SELECT T1.""DocEntry""
+                            string ssqlCheckSap = @"SELECT T1.""DocEntry"", T1.""DocNum""
                                     FROM ""Tx_TransferSummaryOut"" T0
                                     INNER JOIN """ + DbProvider.dbSap_Name + @""".""OWTR"" T1  ON T0.""Id"" = T1.""U_IDU_WebId""  AND T0.""TransNo"" = T1.""U_IDU_WebTransNo""
                                     WHERE T0.""Id"" = :p0
                                     AND T1.""CANCELED"" = 'N'
                                 ";
 
-                            string existingDocEntry = CONTEXT.Database.SqlQuery<string>(ssqlCheckSap, id).FirstOrDefault();
+                            SapDocResult existingDocEntry = CONTEXT.Database.SqlQuery<SapDocResult>(ssqlCheckSap, id).FirstOrDefault();
 
-                            if (!string.IsNullOrEmpty(existingDocEntry))
+                            if (existingDocEntry != null)
                             {
-                                if (syncTransferSummaryOut.Status == "Posted")
-                                {
-                                    throw new Exception("[VALIDATION] Transaction sudah pernah di-post ke SAP dengan DocEntry " + existingDocEntry);
-                                }
-                                docEntry_ = existingDocEntry;
+                                // jalur reconcile: SAP sudah ada, perbaiki data lokal
+                                if (syncTransferSummaryOut.Status == "Posted" && tx_TransferSummaryOut.IsAfterPosted == "Y")
+                                    throw new Exception("[VALIDATION] Transaction sudah pernah di-post ke SAP dengan DocEntry " + existingDocEntry.DocEntry);
+
+                                TryReconcilePostStatus(userId, id, existingDocEntry.DocEntry, existingDocEntry.DocNum, oCompany);
+
+                                if (oCompany.InTransaction)
+                                    oCompany.EndTransaction(BoWfTransOpt.wf_Commit);
+
+                                CONTEXT_TRANS.Commit();
+                                return; // <-- WAJIB: keluar dari method, jangan lanjut ke blok normal post di bawah
                             }
                             else
                             {
@@ -919,25 +925,27 @@ namespace Models.Transaction.Inventory
                             }
 
                             Recordset rs = (Recordset)oCompany.GetBusinessObject(BoObjectTypes.BoRecordset);
-                            /*
+
+                            rs.DoQuery($@"SELECT ""DocNum"" FROM ""{DbProvider.dbSap_Name}"".""OWTR"" WHERE ""DocEntry"" = {docEntry_}");
+                            string docNum_ = !rs.EoF ? rs.Fields.Item("DocNum").Value?.ToString() : string.Empty;
+                            if (string.IsNullOrEmpty(docNum_))
+                                throw new Exception($"[VALIDATION] DocNum tidak ditemukan di OWTR untuk DocEntry {docEntry_}");
+
                             string sqlUpdate = $@"
                                 UPDATE ""{DbProvider.dbApp_Name}"".""Tx_TransferSummaryOut""
-                                SET ""Status"" = 'Posted',
-                                    ""DocEntry"" = {docEntry_},
-                                    ""PostingDate"" = CURRENT_TIMESTAMP,
-                                    ""DocNum"" = (SELECT ""DocNum"" FROM ""{DbProvider.dbSap_Name}"".""OWTR"" WHERE ""DocEntry"" = {docEntry_}),
+                                SET ""Status""        = 'Posted',
+                                    ""DocEntry""      = {docEntry_},
+                                    ""PostingDate""   = CURRENT_TIMESTAMP,
+                                    ""DocNum""        = '{docNum_.Replace("'", "''")}',
                                     ""IsAfterPosted"" = 'Y',
-                                    ""ModifiedUser"" = {userId},
-                                    ""ModifiedDate"" = CURRENT_TIMESTAMP
+                                    ""ModifiedUser""  = {userId},
+                                    ""ModifiedDate""  = CURRENT_TIMESTAMP
                                 WHERE ""Id"" = {id}";
 
-                            ExecuteQuery(rs, sqlUpdate, "Update TransferSummaryOut");
-                            ExecuteQuery(rs, $"CALL \"{DbProvider.dbApp_Name}\".\"SpItem_TransferItemTag\"({userId}, {id}, 'TransferSummaryOut', 'A')", "SpItem_TransferItemTag");
-                            ExecuteQuery(rs, $"CALL \"{DbProvider.dbApp_Name}\".\"SpTransferSummaryOut_UpdateItem\"({userId}, {id}, 'after')", "SpTransferSummaryOut_UpdateItem after");
-                            */
-
-                            rs.DoQuery($"CALL \"{DbProvider.dbApp_Name}\".\"SpItem_TransferItemTag\"({userId}, {id}, 'TransferSummaryOut', 'A')");
-                            rs.DoQuery($"CALL \"{DbProvider.dbApp_Name}\".\"SpTransferSummaryOut_UpdateItem\"({userId}, {id}, 'after', {docEntry_})");
+                            this.ExecuteQuery(rs, sqlUpdate, "Update Tx_TransferSummaryOut");
+                            this.ExecuteQuery(rs, $"CALL \"{DbProvider.dbApp_Name}\".\"SpItem_TransferItemTag\"({userId}, {id}, 'TransferSummaryOut', 'A')", "SpItem_TransferItemTag");
+                            this.ExecuteQuery(rs, $"CALL \"{DbProvider.dbApp_Name}\".\"SpTransferSummaryOut_UpdateItem\"({userId}, {id}, 'after')", "SpTransferSummaryOut_UpdateItem after");
+                             
 
                             SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "after", "Tx_TransferSummaryOut", "post", "Id", keyValue);
 
@@ -1060,6 +1068,65 @@ namespace Models.Transaction.Inventory
             return result;
         }
 
+        private void TryReconcilePostStatus(int userId, long id, long docEntry, string docNum, Company oCompany)
+        {
+            // 1. bandingkan quantity WTR1 vs QuantityPosted
+            using (var CONTEXT = new HANA_APP())
+            {
+                string ssqlCompare = $@"
+                    SELECT 
+                        T0.""DetId"",
+                        T0.""ItemCode"",
+                        COALESCE(T0.""QuantityPosted"", 0) AS ""QuantityPosted"",
+                        COALESCE(T1.""Quantity"", 0)       AS ""QuantitySAP"",
+                        CASE 
+                            WHEN COALESCE(T0.""QuantityPosted"", 0) = COALESCE(T1.""Quantity"", 0) 
+                            THEN 'Y' ELSE 'N' 
+                        END AS ""IsMatch""
+                    FROM ""Tx_TransferSummaryOut_Item"" T0
+                    LEFT JOIN ""{DbProvider.dbSap_Name}"".""WTR1"" T1 
+                        ON T1.""DocEntry"" = {docEntry}
+                        AND T1.""U_IDU_DetId"" = T0.""DetId""
+                    WHERE T0.""Id"" = :p0
+                ";
+
+                var compareResult = CONTEXT.Database.SqlQuery<ReconcileLineResult>(ssqlCompare, id).ToList();
+                var mismatch = compareResult.Where(x => x.IsMatch == "N").ToList();
+                if (mismatch.Any())
+                {
+                    string detail = string.Join("; ", mismatch.Select(x =>
+                        $"DetId={x.DetId} Item={x.ItemCode} (Web:{x.QuantityPosted} SAP:{x.QuantitySAP})"));
+                    throw new Exception($"[VALIDATION] Reconcile: Quantity tidak cocok — {detail}");
+                }
+
+                // 2. quantity cocok → update status lokal + jalankan SP via oCompany
+                Recordset rs = (Recordset)oCompany.GetBusinessObject(BoObjectTypes.BoRecordset);
+
+                string sqlUpdate = $@"
+                    UPDATE ""{DbProvider.dbApp_Name}"".""Tx_TransferSummaryOut""
+                    SET ""Status""        = 'Posted',
+                        ""DocEntry""      = {docEntry},
+                        ""PostingDate""   = CURRENT_TIMESTAMP,
+                        ""DocNum""        = '{docNum.Replace("'", "''")}',
+                        ""IsAfterPosted"" = 'Y',
+                        ""ModifiedUser""  = {userId},
+                        ""ModifiedDate""  = CURRENT_TIMESTAMP
+                    WHERE ""Id"" = {id}";
+
+                string sqlUpdateTag = $@"
+                    UPDATE ""{DbProvider.dbApp_Name}"".""Tx_TransferSummaryOut_Item_Tag""
+                    SET ""Status""        = 'Posted', 
+                        ""ModifiedUser""  = {userId},
+                        ""ModifiedDate""  = CURRENT_TIMESTAMP
+                    WHERE ""Id"" = {id}
+                    AND ""Status"" = 'Open' 
+                ";
+
+                ExecuteQuery(rs, sqlUpdate, "Reconcile: Update Tx_TransferSummaryOut");
+                ExecuteQuery(rs, sqlUpdateTag, "Reconcile: Update Tx_TransferSummaryOut_Item_Tag");
+            }
+        }
+
         public void Cancel(int userId, long Id, string cancelReason)
         {
             SAPbobsCOM.Company oCompany = null;
@@ -1155,6 +1222,7 @@ namespace Models.Transaction.Inventory
 
             return lRet;
         }
+         
 
         public void RequestApproval(int userId, long id, int templateId, string approvalMessages)
         {
@@ -1229,6 +1297,7 @@ namespace Models.Transaction.Inventory
                         {
                             CONTEXT.Database.ExecuteSqlCommand("CALL \"SpTransferSummaryOut_UpdateItem\"(:p0,:p1, 'before', 0)", userId, id);
                             CONTEXT.SaveChanges();
+                            CONTEXT_TRANS.Commit();
                         }
                     }
 

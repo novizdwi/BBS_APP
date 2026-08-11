@@ -9,6 +9,22 @@ using Sap.Data.Hana;
 
 namespace Models._Utils
 {
+
+    public class SapDocResult
+    {
+        public long DocEntry { get; set; }
+        public string DocNum { get; set; }
+    }
+
+    public class ReconcileLineResult
+    {
+        public long DetId { get; set; }
+        public string ItemCode { get; set; }
+        public decimal QuantityPosted { get; set; }
+        public decimal QuantitySAP { get; set; }
+        public string IsMatch { get; set; }
+    }
+
     public static class General
     {
         public static void GridViewFilterExpression(MVCxGridView gridView, GridViewSettings settings)
