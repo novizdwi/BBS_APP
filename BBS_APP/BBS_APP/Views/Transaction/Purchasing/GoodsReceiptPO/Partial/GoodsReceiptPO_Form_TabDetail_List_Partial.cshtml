@@ -17,6 +17,10 @@
     settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
     //settings.Settings.VerticalScrollableHeight = 350;
     settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+    /* ================================= */
+
+    settings.Settings.ShowFilterRow = true;
+    settings.Settings.ShowFilterRowMenu = true;
 
     settings.Width = Unit.Percentage(100);
     settings.Height = Unit.Percentage(100);
@@ -51,7 +55,7 @@
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-        txt.Width = Unit.Percentage(90);
+        txt.Width = Unit.Percentage(100);
 
     });
 
@@ -68,7 +72,7 @@
 
         column.SetDataItemTemplateContent(c =>
         {
-            c.Column.Width = Unit.Percentage(90);
+            c.Column.Width = 150;
             if (c.ItemIndex >= 0)
             {
                 string itemCode = (string)DataBinder.Eval(c.DataItem, "ItemCode");
@@ -97,13 +101,13 @@
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
-        column.Width = 220;
+        column.Width = 250;
         column.Settings.AllowSort = DefaultBoolean.False;
         column.ReadOnly = true;
         column.PropertiesEdit.Style.BackColor = System.Drawing.Color.FromName("#EDEDED");
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
-        txt.Width = Unit.Percentage(90);
+        txt.Width = Unit.Percentage(100);
 
     });
 
@@ -170,6 +174,12 @@
 
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+        ASPxSummaryItem summary = new ASPxSummaryItem();
+        summary.FieldName = column.FieldName;
+        summary.SummaryType = DevExpress.Data.SummaryItemType.Sum;
+        summary.DisplayFormat = "{0:#,###}";
+        settings.TotalSummary.Add(summary);
     });
 
     settings.Columns.Add(column =>
@@ -187,6 +197,12 @@
         var txt = column.PropertiesEdit as TextBoxProperties;
         txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
         txt.DisplayFormatString = "#,###.##";
+
+        ASPxSummaryItem summary = new ASPxSummaryItem();
+        summary.FieldName = column.FieldName;
+        summary.SummaryType = DevExpress.Data.SummaryItemType.Sum;
+        summary.DisplayFormat = "{0:#,###}";
+        settings.TotalSummary.Add(summary);
     });
 
     settings.HtmlRowPrepared = (sender, e) =>
@@ -273,7 +289,7 @@
     {
         column.FieldName = "BaseLine";
         column.Name = "BaseLine";
-        column.Caption = "BaseLine";
+        column.Caption = "Base Line";
 
         column.ColumnType = MVCxGridViewColumnType.TextBox;
         column.Width = 120;

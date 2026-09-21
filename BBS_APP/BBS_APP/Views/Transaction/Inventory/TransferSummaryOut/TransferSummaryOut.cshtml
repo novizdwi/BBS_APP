@@ -16,9 +16,14 @@
     ViewBag.Title = "Transfer Out Summary";
     string MenuCodePost = "TransferSummaryOut/Post";
     string IsCanPost_ = "Y";
+
+    string MenuCodeCopyTo = "TransferSummaryOut/CopyTo";
+    string IsCanCopyTo_ = "Y";
+
     if (ViewBag.UserId != 1)
     {
         IsCanPost_ = Models._Utils.GeneralGetList.GetIsCanAccessOpeningBalance(ViewBag.UserId, MenuCodePost);
+        IsCanCopyTo_ = Models._Utils.GeneralGetList.GetIsCanAccessOpeningBalance(ViewBag.UserId, MenuCodeCopyTo);
     }
 }
 
@@ -32,7 +37,7 @@
         SetBtnStatus();
     }
     );
-
+}
 
 </script>
 
@@ -40,6 +45,7 @@
 
 <script type="text/javascript">
     var IsCanPost_ = '@IsCanPost_';
+    var IsCanCopyTo_ = '@IsCanCopyTo_';
 
     var beforeSaveActiveTabName = '';
     var beforeSaveActiveTabIndex = 0;
@@ -75,6 +81,7 @@
 
         var btnMenuOther = ASPxClientMenu.Cast('btnMenuOther');
         btnMenuOther.GetItemByName("btnMenuAuthorize").SetEnabled(false);
+        btnMenuOther.GetItemByName("btnMenuCopyToTransferIn").SetEnabled(false);
 
         btnPost.SetEnabled(false);
         btnCancel.SetEnabled(false);
@@ -113,6 +120,10 @@
 
                         btnUpdate.SetEnabled(true);
                         btnCancel.SetEnabled(true);
+
+                        if (IsCanCopyTo_ == "Y") {
+                            btnMenuOther.GetItemByName("btnMenuCopyToTransferIn").SetEnabled(true);
+                        }
 
                         break;
                     case 'Cancel':
@@ -621,7 +632,19 @@
             case 'btnMenuSetStatusCancel':
                 key = Id.GetValue();
                 btnShowCancelReasonOnClick(s, e, key);
+                break;
+            case 'btnMenuCopyToTransferIn':
+                if (confirm('Copy to "Transfer In Scan" ?')) {
+                    key = Id.GetValue();
 
+                    var guid = CreateGuid();
+                        window.open('', guid);
+                        SubmitForm(guid, '@Url.Action("Detail", "Transferin")', 'post', {
+                            Id: 0,
+                            CopyFromForm: "TransferSummaryOut",
+                            CopyFromId: key
+                    });
+                }
                 break;
             case 'btnMenuSetStatusPost':
                 if (BeforeSave() == false) {

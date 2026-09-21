@@ -1043,6 +1043,9 @@ namespace Models.Transaction.Inventory
                         oInventoryTransfer.Lines.UoMEntry = Convert.ToInt32(item.UomEntry);
                     }
 
+                    oInventoryTransfer.Lines.UserFields.Fields.Item("U_IDU_WebId").Value = Convert.ToInt32(model.Id);
+                    oInventoryTransfer.Lines.UserFields.Fields.Item("U_IDU_DetId").Value = Convert.ToInt32(item.DetId);
+                    
                     //if (item.FreeText != null)
                     //{
                     //    oInventoryTransfer.Lines.UserFields.Fields.Item("U_H_KET").Value = item.FreeText;
@@ -1084,9 +1087,7 @@ namespace Models.Transaction.Inventory
                             THEN 'Y' ELSE 'N' 
                         END AS ""IsMatch""
                     FROM ""Tx_TransferSummaryOut_Item"" T0
-                    LEFT JOIN ""{DbProvider.dbSap_Name}"".""WTR1"" T1 
-                        ON T1.""DocEntry"" = {docEntry}
-                        AND T1.""U_IDU_DetId"" = T0.""DetId""
+                    LEFT JOIN ""{DbProvider.dbSap_Name}"".""WTR1"" T1  ON T1.""DocEntry"" = {docEntry} AND T1.""ItemCode"" = T0.""ItemCode""
                     WHERE T0.""Id"" = :p0
                 ";
 

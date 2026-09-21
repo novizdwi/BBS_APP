@@ -870,7 +870,6 @@ namespace Models.Transaction.Purchasing
 
             using (var CONTEXT = new HANA_APP())
             {
-
                 using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction())
                 {
                     try
@@ -878,108 +877,118 @@ namespace Models.Transaction.Purchasing
                         oCompany = SAPCachedCompany.GetCompany();
                         oCompany.StartTransaction();
 
-                        String keyValue;
-                        keyValue = id.ToString();
-
-
+                        string keyValue = id.ToString();
                         SpNotif.SpSysControllerTransNotif(userId, "GoodsReceiptPO", CONTEXT, "before", "Tx_GoodsReceiptPO", "post", "Id", keyValue);
 
                         Tx_GoodsReceiptPO tx_GoodsReceiptPO = CONTEXT.Tx_GoodsReceiptPO.Find(id);
                         if (tx_GoodsReceiptPO == null)
-                        {
-                            throw new Exception($"[VALIDATION] - GRPO Data not found");
-                        }
+                            throw new Exception("[VALIDATION] - GRPO Data not found");
 
                         if (syncGRPO.ListDetails_.All(q => q.QuantityValid == 0))
+                            throw new Exception("[VALIDATION] - No record created");
+
+                        // cek apakah OPDN sudah ada di SAP
+                        string ssqlCheckSap = @"SELECT T1.""DocEntry"", T1.""DocNum""
+                            FROM ""Tx_GoodsReceiptPO"" T0
+                            INNER JOIN """ + DbProvider.dbSap_Name + @""".""OPDN"" T1 
+                                ON T0.""Id"" = T1.""U_IDU_WebId"" 
+                                AND T0.""TransNo"" = T1.""U_IDU_WebTransNo""
+                            WHERE T0.""Id"" = :p0
+                            AND T1.""CANCELED"" = 'N'
+                        ";
+
+                        SapDocResult existingDoc = CONTEXT.Database.SqlQuery<SapDocResult>(ssqlCheckSap, id).FirstOrDefault();
+
+                        if (existingDoc != null)
                         {
-                            throw new Exception($"[VALIDATION] - No record created");
+                            // jalur reconcile: OPDN sudah ada, perbaiki data lokal
+                            if (tx_GoodsReceiptPO.Status == "Posted" && tx_GoodsReceiptPO.IsAfterPosted == "Y")
+                                throw new Exception("[VALIDATION] Transaction sudah pernah di-post ke SAP dengan DocEntry " + existingDoc.DocEntry);
+
+                            TryReconcilePostStatus(userId, id, existingDoc.DocEntry, existingDoc.DocNum, oCompany);
+
+                            if (oCompany.InTransaction)
+                                oCompany.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_Commit);
+
+                            CONTEXT_TRANS.Commit();
+                            return; // keluar, tidak lanjut ke normal post
                         }
 
+                        // jalur normal post: OPDN belum ada
                         GRPOAddResultModel GRPOResult = AddGoodsReceiptPO(oCompany, userId, id, syncGRPO);
-                        if(GRPOResult != null)
-                        {
-                            //insert RFID items to pending
-                            CONTEXT.Database.ExecuteSqlCommand("CALL \"SpItem_InsertItemTag\"(:p0,:p1, 'GoodsReceiptPO','A')", userId, id);
-                        }
+                        if (GRPOResult == null)
+                            throw new Exception("[VALIDATION] - GRPO Result null");
+
                         List<GoodsReceiptResultModel> GRResult = new List<GoodsReceiptResultModel>();
-                        if (syncGRPO.ListDetails_.Any(q => q.IdPDO.GetValueOrDefault() != 0 && (q.QuantityValid > 0 && q.QuantityValid.HasValue )))
+                        if (syncGRPO.ListDetails_.Any(q => q.IdPDO.GetValueOrDefault() != 0
+                            && q.QuantityValid.HasValue && q.QuantityValid > 0))
                         {
                             GRResult = AddReceiveFromProduction(oCompany, userId, id, syncGRPO);
                         }
 
-                        //string ssql = @"SELECT ""DocNum"" 
-                        //    FROM """ + DbProvider.dbSap_Name + @""".""OPDN"" T0
-                        //    WHERE T0.""DocEntry"" = " + GRPOResult.DocEntry + @" 
-                        //";
+                        // fetch DocNum via rs — bisa lihat uncommitted OPDN karena koneksi sama
+                        Recordset rs = (Recordset)oCompany.GetBusinessObject(BoObjectTypes.BoRecordset);
+                        rs.DoQuery($@"SELECT ""DocNum"" FROM ""{DbProvider.dbSap_Name}"".""OPDN"" WHERE ""DocEntry"" = {GRPOResult.DocEntry}");
+                        string docNum_ = !rs.EoF ? rs.Fields.Item("DocNum").Value?.ToString() : string.Empty;
+                        if (string.IsNullOrEmpty(docNum_))
+                            throw new Exception($"[VALIDATION] DocNum tidak ditemukan di OPDN untuk DocEntry {GRPOResult.DocEntry}");
 
-                        //string docNum = CONTEXT.Database.SqlQuery<string>(ssql, id).FirstOrDefault();
+                        // update header Tx_GoodsReceiptPO
+                        string sqlHeader = $@"
+                        UPDATE ""{DbProvider.dbApp_Name}"".""Tx_GoodsReceiptPO""
+                        SET ""Status""        = 'Posted',
+                            ""DocEntry""      = {GRPOResult.DocEntry},
+                            ""DocNum""        = '{docNum_.Replace("'", "''")}',
+                            ""PostingDate""   = CURRENT_TIMESTAMP,
+                            ""IsAfterPosted"" = 'Y',
+                            ""ModifiedUser""  = {userId},
+                            ""ModifiedDate""  = CURRENT_TIMESTAMP
+                        WHERE ""Id"" = {id}";
+                        ExecuteQuery(rs, sqlHeader, "Update Tx_GoodsReceiptPO header");
 
-
-                        DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
-
-                        tx_GoodsReceiptPO.PostingDate = dtModified;
-                        tx_GoodsReceiptPO.DocEntry = Convert.ToInt64(GRPOResult.DocEntry); 
-
-                        tx_GoodsReceiptPO.Status = "Posted";
-                        tx_GoodsReceiptPO.IsAfterPosted = "Y";
-                        tx_GoodsReceiptPO.ModifiedDate = dtModified;
-                        tx_GoodsReceiptPO.ModifiedUser = userId;
-
-                        CONTEXT.SaveChanges();
-
-                        var caseStatements = string.Join(" ",
-                            GRPOResult.LineMapping.Select(kv => $"WHEN T0.\"DetId\" = {kv.Key} THEN {kv.Value}"));
+                        // update LineNum dan DocEntry per item
+                        var caseLineNum = string.Join(" ", GRPOResult.LineMapping.Select(kv => $"WHEN T0.\"DetId\" = {kv.Key} THEN {kv.Value}"));
+                        var caseDocEntry = string.Join(" ", GRPOResult.LineMapping.Select(kv => $"WHEN T0.\"DetId\" = {kv.Key} THEN {GRPOResult.DocEntry}"));
 
                         string sqlLine = $@"
-                            UPDATE ""Tx_GoodsReceiptPO_Item"" T0 
-                            SET ""LineNum"" = CASE {caseStatements} END,
-                                ""DocEntry"" = {GRPOResult.DocEntry}
-                            ";
-                        var whereIn = string.Join(", ", GRPOResult.LineMapping.Keys);
+                        UPDATE ""{DbProvider.dbApp_Name}"".""Tx_GoodsReceiptPO_Item"" T0
+                        SET ""LineNum""  = CASE {caseLineNum} ELSE T0.""LineNum"" END,
+                            ""DocEntry"" = CASE {caseDocEntry} ELSE T0.""DocEntry"" END
+                        ";
 
-                        if (GRResult.Count > 0) {
-                        var GRStatements = string.Join(" ",
-                            GRResult.Select(kv => $"WHEN T0.\"DetId\" = {kv.DetId} THEN {kv.GoodsReceiptId}"));
-                            sqlLine += ",";
-                            sqlLine += @"
-                                    ""GoodsReceiptDocEntry"" = CASE " + GRStatements + " END ";
-                            whereIn = string.Join(", ", GRPOResult.LineMapping.Keys.Union(GRResult.Select(x => x.DetId)).ToList());
+                        var whereKeys = new HashSet<long>(GRPOResult.LineMapping.Keys);
+                        if (GRResult.Count > 0)
+                        {
+                            var caseGR = string.Join(" ",
+                                GRResult.Select(kv => $"WHEN T0.\"DetId\" = {kv.DetId} THEN {kv.GoodsReceiptId}"));
+                            sqlLine += $", \"GoodsReceiptDocEntry\" = CASE {caseGR} ELSE T0.\"GoodsReceiptDocEntry\" END";
+                            foreach (var gr in GRResult) whereKeys.Add(gr.DetId);
                         }
+                        sqlLine += $" WHERE T0.\"DetId\" IN ({string.Join(", ", whereKeys)})";
+                        ExecuteQuery(rs, sqlLine, "Update Tx_GoodsReceiptPO_Item LineNum/DocEntry");
 
-                        sqlLine += @" WHERE T0.""DetId"" IN ("+ whereIn + ")";
-
-                        CONTEXT.Database.ExecuteSqlCommand(sqlLine);
-
+                        // update item tag dan stock
+                        ExecuteQuery(rs, $"CALL \"{DbProvider.dbApp_Name}\".\"SpItem_InsertItemTag\"({userId}, {id}, 'GoodsReceiptPO', 'A')", "SpItem_InsertItemTag");
+                        // update PO status
+                        ExecuteQuery(rs, $"CALL \"{DbProvider.dbApp_Name}\".\"SpGoodsReceiptPO_UpdatePOStatus\"({userId}, {id}, 'post')", "SpGoodsReceiptPO_UpdatePOStatus");
 
                         SpNotif.SpSysControllerTransNotif(userId, "GoodsReceiptPO", CONTEXT, "after", "Tx_GoodsReceiptPO", "post", "Id", keyValue);
-                        CONTEXT.Database.ExecuteSqlCommand("CALL \"SpGoodsReceiptPO_UpdatePOStatus\"(:p0,:p1,'post')", userId, id);
 
                         if (oCompany.InTransaction)
-                        {
                             oCompany.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_Commit);
-                        }
 
                         CONTEXT_TRANS.Commit();
                     }
-
                     catch (Exception ex)
                     {
-                        if (oCompany.InTransaction)
-                        {
+                        if (oCompany != null && oCompany.InTransaction)
                             oCompany.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_RollBack);
-                        }
 
                         CONTEXT_TRANS.Rollback();
 
-                        string errorMassage;
-                        if (ex.Message.Substring(12) == "[VALIDATION]")
-                        {
-                            errorMassage = ex.Message;
-                        }
-                        else
-                        {
-                            errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
-                        }
+                        string errorMassage = ex.Message.Length >= 12 && ex.Message.Substring(0, 12) == "[VALIDATION]"
+                            ? ex.Message
+                            : $"[VALIDATION] {ex.Message}";
 
                         throw new Exception(errorMassage);
                     }
@@ -989,8 +998,8 @@ namespace Models.Transaction.Purchasing
                     }
                 }
             }
-
         }
+
 
 
         private GRPOAddResultModel AddGoodsReceiptPO(Company oCompany, int userId, long id, GoodsReceiptPOModel model)
@@ -1079,7 +1088,65 @@ namespace Models.Transaction.Purchasing
             return result;
         }
 
-        
+        private void TryReconcilePostStatus(int userId, long id, long docEntry, string docNum, Company oCompany)
+        {
+            using (var CONTEXT = new HANA_APP())
+            {
+                // 1. bandingkan quantity PDN1 vs QuantityValid di Tx_GoodsReceiptPO_Item
+                string ssqlCompare = $@"
+                    SELECT 
+                        T0.""DetId"",
+                        T0.""ItemCode"",
+                        COALESCE(T0.""QuantityValid"", 0)  AS ""QuantityPosted"",
+                        COALESCE(T1.""Quantity"", 0)       AS ""QuantitySAP"",
+                        CASE 
+                            WHEN COALESCE(T0.""QuantityValid"", 0) = COALESCE(T1.""Quantity"", 0) 
+                            THEN 'Y' ELSE 'N' 
+                        END AS ""IsMatch""
+                    FROM ""Tx_GoodsReceiptPO_Item"" T0
+                    LEFT JOIN ""{DbProvider.dbSap_Name}"".""PDN1"" T1 
+                        ON T1.""DocEntry"" = {docEntry}
+                        AND T1.""U_IDU_DetId"" = T0.""DetId""
+                    WHERE T0.""Id"" = :p0
+                ";
+
+                var compareResult = CONTEXT.Database.SqlQuery<ReconcileLineResult>(ssqlCompare, id).ToList();
+                var mismatch = compareResult.Where(x => x.IsMatch == "N").ToList();
+                if (mismatch.Any())
+                {
+                    string detail = string.Join("; ", mismatch.Select(x =>
+                        $"DetId={x.DetId} Item={x.ItemCode} (Web:{x.QuantityPosted} SAP:{x.QuantitySAP})"));
+                    throw new Exception($"[VALIDATION] Reconcile GRPO: Quantity tidak cocok — {detail}");
+                }
+
+                // 2. quantity cocok → update via rs (koneksi oCompany)
+                Recordset rs = (Recordset)oCompany.GetBusinessObject(BoObjectTypes.BoRecordset);
+
+                // update header
+                string sqlHeader = $@"
+                UPDATE ""{DbProvider.dbApp_Name}"".""Tx_GoodsReceiptPO""
+                SET ""Status""        = 'Posted',
+                    ""DocEntry""      = {docEntry},
+                    ""DocNum""        = '{docNum.Replace("'", "''")}',
+                    ""PostingDate""   = CURRENT_TIMESTAMP,
+                    ""IsAfterPosted"" = 'Y',
+                    ""ModifiedUser""  = {userId},
+                    ""ModifiedDate""  = CURRENT_TIMESTAMP
+                WHERE ""Id"" = {id}
+                AND (""Status"" <> 'Posted' OR ""IsAfterPosted"" <> 'Y')";
+                    ExecuteQuery(rs, sqlHeader, "Reconcile GRPO: Update header");
+
+                // update item tag yang masih Open → A
+                string sqlUpdateTag = $@"
+                UPDATE ""{DbProvider.dbApp_Name}"".""Tx_GoodsReceiptPO_Item_Tag""
+                SET ""Status""       = 'A',
+                    ""ModifiedUser"" = {userId},
+                    ""ModifiedDate"" = CURRENT_TIMESTAMP
+                WHERE ""Id"" = {id}
+                AND ""Status"" = 'Open'";
+                ExecuteQuery(rs, sqlUpdateTag, "Reconcile GRPO: Update Item_Tag");  
+            }
+        }
 
         private List<GoodsReceiptResultModel> AddReceiveFromProduction(Company oCompany, int userId, long id, GoodsReceiptPOModel model)
         {

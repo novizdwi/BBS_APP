@@ -23,28 +23,47 @@ namespace Controllers.Transaction.Inventory
             return RedirectToAction("Detail");
         }
 
-        public ActionResult Detail(long Id = 0)
+        public ActionResult Detail(long Id = 0, string CopyFromForm = "", long CopyFromId = 0)
         {
             int userId = (int)Session["userId"];
 
 
             transferInService = new TransferInService();
             TransferInModel transferInModel;
-            if (Id == 0)
+            if (CopyFromForm == "TransferSummaryOut")
             {
                 ViewBag.initNew = true;
-                transferInModel = transferInService.GetNewModel(userId);
-                transferInModel._FormMode = FormModeEnum.New;
+                string error = transferInService.CheckTransferOutStatus(userId, CopyFromForm, CopyFromId);
+                if (!string.IsNullOrEmpty(error))
+                {
+                    throw new Exception("[VALIDATION]-"+ error);
+                }
+
+                transferInModel = transferInService.GetCopyFrom(userId, CopyFromForm, CopyFromId);
+                if (transferInModel == null)
+                {
+                    throw new Exception("[VALIDATION]-Data not exists");
+
+                }
             }
             else
             {
-                transferInService = new TransferInService();
-                transferInModel = transferInService.GetById(userId, Id);
-                transferInModel._FormMode = FormModeEnum.Edit;
+                if (Id == 0)
+                {
+                    ViewBag.initNew = true;
+                    transferInModel = transferInService.GetNewModel(userId);
+                    transferInModel._FormMode = FormModeEnum.New;
+                }
+                else
+                {
+                    transferInService = new TransferInService();
+                    transferInModel = transferInService.GetById(userId, Id);
+                    transferInModel._FormMode = FormModeEnum.Edit;
+                }
             }
 
-            return View(VIEW_DETAIL, transferInModel);
-        }
+                return View(VIEW_DETAIL, transferInModel);
+            } 
 
         public ActionResult DetailPartial(long Id = 0, string copyFromForm = "", long copyFromId = 0)
         {
@@ -76,30 +95,30 @@ namespace Controllers.Transaction.Inventory
             return PartialView(VIEW_FORM_PARTIAL, transferInModel);
         }
 
-        //[HttpPost, ValidateInput(false)]
-        //public ActionResult Add([ModelBinder(typeof(DevExpressEditorsBinder))]  TransferInModel transferInModel)
-        //{
-        //    int userId = (int)Session["userId"];
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Add([ModelBinder(typeof(DevExpressEditorsBinder))]  TransferInModel transferInModel)
+        {
+            int userId = (int)Session["userId"];
 
-        //    transferInModel._UserId = (int)Session["userId"];
-        //    transferInService = new TransferInService();
+            transferInModel._UserId = (int)Session["userId"];
+            transferInService = new TransferInService();
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        long Id = 0;
+            if (ModelState.IsValid)
+            {
+                long Id = 0;
 
-        //        Id = transferInService.Add(transferInModel);
-        //        transferInModel = transferInService.GetById(userId, Id);
-        //        transferInModel._FormMode = Models.FormModeEnum.Edit;
-        //    }
-        //    else
-        //    {
-        //        string message = GetErrorModel();
-        //        throw new Exception(string.Format("[VALIDATION] {0}", message));
-        //    }
+                Id = transferInService.Add(transferInModel);
+                transferInModel = transferInService.GetById(userId, Id);
+                transferInModel._FormMode = Models.FormModeEnum.Edit;
+            }
+            else
+            {
+                string message = GetErrorModel();
+                throw new Exception(string.Format("[VALIDATION] {0}", message));
+            }
 
-        //    return PartialView(VIEW_FORM_PARTIAL, transferInModel);
-        //}
+            return PartialView(VIEW_FORM_PARTIAL, transferInModel);
+        }
 
         [HttpPost, ValidateInput(false)]
         public ActionResult Update([ModelBinder(typeof(DevExpressEditorsBinder))]  TransferInModel transferInModel)

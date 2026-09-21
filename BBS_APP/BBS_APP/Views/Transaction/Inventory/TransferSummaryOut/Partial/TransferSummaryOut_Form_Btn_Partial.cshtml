@@ -252,6 +252,12 @@
                                        itemOther.Text = "Approval";
                                        itemOther.Items.Add("Authorize", "btnMenuAuthorize");
                                    });
+
+                                   item.Items.Add(itemOther =>
+                                   {
+                                       itemOther.Text = "Copy To";
+                                       itemOther.Items.Add("Transfer In Scan", "btnMenuCopyToTransferIn");
+                                   });
                                });
                            }).Render();
 

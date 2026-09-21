@@ -118,7 +118,6 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_StockSummaryOpname_Item> Tx_StockSummaryOpname_Item { get; set; }
         public virtual DbSet<Tx_StockSummaryOpname_Item_Tag> Tx_StockSummaryOpname_Item_Tag { get; set; }
         public virtual DbSet<Tx_StockSummaryOpname_Ref> Tx_StockSummaryOpname_Ref { get; set; }
-        public virtual DbSet<Tx_TransferIn> Tx_TransferIn { get; set; }
         public virtual DbSet<Tx_TransferIn_Item> Tx_TransferIn_Item { get; set; }
         public virtual DbSet<Tx_TransferIn_Item_Tag> Tx_TransferIn_Item_Tag { get; set; }
         public virtual DbSet<Tx_TransferOut> Tx_TransferOut { get; set; }
@@ -138,5 +137,6 @@ namespace BBS_DI.Models._EF
         public virtual DbSet<Tx_TransferSummaryOut_Item_Tag> Tx_TransferSummaryOut_Item_Tag { get; set; }
         public virtual DbSet<Tx_TransferSummaryOut_Ref> Tx_TransferSummaryOut_Ref { get; set; }
         public virtual DbSet<Tp_UserAlert> Tp_UserAlert { get; set; }
+        public virtual DbSet<Tx_TransferIn> Tx_TransferIn { get; set; }
     }
 }

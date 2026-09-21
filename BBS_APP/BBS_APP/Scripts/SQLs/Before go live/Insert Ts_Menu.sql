@@ -110,6 +110,7 @@ INSERT INTO "Ts_Menu" VALUES ('TransferSummaryOut/Post', 'Post', 'TransferSummar
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryOut/Cancel', 'Cancel', 'TransferSummaryOut/Cancel', 'TransferSummaryOut', 20020506);
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryOut/Approve','Approve','TransferSummaryOut/Approve','TransferSummaryOut','20020507');
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryOut/Reject','Reject','TransferSummaryOut/Reject','TransferSummaryOut','20020508');
+INSERT INTO "Ts_Menu" VALUES ('TransferSummaryOut/CopyTo','Copy To','TransferSummaryOut/CopyTo','TransferSummaryOut','20020509');
 INSERT INTO "Ts_Menu" VALUES ('TransferSummaryOut/Print', 'Print', 'TransferSummaryOut/Print', 'TransferSummaryOut', 20020510);
 
 INSERT INTO "Ts_Menu" VALUES ('StockOpname', 'Stock Opname', NULL, 'Transaction', 2003);

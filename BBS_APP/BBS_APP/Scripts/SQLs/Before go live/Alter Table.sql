@@ -11,3 +11,5 @@ ALTER TABLE "Tx_StockSummaryOpname_Item_Tag" ADD("ErrorMessage" NVARCHAR(200) );
 ALTER TABLE "Tx_GoodsReceiptPO_Item_Tag" ADD("ErrorMessage" NVARCHAR(200) );
 ALTER TABLE "Tx_AdjustmentIn_Item_Tag" ADD("ErrorMessage" NVARCHAR(200) );
 ALTER TABLE "Tx_AdjustmentOut_Item_Tag" ADD("ErrorMessage" NVARCHAR(200) );
+
+ALTER TABLE "Tx_TransferIn" ADD("CopyFromForm" NVARCHAR(100) );

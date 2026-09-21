@@ -84,8 +84,11 @@
 
                 grpBtnAdd.SetVisible(true);
                 grpBtnUpdate.SetVisible(false);
+                console.log(BaseEntry.GetValue())
+                if (BaseEntry.GetValue() != null ) {
+                    btnAdd.SetEnabled(true);
+                }
 
-                //btnAdd.SetEnabled(false);
                 btnUpdate.SetEnabled(false);
                 btnRefresh.SetEnabled(false);
                 break;

@@ -28,6 +28,8 @@ namespace Models.Transaction.Inventory
             set { this._FormModeEnum = value; }
         }
 
+        public string CopyFromForm { get; set; }
+
         public int _UserId { get; set; }
 
         public int? CreatedUser { get; set; }
@@ -382,6 +384,7 @@ namespace Models.Transaction.Inventory
 
                             Tx_TransferIn Tx_TransferIn = new Tx_TransferIn();
                             CopyProperty.CopyProperties(model, Tx_TransferIn, false);
+                            Tx_TransferIn.Status = "Draft";
 
                             DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
                             Tx_TransferIn.TransType = "TransferIn";
@@ -401,11 +404,20 @@ namespace Models.Transaction.Inventory
                             String keyValue;
                             keyValue = Tx_TransferIn.Id.ToString();
 
-                        //    CONTEXT.Database.ExecuteSqlCommand(
-                        //    "CALL \"SpTransferIn_AddItemDetail\" ({0}, {1}, {2})",
-                        //    model._UserId,
-                        //    keyValue
-                        //);
+                            if(!string.IsNullOrEmpty(model.CopyFromForm))
+                            {
+                                CONTEXT.Database.ExecuteSqlCommand(
+                                "CALL \"SpTransferIn_AddItemDetail\" ({0}, {1})",
+                                model._UserId,
+                                keyValue
+                                );
+                            }
+
+                            //    CONTEXT.Database.ExecuteSqlCommand(
+                            //    "CALL \"SpTransferIn_AddItemDetail\" ({0}, {1}, {2})",
+                            //    model._UserId,
+                            //    keyValue
+                            //);
 
                             SpNotif.SpSysTransNotif(model._UserId, CONTEXT, "after", "TransferIn", "add", "Id", keyValue);
 
@@ -729,6 +741,55 @@ namespace Models.Transaction.Inventory
             return model;
         }
 
+        public string CheckTransferOutStatus(int userId, string copyFromForm, long copyFromId)
+        {
+            string error = "";
+            string sql = null; 
+
+            using (var CONTEXT = new HANA_APP())
+            {
+                if (copyFromForm == "TransferSummaryOut")
+                {
+                    sql = @"SELECT CASE WHEN COALESCE(T0.""Id"", 0) = 0 THEN 'Invalid Transfer Out' ELSE NULL END AS Error
+                            FROM ""Tx_TransferSummaryOut"" T0   
+                            WHERE T0.""Id""=:p0 
+                            AND T0.""Status"" NOT IN ('Posted')
+                   "; 
+
+                    error = CONTEXT.Database.SqlQuery<string>(sql, copyFromId).FirstOrDefault();
+                }
+            }
+
+            return error;
+        }
+
+        public TransferInModel GetCopyFrom(int userId, string copyFromForm, long copyFromId = 0)
+        {
+            TransferInModel model = new TransferInModel();
+
+            using (var CONTEXT = new HANA_APP())                
+            {
+                if (copyFromForm == "TransferSummaryOut")
+                {
+                    Tx_TransferSummaryOut tx_TransferSummaryOut = CONTEXT.Tx_TransferSummaryOut.Find(copyFromId);
+                    model.CopyFromForm = copyFromForm;
+                    
+                    model.BaseEntry = tx_TransferSummaryOut.Id;
+                    model.BaseDocNum = tx_TransferSummaryOut.TransNo;
+                    model.TransDate = DateTime.Now;
+
+                    model.FromWhsCode = tx_TransferSummaryOut.FromWhsCode;
+                    model.FromWhsName = tx_TransferSummaryOut.FromWhsName;
+                    model.ToWhsCode = tx_TransferSummaryOut.ToWhsCode;
+                    model.ToWhsName = tx_TransferSummaryOut.ToWhsName;
+
+                    model.Comments = tx_TransferSummaryOut.Comments;
+
+                }
+            }
+
+            return model;
+        }
     }
 
 
