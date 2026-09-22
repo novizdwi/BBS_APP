@@ -249,6 +249,12 @@
 
                                    item.Items.Add(itemOther =>
                                    {
+                                       itemOther.Text = "Set Status";
+                                       itemOther.Items.Add("Close", "btnMenuClose");
+                                   });
+
+                                   item.Items.Add(itemOther =>
+                                   {
                                        itemOther.Text = "Approval";
                                        itemOther.Items.Add("Authorize", "btnMenuAuthorize");
                                    });
@@ -264,10 +270,10 @@
                        ViewContext.Writer.Write("</div>");
                    });
 
-        });
+            });
 
 
-    }).GetHtml();
-});
+        }).GetHtml();
+    });
 }).GetHtml()
 

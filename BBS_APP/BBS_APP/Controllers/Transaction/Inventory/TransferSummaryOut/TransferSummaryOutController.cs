@@ -177,6 +177,30 @@ namespace Controllers.Transaction.Inventory
             return PartialView(VIEW_FORM_PARTIAL, transferSummaryOutModel);
         }
 
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Close(long Id, string CloseReason = "")
+        {
+            int userId = (int)Session["userId"];
+
+            TransferSummaryOutModel transferSummaryOutModel;
+
+            transferSummaryOutService = new TransferSummaryOutService();
+            transferSummaryOutService.Close(userId, Id, CloseReason);
+
+            transferSummaryOutModel = transferSummaryOutService.GetById(userId, Id);
+            if (transferSummaryOutModel != null)
+            {
+                transferSummaryOutModel._FormMode = FormModeEnum.Edit;
+            }
+            else
+            {
+                transferSummaryOutModel = transferSummaryOutService.GetNewModel(userId);
+                transferSummaryOutModel._FormMode = FormModeEnum.New;
+            }
+
+            return PartialView(VIEW_FORM_PARTIAL, transferSummaryOutModel);
+        }
+
 
         [HttpPost, ValidateInput(false)]
         public ActionResult RequestApproval(long id, int templateId, string approvalMessage = "")

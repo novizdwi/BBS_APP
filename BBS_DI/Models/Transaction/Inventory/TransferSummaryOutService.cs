@@ -94,6 +94,8 @@ namespace Models.Transaction.Inventory
 
         public string CancelReason { get; set; }
 
+        public string CloseReason { get; set; }
+
         public string CreatedDate_ { get; set; }
 
         public string ModifiedDate_ { get; set; }
@@ -315,6 +317,17 @@ namespace Models.Transaction.Inventory
 
         public TransferSummaryOut_Approval ApprovalStep__ { get; set; }
     }
+
+    public class TransferSummaryOutCloseModel {
+
+        public long Id { get; set; }
+
+        [Required(ErrorMessage = "required")]
+        public string CloseReason { get; set; }
+
+        public int? _UserId { get; set; }
+    }
+
 
     #endregion
 
@@ -1126,6 +1139,60 @@ namespace Models.Transaction.Inventory
                 ExecuteQuery(rs, sqlUpdate, "Reconcile: Update Tx_TransferSummaryOut");
                 ExecuteQuery(rs, sqlUpdateTag, "Reconcile: Update Tx_TransferSummaryOut_Item_Tag");
             }
+        }
+
+        public void Close(int userId, long id, string closeReason)
+        {  
+            using (var CONTEXT = new HANA_APP())
+            {
+                using (var CONTEXT_TRANS = CONTEXT.Database.BeginTransaction()) {
+                    try
+                    {
+                        String keyValue;
+                        keyValue = id.ToString();
+
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "before", "Tx_TransferSummaryOut", "close", "Id", id.ToString() );
+                        Tx_TransferSummaryOut tx_TransferSummaryOut = CONTEXT.Tx_TransferSummaryOut.Find(id);
+                        if(tx_TransferSummaryOut != null)
+                        {
+                            DateTime dtModified = CONTEXT.Database.SqlQuery<DateTime>("SELECT CURRENT_TIMESTAMP AS IDU FROM DUMMY").FirstOrDefault();
+                            tx_TransferSummaryOut.Status = "Closed";
+                            tx_TransferSummaryOut.CancelReason = closeReason;
+                            tx_TransferSummaryOut.ModifiedDate = dtModified;
+                            tx_TransferSummaryOut.ModifiedUser = userId;
+                            CONTEXT.SaveChanges();
+
+                            string sqlUpdate = $@"
+                                UPDATE ""{DbProvider.dbApp_Name}"".""Tx_TransferSummaryOut_Item""
+                                SET ""LineStatus""        = 'Closed',
+                                    ""ModifiedUser""  = {userId},
+                                    ""ModifiedDate""  = CURRENT_TIMESTAMP
+                                WHERE ""Id"" = {id}";
+
+                            CONTEXT.Database.ExecuteSqlCommand(sqlUpdate);
+
+                        }
+                        SpNotif.SpSysControllerTransNotif(userId, "TransferSummaryOut", CONTEXT, "before", "Tx_TransferSummaryOut", "close", "Id", id.ToString());
+                        CONTEXT_TRANS.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        CONTEXT_TRANS.Rollback();
+
+                        string errorMassage;
+                        if (ex.Message.Substring(12) == "[VALIDATION]")
+                        {
+                            errorMassage = ex.Message;
+                        }
+                        else
+                        {
+                            errorMassage = string.Format("[VALIDATION] {0} ", ex.Message);
+                        }
+
+                        throw new Exception(errorMassage);
+                    }
+                }
+            } 
         }
 
         public void Cancel(int userId, long Id, string cancelReason)

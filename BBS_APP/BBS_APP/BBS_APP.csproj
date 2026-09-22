@@ -960,6 +960,9 @@
     <Content Include="Views\Master\Item\ReactiveTag\Partial\ViewApproval\ViewApproval_Partial.cshtml" />
     <Content Include="Views\Master\Item\ReactiveTag\Partial\ViewApproval\ViewApproval_TabContent_List_Partial.cshtml" />
     <Content Include="Views\Master\Item\ReactiveTag\ReactiveTag.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferSummaryOut\Partial\CloseReason\CloseReason_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferSummaryOut\Partial\CloseReason\CloseReason_Panel_Partial.cshtml" />
+    <Content Include="Views\Transaction\Inventory\TransferSummaryOut\Partial\CloseReason\CloseReason_Partial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1119,6 +1122,7 @@
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.Tab.Ref.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.ViewItemTag.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryIn\TransferSummaryInController.Approval.cs" />
+    <Compile Include="Controllers\Transaction\Inventory\TransferSummaryOut\TransferSummaryOutController.CloseReason.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryOut\TransferSummaryOutController.ViewApproval.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryOut\TransferSummaryOutController.Tab.Detail.cs" />
     <Compile Include="Controllers\Transaction\Inventory\TransferSummaryOut\TransferSummaryOutController.Approval.cs" />

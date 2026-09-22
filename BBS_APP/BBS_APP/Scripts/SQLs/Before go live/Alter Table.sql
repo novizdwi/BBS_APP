@@ -13,3 +13,4 @@ ALTER TABLE "Tx_AdjustmentIn_Item_Tag" ADD("ErrorMessage" NVARCHAR(200) );
 ALTER TABLE "Tx_AdjustmentOut_Item_Tag" ADD("ErrorMessage" NVARCHAR(200) );
 
 ALTER TABLE "Tx_TransferIn" ADD("CopyFromForm" NVARCHAR(100) );
+ALTER TABLE "Tx_TransferSummaryOut" ADD("CloseReason" NVARCHAR(500));

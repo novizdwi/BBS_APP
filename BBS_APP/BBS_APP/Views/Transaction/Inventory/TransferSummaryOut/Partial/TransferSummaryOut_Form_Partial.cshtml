@@ -571,6 +571,30 @@
          });
     }
 
+    if (!string.IsNullOrWhiteSpace(Model.CloseReason))
+    {
+        groupItem_Col3.Items.Add(itemSettings =>
+        {
+            itemSettings.Caption = "Cancel Reason";
+        })
+         .SetNestedContent(() =>
+         {
+             ViewContext.Writer.Write("<table  cellspacing=\"0\" cellpadding=\"0\" style=\"margin:0.65em 0 0.67em 0!important;\" ><tr><td  cellspacing=\"0\" cellpadding=\"0\" >");
+
+             Html.DevExpress().Label(
+                x =>
+                {
+                    x.Name = "label3";
+                    x.Text = Model.CloseReason;
+                    x.ControlStyle.ForeColor = System.Drawing.Color.IndianRed;
+                }
+            )
+            .Render();
+
+             ViewContext.Writer.Write("</td></tr></table>");
+         });
+    }
+
     groupItem_Col3.Items.Add(m => Model.Comments, itemSettings =>
     {
         itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Memo;
