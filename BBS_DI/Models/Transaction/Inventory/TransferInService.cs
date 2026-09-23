@@ -407,10 +407,11 @@ namespace Models.Transaction.Inventory
                             if(!string.IsNullOrEmpty(model.CopyFromForm))
                             {
                                 CONTEXT.Database.ExecuteSqlCommand(
-                                "CALL \"SpTransferIn_AddItemDetail\" ({0}, {1})",
+                                "CALL \"SpTransferIn_AddItemDetail\" (:p0, :p1)",
                                 model._UserId,
                                 keyValue
                                 );
+
                             }
 
                             //    CONTEXT.Database.ExecuteSqlCommand(
